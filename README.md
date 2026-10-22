@@ -19,6 +19,25 @@ is the point: public benchmarks leak into training data, so the most durable way
 evaluate coding agents on work that looks like *your* work is to build the eval from your
 own repository's fix history.
 
+## The dashboard
+
+`python3 tools/bench_dashboard.py` serves a local, read-only board over your results
+(http://127.0.0.1:8787/). Below is the front page from our 2026-10-20 snapshot: 21
+model × harness agents on the 107-task common set. Each model appears once per harness,
+since the harness changes the result. Every row and number links to a drill-down of
+runs, tasks and transcripts.
+
+![zbench dashboard: leaderboard table and resolve-rate chart](docs/images/dashboard-leaderboard.png)
+
+<details>
+<summary>Capability vs. cost (Pareto frontier)</summary>
+
+![zbench dashboard: resolve rate vs. cost per task](docs/images/dashboard-pareto.png)
+
+</details>
+
+The same numbers in plain form are in [`results/LEADERBOARD.md`](results/LEADERBOARD.md).
+
 ## What is in the repo
 
 | Path | What it is |
