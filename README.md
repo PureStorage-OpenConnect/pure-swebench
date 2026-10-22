@@ -38,6 +38,28 @@ runs, tasks and transcripts.
 
 The same numbers in plain form are in [`results/LEADERBOARD.md`](results/LEADERBOARD.md).
 
+### What the model wrote vs. the real fix
+
+Each attempt has a detail page (`/run`, reached from any row) that traces the attempt from
+problem statement through generation, patch and hidden-test verification to the verdict.
+It also puts **the model's final patch next to the gold patch** (the upstream fix, which
+the model never sees). Grading only runs the hidden test, so a model can solve a task
+differently from the gold patch and still pass. The failed example below shows where a
+model went wrong.
+
+**Failed:** Claude Opus 5 (Claude Code) on ZT-b7ce31135d20. The model shows the
+"deactivated" indicator for every deactivated user, but the real fix shows it only in
+direct-message conversations (`is_deactivated && is_dm`), so the hidden test fails.
+
+![Run detail page: model patch vs. gold patch for a failed attempt](docs/images/dashboard-patch-vs-gold-failed.png)
+
+<details>
+<summary>Resolved example: same model, a task it solved with a different patch from the gold one</summary>
+
+![Run detail page: model patch vs. gold patch for a resolved attempt](docs/images/dashboard-patch-vs-gold-resolved.png)
+
+</details>
+
 ## What is in the repo
 
 | Path | What it is |

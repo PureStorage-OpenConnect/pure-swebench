@@ -2999,6 +2999,10 @@ def render_run_page(run_id, agent_id, instance_id):
     if ann_full:
         p.append(ann_full)
 
+    # model patch vs gold patch, side by side (falls back to the bundle's patch.diff)
+    _cmp_patch = patch_text or (_read_bundle_patch(evaluation_id) if evaluation_id else "")
+    p.append(_render_patch_compare(task_id, _cmp_patch, outcome))
+
     # W37: human-controlled run scoring exclusion + notes. Notes are hints/comments
     # only; only a non-empty run exclusion reason affects scoring.
     if evaluation_id:
@@ -3373,6 +3377,59 @@ def _bundle_transcript_name(eval_id):
         if (bd / name).is_file():
             return name
     return None
+
+
+def _render_patch_compare(task_id, agent_patch, outcome=""):
+    """Side-by-side card: the agent's final patch vs the gold code patch (the answer
+    key from zbench-tasks/solutions/). Used on /run so a reader can see what the model
+    changed next to what the upstream fix changed. Diff lines are colored; each side is
+    capped at _INLINE_PATCH_CAP chars with a pointer to the raw file for the rest."""
+    esc = lambda x: html.escape("" if x is None else str(x))
+    gp = _task_artifact_path(task_id, "gold_code.patch")
+    gold = gp.read_text(errors="replace") if gp else ""
+
+    def _side(title, text, empty):
+        if not text.strip():
+            return (f'<div class=pc-side><div class=pc-head>{title}</div>'
+                    f'<div class=muted style="padding:8px">{empty}</div></div>')
+        a, d, nf = _diff_stat(text)
+        body = text if len(text) <= _INLINE_PATCH_CAP else (
+            text[:_INLINE_PATCH_CAP] + f"\n--- truncated ({len(text):,} chars) ---")
+        rows = []
+        for ln in body.splitlines():
+            cls = ("pc-meta" if ln.startswith(("diff --git", "index ", "+++", "---"))
+                   else "pc-hunk" if ln.startswith("@@")
+                   else "pc-add" if ln.startswith("+")
+                   else "pc-del" if ln.startswith("-") else "")
+            rows.append(f'<span class="{cls}">{esc(ln) or " "}</span>')
+        return (f'<div class=pc-side><div class=pc-head>{title} '
+                f'<span class=muted>{nf} file{"s" if nf != 1 else ""}, '
+                f'<span style="color:#16a34a">+{a}</span> '
+                f'<span style="color:#dc2626">&minus;{d}</span></span></div>'
+                f'<pre class=pc-pre>{"".join(rows)}</pre></div>')
+
+    verdict = {"resolved": "the hidden test passed with the model's patch",
+               "miss": "the hidden test still failed with the model's patch"}.get(outcome, "")
+    return (
+        '<style>.pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}'
+        '@media(max-width:900px){.pc-grid{grid-template-columns:1fr}}'
+        '.pc-side{border:1px solid #e2e8f0;border-radius:6px;background:#fff;min-width:0}'
+        '.pc-head{font-weight:600;font-size:12px;padding:6px 10px;border-bottom:1px solid #e2e8f0;background:#f8fafc}'
+        '.pc-side pre.pc-pre{margin:0;padding:6px 0;font-size:11px;line-height:1.45;max-height:640px;'
+        'overflow:auto;background:#fff;color:#0f172a;border:0;border-radius:0 0 6px 6px}'
+        '.pc-pre span{display:block;padding:0 10px;white-space:pre}'
+        '.pc-add{background:#ecfdf5;color:#166534}.pc-del{background:#fef2f2;color:#991b1b}'
+        '.pc-hunk{color:#6366f1;background:#f5f3ff}.pc-meta{color:#64748b;font-weight:600}</style>'
+        '<h2>Model patch vs. gold patch</h2>'
+        '<div class=muted style="font-size:12px;margin-bottom:6px">Left: the final patch the '
+        'model produced. Right: the upstream fix (the answer key; the model never sees it). '
+        'Grading runs the hidden test, so the patches need not match line for line'
+        + (f' &mdash; here {verdict}' if verdict else '') + '.</div>'
+        '<div class=pc-grid>'
+        + _side("Model patch", agent_patch, "no patch produced")
+        + _side("Gold patch (upstream fix)", gold, "gold patch not available "
+                "(zbench-tasks/solutions/ missing for this task)")
+        + '</div>')
 
 
 def _diff_stat(text):
