@@ -39,3 +39,16 @@ zbench-tasks/tasks/ZT-3fc63110ac63/instance.jsonl
 .env
 .env.*
 !.env.example
+
+# Results data stays local: run zbench on your own models to produce your own store.
+# The published numbers live in results/ as small CSV/Markdown exports only.
+downloads/
+blobs/
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite3
+*.tgz
+*.tar.gz
