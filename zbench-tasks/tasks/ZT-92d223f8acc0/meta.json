@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-92d223f8acc0",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The test's only visible change is adding a stub for `set_recent_view_participants_column_class_update` to its mock of the internal `../src/resize` module. This is a brand-new setter invented by the reference fix purely as internal wiring (the callback-registration pattern resize.ts uses to avoid circular imports with recent_view_ui). Because Zulip's mock_esm replaces the whole module and any accessed-but-unstubbed export fails, the test only passes if the solver's code calls a resize export with exactly this name \u2014 i.e., it pins the fix's private plumbing, not behavior. No reasonable ticket would dictate the name or existence of an internal callback-setter in resize.ts; a solver could correctly fix the participants-column class updating via many other structures (direct import, event, different setter name) and still fail this test. This binds to a mock target of an internal helper, which cannot be cured by a brief.",
+  "summary": "recent_view: Size participants column dynamically based on avatar count.",
+  "lang": "web",
+  "issue": 38155,
+  "fix_commit": "92d223f8acc0d5ab156cefa0c0e9418e4ad54ad5",
+  "base_commit": "8b950dfd2e65d4b2cca693bc0fef66e97db85430",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/92d223f8acc0d5ab156cefa0c0e9418e4ad54ad5",
+    "issue_url": "https://github.com/zulip/zulip/issues/38155"
+  }
+}

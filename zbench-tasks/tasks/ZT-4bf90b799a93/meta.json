@@ -1,0 +1,39 @@
+{
+  "task_id": "ZT-4bf90b799a93",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "Two of the hidden tests call symbols that exist only in the reference fix. The composebox_typeahead test invokes ct.should_suppress_topic_typeahead(...) directly, and the stream_data test asserts on stream_data.is_topic_creation_enabled(...) \u2014 both are new exported functions introduced by the code diff, with author-chosen names a solver could not know from the base commit. A correct alternative fix (e.g., inlining the suppression logic in the source() callback, or naming the helper differently) would pass the behavioral tests but fail these unit tests on a missing export. Only the two config-behavior tests (asserting showOnFocus/helpOnEmptyStrings and source() output through the pre-existing initialize_topic_edit_typeahead/bootstrap Typeahead config interface) are clean; the direct helper-function tests couple the suite to the reference implementation's naming.",
+  "summary": "topic: Auto-open topic typeahead when creation is disallowed.",
+  "lang": "web",
+  "issue": 36970,
+  "fix_commit": "4bf90b799a93c24068ad8a17bc38fbf13de3241a",
+  "base_commit": "8eac5d7869a50296da568db70a7237fe2ca2cd9e",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/4bf90b799a93c24068ad8a17bc38fbf13de3241a",
+    "issue_url": "https://github.com/zulip/zulip/issues/36970"
+  },
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 53,
+    "files": 2,
+    "hunks": 5,
+    "f2p_count": 0
+  },
+  "author": {
+    "name": "Aman Agrawal",
+    "email": "amanagr@zulip.com",
+    "date": "2026-06-08T05:52:06+00:00"
+  },
+  "author_flagged": "ai_generated_trailer",
+  "contamination": {
+    "fix_public_at": "2026-06-11",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

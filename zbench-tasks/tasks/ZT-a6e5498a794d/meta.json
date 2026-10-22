@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-a6e5498a794d",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden test grades the arbitrary internal key format rather than the observable behavior. It asserts exact key strings like 'channel:1:10:whatever', 'dm:2,3', and 'test:Notification Bot' \u2014 but these keys are internal map entries never shown to users, and the prefix/ordering scheme ('channel:' vs 'stream:', sender_id:stream_id:topic order, comma-joined user ids) is an incidental implementation choice not derivable from the issue. Any correct alternative fix that eliminates collisions with a different key scheme (e.g., JSON-encoded tuples or a different field order) would fail these assertions. The genuinely observable outcome \u2014 that distinct senders/streams/topics produce distinct notifications and duplicates dedupe \u2014 could be tested via notification counts alone, but the test instead pins the gold patch's exact string format, making it brittle format-over-behavior grading.",
+  "summary": "notifications: Avoid potential collisions in notification keys.",
+  "lang": "web",
+  "issue": 26729,
+  "fix_commit": "a6e5498a794de7450e6f1d300586c44aa4ffbfaa",
+  "base_commit": "68414b3b28951573cd80fb281ebfc4dbb6f66fec",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/a6e5498a794de7450e6f1d300586c44aa4ffbfaa",
+    "issue_url": "https://github.com/zulip/zulip/issues/26729"
+  }
+}

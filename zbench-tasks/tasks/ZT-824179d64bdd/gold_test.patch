@@ -1,0 +1,320 @@
+diff --git a/web/tests/compose_fade.test.cjs b/web/tests/compose_fade.test.cjs
+index 14d92b16b6..613e49925c 100644
+--- a/web/tests/compose_fade.test.cjs
++++ b/web/tests/compose_fade.test.cjs
+@@ -10,6 +10,7 @@ const {run_test} = require("./lib/test.cjs");
+ const $ = require("./lib/zjquery.cjs");
+ 
+ const stream_data = zrequire("stream_data");
++stream_data.set_channel_has_locally_available_topic(() => false);
+ const peer_data = zrequire("peer_data");
+ const people = zrequire("people");
+ const compose_fade = zrequire("compose_fade");
+@@ -72,7 +73,7 @@ run_test("set_focused_recipient", () => {
+     assert.ok(compose_fade_helper.should_fade_message(bad_msg));
+ });
+ 
+-run_test("want_normal_display", ({override}) => {
++run_test("want_normal_display", ({override, override_rewire}) => {
+     const stream_id = 110;
+     const sub = make_stream({
+         stream_id,
+@@ -101,8 +102,22 @@ run_test("want_normal_display", ({override}) => {
+     assert.ok(compose_fade_helper.want_normal_display());
+ 
+     // Focused recipient is a valid stream with no topic set
+-    // when topics are not mandatory. Focused to input box.
++    // when topics are not mandatory.
+     override(realm, "realm_topics_policy", "allow_empty_topic");
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => true);
++    assert.ok(!compose_fade_helper.want_normal_display());
++
++    // When empty topics are allowed but user is still focused on
++    // the topic input, show normal display since user is still
++    // configuring topic.
++    $("input#stream_message_recipient_topic").trigger("focus");
++    assert.ok(compose_fade_helper.want_normal_display());
++    $("input#stream_message_recipient_topic").trigger("blur");
++
++    // When empty topics are allowed by policy but the user cannot
++    // create new topics and no empty topic exists, show normal
++    // display since the compose target is incomplete.
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => false);
+     assert.ok(compose_fade_helper.want_normal_display());
+ 
+     // If we're focused to a topic, then we do want to fade.
+diff --git a/web/tests/compose_ui.test.cjs b/web/tests/compose_ui.test.cjs
+index 983b3d3f22..68061cb4a0 100644
+--- a/web/tests/compose_ui.test.cjs
++++ b/web/tests/compose_ui.test.cjs
+@@ -27,6 +27,7 @@ mock_esm("../src/message_lists", {
+ const compose_ui = zrequire("compose_ui");
+ const linkifiers = zrequire("linkifiers");
+ const stream_data = zrequire("stream_data");
++stream_data.set_channel_has_locally_available_topic(() => false);
+ const people = zrequire("people");
+ const user_status = zrequire("user_status");
+ const channel = mock_esm("../src/channel");
+@@ -192,7 +193,7 @@ run_test("replace_syntax", ({override}) => {
+     assert.equal(prev_caret + "$$\\pi$$".length - "Bca".length, $textbox.caret());
+ });
+ 
+-run_test("compute_placeholder_text", ({override}) => {
++run_test("compute_placeholder_text", ({override, override_rewire}) => {
+     let opts = {
+         message_type: "stream",
+         stream_id: undefined,
+@@ -210,6 +211,7 @@ run_test("compute_placeholder_text", ({override}) => {
+         subscribed: true,
+         name: "all",
+         stream_id: 2,
++        topics_policy: "disable_empty_topic",
+     });
+     stream_data.add_sub_for_tests(stream_all);
+     opts.stream_id = stream_all.stream_id;
+@@ -221,6 +223,31 @@ run_test("compute_placeholder_text", ({override}) => {
+         $t({defaultMessage: "Message #all > Test"}),
+     );
+ 
++    // When empty topic is allowed and user can create new topics,
++    // the placeholder should include the "general chat" display name.
++    const stream_open = make_stream({
++        subscribed: true,
++        name: "open",
++        stream_id: 3,
++        topics_policy: "inherit",
++    });
++    stream_data.add_sub_for_tests(stream_open);
++    opts.stream_id = stream_open.stream_id;
++    opts.topic = "";
++    realm.realm_topics_policy = "allow_empty_topic";
++    realm.realm_empty_topic_display_name = "general chat";
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => true);
++    assert.equal(
++        compose_ui.compute_placeholder_text(opts),
++        $t({defaultMessage: "Message #open > translated: general chat"}),
++    );
++
++    // When empty topic is allowed but user cannot create new topics
++    // and no empty topic exists, the placeholder should not include
++    // the empty topic display name.
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => false);
++    assert.equal(compose_ui.compute_placeholder_text(opts), $t({defaultMessage: "Message #open"}));
++
+     // direct message narrows
+     opts = {
+         message_type: "private",
+@@ -1293,7 +1320,7 @@ run_test("right-to-left", () => {
+ });
+ 
+ const get_focus_area = compose_ui._get_focus_area;
+-run_test("get_focus_area", ({override}) => {
++run_test("get_focus_area", ({override, override_rewire}) => {
+     assert.equal(
+         get_focus_area({message_type: "private", private_message_recipient_ids: []}),
+         "#private_message_recipient",
+@@ -1324,6 +1351,7 @@ run_test("get_focus_area", ({override}) => {
+         "input#stream_message_recipient_topic",
+     );
+     override(realm, "realm_topics_policy", "allow_empty_topic");
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => true);
+     assert.equal(
+         get_focus_area({message_type: "stream", stream_name: "fun", stream_id: 4}),
+         "textarea#compose-textarea",
+@@ -1341,4 +1369,13 @@ run_test("get_focus_area", ({override}) => {
+         }),
+         "input#stream_message_recipient_topic",
+     );
++
++    // When empty topics are allowed by policy but the user cannot
++    // create new topics and no empty topic exists, focus should go
++    // to the topic input, not the textarea.
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => false);
++    assert.equal(
++        get_focus_area({message_type: "stream", stream_name: "fun", stream_id: 4}),
++        "input#stream_message_recipient_topic",
++    );
+ });
+diff --git a/web/tests/compose_validate.test.cjs b/web/tests/compose_validate.test.cjs
+index 8baf5318fb..681d3175b9 100644
+--- a/web/tests/compose_validate.test.cjs
++++ b/web/tests/compose_validate.test.cjs
+@@ -274,6 +274,7 @@ test_ui("validate", ({mock_template, override}) => {
+     const denmark = {
+         stream_id: 100,
+         name: "Denmark",
++        topics_policy: "inherit",
+     };
+     stream_data.add_sub_for_tests(denmark);
+     compose_state.set_stream_id(denmark.stream_id);
+diff --git a/web/tests/lib/example_stream.cjs b/web/tests/lib/example_stream.cjs
+index 9948a68417..e572617016 100644
+--- a/web/tests/lib/example_stream.cjs
++++ b/web/tests/lib/example_stream.cjs
+@@ -48,6 +48,7 @@ exports.make_stream = (opts = {}) => {
+         stream_weekly_traffic: 0,
+         /* Most tests want to work with a channel the current user is subscribed to. */
+         subscribed: true,
++        topics_policy: "inherit",
+         wildcard_mentions_notify: false,
+         folder_id: null,
+     };
+diff --git a/web/tests/message_view.test.cjs b/web/tests/message_view.test.cjs
+index b8120631a8..7cedce72e1 100644
+--- a/web/tests/message_view.test.cjs
++++ b/web/tests/message_view.test.cjs
+@@ -16,6 +16,7 @@ const compose_state = zrequire("compose_state");
+ const narrow_banner = zrequire("narrow_banner");
+ const people = zrequire("people");
+ const stream_data = zrequire("stream_data");
++stream_data.set_channel_has_locally_available_topic(() => false);
+ const {Filter} = zrequire("../src/filter");
+ const message_fetch = mock_esm("../src/message_fetch", {
+     load_messages_around_anchor() {},
+@@ -824,7 +825,7 @@ run_test("narrow_to_compose_target streams", ({override, override_rewire}) => {
+         {operator: "topic", operand: "four"},
+     ]);
+ 
+-    // Test with blank topic, with realm_topics_policy
++    // Test with blank topic, empty topic not allowed
+     override(realm, "realm_topics_policy", "disable_empty_topic");
+     compose_state.topic("");
+     args.called = false;
+@@ -832,8 +833,9 @@ run_test("narrow_to_compose_target streams", ({override, override_rewire}) => {
+     assert.equal(args.called, true);
+     assert.deepEqual(args.terms, [{operator: "channel", operand: rome_id.toString()}]);
+ 
+-    // Test with blank topic, without realm_topics_policy
++    // Test with blank topic, empty topic allowed
+     override(realm, "realm_topics_policy", "allow_empty_topic");
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => true);
+     compose_state.topic("");
+     args.called = false;
+     message_view.to_compose_target();
+@@ -843,6 +845,15 @@ run_test("narrow_to_compose_target streams", ({override, override_rewire}) => {
+         {operator: "topic", operand: ""},
+     ]);
+ 
++    // When empty topic is allowed by policy but user cannot create
++    // topics and no empty topic exists, narrowing with blank topic
++    // should not include the topic term.
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => false);
++    compose_state.topic("");
++    args.called = false;
++    message_view.to_compose_target();
++    assert.equal(args.called, true);
++    assert.deepEqual(args.terms, [{operator: "channel", operand: rome_id.toString()}]);
+ });
+ 
+ run_test("narrow_to_compose_target direct messages", ({override, override_rewire}) => {
+diff --git a/web/tests/stream_data.test.cjs b/web/tests/stream_data.test.cjs
+index 7162e7d6e1..27938a58da 100644
+--- a/web/tests/stream_data.test.cjs
++++ b/web/tests/stream_data.test.cjs
+@@ -2533,7 +2533,7 @@ run_test("is_empty_topic_only_channel", ({override}) => {
+     assert.equal(stream_data.is_empty_topic_only_channel(scotland.stream_id), false);
+ });
+ 
+-run_test("can_use_empty_topic", ({override}) => {
++run_test("can_use_empty_topic", ({override, override_rewire}) => {
+     const social = {
+         subscribed: true,
+         color: "red",
+@@ -2542,6 +2542,30 @@ run_test("can_use_empty_topic", ({override}) => {
+         topics_policy: "empty_topic_only",
+     };
+     stream_data.add_sub_for_tests(social);
++
++    assert.equal(stream_data.can_use_empty_topic(undefined), false);
++    assert.equal(stream_data.can_use_empty_topic(99), false);
++
++    let has_empty_topic = false;
++    stream_data.set_channel_has_locally_available_topic(
++        (_channel_id, _topic_name) => has_empty_topic,
++    );
++
++    // With empty_topic_only policy, if the channel already has an empty topic,
++    // the user can use it even without topic creation permission.
++    has_empty_topic = true;
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => false);
++    assert.equal(stream_data.can_use_empty_topic(social.stream_id), true);
++
++    // Without an existing empty topic and without topic creation
++    // permission, the user cannot use empty topic.
++    has_empty_topic = false;
++    assert.equal(stream_data.can_use_empty_topic(social.stream_id), false);
++
++    // With topic creation permission
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => true);
++    assert.equal(stream_data.can_use_empty_topic(social.stream_id), true);
++
+     const scotland = {
+         subscribed: true,
+         color: "red",
+@@ -2549,15 +2573,25 @@ run_test("can_use_empty_topic", ({override}) => {
+         stream_id: 3,
+         topics_policy: "inherit",
+     };
+-    override(realm, "realm_topics_policy", "allow_empty_topic");
+-    assert.equal(stream_data.can_use_empty_topic(undefined), false);
+-    assert.equal(stream_data.can_use_empty_topic(99), false);
++    stream_data.add_sub_for_tests(scotland);
+ 
+-    assert.equal(stream_data.can_use_empty_topic(social.stream_id), true);
++    // With allow_empty_topic policy, if the channel already has an empty topic,
++    // the user can use it even without topic creation permission.
++    realm.realm_topics_policy = "allow_empty_topic";
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => false);
++    has_empty_topic = true;
++    assert.equal(stream_data.can_use_empty_topic(scotland.stream_id), true);
+ 
+-    stream_data.add_sub_for_tests(scotland);
++    // Without an existing empty topic and without topic creation
++    // permission, the user cannot use empty topic.
++    has_empty_topic = false;
++    assert.equal(stream_data.can_use_empty_topic(scotland.stream_id), false);
+ 
++    // With topic creation permission
++    override_rewire(stream_data, "can_create_new_topics_in_stream", () => true);
+     assert.equal(stream_data.can_use_empty_topic(scotland.stream_id), true);
++
++    // disable_empty_topic always returns false regardless of other factors.
+     override(realm, "realm_topics_policy", "disable_empty_topic");
+     assert.equal(stream_data.can_use_empty_topic(scotland.stream_id), false);
+ });
+diff --git a/web/tests/stream_topic_history.test.cjs b/web/tests/stream_topic_history.test.cjs
+index 45bf98a9c6..9b577412d6 100644
+--- a/web/tests/stream_topic_history.test.cjs
++++ b/web/tests/stream_topic_history.test.cjs
+@@ -294,6 +294,31 @@ test("test_stream_has_topics", () => {
+     assert.equal(stream_topic_history.stream_has_locally_available_named_topics(stream_id), true);
+ });
+ 
++test("channel_has_locally_available_topic", () => {
++    const stream_id = 90;
++
++    // Unknown stream returns false.
++    assert.equal(
++        stream_topic_history.channel_has_locally_available_topic(stream_id, "topic1"),
++        false,
++    );
++
++    stream_topic_history.add_message({
++        stream_id,
++        message_id: 901,
++        topic_name: "topic1",
++    });
++
++    assert.equal(
++        stream_topic_history.channel_has_locally_available_topic(stream_id, "topic1"),
++        true,
++    );
++    assert.equal(
++        stream_topic_history.channel_has_locally_available_topic(stream_id, "nonexistent"),
++        false,
++    );
++});
++
+ test("test_stream_has_resolved_topics", () => {
+     const stream_id = 89;
+ 

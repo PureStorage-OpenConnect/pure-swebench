@@ -1,0 +1,54 @@
+diff --git a/zerver/lib/integrations.py b/zerver/lib/integrations.py
+index 89c3fcdf13..962058905e 100644
+--- a/zerver/lib/integrations.py
++++ b/zerver/lib/integrations.py
+@@ -571,9 +571,6 @@ INCOMING_WEBHOOK_INTEGRATIONS: list[IncomingWebhookIntegration] = [
+         [WebhookScreenshotConfig("github_job_completed.json")],
+         display_name="CircleCI",
+     ),
+-    IncomingWebhookIntegration(
+-        "clubhouse", ["project-management"], [WebhookScreenshotConfig("story_create.json")]
+-    ),
+     IncomingWebhookIntegration(
+         "codeship",
+         ["continuous-integration", "deployment"],
+@@ -847,6 +844,12 @@ INCOMING_WEBHOOK_INTEGRATIONS: list[IncomingWebhookIntegration] = [
+     IncomingWebhookIntegration(
+         "sentry", ["monitoring"], [WebhookScreenshotConfig("event_for_exception_python.json")]
+     ),
++    IncomingWebhookIntegration(
++        "shortcut",
++        ["project-management"],
++        [WebhookScreenshotConfig("story_create.json")],
++        legacy_names=["clubhouse"],
++    ),
+     IncomingWebhookIntegration(
+         "slack",
+         ["communication"],
+diff --git a/zerver/webhooks/clubhouse/__init__.py b/zerver/webhooks/shortcut/__init__.py
+similarity index 100%
+rename from zerver/webhooks/clubhouse/__init__.py
+rename to zerver/webhooks/shortcut/__init__.py
+diff --git a/zerver/webhooks/clubhouse/view.py b/zerver/webhooks/shortcut/view.py
+similarity index 99%
+rename from zerver/webhooks/clubhouse/view.py
+rename to zerver/webhooks/shortcut/view.py
+index 2c074467e1..1b3260ddb8 100644
+--- a/zerver/webhooks/clubhouse/view.py
++++ b/zerver/webhooks/shortcut/view.py
+@@ -757,13 +757,13 @@ EVENTS_SECONDARY_ACTIONS_FUNCTION_MAPPER: dict[str, Callable[[WildValue], Iterat
+ 
+ @webhook_view("Clubhouse", all_event_types=ALL_EVENT_TYPES)
+ @typed_endpoint
+-def api_clubhouse_webhook(
++def api_shortcut_webhook(
+     request: HttpRequest,
+     user_profile: UserProfile,
+     *,
+     payload: JsonBodyPayload[WildValue],
+ ) -> HttpResponse:
+-    # Clubhouse has a tendency to send empty POST requests to
++    # Shortcut has a tendency to send empty POST requests to
+     # third-party endpoints. It is unclear as to which event type
+     # such requests correspond to. So, it is best to ignore such
+     # requests for now.

@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-0eea85446b80",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden test diff contains no behavioral assertion: it only adds a noop mock for the new initialize_compose_tooltips function so the existing compose_actions test doesn't break. Nothing grades the observable outcome of the change (singleton tooltip grouping, delay behavior, cleanup on edit end) \u2014 the actual behavior is hover/transition timing observable only via real browser interaction. A solution could implement the delays entirely wrong or leave the function an empty stub and still pass, so the task cannot be graded fail-before/pass-after on outcome.",
+  "summary": "tooltips: Group tooltips for a smooth transition.",
+  "lang": "web",
+  "issue": 24825,
+  "fix_commit": "0eea85446b8098c24035d259120710461bf013d0",
+  "base_commit": "48d2ee26847a262bf5dda92de4360a96daeda4a0",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/0eea85446b8098c24035d259120710461bf013d0",
+    "issue_url": "https://github.com/zulip/zulip/issues/24825"
+  }
+}

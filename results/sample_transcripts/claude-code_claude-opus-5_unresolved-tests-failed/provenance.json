@@ -1,0 +1,47 @@
+{
+ "agent": {
+  "agent_id": "claude-cli-opus-5",
+  "cli": {
+   "name": "claude",
+   "version_probe": {
+    "command": [
+     "claude",
+     "--version"
+    ],
+    "ok": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "2.1.261 (Claude Code)"
+   }
+  },
+  "command": "python3 -m zbench.agents.claude_agent",
+  "config": {
+   "available": true,
+   "claude_env": {
+    "CLAUDE_EFFORT": "high",
+    "CLAUDE_MODEL_NAME": "claude-opus-5",
+    "ZBENCH_AGENT_TIMEOUT": "3000"
+   },
+   "kind": "claude",
+   "note": "CLAUDE_CONFIG_DIR holds OAuth creds; not snapshotted (secret-safe).",
+   "sha256": "8d42db3e97911402383142ebf06ba8f5a797a2bb48940e9cd9337999c5b1c56b"
+  },
+  "env_keys": [
+   "CLAUDE_EFFORT",
+   "CLAUDE_MODEL_NAME",
+   "ZBENCH_AGENT_TIMEOUT"
+  ],
+  "timeout_sec": 3600
+ },
+ "captured_at": "2026-09-05T13:13:49.019661+00:00",
+ "harness": {
+  "git": {
+   "available": false,
+   "start": "/home/user/scripts/zbench/zbench/provenance.py"
+  },
+  "name": "zbench",
+  "platform": "Linux-6.8.0-110-generic-x86_64-with-glibc2.39",
+  "python_version": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]"
+ },
+ "schema_version": 2
+}

@@ -1,0 +1,60 @@
+{
+  "task_id": "ZT-b45341991d57",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "message_edit: Invalidate cache for propagated messages on topic edit.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 37619,
+  "fix_commit": "b45341991d573485e2c27bb6759f94ed44dad125",
+  "base_commit": "5c0715fd307426c155a5b6b76ab3bd8fe54e1a25",
+  "env_fingerprint": "6ab683ab5879",
+  "fail_to_pass": [
+    "zerver.tests.test_message_edit.EditMessageTest.test_edit_message_content_limit",
+    "zerver.tests.test_message_edit.EditMessageTest.test_edit_message_race_condition",
+    "zerver.tests.test_message_edit.EditMessageTest.test_remove_another_user_attachment_while_editing",
+    "zerver.tests.test_message_edit.EditMessageTest.test_remove_another_user_deleted_attachment_while_editing",
+    "zerver.tests.test_message_edit.EditMessageTest.test_save_message"
+  ],
+  "pass_to_pass": [],
+  "contamination": {
+    "fix_public_at": "2026-03-03",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-01-21T23:41:52Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/b45341991d573485e2c27bb6759f94ed44dad125",
+    "issue_url": "https://github.com/zulip/zulip/issues/37619"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-b45341991d57",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 26.4
+    }
+  },
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 16,
+    "files": 2,
+    "hunks": 6,
+    "f2p_count": 5
+  },
+  "author": {
+    "name": "Sairam Bisoyi",
+    "email": "sairamb2007.21@gmail.com",
+    "date": "2026-03-03T11:31:16+05:30"
+  },
+  "author_flagged": "ai_generated_trailer"
+}

@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-00ad005ca02d",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The behavior being asserted (no inline-code wrapping when the paste cursor sits inside an unclosed backtick span) is legitimate product behavior tested through the pre-existing public entry point paste_handler_converter. However, the test's fake textarea couples to an internal implementation choice: it replaces the old stub's `caret()` method (the jquery-caret accessor the base-commit code actually uses at web/src/compose_paste.ts) with only `val()` plus an element at index 0 exposing `selectionStart`/`value`. A solver who implements the identical correct behavior while continuing to read the cursor via `$textarea.caret()` \u2014 the natural, base-commit-idiomatic choice \u2014 fails every assertion because the stub lacks that method. The test therefore discriminates on WHICH accessor the implementation calls to read cursor position (`$textarea[0].selectionStart` vs `$textarea.caret()`), a private call-path decision no product ticket would dictate. This is a mock/stub-of-internals binding that cannot be phrased as a product requirement, so the task is coupled.",
+  "summary": "compose: Skip adding backticks when pasting in inline code span.",
+  "lang": "web",
+  "issue": 34313,
+  "fix_commit": "00ad005ca02d9ca62a25d2801a16d7ca1b6062e1",
+  "base_commit": "72fa1ce8c07983c8879f2a86f7afaebf1254f0df",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/00ad005ca02d9ca62a25d2801a16d7ca1b6062e1",
+    "issue_url": "https://github.com/zulip/zulip/issues/34313"
+  }
+}

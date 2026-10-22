@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-3ec23e68c34c",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "This is an API-documentation-only change: it adds OpenAPI docs for /jwt/fetch_api_key and whitelists the generated curl example as untested. No runtime behavior changes. The hidden test merely moves the endpoint between the 'pending documentation' and 'documented_post_only_endpoints' bookkeeping sets in test_openapi.py \u2014 pure OpenAPI schema lockstep bookkeeping, which is an explicit drop criterion.",
+  "summary": "api docs: Add documentation for JWT API key fetch endpoint.",
+  "lang": "py",
+  "issue": 24278,
+  "fix_commit": "3ec23e68c34c97964bb6c15c0f4cbb5eea7495a3",
+  "base_commit": "fbf6633732e66355f3c2a2012b9983914498c193",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/3ec23e68c34c97964bb6c15c0f4cbb5eea7495a3",
+    "issue_url": "https://github.com/zulip/zulip/issues/24278"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "task_id": "ZT-0d91dad76f73",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "pm_list: Hide conversations with deactivated users by default.",
+  "type": "other",
+  "lang": "web",
+  "issue": 35102,
+  "fix_commit": "0d91dad76f737dee6fc8eaaf13ab8f8affc0e99e",
+  "base_commit": "65a1b7e4df03b49c95b2ad1fe10d55dcd117b6f8",
+  "env_fingerprint": "84925a8cc077",
+  "fail_to_pass": [
+    "web/tests/pm_list_data.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 26,
+    "files": 1,
+    "hunks": 10,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The direct-message list's per-conversation display object renames its boolean field `is_deactivated` to `includes_deactivated_user`, which is true when ANY participant in the conversation (not just the first/only user) is a deactivated account; consumers of `pm_list_data.get_conversations()` read this field.",
+    "In the unzoomed (collapsed) direct-message list, conversations that include any deactivated user are excluded from `conversations_to_be_shown`; unread messages in those excluded conversations are added to `more_conversations_unread_count`.",
+    "In the zoomed (expanded) direct-message list, all conversations are shown, including those with deactivated users, and `more_conversations_unread_count` is 0.",
+    "The unzoomed cap of 8 most-recent conversations (`max_conversations_to_show`) is applied after excluding deactivated-user conversations, i.e. up to 8 of the remaining eligible conversations are shown rather than 8 slots being consumed by filtered-out entries."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 347,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "santhoshkumarCodes",
+    "email": "santhoshkumartechsavvy@gmail.com",
+    "date": "2025-11-24"
+  },
+  "contamination": {
+    "fix_public_at": "2025-11-24",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-07-02T18:22:58Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/0d91dad76f737dee6fc8eaaf13ab8f8affc0e99e",
+    "issue_url": "https://github.com/zulip/zulip/issues/35102"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-0d91dad76f73",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 88.9
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

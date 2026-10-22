@@ -1,0 +1,104 @@
+{
+  "task_id": "ZT-5e51b7d33cfd",
+  "curation_status": "held",
+  "curation_stage": "oracle_validated",
+  "verdict": "held",
+  "reason_code": "held_scope_too_broad_for_agent",
+  "reason": "Oracle-valid (flip + P2P green, flake-gated) -- this is NOT a rejected/auto_prepared hold, it is a deliberate quarantine applied AFTER validation. 2026-08-17 smoke run + brief rewrite: after fixing the brief's message-wording gap (see problem_statement.md/card.md history), 8/8 completed re-attempts across 8 different model/harness combos still failed identically -- a TypeError from zerver/lib/test_classes.py's set_full_name helper, one of ~15 scattered call sites that must add the new required `notify` parameter. Every model implemented the notification logic correctly but ran out of scope/turns before finishing the caller migration, even with that exact call site named in the brief. This looks like a task-scope problem (too many required call-site edits for one pass), not a brief-clarity problem. Held out of the 124-task validated corpus pending a decision on whether to split/simplify the required-caller scope or accept it as multi-step. Revisit by re-promoting curation_status to \"validated\" if resolved.",
+  "summary": "notifications: Send private messages for user profile modifications.",
+  "type": "other",
+  "lang": "py",
+  "issue": 23641,
+  "fix_commit": "5e51b7d33cfd2b2ccaac4bd34df6ed73c2e719f7",
+  "base_commit": "0ac926533ff973ba5654ddbbff6c299520a18822",
+  "env_fingerprint": "3b800bbbe80e",
+  "fail_to_pass": [
+    "zerver.tests.test_management_commands.TestUserChangeNotifications.test_bulk_change_user_name_sends_notifications",
+    "zerver.tests.test_management_commands.TestUserChangeNotifications.test_change_user_role_sends_notifications",
+    "zerver.tests.test_users.PermissionTest.test_change_regular_member_to_guest",
+    "zerver.tests.test_users.PermissionTest.test_non_admin_cannot_change_full_name"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_message_send",
+    "zerver.tests.test_scim"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 186,
+    "files": 15,
+    "hunks": 43,
+    "f2p_count": 9
+  },
+  "interface_requirements": [
+    "do_change_user_role and do_change_full_name (both already take acting_user: UserProfile | None) gain a new required boolean keyword parameter `notify`: when true, the affected user is notified of the account change; when false, no notification is sent.",
+    "do_update_user_custom_profile_data_if_changed currently takes only (user_profile, data); it must gain two new required parameters, `acting_user: UserProfile | None` and `notify: bool`, with the same meaning. check_remove_custom_profile_field_value (already takes acting_user) must likewise gain a required `notify: bool`.",
+    "Because notify (and, for do_update_user_custom_profile_data_if_changed, acting_user) are required with no default, every existing call site of these four functions must be updated to pass the new argument(s) explicitly -- including the shared test helpers set_full_name, set_user_custom_profile_data, and the role-setting helper in zerver/lib/test_classes.py's ZulipTestCase, which are easy to miss because they are test infrastructure rather than feature code.",
+    "LDAP synchronization must invoke do_change_full_name with `notify=True` passed as a keyword argument, so name changes made by LDAP sync trigger the user notification; LDAP-driven custom profile field updates must likewise notify with acting_user=None.",
+    "When notified, the message body starts with one of two exact sentences depending on whether acting_user is None: '{mention of the acting user} has made the following changes to your account.' (built with the existing silent_mention_syntax_for_user helper) when a specific person made the change, or 'The following changes have been made to your account.' when the system made the change (e.g. LDAP sync, a management command run with no acting user).",
+    "For each changed field, the notification message contains a Markdown line of the form '- **Old <field label>:** <old value>' and '- **New <field label>:** <new value>'; for the built-in name field the label is 'full name', and for custom profile fields the label is the field's configured name. Between fields, insert a line containing exactly '____' followed by two blank lines. An empty old or new value is rendered as '*None*', not as an empty string.",
+    "Custom profile field values in the notification are rendered as human-readable display values (e.g., for SELECT fields the option text, for USER fields user mentions), matching the value shown for the field's new state.",
+    "No notification is sent when the user changes their own profile (acting_user is the same user) or when the affected profile is a bot; callers may also suppress it explicitly with notify=False."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 608,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "The Dance",
+    "email": "thedance@amamu.io",
+    "date": "2026-01-07"
+  },
+  "contamination": {
+    "fix_public_at": "2026-01-07",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2022-11-21T20:57:45Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/5e51b7d33cfd2b2ccaac4bd34df6ed73c2e719f7",
+    "issue_url": "https://github.com/zulip/zulip/issues/23641"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-5e51b7d33cfd",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_bulk_change_user_name_sends_notifications",
+        "test_change_regular_member_to_guest",
+        "test_change_user_role_sends_notifications"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 308.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-965cadd8aff8",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The tests bind directly to internal implementation choices of the fix rather than to any surface a spec could dictate. emoji_picker.test.cjs reaches into the new module's exported mutable state: it writes entries directly into `emoji_frequency.reaction_data` (an internal Map whose entry shape \u2014 `score`, `emoji_code`, `emoji_type` fields \u2014 is a private data structure the author invented, and the test even inserts partial objects omitting `message_ids`/`current_user_reacted_message_ids`, relying on the fact that the sort implementation only touches `score`). It then calls the internal recompute step `update_frequently_used_emojis_list()` in isolation and asserts the exact merged ordering of `typeahead.frequently_used_emojis`, coupling to the specific popular-then-top-scored merge algorithm and the exported-variable representation. dispatch.test.cjs pins the internal module path `../src/emoji_frequency` via mock_esm and stubs three internal helper names (`update_emoji_frequency_on_add_reaction_event`, `update_emoji_frequency_on_remove_reaction_event`, `update_emoji_frequency_on_messages_deletion`) \u2014 mock targets of internals with author-chosen names and call sites; a solver who implemented the same feature by, e.g., hooking frequency tracking inside reactions.ts or using a different state shape would fail these tests despite correct behavior. Other bindings (`typeahead.set_frequently_used_emojis`, `get_popular_emojis`, `frequently_used_emojis`) are likewise internal frontend plumbing no ticket would specify. While the user-visible bits ('Frequently used' category of 12 emojis, weight-5 for own reactions) could be spec'd, the tests cannot pass without matching the private module layout and data structures, so a brief cannot cure this.",
+  "summary": "emoji_picker: Add a \"Frequently used\" section in the emoji selector.",
+  "lang": "web",
+  "issue": 21841,
+  "fix_commit": "965cadd8aff83500162db31a3767661b2494c0e2",
+  "base_commit": "98e14a644f3e73b1d178a2ed1edd95a88a9ad858",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/965cadd8aff83500162db31a3767661b2494c0e2",
+    "issue_url": "https://github.com/zulip/zulip/issues/21841"
+  }
+}

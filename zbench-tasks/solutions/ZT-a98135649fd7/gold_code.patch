@@ -1,0 +1,176 @@
+diff --git a/web/src/message_list_view.ts b/web/src/message_list_view.ts
+index 93de7db21e..e04225eae3 100644
+--- a/web/src/message_list_view.ts
++++ b/web/src/message_list_view.ts
+@@ -65,6 +65,7 @@ export type MessageContainer = {
+     msg: Message;
+     sender_is_bot: boolean;
+     sender_is_guest: boolean;
++    sender_is_deactivated: boolean;
+     should_add_guest_indicator_for_sender: boolean;
+     small_avatar_url: string;
+     status_message: string | false;
+@@ -662,6 +663,7 @@ export class MessageListView {
+         small_avatar_url: string;
+         sender_is_bot: boolean;
+         sender_is_guest: boolean;
++        sender_is_deactivated: boolean;
+         should_add_guest_indicator_for_sender: boolean;
+         is_hidden: boolean;
+         mention_classname: string | undefined;
+@@ -743,6 +745,7 @@ export class MessageListView {
+ 
+         const sender_is_bot = people.sender_is_bot(message);
+         const sender_is_guest = people.sender_is_guest(message);
++        const sender_is_deactivated = people.sender_is_deactivated(message);
+         const should_add_guest_indicator_for_sender = people.should_add_guest_user_indicator(
+             message.sender_id,
+         );
+@@ -760,6 +763,7 @@ export class MessageListView {
+             small_avatar_url,
+             sender_is_bot,
+             sender_is_guest,
++            sender_is_deactivated,
+             should_add_guest_indicator_for_sender,
+             is_hidden,
+             mention_classname,
+diff --git a/web/src/people.ts b/web/src/people.ts
+index ec26fa9f29..9a01460fe3 100644
+--- a/web/src/people.ts
++++ b/web/src/people.ts
+@@ -778,6 +778,14 @@ export function sender_is_guest(message: Message): boolean {
+     return false;
+ }
+ 
++export function sender_is_deactivated(message: Message): boolean {
++    const sender_id = message.sender_id;
++    if (sender_id) {
++        return !is_active_user_for_popover(message.sender_id);
++    }
++    return false;
++}
++
+ export function is_valid_bot_user(user_id: number): boolean {
+     const user = maybe_get_user_by_id(user_id, true);
+     return user?.is_bot ?? false;
+diff --git a/web/src/pm_list_data.ts b/web/src/pm_list_data.ts
+index a0f65835e1..5715076a95 100644
+--- a/web/src/pm_list_data.ts
++++ b/web/src/pm_list_data.ts
+@@ -47,6 +47,7 @@ type DisplayObject = {
+     is_group: boolean;
+     is_bot: boolean;
+     has_unread_mention: boolean;
++    is_deactivated: boolean;
+ };
+ 
+ export function get_conversations(search_string = ""): DisplayObject[] {
+@@ -86,6 +87,9 @@ export function get_conversations(search_string = ""): DisplayObject[] {
+             unread.num_unread_mentions_for_user_ids_strings(user_ids_string) > 0;
+         const is_group = user_ids_string.includes(",");
+         const is_active = user_ids_string === active_user_ids_string;
++        const is_deactivated = !people.is_active_user_for_popover(
++            Number.parseInt(user_ids_string, 10) || 0,
++        );
+ 
+         let user_circle_class;
+         let status_emoji_info;
+@@ -116,6 +120,7 @@ export function get_conversations(search_string = ""): DisplayObject[] {
+             is_group,
+             is_bot,
+             has_unread_mention,
++            is_deactivated,
+         };
+         display_objects.push(display_object);
+     }
+diff --git a/web/templates/input_pill.hbs b/web/templates/input_pill.hbs
+index 1fd81c0c0d..8da370dcae 100644
+--- a/web/templates/input_pill.hbs
++++ b/web/templates/input_pill.hbs
+@@ -1,6 +1,9 @@
+ <div class='pill {{#if deactivated}} deactivated-pill {{/if}}'{{#if user_id}}data-user-id="{{user_id}}"{{/if}}{{#if group_id}}data-user-group-id="{{group_id}}"{{/if}}{{#if stream_id}}data-stream-id="{{stream_id}}"{{/if}} tabindex=0>
+     {{#if has_image}}
+     <img class="pill-image" src="{{img_src}}" />
++    {{#if deactivated}}
++        <span class="fa fa-ban slashed-circle-icon"></span>
++    {{/if}}
+     {{/if}}
+     <span class="pill-label">
+         <span class="pill-value">
+@@ -20,7 +23,6 @@
+             {{/if}}
+         </span>
+         {{~#if should_add_guest_user_indicator}}&nbsp;<i>({{t 'guest'}})</i>{{~/if~}}
+-        {{~#if deactivated}}&nbsp;({{t 'deactivated'}}){{~/if~}}
+         {{~#if has_status~}}
+             {{~> status_emoji status_emoji_info~}}
+         {{~/if~}}
+diff --git a/web/templates/message_avatar.hbs b/web/templates/message_avatar.hbs
+index 172e5e4136..59bb29adde 100644
+--- a/web/templates/message_avatar.hbs
++++ b/web/templates/message_avatar.hbs
+@@ -1,6 +1,9 @@
+ <div class="u-{{msg/sender_id}} message-avatar sender_info_hover view_user_card_tooltip no-select" aria-hidden="true" data-is-bot="{{sender_is_bot}}">
+-    <div class="inline_profile_picture {{#if sender_is_guest}} guest-avatar{{/if}}">
++    <div class="inline_profile_picture {{#if sender_is_guest}} guest-avatar{{/if}} {{#if sender_is_deactivated}} deactivated {{/if}}">
+         <img loading="lazy" src="{{small_avatar_url}}" alt="" class="no-drag"/>
++        {{#if sender_is_deactivated}}
++            <i class="fa fa-ban deactivated-user-icon"></i>
++        {{/if}}
+     </div>
+ </div>
+ {{~! remove whitespace ~}}
+diff --git a/web/templates/pm_list_item.hbs b/web/templates/pm_list_item.hbs
+index 2973a72ebc..e6424dd659 100644
+--- a/web/templates/pm_list_item.hbs
++++ b/web/templates/pm_list_item.hbs
+@@ -4,8 +4,12 @@
+         {{#if is_group}}
+         <span class="conversation-partners-icon zulip-icon zulip-icon-dm-groups-3"></span>
+         {{else}}
++        {{#if is_deactivated}}
++        <span class="conversation-partners-icon fa fa-ban {{user_circle_class}} user_circle"></span>
++        {{else}}
+         <span class="conversation-partners-icon zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
+         {{/if}}
++        {{/if}}
+ 
+         <a href="{{url}}" class="conversation-partners">
+             <span class="conversation-partners-list">{{recipients}}</span>
+diff --git a/web/templates/popovers/user_card/user_card_popover.hbs b/web/templates/popovers/user_card/user_card_popover.hbs
+index 251dab12a0..f80a6218ae 100644
+--- a/web/templates/popovers/user_card/user_card_popover.hbs
++++ b/web/templates/popovers/user_card/user_card_popover.hbs
+@@ -1,10 +1,13 @@
+ <div class="popover-menu user-card-popover-actions no-auto-hide-right-sidebar-overlay" id="user_card_popover" data-simplebar data-simplebar-tab-index="-1">
+     <div class="popover-menu-user-header">
+-        <div class="popover-menu-user-avatar-container">
++        <div class="popover-menu-user-avatar-container {{#if (not is_active)}}deactivated{{/if}}">
+             <img class="popover-menu-user-avatar{{#if user_is_guest}} guest-avatar{{/if}}" src="{{user_avatar}}" />
+             {{#if (and is_active (not is_bot))}}
+                 <div class="popover-menu-user-presence user-circle zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} hidden-for-spectators" data-presence-indicator-user-id="{{user_id}}"></div>
+             {{/if}}
++            {{#if (not is_active)}}
++                <span class="popover-menu-user-presence conversation-partners-icon fa fa-ban fa-lg deactivated-user-icon user_circle"></span>
++            {{/if}}
+         </div>
+         <div class="popover-menu-user-info">
+             <div class="popover-menu-user-full-name text-select" data-tippy-content="{{user_full_name}}">
+diff --git a/web/templates/search_user_pill.hbs b/web/templates/search_user_pill.hbs
+index 8134da9dae..904ea71cf0 100644
+--- a/web/templates/search_user_pill.hbs
++++ b/web/templates/search_user_pill.hbs
+@@ -6,10 +6,12 @@
+     {{#each users}}
+         <div class="pill{{#if deactivated}} deactivated-pill{{/if}}" data-user-id="{{this.user_id}}">
+             <img class="pill-image" src="{{this.img_src}}" />
++            {{#if deactivated}}
++            <span class="fa fa-ban slashed-circle-icon"></span>
++            {{/if}}
+             <span class="pill-label">
+                 <span class="pill-value">{{ this.full_name }}</span>
+                 {{~#if this.should_add_guest_user_indicator}}&nbsp;<i>({{t 'guest'}})</i>{{~/if~}}
+-                {{~#if deactivated}}&nbsp;({{t 'deactivated'}}){{~/if~}}
+                 {{~#if this.status_emoji_info~}}
+                     {{~> status_emoji this.status_emoji_info~}}
+                 {{~/if~}}

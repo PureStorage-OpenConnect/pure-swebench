@@ -1,0 +1,336 @@
+AGENT PATCH:
+diff --git a/web/src/buddy_data.ts b/web/src/buddy_data.ts
+index 2566566..d8c1da0 100644
+--- a/web/src/buddy_data.ts
++++ b/web/src/buddy_data.ts
+@@ -51,7 +51,10 @@ export function set_is_searching_users(val: boolean): void {
+     is_searching_users = val;
+ }
+ 
+-export function get_user_circle_class(user_id: number): string {
++export function get_user_circle_class(user_id: number, is_deactivated = false): string {
++    if (is_deactivated) {
++        return "user-circle-deactivated";
++    }
+     const status = presence.get_status(user_id);
+ 
+     switch (status) {
+@@ -204,7 +207,8 @@ export type BuddyUserInfo = {
+ };
+ 
+ export function info_for(user_id: number): BuddyUserInfo {
+-    const user_circle_class = get_user_circle_class(user_id);
++    const is_deactivated = !people.is_person_active(user_id);
++    const user_circle_class = get_user_circle_class(user_id, is_deactivated);
+     const person = people.get_by_user_id(user_id);
+ 
+     const status_emoji_info = user_status.get_status_emoji(user_id);
+@@ -381,8 +385,10 @@ function filter_user_ids(user_filter_text: string, user_ids: number[]): number[]
+             return false;
+         }
+ 
+-        if (!people.is_person_active(user_id)) {
+-            // Deactivated users are hidden from the right sidebar entirely.
++        if (!people.is_person_active(user_id) && !conversation_participants.has(user_id)) {
++            // Deactivated users are hidden from the right sidebar entirely,
++            // except when they are participants in the currently viewed conversation
++            // (e.g., a deactivated user in a DM conversation being viewed).
+             return false;
+         }
+ 
+diff --git a/web/src/buddy_list.ts b/web/src/buddy_list.ts
+index 023d0f2..79fa39b 100644
+--- a/web/src/buddy_list.ts
++++ b/web/src/buddy_list.ts
+@@ -49,11 +49,13 @@ function get_total_human_subscriber_count(
+     } else if (pm_ids_set.size > 0) {
+         // The current user is only in the provided recipients list
+         // for direct message conversations with oneself.
++        // Include deactivated users in DM counts since they appear in the buddy list
++        // when they are participants in the DM conversation being viewed.
+         const all_recipient_user_ids_set = pm_ids_set.union(new Set([current_user.user_id]));
+ 
+         let human_user_count = 0;
+         for (const pm_id of all_recipient_user_ids_set) {
+-            if (!people.is_valid_bot_user(pm_id) && people.is_person_active(pm_id)) {
++            if (!people.is_valid_bot_user(pm_id)) {
+                 human_user_count += 1;
+             }
+         }
+@@ -940,6 +942,15 @@ export class BuddyList extends BuddyListConf {
+         for (const user of users) {
+             const user_id = user.user_id;
+ 
++            // For deactivated users who are not conversation participants,
++            // remove them from the list (if present) and don't re-add.
++            // Deactivated users only appear when they're participants in
++            // the DM conversation currently being viewed.
++            if (!people.is_person_active(user_id) && !all_participant_ids.has(user_id)) {
++                this.maybe_remove_user_id({user_id});
++                continue;
++            }
++
+             this.maybe_remove_user_id({user_id});
+ 
+             const new_pos_in_all_users = this.find_position({
+diff --git a/web/src/user_events.ts b/web/src/user_events.ts
+index 62f9c25..5d99b47 100644
+--- a/web/src/user_events.ts
++++ b/web/src/user_events.ts
+@@ -217,8 +217,12 @@ export const update_person = function update(person: UserUpdate): void {
+             stream_events.remove_deactivated_user_from_all_streams(person.user_id);
+             user_group_edit.remove_deactivated_user_from_all_groups(person.user_id);
+             settings_users.update_view_on_deactivate(person.user_id);
+-            buddy_list.maybe_remove_user_id({user_id: person.user_id});
+         }
++        // Update the user's row position in the buddy list on both
++        // deactivation and reactivation. insert_or_move handles the
++        // logic of whether the user should be visible (e.g., deactivated
++        // users appear only as DM conversation participants).
++        buddy_list.insert_or_move([person.user_id]);
+         settings_account.maybe_update_deactivate_account_button();
+         if (people.is_valid_bot_user(person.user_id)) {
+             settings_users.update_bot_data(person.user_id);
+diff --git a/web/styles/user_circles.css b/web/styles/user_circles.css
+index 8711d4d..5afd54f 100644
+--- a/web/styles/user_circles.css
++++ b/web/styles/user_circles.css
+@@ -9,3 +9,7 @@
+ .user-circle-offline {
+     color: var(--color-user-circle-offline);
+ }
++
++.user-circle-deactivated {
++    color: var(--color-user-circle-deactivated);
++}
+diff --git a/web/templates/presence_row.hbs b/web/templates/presence_row.hbs
+index ba309d4..a781372 100644
+--- a/web/templates/presence_row.hbs
++++ b/web/templates/presence_row.hbs
+@@ -1,7 +1,11 @@
+ <li data-user-id="{{user_id}}" data-name="{{name}}" class="user_sidebar_entry {{#if user_list_style.WITH_AVATAR}}with_avatar{{/if}} {{#if has_status_text}}with_status{{/if}} {{#if is_current_user}}user_sidebar_entry_me {{/if}} narrow-filter {{#if faded}} user-fade {{/if}}">
+     <div class="selectable_sidebar_block">
+         {{#if user_list_style.WITH_STATUS}}
+-            <span class="zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
++            {{#if (eq user_circle_class "user-circle-deactivated")}}
++                <span class="fa fa-ban {{user_circle_class}} deactivated-user-icon user-circle"></span>
++            {{else}}
++                <span class="zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
++            {{/if}}
+             <a class="user-presence-link" href="{{href}}">
+                 <div class="user-name-and-status-wrapper">
+                     <div class="user-name-and-status-emoji">
+@@ -14,7 +18,11 @@
+         {{else if user_list_style.WITH_AVATAR}}
+             <div class="user-profile-picture avatar-preload-background">
+                 <img loading="lazy" src="{{profile_picture}}"/>
+-                <span class="zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
++                {{#if (eq user_circle_class "user-circle-deactivated")}}
++                    <span class="fa fa-ban {{user_circle_class}} deactivated-user-icon user-circle"></span>
++                {{else}}
++                    <span class="zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
++                {{/if}}
+             </div>
+             <a class="user-presence-link" href="{{href}}">
+                 <div class="user-name-and-status-wrapper">
+@@ -26,7 +34,11 @@
+                 </div>
+             </a>
+         {{else}}
+-            <span class="zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
++            {{#if (eq user_circle_class "user-circle-deactivated")}}
++                <span class="fa fa-ban {{user_circle_class}} deactivated-user-icon user-circle"></span>
++            {{else}}
++                <span class="zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
++            {{/if}}
+             <a class="user-presence-link" href="{{href}}">
+                 <div class="user-name-and-status-emoji">
+                     {{> user_full_name .}}
+diff --git a/web/tests/buddy_data.test.cjs b/web/tests/buddy_data.test.cjs
+index 8d72568..257626a 100644
+--- a/web/tests/buddy_data.test.cjs
++++ b/web/tests/buddy_data.test.cjs
+@@ -175,6 +175,20 @@ test("user_circle, level", ({override}) => {
+     set_presence(fred.user_id, undefined);
+     assert.equal(buddy_data.get_user_circle_class(fred.user_id), "user-circle-offline");
+     assert.equal(buddy_data.level(fred.user_id), 3);
++
++    // Deactivated user always gets user-circle-deactivated regardless of presence.
++    assert.equal(
++        buddy_data.get_user_circle_class(selma.user_id, true),
++        "user-circle-deactivated",
++    );
++    set_presence(selma.user_id, "active");
++    assert.equal(
++        buddy_data.get_user_circle_class(selma.user_id, true),
++        "user-circle-deactivated",
++    );
++    // Deactivated user still has correct sort level (3 for offline/no presence).
++    set_presence(selma.user_id, undefined);
++    assert.equal(buddy_data.level(selma.user_id), 3);
+ });
+ 
+ test("title_data", ({override}) => {
+@@ -261,7 +275,7 @@ test("title_data", ({override}) => {
+     );
+ });
+ 
+-test("filters deactivated users", () => {
++test("filters deactivated users", ({override_rewire}) => {
+     add_canned_users();
+ 
+     set_presence(selma.user_id, "active");
+@@ -272,7 +286,7 @@ test("filters deactivated users", () => {
+     assert.deepEqual(user_ids, [selma.user_id]);
+     assert.ok(buddy_data.matches_filter("selm", selma.user_id));
+ 
+-    // Deactivated users are excluded.
++    // Deactivated users are excluded from the general list.
+     people.deactivate(selma);
+ 
+     user_ids = buddy_data.get_filtered_and_sorted_user_ids("selm");
+@@ -281,6 +295,14 @@ test("filters deactivated users", () => {
+     user_ids = buddy_data.get_filtered_and_sorted_user_ids();
+     assert.equal(user_ids.includes(selma.user_id), false);
+     assert.ok(!buddy_data.matches_filter("selm", selma.user_id));
++
++    // But deactivated users ARE included if they are conversation participants
++    // (e.g., in a DM conversation being viewed).
++    override_rewire(buddy_data, "get_conversation_participants_callback", () => {
++        return () => new Set([selma.user_id]);
++    });
++    user_ids = buddy_data.get_filtered_and_sorted_user_ids();
++    assert.ok(user_ids.includes(selma.user_id), "Deactivated participant should appear");
+ });
+ 
+ test("muted users excluded from search", () => {
+@@ -684,3 +706,24 @@ test("unknown user id in presence", () => {
+     // it's meant to be ignored until we know about the user.
+     assert.equal(user_ids.includes(999), false);
+ });
++
++test("deactivated user gets user-circle-deactivated", ({override}) => {
++    people.add_active_user(alice);
++    set_presence(alice.user_id, "active");
++    override(user_settings, "user_list_style", 2);
++
++    // Active user gets normal presence circle.
++    let items = buddy_data.get_items_for_users([alice.user_id]);
++    assert.equal(items[0].user_circle_class, "user-circle-active");
++
++    // Deactivating the user changes the circle class to deactivated,
++    // regardless of their presence status.
++    people.deactivate(alice);
++    items = buddy_data.get_items_for_users([alice.user_id]);
++    assert.equal(items[0].user_circle_class, "user-circle-deactivated");
++
++    // Even if the deactivated user's presence is still "active".
++    set_presence(alice.user_id, "active");
++    items = buddy_data.get_items_for_users([alice.user_id]);
++    assert.equal(items[0].user_circle_class, "user-circle-deactivated");
++});
+diff --git a/web/tests/user_events.test.cjs b/web/tests/user_events.test.cjs
+index ae2dd95..7f827c0 100644
+--- a/web/tests/user_events.test.cjs
++++ b/web/tests/user_events.test.cjs
+@@ -29,6 +29,16 @@ const stream_events = mock_esm("../src/stream_events");
+ mock_esm("../src/activity_ui", {
+     redraw() {},
+ });
++const buddy_list = mock_esm("../src/buddy_list", {
++    buddy_list: {
++        insert_or_move() {},
++    },
++});
++let buddy_list_insert_or_move_called = false;
++buddy_list.buddy_list.insert_or_move = (user_ids) => {
++    buddy_list_insert_or_move_called = true;
++    return user_ids;
++};
+ mock_esm("../src/compose_state", {
+     update_email() {},
+ });
+@@ -278,12 +288,18 @@ run_test("updates", ({override}) => {
+         assert.equal(user_id, isaac.user_id);
+         user_removed_from_streams = true;
+     };
++    buddy_list_insert_or_move_called = false;
+     user_events.update_person({user_id: isaac.user_id, is_active: false});
+     assert.ok(!people.is_person_active(isaac.user_id));
+     assert.ok(user_removed_from_streams);
++    // On deactivation, insert_or_move is called (not maybe_remove_user_id).
++    assert.ok(buddy_list_insert_or_move_called, "insert_or_move should be called on deactivation");
+ 
++    buddy_list_insert_or_move_called = false;
+     user_events.update_person({user_id: isaac.user_id, is_active: true});
+     assert.ok(people.is_person_active(isaac.user_id));
++    // On reactivation, insert_or_move is also called.
++    assert.ok(buddy_list_insert_or_move_called, "insert_or_move should be called on reactivation");
+ 
+     stream_events.remove_deactivated_user_from_all_streams = noop;
+ 
+
+
+STRIPPED AGENT TEST EDITS:
+reset test/runner files (9 pathspecs) -> base
+
+$ bash "${ZBENCH_SCRIPTS:?export zbench-tasks/scripts dir}"/zbench_verify.sh node web/tests/buddy_data.test.cjs web/tests/user_events.test.cjs web/tests/buddy_list.test.cjs
+(rc=1)
+Using /srv/zulip-py3-venv
+=== zbench node file: web/tests/buddy_data.test.cjs ===
+running test buddy_data
+        test: user_circle, level
+        test: title_data
+        test: filters deactivated users
+--------------------------------------------------
+test failed: /srv/zulip/web/tests/buddy_data.test.cjs > filters deactivated users
+
+Starting node tests...
+
+** Tests failed, PLEASE FIX! **
+
+=== zbench node file: web/tests/user_events.test.cjs ===
+running test user_events
+        test: updates
+Starting node tests...
+
+[32mTest(s) passed. SUCCESS![0m
+=== zbench node file: web/tests/buddy_list.test.cjs ===
+running test buddy_list
+        test: basics
+        test: split list
+        test: find_li
+        test: fill_screen_with_content early break on big list
+        test: big_list
+        test: force_render
+        test: find_li w/force_render
+        test: find_li w/bad key
+        test: scrolling
+Starting node tests...
+
+[32mTest(s) passed. SUCCESS![0m
+
+Browserslist: browsers data (caniuse-lite) is 20 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ReferenceError: conversation_participants is not defined
+    at filter (/srv/zulip/web/src/buddy_data.ts:388:51)
+    at Array.filter (<anonymous>)
+    at filter_user_ids (/srv/zulip/web/src/buddy_data.ts:372:25)
+    at get_filtered_user_id_list (/srv/zulip/web/src/buddy_data.ts:455:12)
+    at Proxy.get_filtered_and_sorted_user_ids (/srv/zulip/web/src/buddy_data.ts:470:16)
+    at /srv/zulip/web/tests/buddy_data.test.cjs:285:27
+    at /srv/zulip/web/tests/buddy_data.test.cjs:131:9
+    at /srv/zulip/web/tests/lib/test.cjs:37:19
+    at Object.exports.with_overrides (/srv/zulip/web/tests/lib/namespace.cjs:392:15)
+    at execute_test (/srv/zulip/web/tests/lib/test.cjs:36:25)
+    at /srv/zulip/web/tests/lib/test.cjs:54:30
+    at run_one_module (/srv/zulip/web/tests/lib/index.cjs:96:15)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at /srv/zulip/web/tests/lib/index.cjs:135:13
+Browserslist: browsers data (caniuse-lite) is 20 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: browsers data (caniuse-lite) is 20 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme

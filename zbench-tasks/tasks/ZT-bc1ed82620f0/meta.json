@@ -1,0 +1,88 @@
+{
+  "task_id": "ZT-bc1ed82620f0",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "rate_limiter: Block IPv6 by /64 instead of per-single-IP.",
+  "type": "other",
+  "lang": "py",
+  "issue": 21544,
+  "fix_commit": "bc1ed82620f008c2784372717926f16b31ca7fb1",
+  "base_commit": "5fa027a577b60b4ecb33578765780ebea1f604ff",
+  "env_fingerprint": "b9fdf1bdb1ee",
+  "fail_to_pass": [
+    "zerver.tests.test_rate_limiter.RateLimitedObjectsTest.test_ip_bucket_key"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 22,
+    "files": 2,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "RateLimitedIPAddr gains an optional keyword parameter `ipv6_network_prefix: int = 64` that selects the IPv6 subnet prefix length used for rate-limit bucketing (only /64 is used in production, but the parameter must accept other prefixes such as 56 and 48).",
+    "For an IPv6 client address, the rate-limit bucket is the containing network at the configured prefix, not the individual address: two IPv6 addresses within the same /N network must map to the same bucket key, and addresses in different /N networks must map to different keys.",
+    "The bucket-key format is unchanged: `RateLimitedIPAddr:<{addr}>:{domain}`, where the angle-bracketed portion is the full address for IPv4 and the network for IPv6.",
+    "The IPv6 network in the key is rendered in canonical compressed CIDR form per RFC 5952 as produced by standard IP formatting (leading zeros omitted, `::` compression), e.g. address 2001:0db8::ce1:12:8a2e:0370 at prefix 64 yields `2001:db8::/64`.",
+    "IPv4 addresses keep their existing per-address bucketing and key format, e.g. `RateLimitedIPAddr:<192.168.0.123>:api_by_ip`.",
+    "IPv6 addresses must be accepted for the Tornado in-memory rate-limiting path identically to IPv4: backend selection (Tornado in-memory vs Redis) depends only on the domain setting, not on address family."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 590,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "bedo",
+    "email": "bedokhaled66@gmail.com",
+    "date": "2025-09-12"
+  },
+  "contamination": {
+    "fix_public_at": "2025-09-12",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2022-03-24T19:49:13Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/bc1ed82620f008c2784372717926f16b31ca7fb1",
+    "issue_url": "https://github.com/zulip/zulip/issues/21544"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-bc1ed82620f0",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_ip_bucket_key"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 80.0
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

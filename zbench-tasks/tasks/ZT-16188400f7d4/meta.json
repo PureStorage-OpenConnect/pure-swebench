@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-16188400f7d4",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "password: Add password limit inidcator to form.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 27922,
+  "fix_commit": "16188400f7d41a30d82d1867f911fb6cd160b40d",
+  "base_commit": "4362c8d3c96fbbdb273e84871613faa814574f04",
+  "env_fingerprint": "4bc3ab154e5a",
+  "fail_to_pass": [
+    "web/tests/password.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 27,
+    "files": 3,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The change-password input element gains a new HTML data attribute `data-max-length`, populated with the realm's maximum allowed password length (alongside the existing `data-min-length` and `data-min-guesses` attributes).",
+    "`password_quality(password, $bar, $password_field)` (existing public function) must read the maximum length from the field's `data-max-length` attribute and return false for any password longer than that limit, styling the strength bar with the existing `bar-danger` class in that case.",
+    "`password_warning(password, $password_field)` (existing public function) must, for a password exceeding the field's `data-max-length`, return the user-facing message: 'Maximum password length: {max} characters.' \u2014 exact wording, with the configured limit interpolated and a trailing period, passed through the standard translation mechanism."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1381,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Maneesh Shukla",
+    "email": "shuklamaneesh24@gmail.com",
+    "date": "2025-01-13"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-13",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-11-28T01:15:22Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/16188400f7d41a30d82d1867f911fb6cd160b40d",
+    "issue_url": "https://github.com/zulip/zulip/issues/27922"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-16188400f7d4",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 63.5
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

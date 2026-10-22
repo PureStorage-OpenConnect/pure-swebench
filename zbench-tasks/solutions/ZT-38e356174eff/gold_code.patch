@@ -1,0 +1,132 @@
+diff --git a/zerver/actions/message_send.py b/zerver/actions/message_send.py
+index da701d8d2f..416b16a807 100644
+--- a/zerver/actions/message_send.py
++++ b/zerver/actions/message_send.py
+@@ -93,10 +93,10 @@ from zerver.lib.user_groups import (
+ from zerver.lib.user_message import UserMessageLite, bulk_insert_ums
+ from zerver.lib.users import (
+     check_can_access_user,
+-    get_inaccessible_user_ids,
+     get_subscribers_of_target_user_subscriptions,
+     get_user_ids_who_can_access_user,
+     get_users_involved_in_dms_with_target_users,
++    has_inaccessible_users,
+     user_access_restricted_in_realm,
+ )
+ from zerver.lib.validator import check_widget_content
+@@ -1670,12 +1670,10 @@ def check_can_send_direct_message(
+ 
+ 
+ def check_sender_can_access_recipients(
+-    realm: Realm, sender: UserProfile, user_profiles: Sequence[UserProfile]
++    sender: UserProfile, user_profiles: Sequence[UserProfile]
+ ) -> None:
+     recipient_user_ids = [user.id for user in user_profiles]
+-    inaccessible_recipients = get_inaccessible_user_ids(recipient_user_ids, sender)
+-
+-    if inaccessible_recipients:
++    if has_inaccessible_users(recipient_user_ids, sender):
+         raise JsonableError(_("You do not have permission to access some of the recipients."))
+ 
+ 
+@@ -1841,7 +1839,7 @@ def check_message(
+             "JabberMirror",
+         ]
+ 
+-        check_sender_can_access_recipients(realm, sender, user_profiles)
++        check_sender_can_access_recipients(sender, user_profiles)
+ 
+         recipients_for_user_creation_events = get_recipients_for_user_creation_events(
+             realm, sender, user_profiles
+diff --git a/zerver/lib/users.py b/zerver/lib/users.py
+index edeb4ba645..1d66f615b5 100644
+--- a/zerver/lib/users.py
++++ b/zerver/lib/users.py
+@@ -9,7 +9,7 @@ from typing import Any, TypedDict
+ 
+ from django.conf import settings
+ from django.core.exceptions import ValidationError
+-from django.db.models import Q, QuerySet
++from django.db.models import Exists, OuterRef, Q, QuerySet
+ from django.db.models.functions import Upper
+ from django.utils.translation import gettext as _
+ from django_otp.middleware import is_verified
+@@ -779,6 +779,41 @@ def check_can_access_user(
+     ).exists()
+ 
+ 
++def get_inaccessible_users_queryset(
++    target_user_ids: list[int], acting_user: UserProfile
++) -> QuerySet[UserProfile]:
++    """
++    Fetch human users who have no subscription to a recipient
++    the acting_user is also subscribed to.
++    """
++    acting_user_recipient_ids = Subscription.objects.filter(
++        user_profile=acting_user,
++        active=True,
++        recipient__type__in=[Recipient.STREAM, Recipient.DIRECT_MESSAGE_GROUP],
++    ).values("recipient_id")
++
++    # We fetch all inaccessible users without filtering
++    # by is_user_active.
++    common_subscriptions = Subscription.objects.filter(
++        recipient_id__in=acting_user_recipient_ids,
++        user_profile_id=OuterRef("pk"),
++        active=True,
++    )
++    # All users can access all the bots, so we exclude them.
++    target_human_users = UserProfile.objects.filter(id__in=target_user_ids, is_bot=False)
++    return target_human_users.exclude(Exists(common_subscriptions))
++
++
++def has_inaccessible_users(target_user_ids: list[int], acting_user: UserProfile) -> bool:
++    if len(target_user_ids) == 1 and target_user_ids[0] == acting_user.id:
++        return False
++
++    if check_user_can_access_all_users(acting_user):
++        return False
++
++    return get_inaccessible_users_queryset(target_user_ids, acting_user).exists()
++
++
+ def get_inaccessible_user_ids(
+     target_user_ids: list[int], acting_user: UserProfile | None
+ ) -> set[int]:
+@@ -787,34 +822,10 @@ def get_inaccessible_user_ids(
+ 
+     assert acting_user is not None
+ 
+-    # All users can access all the bots, so we just exclude them.
+-    target_human_user_ids = UserProfile.objects.filter(
+-        id__in=target_user_ids, is_bot=False
+-    ).values_list("id", flat=True)
+-
+-    if not target_human_user_ids:
+-        return set()
+-
+-    subscribed_recipient_ids = Subscription.objects.filter(
+-        user_profile=acting_user,
+-        active=True,
+-        recipient__type__in=[Recipient.STREAM, Recipient.DIRECT_MESSAGE_GROUP],
+-    ).values_list("recipient_id", flat=True)
+-
+-    common_subscription_user_ids = (
+-        Subscription.objects.filter(
+-            recipient_id__in=subscribed_recipient_ids,
+-            user_profile_id__in=target_human_user_ids,
+-            active=True,
+-            is_user_active=True,
+-        )
+-        .distinct("user_profile_id")
+-        .values_list("user_profile_id", flat=True)
++    return set(
++        get_inaccessible_users_queryset(target_user_ids, acting_user).values_list("id", flat=True)
+     )
+ 
+-    possible_inaccessible_user_ids = set(target_human_user_ids) - set(common_subscription_user_ids)
+-    return possible_inaccessible_user_ids
+-
+ 
+ def get_user_ids_who_can_access_user(target_user: UserProfile) -> list[int]:
+     # We assume that caller only needs active users here, since

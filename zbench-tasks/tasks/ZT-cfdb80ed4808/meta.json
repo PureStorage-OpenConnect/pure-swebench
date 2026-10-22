@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-cfdb80ed4808",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The composebox_typeahead test stubs the internal helper typeahead_helper.render_typeahead_item and asserts with deepEqual that content_highlighter_html calls it with exactly {is_default_language: false, primary: 'py'}. This pins (a) the invented flag name `is_default_language` on an internal renderer's argument object, and (b) the implementation choice to always pass the flag explicitly even when false rather than omitting it or styling the default language through any other mechanism (separate template branch, class computed in the template, a different arg name like `is_default`). A ticket would legitimately specify the user-visible behavior \u2014 'the realm's default code-block language appears first in the syntax typeahead and is visually distinguished; a (default) / (no highlighting) status is shown' \u2014 but no reasonable spec would dictate the call signature of an internal rendering helper or that a false-valued flag must be present in its args object. A correct alternative implementation of the same product behavior would fail this assertion. The other test changes are closer to specifiable (sort_languages pinning the default language first uses the pre-existing realm_default_code_block_language setting and the existing sort_languages function; the realm_playground ordering assertions bind to new special-language entries text/quote/spoiler/math with specific priorities and display strings like 'Text only (text, text)', which a brief could enumerate), but the internal-stub signature coupling cannot be cured by a brief, so the task is dropped.",
+  "summary": "typeahead: Replace code block language hint text with more clear options",
+  "lang": "web",
+  "issue": 33682,
+  "fix_commit": "cfdb80ed48083c96e851ad6428f27de92be6d080",
+  "base_commit": "1dcda2ba9d6ed12b384ec9ab623430e418679d2f",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/cfdb80ed48083c96e851ad6428f27de92be6d080",
+    "issue_url": "https://github.com/zulip/zulip/issues/33682"
+  }
+}

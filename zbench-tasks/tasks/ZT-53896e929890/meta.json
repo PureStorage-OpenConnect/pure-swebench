@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-53896e929890",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "f2p_unenumerable",
+  "reason": "no extractable test targets",
+  "summary": "markdown: Fix autolinking of URLs preceded by multibyte characters.",
+  "lang": "py",
+  "issue": 7740,
+  "fix_commit": "53896e9298907e9b5fd7bd912dc159d22e6ef4bf",
+  "base_commit": "9e5d927b2e1200607ce09eaceb2d1fa79957d10e",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/53896e9298907e9b5fd7bd912dc159d22e6ef4bf",
+    "issue_url": "https://github.com/zulip/zulip/issues/7740"
+  }
+}

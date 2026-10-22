@@ -1,0 +1,56 @@
+diff --git a/zerver/lib/integrations.py b/zerver/lib/integrations.py
+index ec8e7d7ae7..2079de5517 100644
+--- a/zerver/lib/integrations.py
++++ b/zerver/lib/integrations.py
+@@ -677,7 +677,14 @@ INCOMING_WEBHOOK_INTEGRATIONS: list[IncomingWebhookIntegration] = [
+             )
+         ],
+         display_name="GitLab",
+-        url_options=[WebhookUrlOption.build_preset_config(PresetUrlOption.BRANCHES)],
++        url_options=[
++            WebhookUrlOption.build_preset_config(PresetUrlOption.BRANCHES),
++            WebhookUrlOption(
++                name="ignore_private_projects",
++                label="Exclude notifications from private projects",
++                validator=check_bool,
++            ),
++        ],
+     ),
+     IncomingWebhookIntegration(
+         "gocd",
+diff --git a/zerver/webhooks/github/view.py b/zerver/webhooks/github/view.py
+index d4f3ba50ea..ad9b8ac417 100644
+--- a/zerver/webhooks/github/view.py
++++ b/zerver/webhooks/github/view.py
+@@ -1122,7 +1122,7 @@ def api_github_webhook(
+     """
+     header_event = get_event_header(request, "X-GitHub-Event", "GitHub")
+ 
+-    # Check if the repository is private and skip processing if ignore_private_repositories is True
++    # Ignore events from private repositories if the URL option is set
+     if (
+         "repository" in payload
+         and payload["repository"]["private"].tame(check_bool)
+diff --git a/zerver/webhooks/gitlab/view.py b/zerver/webhooks/gitlab/view.py
+index 852789bddd..c9574f675e 100644
+--- a/zerver/webhooks/gitlab/view.py
++++ b/zerver/webhooks/gitlab/view.py
+@@ -589,8 +589,18 @@ def api_gitlab_webhook(
+     branches: str | None = None,
+     use_merge_request_title: Json[bool] = True,
+     user_specified_topic: OptionalUserSpecifiedTopicStr = None,
++    ignore_private_projects: Json[bool] = False,
+ ) -> HttpResponse:
+     event = get_event(request, payload, branches)
++
++    # Ignore events from private projects if the URL option is set
++    if (
++        "project" in payload
++        and payload["project"]["visibility_level"].tame(check_int) == 0
++        and ignore_private_projects
++    ):
++        return json_success(request)
++
+     if event is not None:
+         event_body_function = get_body_based_on_event(event)
+         body = event_body_function(

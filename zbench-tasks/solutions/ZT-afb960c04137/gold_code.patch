@@ -1,0 +1,127 @@
+diff --git a/web/src/markdown.ts b/web/src/markdown.ts
+index a76382e0a9..1363ac297d 100644
+--- a/web/src/markdown.ts
++++ b/web/src/markdown.ts
+@@ -632,10 +632,11 @@ function handleStreamTopic({
+         return undefined;
+     }
+     const href = stream_topic_hash(stream.stream_id, topic);
++    const topic_display_name_html = _.escape(util.get_final_topic_display_name(topic));
+     return render_topic_link({
+         channel_id: stream.stream_id,
+         channel_name: stream.name,
+-        topic_display_name: util.get_final_topic_display_name(topic),
++        topic_display_name_html,
+         is_empty_string_topic: topic === "",
+         href,
+     });
+@@ -664,9 +665,10 @@ function handleStreamTopicMessage({
+         return undefined;
+     }
+     const href = stream_topic_hash(stream.stream_id, topic) + "/near/" + message_id;
++    const topic_display_name_html = _.escape(util.get_final_topic_display_name(topic));
+     return render_channel_message_link({
+         channel_name: stream.name,
+-        topic_display_name: util.get_final_topic_display_name(topic),
++        topic_display_name_html,
+         is_empty_string_topic: topic === "",
+         href,
+     });
+diff --git a/web/src/rendered_markdown.ts b/web/src/rendered_markdown.ts
+index ccd30da401..d8f407bdff 100644
+--- a/web/src/rendered_markdown.ts
++++ b/web/src/rendered_markdown.ts
+@@ -1,6 +1,7 @@
+ import ClipboardJS from "clipboard";
+ import {isValid, parseISO} from "date-fns";
+ import $ from "jquery";
++import _ from "lodash";
+ import assert from "minimalistic-assert";
+ 
+ import render_channel_message_link from "../templates/channel_message_link.hbs";
+@@ -11,6 +12,7 @@ import render_markdown_timestamp from "../templates/markdown_timestamp.hbs";
+ import render_mention_content_wrapper from "../templates/mention_content_wrapper.hbs";
+ import render_topic_link from "../templates/topic_link.hbs";
+ 
++import * as alert_words from "./alert_words.ts";
+ import * as blueslip from "./blueslip.ts";
+ import {show_copied_confirmation} from "./copied_tooltip.ts";
+ import * as hash_util from "./hash_util.ts";
+@@ -77,12 +79,17 @@ export function update_topic_or_message_link_element(
+     stream_info: StreamInfo,
+     topic_name: string,
+     narrow_url: string,
++    message?: Message,
+ ): void {
+-    const topic_display_name = util.get_final_topic_display_name(topic_name);
++    let topic_display_name = _.escape(util.get_final_topic_display_name(topic_name));
++
++    if (message?.alerted) {
++        topic_display_name = alert_words.highlight_alert_words(topic_display_name);
++    }
+ 
+     const context = {
+         channel_name: stream_info.name,
+-        topic_display_name,
++        topic_display_name_html: topic_display_name,
+         is_empty_string_topic: topic_name === "",
+         href: narrow_url,
+     };
+@@ -288,11 +295,13 @@ export const update_elements = ($content: JQuery): void => {
+             // TODO: Ideally, we should NOT skip this if only topic is highlighted,
+             // but we are doing so currently.
+             assert(channel_topic.topic_name !== undefined);
++            message ??= get_message_for_message_content($content);
+             update_topic_or_message_link_element(
+                 $(this),
+                 sub,
+                 channel_topic.topic_name,
+                 narrow_url,
++                message,
+             );
+         }
+     });
+diff --git a/web/templates/channel_message_link.hbs b/web/templates/channel_message_link.hbs
+index f4f4b27afe..74283ecd84 100644
+--- a/web/templates/channel_message_link.hbs
++++ b/web/templates/channel_message_link.hbs
+@@ -5,7 +5,7 @@
+     {{~> decorated_channel_name stream=stream inline_with_text=true show_colored_icon=false}}
+     {{~else~}}
+     #{{channel_name}}
+-    {{~/if}} &gt; <span class="empty-topic-display">{{topic_display_name}}</span> @ 💬
++    {{~/if}} &gt; <span class="empty-topic-display">{{{topic_display_name_html}}}</span> @ 💬
+     {{~!-- squash whitespace --~}}
+ </a>
+ {{~else}}
+@@ -15,7 +15,7 @@
+     {{~> decorated_channel_name stream=stream inline_with_text=true show_colored_icon=false}}
+     {{~else~}}
+     #{{channel_name}}
+-    {{~/if}} &gt; {{topic_display_name}} @ 💬
++    {{~/if}} &gt; {{{topic_display_name_html}}} @ 💬
+     {{~!-- squash whitespace --~}}
+ </a>
+ {{~/if}}
+diff --git a/web/templates/topic_link.hbs b/web/templates/topic_link.hbs
+index 9db585d8c9..16e18ede57 100644
+--- a/web/templates/topic_link.hbs
++++ b/web/templates/topic_link.hbs
+@@ -5,7 +5,7 @@
+     {{~> decorated_channel_name stream=stream inline_with_text=true show_colored_icon=false}}
+     {{~else~}}
+     #{{channel_name}}
+-    {{~/if}} &gt; <span class="empty-topic-display">{{topic_display_name}}</span>
++    {{~/if}} &gt; <span class="empty-topic-display">{{{topic_display_name_html}}}</span>
+     {{~!-- squash whitespace --~}}
+ </a>
+ {{~else}}
+@@ -15,7 +15,7 @@
+     {{~> decorated_channel_name stream=stream inline_with_text=true show_colored_icon=false}}
+     {{~else~}}
+     #{{channel_name}}
+-    {{~/if}} &gt; {{topic_display_name}}
++    {{~/if}} &gt; {{{topic_display_name_html}}}
+     {{~!-- squash whitespace --~}}
+ </a>
+ {{~/if}}

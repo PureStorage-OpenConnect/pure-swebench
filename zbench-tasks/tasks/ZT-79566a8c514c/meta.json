@@ -1,0 +1,90 @@
+{
+  "task_id": "ZT-79566a8c514c",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "stream-settings: Add permissions tab for stream settings.",
+  "type": "other",
+  "lang": "web",
+  "issue": 36523,
+  "fix_commit": "79566a8c514cb78b167f63b33130a8bd9b5f4baa",
+  "base_commit": "825880f4cd3a97b5f6ebee03394ccea0adce77c6",
+  "env_fingerprint": "d12bb386469f",
+  "fail_to_pass": [
+    "web/tests/settings_org.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/hash_util.test.cjs",
+    "web/tests/stream_edit.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 94,
+    "files": 10,
+    "hunks": 17,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "Unsaved-changes detection for a settings subsection must identify group-permission setting widgets by selecting elements matching `.pill-container.prop-element` (pill containers that are marked as property elements via the pre-existing `prop-element` class), so that pill containers which are not property elements (e.g., the channel folder widget's pill container) are excluded from save-button change tracking."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 683,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Sahil Batra",
+    "email": "sahil@zulip.com",
+    "date": "2025-11-26"
+  },
+  "contamination": {
+    "fix_public_at": "2025-11-26",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-11-07T23:10:23Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/79566a8c514cb78b167f63b33130a8bd9b5f4baa",
+    "issue_url": "https://github.com/zulip/zulip/issues/36523"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-79566a8c514c",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 125.0
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

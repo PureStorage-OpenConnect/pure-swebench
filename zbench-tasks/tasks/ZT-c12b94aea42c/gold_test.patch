@@ -1,0 +1,131 @@
+diff --git a/corporate/tests/test_activity_views.py b/corporate/tests/test_activity_views.py
+index 17ab2b52f6..ccc0f9ded0 100644
+--- a/corporate/tests/test_activity_views.py
++++ b/corporate/tests/test_activity_views.py
+@@ -6,7 +6,9 @@ from django.utils.timezone import now as timezone_now
+ 
+ from corporate.lib.activity import get_remote_server_audit_logs
+ from corporate.lib.stripe import add_months
+-from corporate.models import Customer, CustomerPlan, LicenseLedger
++from corporate.models.customers import Customer
++from corporate.models.licenses import LicenseLedger
++from corporate.models.plans import CustomerPlan
+ from zerver.lib.test_classes import ZulipTestCase
+ from zerver.models import Client, UserActivity, UserProfile
+ from zerver.models.realm_audit_logs import AuditLogEventType
+diff --git a/corporate/tests/test_remote_billing.py b/corporate/tests/test_remote_billing.py
+index 85a71f1082..46bc15de82 100644
+--- a/corporate/tests/test_remote_billing.py
++++ b/corporate/tests/test_remote_billing.py
+@@ -15,13 +15,9 @@ from corporate.lib.remote_billing_util import (
+     RemoteBillingUserDict,
+ )
+ from corporate.lib.stripe import RemoteRealmBillingSession, RemoteServerBillingSession, add_months
+-from corporate.models import (
+-    CustomerPlan,
+-    LicenseLedger,
+-    get_current_plan_by_customer,
+-    get_customer_by_remote_realm,
+-    get_customer_by_remote_server,
+-)
++from corporate.models.customers import get_customer_by_remote_realm, get_customer_by_remote_server
++from corporate.models.licenses import LicenseLedger
++from corporate.models.plans import CustomerPlan, get_current_plan_by_customer
+ from corporate.views.remote_billing_page import generate_confirmation_link_for_server_deactivation
+ from zerver.lib.exceptions import RemoteRealmServerMismatchError
+ from zerver.lib.rate_limiter import RateLimitedIPAddr
+diff --git a/corporate/tests/test_stripe.py b/corporate/tests/test_stripe.py
+index 0e6b6d84a6..7e5281b9a5 100644
+--- a/corporate/tests/test_stripe.py
++++ b/corporate/tests/test_stripe.py
+@@ -65,19 +65,16 @@ from corporate.lib.stripe import (
+     stripe_get_customer,
+     unsign_string,
+ )
+-from corporate.models import (
+-    Customer,
++from corporate.models.customers import Customer, get_customer_by_realm, get_customer_by_remote_realm
++from corporate.models.licenses import LicenseLedger
++from corporate.models.plans import (
+     CustomerPlan,
+     CustomerPlanOffer,
+-    Event,
+-    Invoice,
+-    LicenseLedger,
+-    ZulipSponsorshipRequest,
+     get_current_plan_by_customer,
+     get_current_plan_by_realm,
+-    get_customer_by_realm,
+-    get_customer_by_remote_realm,
+ )
++from corporate.models.sponsorships import ZulipSponsorshipRequest
++from corporate.models.stripe_state import Event, Invoice
+ from corporate.tests.test_remote_billing import RemoteRealmBillingTestCase, RemoteServerTestCase
+ from corporate.views.remote_billing_page import generate_confirmation_link_for_server_deactivation
+ from zerver.actions.create_realm import do_create_realm
+diff --git a/corporate/tests/test_support_views.py b/corporate/tests/test_support_views.py
+index cdf27bf2e2..44350dc322 100644
+--- a/corporate/tests/test_support_views.py
++++ b/corporate/tests/test_support_views.py
+@@ -15,16 +15,10 @@ from corporate.lib.stripe import (
+     get_configured_fixed_price_plan_offer,
+     start_of_next_billing_cycle,
+ )
+-from corporate.models import (
+-    Customer,
+-    CustomerPlan,
+-    CustomerPlanOffer,
+-    LicenseLedger,
+-    SponsoredPlanTypes,
+-    ZulipSponsorshipRequest,
+-    get_current_plan_by_customer,
+-    get_customer_by_realm,
+-)
++from corporate.models.customers import Customer, get_customer_by_realm
++from corporate.models.licenses import LicenseLedger
++from corporate.models.plans import CustomerPlan, CustomerPlanOffer, get_current_plan_by_customer
++from corporate.models.sponsorships import SponsoredPlanTypes, ZulipSponsorshipRequest
+ from zerver.actions.create_realm import do_create_realm
+ from zerver.actions.invites import do_create_multiuse_invite_link
+ from zerver.actions.realm_settings import do_change_realm_org_type, do_send_realm_reactivation_email
+diff --git a/zerver/tests/test_docs.py b/zerver/tests/test_docs.py
+index 1a35813c3c..686fc6acd7 100644
+--- a/zerver/tests/test_docs.py
++++ b/zerver/tests/test_docs.py
+@@ -10,7 +10,8 @@ from django.conf import settings
+ from django.test import override_settings
+ from django.utils.timezone import now as timezone_now
+ 
+-from corporate.models import Customer, CustomerPlan
++from corporate.models.customers import Customer
++from corporate.models.plans import CustomerPlan
+ from zerver.context_processors import get_apps_page_url
+ from zerver.lib.integrations import CATEGORIES, INTEGRATIONS, META_CATEGORY
+ from zerver.lib.test_classes import ZulipTestCase
+diff --git a/zerver/tests/test_home.py b/zerver/tests/test_home.py
+index 4553abaed6..0e81067d80 100644
+--- a/zerver/tests/test_home.py
++++ b/zerver/tests/test_home.py
+@@ -10,7 +10,8 @@ from django.conf import settings
+ from django.test import override_settings
+ from django.utils.timezone import now as timezone_now
+ 
+-from corporate.models import Customer, CustomerPlan
++from corporate.models.customers import Customer
++from corporate.models.plans import CustomerPlan
+ from version import ZULIP_VERSION
+ from zerver.actions.create_user import do_create_user
+ from zerver.actions.realm_settings import do_change_realm_plan_type, do_set_realm_property
+diff --git a/zerver/tests/test_push_notifications.py b/zerver/tests/test_push_notifications.py
+index 67810ba893..b4999c2fb9 100644
+--- a/zerver/tests/test_push_notifications.py
++++ b/zerver/tests/test_push_notifications.py
+@@ -29,7 +29,7 @@ from typing_extensions import override
+ from analytics.lib.counts import CountStat, LoggingCountStat
+ from analytics.models import InstallationCount, RealmCount, UserCount
+ from corporate.lib.stripe import RemoteRealmBillingSession
+-from corporate.models import CustomerPlan
++from corporate.models.plans import CustomerPlan
+ from version import ZULIP_VERSION
+ from zerver.actions.create_realm import do_create_realm
+ from zerver.actions.message_delete import do_delete_messages

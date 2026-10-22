@@ -1,0 +1,82 @@
+{
+  "task_id": "ZT-1db9b3d4156a",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "settings: Show privacy icons in 'Add default channels' dropdown.",
+  "type": "other",
+  "lang": "web",
+  "issue": 38202,
+  "fix_commit": "1db9b3d4156ae7bd543ca16a75c315887910dc61",
+  "base_commit": "d55e3001a167faa92719d77e2cc26619a6188312",
+  "env_fingerprint": "6ab683ab5879",
+  "fail_to_pass": [
+    "web/tests/stream_data.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 10,
+    "files": 2,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "the `stream_data` module must export a function `get_default_stream_options()` (replacing the former `get_non_default_stream_names()`) that returns the streams eligible to be added as default streams: all streams that are not already default, not private (invite_only), and not archived",
+    "each element of the array returned by `get_default_stream_options()` is an object with three fields: `name` (string, the stream's name), `unique_id` (number, the stream's stream_id), and `stream` (the full StreamSubscription object for that stream), so callers such as the default-streams settings UI can access complete stream data for each option"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 178,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "raja",
+    "email": "raja_cs24a05_063@dtu.ac.in",
+    "date": "2026-03-03"
+  },
+  "contamination": {
+    "fix_public_at": "2026-03-03",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-02-26T23:27:26Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/1db9b3d4156ae7bd543ca16a75c315887910dc61",
+    "issue_url": "https://github.com/zulip/zulip/issues/38202"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-1db9b3d4156a",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 72.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

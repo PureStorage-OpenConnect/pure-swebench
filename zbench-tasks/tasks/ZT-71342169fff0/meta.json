@@ -1,0 +1,64 @@
+{
+  "task_id": "ZT-71342169fff0",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "stream_settings: Update organization default dropdown labels.",
+  "type": "other",
+  "lang": "web",
+  "issue": 35212,
+  "fix_commit": "71342169fff0c85cbd9f66c055a1f9a28eae4d3f",
+  "base_commit": "99b97ea883aadeda365d146014b58d3fc6737b0b",
+  "env_fingerprint": "e6da6b177da5",
+  "fail_to_pass": [
+    "web/tests/compose.test.cjs",
+    "web/tests/compose_ui.test.cjs",
+    "web/tests/compose_validate.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/settings_config.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 8,
+    "files": 2,
+    "hunks": 2,
+    "f2p_count": 3
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 563,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Vector73",
+    "email": "v.shm.kunal@gmail.com",
+    "date": "2025-07-11"
+  },
+  "contamination": {
+    "fix_public_at": "2025-07-11",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-07-10T18:57:57Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/71342169fff0c85cbd9f66c055a1f9a28eae4d3f",
+    "issue_url": "https://github.com/zulip/zulip/issues/35212"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-71342169fff0",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 17.5
+    }
+  }
+}

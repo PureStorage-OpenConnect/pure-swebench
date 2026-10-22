@@ -1,0 +1,157 @@
+diff --git a/zerver/webhooks/hellosign/fixtures/signatures.json b/zerver/webhooks/dropboxsign/fixtures/signatures.json
+similarity index 76%
+rename from zerver/webhooks/hellosign/fixtures/signatures.json
+rename to zerver/webhooks/dropboxsign/fixtures/signatures.json
+index 744cb74d02..8dd8cfdd2f 100644
+--- a/zerver/webhooks/hellosign/fixtures/signatures.json
++++ b/zerver/webhooks/dropboxsign/fixtures/signatures.json
+@@ -14,12 +14,12 @@
+ 		"has_error": false,
+ 		"custom_fields": [],
+ 		"response_data": [],
+-		"signing_url": "https://www.hellosign.com/sign/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
++		"signing_url": "https://www.dropboxsign.com/sign/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+ 		"signing_redirect_url": null,
+ 		"final_copy_uri": "/v3/signature_request/final_copy/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+-		"files_url": "https://api.hellosign.com/v3/signature_request/files/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+-		"details_url": "https://www.hellosign.com/home/manage?guid=2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+-		"requester_email_address": "me@hellosign.com",
++		"files_url": "https://api.dropboxsign.com/v3/signature_request/files/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
++		"details_url": "https://www.dropboxsign.com/home/manage?guid=2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
++		"requester_email_address": "me@dropboxsign.com",
+ 		"signatures": [{
+ 			"signature_id": "78caf2a1d01cd39cea2bc1cbb340dac3",
+ 			"signer_email_address": "jack@example.com",
+@@ -42,7 +42,7 @@
+ 			"has_pin": false
+ 		}],
+ 		"cc_email_addresses": [
+-			"lawyer1@hellosign.com",
++			"lawyer1@dropboxsign.com",
+ 			"lawyer2@example.com"
+ 		]
+ 	}
+diff --git a/zerver/webhooks/hellosign/fixtures/signatures_signed_by_one_signatory.json b/zerver/webhooks/dropboxsign/fixtures/signatures_signed_by_one_signatory.json
+similarity index 70%
+rename from zerver/webhooks/hellosign/fixtures/signatures_signed_by_one_signatory.json
+rename to zerver/webhooks/dropboxsign/fixtures/signatures_signed_by_one_signatory.json
+index 17090896ad..c814020396 100644
+--- a/zerver/webhooks/hellosign/fixtures/signatures_signed_by_one_signatory.json
++++ b/zerver/webhooks/dropboxsign/fixtures/signatures_signed_by_one_signatory.json
+@@ -14,12 +14,12 @@
+ 		"has_error": false,
+ 		"custom_fields": [],
+ 		"response_data": [],
+-		"signing_url": "https://www.hellosign.com/sign/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
++		"signing_url": "https://www.dropboxsign.com/sign/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+ 		"signing_redirect_url": null,
+ 		"final_copy_uri": "/v3/signature_request/final_copy/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+-		"files_url": "https://api.hellosign.com/v3/signature_request/files/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+-		"details_url": "https://www.hellosign.com/home/manage?guid=2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+-		"requester_email_address": "me@hellosign.com",
++		"files_url": "https://api.dropboxsign.com/v3/signature_request/files/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
++		"details_url": "https://www.dropboxsign.com/home/manage?guid=2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
++		"requester_email_address": "me@dropboxsign.com",
+ 		"signatures": [{
+ 			"signature_id": "616629ed37f8588d28600be17ab5d6b7",
+ 			"signer_email_address": "jill@example.com",
+@@ -32,7 +32,7 @@
+ 			"has_pin": false
+ 		}],
+ 		"cc_email_addresses": [
+-			"lawyer1@hellosign.com",
++			"lawyer1@dropboxsign.com",
+ 			"lawyer2@example.com"
+ 		]
+ 	}
+diff --git a/zerver/webhooks/hellosign/fixtures/signatures_with_four_signatories.json b/zerver/webhooks/dropboxsign/fixtures/signatures_with_four_signatories.json
+similarity index 90%
+rename from zerver/webhooks/hellosign/fixtures/signatures_with_four_signatories.json
+rename to zerver/webhooks/dropboxsign/fixtures/signatures_with_four_signatories.json
+index b5d7380570..fe055f88f6 100644
+--- a/zerver/webhooks/hellosign/fixtures/signatures_with_four_signatories.json
++++ b/zerver/webhooks/dropboxsign/fixtures/signatures_with_four_signatories.json
+@@ -30,11 +30,11 @@
+         "response_data":[
+ 
+         ],
+-        "signing_url":"https:\/\/app.hellosign.com\/sign\/a6ce6526d1e7496c96a1cdd11276efb5c4504084",
++        "signing_url":"https:\/\/app.dropboxsign.com\/sign\/a6ce6526d1e7496c96a1cdd11276efb5c4504084",
+         "signing_redirect_url":null,
+         "final_copy_uri":"\/\/signature_request\/final_copy\/a6ce6526d1e7496c96a1cdd11276efb5c4504084",
+-        "files_url":"https:\/\/api.hellosign.com\/signature_request\/files\/a6ce6526d1e7496c96a1cdd11276efb5c4504084",
+-        "details_url":"https:\/\/app.hellosign.com\/home\/manage?guid=a6ce6526d1e7496c96a1cdd11276efb5c4504084",
++        "files_url":"https:\/\/api.dropboxsign.com\/signature_request\/files\/a6ce6526d1e7496c96a1cdd11276efb5c4504084",
++        "details_url":"https:\/\/app.dropboxsign.com\/home\/manage?guid=a6ce6526d1e7496c96a1cdd11276efb5c4504084",
+         "requester_email_address":"jerryguitarist@gmail.com",
+         "signatures":[
+             {
+diff --git a/zerver/webhooks/hellosign/fixtures/signatures_with_own_subject.json b/zerver/webhooks/dropboxsign/fixtures/signatures_with_own_subject.json
+similarity index 76%
+rename from zerver/webhooks/hellosign/fixtures/signatures_with_own_subject.json
+rename to zerver/webhooks/dropboxsign/fixtures/signatures_with_own_subject.json
+index 744cb74d02..8dd8cfdd2f 100644
+--- a/zerver/webhooks/hellosign/fixtures/signatures_with_own_subject.json
++++ b/zerver/webhooks/dropboxsign/fixtures/signatures_with_own_subject.json
+@@ -14,12 +14,12 @@
+ 		"has_error": false,
+ 		"custom_fields": [],
+ 		"response_data": [],
+-		"signing_url": "https://www.hellosign.com/sign/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
++		"signing_url": "https://www.dropboxsign.com/sign/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+ 		"signing_redirect_url": null,
+ 		"final_copy_uri": "/v3/signature_request/final_copy/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+-		"files_url": "https://api.hellosign.com/v3/signature_request/files/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+-		"details_url": "https://www.hellosign.com/home/manage?guid=2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
+-		"requester_email_address": "me@hellosign.com",
++		"files_url": "https://api.dropboxsign.com/v3/signature_request/files/2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
++		"details_url": "https://www.dropboxsign.com/home/manage?guid=2b388914e3ae3b738bd4e2ee2850c677e6dc53d2",
++		"requester_email_address": "me@dropboxsign.com",
+ 		"signatures": [{
+ 			"signature_id": "78caf2a1d01cd39cea2bc1cbb340dac3",
+ 			"signer_email_address": "jack@example.com",
+@@ -42,7 +42,7 @@
+ 			"has_pin": false
+ 		}],
+ 		"cc_email_addresses": [
+-			"lawyer1@hellosign.com",
++			"lawyer1@dropboxsign.com",
+ 			"lawyer2@example.com"
+ 		]
+ 	}
+diff --git a/zerver/webhooks/hellosign/tests.py b/zerver/webhooks/dropboxsign/tests.py
+similarity index 74%
+rename from zerver/webhooks/hellosign/tests.py
+rename to zerver/webhooks/dropboxsign/tests.py
+index a2dc79b5b1..88a53c0198 100644
+--- a/zerver/webhooks/hellosign/tests.py
++++ b/zerver/webhooks/dropboxsign/tests.py
+@@ -3,7 +3,21 @@ from typing_extensions import override
+ from zerver.lib.test_classes import WebhookTestCase
+ 
+ 
+-class HelloSignHookTests(WebhookTestCase):
++class DropboxSignHookTests(WebhookTestCase):
++    def test_legacy_urls(self) -> None:
++        expected_topic_name = "NDA with Acme Co."
++        expected_message = (
++            "The `NDA with Acme Co.` document is awaiting the signature of "
++            "Jack, and was just signed by Jill."
++        )
++
++        legacy_names = ["hellosign"]
++        for legacy_name in legacy_names:
++            self.url = self.build_webhook_url(legacy_name=legacy_name)
++            self.check_webhook(
++                "signatures", expected_topic_name, expected_message, content_type=None
++            )
++
+     def test_signatures_message(self) -> None:
+         expected_topic_name = "NDA with Acme Co."
+         expected_message = (
+@@ -52,4 +66,4 @@ class HelloSignHookTests(WebhookTestCase):
+ 
+     @override
+     def get_payload(self, fixture_name: str) -> dict[str, str]:
+-        return {"json": self.webhook_fixture_data("hellosign", fixture_name, file_type="json")}
++        return {"json": self.webhook_fixture_data("dropboxsign", fixture_name, file_type="json")}

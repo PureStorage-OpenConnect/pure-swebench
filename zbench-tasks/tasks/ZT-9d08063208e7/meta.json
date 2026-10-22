@@ -1,0 +1,89 @@
+{
+  "task_id": "ZT-9d08063208e7",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "webhooks/github: Added support for issue transferred events.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 33450,
+  "fix_commit": "9d08063208e799fe0a29eaa6645d09cbffa40bba",
+  "base_commit": "c84c76f3a1d3af5790970fdab722b89821e51daf",
+  "env_fingerprint": "3d60e43ad3a4",
+  "fail_to_pass": [
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_issue_transfer_opened_message",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_issue_transfer_transferred_message",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_membership_msg"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 34,
+    "files": 1,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "When the GitHub webhook receives an issues event with action `transferred`, the integration must post the message: \"{sender} transferred [issue #{old_issue_number} {title}]({old_issue_html_url}) to [{new_repo_full_name}/#{new_issue_number}]({new_issue_html_url}).\" \u2014 old issue number/title/URL taken from payload `issue`, new repo full name and new issue number/URL taken from payload `changes.new_repository` and `changes.new_issue`.",
+    "When the GitHub webhook receives an issues event with action `opened` whose payload contains `changes.old_issue` (an issue created by a transfer), the integration must post the message: \"[Issue #{issue_number} {title}]({issue_html_url}) was transferred from {old_repo_full_name}.\" \u2014 using the payload's `issue` fields and `changes.old_repository.full_name`, instead of the normal issue-opened message.",
+    "These two cases are exposed as distinct user-facing event types named `issues_transferred` and `issues_opened_via_transfer` in the webhook's supported-event list (usable in the URL's event-filtering parameter).",
+    "The messages go to the topic following the integration's existing convention for issue events: \"{repo name} / issue #{issue number} {issue title}\"."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1307,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Aditya Kumar Kasaudhan",
+    "email": "74228301+Aditya8840@users.noreply.github.com",
+    "date": "2025-02-21"
+  },
+  "contamination": {
+    "fix_public_at": "2025-02-21",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-02-12T23:39:48Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/9d08063208e799fe0a29eaa6645d09cbffa40bba",
+    "issue_url": "https://github.com/zulip/zulip/issues/33450"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-9d08063208e7",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_issue_transfer_opened_message",
+        "test_issue_transfer_transferred_message"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 86.9
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

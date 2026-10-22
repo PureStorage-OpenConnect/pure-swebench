@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-5910bfcaf9b4",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "This is an internal restructuring with no user-observable behavior change: the highlighting logic works the same, but the CSS class is renamed from 'active-filter' to 'top-left-active-filter' and the deselect logic is centralized into a new helper. The hidden test is tightly coupled to that internal structure rather than to an outcome: it uses override_rewire to replace 'select_top_left_corner_item', so a passing solution must export a function with that exact name plus a rewire hook, and its assertions pin the new incidental class name. A functionally equivalent implementation that kept the old class name or a different helper name would fail; conversely nothing here can fail-before/pass-after on genuine behavior. This grades naming and module internals, not behavior.",
+  "summary": "left_sidebar: Rewrite left sidebar navigation area library.",
+  "lang": "web",
+  "issue": 26686,
+  "fix_commit": "5910bfcaf9b471801fb52c2c82c69d7248998568",
+  "base_commit": "2d6426100ff02be1efd139a20737e696af693a39",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/5910bfcaf9b471801fb52c2c82c69d7248998568",
+    "issue_url": "https://github.com/zulip/zulip/issues/26686"
+  }
+}

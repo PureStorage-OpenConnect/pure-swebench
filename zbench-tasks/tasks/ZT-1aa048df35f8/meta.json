@@ -1,0 +1,62 @@
+{
+  "task_id": "ZT-1aa048df35f8",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "channel_email: Make sender configurable when generating channel email.",
+  "type": "other",
+  "lang": "web",
+  "issue": 31566,
+  "fix_commit": "1aa048df35f81d6c16aa407d5e9bca5c1c5c8df3",
+  "base_commit": "7fa8b46c5cd6172725e9c8b7752b5f4e6f246f9c",
+  "env_fingerprint": "e064f4fe4320",
+  "fail_to_pass": [
+    "web/tests/people.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/stream_edit.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 124,
+    "files": 3,
+    "hunks": 9,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 1083,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Prakhar Pratyush",
+    "email": "prakhar@zulip.com",
+    "date": "2025-02-12"
+  },
+  "contamination": {
+    "fix_public_at": "2025-02-12",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-09-09T23:11:20Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/1aa048df35f81d6c16aa407d5e9bca5c1c5c8df3",
+    "issue_url": "https://github.com/zulip/zulip/issues/31566"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-1aa048df35f8",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 16.9
+    }
+  }
+}

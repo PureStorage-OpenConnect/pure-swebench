@@ -1,0 +1,18 @@
+diff --git a/web/tests/postprocess_content.test.cjs b/web/tests/postprocess_content.test.cjs
+index 2b43c4226c..9f4dd1a6be 100644
+--- a/web/tests/postprocess_content.test.cjs
++++ b/web/tests/postprocess_content.test.cjs
+@@ -38,6 +38,13 @@ run_test("postprocess_content", () => {
+     );
+ });
+ 
++run_test("ordered_lists", () => {
++    assert.equal(
++        postprocess_content('<ol start="9"><li>Nine</li><li>Ten</li></ol>'),
++        '<ol start="9" class="counter-length-2"><li>Nine</li><li>Ten</li></ol>',
++    );
++});
++
+ run_test("message_inline_animated_image_still", ({override}) => {
+     const thumbnail_formats = [
+         {

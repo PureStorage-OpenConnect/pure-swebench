@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-118eaffd3aca",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The underlying change is a legitimate, gradable UI behavior change, but the hidden grader is a brittle exact-HTML snapshot: it pins the entire rendered pill markup character-for-character (including incidental whitespace, the malformed `class='pill '` attribute quirk, and newline layout from the Handlebars template) rather than asserting the observable behavior (that the pill shows the group name plus a member count). Any semantically equivalent template output would fail, which is exactly the format-over-behavior brittleness the screen rejects.",
+  "summary": "groups: Update how we show members count in group pills.",
+  "lang": "web",
+  "issue": 33628,
+  "fix_commit": "118eaffd3aca2d072a75769772b1da085a7fe17e",
+  "base_commit": "81901e86ed5fbd9c886575640bc42a6847d660fe",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/118eaffd3aca2d072a75769772b1da085a7fe17e",
+    "issue_url": "https://github.com/zulip/zulip/issues/33628"
+  }
+}

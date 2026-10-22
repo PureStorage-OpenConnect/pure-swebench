@@ -1,0 +1,65 @@
+{
+  "task_id": "ZT-136be83502b0",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "mentions: Warn on non-silent group mentions with unsubscribed members.",
+  "type": "other",
+  "lang": "web",
+  "issue": 33545,
+  "fix_commit": "136be83502b04956c51789361ddc43b21bd8986a",
+  "base_commit": "4454811191c389a6b7d795a890a1f488bc5a322d",
+  "env_fingerprint": "cf160acfcfa6",
+  "fail_to_pass": [
+    "web/tests/composebox_typeahead.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/compose_validate.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 91,
+    "files": 5,
+    "hunks": 9,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The compose_validate module gains an exported function `warn_if_mentioning_unsubscribed_group(mentioned_group, $textarea, is_silent)`, mirroring the existing `warn_if_mentioning_unsubscribed_user`; when a user selects a user-group mention from the compose typeahead into a channel compose box (non-silent), callers invoke it to show a warning banner if no active member of the group (including recursive subgroup members) is subscribed to that channel.",
+    "The compose_validate module gains an exported `initialize()` function that registers its one-time UI event handlers (the click handler opening the group info popover from the warning banner's group pill); it is called once during application startup alongside the other compose modules' initialize calls."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 477,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Kartikay5849",
+    "email": "kartikaysambher@gmail.com",
+    "date": "2025-03-13"
+  },
+  "contamination": {
+    "fix_public_at": "2025-03-13",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-02-19T16:44:19Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/136be83502b04956c51789361ddc43b21bd8986a",
+    "issue_url": "https://github.com/zulip/zulip/issues/33545"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-136be83502b0",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 16.0
+    }
+  }
+}

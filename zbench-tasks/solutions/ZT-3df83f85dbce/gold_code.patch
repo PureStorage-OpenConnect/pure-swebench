@@ -1,0 +1,63 @@
+diff --git a/zerver/lib/integrations.py b/zerver/lib/integrations.py
+index 8982e02944..fe9baf50e9 100644
+--- a/zerver/lib/integrations.py
++++ b/zerver/lib/integrations.py
+@@ -613,6 +613,19 @@ INCOMING_WEBHOOK_INTEGRATIONS: list[IncomingWebhookIntegration] = [
+     IncomingWebhookIntegration(
+         "dropbox", ["productivity"], [WebhookScreenshotConfig("file_updated.json")]
+     ),
++    IncomingWebhookIntegration(
++        "dropboxsign",
++        ["productivity", "hr"],
++        [
++            WebhookScreenshotConfig(
++                "signatures_signed_by_one_signatory.json",
++                payload_as_query_param=True,
++                payload_param_name="json",
++            )
++        ],
++        display_name="Dropbox Sign",
++        legacy_names=["hellosign"],
++    ),
+     IncomingWebhookIntegration(
+         "errbit", ["monitoring"], [WebhookScreenshotConfig("error_message.json")]
+     ),
+@@ -710,18 +723,6 @@ INCOMING_WEBHOOK_INTEGRATIONS: list[IncomingWebhookIntegration] = [
+         ["deployment"],
+         [WebhookScreenshotConfig("scanning_completed.json")],
+     ),
+-    IncomingWebhookIntegration(
+-        "hellosign",
+-        ["productivity", "hr"],
+-        [
+-            WebhookScreenshotConfig(
+-                "signatures_signed_by_one_signatory.json",
+-                payload_as_query_param=True,
+-                payload_param_name="json",
+-            )
+-        ],
+-        display_name="HelloSign",
+-    ),
+     IncomingWebhookIntegration(
+         "helloworld", ["misc"], [WebhookScreenshotConfig("hello.json")], display_name="Hello World"
+     ),
+diff --git a/zerver/webhooks/hellosign/__init__.py b/zerver/webhooks/dropboxsign/__init__.py
+similarity index 100%
+rename from zerver/webhooks/hellosign/__init__.py
+rename to zerver/webhooks/dropboxsign/__init__.py
+diff --git a/zerver/webhooks/hellosign/view.py b/zerver/webhooks/dropboxsign/view.py
+similarity index 98%
+rename from zerver/webhooks/hellosign/view.py
+rename to zerver/webhooks/dropboxsign/view.py
+index 1e9ed88189..cb136e3c66 100644
+--- a/zerver/webhooks/hellosign/view.py
++++ b/zerver/webhooks/dropboxsign/view.py
+@@ -58,7 +58,7 @@ def get_recipients_text(recipients: list[str]) -> str:
+ 
+ @webhook_view("HelloSign")
+ @typed_endpoint
+-def api_hellosign_webhook(
++def api_dropboxsign_webhook(
+     request: HttpRequest,
+     user_profile: UserProfile,
+     *,

@@ -1,0 +1,87 @@
+{
+  "task_id": "ZT-6f196c7ec97e",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "composebox_typeahead: Show CrossRealmBots in the typeahead list.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 30817,
+  "fix_commit": "6f196c7ec97e0f3894d16ca01b722bbcdd964169",
+  "base_commit": "2c548d4856db0326c5b792c8db7b9a96f72720b9",
+  "env_fingerprint": "29babd8b87b3",
+  "fail_to_pass": [
+    "web/tests/composebox_typeahead.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/people.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 15,
+    "files": 2,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 342,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "afeefuddin",
+    "email": "afeefud2004din@gmail.com",
+    "date": "2025-03-12"
+  },
+  "contamination": {
+    "fix_public_at": "2025-03-12",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-07-10T20:58:51Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/6f196c7ec97e0f3894d16ca01b722bbcdd964169",
+    "issue_url": "https://github.com/zulip/zulip/issues/30817"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-6f196c7ec97e",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 98.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "task_id": "ZT-194dfbc84d25",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "oracle_not_enumerable",
+  "reason": "arm A run 0: target could not run (see ZT-194dfbc84d25_A0.log)",
+  "summary": "integrations: Add common framework for webhook signature verification.",
+  "type": "other",
+  "lang": "py",
+  "issue": 19774,
+  "fix_commit": "194dfbc84d25b0bf4247876aa15fa04a130271e6",
+  "base_commit": "f7129ae5505aebb7be4ed1e0a3da1f1cb914b56b",
+  "env_fingerprint": "13af4fccb13c",
+  "fail_to_pass": [
+    "zerver.tests.test_webhooks_common.WebhooksCommonTestCase.test_validate_webhook_signature"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 42,
+    "files": 3,
+    "hunks": 5,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "A new function `validate_webhook_signature(request, payload, signature)` in `zerver.lib.webhooks.common`, intended as the shared helper webhook integrations call to verify incoming payload signatures; it takes the Django HttpRequest, the raw payload as a string, and the signature string provided by the sender, returning None on success and raising `JsonableError` on failure.",
+    "Signature verification computes an HMAC of the payload using SHA-256 by default, keyed by the shared secret, and compares its lowercase hex digest against the provided signature string.",
+    "The shared secret is supplied by the sender as a URL query parameter named `webhook_secret` on the webhook URL.",
+    "When the computed digest does not match the provided signature, the function raises `JsonableError` with the user-facing message \"Webhook signature verification failed.\"",
+    "When the `webhook_secret` query parameter is absent, the function raises `JsonableError` with the user-facing message \"The webhook secret is missing. Please set the webhook_secret while generating the URL.\"",
+    "A new server setting `VERIFY_WEBHOOK_SIGNATURES` (boolean, default True in production defaults) gates the feature: when False, `validate_webhook_signature` is a no-op that returns without checking anything.",
+    "The Zulip test-suite settings must default `VERIFY_WEBHOOK_SIGNATURES` to False so existing webhook behavior is unchanged unless a caller explicitly enables verification."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 274,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "theofficialvedantjoshi",
+    "email": "vedant.messi101@gmail.com",
+    "date": "2025-04-09"
+  },
+  "contamination": {
+    "fix_public_at": "2025-04-09",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2021-09-16T20:07:11Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/194dfbc84d25b0bf4247876aa15fa04a130271e6",
+    "issue_url": "https://github.com/zulip/zulip/issues/19774"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-194dfbc84d25",
+      "arms": {},
+      "verdict": "UNENUMERABLE",
+      "why": "arm A run 0: target could not run (see ZT-194dfbc84d25_A0.log)",
+      "elapsed_s": 15.5
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "task_id": "ZT-2cbf9e130e35",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "drafts: Store DM drafts with user ids instead of emails.",
+  "type": "other",
+  "lang": "web",
+  "issue": 34468,
+  "fix_commit": "2cbf9e130e35ef742ba8a0225925ae29184d81d6",
+  "base_commit": "5bb598f6152de2efa2ddf2090ccc39ab8199e8ec",
+  "env_fingerprint": "e65335ce079d",
+  "fail_to_pass": [
+    "web/tests/drafts.test.cjs",
+    "web/tests/people.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 81,
+    "files": 3,
+    "hunks": 18,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "The persisted (localStorage) draft format for direct-message drafts replaces the legacy `private_message_recipient` comma-separated email string with a new field `private_message_recipient_ids: number[]` holding the recipients' user IDs; an empty recipient list is stored as `[]` (not an empty string).",
+    "On loading drafts, legacy direct-message drafts that still carry `private_message_recipient` (emails) must be migrated in place: the email string is resolved to user IDs stored in `private_message_recipient_ids` (preserving recipient order), and the legacy `private_message_recipient` field is removed so it reads back as undefined.",
+    "The people module gains an exported function `is_valid_user_id_for_compose(user_id: number): boolean`, the user-ID analog of the existing `is_valid_email_for_compose`: it returns true for active users, non-active (deactivated) users, and cross-realm bots, and false for unknown user IDs.",
+    "The people module's exported `emails_to_full_names_string(emails)` is replaced by `user_ids_to_full_names_string(user_ids: number[]): string`, which resolves each ID to a full name (an unknown ID contributes the translated string \"Unknown user\") and returns those names SORTED ALPHABETICALLY (case-insensitive) by full name, joined by \", \". The alphabetical sort matches the prior behavior; the output is NOT in recipient order. All callers of the old email-based function pass user IDs.",
+    "The people module exports `sort_user_ids_by_username(user_ids: number[]): number[]`, returning the given user IDs sorted alphabetically (case-insensitive) by resolved full name.",
+    "Resolving an unknown user ID (e.g. in `user_ids_to_full_names_string` or `is_valid_user_id_for_compose`) must route through the existing lookup that logs the error message 'Unknown user_id in maybe_get_user_by_id' (this message and lookup already exist at the base commit); unknown IDs must produce that error log rather than being silently ignored."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 394,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Evy Kassirer",
+    "email": "evy@zulip.com",
+    "date": "2025-05-16"
+  },
+  "contamination": {
+    "fix_public_at": "2025-05-16",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-04-24T17:45:13Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/2cbf9e130e35ef742ba8a0225925ae29184d81d6",
+    "issue_url": "https://github.com/zulip/zulip/issues/34468"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-2cbf9e130e35",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 76.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  },
+  "rebrief": {
+    "date": "2026-08-22",
+    "by": "project owner (curation)",
+    "reason": "corrected brief/gold divergence (false-negative fix); prior attempts superseded, Claude rows re-run"
+  }
+}

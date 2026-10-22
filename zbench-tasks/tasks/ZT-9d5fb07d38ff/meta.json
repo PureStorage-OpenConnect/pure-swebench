@@ -1,0 +1,26 @@
+{
+  "task_id": "ZT-9d5fb07d38ff",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "sparse_issue",
+  "reason": "issue #2007 has 258 chars of prose (<280)",
+  "summary": "compose: Remove stale \"recipient not subscribed\" banners.",
+  "lang": "web",
+  "issue": 2007,
+  "fix_commit": "9d5fb07d38ffe971a5aa87bc6e8da0dd9cb48235",
+  "base_commit": "27d3d01edb38dda5172c4ce08edaf6a15a7c4ba2",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/9d5fb07d38ffe971a5aa87bc6e8da0dd9cb48235",
+    "issue_url": "https://github.com/zulip/zulip/issues/2007"
+  },
+  "contamination": {
+    "fix_public_at": "2026-03-26",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

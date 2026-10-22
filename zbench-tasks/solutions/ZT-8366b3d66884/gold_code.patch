@@ -1,0 +1,358 @@
+diff --git a/web/src/compose_recipient.ts b/web/src/compose_recipient.ts
+index 932c86bf1f..6e05c6b1a5 100644
+--- a/web/src/compose_recipient.ts
++++ b/web/src/compose_recipient.ts
+@@ -59,8 +59,7 @@ function composing_to_current_private_message_narrow(): boolean {
+     return _.isEqual(narrow_state_recipient, compose_state_recipient);
+ }
+ 
+-export let update_recipient_row_attention_level = (): void => {
+-    // We need to adjust the privacy-icon colors in the low-attention state
++export function adjust_compose_channel_privacy_icon_color(): void {
+     const message_type = compose_state.get_message_type();
+     if (message_type === "stream") {
+         const stream_id = compose_state.stream_id();
+@@ -69,6 +68,12 @@ export let update_recipient_row_attention_level = (): void => {
+ 
+         stream_color.adjust_stream_privacy_icon_colors(stream_id, channel_picker_icon_selector);
+     }
++}
++
++export let update_recipient_row_attention_level = (): void => {
++    // We need to adjust the privacy-icon colors in the low-attention state
++    adjust_compose_channel_privacy_icon_color();
++
+     // If there is any text that hasn't yet been transformed into a pill,
+     // we should consider that the user is not composing to the current
+     // DM narrow -- even though that input is ignored when sending a DM.
+diff --git a/web/src/stream_color_events.ts b/web/src/stream_color_events.ts
+index 5cc982e372..125257f029 100644
+--- a/web/src/stream_color_events.ts
++++ b/web/src/stream_color_events.ts
+@@ -1,5 +1,6 @@
+ import $ from "jquery";
+ 
++import * as compose_recipient from "./compose_recipient.ts";
+ import * as inbox_util from "./inbox_util.ts";
+ import * as message_lists from "./message_lists.ts";
+ import * as message_view_header from "./message_view_header.ts";
+@@ -76,4 +77,5 @@ export function update_stream_color(sub: StreamSubscription, color: string): voi
+     update_message_recipient_color(sub.name, color);
+     update_stream_privacy_color(stream_id, color);
+     message_view_header.colorize_message_view_header();
++    compose_recipient.adjust_compose_channel_privacy_icon_color();
+ }
+diff --git a/web/src/stream_edit.ts b/web/src/stream_edit.ts
+index 7924c72b7e..dfea774fbc 100644
+--- a/web/src/stream_edit.ts
++++ b/web/src/stream_edit.ts
+@@ -876,7 +876,10 @@ export function initialize(): void {
+         const stream_id = get_stream_id(this);
+         const stream = sub_store.get(stream_id);
+ 
+-        const stream_name_with_privacy_symbol_html = render_decorated_channel_name({stream});
++        const stream_name_with_privacy_symbol_html = render_decorated_channel_name({
++            inline_with_text: true,
++            stream,
++        });
+ 
+         const is_moderation_request_channel =
+             stream_id === realm.realm_moderation_request_channel_id;
+@@ -938,7 +941,10 @@ export function initialize(): void {
+         }
+ 
+         const stream = sub_store.get(stream_id);
+-        const stream_name_with_privacy_symbol_html = render_decorated_channel_name({stream});
++        const stream_name_with_privacy_symbol_html = render_decorated_channel_name({
++            inline_with_text: true,
++            stream,
++        });
+         const modal_content_html = render_settings_reactivation_stream_modal();
+ 
+         confirm_dialog.launch({
+diff --git a/web/src/stream_edit_subscribers.ts b/web/src/stream_edit_subscribers.ts
+index e4213332df..98cda633cc 100644
+--- a/web/src/stream_edit_subscribers.ts
++++ b/web/src/stream_edit_subscribers.ts
+@@ -435,6 +435,7 @@ function remove_subscriber({
+         }
+ 
+         const stream_name_with_privacy_symbol_html = render_decorated_channel_name({
++            inline_with_text: true,
+             stream: sub,
+         });
+ 
+diff --git a/web/src/stream_popover.ts b/web/src/stream_popover.ts
+index 44db8d1d18..d64fba7505 100644
+--- a/web/src/stream_popover.ts
++++ b/web/src/stream_popover.ts
+@@ -881,7 +881,10 @@ export async function build_move_topic_to_stream_popover(
+             );
+         } else {
+             $("#move_topic_to_stream_widget .dropdown_widget_value").html(
+-                render_decorated_channel_name({stream, show_colored_icon: true}),
++                render_decorated_channel_name({
++                    stream,
++                    show_colored_icon: true,
++                }),
+             );
+         }
+     }
+diff --git a/web/src/stream_settings_components.ts b/web/src/stream_settings_components.ts
+index 8cdfdfd151..edf2cf6223 100644
+--- a/web/src/stream_settings_components.ts
++++ b/web/src/stream_settings_components.ts
+@@ -274,6 +274,7 @@ export function unsubscribe_from_private_stream(sub: StreamSubscription): void {
+     const invite_only = sub.invite_only;
+     const sub_count = peer_data.get_subscriber_count(sub.stream_id);
+     const stream_name_with_privacy_symbol_html = render_decorated_channel_name({
++        inline_with_text: true,
+         stream: sub,
+     });
+ 
+diff --git a/web/templates/confirm_dialog/confirm_reset_stream_notifications.hbs b/web/templates/confirm_dialog/confirm_reset_stream_notifications.hbs
+index 41b31c209d..5ba2afd93f 100644
+--- a/web/templates/confirm_dialog/confirm_reset_stream_notifications.hbs
++++ b/web/templates/confirm_dialog/confirm_reset_stream_notifications.hbs
+@@ -1,4 +1,4 @@
+ {{#tr}}
+ Are you sure you want to reset notifications for <z-stream></z-stream>?
+-{{#*inline "z-stream"}}{{> ../decorated_channel_name stream=sub show_colored_icon=false}}{{/inline}}
++{{#*inline "z-stream"}}{{> ../decorated_channel_name inline_with_text=true stream=sub show_colored_icon=false}}{{/inline}}
+ {{/tr}}
+diff --git a/web/templates/decorated_channel_name.hbs b/web/templates/decorated_channel_name.hbs
+index dc85b1acce..3800d1ee41 100644
+--- a/web/templates/decorated_channel_name.hbs
++++ b/web/templates/decorated_channel_name.hbs
+@@ -1,10 +1,7 @@
+-{{! This controls whether the swatch next to streams in the left sidebar has a lock icon. }}
+-{{~#if stream.is_archived ~}}
+-<i class="zulip-icon zulip-icon-archive channel-privacy-type-icon" {{#if show_colored_icon}}style="color: {{stream.color}}"{{/if}} aria-hidden="true"></i> <span class="decorated-channel-name">{{stream.name ~}}</span>
+-{{~ else if stream.invite_only ~}}
+-<i class="zulip-icon zulip-icon-lock channel-privacy-type-icon" {{#if show_colored_icon}}style="color: {{stream.color}}"{{/if}} aria-hidden="true"></i> <span class="decorated-channel-name">{{stream.name ~}}</span>
+-{{~ else if stream.is_web_public ~}}
+-<i class="zulip-icon zulip-icon-globe channel-privacy-type-icon" {{#if show_colored_icon}}style="color: {{stream.color}}"{{/if}} aria-hidden="true"></i> <span class="decorated-channel-name">{{stream.name ~}}</span>
+-{{~ else ~}}
+-<i class="zulip-icon zulip-icon-hashtag channel-privacy-type-icon" {{#if show_colored_icon}}style="color: {{stream.color}}"{{/if}} aria-hidden="true"></i> <span class="decorated-channel-name">{{stream.name ~}}</span>
+-{{~/if~}}
++<span class="decorated-channel-name-wrapper{{#if inline_with_text}} inline-decorated-channel-name{{/if}}">
++    <span class="channel-privacy-type-icon{{#if show_colored_icon}} stream-privacy-original-color-{{stream.stream_id}}{{/if}}"{{#if show_colored_icon}} style="color: {{stream.color}}"{{/if}}>
++        {{~> stream_privacy stream ~}}
++    </span>
++    {{~!-- squash whitespace --~}}
++    <span class="decorated-channel-name">{{stream.name}}</span>
++</span>
+diff --git a/web/templates/dropdown_list.hbs b/web/templates/dropdown_list.hbs
+index b96877ad59..9e43ec3683 100644
+--- a/web/templates/dropdown_list.hbs
++++ b/web/templates/dropdown_list.hbs
+@@ -31,17 +31,25 @@
+             {{#if stream}}
+                 {{> decorated_channel_name stream=stream show_colored_icon=true}}
+             {{else if is_direct_message}}
+-                <i class="zulip-icon zulip-icon-users channel-privacy-type-icon"></i> <span class="decorated-dm-name">{{name}}</span>
++                <div class="dropdown-list-item-direct-message">
++                    <i class="zulip-icon zulip-icon-users dropdown-list-item-icon"></i>
++                    <span class="decorated-dm-name">{{name}}</span>
++                </div>
+             {{else if is_setting_disabled}}
+-                <i class="setting-disabled-option-icon zulip-icon zulip-icon-deactivated-circle" aria-hidden="true"></i>
+-                {{#if bold_current_selection}}
+-                    <span class="setting-disabled-option-text dropdown-list-text-selected">{{t "Disable" }}</span>
+-                {{else}}
+-                    <span class="setting-disabled-option-text dropdown-list-text-neutral">{{t "Disable" }}</span>
+-                {{/if}}
++                <div class="dropdown-list-item-setting-disabled-option">
++                    <i class="setting-disabled-option-icon zulip-icon zulip-icon-deactivated-circle dropdown-list-item-icon" aria-hidden="true"></i>
++                    {{#if bold_current_selection}}
++                        <span class="setting-disabled-option-text dropdown-list-text-selected">{{t "Disable" }}</span>
++                    {{else}}
++                        <span class="setting-disabled-option-text dropdown-list-text-neutral">{{t "Disable" }}</span>
++                    {{/if}}
++                </div>
+             {{else if (eq unique_id -2)}}
+                 {{!-- This is the option for PresetUrlOption.CHANNEL_MAPPING --}}
+-                <i class="zulip-icon zulip-icon-hashtag channel-privacy-type-icon" aria-hidden="true"></i> <span class="dropdown-list-text-neutral">{{name}}</span>
++                <div class="dropdown-list-item-channel-mapping">
++                    <i class="zulip-icon zulip-icon-hashtag dropdown-list-item-icon" aria-hidden="true"></i>
++                    <span class="dropdown-list-text-neutral">{{name}}</span>
++                </div>
+             {{else}}
+                 <span class="dropdown-list-item-name">
+                     {{#if bold_current_selection}}
+diff --git a/web/templates/inline_stream_or_topic_reference.hbs b/web/templates/inline_stream_or_topic_reference.hbs
+index 3d31929973..3d7188579f 100644
+--- a/web/templates/inline_stream_or_topic_reference.hbs
++++ b/web/templates/inline_stream_or_topic_reference.hbs
+@@ -1,6 +1,6 @@
+ <span class="stream-or-topic-reference">
+     {{~#if stream~}}
+-        {{> decorated_channel_name stream=stream show_colored_icon=show_colored_icon}}
++        {{> decorated_channel_name inline_with_text=true stream=stream show_colored_icon=show_colored_icon}}
+         {{#if topic_display_name~}} &gt; {{/if}}
+     {{~/if~}}
+     <span {{#if is_empty_string_topic}}class="empty-topic-display"{{/if}}>{{~ topic_display_name ~}}</span>
+diff --git a/web/templates/input_pill.hbs b/web/templates/input_pill.hbs
+index 0d862c5c1c..6c97bff980 100644
+--- a/web/templates/input_pill.hbs
++++ b/web/templates/input_pill.hbs
+@@ -13,22 +13,17 @@
+     <span class="pill-label">
+         <span class="pill-value">
+             {{#if has_stream}}
+-                {{~#if stream.invite_only ~}}
+-                <i class="zulip-icon zulip-icon-lock channel-privacy-type-icon" aria-hidden="true"></i>
+-                {{~ else if stream.is_web_public ~}}
+-                <i class="zulip-icon zulip-icon-globe channel-privacy-type-icon" aria-hidden="true"></i>
+-                {{~ else ~}}
+-                <i class="zulip-icon zulip-icon-hashtag channel-privacy-type-icon" aria-hidden="true"></i>
+-                {{~/if~}}
+-            {{/if}}
+-            {{#if is_combined_channel_topic}}
+-            {{sign}}#{{combined_channel_name}} &gt;<span {{#if is_empty_string_topic}}class="empty-topic-display"{{/if}}> {{topic_display_name}}</span>
+-            {{else}}
+-            {{#if is_empty_string_topic}}
+-            {{sign}}topic:{{#if topic_display_name}}<span class="empty-topic-display"> {{topic_display_name}}</span>{{/if}}
++                {{> decorated_channel_name stream=stream }}
+             {{else}}
+-            {{ display_value }}
+-            {{/if}}
++                {{#if is_combined_channel_topic}}
++                {{sign}}#{{combined_channel_name}} &gt;<span {{#if is_empty_string_topic}}class="empty-topic-display"{{/if}}> {{topic_display_name}}</span>
++                {{else}}
++                {{#if is_empty_string_topic}}
++                {{sign}}topic:{{#if topic_display_name}}<span class="empty-topic-display"> {{topic_display_name}}</span>{{/if}}
++                {{else}}
++                {{~ display_value }}
++                {{/if}}
++                {{/if}}
+             {{/if}}
+         </span>
+         {{~#if should_add_guest_user_indicator}}&nbsp;<i>({{t 'guest'}})</i>{{~/if~}}
+diff --git a/web/templates/modal_banner/unsubscribed_participants_warning_banner.hbs b/web/templates/modal_banner/unsubscribed_participants_warning_banner.hbs
+index 37d76d0837..1c8df8f665 100644
+--- a/web/templates/modal_banner/unsubscribed_participants_warning_banner.hbs
++++ b/web/templates/modal_banner/unsubscribed_participants_warning_banner.hbs
+@@ -10,7 +10,7 @@
+                     {{~/list_each ~}}
+                     )
+                 {{~/inline}}
+-                {{#*inline "z-stream"}}<strong class="highlighted-element">{{> ../decorated_channel_name stream=stream}}</strong>{{/inline}}
++                {{#*inline "z-stream"}}<strong class="highlighted-element">{{> ../decorated_channel_name inline_with_text=true stream=stream}}</strong>{{/inline}}
+             {{/tr}}
+ 
+         {{else if few_unsubscribed_participants}}
+@@ -23,13 +23,13 @@
+                     {{~/list_each ~}}
+                     )
+                 {{~/inline}}
+-                {{#*inline "z-stream"}}<strong class="highlighted-element">{{> ../decorated_channel_name stream=stream}}</strong>{{/inline}}
++                {{#*inline "z-stream"}}<strong class="highlighted-element">{{> ../decorated_channel_name inline_with_text=true stream=stream}}</strong>{{/inline}}
+             {{/tr}}
+ 
+         {{else}}
+             {{#tr}}
+                 {unsubscribed_participants_count} topic participants are not subscribed to <z-stream></z-stream>.
+-                {{#*inline "z-stream"}}<strong class="highlighted-element">{{> ../decorated_channel_name stream=stream}}</strong>{{/inline}}
++                {{#*inline "z-stream"}}<strong class="highlighted-element">{{> ../decorated_channel_name inline_with_text=true stream=stream}}</strong>{{/inline}}
+             {{/tr}}
+         {{/if}}
+     </p>
+diff --git a/web/templates/skipped_marking_unread.hbs b/web/templates/skipped_marking_unread.hbs
+index a6af762d7e..680907a418 100644
+--- a/web/templates/skipped_marking_unread.hbs
++++ b/web/templates/skipped_marking_unread.hbs
+@@ -3,7 +3,7 @@
+     {{#*inline "z-streams" ~}}
+     <strong>
+         {{~#list_each streams as |stream| ~}}
+-        {{> decorated_channel_name stream=stream}}
++        {{> decorated_channel_name inline_with_text=true stream=stream}}
+         {{~/list_each ~}}
+     </strong>
+     {{~/inline}}
+diff --git a/web/templates/stream_privacy.hbs b/web/templates/stream_privacy.hbs
+index 21c877cd6b..4f7afa85c7 100644
+--- a/web/templates/stream_privacy.hbs
++++ b/web/templates/stream_privacy.hbs
+@@ -1,10 +1,10 @@
+ {{! This controls whether the swatch next to streams in the left sidebar has a lock icon. }}
+-{{#if is_archived}}
++{{~#if is_archived ~}}
+ <i class="zulip-icon zulip-icon-archive" aria-hidden="true"></i>
+-{{else if invite_only}}
++{{~else if invite_only ~}}
+ <i class="zulip-icon zulip-icon-lock" aria-hidden="true"></i>
+-{{else if is_web_public}}
++{{~else if is_web_public ~}}
+ <i class="zulip-icon zulip-icon-globe" aria-hidden="true"></i>
+-{{else}}
++{{~else~}}
+ <i class="zulip-icon zulip-icon-hashtag" aria-hidden="true"></i>
+-{{/if}}
++{{~/if~}}
+diff --git a/web/templates/stream_settings/announce_stream_checkbox.hbs b/web/templates/stream_settings/announce_stream_checkbox.hbs
+index 9235b483c9..2f684f3bd1 100644
+--- a/web/templates/stream_settings/announce_stream_checkbox.hbs
++++ b/web/templates/stream_settings/announce_stream_checkbox.hbs
+@@ -5,6 +5,7 @@
+     {{#if new_stream_announcements_stream_sub}}
+         <strong>
+             {{> ../decorated_channel_name
++              inline_with_text=true
+               stream=new_stream_announcements_stream_sub
+               }}
+         </strong>
+diff --git a/web/templates/stream_settings/browse_streams_list_item.hbs b/web/templates/stream_settings/browse_streams_list_item.hbs
+index a654f0077a..a54e764f4e 100644
+--- a/web/templates/stream_settings/browse_streams_list_item.hbs
++++ b/web/templates/stream_settings/browse_streams_list_item.hbs
+@@ -9,7 +9,7 @@
+                     <span>
+                         {{#tr}}
+                             Unsubscribe from <z-stream></z-stream>
+-                            {{#*inline "z-stream"}}{{> ../decorated_channel_name stream=this}}{{/inline}}
++                            {{#*inline "z-stream"}}{{> ../decorated_channel_name inline_with_text=true stream=this}}{{/inline}}
+                         {{/tr}}
+                     </span>
+                 </template>
+@@ -26,7 +26,7 @@
+                     <span>
+                         {{#tr}}
+                             Subscribe to <z-stream></z-stream>
+-                            {{#*inline "z-stream"}}{{> ../decorated_channel_name stream=this}}{{/inline}}
++                            {{#*inline "z-stream"}}{{> ../decorated_channel_name inline_with_text=true stream=this}}{{/inline}}
+                         {{/tr}}
+                     </span>
+                 </template>
+@@ -35,7 +35,7 @@
+                     <span>
+                         {{#tr}}
+                             Cannot subscribe to <z-stream></z-stream>
+-                            {{#*inline "z-stream"}}{{> ../decorated_channel_name stream=this}}{{/inline}}
++                            {{#*inline "z-stream"}}{{> ../decorated_channel_name inline_with_text=true stream=this}}{{/inline}}
+                         {{/tr}}
+                     </span>
+                 </template>
+diff --git a/web/templates/stream_settings/selected_stream_title.hbs b/web/templates/stream_settings/selected_stream_title.hbs
+index ea7606d1bb..3655b482a7 100644
+--- a/web/templates/stream_settings/selected_stream_title.hbs
++++ b/web/templates/stream_settings/selected_stream_title.hbs
+@@ -11,7 +11,7 @@
+             <span class="view-channel-text">
+                 {{#tr}}
+                     View <z-channel-name></z-channel-name>
+-                    {{#*inline "z-channel-name"}}{{> ../decorated_channel_name stream=sub}}{{/inline}}
++                    {{#*inline "z-channel-name"}}{{> ../decorated_channel_name inline_with_text=true stream=sub}}{{/inline}}
+                 {{/tr}}
+             </span>
+             {{tooltip_hotkey_hints "Shift" "V"}}
+@@ -24,7 +24,7 @@
+                 <span>
+                     {{#tr}}
+                         Cannot subscribe to private channel <z-stream></z-stream>
+-                        {{#*inline "z-stream"}}{{> ../decorated_channel_name stream=../sub}}{{/inline}}
++                        {{#*inline "z-stream"}}{{> ../decorated_channel_name inline_with_text=true stream=../sub}}{{/inline}}
+                     {{/tr}}
+                 </span>
+             </template>

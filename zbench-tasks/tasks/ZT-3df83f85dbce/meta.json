@@ -1,0 +1,79 @@
+{
+  "task_id": "ZT-3df83f85dbce",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_invalid",
+  "reason": "pass_to_pass not green at base+gold_test (FAIL) -- pre-red P2P",
+  "summary": "webhooks: Rebrand HelloSign integration as Dropbox Sign.",
+  "type": "other",
+  "lang": "py",
+  "issue": 30779,
+  "fix_commit": "3df83f85dbcec7471e1c5b9bd9b807ac33ffc7c1",
+  "base_commit": "32825ea1dfafa7c2e17ba4dbc7a14b099889c1be",
+  "env_fingerprint": "d76699d5e9f1",
+  "fail_to_pass": [
+    "zerver.webhooks.dropboxsign.tests.DropboxSignHookTests.test_legacy_urls",
+    "zerver.webhooks.dropboxsign.tests.DropboxSignHookTests.test_signatures_message"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_integrations"
+  ],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 14,
+    "files": 2,
+    "hunks": 3,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "The HelloSign incoming webhook integration is renamed to the slug `dropboxsign` (display name \"Dropbox Sign\"): its webhook endpoint becomes /api/v1/external/dropboxsign, and per Zulip's existing webhook framework convention its module and fixtures live under zerver/webhooks/dropboxsign/.",
+    "Webhook URLs using the old slug `hellosign` (/api/v1/external/hellosign) must continue to be accepted and routed to the renamed integration, by registering `hellosign` in the integration's legacy_names (a registration mechanism that already exists at the base commit).",
+    "The integration's message-formatting behavior is unchanged by the rename: the same signature-request payloads produce the same topic (document title, e.g. the signature request's title) and the same notification message text as before."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 153,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Niloth P",
+    "email": "20315308+Niloth-p@users.noreply.github.com",
+    "date": "2026-01-20"
+  },
+  "contamination": {
+    "fix_public_at": "2026-01-20",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-07-08T22:50:56Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/3df83f85dbcec7471e1c5b9bd9b807ac33ffc7c1",
+    "issue_url": "https://github.com/zulip/zulip/issues/30779"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-3df83f85dbce",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "FAIL"
+        ]
+      },
+      "fail_signature": [
+        "test_legacy_urls",
+        "test_signatures_message"
+      ],
+      "verdict": "INVALID",
+      "code": 1,
+      "why": "pass_to_pass not green at base+gold_test (FAIL) -- pre-red P2P",
+      "elapsed_s": 47.8
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "task_id": "ZT-00fe2236dad8",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "message_delete: Sort message_ids when sending delete_message event.",
+  "type": "other",
+  "lang": "py",
+  "issue": 34324,
+  "fix_commit": "00fe2236dad87e63dc701fc4e3728b6223144323",
+  "base_commit": "37bfb7c963e4e552d1e84921a7238c39dcd804fa",
+  "env_fingerprint": "d5524528dd02",
+  "fail_to_pass": [
+    "zerver.tests.test_events.NormalActionsTest.test_do_delete_message_stream"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_message_delete"
+  ],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 1,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 333,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Shubham Padia",
+    "email": "shubham@zulip.com",
+    "date": "2025-06-18"
+  },
+  "contamination": {
+    "fix_public_at": "2025-06-18",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-04-08T00:37:43Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/00fe2236dad87e63dc701fc4e3728b6223144323",
+    "issue_url": "https://github.com/zulip/zulip/issues/34324"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-00fe2236dad8",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_do_delete_message_stream"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 132.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-b193d97062ae",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "f2p_unenumerable",
+  "reason": "no extractable test targets",
+  "summary": "auth_backends: Add support for OIDC user attributes sync.",
+  "lang": "py",
+  "issue": 34071,
+  "fix_commit": "b193d97062aeb7d31ed50d2c0c6b39e01299e119",
+  "base_commit": "d34e2ec624b7143dc92338c24715df32e910df6e",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/b193d97062aeb7d31ed50d2c0c6b39e01299e119",
+    "issue_url": "https://github.com/zulip/zulip/issues/34071"
+  }
+}

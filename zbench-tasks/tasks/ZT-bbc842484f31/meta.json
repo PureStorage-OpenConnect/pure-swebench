@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-bbc842484f31",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The test drives internal module state through `unread.set_old_unreads_missing_for_tests(value)`, a test-only setter the reference fix invents (the base commit only exposes `clear_old_unreads_missing`). No product ticket or design spec would dictate a `_for_tests` state-injection helper \u2014 it is test scaffolding, and per the rubric it cannot even be phrased as a product requirement without referencing tests. The test also binds to `unread_ops.get_message_count_text(count)`, an exported-for-testability internal formatting helper; while its output strings ('{count}+ messages will be marked as read.', singular/plural variants) are user-facing text a spec could pin, the function name and its export are an implementation choice \u2014 the feature could equally render the text inline in the dialog handler. A solver would have to guess both the invented test seam name and the helper's name/signature, so the test grades name-guessing rather than behavior; the task should be dropped.",
+  "summary": "modal: Add options for marking messages as read.",
+  "lang": "web",
+  "issue": 30025,
+  "fix_commit": "bbc842484f31918f957150b22b97378881a402f3",
+  "base_commit": "01ce268d64d16a03e1de72f372c77d30d8fe6e04",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/bbc842484f31918f957150b22b97378881a402f3",
+    "issue_url": "https://github.com/zulip/zulip/issues/30025"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "task_id": "ZT-124a32e8194d",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "compose: Save messages as drafts when window loses focus.",
+  "type": "other",
+  "lang": "web",
+  "issue": 35262,
+  "fix_commit": "124a32e8194da555bb3f9fb417393998e84b5b55",
+  "base_commit": "f689dfc3c317a5e8847f5b7c40b2eb0e43b202ef",
+  "env_fingerprint": "eb926f1a7740",
+  "fail_to_pass": [
+    "web/tests/compose.test.cjs",
+    "web/tests/compose_video.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 7,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "When the window loses focus, the user's in-progress compose draft must be saved so no work is lost (window 'blur' saves the current draft).",
+    "This blur handler must be registered as part of compose setup initialization \u2014 i.e., inside the existing compose_setup.initialize() entry point, which callers invoke once at startup.",
+    "The handler must be attached through the codebase's standard jQuery event mechanism on the window object ($(window).on(\"blur\", ...)), not a raw window.addEventListener call."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 231,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "amcdowell226",
+    "email": "aliyahmcdowell777@gmail.com",
+    "date": "2025-08-05"
+  },
+  "contamination": {
+    "fix_public_at": "2025-08-05",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-07-14T23:09:05Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/124a32e8194da555bb3f9fb417393998e84b5b55",
+    "issue_url": "https://github.com/zulip/zulip/issues/35262"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-124a32e8194d",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 75.5
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

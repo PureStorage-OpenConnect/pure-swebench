@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-4fbc8daf6614",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden test diff provides essentially no outcome-based grading signal. The core behavioral test (zoom_in_and_zoom_out) is deleted outright and replaced with an empty stub containing a TODO comment ('write new tests for this, if we want'), and the update_count_in_dom changes only REMOVE assertions (removed assertions cannot fail-before/pass-after). The sole change that could distinguish pre/post states is the rename_stream test now expecting `for_modal: false` in the template payload \u2014 an incidental internal template-data field pinned via a whole-payload template snapshot, which grades formatting/plumbing rather than the observable modal behavior the commit implements. The actual user-visible outcome of this change is CSS/modal visual styling in the left sidebar, observable only via real browser layout, and none of the new zoom-in class/DOM behavior is asserted anywhere.",
+  "summary": "left_sidebar: Modal styling for more topics.",
+  "lang": "web",
+  "issue": 34471,
+  "fix_commit": "4fbc8daf6614308459dd37f3f438dddf1baaffec",
+  "base_commit": "fe9a8b7cdbdeb12cbf5b6069bb1c737ad5395222",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/4fbc8daf6614308459dd37f3f438dddf1baaffec",
+    "issue_url": "https://github.com/zulip/zulip/issues/34471"
+  }
+}

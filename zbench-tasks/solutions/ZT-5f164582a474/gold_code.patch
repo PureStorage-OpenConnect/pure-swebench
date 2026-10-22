@@ -1,0 +1,228 @@
+diff --git a/web/src/settings.ts b/web/src/settings.ts
+index a40d54a58a..db1ca4061f 100644
+--- a/web/src/settings.ts
++++ b/web/src/settings.ts
+@@ -117,6 +117,8 @@ export function build_page(): void {
+         twenty_four_hour_time_values: settings_config.twenty_four_hour_time_values,
+         general_settings: settings_config.all_notifications(user_settings).general_settings,
+         notification_settings: settings_config.all_notifications(user_settings).settings,
++        custom_stream_specific_notification_settings:
++            settings_config.get_custom_stream_specific_notifications_table_row_data(),
+         email_notifications_batching_period_values:
+             settings_config.email_notifications_batching_period_values,
+         realm_name_in_email_notifications_policy_values:
+diff --git a/web/src/settings_config.ts b/web/src/settings_config.ts
+index 5f822ae0e1..b974857dee 100644
+--- a/web/src/settings_config.ts
++++ b/web/src/settings_config.ts
+@@ -1012,6 +1012,21 @@ export function get_notifications_table_row_data(
+     });
+ }
+ 
++export function get_custom_stream_specific_notifications_table_row_data(): NotificationSettingCheckbox[] {
++    // Returns an array of NotificationSettingCheckbox for the special row that
++    // allows adding new configuration for a previously uncustomized channel.
++    return stream_specific_notification_settings.map((setting_name) => {
++        const checkbox = {
++            setting_name,
++            is_disabled: true,
++            is_checked: false,
++            is_mobile_checkbox: setting_name === "push_notifications",
++            push_notifications_disabled: !realm.realm_push_notifications_enabled,
++        };
++        return checkbox;
++    });
++}
++
+ export type AllNotifications = {
+     general_settings: {
+         label: string;
+diff --git a/web/src/settings_notifications.ts b/web/src/settings_notifications.ts
+index 2704cf337f..b1f92db8c9 100644
+--- a/web/src/settings_notifications.ts
++++ b/web/src/settings_notifications.ts
+@@ -1,5 +1,6 @@
+ import $ from "jquery";
+ import assert from "minimalistic-assert";
++import type * as tippy from "tippy.js";
+ import {z} from "zod";
+ 
+ import render_confirm_disable_all_notifications from "../templates/confirm_dialog/confirm_disable_all_notifications.hbs";
+@@ -9,6 +10,7 @@ import * as banners from "./banners.ts";
+ import * as blueslip from "./blueslip.ts";
+ import * as channel from "./channel.ts";
+ import * as confirm_dialog from "./confirm_dialog.ts";
++import * as dropdown_widget from "./dropdown_widget.ts";
+ import {$t, $t_html} from "./i18n.ts";
+ import * as message_notifications from "./message_notifications.ts";
+ import {page_params} from "./page_params.ts";
+@@ -33,6 +35,8 @@ import {
+ import * as util from "./util.ts";
+ 
+ export let user_settings_panel: SettingsPanel | undefined;
++let customize_stream_notifications_widget: dropdown_widget.DropdownWidget;
++const stream_ids_with_custom_notifications = new Set<number>();
+ 
+ const DESKTOP_NOTIFICATIONS_BANNER: banners.Banner = {
+     intent: "warning",
+@@ -63,6 +67,7 @@ function rerender_ui(): void {
+     $unmatched_streams_table.find(".stream-notifications-row").remove();
+ 
+     const muted_stream_ids = stream_data.muted_stream_ids();
++    stream_ids_with_custom_notifications.clear();
+ 
+     for (const stream of unmatched_streams) {
+         $unmatched_streams_table.append(
+@@ -79,12 +84,19 @@ function rerender_ui(): void {
+                 }),
+             ),
+         );
++        stream_ids_with_custom_notifications.add(stream.stream_id);
+     }
+ 
+     if (unmatched_streams.length === 0) {
+         $unmatched_streams_table.css("display", "none");
++        $("#customize_stream_notifications_widget .dropdown_widget_value").text(
++            $t({defaultMessage: "Customize a channel"}),
++        );
+     } else {
+         $unmatched_streams_table.css("display", "table-row-group");
++        $("#customize_stream_notifications_widget .dropdown_widget_value").text(
++            $t({defaultMessage: "Customize another channel"}),
++        );
+     }
+     update_desktop_notification_banner();
+ }
+@@ -187,9 +199,7 @@ export function set_enable_marketing_emails_visibility(): void {
+     }
+ }
+ 
+-function stream_notification_setting_changed(target: HTMLInputElement): void {
+-    const $row = $(target).closest(".stream-notifications-row");
+-    const stream_id = Number.parseInt($row.attr("data-stream-id")!, 10);
++function stream_notification_setting_changed(target: HTMLInputElement, stream_id: number): void {
+     if (!stream_id) {
+         blueslip.error("Cannot find stream id for target");
+         return;
+@@ -211,6 +221,53 @@ function stream_notification_setting_changed(target: HTMLInputElement): void {
+     );
+ }
+ 
++function change_state_of_customize_stream_notifications_widget(
++    event: JQuery.ClickEvent,
++    dropdown: tippy.Instance,
++): void {
++    dropdown.hide();
++    event.preventDefault();
++    event.stopPropagation();
++
++    assert(customize_stream_notifications_widget !== undefined);
++    customize_stream_notifications_widget.render();
++    const stream_id = customize_stream_notifications_widget.value();
++    assert(typeof stream_id === "number");
++
++    const $customizable_stream_notifications_table = $("#customizable_stream_notifications_table");
++    $customizable_stream_notifications_table.find("input[type='checkbox']").prop("disabled", false);
++
++    if (!realm.realm_push_notifications_enabled) {
++        $customizable_stream_notifications_table
++            .find("input.push_notifications")
++            .prop("disabled", true);
++    }
++
++    for (const notification_setting of settings_config.stream_specific_notification_settings) {
++        const checked_state = stream_data.receives_notifications(stream_id, notification_setting);
++        $customizable_stream_notifications_table
++            .find(`.${CSS.escape(notification_setting)}`)
++            .prop("checked", checked_state);
++    }
++}
++
++function get_streams_to_customize_notifications(): dropdown_widget.Option[] {
++    return stream_data
++        .get_options_for_dropdown_widget()
++        .filter(({stream}) => !stream_ids_with_custom_notifications.has(stream.stream_id));
++}
++
++function render_customize_stream_notifications_widget(): void {
++    customize_stream_notifications_widget = new dropdown_widget.DropdownWidget({
++        widget_name: "customize_stream_notifications",
++        get_options: get_streams_to_customize_notifications,
++        item_click_callback: change_state_of_customize_stream_notifications_widget,
++        $events_container: $("#user-notification-settings .notification-settings-form"),
++        unique_id_type: "number",
++    });
++    customize_stream_notifications_widget.setup();
++}
++
+ export function set_up(settings_panel: SettingsPanel): void {
+     const $container = $(settings_panel.container);
+     const settings_object = settings_panel.settings_object;
+@@ -290,8 +347,18 @@ export function set_up(settings_panel: SettingsPanel): void {
+         e.stopPropagation();
+         const $input_elem = $(e.currentTarget);
+         if ($input_elem.parents("#stream-specific-notify-table").length > 0) {
++            const $row = $input_elem.closest(".stream-notifications-row");
++            const stream_id = Number.parseInt($row.attr("data-stream-id")!, 10);
+             assert(e.currentTarget instanceof HTMLInputElement);
+-            stream_notification_setting_changed(e.currentTarget);
++            stream_notification_setting_changed(e.currentTarget, stream_id);
++            return;
++        }
++        if ($input_elem.parents("#customizable_stream_notifications_table").length > 0) {
++            assert(e.currentTarget instanceof HTMLInputElement);
++            assert(customize_stream_notifications_widget !== undefined);
++            const stream_id = customize_stream_notifications_widget.value();
++            assert(typeof stream_id === "number");
++            stream_notification_setting_changed(e.currentTarget, stream_id);
+             return;
+         }
+ 
+@@ -407,6 +474,7 @@ export function set_up(settings_panel: SettingsPanel): void {
+     });
+ 
+     set_enable_marketing_emails_visibility();
++    render_customize_stream_notifications_widget();
+     rerender_ui();
+ }
+ 
+@@ -452,6 +520,12 @@ export function update_page(settings_panel: SettingsPanel): void {
+             }
+         }
+     }
++    $container
++        .find("#customizable_stream_notifications_table input[type='checkbox']")
++        .each(function () {
++            $(this).prop("disabled", true).prop("checked", false);
++        });
++
+     rerender_ui();
+ }
+ 
+diff --git a/web/templates/settings/notification_settings.hbs b/web/templates/settings/notification_settings.hbs
+index 7ca5a982a1..2f5e3c1f8c 100644
+--- a/web/templates/settings/notification_settings.hbs
++++ b/web/templates/settings/notification_settings.hbs
+@@ -50,6 +50,22 @@
+             {{#unless for_realm_settings}}
+             <tbody id="stream-specific-notify-table">
+             </tbody>
++            <tbody id="customizable_stream_notifications_table">
++                <tr>
++                    <td>
++                        {{> ../dropdown_widget widget_name="customize_stream_notifications" custom_classes="decorated-stream-name-dropdown-widget"}}
++                    </td>
++                    {{#each custom_stream_specific_notification_settings}}
++                        {{> notification_settings_checkboxes
++                          setting_name=this.setting_name
++                          is_checked=this.is_checked
++                          is_mobile_checkbox=this.is_mobile_checkbox
++                          is_disabled=this.is_disabled
++                          push_notifications_disabled=this.push_notifications_disabled
++                          prefix="customize_stream_" }}
++                    {{/each}}
++                </tr>
++            </tbody>
+             {{/unless}}
+         </table>
+     </div>

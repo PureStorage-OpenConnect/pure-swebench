@@ -1,0 +1,179 @@
+diff --git a/zerver/lib/send_email.py b/zerver/lib/send_email.py
+index 83d1bc6fe9..4f63064f5a 100644
+--- a/zerver/lib/send_email.py
++++ b/zerver/lib/send_email.py
+@@ -21,7 +21,6 @@ import orjson
+ from django.conf import settings
+ from django.core.mail import EmailMultiAlternatives, get_connection
+ from django.core.mail.backends.base import BaseEmailBackend
+-from django.core.mail.backends.smtp import EmailBackend
+ from django.core.mail.message import sanitize_address
+ from django.core.management import CommandError
+ from django.db import transaction
+@@ -40,7 +39,6 @@ from zerver.models import Realm, RealmAuditLog, ScheduledEmail, UserProfile
+ from zerver.models.realm_audit_logs import AuditLogEventType
+ from zerver.models.scheduled_jobs import EMAIL_TYPES
+ from zerver.models.users import get_user_profile_by_id
+-from zproject.email_backends import EmailLogBackEnd, get_forward_address
+ 
+ if settings.ZILENCER_ENABLED:
+     from zilencer.models import RemoteZulipServer
+@@ -406,32 +404,7 @@ def initialize_connection(connection: BaseEmailBackend | None = None) -> BaseEma
+         connection = get_connection()
+         assert connection is not None
+ 
+-    if connection.open():
+-        # If it's a new connection, no need to no-op to check connectivity
+-        return connection
+-
+-    if isinstance(connection, EmailLogBackEnd) and not get_forward_address():
+-        # With the development environment backend and without a
+-        # configured forwarding address, we don't actually send emails.
+-        #
+-        # As a result, the connection cannot be closed by the server
+-        # (as there is none), and `connection.noop` is not
+-        # implemented, so we need to return the connection early.
+-        return connection
+-
+-    # No-op to ensure that we don't return a connection that has been
+-    # closed by the mail server.
+-    if isinstance(connection, EmailBackend):
+-        try:
+-            assert connection.connection is not None
+-            status = connection.connection.noop()[0]
+-        except Exception:
+-            status = -1
+-        if status != 250:
+-            # Close and connect again.
+-            connection.close()
+-            connection.open()
+-
++    connection.open()
+     return connection
+ 
+ 
+diff --git a/zproject/computed_settings.py b/zproject/computed_settings.py
+index 650a8843b7..c964720786 100644
+--- a/zproject/computed_settings.py
++++ b/zproject/computed_settings.py
+@@ -35,6 +35,7 @@ from .configured_settings import (
+     DEFAULT_RATE_LIMITING_RULES,
+     EMAIL_BACKEND,
+     EMAIL_HOST,
++    EMAIL_MAX_CONNECTION_LIFETIME_IN_MINUTES,
+     ERROR_REPORTING,
+     EXTERNAL_HOST,
+     EXTERNAL_HOST_WITHOUT_PORT,
+@@ -1239,8 +1240,11 @@ elif not EMAIL_HOST:
+     WARN_NO_EMAIL = True
+     EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
+ else:
+-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+-
++    # Route '0' to Django's default, everything else to custom class
++    if EMAIL_MAX_CONNECTION_LIFETIME_IN_MINUTES == 0:
++        EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
++    else:
++        EMAIL_BACKEND = "zproject.email_backends.PersistentSMTPEmailBackend"
+ EMAIL_TIMEOUT = 15
+ 
+ if DEVELOPMENT:
+diff --git a/zproject/default_settings.py b/zproject/default_settings.py
+index ce97310596..78200eba51 100644
+--- a/zproject/default_settings.py
++++ b/zproject/default_settings.py
+@@ -39,6 +39,7 @@ TOKENIZED_NOREPLY_EMAIL_ADDRESS = Address(
+ ).addr_spec
+ PHYSICAL_ADDRESS = ""
+ FAKE_EMAIL_DOMAIN = EXTERNAL_HOST_WITHOUT_PORT
++EMAIL_MAX_CONNECTION_LIFETIME_IN_MINUTES: int | None = 0
+ 
+ # SMTP settings
+ EMAIL_HOST: str | None = None
+diff --git a/zproject/email_backends.py b/zproject/email_backends.py
+index 626dfef2d3..bba21fe8e6 100644
+--- a/zproject/email_backends.py
++++ b/zproject/email_backends.py
+@@ -3,12 +3,14 @@ import configparser
+ import logging
+ from collections.abc import Sequence
+ from email.message import Message
++from typing import Any
+ 
+ from django.conf import settings
+ from django.core.mail import EmailMultiAlternatives
+ from django.core.mail.backends.smtp import EmailBackend
+ from django.core.mail.message import EmailAlternative, EmailMessage
+ from django.template import loader
++from django.utils.timezone import now as timezone_now
+ from typing_extensions import override
+ 
+ 
+@@ -110,3 +112,49 @@ class EmailLogBackEnd(EmailBackend):
+                 email_log_url = settings.ROOT_DOMAIN_URI + "/emails"
+                 logging.info("Emails sent in development are available at %s", email_log_url)
+         return num_sent
++
++
++class PersistentSMTPEmailBackend(EmailBackend):
++    def _open(self, **kwargs: Any) -> bool | None:
++        is_opened = super().open(**kwargs)
++        if is_opened:
++            self.opened_at = timezone_now()
++            return True
++
++        return is_opened
++
++    @override
++    def open(self, **kwargs: Any) -> bool | None:
++        is_opened = self._open(**kwargs)
++        if is_opened:
++            return True
++
++        status = None
++        time_elapsed = (timezone_now() - self.opened_at).seconds / 60
++        if (
++            settings.EMAIL_MAX_CONNECTION_LIFETIME_IN_MINUTES is None
++            or time_elapsed <= settings.EMAIL_MAX_CONNECTION_LIFETIME_IN_MINUTES
++        ):
++            # No-op to ensure that we don't return a connection that has been
++            # closed by the mail server.
++            try:
++                assert self.connection is not None
++                status = self.connection.noop()[0]
++            except Exception:
++                pass
++        if status is None or status != 250:
++            # Close and connect again.
++            super().close()
++            self._open()
++            # We return false here as Django will then have
++            # to leave the connection alive for next entries.
++            return False
++
++        # The connection was already open, the noop succeeded.
++        return False
++
++    @override
++    def close(self) -> None:
++        # We override close to a no-op so that Django's send_messages
++        # does not close the connection after sending a batch of emails.
++        pass
+diff --git a/zproject/prod_settings_template.py b/zproject/prod_settings_template.py
+index 3cc3846d53..4fa5a427b1 100644
+--- a/zproject/prod_settings_template.py
++++ b/zproject/prod_settings_template.py
+@@ -86,6 +86,13 @@ EXTERNAL_HOST = "zulip.example.com"
+ # EMAIL_USE_TLS = True
+ # EMAIL_PORT = 587
+ 
++## By default, Zulip will open a new SMTP connection for each outgoing email.
++## This has a small overhead, though not one which is relevant in most installs,
++## which send very low volumes of email. You can set to a positive number to
++## reuse SMTP connections for that many minutes; set to None to leave connections
++## open indefinitely.
++# EMAIL_MAX_CONNECTION_LIFETIME_IN_MINUTES = 0
++
+ ## The noreply address to be used as the sender for certain generated
+ ## emails.  Messages sent to this address could contain sensitive user
+ ## data and should not be delivered anywhere.  The default is

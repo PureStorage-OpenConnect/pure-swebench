@@ -1,0 +1,26 @@
+{
+  "task_id": "ZT-ec56a6762985",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "sparse_issue",
+  "reason": "issue #36819 has 175 chars of prose (<280)",
+  "summary": "scim: Add support for syncing custom profile fields.",
+  "lang": "py",
+  "issue": 36819,
+  "fix_commit": "ec56a67629850de6a5c37e27311df9c7045bad4a",
+  "base_commit": "9a10c0220cbbc96ac6578f43c9e9c94447dafbf2",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ec56a67629850de6a5c37e27311df9c7045bad4a",
+    "issue_url": "https://github.com/zulip/zulip/issues/36819"
+  },
+  "contamination": {
+    "fix_public_at": "2026-03-25",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

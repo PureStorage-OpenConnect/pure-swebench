@@ -1,0 +1,42 @@
+diff --git a/web/tests/compose.test.cjs b/web/tests/compose.test.cjs
+index 48a1d9757d..ab668ff1b2 100644
+--- a/web/tests/compose.test.cjs
++++ b/web/tests/compose.test.cjs
+@@ -67,7 +67,7 @@ const stream_data = zrequire("stream_data");
+ const compose_validate = zrequire("compose_validate");
+ const {initialize_user_settings} = zrequire("user_settings");
+ 
+-const realm = {};
++const realm = {realm_topics_policy: "allow_empty_topic"};
+ set_realm(realm);
+ const current_user = {};
+ set_current_user(current_user);
+diff --git a/web/tests/compose_ui.test.cjs b/web/tests/compose_ui.test.cjs
+index 9e8ec355e0..cf770d0761 100644
+--- a/web/tests/compose_ui.test.cjs
++++ b/web/tests/compose_ui.test.cjs
+@@ -30,7 +30,7 @@ const text_field_edit = mock_esm("text-field-edit");
+ const {set_realm} = zrequire("state_data");
+ const {initialize_user_settings} = zrequire("user_settings");
+ 
+-const realm = {};
++const realm = {realm_topics_policy: "allow_empty_topic"};
+ set_realm(realm);
+ initialize_user_settings({user_settings: {}});
+ 
+diff --git a/web/tests/compose_validate.test.cjs b/web/tests/compose_validate.test.cjs
+index 844317c278..5368f608e8 100644
+--- a/web/tests/compose_validate.test.cjs
++++ b/web/tests/compose_validate.test.cjs
+@@ -36,7 +36,10 @@ mock_esm("../src/group_permission_settings", {
+ });
+ 
+ const REALM_EMPTY_TOPIC_DISPLAY_NAME = "general chat";
+-const realm = {realm_empty_topic_display_name: REALM_EMPTY_TOPIC_DISPLAY_NAME};
++const realm = {
++    realm_empty_topic_display_name: REALM_EMPTY_TOPIC_DISPLAY_NAME,
++    realm_topics_policy: "allow_empty_topic",
++};
+ set_realm(realm);
+ const current_user = {};
+ set_current_user(current_user);

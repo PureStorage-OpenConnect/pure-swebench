@@ -1,0 +1,99 @@
+diff --git a/zerver/data_import/slack.py b/zerver/data_import/slack.py
+index 84c6d16c7e..73cd68399a 100644
+--- a/zerver/data_import/slack.py
++++ b/zerver/data_import/slack.py
+@@ -46,6 +46,7 @@ from zerver.data_import.sequencer import NEXT_ID
+ from zerver.data_import.slack_message_conversion import (
+     convert_to_zulip_markdown,
+     get_user_full_name,
++    process_slack_block_and_attachment,
+ )
+ from zerver.lib.emoji import codepoint_to_name, get_emoji_file_name
+ from zerver.lib.export import MESSAGE_BATCH_CHUNK_SIZE, do_common_export_processes
+@@ -940,6 +941,15 @@ def channel_message_to_zerver_message(
+         ]:
+             continue
+ 
++        formatted_block = process_slack_block_and_attachment(message)
++
++        # Leave it as is if formatted_block is an empty string, it's likely
++        # one of the unhandled_types.
++        if formatted_block != "":
++            # For most cases, the value of message["text"] will be just an
++            # empty string.
++            message["text"] = formatted_block
++
+         try:
+             content, mentioned_user_ids, has_link = convert_to_zulip_markdown(
+                 message["text"], users, added_channels, slack_user_id_to_zulip_user_id
+@@ -1291,6 +1301,8 @@ def get_message_sending_user(message: ZerverFieldsT) -> str | None:
+         return message["user"]
+     if message.get("file"):
+         return message["file"].get("user")
++    if message.get("bot_id"):
++        return message.get("bot_id")
+     return None
+ 
+ 
+diff --git a/zerver/data_import/slack_message_conversion.py b/zerver/data_import/slack_message_conversion.py
+index bb4bc12066..45fd163d92 100644
+--- a/zerver/data_import/slack_message_conversion.py
++++ b/zerver/data_import/slack_message_conversion.py
+@@ -1,3 +1,4 @@
++import json
+ import re
+ from itertools import zip_longest
+ from typing import Any, Literal, TypeAlias, TypedDict, cast
+@@ -13,6 +14,7 @@ from zerver.lib.validator import (
+     check_string,
+     check_string_in,
+     check_url,
++    to_wild_value,
+ )
+ 
+ # stubs
+@@ -239,10 +241,25 @@ def convert_to_zulip_markdown(
+ def render_block(block: WildValue) -> str:
+     # https://api.slack.com/reference/block-kit/blocks
+     block_type = block["type"].tame(
+-        check_string_in(["actions", "context", "divider", "header", "image", "input", "section"])
++        check_string_in(
++            ["actions", "context", "divider", "header", "image", "input", "section", "rich_text"]
++        )
+     )
+-    if block_type == "actions":
+-        # Unhandled
++
++    unhandled_types = [
++        # The "actions" block is used to format literal in-message clickable
++        # buttons and similar elements, which Zulip currently doesn't support.
++        # https://docs.slack.dev/reference/block-kit/blocks/actions-block
++        "actions",
++        # All user-sent messages contain at least a "block" component with a
++        # "rich_text" block. This block contains the same string as the "text"
++        # field. We're skipping this because the Slack import tool already
++        # handles the "text" field and the Slack incoming integration
++        # overrides it.
++        # https://docs.slack.dev/reference/block-kit/blocks/rich-text-block/
++        "rich_text",
++    ]
++    if block_type in unhandled_types:
+         return ""
+     elif block_type == "context" and block.get("elements"):
+         pieces = []
+@@ -389,3 +406,15 @@ def replace_links(text: str) -> str:
+     text, _ = convert_link_format(text)
+     text, _ = convert_mailto_format(text)
+     return text
++
++
++def process_slack_block_and_attachment(message: ZerverFieldsT) -> str:
++    slack_message: WildValue = to_wild_value("slack_message", json.dumps(message))
++    pieces: list[str] = []
++
++    if slack_message.get("blocks"):
++        pieces += map(render_block, slack_message["blocks"])
++
++    if slack_message.get("attachments"):
++        pieces += map(render_attachment, slack_message["attachments"])
++    return "\n".join(piece.strip() for piece in pieces if piece.strip() != "")

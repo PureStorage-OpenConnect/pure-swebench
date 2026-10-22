@@ -1,0 +1,87 @@
+{
+  "task_id": "ZT-f7ac7b885aa4",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "narrow: Handle use of -is:dm with channels:public.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 33033,
+  "fix_commit": "f7ac7b885aa430c577f3f66fe5045059528bc33b",
+  "base_commit": "053125ec97ca816a7111a809265b703381b63292",
+  "env_fingerprint": "9994f239d40e",
+  "fail_to_pass": [
+    "zerver.tests.test_message_fetch.NarrowBuilderTest.test_add_term_using_dm_operator_not_the_same_user_as_operand_and_negated",
+    "zerver.tests.test_message_fetch.NarrowBuilderTest.test_combined_channel_dm",
+    "zerver.tests.test_message_fetch.NarrowBuilderTest.test_combined_channel_with_negated_is_dm",
+    "zerver.tests.test_message_fetch.NarrowBuilderTest.test_combined_negated_channel_with_is_dm",
+    "zerver.tests.test_message_fetch.NarrowBuilderTest.test_negated_is_dm_with_dm_operator"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 18,
+    "files": 1,
+    "hunks": 8,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 422,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Abhay Upadhyay",
+    "email": "urabhay10@gmail.com",
+    "date": "2025-01-29"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-29",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-01-14T02:14:10Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/f7ac7b885aa430c577f3f66fe5045059528bc33b",
+    "issue_url": "https://github.com/zulip/zulip/issues/33033"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-f7ac7b885aa4",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_combined_channel_with_negated_is_dm",
+        "test_combined_negated_channel_with_is_dm",
+        "test_negated_is_dm_with_dm_operator"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 97.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

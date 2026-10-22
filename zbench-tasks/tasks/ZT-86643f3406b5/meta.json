@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-86643f3406b5",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The test deep-asserts the internal TopicSuggestion object shape, requiring the reference fix's invented refactor: replacing the pre-existing boolean field is_shortcut_syntax_used with a string field used_syntax_prefix holding literal sentinel values '#**', '#>' (and implicitly '[#'). This is internal data plumbing between get_candidates and content_typeahead_selected inside composebox_typeahead.ts, not API/settings/UI surface; an equally correct fix (keeping the boolean plus a fallback flag, or an enum) would fail the deep-equality assertions. The user-visible parts (inserted markdown-link text like '[#A&#42; Algorithm](#narrow/channel/6-A*-Algorithm)>' and typeahead re-triggering after '[#channel](url) >') would be specifiable, but the internal field-name/value coupling cannot be cured by a brief without dictating the implementation.",
+  "summary": "composebox_typeahead: Show topic suggestions for markdown stream links.",
+  "lang": "web",
+  "issue": 32556,
+  "fix_commit": "86643f3406b58f68dbf5587ca5a8a41bc2849957",
+  "base_commit": "10995ded0e6ae58d6c54f01f1ff74fc64a09fb75",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/86643f3406b58f68dbf5587ca5a8a41bc2849957",
+    "issue_url": "https://github.com/zulip/zulip/issues/32556"
+  }
+}

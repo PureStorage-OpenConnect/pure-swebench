@@ -1,0 +1,101 @@
+diff --git a/zerver/data_import/import_util.py b/zerver/data_import/import_util.py
+index b00b088553..2ef94fbf7c 100644
+--- a/zerver/data_import/import_util.py
++++ b/zerver/data_import/import_util.py
+@@ -583,6 +583,12 @@ class AttachmentRecordData:
+     size: int
+ 
+ 
++@dataclass
++class ScrubbedRecords:
++    zerver_attachments: list[AttachmentRecordData]
++    upload_records: list[UploadRecordData]
++
++
+ def build_attachment(
+     realm_id: int,
+     message_ids: set[int],
+@@ -1006,3 +1012,26 @@ class ImportedBotEmail:
+ 
+         cls.assigned_email[bot_id] = email
+         return email
++
++
++def scrub_missing_upload_records_after_download(
++    output_dir: str,
++    zerver_attachments: list[AttachmentRecordData],
++    upload_records: list[UploadRecordData],
++) -> ScrubbedRecords:
++    """
++    This filters out any orphaned records in zerver_attachment and upload_record
++    due to failed parallel download.
++    """
++    return ScrubbedRecords(
++        zerver_attachments=[
++            attachment_record
++            for attachment_record in zerver_attachments
++            if os.path.isfile(os.path.join(output_dir, "uploads", attachment_record.path_id))
++        ],
++        upload_records=[
++            upload_record
++            for upload_record in upload_records
++            if os.path.isfile(os.path.join(output_dir, "uploads", upload_record.path))
++        ],
++    )
+diff --git a/zerver/data_import/microsoft_teams.py b/zerver/data_import/microsoft_teams.py
+index b4c11a33a2..a2b5480e68 100644
+--- a/zerver/data_import/microsoft_teams.py
++++ b/zerver/data_import/microsoft_teams.py
+@@ -35,6 +35,7 @@ from zerver.data_import.import_util import (
+     get_data_file,
+     make_subscriber_map,
+     request_file_stream,
++    scrub_missing_upload_records_after_download,
+     validate_user_emails_for_import,
+     write_response_file_stream_to_path,
+ )
+@@ -796,6 +797,15 @@ def convert_messages(
+             )
+             dump_file_id += 1
+ 
++    scrubbed_data = scrub_missing_upload_records_after_download(
++        output_dir,
++        # Attachment record data is built inside download workers only
++        # on successful downloads, so there should be no stale records.
++        zerver_attachments=[],
++        upload_records=total_accumulated_upload_records,
++    )
++    total_accumulated_upload_records = scrubbed_data.upload_records
++
+     def fix_attachment_id(attachment: AttachmentRecordData) -> AttachmentRecordData:
+         attachment.id = NEXT_ID("attachment")
+         return attachment
+diff --git a/zerver/data_import/slack.py b/zerver/data_import/slack.py
+index 9657ad82fc..d018bacc25 100644
+--- a/zerver/data_import/slack.py
++++ b/zerver/data_import/slack.py
+@@ -47,6 +47,7 @@ from zerver.data_import.import_util import (
+     process_avatars,
+     process_emojis,
+     request_file_stream,
++    scrub_missing_upload_records_after_download,
+     validate_user_emails_for_import,
+     write_response_file_stream_to_path,
+ )
+@@ -1791,6 +1792,16 @@ def do_convert_directory(
+             do_download_and_export_upload_file,
+         )
+ 
++    # Attachment and upload records are built before the download runs,
++    # so records for files whose download failed will be invalid.
++    # This filters out such records after the download process has
++    # completed.
++    scrubbed_data = scrub_missing_upload_records_after_download(
++        output_dir, zerver_attachment, uploads_list
++    )
++    zerver_attachment = scrubbed_data.zerver_attachments
++    uploads_list = scrubbed_data.upload_records
++
+     # Move zerver_reactions to realm.json file
+     realm["zerver_reaction"] = reactions
+ 

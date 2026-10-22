@@ -1,0 +1,105 @@
+diff --git a/zerver/lib/export.py b/zerver/lib/export.py
+index ebddd2afab..5ec827e9fc 100644
+--- a/zerver/lib/export.py
++++ b/zerver/lib/export.py
+@@ -89,6 +89,7 @@ from zerver.models import (
+     UserStatus,
+     UserTopic,
+ )
++from zerver.models.messages import SubMessage
+ from zerver.models.presence import PresenceSequence
+ from zerver.models.realm_audit_logs import AuditLogEventType
+ from zerver.models.realms import get_fake_email_domain, get_realm
+@@ -286,7 +287,6 @@ NON_EXPORTED_TABLES = {
+     # export before they reach full production status.
+     "zerver_defaultstreamgroup",
+     "zerver_defaultstreamgroup_streams",
+-    "zerver_submessage",
+     # Drafts don't need to be exported as they are supposed to be more ephemeral.
+     "zerver_draft",
+     # The importer cannot trust ImageAttachment objects anyway and needs to check
+@@ -314,9 +314,10 @@ MESSAGE_TABLES = {
+     # largest tables and need to be paginated.
+     "zerver_message",
+     "zerver_usermessage",
+-    # zerver_reaction belongs here, since it's added late because it
+-    # has a foreign key into the Message table.
++    # zerver_reaction and zerver_submessage are effectively metadata
++    # attached to messages that are used to display the message.
+     "zerver_reaction",
++    "zerver_submessage",
+     # zerver_client is also written after we know what clients got
+     # used
+     "zerver_client",
+@@ -1523,6 +1524,11 @@ def fetch_client_data(response: TableData, client_ids: set[int]) -> None:
+     response["zerver_client"] = make_raw(query.iterator())
+ 
+ 
++def fetch_submessage_data(response: TableData, message_ids: set[int]) -> None:
++    query = SubMessage.objects.filter(message_id__in=list(message_ids))
++    response["zerver_submessage"] = make_raw(query.iterator())
++
++
+ def custom_fetch_direct_message_groups(response: TableData, context: Context) -> None:
+     realm = context["realm"]
+     export_type = context["export_type"]
+@@ -2558,6 +2564,8 @@ def do_export_realm(
+ 
+     fetch_client_data(response=response, client_ids=collected_client_ids)
+ 
++    fetch_submessage_data(response=response, message_ids=message_ids)
++
+     # Override the "deactivated" flag on the realm
+     if export_as_active is not None:
+         assert isinstance(response["zerver_realm"], list)
+@@ -2773,6 +2781,17 @@ def get_single_user_config() -> Config:
+         use_iterator=False,
+     )
+ 
++    Config(
++        table="zerver_submessage",
++        model=SubMessage,
++        normal_parent=user_profile_config,
++        include_rows="sender_id__in",
++        # Like reactions, submessages are metadata like poll votes
++        # that are readable by anyone who can access the message.
++        limit_to_consenting_users=False,
++        use_iterator=False,
++    )
++
+     add_user_profile_child_configs(user_profile_config)
+ 
+     return user_profile_config
+diff --git a/zerver/lib/import_realm.py b/zerver/lib/import_realm.py
+index 033742ee46..fc56d35384 100644
+--- a/zerver/lib/import_realm.py
++++ b/zerver/lib/import_realm.py
+@@ -109,6 +109,7 @@ from zerver.models import (
+     UserTopic,
+ )
+ from zerver.models.groups import SystemGroups
++from zerver.models.messages import SubMessage
+ from zerver.models.presence import PresenceSequence
+ from zerver.models.realm_audit_logs import AuditLogEventType
+ from zerver.models.realms import get_realm
+@@ -183,6 +184,7 @@ ID_MAP: dict[str, dict[int, int]] = {
+     "savedsnippet": {},
+     "channelfolder": {},
+     "navigationview": {},
++    "submessage": {},
+ }
+ 
+ id_map_to_list: dict[str, dict[int, list[int]]] = {
+@@ -1819,6 +1821,12 @@ def do_import_realm(import_dir: Path, subdomain: str, processes: int = 1) -> Rea
+     update_model_ids(Reaction, data, "reaction")
+     bulk_import_model(data, Reaction)
+ 
++    if "zerver_submessage" in data:
++        re_map_foreign_keys(data, "zerver_submessage", "message", related_table="message")
++        re_map_foreign_keys(data, "zerver_submessage", "sender", related_table="user_profile")
++        update_model_ids(SubMessage, data, "submessage")
++        bulk_import_model(data, SubMessage)
++
+     # Similarly, we need to recalculate the first_message_id for stream objects.
+     update_first_message_id_query = SQL(
+         """

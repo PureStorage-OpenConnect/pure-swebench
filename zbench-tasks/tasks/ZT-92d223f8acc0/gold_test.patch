@@ -1,0 +1,12 @@
+diff --git a/web/tests/recent_view.test.cjs b/web/tests/recent_view.test.cjs
+index 3a1944d8a4..9430a31228 100644
+--- a/web/tests/recent_view.test.cjs
++++ b/web/tests/recent_view.test.cjs
+@@ -197,6 +197,7 @@ mock_esm("../src/unread", {
+ mock_esm("../src/resize", {
+     update_recent_view: noop,
+     set_recent_view_participants_rerender: noop,
++    set_recent_view_participants_column_class_update: noop,
+ });
+ mock_esm("../src/popup_banners", {
+     close_found_missing_unreads_banner: noop,

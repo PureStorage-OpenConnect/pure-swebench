@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-ee246b2cda80",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "f2p_unenumerable",
+  "reason": "no extractable test targets",
+  "summary": "markdown: Linkify RFC2392 'mid:' URLs.",
+  "lang": "py",
+  "issue": 36518,
+  "fix_commit": "ee246b2cda802011f04542b72a350d82462a7994",
+  "base_commit": "69470ec9e09aa63a20b7fc8302fdf777c7993033",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ee246b2cda802011f04542b72a350d82462a7994",
+    "issue_url": "https://github.com/zulip/zulip/issues/36518"
+  }
+}

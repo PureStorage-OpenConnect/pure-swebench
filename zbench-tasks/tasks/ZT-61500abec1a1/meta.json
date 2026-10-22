@@ -1,0 +1,79 @@
+{
+  "task_id": "ZT-61500abec1a1",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "compose_paste: Add turndown rule for divs to avoid extra newlines.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 36936,
+  "fix_commit": "61500abec1a10cf8601324dbad0cd6348ad9d0ac",
+  "base_commit": "5c1201036cb461ef87092b82b45d4879f56d3393",
+  "env_fingerprint": "09d041dc1808",
+  "fail_to_pass": [
+    "web/tests/compose_paste.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 15,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 762,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "apoorvapendse",
+    "email": "apoorvavpendse@gmail.com",
+    "date": "2025-12-09"
+  },
+  "contamination": {
+    "fix_public_at": "2025-12-09",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-12-06T15:20:20Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/61500abec1a10cf8601324dbad0cd6348ad9d0ac",
+    "issue_url": "https://github.com/zulip/zulip/issues/36936"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-61500abec1a1",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 92.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

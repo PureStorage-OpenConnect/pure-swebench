@@ -1,0 +1,43 @@
+diff --git a/web/tests/buddy_data.test.cjs b/web/tests/buddy_data.test.cjs
+index 8d72568e2c..083121bdbd 100644
+--- a/web/tests/buddy_data.test.cjs
++++ b/web/tests/buddy_data.test.cjs
+@@ -175,6 +175,10 @@ test("user_circle, level", ({override}) => {
+     set_presence(fred.user_id, undefined);
+     assert.equal(buddy_data.get_user_circle_class(fred.user_id), "user-circle-offline");
+     assert.equal(buddy_data.level(fred.user_id), 3);
++
++    set_presence(fred.user_id, undefined);
++    assert.equal(buddy_data.get_user_circle_class(fred.user_id, true), "user-circle-deactivated");
++    assert.equal(buddy_data.level(fred.user_id), 3);
+ });
+ 
+ test("title_data", ({override}) => {
+diff --git a/web/tests/user_events.test.cjs b/web/tests/user_events.test.cjs
+index ae2dd95542..42b94e4437 100644
+--- a/web/tests/user_events.test.cjs
++++ b/web/tests/user_events.test.cjs
+@@ -26,6 +26,15 @@ mock_esm("../src/user_profile", {
+ });
+ const stream_events = mock_esm("../src/stream_events");
+ 
++const buddy_list = mock_esm("../src/buddy_list", {
++    BuddyList: class {
++        insert_or_move = noop;
++    },
++});
++
++const buddy_data = new buddy_list.BuddyList();
++buddy_list.buddy_list = buddy_data;
++
+ mock_esm("../src/activity_ui", {
+     redraw() {},
+ });
+@@ -278,6 +287,7 @@ run_test("updates", ({override}) => {
+         assert.equal(user_id, isaac.user_id);
+         user_removed_from_streams = true;
+     };
++    buddy_list.BuddyList.insert_or_move = noop;
+     user_events.update_person({user_id: isaac.user_id, is_active: false});
+     assert.ok(!people.is_person_active(isaac.user_id));
+     assert.ok(user_removed_from_streams);

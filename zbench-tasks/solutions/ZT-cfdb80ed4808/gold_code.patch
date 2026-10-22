@@ -1,0 +1,110 @@
+diff --git a/web/src/composebox_typeahead.ts b/web/src/composebox_typeahead.ts
+index 0096fe9f9a..fe3f64b8c6 100644
+--- a/web/src/composebox_typeahead.ts
++++ b/web/src/composebox_typeahead.ts
+@@ -843,11 +843,12 @@ export function get_candidates(
+         }
+         completing = "syntax";
+         token = current_token;
+-        // If the code formatting button was triggered, we want to show a blank option
+-        // to improve the discoverability of the possibility of specifying a language.
+-        const language_list = compose_ui.code_formatting_button_triggered
+-            ? ["", ...realm_playground.get_pygments_typeahead_list_for_composebox()]
+-            : realm_playground.get_pygments_typeahead_list_for_composebox();
++
++        const default_language = realm.realm_default_code_block_language;
++        const language_list = realm_playground.get_pygments_typeahead_list_for_composebox();
++        if (default_language) {
++            language_list.unshift(default_language);
++        }
+         compose_ui.set_code_formatting_button_triggered(false);
+         const matcher = get_language_matcher(token);
+         const matches = language_list.filter((item) => matcher(item));
+@@ -1109,7 +1110,12 @@ export function content_highlighter_html(item: TypeaheadSuggestion): string | un
+         case "stream":
+             return typeahead_helper.render_stream(item);
+         case "syntax":
+-            return typeahead_helper.render_typeahead_item({primary: item.language});
++            return typeahead_helper.render_typeahead_item({
++                primary: item.language,
++                is_default_language:
++                    item.language !== "" &&
++                    item.language === realm.realm_default_code_block_language,
++            });
+         case "topic_jump":
+             return typeahead_helper.render_typeahead_item({primary: item.message});
+         case "topic_list": {
+@@ -1415,15 +1421,6 @@ function get_footer_html(): string | false {
+         case "silent_mention":
+             tip_text = $t({defaultMessage: "This silent mention won't trigger notifications."});
+             break;
+-        case "syntax":
+-            if (realm.realm_default_code_block_language !== "") {
+-                tip_text = $t(
+-                    {defaultMessage: "Default is {language}. Use 'text' to disable highlighting."},
+-                    {language: realm.realm_default_code_block_language},
+-                );
+-                break;
+-            }
+-            return false;
+         default:
+             return false;
+     }
+@@ -1465,6 +1462,15 @@ export function initialize_compose_typeahead($element: JQuery<HTMLTextAreaElemen
+                     if (item.is_new_topic) {
+                         return `<em>${$t({defaultMessage: "New"})}</em>`;
+                     }
++                } else if (item.type === "syntax") {
++                    if (
++                        item.language !== "" &&
++                        item.language === realm.realm_default_code_block_language
++                    ) {
++                        return `<em>${$t({defaultMessage: "(default)"})}</em>`;
++                    } else if (item.language === "text") {
++                        return `<em>${$t({defaultMessage: "(no highlighting)"})}</em>`;
++                    }
+                 }
+                 return false;
+             },
+diff --git a/web/src/typeahead_helper.ts b/web/src/typeahead_helper.ts
+index e26b577139..c05657b8bd 100644
+--- a/web/src/typeahead_helper.ts
++++ b/web/src/typeahead_helper.ts
+@@ -113,6 +113,7 @@ export let render_typeahead_item = (args: {
+     topic_object?: TopicSuggestion;
+     is_stream_topic?: boolean;
+     is_empty_string_topic?: boolean;
++    is_default_language?: boolean;
+ }): string => {
+     const has_image = args.img_src !== undefined;
+     const has_status = args.status_emoji_info !== undefined;
+@@ -434,8 +435,15 @@ function retain_unique_language_aliases(matches: string[]): string[] {
+ 
+ export function sort_languages(matches: LanguageSuggestion[], query: string): LanguageSuggestion[] {
+     const languages = matches.map((object) => object.language);
++    const default_language = realm.realm_default_code_block_language;
+     const results = typeahead.triage(query, languages, (x) => x, compare_language);
+-    const unique_languages = retain_unique_language_aliases([...results.matches, ...results.rest]);
++    let language_results;
++    if (default_language && results.matches.includes(default_language)) {
++        language_results = [default_language, ...results.matches, ...results.rest];
++    } else {
++        language_results = [...results.matches, ...results.rest];
++    }
++    const unique_languages = retain_unique_language_aliases(language_results);
+     return unique_languages.map((language) => ({
+         language,
+         type: "syntax",
+diff --git a/web/templates/typeahead_list_item.hbs b/web/templates/typeahead_list_item.hbs
+index 5d36ae7ecd..3c681c8a3f 100644
+--- a/web/templates/typeahead_list_item.hbs
++++ b/web/templates/typeahead_list_item.hbs
+@@ -26,7 +26,7 @@
+ {{else}}
+ {{!-- Separate container to ensure overflowing text remains in this container. --}}
+ <div class="typeahead-text-container{{#if has_secondary_html}} has_secondary_html{{/if}}">
+-    <strong class="typeahead-strong-section{{#if is_empty_string_topic}} empty-topic-display{{/if}}">
++    <strong class="typeahead-strong-section{{#if is_empty_string_topic}} empty-topic-display{{/if}}{{#if is_default_language}} default-language-display{{/if}}">
+         {{~#if stream~}}
+             {{~> inline_decorated_channel_name stream=stream ~}}
+             {{~else~}}

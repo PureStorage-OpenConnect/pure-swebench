@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-95c912832352",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The test does not observe the user-visible fix (that the self-copy no longer blocks on S3-compatible backends holding read locks). Instead it mock-patches the internal function `zerver.views.tusd.attachment_source` and asserts the exact call shape of the fix: `call_count == 2` (source opened once for charset sniffing, then a second fresh time for create_attachment) and `reader.close.called` (the first reader closed via `.reader().close()`). These pin one particular restructuring among several behaviorally equivalent ones: a solver could instead read the sniff bytes into memory and never reopen (call_count 1), call `.reader()` twice on a single source object, close the reader via a context manager on a different object, or hoist the logic so the patched module-level name isn't the choke point. No reasonable ticket would specify 'the pre-finish hook must invoke attachment_source exactly twice and call close() on the first reader' \u2014 that is implementation prescription, not a product requirement, so the coupling cannot be cured by a brief. (The one behavioral bit a spec could dictate \u2014 only open the object for text/plain sniffing \u2014 is not actually what the assertions grade.)",
+  "summary": "upload: Don't hold a read open on S3 objects during self-copy.",
+  "lang": "py",
+  "issue": 39752,
+  "fix_commit": "95c912832352d6de4adcca9cba57ccab827db9a8",
+  "base_commit": "5d26507848381af0ff011dcdf67cd8b0c81e98cc",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/95c912832352d6de4adcca9cba57ccab827db9a8",
+    "issue_url": "https://github.com/zulip/zulip/issues/39752"
+  }
+}

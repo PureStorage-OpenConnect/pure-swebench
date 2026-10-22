@@ -1,0 +1,85 @@
+{
+  "task_id": "ZT-abc3cf3bc52f",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "lightbox: Open YouTube videos at correct timestamp.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 36990,
+  "fix_commit": "abc3cf3bc52f44557bd27d31371ad62ce704dd91",
+  "base_commit": "c82eecd1c59be2c41bf415203985a4c462dd342a",
+  "env_fingerprint": "d40f35024a1c",
+  "fail_to_pass": [
+    "web/tests/util.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 33,
+    "files": 2,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The web/src/util module exports a function `parse_youtube_start_time(url: string): number | undefined` that extracts the start-time offset from a YouTube URL (both youtu.be short links and youtube.com/watch links).",
+    "The function reads the `t` query parameter, falling back to the `start` query parameter if `t` is absent.",
+    "A plain integer value (e.g. `t=120`) is returned as that number of seconds.",
+    "A duration-formatted value of the form `#h#m#s` with each component optional (e.g. `1h1m1s`, `1h30m`, `1m`) is converted to total seconds (e.g. 3661, 5400, 60).",
+    "If the URL has neither parameter, or the value matches neither the integer nor the duration format (e.g. `t=invalid`), the function returns `undefined`."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 255,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Sarafaraj Nasardi",
+    "email": "sarafarajnasardi786@gmail.com",
+    "date": "2026-01-28"
+  },
+  "contamination": {
+    "fix_public_at": "2026-01-28",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-12-10T16:43:57Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/abc3cf3bc52f44557bd27d31371ad62ce704dd91",
+    "issue_url": "https://github.com/zulip/zulip/issues/36990"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-abc3cf3bc52f",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 67.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

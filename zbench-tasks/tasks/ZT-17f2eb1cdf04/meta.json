@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-17f2eb1cdf04",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The change itself is a fine, verifiable feature (show bot owner on realm_activity/user_activity pages), but the hidden test never asserts the observable outcome. It only checks status codes and exact database query counts (7\u219213, and 6 for the new bot page). Query counts are incidental implementation bookkeeping: any alternate correct implementation (e.g. using select_related to prefetch bot_owner) would show the owner correctly yet fail the pinned counts, and a wrong implementation that merely issues extra queries without rendering the owner could pass. This grades an internal side effect rather than the behavior the fix changes, so it's brittle in exactly the format-over-behavior sense.",
+  "summary": "activity: Add bot owner information for bot users in activity charts.",
+  "lang": "py",
+  "issue": 18275,
+  "fix_commit": "17f2eb1cdf048bd06a52dc84c721df9c92ac4e64",
+  "base_commit": "82f2613880a7857036d80d2e39b4dc0a57384e1b",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/17f2eb1cdf048bd06a52dc84c721df9c92ac4e64",
+    "issue_url": "https://github.com/zulip/zulip/issues/18275"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "task_id": "ZT-f9825142c811",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "settings: Add frontend to change allow_edit_history to integer field.",
+  "type": "other",
+  "lang": "web",
+  "issue": 21398,
+  "fix_commit": "f9825142c811cf28c04ad3c148ad2f91893e6579",
+  "base_commit": "d0c5c1cacbb2fda41d599df5a82c3283b266cec2",
+  "env_fingerprint": "16cfe98c0c8f",
+  "fail_to_pass": [
+    "web/tests/message_events.test.cjs",
+    "web/tests/popover_menus_data.test.cjs",
+    "web/tests/settings_org.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/hotkey.test.cjs",
+    "web/tests/message_view.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 73,
+    "files": 14,
+    "hunks": 27,
+    "f2p_count": 3
+  },
+  "interface_requirements": [
+    "the realm object gains an integer-enum setting `realm_message_edit_history_visibility_policy`, replacing the boolean `realm_allow_edit_history`",
+    "the frontend module `settings_config` exports `message_edit_history_visibility_policy_values`, an object with (at least) keys `always` and `never`, each entry having a numeric `code` property holding the API enum value for that policy (tests reference codes only via this object, so exact numbers are not asserted)",
+    "semantics: policy code `never` means message edit history is not visible (edit-history UI suppressed, no client-side edit_history bookkeeping); `always` means full edit history is visible",
+    "the organization-settings UI exposes the policy as an input (select) with DOM id `#id_realm_message_edit_history_visibility_policy`, following the existing `#id_realm_<setting_name>` convention, whose value is the policy code"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 835,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Saubhagya Patel",
+    "email": "patelsaubhagya0144@gmail.com",
+    "date": "2025-02-25"
+  },
+  "contamination": {
+    "fix_public_at": "2025-02-25",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2022-03-12T00:21:12Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/f9825142c811cf28c04ad3c148ad2f91893e6579",
+    "issue_url": "https://github.com/zulip/zulip/issues/21398"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-f9825142c811",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 102.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

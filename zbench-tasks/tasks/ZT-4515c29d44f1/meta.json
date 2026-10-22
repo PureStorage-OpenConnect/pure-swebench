@@ -1,0 +1,82 @@
+{
+  "task_id": "ZT-4515c29d44f1",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "topic_list: Fix missing 'show all topics' when messages not cached.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 28949,
+  "fix_commit": "4515c29d44f154ef2e9699af8a805a2075c82442",
+  "base_commit": "7d55ad3c130bac8118150645315baeaa4d0fde01",
+  "env_fingerprint": "da19f2d226e8",
+  "fail_to_pass": [
+    "web/tests/topic_list.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 39,
+    "files": 1,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "When a stream's `first_message_id` is covered by the locally cached message range (i.e. `sub.first_message_id >= first cached message id`) but the server has not yet confirmed the full topic history, `topic_list.is_full_topic_history_available(stream_id)` must return false (keeping the 'show all topics' affordance visible) instead of the previous behavior of returning true.",
+    "In that same case, the function must immediately (synchronously, during the call) initiate a server fetch of the stream's full topic history by calling the pre-existing `stream_topic_history_util.get_server_history`, passing the stream's id as the first argument."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 5075,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Prakhar Pratyush",
+    "email": "prakhar@zulip.com",
+    "date": "2025-06-19"
+  },
+  "contamination": {
+    "fix_public_at": "2025-06-19",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-02-15T21:26:20Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/4515c29d44f154ef2e9699af8a805a2075c82442",
+    "issue_url": "https://github.com/zulip/zulip/issues/28949"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-4515c29d44f1",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 69.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

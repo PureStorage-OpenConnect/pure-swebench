@@ -1,0 +1,120 @@
+diff --git a/web/src/add_subscribers_pill.ts b/web/src/add_subscribers_pill.ts
+index 603f9a73e9..0a7829fd83 100644
+--- a/web/src/add_subscribers_pill.ts
++++ b/web/src/add_subscribers_pill.ts
+@@ -1,7 +1,5 @@
+ import assert from "minimalistic-assert";
+ 
+-import render_input_pill from "../templates/input_pill.hbs";
+-
+ import * as blueslip from "./blueslip.ts";
+ import * as input_pill from "./input_pill.ts";
+ import * as keydown_util from "./keydown_util.ts";
+@@ -79,7 +77,8 @@ export function set_up_pill_typeahead({
+ 
+ export function get_display_value_from_item(item: CombinedPill): string {
+     if (item.type === "user_group") {
+-        return user_group_pill.display_pill(user_groups.get_user_group_from_id(item.group_id));
++        const group = user_groups.get_user_group_from_id(item.group_id);
++        return user_groups.get_display_group_name(group.name);
+     } else if (item.type === "stream") {
+         return stream_pill.get_display_value_from_item(item);
+     }
+@@ -89,10 +88,7 @@ export function get_display_value_from_item(item: CombinedPill): string {
+ 
+ export function generate_pill_html(item: CombinedPill): string {
+     if (item.type === "user_group") {
+-        return render_input_pill({
+-            display_value: get_display_value_from_item(item),
+-            group_id: item.group_id,
+-        });
++        return user_group_pill.generate_pill_html(item);
+     } else if (item.type === "user") {
+         return user_pill.generate_pill_html(item);
+     }
+diff --git a/web/src/group_setting_pill.ts b/web/src/group_setting_pill.ts
+index 7cfe003d47..ee78c315b5 100644
+--- a/web/src/group_setting_pill.ts
++++ b/web/src/group_setting_pill.ts
+@@ -1,7 +1,5 @@
+ import assert from "minimalistic-assert";
+ 
+-import render_input_pill from "../templates/input_pill.hbs";
+-
+ import * as group_permission_settings from "./group_permission_settings.ts";
+ import * as input_pill from "./input_pill.ts";
+ import type {InputPillConfig} from "./input_pill.ts";
+@@ -107,7 +105,8 @@ export function get_text_from_item(item: GroupSettingPill): string {
+ 
+ export function get_display_value_from_item(item: GroupSettingPill): string {
+     if (item.type === "user_group") {
+-        return user_group_pill.display_pill(user_groups.get_user_group_from_id(item.group_id));
++        const group = user_groups.get_user_group_from_id(item.group_id);
++        return user_groups.get_display_group_name(group.name);
+     }
+     assert(item.type === "user");
+     return user_pill.get_display_value_from_item(item);
+@@ -115,10 +114,7 @@ export function get_display_value_from_item(item: GroupSettingPill): string {
+ 
+ export function generate_pill_html(item: GroupSettingPill): string {
+     if (item.type === "user_group") {
+-        return render_input_pill({
+-            display_value: get_display_value_from_item(item),
+-            group_id: item.group_id,
+-        });
++        return user_group_pill.generate_pill_html(item);
+     }
+     assert(item.type === "user");
+     return user_pill.generate_pill_html(item);
+diff --git a/web/src/user_group_pill.ts b/web/src/user_group_pill.ts
+index dbcf78c362..c8a1a540a6 100644
+--- a/web/src/user_group_pill.ts
++++ b/web/src/user_group_pill.ts
+@@ -1,7 +1,8 @@
+ import assert from "minimalistic-assert";
+ 
++import render_input_pill from "../templates/input_pill.hbs";
++
+ import * as group_permission_settings from "./group_permission_settings.ts";
+-import {$t_html} from "./i18n.ts";
+ import type {InputPillContainer} from "./input_pill.ts";
+ import * as people from "./people.ts";
+ import type {
+@@ -25,15 +26,15 @@ export type UserGroupPillData = UserGroup & {
+     is_silent?: boolean;
+ };
+ 
+-export function display_pill(group: UserGroup): string {
++export function generate_pill_html(item: UserGroupPill): string {
++    const group = user_groups.get_user_group_from_id(item.group_id);
+     const group_members = get_group_members(group);
+-    return $t_html(
+-        {defaultMessage: "{group_name}: {group_size, plural, one {# user} other {# users}}"},
+-        {
+-            group_name: user_groups.get_display_group_name(group.name),
+-            group_size: group_members.length,
+-        },
+-    );
++    return render_input_pill({
++        display_value: user_groups.get_display_group_name(group.name),
++        group_id: item.group_id,
++        show_group_members_count: true,
++        group_members_count: group_members.length,
++    });
+ }
+ 
+ export function create_item_from_group_name(
+diff --git a/web/templates/input_pill.hbs b/web/templates/input_pill.hbs
+index 8da370dcae..bdfa1715e4 100644
+--- a/web/templates/input_pill.hbs
++++ b/web/templates/input_pill.hbs
+@@ -29,6 +29,9 @@
+         {{~#if is_bot~}}
+             <i class="zulip-icon zulip-icon-bot" aria-label="{{t 'Bot' }}"></i>
+         {{~/if~}}
++        {{~#if show_group_members_count~}}
++        &nbsp;<span class="group-members-count">({{group_members_count}})</span>
++        {{~/if~}}
+     </span>
+     {{#unless disabled}}
+     <div class="exit">

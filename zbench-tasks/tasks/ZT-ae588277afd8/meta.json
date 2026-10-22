@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-ae588277afd8",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The test stubs the invented internal helper stream_settings_ui.update_default_push_notifications_setting and asserts update_property calls it with (sub, val); it calls the new internal setter stream_data.update_default_push_notifications by exact name; and it pins mark_subscribed's new 4th positional parameter push_notifications (boolean|null sentinel). These are internal frontend module-layout and call-signature choices no reasonable ticket would dictate \u2014 an equally correct implementation (inline updates, different helper names, passing the value differently) would fail. Only the API-level field name default_push_notifications is spec-dictatable; the rest cannot be cured by a brief.",
+  "summary": "streams: Add UI for per-stream push notification default.",
+  "lang": "web",
+  "issue": 23873,
+  "fix_commit": "ae588277afd8d27ee5c6c6e727475808e65fc2ed",
+  "base_commit": "be4da6c8d8ce7ada23fdef45db589b4a046b3b3e",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ae588277afd8d27ee5c6c6e727475808e65fc2ed",
+    "issue_url": "https://github.com/zulip/zulip/issues/23873"
+  }
+}

@@ -1,0 +1,37 @@
+diff --git a/zerver/actions/realm_settings.py b/zerver/actions/realm_settings.py
+index 55cea4145d..3d58a2dcd5 100644
+--- a/zerver/actions/realm_settings.py
++++ b/zerver/actions/realm_settings.py
+@@ -725,6 +725,15 @@ def scrub_deactivated_realm(realm_to_scrub: Realm) -> None:
+         logging.info("Scrubbed realm %s", realm_to_scrub.id)
+ 
+ 
++def clean_deactivated_realm_data() -> None:
++    realms_to_scrub = Realm.objects.filter(
++        deactivated=True,
++        scheduled_deletion_date__lte=timezone_now(),
++    )
++    for realm in realms_to_scrub:
++        scrub_deactivated_realm(realm)
++
++
+ @transaction.atomic(durable=True)
+ def do_change_realm_org_type(
+     realm: Realm,
+diff --git a/zerver/management/commands/archive_messages.py b/zerver/management/commands/archive_messages.py
+index ac38665048..7624479864 100644
+--- a/zerver/management/commands/archive_messages.py
++++ b/zerver/management/commands/archive_messages.py
+@@ -2,6 +2,7 @@ from typing import Any
+ 
+ from typing_extensions import override
+ 
++from zerver.actions.realm_settings import clean_deactivated_realm_data
+ from zerver.lib.management import ZulipBaseCommand, abort_unless_locked
+ from zerver.lib.retention import archive_messages, clean_archived_data
+ 
+@@ -12,3 +13,4 @@ class Command(ZulipBaseCommand):
+     def handle(self, *args: Any, **options: str) -> None:
+         clean_archived_data()
+         archive_messages()
++        clean_deactivated_realm_data()

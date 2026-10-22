@@ -1,0 +1,89 @@
+{
+  "task_id": "ZT-0dfb70915262",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "slack_data_import: Support converting integration bot messages.",
+  "type": "other",
+  "lang": "py",
+  "issue": 31162,
+  "fix_commit": "0dfb70915262cec91030368e53b7472a0ef3dfe4",
+  "base_commit": "359939ba77a45c06a8810bba6fc4169c5574d694",
+  "env_fingerprint": "295ae4d0d5d8",
+  "fail_to_pass": [
+    "zerver.tests.test_slack_importer.SlackImporter.test_channel_message_to_zerver_message_with_integration_bots"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_slack_message_conversion"
+  ],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 44,
+    "files": 2,
+    "hunks": 7,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 4946,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2025-05-23"
+  },
+  "contamination": {
+    "fix_public_at": "2025-05-23",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-07-30T04:30:21Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/0dfb70915262cec91030368e53b7472a0ef3dfe4",
+    "issue_url": "https://github.com/zulip/zulip/issues/31162"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-0dfb70915262",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_channel_message_to_zerver_message_with_integration_bots"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 110.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

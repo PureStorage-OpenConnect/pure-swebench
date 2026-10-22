@@ -1,0 +1,1375 @@
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_archive.json b/zerver/webhooks/shortcut/fixtures/epic_archive.json
+similarity index 100%
+rename from zerver/webhooks/clubhouse/fixtures/epic_archive.json
+rename to zerver/webhooks/shortcut/fixtures/epic_archive.json
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_create.json b/zerver/webhooks/shortcut/fixtures/epic_create.json
+similarity index 100%
+rename from zerver/webhooks/clubhouse/fixtures/epic_create.json
+rename to zerver/webhooks/shortcut/fixtures/epic_create.json
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_create_story.json b/zerver/webhooks/shortcut/fixtures/epic_create_story.json
+similarity index 93%
+rename from zerver/webhooks/clubhouse/fixtures/epic_create_story.json
+rename to zerver/webhooks/shortcut/fixtures/epic_create_story.json
+index 32715fba6a..bbf608c7df 100644
+--- a/zerver/webhooks/clubhouse/fixtures/epic_create_story.json
++++ b/zerver/webhooks/shortcut/fixtures/epic_create_story.json
+@@ -9,7 +9,7 @@
+             "id":23,
+             "entity_type":"story",
+             "action":"create",
+-            "app_url":"https://app.clubhouse.io/zulip/story/23",
++            "app_url":"https://app.shortcut.com/zulip/story/23",
+             "description":"",
+             "story_type":"feature",
+             "name":"An epic story!",
+@@ -30,7 +30,7 @@
+             "action":"update",
+             "name":"Add super cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "subject_story_link_ids":{
+                     "adds":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_delete.json b/zerver/webhooks/shortcut/fixtures/epic_delete.json
+similarity index 89%
+rename from zerver/webhooks/clubhouse/fixtures/epic_delete.json
+rename to zerver/webhooks/shortcut/fixtures/epic_delete.json
+index 8e4faba551..52226eb02d 100644
+--- a/zerver/webhooks/clubhouse/fixtures/epic_delete.json
++++ b/zerver/webhooks/shortcut/fixtures/epic_delete.json
+@@ -9,7 +9,7 @@
+             "id":17,
+             "entity_type":"epic",
+             "action":"delete",
+-            "name":"Clubhouse Fork"
++            "name":"Shortcut Fork"
+         }
+     ]
+ }
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_update_add_comment.json b/zerver/webhooks/shortcut/fixtures/epic_update_add_comment.json
+similarity index 100%
+rename from zerver/webhooks/clubhouse/fixtures/epic_update_add_comment.json
+rename to zerver/webhooks/shortcut/fixtures/epic_update_add_comment.json
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_update_add_description.json b/zerver/webhooks/shortcut/fixtures/epic_update_add_description.json
+similarity index 100%
+rename from zerver/webhooks/clubhouse/fixtures/epic_update_add_description.json
+rename to zerver/webhooks/shortcut/fixtures/epic_update_add_description.json
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_update_change_description.json b/zerver/webhooks/shortcut/fixtures/epic_update_change_description.json
+similarity index 100%
+rename from zerver/webhooks/clubhouse/fixtures/epic_update_change_description.json
+rename to zerver/webhooks/shortcut/fixtures/epic_update_change_description.json
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_update_change_state.json b/zerver/webhooks/shortcut/fixtures/epic_update_change_state.json
+similarity index 100%
+rename from zerver/webhooks/clubhouse/fixtures/epic_update_change_state.json
+rename to zerver/webhooks/shortcut/fixtures/epic_update_change_state.json
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_update_change_title.json b/zerver/webhooks/shortcut/fixtures/epic_update_change_title.json
+similarity index 100%
+rename from zerver/webhooks/clubhouse/fixtures/epic_update_change_title.json
+rename to zerver/webhooks/shortcut/fixtures/epic_update_change_title.json
+diff --git a/zerver/webhooks/clubhouse/fixtures/epic_update_remove_description.json b/zerver/webhooks/shortcut/fixtures/epic_update_remove_description.json
+similarity index 100%
+rename from zerver/webhooks/clubhouse/fixtures/epic_update_remove_description.json
+rename to zerver/webhooks/shortcut/fixtures/epic_update_remove_description.json
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_archive.json b/zerver/webhooks/shortcut/fixtures/story_archive.json
+similarity index 89%
+rename from zerver/webhooks/clubhouse/fixtures/story_archive.json
+rename to zerver/webhooks/shortcut/fixtures/story_archive.json
+index 10bb476126..e3fcde2625 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_archive.json
++++ b/zerver/webhooks/shortcut/fixtures/story_archive.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Story 2",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/9",
++            "app_url":"https://app.shortcut.com/zulip/story/9",
+             "changes":{
+                 "archived":{
+                     "new":true,
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_comment_updated.json b/zerver/webhooks/shortcut/fixtures/story_comment_updated.json
+similarity index 92%
+rename from zerver/webhooks/clubhouse/fixtures/story_comment_updated.json
+rename to zerver/webhooks/shortcut/fixtures/story_comment_updated.json
+index 0f45550737..cac9830e7b 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_comment_updated.json
++++ b/zerver/webhooks/shortcut/fixtures/story_comment_updated.json
+@@ -25,7 +25,7 @@
+             "entity_type":"story",
+             "name":"Add super cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11"
++            "app_url":"https://app.shortcut.com/zulip/story/11"
+         }
+     ]
+ }
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_create.json b/zerver/webhooks/shortcut/fixtures/story_create.json
+similarity index 93%
+rename from zerver/webhooks/clubhouse/fixtures/story_create.json
+rename to zerver/webhooks/shortcut/fixtures/story_create.json
+index b6aa5ccad5..b12515f7d1 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_create.json
++++ b/zerver/webhooks/shortcut/fixtures/story_create.json
+@@ -11,7 +11,7 @@
+             "action":"create",
+             "name":"Add cool feature!",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "project_id":6,
+             "description":"We should probably add this cool feature!",
+             "workflow_state_id":500000008,
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_delete.json b/zerver/webhooks/shortcut/fixtures/story_delete.json
+similarity index 100%
+rename from zerver/webhooks/clubhouse/fixtures/story_delete.json
+rename to zerver/webhooks/shortcut/fixtures/story_delete.json
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_task_complete.json b/zerver/webhooks/shortcut/fixtures/story_task_complete.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_task_complete.json
+rename to zerver/webhooks/shortcut/fixtures/story_task_complete.json
+index b6f4ac5426..0e8febecbf 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_task_complete.json
++++ b/zerver/webhooks/shortcut/fixtures/story_task_complete.json
+@@ -25,7 +25,7 @@
+             "entity_type":"story",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11"
++            "app_url":"https://app.shortcut.com/zulip/story/11"
+         }
+     ]
+ }
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_task_create.json b/zerver/webhooks/shortcut/fixtures/story_task_create.json
+similarity index 92%
+rename from zerver/webhooks/clubhouse/fixtures/story_task_create.json
+rename to zerver/webhooks/shortcut/fixtures/story_task_create.json
+index e53babe209..e70f288844 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_task_create.json
++++ b/zerver/webhooks/shortcut/fixtures/story_task_create.json
+@@ -18,7 +18,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "task_ids":{
+                     "adds":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_task_delete.json b/zerver/webhooks/shortcut/fixtures/story_task_delete.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_task_delete.json
+rename to zerver/webhooks/shortcut/fixtures/story_task_delete.json
+index e7059a280f..cb6aa7c935 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_task_delete.json
++++ b/zerver/webhooks/shortcut/fixtures/story_task_delete.json
+@@ -17,7 +17,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "task_ids":{
+                     "removes":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_task_not_complete.json b/zerver/webhooks/shortcut/fixtures/story_task_not_complete.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_task_not_complete.json
+rename to zerver/webhooks/shortcut/fixtures/story_task_not_complete.json
+index 3497610f26..6df0046cfb 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_task_not_complete.json
++++ b/zerver/webhooks/shortcut/fixtures/story_task_not_complete.json
+@@ -25,7 +25,7 @@
+             "entity_type":"story",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11"
++            "app_url":"https://app.shortcut.com/zulip/story/11"
+         }
+     ]
+ }
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_unarchive.json b/zerver/webhooks/shortcut/fixtures/story_unarchive.json
+similarity index 89%
+rename from zerver/webhooks/clubhouse/fixtures/story_unarchive.json
+rename to zerver/webhooks/shortcut/fixtures/story_unarchive.json
+index 35c4289acd..35d765fa5b 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_unarchive.json
++++ b/zerver/webhooks/shortcut/fixtures/story_unarchive.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Story 2",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/9",
++            "app_url":"https://app.shortcut.com/zulip/story/9",
+             "changes":{
+                 "archived":{
+                     "new":false,
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_attachment.json b/zerver/webhooks/shortcut/fixtures/story_update_add_attachment.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_attachment.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_attachment.json
+index e4fbf321ac..65ef47358e 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_attachment.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_attachment.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "file_ids":{
+                     "adds":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_comment.json b/zerver/webhooks/shortcut/fixtures/story_update_add_comment.json
+similarity index 92%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_comment.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_comment.json
+index 6bf0a316d1..6ba70c4f04 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_comment.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_comment.json
+@@ -18,7 +18,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "comment_ids":{
+                     "adds":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_description.json b/zerver/webhooks/shortcut/fixtures/story_update_add_description.json
+similarity index 89%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_description.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_description.json
+index b5931c03b0..06a8158e39 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_description.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_description.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Story 2",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/9",
++            "app_url":"https://app.shortcut.com/zulip/story/9",
+             "changes":{
+                 "description":{
+                     "new":"Added a description.",
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_epic.json b/zerver/webhooks/shortcut/fixtures/story_update_add_epic.json
+similarity index 90%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_epic.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_epic.json
+index 2413d2c0ce..b175615656 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_epic.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_epic.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "epic_id":{
+                     "new":7
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_estimate.json b/zerver/webhooks/shortcut/fixtures/story_update_add_estimate.json
+similarity index 88%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_estimate.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_estimate.json
+index 94f1da18c9..b58da96d48 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_estimate.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_estimate.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "estimate":{
+                     "new":4
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_branch.json b/zerver/webhooks/shortcut/fixtures/story_update_add_github_branch.json
+similarity index 96%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_github_branch.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_github_branch.json
+index a74fbb9719..0d2ba1655f 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_branch.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_github_branch.json
+@@ -17,7 +17,7 @@
+             "action":"update",
+             "name":"Testing pull requests with Story",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/27",
++            "app_url":"https://app.shortcut.com/zulip/story/27",
+             "changes":{
+                 "branch_ids":{
+                     "adds":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_multiple_pull_requests.json b/zerver/webhooks/shortcut/fixtures/story_update_add_github_multiple_pull_requests.json
+similarity index 95%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_github_multiple_pull_requests.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_github_multiple_pull_requests.json
+index 9bd2ec7b6d..72bbad297f 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_multiple_pull_requests.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_github_multiple_pull_requests.json
+@@ -25,7 +25,7 @@
+             "action": "update",
+             "name": "Story1",
+             "story_type": "feature",
+-            "app_url": "https://app.clubhouse.io/pig208/story/17",
++            "app_url": "https://app.shortcut.com/pig208/story/17",
+             "changes": {
+                 "pull_request_ids": {
+                     "adds": [
+@@ -55,7 +55,7 @@
+             "action": "update",
+             "name": "Story2",
+             "story_type": "feature",
+-            "app_url": "https://app.clubhouse.io/pig208/story/18",
++            "app_url": "https://app.shortcut.com/pig208/story/18",
+             "changes": {
+                 "pull_request_ids": {
+                     "adds": [
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_multiple_pull_requests_with_comment.json b/zerver/webhooks/shortcut/fixtures/story_update_add_github_multiple_pull_requests_with_comment.json
+similarity index 94%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_github_multiple_pull_requests_with_comment.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_github_multiple_pull_requests_with_comment.json
+index 18d8c902af..e941fae494 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_multiple_pull_requests_with_comment.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_github_multiple_pull_requests_with_comment.json
+@@ -18,7 +18,7 @@
+         "action": "update",
+         "name": "new1",
+         "story_type": "feature",
+-        "app_url": "https://app.clubhouse.io/pig208/story/26",
++        "app_url": "https://app.shortcut.com/pig208/story/26",
+         "changes": {
+           "pull_request_ids": {
+             "adds": [
+@@ -48,7 +48,7 @@
+         "action": "update",
+         "name": "new2",
+         "story_type": "feature",
+-        "app_url": "https://app.clubhouse.io/pig208/story/27",
++        "app_url": "https://app.shortcut.com/pig208/story/27",
+         "changes": {
+           "pull_request_ids": {
+             "adds": [
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_pull_request.json b/zerver/webhooks/shortcut/fixtures/story_update_add_github_pull_request.json
+similarity index 96%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_github_pull_request.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_github_pull_request.json
+index 904f6d28e5..f0940530aa 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_pull_request.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_github_pull_request.json
+@@ -30,7 +30,7 @@
+             "action":"update",
+             "name":"Testing pull requests with Story",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/28",
++            "app_url":"https://app.shortcut.com/zulip/story/28",
+             "changes":{
+                 "started":{
+                     "new":true,
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_pull_request_with_comment.json b/zerver/webhooks/shortcut/fixtures/story_update_add_github_pull_request_with_comment.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_github_pull_request_with_comment.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_github_pull_request_with_comment.json
+index c226e88be5..12af01be9d 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_pull_request_with_comment.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_github_pull_request_with_comment.json
+@@ -18,7 +18,7 @@
+         "action": "update",
+         "name": "asd2",
+         "story_type": "bug",
+-        "app_url": "https://app.clubhouse.io/pig208/story/15",
++        "app_url": "https://app.shortcut.com/pig208/story/15",
+         "changes":
+             {
+             "pull_request_ids": {
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_pull_request_without_workflow_state.json b/zerver/webhooks/shortcut/fixtures/story_update_add_github_pull_request_without_workflow_state.json
+similarity index 96%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_github_pull_request_without_workflow_state.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_github_pull_request_without_workflow_state.json
+index 0f9ad4b321..cdbae69e03 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_github_pull_request_without_workflow_state.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_github_pull_request_without_workflow_state.json
+@@ -30,7 +30,7 @@
+             "action":"update",
+             "name":"Testing pull requests with Story",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/28",
++            "app_url":"https://app.shortcut.com/zulip/story/28",
+             "changes":{
+                 "started":{
+                     "new":true,
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_label.json b/zerver/webhooks/shortcut/fixtures/story_update_add_label.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_label.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_label.json
+index 63fd910af5..58206703bb 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_label.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_label.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"An epic story!",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/23",
++            "app_url":"https://app.shortcut.com/zulip/story/23",
+             "changes":{
+                 "label_ids":{
+                     "adds":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_label_name_in_action.json b/zerver/webhooks/shortcut/fixtures/story_update_add_label_name_in_action.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_label_name_in_action.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_label_name_in_action.json
+index 9344fb9c8c..ac842504a3 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_label_name_in_action.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_label_name_in_action.json
+@@ -16,7 +16,7 @@
+                 }
+             },
+             "id":11200,
+-            "app_url":"https:\/\/app.clubhouse.io\/zulip\/story\/28",
++            "app_url":"https:\/\/app.shortcut.com\/zulip\/story\/28",
+             "name":"An emotional story!"
+         },
+         {
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_multiple_labels.json b/zerver/webhooks/shortcut/fixtures/story_update_add_multiple_labels.json
+similarity index 92%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_multiple_labels.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_multiple_labels.json
+index 6a0f0d9deb..f1d8f5c881 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_multiple_labels.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_multiple_labels.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"An epic story!",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/23",
++            "app_url":"https://app.shortcut.com/zulip/story/23",
+             "changes":{
+                 "label_ids":{
+                     "adds":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_add_owner.json b/zerver/webhooks/shortcut/fixtures/story_update_add_owner.json
+similarity index 90%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_add_owner.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_add_owner.json
+index 271cd9d918..4de1674a09 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_add_owner.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_add_owner.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"A new story by Shakespeare!",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/26",
++            "app_url":"https://app.shortcut.com/zulip/story/26",
+             "changes":{
+                 "owner_ids":{
+                     "adds":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_change_epic.json b/zerver/webhooks/shortcut/fixtures/story_update_change_epic.json
+similarity index 88%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_change_epic.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_change_epic.json
+index f4bc1d317e..05230a915d 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_change_epic.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_change_epic.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "epic_id":{
+                     "new":17,
+@@ -24,7 +24,7 @@
+         {
+             "id":17,
+             "entity_type":"epic",
+-            "name":"Clubhouse Fork"
++            "name":"Shortcut Fork"
+         },
+         {
+             "id":7,
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_change_estimate.json b/zerver/webhooks/shortcut/fixtures/story_update_change_estimate.json
+similarity index 89%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_change_estimate.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_change_estimate.json
+index 814b0a38a5..0b1613a216 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_change_estimate.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_change_estimate.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "estimate":{
+                     "new":4,
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_change_project.json b/zerver/webhooks/shortcut/fixtures/story_update_change_project.json
+similarity index 92%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_change_project.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_change_project.json
+index 95848bb3d8..b4b3437076 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_change_project.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_change_project.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "project_id":{
+                     "new":16,
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_change_state.json b/zerver/webhooks/shortcut/fixtures/story_update_change_state.json
+similarity index 95%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_change_state.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_change_state.json
+index 70cb75b5ef..77a457607c 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_change_state.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_change_state.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "started":{
+                     "new":true,
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_change_title.json b/zerver/webhooks/shortcut/fixtures/story_update_change_title.json
+similarity index 90%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_change_title.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_change_title.json
+index 0f66ede68f..f90ef385cf 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_change_title.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_change_title.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add super cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "name":{
+                     "new":"Add super cool feature!",
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_change_type.json b/zerver/webhooks/shortcut/fixtures/story_update_change_type.json
+similarity index 89%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_change_type.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_change_type.json
+index dc8d065c2e..678e3ea5ce 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_change_type.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_change_type.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "story_type":{
+                     "new":"bug",
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_description.json b/zerver/webhooks/shortcut/fixtures/story_update_description.json
+similarity index 90%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_description.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_description.json
+index eeadac728c..dc6b95fa52 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_description.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_description.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "description":{
+                     "new":"We should probably add this cool feature! Just edited this. :)",
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_everything_at_once.json b/zerver/webhooks/shortcut/fixtures/story_update_everything_at_once.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_everything_at_once.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_everything_at_once.json
+index 8aeb68bbef..cfc8187cf8 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_everything_at_once.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_everything_at_once.json
+@@ -10,7 +10,7 @@
+       "action": "update",
+       "name": "asd4",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/17",
++      "app_url": "https://app.shortcut.com/pig208/story/17",
+       "changes": {
+         "story_type": {
+           "new": "bug",
+@@ -67,7 +67,7 @@
+       "action": "update",
+       "name": "new1",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/26",
++      "app_url": "https://app.shortcut.com/pig208/story/26",
+       "changes": {
+         "story_type": {
+           "new": "bug",
+@@ -124,7 +124,7 @@
+       "action": "update",
+       "name": "new2",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/27",
++      "app_url": "https://app.shortcut.com/pig208/story/27",
+       "changes": {
+         "story_type": {
+           "new": "bug",
+@@ -198,19 +198,19 @@
+       "id": 8,
+       "entity_type": "label",
+       "name": "low priority",
+-      "app_url": "https://app.clubhouse.io/pig208/label/8"
++      "app_url": "https://app.shortcut.com/pig208/label/8"
+     },
+     {
+       "id": 23,
+       "entity_type": "epic",
+       "name": "testeipc",
+-      "app_url": "https://app.clubhouse.io/pig208/epic/23"
++      "app_url": "https://app.shortcut.com/pig208/epic/23"
+     },
+     {
+       "id": 2,
+       "entity_type": "project",
+       "name": "Product Development",
+-      "app_url": "https://app.clubhouse.io/pig208/project/2"
++      "app_url": "https://app.shortcut.com/pig208/project/2"
+     },
+     {
+       "id": "6071adb0-641f-46c4-b5e1-4945dae399ea",
+@@ -221,13 +221,13 @@
+       "id": 29,
+       "entity_type": "epic",
+       "name": "epic",
+-      "app_url": "https://app.clubhouse.io/pig208/epic/29"
++      "app_url": "https://app.shortcut.com/pig208/epic/29"
+     },
+     {
+       "id": 28,
+       "entity_type": "project",
+       "name": "test2",
+-      "app_url": "https://app.clubhouse.io/pig208/project/28"
++      "app_url": "https://app.shortcut.com/pig208/project/28"
+     }
+   ]
+ }
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_everything_at_once_skip_removed_labels.json b/zerver/webhooks/shortcut/fixtures/story_update_everything_at_once_skip_removed_labels.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_everything_at_once_skip_removed_labels.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_everything_at_once_skip_removed_labels.json
+index 7776fd40d9..61030ae2cf 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_everything_at_once_skip_removed_labels.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_everything_at_once_skip_removed_labels.json
+@@ -10,7 +10,7 @@
+       "action": "update",
+       "name": "asd4",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/17",
++      "app_url": "https://app.shortcut.com/pig208/story/17",
+       "changes": {
+         "story_type": {
+           "new": "bug",
+@@ -67,7 +67,7 @@
+       "action": "update",
+       "name": "new1",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/26",
++      "app_url": "https://app.shortcut.com/pig208/story/26",
+       "changes": {
+         "story_type": {
+           "new": "bug",
+@@ -124,7 +124,7 @@
+       "action": "update",
+       "name": "new2",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/27",
++      "app_url": "https://app.shortcut.com/pig208/story/27",
+       "changes": {
+         "story_type": {
+           "new": "bug",
+@@ -198,19 +198,19 @@
+       "id": 8,
+       "entity_type": "label",
+       "name": "low priority",
+-      "app_url": "https://app.clubhouse.io/pig208/label/8"
++      "app_url": "https://app.shortcut.com/pig208/label/8"
+     },
+     {
+       "id": 23,
+       "entity_type": "epic",
+       "name": "testeipc",
+-      "app_url": "https://app.clubhouse.io/pig208/epic/23"
++      "app_url": "https://app.shortcut.com/pig208/epic/23"
+     },
+     {
+       "id": 2,
+       "entity_type": "project",
+       "name": "Product Development",
+-      "app_url": "https://app.clubhouse.io/pig208/project/2"
++      "app_url": "https://app.shortcut.com/pig208/project/2"
+     },
+     {
+       "id": "6071adb0-641f-46c4-b5e1-4945dae399ea",
+@@ -221,13 +221,13 @@
+       "id": 29,
+       "entity_type": "epic",
+       "name": "epic",
+-      "app_url": "https://app.clubhouse.io/pig208/epic/29"
++      "app_url": "https://app.shortcut.com/pig208/epic/29"
+     },
+     {
+       "id": 28,
+       "entity_type": "project",
+       "name": "test2",
+-      "app_url": "https://app.clubhouse.io/pig208/project/28"
++      "app_url": "https://app.shortcut.com/pig208/project/28"
+     }
+   ]
+ }
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_multiple_at_once.json b/zerver/webhooks/shortcut/fixtures/story_update_multiple_at_once.json
+similarity index 79%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_multiple_at_once.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_multiple_at_once.json
+index 78657249f8..12f8bc5294 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_multiple_at_once.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_multiple_at_once.json
+@@ -10,7 +10,7 @@
+       "action": "update",
+       "name": "asd4",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/17",
++      "app_url": "https://app.shortcut.com/pig208/story/17",
+       "changes": {
+         "story_type": {
+           "new": "bug",
+@@ -24,7 +24,7 @@
+       "action": "update",
+       "name": "new1",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/26",
++      "app_url": "https://app.shortcut.com/pig208/story/26",
+       "changes": {
+         "epic_id": {
+           "new": 23,
+@@ -38,7 +38,7 @@
+       "action": "update",
+       "name": "new2",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/27",
++      "app_url": "https://app.shortcut.com/pig208/story/27",
+       "changes": {
+         "label_ids": {
+           "adds": [
+@@ -53,7 +53,7 @@
+       "action": "update",
+       "name": "new3",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/28",
++      "app_url": "https://app.shortcut.com/pig208/story/28",
+       "changes": {
+         "workflow_state_id": {
+           "new": 500000010,
+@@ -67,7 +67,7 @@
+       "action": "update",
+       "name": "new4",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/29",
++      "app_url": "https://app.shortcut.com/pig208/story/29",
+       "changes": {
+         "project_id": {
+           "new": 28,
+@@ -98,19 +98,19 @@
+       "id": 8,
+       "entity_type": "label",
+       "name": "low priority",
+-      "app_url": "https://app.clubhouse.io/pig208/label/8"
++      "app_url": "https://app.shortcut.com/pig208/label/8"
+     },
+     {
+       "id": 23,
+       "entity_type": "epic",
+       "name": "testeipc",
+-      "app_url": "https://app.clubhouse.io/pig208/epic/23"
++      "app_url": "https://app.shortcut.com/pig208/epic/23"
+     },
+     {
+       "id": 2,
+       "entity_type": "project",
+       "name": "Product Development",
+-      "app_url": "https://app.clubhouse.io/pig208/project/2"
++      "app_url": "https://app.shortcut.com/pig208/project/2"
+     },
+     {
+       "id": "6071adb0-641f-46c4-b5e1-4945dae399ea",
+@@ -121,13 +121,13 @@
+       "id": 29,
+       "entity_type": "epic",
+       "name": "epic",
+-      "app_url": "https://app.clubhouse.io/pig208/epic/29"
++      "app_url": "https://app.shortcut.com/pig208/epic/29"
+     },
+     {
+       "id": 28,
+       "entity_type": "project",
+       "name": "test2",
+-      "app_url": "https://app.clubhouse.io/pig208/project/28"
++      "app_url": "https://app.shortcut.com/pig208/project/28"
+     }
+   ]
+ }
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_multiple_not_supported.json b/zerver/webhooks/shortcut/fixtures/story_update_multiple_not_supported.json
+similarity index 84%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_multiple_not_supported.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_multiple_not_supported.json
+index 0b543e3857..05e37214f8 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_multiple_not_supported.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_multiple_not_supported.json
+@@ -10,7 +10,7 @@
+       "action": "update",
+       "name": "asd4",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/17",
++      "app_url": "https://app.shortcut.com/pig208/story/17",
+       "changes": {
+         "deadline": {
+           "new": "2021-04-12T16:00:00Z",
+@@ -24,7 +24,7 @@
+       "action": "update",
+       "name": "new1",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/26",
++      "app_url": "https://app.shortcut.com/pig208/story/26",
+       "changes": {
+         "owner_ids": {
+           "adds": [
+@@ -39,7 +39,7 @@
+       "action": "update",
+       "name": "new2",
+       "story_type": "bug",
+-      "app_url": "https://app.clubhouse.io/pig208/story/27",
++      "app_url": "https://app.shortcut.com/pig208/story/27",
+       "changes": {
+         "follower_ids": {
+           "adds": [
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_remove_attachment.json b/zerver/webhooks/shortcut/fixtures/story_update_remove_attachment.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_remove_attachment.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_remove_attachment.json
+index 06650ee93a..b8efae6b19 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_remove_attachment.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_remove_attachment.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "file_ids":{
+                     "removes":[
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_remove_description.json b/zerver/webhooks/shortcut/fixtures/story_update_remove_description.json
+similarity index 90%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_remove_description.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_remove_description.json
+index be05824400..eeabf3c4d1 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_remove_description.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_remove_description.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "description":{
+                     "new":"",
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_remove_epic.json b/zerver/webhooks/shortcut/fixtures/story_update_remove_epic.json
+similarity index 90%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_remove_epic.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_remove_epic.json
+index 89e839fde7..eab51a4af0 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_remove_epic.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_remove_epic.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "epic_id":{
+                     "old":7
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_remove_estimate.json b/zerver/webhooks/shortcut/fixtures/story_update_remove_estimate.json
+similarity index 88%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_remove_estimate.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_remove_estimate.json
+index 219b76c009..4f60129680 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_remove_estimate.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_remove_estimate.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"Add cool feature!",
+             "story_type":"bug",
+-            "app_url":"https://app.clubhouse.io/zulip/story/11",
++            "app_url":"https://app.shortcut.com/zulip/story/11",
+             "changes":{
+                 "estimate":{
+                     "old":4
+diff --git a/zerver/webhooks/clubhouse/fixtures/story_update_remove_label.json b/zerver/webhooks/shortcut/fixtures/story_update_remove_label.json
+similarity index 91%
+rename from zerver/webhooks/clubhouse/fixtures/story_update_remove_label.json
+rename to zerver/webhooks/shortcut/fixtures/story_update_remove_label.json
+index 7bbe7d26d2..a8efc16cd0 100644
+--- a/zerver/webhooks/clubhouse/fixtures/story_update_remove_label.json
++++ b/zerver/webhooks/shortcut/fixtures/story_update_remove_label.json
+@@ -11,7 +11,7 @@
+             "action":"update",
+             "name":"An epic story!",
+             "story_type":"feature",
+-            "app_url":"https://app.clubhouse.io/zulip/story/23",
++            "app_url":"https://app.shortcut.com/zulip/story/23",
+             "changes":{
+                 "label_ids":{
+                     "removes":[
+diff --git a/zerver/webhooks/clubhouse/tests.py b/zerver/webhooks/shortcut/tests.py
+similarity index 80%
+rename from zerver/webhooks/clubhouse/tests.py
+rename to zerver/webhooks/shortcut/tests.py
+index 3503c8b1be..77a1675463 100644
+--- a/zerver/webhooks/clubhouse/tests.py
++++ b/zerver/webhooks/shortcut/tests.py
+@@ -4,34 +4,34 @@ from unittest.mock import MagicMock, call, patch
+ from zerver.lib.test_classes import WebhookTestCase
+ 
+ 
+-class ClubhouseWebhookTest(WebhookTestCase):
++class ShortcutWebhookTest(WebhookTestCase):
++    def test_legacy_urls(self) -> None:
++        expected_message = "New story [Add cool feature!](https://app.shortcut.com/zulip/story/11) of type **feature** was created."
++
++        legacy_names = ["clubhouse"]
++        for legacy_name in legacy_names:
++            self.url = self.build_webhook_url(legacy_name=legacy_name)
++            self.check_webhook("story_create", "Add cool feature!", expected_message)
++
+     def test_story_create(self) -> None:
+-        expected_message = "New story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) of type **feature** was created."
+-        self.check_webhook(
+-            "story_create",
+-            "Add cool feature!",
+-            expected_message,
+-        )
++        expected_message = "New story [Add cool feature!](https://app.shortcut.com/zulip/story/11) of type **feature** was created."
++        self.check_webhook("story_create", "Add cool feature!", expected_message)
+ 
+     def test_story_delete(self) -> None:
+         expected_message = "The story **New random story** was deleted."
+         self.check_webhook("story_delete", "New random story", expected_message)
+ 
+     def test_epic_story_create(self) -> None:
+-        expected_message = "New story [An epic story!](https://app.clubhouse.io/zulip/story/23) was created and added to the epic **New Cool Epic!**."
+-        self.check_webhook(
+-            "epic_create_story",
+-            "An epic story!",
+-            expected_message,
+-        )
++        expected_message = "New story [An epic story!](https://app.shortcut.com/zulip/story/23) was created and added to the epic **New Cool Epic!**."
++        self.check_webhook("epic_create_story", "An epic story!", expected_message)
+ 
+     def test_epic_delete(self) -> None:
+-        expected_message = "The epic **Clubhouse Fork** was deleted."
+-        self.check_webhook("epic_delete", "Clubhouse Fork", expected_message)
++        expected_message = "The epic **Shortcut Fork** was deleted."
++        self.check_webhook("epic_delete", "Shortcut Fork", expected_message)
+ 
+     def test_story_archive(self) -> None:
+         expected_message = (
+-            "The story [Story 2](https://app.clubhouse.io/zulip/story/9) was archived."
++            "The story [Story 2](https://app.shortcut.com/zulip/story/9) was archived."
+         )
+         self.check_webhook("story_archive", "Story 2", expected_message)
+ 
+@@ -41,7 +41,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+ 
+     def test_story_unarchive(self) -> None:
+         expected_message = (
+-            "The story [Story 2](https://app.clubhouse.io/zulip/story/9) was unarchived."
++            "The story [Story 2](https://app.shortcut.com/zulip/story/9) was unarchived."
+         )
+         self.check_webhook("story_unarchive", "Story 2", expected_message)
+ 
+@@ -54,7 +54,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.check_webhook("epic_update_add_comment", "New Cool Epic!", expected_message)
+ 
+     def test_story_update_add_comment(self) -> None:
+-        expected_message = "New comment added to the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11):\n``` quote\nJust leaving a comment here!\n```"
++        expected_message = "New comment added to the story [Add cool feature!](https://app.shortcut.com/zulip/story/11):\n``` quote\nJust leaving a comment here!\n```"
+         self.check_webhook("story_update_add_comment", "Add cool feature!", expected_message)
+ 
+     def test_epic_update_add_description(self) -> None:
+@@ -70,15 +70,15 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.check_webhook("epic_update_change_description", "New Cool Epic!", expected_message)
+ 
+     def test_story_update_add_description(self) -> None:
+-        expected_message = "New description added to the story [Story 2](https://app.clubhouse.io/zulip/story/9):\n``` quote\nAdded a description.\n```"
++        expected_message = "New description added to the story [Story 2](https://app.shortcut.com/zulip/story/9):\n``` quote\nAdded a description.\n```"
+         self.check_webhook("story_update_add_description", "Story 2", expected_message)
+ 
+     def test_story_update_remove_description(self) -> None:
+-        expected_message = "Description for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was removed."
++        expected_message = "Description for the story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was removed."
+         self.check_webhook("story_update_remove_description", "Add cool feature!", expected_message)
+ 
+     def test_story_update_change_description(self) -> None:
+-        expected_message = "Description for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was changed from:\n``` quote\nWe should probably add this cool feature!\n```\nto\n``` quote\nWe should probably add this cool feature! Just edited this. :)\n```"
++        expected_message = "Description for the story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was changed from:\n``` quote\nWe should probably add this cool feature!\n```\nto\n``` quote\nWe should probably add this cool feature! Just edited this. :)\n```"
+         self.check_webhook("story_update_description", "Add cool feature!", expected_message)
+ 
+     def test_epic_update_change_state(self) -> None:
+@@ -88,7 +88,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.check_webhook("epic_update_change_state", "New Cool Epic!", expected_message)
+ 
+     def test_story_update_change_state(self) -> None:
+-        expected_message = "State of the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was changed from **Unscheduled** to **Ready for Review**."
++        expected_message = "State of the story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was changed from **Unscheduled** to **Ready for Review**."
+         self.check_webhook("story_update_change_state", "Add cool feature!", expected_message)
+ 
+     def test_epic_update_change_name(self) -> None:
+@@ -96,28 +96,28 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.check_webhook("epic_update_change_title", "New Cool Epic!", expected_message)
+ 
+     def test_story_update_change_name(self) -> None:
+-        expected_message = "The name of the story [Add super cool feature!](https://app.clubhouse.io/zulip/story/11) was changed from:\n``` quote\nAdd cool feature!\n```\nto\n``` quote\nAdd super cool feature!\n```"
++        expected_message = "The name of the story [Add super cool feature!](https://app.shortcut.com/zulip/story/11) was changed from:\n``` quote\nAdd cool feature!\n```\nto\n``` quote\nAdd super cool feature!\n```"
+         self.check_webhook("story_update_change_title", "Add super cool feature!", expected_message)
+ 
+     def test_story_update_add_owner(self) -> None:
+-        expected_message = "New owner added to the story [A new story by Shakespeare!](https://app.clubhouse.io/zulip/story/26)."
++        expected_message = "New owner added to the story [A new story by Shakespeare!](https://app.shortcut.com/zulip/story/26)."
+         self.check_webhook(
+             "story_update_add_owner", "A new story by Shakespeare!", expected_message
+         )
+ 
+     def test_story_task_created(self) -> None:
+-        expected_message = "Task **Added a new task** was added to the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11)."
++        expected_message = "Task **Added a new task** was added to the story [Add cool feature!](https://app.shortcut.com/zulip/story/11)."
+         self.check_webhook("story_task_create", "Add cool feature!", expected_message)
+ 
+     def test_story_task_deleted(self) -> None:
+-        expected_message = "Task **Added a new task** was removed from the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11)."
++        expected_message = "Task **Added a new task** was removed from the story [Add cool feature!](https://app.shortcut.com/zulip/story/11)."
+         self.check_webhook("story_task_delete", "Add cool feature!", expected_message)
+ 
+     def test_story_task_completed(self) -> None:
+-        expected_message = "Task **A new task for this story** ([Add cool feature!](https://app.clubhouse.io/zulip/story/11)) was completed. :tada:"
++        expected_message = "Task **A new task for this story** ([Add cool feature!](https://app.shortcut.com/zulip/story/11)) was completed. :tada:"
+         self.check_webhook("story_task_complete", "Add cool feature!", expected_message)
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_task_incomplete_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
+         payload = self.get_body("story_task_not_complete")
+         result = self.client_post(self.url, payload, content_type="application/json")
+@@ -126,36 +126,36 @@ class ClubhouseWebhookTest(WebhookTestCase):
+ 
+     def test_story_epic_changed(self) -> None:
+         expected_message = (
+-            "The story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was moved from **Release 1.9**"
+-            " to **Clubhouse Fork**."
++            "The story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was moved from **Release 1.9**"
++            " to **Shortcut Fork**."
+         )
+         self.check_webhook("story_update_change_epic", "Add cool feature!", expected_message)
+ 
+     def test_story_epic_added(self) -> None:
+-        expected_message = "The story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was added to the epic **Release 1.9**."
++        expected_message = "The story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was added to the epic **Release 1.9**."
+         self.check_webhook("story_update_add_epic", "Add cool feature!", expected_message)
+ 
+     def test_story_epic_removed(self) -> None:
+-        expected_message = "The story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was removed from the epic **Release 1.9**."
++        expected_message = "The story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was removed from the epic **Release 1.9**."
+         self.check_webhook("story_update_remove_epic", "Add cool feature!", expected_message)
+ 
+     def test_story_estimate_changed(self) -> None:
+-        expected_message = "The estimate for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was set to 4 points."
++        expected_message = "The estimate for the story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was set to 4 points."
+         self.check_webhook("story_update_change_estimate", "Add cool feature!", expected_message)
+ 
+     def test_story_estimate_added(self) -> None:
+-        expected_message = "The estimate for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was set to 4 points."
++        expected_message = "The estimate for the story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was set to 4 points."
+         self.check_webhook("story_update_add_estimate", "Add cool feature!", expected_message)
+ 
+     def test_story_estimate_removed(self) -> None:
+-        expected_message = "The estimate for the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was set to *Unestimated*."
++        expected_message = "The estimate for the story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was set to *Unestimated*."
+         self.check_webhook("story_update_remove_estimate", "Add cool feature!", expected_message)
+ 
+     def test_story_file_attachment_added(self) -> None:
+-        expected_message = "A file attachment `zuliprc` was added to the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11)."
++        expected_message = "A file attachment `zuliprc` was added to the story [Add cool feature!](https://app.shortcut.com/zulip/story/11)."
+         self.check_webhook("story_update_add_attachment", "Add cool feature!", expected_message)
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_file_attachment_removed_ignore(
+         self, check_send_webhook_message_mock: MagicMock
+     ) -> None:
+@@ -165,20 +165,20 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.assert_json_success(result)
+ 
+     def test_story_label_added(self) -> None:
+-        expected_message = "The label **mockup** was added to the story [An epic story!](https://app.clubhouse.io/zulip/story/23)."
++        expected_message = "The label **mockup** was added to the story [An epic story!](https://app.shortcut.com/zulip/story/23)."
+         self.check_webhook("story_update_add_label", "An epic story!", expected_message)
+ 
+     def test_story_label_multiple_added(self) -> None:
+-        expected_message = "The labels **mockup**, **label** were added to the story [An epic story!](https://app.clubhouse.io/zulip/story/23)."
++        expected_message = "The labels **mockup**, **label** were added to the story [An epic story!](https://app.shortcut.com/zulip/story/23)."
+         self.check_webhook("story_update_add_multiple_labels", "An epic story!", expected_message)
+ 
+     def test_story_label_added_label_name_in_actions(self) -> None:
+-        expected_message = "The label **sad** was added to the story [An emotional story!](https://app.clubhouse.io/zulip/story/28)."
++        expected_message = "The label **sad** was added to the story [An emotional story!](https://app.shortcut.com/zulip/story/28)."
+         self.check_webhook(
+             "story_update_add_label_name_in_action", "An emotional story!", expected_message
+         )
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_label_removed_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
+         payload = self.get_body("story_update_remove_label")
+         result = self.client_post(self.url, payload, content_type="application/json")
+@@ -186,15 +186,15 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.assert_json_success(result)
+ 
+     def test_story_update_project(self) -> None:
+-        expected_message = "The story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was moved from the **Backend** project to **Devops**."
++        expected_message = "The story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was moved from the **Backend** project to **Devops**."
+         self.check_webhook("story_update_change_project", "Add cool feature!", expected_message)
+ 
+     def test_story_update_type(self) -> None:
+-        expected_message = "The type of the story [Add cool feature!](https://app.clubhouse.io/zulip/story/11) was changed from **feature** to **bug**."
++        expected_message = "The type of the story [Add cool feature!](https://app.shortcut.com/zulip/story/11) was changed from **feature** to **bug**."
+         self.check_webhook("story_update_change_type", "Add cool feature!", expected_message)
+ 
+     def test_story_update_add_github_pull_request(self) -> None:
+-        expected_message = "New GitHub PR [#10](https://github.com/eeshangarg/Scheduler/pull/10) opened for story [Testing pull requests with Story](https://app.clubhouse.io/zulip/story/28) (Unscheduled -> Ready for Review)."
++        expected_message = "New GitHub PR [#10](https://github.com/eeshangarg/Scheduler/pull/10) opened for story [Testing pull requests with Story](https://app.shortcut.com/zulip/story/28) (Unscheduled -> Ready for Review)."
+         self.check_webhook(
+             "story_update_add_github_pull_request",
+             "Testing pull requests with Story",
+@@ -202,14 +202,14 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         )
+ 
+     def test_story_update_add_github_pull_request_without_workflow_state(self) -> None:
+-        expected_message = "New GitHub PR [#10](https://github.com/eeshangarg/Scheduler/pull/10) opened for story [Testing pull requests with Story](https://app.clubhouse.io/zulip/story/28)."
++        expected_message = "New GitHub PR [#10](https://github.com/eeshangarg/Scheduler/pull/10) opened for story [Testing pull requests with Story](https://app.shortcut.com/zulip/story/28)."
+         self.check_webhook(
+             "story_update_add_github_pull_request_without_workflow_state",
+             "Testing pull requests with Story",
+             expected_message,
+         )
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_update_add_github_multiple_pull_requests(
+         self, check_send_webhook_message_mock: MagicMock
+     ) -> None:
+@@ -226,7 +226,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "Story1",
+                 expected_message.format(
+-                    name="Story1", url="https://app.clubhouse.io/pig208/story/17"
++                    name="Story1", url="https://app.shortcut.com/pig208/story/17"
+                 ),
+                 "pull-request_create",
+             ),
+@@ -235,7 +235,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "Story2",
+                 expected_message.format(
+-                    name="Story2", url="https://app.clubhouse.io/pig208/story/18"
++                    name="Story2", url="https://app.shortcut.com/pig208/story/18"
+                 ),
+                 "pull-request_create",
+             ),
+@@ -243,14 +243,14 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.assertEqual(check_send_webhook_message_mock.call_args_list, expected_list)
+ 
+     def test_story_update_add_github_pull_request_with_comment(self) -> None:
+-        expected_message = "Existing GitHub PR [#2](https://github.com/PIG208/test-clubhouse/pull/2) associated with story [asd2](https://app.clubhouse.io/pig208/story/15)."
++        expected_message = "Existing GitHub PR [#2](https://github.com/PIG208/test-clubhouse/pull/2) associated with story [asd2](https://app.shortcut.com/pig208/story/15)."
+         self.check_webhook(
+             "story_update_add_github_pull_request_with_comment",
+             "asd2",
+             expected_message,
+         )
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_update_add_github_multiple_pull_requests_with_comment(
+         self, check_send_webhook_message_mock: MagicMock
+     ) -> None:
+@@ -267,7 +267,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "new1",
+                 expected_message.format(
+-                    name="new1", url="https://app.clubhouse.io/pig208/story/26"
++                    name="new1", url="https://app.shortcut.com/pig208/story/26"
+                 ),
+                 "pull-request_comment",
+             ),
+@@ -276,7 +276,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "new2",
+                 expected_message.format(
+-                    name="new2", url="https://app.clubhouse.io/pig208/story/27"
++                    name="new2", url="https://app.shortcut.com/pig208/story/27"
+                 ),
+                 "pull-request_comment",
+             ),
+@@ -284,12 +284,12 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.assertEqual(check_send_webhook_message_mock.call_args_list, expected_list)
+ 
+     def test_story_update_add_github_branch(self) -> None:
+-        expected_message = "New GitHub branch [eeshangarg/ch27/testing-pull-requests-with-story](https://github.com/eeshangarg/scheduler/tree/eeshangarg/ch27/testing-pull-requests-with-story) associated with story [Testing pull requests with Story](https://app.clubhouse.io/zulip/story/27) (Unscheduled -> In Development)."
++        expected_message = "New GitHub branch [eeshangarg/ch27/testing-pull-requests-with-story](https://github.com/eeshangarg/scheduler/tree/eeshangarg/ch27/testing-pull-requests-with-story) associated with story [Testing pull requests with Story](https://app.shortcut.com/zulip/story/27) (Unscheduled -> In Development)."
+         self.check_webhook(
+             "story_update_add_github_branch", "Testing pull requests with Story", expected_message
+         )
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_update_batch(self, check_send_webhook_message_mock: MagicMock) -> None:
+         payload = self.get_body("story_update_everything_at_once")
+         self.client_post(self.url, payload, content_type="application/json")
+@@ -304,7 +304,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "asd4",
+                 expected_message.format(
+-                    name="asd4", url="https://app.clubhouse.io/pig208/story/17"
++                    name="asd4", url="https://app.shortcut.com/pig208/story/17"
+                 ),
+                 "story_update_batch",
+             ),
+@@ -313,7 +313,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "new1",
+                 expected_message.format(
+-                    name="new1", url="https://app.clubhouse.io/pig208/story/26"
++                    name="new1", url="https://app.shortcut.com/pig208/story/26"
+                 ),
+                 "story_update_batch",
+             ),
+@@ -322,14 +322,14 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "new2",
+                 expected_message.format(
+-                    name="new2", url="https://app.clubhouse.io/pig208/story/27"
++                    name="new2", url="https://app.shortcut.com/pig208/story/27"
+                 ),
+                 "story_update_batch",
+             ),
+         ]
+         self.assertEqual(check_send_webhook_message_mock.call_args_list, expected_list)
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_update_batch_skip_removed_labels(
+         self, check_send_webhook_message_mock: MagicMock
+     ) -> None:
+@@ -346,7 +346,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "asd4",
+                 expected_message.format(
+-                    name="asd4", url="https://app.clubhouse.io/pig208/story/17"
++                    name="asd4", url="https://app.shortcut.com/pig208/story/17"
+                 ),
+                 "story_update_batch",
+             ),
+@@ -355,7 +355,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "new1",
+                 expected_message.format(
+-                    name="new1", url="https://app.clubhouse.io/pig208/story/26"
++                    name="new1", url="https://app.shortcut.com/pig208/story/26"
+                 ),
+                 "story_update_batch",
+             ),
+@@ -364,14 +364,14 @@ class ClubhouseWebhookTest(WebhookTestCase):
+                 user_profile,
+                 "new2",
+                 expected_message.format(
+-                    name="new2", url="https://app.clubhouse.io/pig208/story/27"
++                    name="new2", url="https://app.shortcut.com/pig208/story/27"
+                 ),
+                 "story_update_batch",
+             ),
+         ]
+         self.assertEqual(check_send_webhook_message_mock.call_args_list, expected_list)
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_update_batch_each_with_one_change(
+         self, check_send_webhook_message_mock: MagicMock
+     ) -> None:
+@@ -380,23 +380,23 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         expected_messages = [
+             (
+                 "asd4",
+-                "The type of the story [asd4](https://app.clubhouse.io/pig208/story/17) was changed from **feature** to **bug**.",
++                "The type of the story [asd4](https://app.shortcut.com/pig208/story/17) was changed from **feature** to **bug**.",
+             ),
+             (
+                 "new1",
+-                "The story [new1](https://app.clubhouse.io/pig208/story/26) was moved from **epic** to **testeipc**.",
++                "The story [new1](https://app.shortcut.com/pig208/story/26) was moved from **epic** to **testeipc**.",
+             ),
+             (
+                 "new2",
+-                "The label **low priority** was added to the story [new2](https://app.clubhouse.io/pig208/story/27).",
++                "The label **low priority** was added to the story [new2](https://app.shortcut.com/pig208/story/27).",
+             ),
+             (
+                 "new3",
+-                "State of the story [new3](https://app.clubhouse.io/pig208/story/28) was changed from **In Development** to **Ready for Review**.",
++                "State of the story [new3](https://app.shortcut.com/pig208/story/28) was changed from **In Development** to **Ready for Review**.",
+             ),
+             (
+                 "new4",
+-                "The story [new4](https://app.clubhouse.io/pig208/story/29) was moved from the **Product Development** project to **test2**.",
++                "The story [new4](https://app.shortcut.com/pig208/story/29) was moved from the **Product Development** project to **test2**.",
+             ),
+         ]
+         request, user_profile = (
+@@ -415,7 +415,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         ]
+         self.assertEqual(check_send_webhook_message_mock.call_args_list, expected_list)
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_update_batch_not_supported_ignore(
+         self, check_send_webhook_message_mock: MagicMock
+     ) -> None:
+@@ -424,7 +424,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.assertFalse(check_send_webhook_message_mock.called)
+         self.assert_json_success(result)
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_empty_post_request_body_ignore(
+         self, check_send_webhook_message_mock: MagicMock
+     ) -> None:
+@@ -433,7 +433,7 @@ class ClubhouseWebhookTest(WebhookTestCase):
+         self.assertFalse(check_send_webhook_message_mock.called)
+         self.assert_json_success(result)
+ 
+-    @patch("zerver.webhooks.clubhouse.view.check_send_webhook_message")
++    @patch("zerver.webhooks.shortcut.view.check_send_webhook_message")
+     def test_story_comment_updated_ignore(self, check_send_webhook_message_mock: MagicMock) -> None:
+         payload = self.get_body("story_comment_updated")
+         result = self.client_post(self.url, payload, content_type="application/json")

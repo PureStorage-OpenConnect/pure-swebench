@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-c61943f002a9",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden test grades format over behavior: it pins multiple exact, multi-line rendered-HTML snapshot strings (full pill markup including whitespace, tab-index attributes, avatar URLs, and incidental template indentation). Any functionally equivalent implementation with trivially different markup or whitespace would fail, so the grader asserts incidental formatting rather than the observable behavior of showing pills in search suggestions.",
+  "summary": "search_suggestion: Show pills in search suggestions.",
+  "lang": "web",
+  "issue": 34750,
+  "fix_commit": "c61943f002a9f238399edcab7a74d95c67ea3355",
+  "base_commit": "106a97cd057f5ffda31ca7d2ecdb74ed83101c39",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/c61943f002a9f238399edcab7a74d95c67ea3355",
+    "issue_url": "https://github.com/zulip/zulip/issues/34750"
+  }
+}

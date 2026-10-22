@@ -1,0 +1,104 @@
+diff --git a/zerver/tests/fixtures/import_fixtures/applied_migrations_fixtures/with_unsorted_migrations_list.json b/zerver/tests/fixtures/import_fixtures/applied_migrations_fixtures/with_unsorted_migrations_list.json
+new file mode 100644
+index 0000000000..26fe973b5e
+--- /dev/null
++++ b/zerver/tests/fixtures/import_fixtures/applied_migrations_fixtures/with_unsorted_migrations_list.json
+@@ -0,0 +1,65 @@
++{
++    "contenttypes": ["0001_initial", "0002_remove_content_type_name"],
++    "auth": [
++        "0004_alter_user_username_opts",
++        "0003_alter_user_email_max_length",
++        "0002_alter_permission_name_max_length",
++        "0001_initial"
++    ],
++    "zerver": [
++        "0001_initial",
++        "0029_realm_subdomain",
++        "0030_realm_org_type",
++        "0031_remove_system_avatar_source"
++    ],
++    "analytics": [
++        "0001_initial",
++        "0002_remove_huddlecount",
++        "0003_fillstate"
++    ],
++    "confirmation": [
++        "0001_initial",
++        "0002_realmcreationkey",
++        "0003_emailchangeconfirmation"
++    ],
++    "zilencer": [
++        "0001_initial",
++        "0002_remote_zulip_server",
++        "0003_add_default_for_remotezulipserver_last_updated_field"
++    ],
++    "corporate": [
++        "0001_initial",
++        "0002_customer_default_discount",
++        "0003_customerplan"
++    ],
++    "otp_static": ["0001_initial", "0002_throttling", "0003_add_timestamps"],
++    "otp_totp": ["0001_initial", "0002_auto_20190420_0723", "0003_add_timestamps"],
++    "pgroonga": ["0001_enable", "0002_html_escape_subject", "0003_v2_api_upgrade"],
++    "phonenumber": ["0001_initial", "0001_squashed_0001_initial"],
++    "two_factor": [
++        "0001_initial",
++        "0002_auto_20150110_0810",
++        "0003_auto_20150817_1733",
++        "0004_auto_20160205_1827"
++    ],
++    "sessions": ["0001_initial"],
++    "default": [
++        "0001_initial",
++        "0002_add_related_name",
++        "0003_alter_email_max_length",
++        "0004_auto_20160423_0400"
++    ],
++    "social_auth": [
++        "0001_initial",
++        "0002_add_related_name",
++        "0003_alter_email_max_length",
++        "0004_auto_20160423_0400",
++        "0005_auto_20160727_2333"
++    ],
++    "social_django": [
++        "0006_partial",
++        "0007_code_timestamp",
++        "0008_partial_timestamp",
++        "0009_auto_20191118_0520"
++    ]
++}
+diff --git a/zerver/tests/test_import_export.py b/zerver/tests/test_import_export.py
+index b5aefe9f3b..9910af4d59 100644
+--- a/zerver/tests/test_import_export.py
++++ b/zerver/tests/test_import_export.py
+@@ -2214,6 +2214,28 @@ class RealmImportExportTest(ExportFile):
+         )
+         self.assertEqual(expected_error_message, str(e.exception))
+ 
++    def test_import_realm_with_identical_but_unsorted_migrations(self) -> None:
++        # Two identical migration sets should pass `check_migrations_status`
++        # regardless of how the list of migrations are ordered in
++        # `migrations_status.json`.
++        realm = get_realm("zulip")
++        with (
++            self.assertLogs(level="INFO"),
++            patch("zerver.lib.export.get_migrations_by_app") as mock_export,
++            patch("zerver.lib.import_realm.get_migrations_by_app") as mock_import,
++        ):
++            mock_export.return_value = self.get_applied_migrations_fixture(
++                "with_unsorted_migrations_list.json"
++            )
++            mock_import.return_value = self.get_applied_migrations_fixture(
++                "with_complete_migrations.json"
++            )
++            self.export_realm_and_create_auditlog(
++                realm,
++                export_type=RealmExport.EXPORT_FULL_WITH_CONSENT,
++            )
++            do_import_realm(get_output_dir(), "test-zulip")
++
+ 
+ class SingleUserExportTest(ExportFile):
+     def do_files_test(self, is_s3: bool) -> None:

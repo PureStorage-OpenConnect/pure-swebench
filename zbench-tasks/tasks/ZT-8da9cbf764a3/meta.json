@@ -1,0 +1,87 @@
+{
+  "task_id": "ZT-8da9cbf764a3",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "compose: Add Ctrl+]/[ shortcuts for list indent/unindent",
+  "type": "other",
+  "lang": "web",
+  "issue": 37738,
+  "fix_commit": "8da9cbf764a3515c970e58c6334eaa1a34cac76e",
+  "base_commit": "4d5abdae1c103598e35e37fa7531290a87c28026",
+  "env_fingerprint": "b6c09ce6b3f2",
+  "fail_to_pass": [
+    "web/tests/compose_ui.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 85,
+    "files": 3,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The `compose_ui` module gains an exported function `handle_list_indent($textarea, increase)` where `$textarea` is a jQuery-wrapped textarea and `increase` is a boolean (true = indent, false = dedent). It implements the Ctrl+]/Ctrl+[ list-indentation feature and is the seam the keydown handler calls.",
+    "Return value semantics: the function returns true when the selected line(s) constitute list context (bulleted `- ` or numbered `1. ` items, possibly already indented), meaning the keyboard shortcut should be consumed; it returns false when the cursor is on a non-list line, in which case the text must be left completely unchanged.",
+    "Dedenting an unindented list item is still list context: the text may be unchanged but the function must return true (so the shortcut is still consumed).",
+    "Indentation unit is 2 spaces per list line; dedent removes up to 2 leading spaces from a line.",
+    "The operation applies to every full line touched by the selection: with a multi-line selection spanning several list items, each list line is indented/dedented; with a collapsed cursor, only the containing line is affected.",
+    "List detection must recognize both bulleted (`- `) and numbered (`1. `) items, including items that already carry leading indentation.",
+    "The function operates on the underlying DOM textarea element ($textarea[0]) using its value/selectionStart/selectionEnd and restores the selection via setSelectionRange; text updates go through the standard text-field-edit `setFieldText` helper (the codebase's established mechanism for programmatic textarea edits) or equivalently by setting the element's value."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 668,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "sandeep",
+    "email": "yogesh.shivaji365@gmail.com",
+    "date": "2026-06-17"
+  },
+  "contamination": {
+    "fix_public_at": "2026-06-17",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-01-30T11:45:52Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/8da9cbf764a3515c970e58c6334eaa1a34cac76e",
+    "issue_url": "https://github.com/zulip/zulip/issues/37738"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-8da9cbf764a3",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 95.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "task_id": "ZT-9b8abbb47123",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "oidc: Add OIDC_REQUIRE_LIMIT_TO_SUBDOMAINS setting.",
+  "type": "other",
+  "lang": "py",
+  "issue": 36580,
+  "fix_commit": "9b8abbb471232875cb93fdadd6dc35c2fd514eff",
+  "base_commit": "4fd6b14b193f08d2073f6d645cf2d13d19a2f25b",
+  "env_fingerprint": "eac692ca457c",
+  "fail_to_pass": [
+    "zerver.tests.test_auth_backends.GenericOpenIdConnectTest.test_social_auth_oidc_idp_limited_to_subdomains_attempt_wrong_realm",
+    "zerver.tests.test_auth_backends.GenericOpenIdConnectTest.test_social_auth_oidc_require_limit_to_subdomains"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 16,
+    "files": 2,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "A new boolean server setting `OIDC_REQUIRE_LIMIT_TO_SUBDOMAINS` (default False), analogous to the existing `SAML_REQUIRE_LIMIT_TO_SUBDOMAINS`: when True, every IdP configured in `SOCIAL_AUTH_OIDC_ENABLED_IDPS` must specify the (pre-existing) `limit_to_subdomains` option to be considered valid.",
+    "When `OIDC_REQUIRE_LIMIT_TO_SUBDOMAINS` is enabled, initialization of the OIDC backend (`GenericOpenIdConnectBackend`, a pre-existing class) validates the configured IdPs and removes every non-compliant IdP from `SOCIAL_AUTH_OIDC_ENABLED_IDPS`, so that only IdPs with `limit_to_subdomains` remain active; compliant IdPs are unaffected.",
+    "For each such validation pass that finds non-compliant IdPs, exactly one ERROR-level message is emitted on the backend's auth logger with the wording: \"OIDC_REQUIRE_LIMIT_TO_SUBDOMAINS is enabled and the following IdPs don't have limit_to_subdomains specified and will be ignored: <list>\", where <list> is the Python-list rendering of the offending IdP names (e.g. ['testoidc'])."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 113,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Mateusz Mandera",
+    "email": "mateusz.mandera@zulip.com",
+    "date": "2026-05-03"
+  },
+  "contamination": {
+    "fix_public_at": "2026-05-03",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-11-13T01:12:57Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/9b8abbb471232875cb93fdadd6dc35c2fd514eff",
+    "issue_url": "https://github.com/zulip/zulip/issues/36580"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-9b8abbb47123",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_social_auth_oidc_require_limit_to_subdomains"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 106.5
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

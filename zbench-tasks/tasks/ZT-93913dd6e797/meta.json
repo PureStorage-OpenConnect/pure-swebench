@@ -1,0 +1,82 @@
+{
+  "task_id": "ZT-93913dd6e797",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "integrations: Support colon and comma characters in jotform payloads.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 32461,
+  "fix_commit": "93913dd6e797e5c9ad6038412baee20c0481182c",
+  "base_commit": "4d953584ca1f32c5619435799ca96d615dd1e678",
+  "env_fingerprint": "b88d632713da",
+  "fail_to_pass": [
+    "zerver.webhooks.jotform.tests.JotformHookTests.test_bad_payload",
+    "zerver.webhooks.jotform.tests.JotformHookTests.test_response_with_colon_comma_characters"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 77,
+    "files": 1,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 337,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Varun-Kolanu",
+    "email": "kolanuvarun739@gmail.com",
+    "date": "2025-07-08"
+  },
+  "contamination": {
+    "fix_public_at": "2025-07-08",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-11-25T11:00:28Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/93913dd6e797e5c9ad6038412baee20c0481182c",
+    "issue_url": "https://github.com/zulip/zulip/issues/32461"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-93913dd6e797",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_response_with_colon_comma_characters"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 111.0
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,189 @@
+diff --git a/web/src/compose_actions.ts b/web/src/compose_actions.ts
+index 007db2cb07..4d0a6b59f9 100644
+--- a/web/src/compose_actions.ts
++++ b/web/src/compose_actions.ts
+@@ -11,6 +11,7 @@ import * as compose_notifications from "./compose_notifications.ts";
+ import * as compose_pm_pill from "./compose_pm_pill.ts";
+ import * as compose_recipient from "./compose_recipient.ts";
+ import * as compose_state from "./compose_state.ts";
++import * as compose_tooltips from "./compose_tooltips.ts";
+ import * as compose_ui from "./compose_ui.ts";
+ import type {ComposeTriggeredOptions} from "./compose_ui.ts";
+ import * as compose_validate from "./compose_validate.ts";
+@@ -440,6 +441,7 @@ export let start = (raw_opts: ComposeActionsStartOpts): void => {
+     // compose-box do not cover the last messages of the current stream
+     // while writing a long message.
+     resize.reset_compose_message_max_height();
++    compose_tooltips.initialize_compose_tooltips("compose", "#compose .compose_button_tooltip");
+ 
+     complete_starting_tasks(opts);
+ 
+diff --git a/web/src/compose_tooltips.ts b/web/src/compose_tooltips.ts
+index 8db7d89254..1e7c4212c4 100644
+--- a/web/src/compose_tooltips.ts
++++ b/web/src/compose_tooltips.ts
+@@ -14,10 +14,77 @@ import {pick_empty_narrow_banner} from "./narrow_banner.ts";
+ import * as narrow_state from "./narrow_state.ts";
+ import * as popover_menus from "./popover_menus.ts";
+ import {realm} from "./state_data.ts";
+-import {EXTRA_LONG_HOVER_DELAY, INSTANT_HOVER_DELAY, LONG_HOVER_DELAY} from "./tippyjs.ts";
++import {
++    EXTRA_LONG_HOVER_DELAY,
++    INSTANT_HOVER_DELAY,
++    LONG_HOVER_DELAY,
++    SINGLETON_INSTANT_HOVER_DELAY,
++    SINGLETON_LONG_HOVER_DELAY,
++    get_tooltip_content,
++} from "./tippyjs.ts";
+ import {parse_html} from "./ui_util.ts";
+ import {user_settings} from "./user_settings.ts";
+ 
++type SingletonContext = "compose" | `edit_message:${string}`;
++type SingletonTooltips = {
++    tooltip_instances: tippy.Instance[] | null;
++    singleton_instance: tippy.CreateSingletonInstance | null;
++};
++
++const compose_button_singleton_context_map = new Map<SingletonContext, SingletonTooltips>();
++
++// Ensure proper teardown of singleton instances, especially for "Save/Cancel" actions or when handling edit window time limits.
++// Reference: http://atomiks.github.io/tippyjs/v6/addons/#destroy
++export function clean_up_compose_singleton_tooltip(context: SingletonContext): void {
++    const singleton_tooltips = compose_button_singleton_context_map.get(context);
++    if (singleton_tooltips) {
++        singleton_tooltips.singleton_instance?.destroy();
++        if (singleton_tooltips.tooltip_instances) {
++            for (const tippy_instance of singleton_tooltips.tooltip_instances) {
++                if (!tippy_instance.state.isDestroyed) {
++                    tippy_instance.destroy();
++                }
++            }
++        }
++        compose_button_singleton_context_map.delete(context);
++    }
++}
++
++export function initialize_compose_tooltips(context: SingletonContext, selector: string): void {
++    // Clean up existing instances first
++    clean_up_compose_singleton_tooltip(context);
++
++    const tooltip_instances = tippy.default(selector, {
++        trigger: "mouseenter",
++        appendTo: () => document.body,
++        placement: "top",
++    });
++
++    const singleton_instance = tippy.createSingleton(tooltip_instances, {
++        delay: LONG_HOVER_DELAY,
++        appendTo: () => document.body,
++        onTrigger(instance, event) {
++            const currentTarget = event.currentTarget;
++            if (currentTarget instanceof HTMLElement) {
++                const content = get_tooltip_content(currentTarget);
++                if (content) {
++                    instance.setContent(content);
++                }
++                if (currentTarget.classList?.contains("disabled-on-hover")) {
++                    instance.setProps({delay: SINGLETON_INSTANT_HOVER_DELAY});
++                } else {
++                    instance.setProps({delay: SINGLETON_LONG_HOVER_DELAY});
++                }
++            }
++        },
++    });
++
++    compose_button_singleton_context_map.set(context, {
++        tooltip_instances,
++        singleton_instance,
++    });
++}
++
+ export function initialize(): void {
+     tippy.delegate("body", {
+         target: [
+@@ -132,40 +199,6 @@ export function initialize(): void {
+         },
+     });
+ 
+-    tippy.delegate("body", {
+-        // Only display Tippy content on classes accompanied by a `data-` attribute.
+-        target: `
+-        .compose_control_button[data-tooltip-template-id],
+-        .compose_control_button[data-tippy-content],
+-        .compose_control_button_container
+-        `,
+-        // Add some additional delay when they open
+-        // so that regular users don't have to see
+-        // them unless they want to.
+-        delay: LONG_HOVER_DELAY,
+-        // By default, tippyjs uses a trigger value of "mouseenter focus",
+-        // which means the tooltips can appear either when the element is
+-        // hovered over or when it receives focus (e.g. by being clicked).
+-        // However, we only want the tooltips to appear on hover, not on click.
+-        // Therefore, we need to remove the "focus" trigger from the buttons,
+-        // so that the tooltips don't appear when the buttons are clicked.
+-        trigger: "mouseenter",
+-        // This ensures that the upload files tooltip
+-        // doesn't hide behind the left sidebar.
+-        appendTo: () => document.body,
+-        // If the button is `.disabled-on-hover`, then we want to show the
+-        // tooltip instantly, to make it clear to the user that the button
+-        // is disabled, and why.
+-        onTrigger(instance, event) {
+-            assert(event.currentTarget instanceof HTMLElement);
+-            if (event.currentTarget.classList.contains("disabled-on-hover")) {
+-                instance.setProps({delay: INSTANT_HOVER_DELAY});
+-            } else {
+-                instance.setProps({delay: LONG_HOVER_DELAY});
+-            }
+-        },
+-    });
+-
+     tippy.delegate("body", {
+         target: ".send-control-button",
+         delay: LONG_HOVER_DELAY,
+diff --git a/web/src/message_edit.ts b/web/src/message_edit.ts
+index 5e8a398e9c..d6399a9642 100644
+--- a/web/src/message_edit.ts
++++ b/web/src/message_edit.ts
+@@ -673,6 +673,10 @@ function edit_message($row: JQuery, raw_content: string): void {
+         $message_edit_content.on("keyup", (event) => {
+             compose_ui.handle_keyup(event, $message_edit_content);
+         });
++        compose_tooltips.initialize_compose_tooltips(
++            `edit_message:${message.id}`,
++            ".message_edit .compose_button_tooltip",
++        );
+     }
+ 
+     // Add tooltip and timer
+@@ -1104,6 +1108,10 @@ export function end_message_row_edit($row: JQuery): void {
+     $row.find(".message_edit").trigger("blur");
+     // We should hide the editing typeahead if it is visible
+     $row.find("input.message_edit_topic").trigger("blur");
++    // Hide the edit box tooltips
++    compose_tooltips.clean_up_compose_singleton_tooltip(
++        `edit_message:${$row.attr("data-message-id")}`,
++    );
+ }
+ 
+ export function end_message_edit(message_id: number): void {
+diff --git a/web/src/tippyjs.ts b/web/src/tippyjs.ts
+index f0c00b7fbf..5de8dd78d6 100644
+--- a/web/src/tippyjs.ts
++++ b/web/src/tippyjs.ts
+@@ -54,6 +54,14 @@ export const LONG_HOVER_DELAY: [number, number] = [750, 20];
+ // keyboard shortcut. For these tooltips, it's very important to avoid
+ // distracting users unnecessarily.
+ export const EXTRA_LONG_HOVER_DELAY: [number, number] = [1500, 20];
++// These delays are specifically for singleton tooltips. Unlike default tooltips,
++// singleton tooltips can feel disconnected or abrupt when using the default hide delays
++// from INSTANT_HOVER_DELAY or LONG_HOVER_DELAY, due to the very low hide timings we use.
++
++// To address this, we increase the hide delay to 250ms. This ensures smoother transitions
++// and prevents tooltips from disappearing too quickly, improving the overall UX.
++export const SINGLETON_INSTANT_HOVER_DELAY: [number, number] = [100, 250];
++export const SINGLETON_LONG_HOVER_DELAY: [number, number] = [750, 250];
+ 
+ // We override the defaults set by tippy library here,
+ // so make sure to check this too after checking tippyjs

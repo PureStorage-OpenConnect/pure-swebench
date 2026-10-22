@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-a481806e821c",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "f2p_unenumerable",
+  "reason": "no extractable test targets",
+  "summary": "markdown: Auto-link obsidian:// URLs.",
+  "lang": "py",
+  "issue": 21859,
+  "fix_commit": "a481806e821cabf53223360bb35f4c985684b494",
+  "base_commit": "f56f54a1ce368555c6cf82fd5f172bdf00822a86",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/a481806e821cabf53223360bb35f4c985684b494",
+    "issue_url": "https://github.com/zulip/zulip/issues/21859"
+  }
+}

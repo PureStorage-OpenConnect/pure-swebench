@@ -1,0 +1,70 @@
+diff --git a/web/src/message_list.ts b/web/src/message_list.ts
+index 1583b63b7c..6d99bc6c00 100644
+--- a/web/src/message_list.ts
++++ b/web/src/message_list.ts
+@@ -579,19 +579,17 @@ export class MessageList {
+         this.view.clear_rendering_state(false);
+         this.view.update_render_window(this.selected_idx(), false);
+ 
+-        if (!this.is_combined_feed_view) {
+-            if (
+-                this.visibly_empty() &&
+-                this.data.fetch_status.has_found_oldest() &&
+-                this.data.fetch_status.has_found_newest()
+-            ) {
+-                // Show the empty narrow message only if we're certain
+-                // that the view doesn't have messages that we're
+-                // waiting for the server to send us.
+-                narrow_banner.show_empty_narrow_message();
+-            } else {
+-                narrow_banner.hide_empty_narrow_message();
+-            }
++        if (
++            this.visibly_empty() &&
++            this.data.fetch_status.has_found_oldest() &&
++            this.data.fetch_status.has_found_newest()
++        ) {
++            // Show the empty narrow message only if we're certain
++            // that the view doesn't have messages that we're
++            // waiting for the server to send us.
++            narrow_banner.show_empty_narrow_message();
++        } else {
++            narrow_banner.hide_empty_narrow_message();
+         }
+         this.rerender_view();
+     }
+diff --git a/web/src/narrow_banner.ts b/web/src/narrow_banner.ts
+index 3a6ebcac46..5ed0d9f221 100644
+--- a/web/src/narrow_banner.ts
++++ b/web/src/narrow_banner.ts
+@@ -128,10 +128,28 @@ export function pick_empty_narrow_banner(): NarrowBannerData {
+     const default_banner_for_multiple_filters = $t({defaultMessage: "No search results."});
+ 
+     const current_filter = narrow_state.filter();
+-
+-    if (current_filter === undefined || current_filter.is_in_home()) {
++    if (current_filter === undefined) {
++        // We're in either the inbox or recent conversations view.
+         return default_banner;
+     }
++    if (current_filter.is_in_home()) {
++        // We're in the combined feed view.
++        return {
++            title: $t({defaultMessage: "There are no messages in your combined feed."}),
++            html: page_params.is_spectator
++                ? ""
++                : $t_html(
++                      {
++                          defaultMessage:
++                              "Would you like to <z-link>view messages in all public channels</z-link>?",
++                      },
++                      {
++                          "z-link": (content_html) =>
++                              `<a href="#narrow/channels/public">${content_html.join("")}</a>`,
++                      },
++                  ),
++        };
++    }
+ 
+     const first_term = current_filter.terms()[0]!;
+     const current_terms_types = current_filter.sorted_term_types();

@@ -1,0 +1,15 @@
+diff --git a/web/src/filter.ts b/web/src/filter.ts
+index e0320d170d..f22bccf0b9 100644
+--- a/web/src/filter.ts
++++ b/web/src/filter.ts
+@@ -1204,6 +1204,10 @@ export class Filter {
+             return true;
+         }
+ 
++        if (_.isEqual(term_types, ["not-is-dm"])) {
++            return true;
++        }
++
+         if (_.isEqual(term_types, ["is-resolved"])) {
+             return true;
+         }

@@ -1,0 +1,431 @@
+diff --git a/web/src/compose_actions.ts b/web/src/compose_actions.ts
+index 047f984ea9..818cd74656 100644
+--- a/web/src/compose_actions.ts
++++ b/web/src/compose_actions.ts
+@@ -15,6 +15,7 @@ import * as compose_tooltips from "./compose_tooltips.ts";
+ import * as compose_ui from "./compose_ui.ts";
+ import type {ComposeTriggeredOptions} from "./compose_ui.ts";
+ import * as compose_validate from "./compose_validate.ts";
++import * as composebox_typeahead from "./composebox_typeahead.ts";
+ import * as drafts from "./drafts.ts";
+ import * as feedback_widget from "./feedback_widget.ts";
+ import {$t} from "./i18n.ts";
+@@ -412,6 +413,15 @@ export let start = (raw_opts: ComposeActionsStartOpts): void => {
+             opts.topic = "";
+             compose_recipient.toggle_compose_recipient_dropdown();
+         }
++
++        if (
++            is_clear_topic_button_triggered &&
++            stream &&
++            !stream_data.can_create_new_topics_in_stream(stream.stream_id)
++        ) {
++            // Open the typahead so that user can select an existing topic.
++            composebox_typeahead.stream_message_topic_typeahead.lookup(false, true);
++        }
+     } else {
+         // Open stream selection dropdown if no stream is selected.
+         compose_state.set_stream_id("");
+diff --git a/web/src/compose_setup.ts b/web/src/compose_setup.ts
+index d0b6747afc..17879bcf5b 100644
+--- a/web/src/compose_setup.ts
++++ b/web/src/compose_setup.ts
+@@ -637,6 +637,11 @@ export function initialize(): void {
+         // chat* is permitted.
+         compose_recipient.update_narrow_to_recipient_visibility();
+         compose_validate.validate_and_update_send_button_status();
++        const stream_id = compose_state.stream_id()!;
++        if (!stream_data.can_create_new_topics_in_stream(stream_id)) {
++            // Open the typahead so that user can select an existing topic.
++            composebox_typeahead.stream_message_topic_typeahead.lookup(false, true);
++        }
+     });
+ 
+     $("#compose-direct-recipient").on("click", "#compose-new-direct-recipient-button", (e) => {
+diff --git a/web/src/compose_tooltips.ts b/web/src/compose_tooltips.ts
+index 2000f22249..fce2a35598 100644
+--- a/web/src/compose_tooltips.ts
++++ b/web/src/compose_tooltips.ts
+@@ -14,6 +14,7 @@ import {pick_empty_narrow_banner} from "./narrow_banner.ts";
+ import * as narrow_state from "./narrow_state.ts";
+ import * as popover_menus from "./popover_menus.ts";
+ import {realm} from "./state_data.ts";
++import * as stream_data from "./stream_data.ts";
+ import {
+     EXTRA_LONG_HOVER_DELAY,
+     INSTANT_HOVER_DELAY,
+@@ -189,9 +190,16 @@ export function initialize(): void {
+                         ),
+                     );
+                 } else {
+-                    instance.setContent(
+-                        parse_html($("#new_topic_message_button_tooltip_template").html()),
+-                    );
++                    const stream_id = narrow_state.stream_id()!;
++                    if (!stream_data.can_create_new_topics_in_stream(stream_id)) {
++                        instance.setContent(
++                            parse_html($("#new_message_button_tooltip_template").html()),
++                        );
++                    } else {
++                        instance.setContent(
++                            parse_html($("#new_topic_message_button_tooltip_template").html()),
++                        );
++                    }
+                 }
+                 return undefined;
+             }
+diff --git a/web/src/compose_validate.ts b/web/src/compose_validate.ts
+index 7cb7bf209d..3e2c39190a 100644
+--- a/web/src/compose_validate.ts
++++ b/web/src/compose_validate.ts
+@@ -31,6 +31,7 @@ import * as resolved_topic from "./resolved_topic.ts";
+ import * as settings_data from "./settings_data.ts";
+ import {current_user, realm} from "./state_data.ts";
+ import * as stream_data from "./stream_data.ts";
++import * as stream_topic_history from "./stream_topic_history.ts";
+ import * as sub_store from "./sub_store.ts";
+ import type {StreamSubscription} from "./sub_store.ts";
+ import type {UserOrMention} from "./typeahead_helper.ts";
+@@ -91,6 +92,10 @@ export const UPLOAD_IN_PROGRESS_ERROR_TOOLTIP_MESSAGE = $t({
+ export const WILDCARD_MENTION_ERROR_TOOLTIP_MESSAGE = $t({
+     defaultMessage: "You do not have permission to use wildcard mentions in large streams.",
+ });
++export const CANNOT_CREATE_NEW_TOPIC_TOOLTIP_MESSAGE = $t({
++    defaultMessage:
++        "You are not allowed to start new topics in this channel. Choose an existing topic from the typeahead.",
++});
+ 
+ type StreamWildcardOptions = {
+     stream_id: number;
+@@ -911,6 +916,22 @@ function validate_stream_message(scheduling_message: boolean, show_banner = true
+         return false;
+     }
+ 
++    if (!stream_data.can_create_new_topics_in_stream(stream_id)) {
++        const topic = compose_state.topic();
++        const existing_topics_in_stream = stream_topic_history
++            .get_recent_topic_names(stream_id)
++            .map((topic) => topic.toLowerCase());
++        if (
++            !existing_topics_in_stream.includes(topic.trim().toLowerCase()) &&
++            stream_topic_history.has_history_for(stream_id)
++        ) {
++            if (is_validating_compose_box) {
++                disabled_send_tooltip_message_html = CANNOT_CREATE_NEW_TOPIC_TOOLTIP_MESSAGE;
++            }
++            return false;
++        }
++    }
++
+     const stream_wildcard_mention = util.find_stream_wildcard_mentions(
+         compose_state.message_content(),
+     );
+diff --git a/web/src/composebox_typeahead.ts b/web/src/composebox_typeahead.ts
+index f36556ff32..9631e630c9 100644
+--- a/web/src/composebox_typeahead.ts
++++ b/web/src/composebox_typeahead.ts
+@@ -144,6 +144,8 @@ export let private_message_recipient_typeahead: Typeahead<
+     UserGroupPillData | user_pill.UserPillData
+ >;
+ 
++export let stream_message_topic_typeahead: Typeahead<string>;
++
+ export function get_or_set_token_for_testing(val?: string): string {
+     if (val !== undefined) {
+         token = val;
+@@ -1468,10 +1470,16 @@ export function initialize_topic_edit_typeahead(
+             return matcher(item);
+         },
+         sorter(items: string[], query: string): string[] {
++            const stream_id = stream_data.get_stream_id(stream_name);
+             const sorted = typeahead_helper.sorter(query, items, (x) =>
+                 util.get_final_topic_display_name(x),
+             );
+-            if (sorted.length > 0 && !sorted.includes(query)) {
++            if (
++                stream_id &&
++                stream_data.can_create_new_topics_in_stream(stream_id) &&
++                sorted.length > 0 &&
++                !sorted.includes(query)
++            ) {
+                 sorted.unshift(query);
+             }
+             return sorted;
+@@ -1596,6 +1604,14 @@ export function initialize_compose_typeahead($element: JQuery<HTMLTextAreaElemen
+     );
+ }
+ 
++function get_footer_html_for_topic_typeahead(stream_id: number | undefined): string {
++    let can_create_new_topics_in_stream = true;
++    if (stream_id !== undefined) {
++        can_create_new_topics_in_stream = stream_data.can_create_new_topics_in_stream(stream_id);
++    }
++    return render_topic_typeahead_hint({can_create_new_topics_in_stream});
++}
++
+ export function initialize({
+     on_enter_send,
+ }: {
+@@ -1613,7 +1629,7 @@ export function initialize({
+         $element: $("input#stream_message_recipient_topic"),
+         type: "input",
+     };
+-    new Typeahead(stream_message_typeahead_input, {
++    stream_message_topic_typeahead = new Typeahead(stream_message_typeahead_input, {
+         source(): string[] {
+             return topics_seen_for(compose_state.stream_id());
+         },
+@@ -1634,7 +1650,13 @@ export function initialize({
+             const sorted = typeahead_helper.sorter(query, items, (x) =>
+                 util.get_final_topic_display_name(x),
+             );
+-            if (sorted.length > 0 && !sorted.includes(query)) {
++            const stream_id = compose_state.stream_id();
++            if (
++                stream_id &&
++                stream_data.can_create_new_topics_in_stream(stream_id) &&
++                sorted.length > 0 &&
++                !sorted.includes(query)
++            ) {
+                 sorted.unshift(query);
+             }
+             return sorted;
+@@ -1650,7 +1672,7 @@ export function initialize({
+             }
+             return false;
+         },
+-        footer_html: render_topic_typeahead_hint,
++        footer_html: () => get_footer_html_for_topic_typeahead(compose_state.stream_id()),
+     });
+ 
+     const private_message_typeahead_input: TypeaheadInputElement = {
+diff --git a/web/src/message_edit.ts b/web/src/message_edit.ts
+index fbc8374b73..698cc8e9b9 100644
+--- a/web/src/message_edit.ts
++++ b/web/src/message_edit.ts
+@@ -519,10 +519,31 @@ function handle_inline_topic_edit_change(elem: HTMLInputElement, stream_id: numb
+ 
+     $topic_edit_save_button.removeClass("topic-required");
+ 
++    if (!stream_data.can_create_new_topics_in_stream(stream_id)) {
++        const topic_val = $inline_topic_edit_input.val()!;
++        const existing_topics_in_stream = stream_topic_history
++            .get_recent_topic_names(stream_id)
++            .map((topic) => topic.toLowerCase());
++        if (
++            !existing_topics_in_stream.includes(topic_val.trim().toLowerCase()) &&
++            stream_topic_history.has_history_for(stream_id)
++        ) {
++            $topic_edit_save_button.prop("disabled", true);
++            $topic_edit_save_button
++                .closest(".topic-edit-save-wrapper")
++                .attr(
++                    "data-tippy-content",
++                    compose_validate.CANNOT_CREATE_NEW_TOPIC_TOOLTIP_MESSAGE,
++                );
++            return;
++        }
++    }
++
+     // If we reach here, it means the save button was disabled previously
+     // and the user has started typing in the input field, probably to fix
+     // the error. So, we re-enable the save button.
+     $topic_edit_save_button.prop("disabled", false);
++    $topic_edit_save_button.closest(".topic-edit-save-wrapper").removeAttr("data-tippy-content");
+ 
+     if (stream_data.can_use_empty_topic(stream_id)) {
+         const $topic_not_mandatory_placeholder = $(".inline-topic-edit-placeholder");
+diff --git a/web/src/stream_data.ts b/web/src/stream_data.ts
+index 7a86a108a7..5e3ad84082 100644
+--- a/web/src/stream_data.ts
++++ b/web/src/stream_data.ts
+@@ -880,6 +880,32 @@ export function rewire_can_post_messages_in_stream(
+     can_post_messages_in_stream = value;
+ }
+ 
++export let can_create_new_topics_in_stream = function (stream_id: number): boolean {
++    if (page_params.is_spectator) {
++        return false;
++    }
++
++    const stream = get_sub_by_id(stream_id);
++    assert(stream !== undefined);
++
++    if (stream.is_archived) {
++        return false;
++    }
++
++    const can_create_topic_group = stream.can_create_topic_group;
++    return settings_data.user_has_permission_for_group_setting(
++        can_create_topic_group,
++        "can_create_topic_group",
++        "stream",
++    );
++};
++
++export function rewire_can_create_new_topics_in_stream(
++    value: typeof can_create_new_topics_in_stream,
++): void {
++    can_create_new_topics_in_stream = value;
++}
++
+ export function user_can_move_messages_out_of_channel(stream: StreamSubscription): boolean {
+     if (page_params.is_spectator) {
+         return false;
+diff --git a/web/src/stream_list.ts b/web/src/stream_list.ts
+index eb098a2a6c..170d165381 100644
+--- a/web/src/stream_list.ts
++++ b/web/src/stream_list.ts
+@@ -672,6 +672,9 @@ function build_stream_sidebar_li(sub: StreamSubscription): JQuery {
+         color: sub.color,
+         pin_to_top: sub.pin_to_top,
+         can_post_messages,
++        cannot_create_topics_in_channel: !stream_data.can_create_new_topics_in_stream(
++            sub.stream_id,
++        ),
+         is_empty_topic_only_channel: stream_data.is_empty_topic_only_channel(sub.stream_id),
+     };
+     const $list_item = $(render_stream_sidebar_row(args));
+diff --git a/web/src/stream_popover.ts b/web/src/stream_popover.ts
+index 542a5cb4a7..93bfb02729 100644
+--- a/web/src/stream_popover.ts
++++ b/web/src/stream_popover.ts
+@@ -516,6 +516,39 @@ export async function build_move_topic_to_stream_popover(
+         ) {
+             is_disabled = true;
+         }
++
++        if (!stream_data.can_create_new_topics_in_stream(select_stream_id)) {
++            const existing_topics_in_stream = stream_topic_history
++                .get_recent_topic_names(select_stream_id)
++                .map((topic) => topic.toLowerCase());
++
++            // new_topic_name can be undefined if user is not allowed
++            // to edit topic, but we still need to check the permission
++            // to create new topics if only stream is changed since it
++            // is possible that original topic does not exist already
++            // for the new stream.
++            const topic_name = new_topic_name ?? old_topic_name;
++            if (
++                !existing_topics_in_stream.includes(topic_name.trim().toLowerCase()) &&
++                stream_topic_history.has_history_for(select_stream_id)
++            ) {
++                is_disabled = true;
++                $("#move_topic_modal .new-topic-name-error").text(
++                    $t({
++                        defaultMessage:
++                            "You are not allowed to start new topics in this channel. Choose an existing topic from the typeahead.",
++                    }),
++                );
++                $("#move_topic_modal .move_messages_edit_topic").addClass("invalid-topic-input");
++            } else {
++                $("#move_topic_modal .new-topic-name-error").empty();
++                $("#move_topic_modal .move_messages_edit_topic").removeClass("invalid-topic-input");
++            }
++        } else {
++            $("#move_topic_modal .new-topic-name-error").empty();
++            $("#move_topic_modal .move_messages_edit_topic").removeClass("invalid-topic-input");
++        }
++
+         util.the($<HTMLButtonElement>("#move_topic_modal button.dialog_submit_button")).disabled =
+             is_disabled;
+     }
+diff --git a/web/src/tippyjs.ts b/web/src/tippyjs.ts
+index 9e6bd7ee00..577c6bb12c 100644
+--- a/web/src/tippyjs.ts
++++ b/web/src/tippyjs.ts
+@@ -9,6 +9,7 @@ import render_org_logo_tooltip from "../templates/org_logo_tooltip.hbs";
+ import render_tooltip_templates from "../templates/tooltip_templates.hbs";
+ import render_topics_not_allowed_error from "../templates/topics_not_allowed_error.hbs";
+ 
++import * as compose_state from "./compose_state.ts";
+ import * as compose_validate from "./compose_validate.ts";
+ import {$t} from "./i18n.ts";
+ import * as information_density from "./information_density.ts";
+@@ -983,6 +984,23 @@ export function initialize(): void {
+         },
+     });
+ 
++    tippy.delegate("body", {
++        target: "#recipient_box_clear_topic_button",
++        delay: LONG_HOVER_DELAY,
++        onShow(instance) {
++            const stream_id = compose_state.stream_id();
++            let content = $t({defaultMessage: "New topic"});
++            if (stream_id && !stream_data.can_create_new_topics_in_stream(stream_id)) {
++                content = $t({defaultMessage: "Clear topic"});
++            }
++            instance.setContent(content);
++        },
++        appendTo: () => document.body,
++        onHidden(instance) {
++            instance.destroy();
++        },
++    });
++
+     // Show expand / collapse tooltip in inbox view on hover over inbox header.
+     let collapse_or_expand_tooltip: tippy.Instance | undefined;
+     let collapse_or_expand_timeout: ReturnType<typeof setTimeout> | undefined;
+diff --git a/web/templates/compose.hbs b/web/templates/compose.hbs
+index f9fe1e256f..91e3780d8e 100644
+--- a/web/templates/compose.hbs
++++ b/web/templates/compose.hbs
+@@ -67,7 +67,7 @@
+                                 <span id="topic-not-mandatory-placeholder" class="placeholder">
+                                     {{> topic_not_mandatory_placeholder_text empty_string_topic_display_name=empty_string_topic_display_name}}
+                                 </span>
+-                                <button type="button" id="recipient_box_clear_topic_button" class="compose-new-recipient-button tippy-zulip-delayed-tooltip" data-tippy-content="{{t 'New topic' }}" tabindex="-1">
++                                <button type="button" id="recipient_box_clear_topic_button" class="compose-new-recipient-button" tabindex="-1">
+                                     <i class="zulip-icon zulip-icon-square-plus"></i>
+                                 </button>
+                             </div>
+diff --git a/web/templates/move_topic_to_stream.hbs b/web/templates/move_topic_to_stream.hbs
+index 7370930c03..a65c57c332 100644
+--- a/web/templates/move_topic_to_stream.hbs
++++ b/web/templates/move_topic_to_stream.hbs
+@@ -18,6 +18,7 @@
+                     <i class="zulip-icon zulip-icon-close"></i>
+                 </button>
+             </div>
++            <div class="new-topic-name-error"></div>
+         </div>
+         <input name="old_topic_name" type="hidden" value="{{topic_name}}" />
+         <input name="current_stream_id" type="hidden" value="{{current_stream_id}}" />
+diff --git a/web/templates/stream_sidebar_row.hbs b/web/templates/stream_sidebar_row.hbs
+index 3c230451bd..5e816a50dd 100644
+--- a/web/templates/stream_sidebar_row.hbs
++++ b/web/templates/stream_sidebar_row.hbs
+@@ -12,7 +12,7 @@
+ 
+             <div class="left-sidebar-controls">
+                 {{#if can_post_messages}}
+-                <div class="channel-new-topic-button tippy-zulip-tooltip hidden-for-spectators auto-hide-left-sidebar-overlay" data-tippy-content="{{#unless is_empty_topic_only_channel}}{{t 'New topic'}}{{else}}{{t 'New message'}}{{/unless}}" data-stream-id="{{id}}">
++                <div class="channel-new-topic-button tippy-zulip-tooltip hidden-for-spectators auto-hide-left-sidebar-overlay" data-tippy-content="{{#if (or is_empty_topic_only_channel cannot_create_topics_in_channel)}}{{t 'New message'}}{{else}}{{t 'New topic'}}{{/if}}" data-stream-id="{{id}}">
+                     <i class="channel-new-topic-icon zulip-icon zulip-icon-square-plus" aria-hidden="true"></i>
+                 </div>
+                 {{/if}}
+diff --git a/web/templates/tooltip_templates.hbs b/web/templates/tooltip_templates.hbs
+index db2d37ab96..c9b93ef27e 100644
+--- a/web/templates/tooltip_templates.hbs
++++ b/web/templates/tooltip_templates.hbs
+@@ -28,6 +28,10 @@
+     {{t 'New topic' }}
+     {{tooltip_hotkey_hints "C"}}
+ </template>
++<template id="new_message_button_tooltip_template">
++    {{t 'New message'}}
++    {{tooltip_hotkey_hints "C"}}
++</template>
+ <template id="new_stream_message_button_tooltip_template">
+     {{t 'New channel message' }}
+     {{tooltip_hotkey_hints "C"}}
+diff --git a/web/templates/topic_typeahead_hint.hbs b/web/templates/topic_typeahead_hint.hbs
+index 73d1734082..e153070519 100644
+--- a/web/templates/topic_typeahead_hint.hbs
++++ b/web/templates/topic_typeahead_hint.hbs
+@@ -1 +1,5 @@
++{{#if can_create_new_topics_in_stream}}
+ <em>{{t 'Start a new topic or select one from the list.' }}</em>
++{{else}}
++<em>{{t 'Select a topic from the list.' }}</em>
++{{/if}}

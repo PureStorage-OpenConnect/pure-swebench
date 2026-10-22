@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-9083c059e8a8",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "stream_type_icon: Render stream privacy icons in message references.",
+  "type": "other",
+  "lang": "web",
+  "issue": 19058,
+  "fix_commit": "9083c059e8a8919ce982742c5faeb98b23d5cb74",
+  "base_commit": "fd5d37b4408a36aebc29c8e5e09739f4bd64a43c",
+  "env_fingerprint": "128772d4f300",
+  "fail_to_pass": [
+    "web/tests/rendered_markdown.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 21,
+    "files": 2,
+    "hunks": 6,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "Stream links (`a.stream` elements) in rendered message content must be re-rendered by calling the pre-existing shared template `web/templates/decorated_channel_name.hbs` (which renders the channel name with its privacy/archived icon), passing the channel's sub object (from sub_store) under the template's existing `stream` parameter; the sub carries the existing fields stream_id, name, invite_only, is_web_public, is_archived.",
+    "The `topic_link.hbs` template context gains a new field `stream`: the full sub object for the linked channel (so the template can render the decorated channel name via the decorated_channel_name partial). The existing context fields (channel_id, channel_name, topic_display_name, is_empty_string_topic, href) are unchanged and no other new fields are added (the test deepEquals the exact context).",
+    "Stream/topic links whose channel is private (invite_only), web-public, or archived must still go through the same decorated_channel_name render path with the corresponding sub flags intact (the decoration reflects the channel's privacy/archived state)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 372,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Aadyot1",
+    "email": "aadyotnandan@gmail.com",
+    "date": "2026-04-14"
+  },
+  "contamination": {
+    "fix_public_at": "2026-04-14",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2021-06-29T22:46:10Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/9083c059e8a8919ce982742c5faeb98b23d5cb74",
+    "issue_url": "https://github.com/zulip/zulip/issues/19058"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-9083c059e8a8",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 91.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

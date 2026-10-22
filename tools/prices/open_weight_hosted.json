@@ -1,0 +1,78 @@
+{
+  "_doc": "Hosted REFERENCE prices for open-weight models we serve on our own hardware (vLLM / local). Standing decision, project owner 2026-08-18 (supersedes the capex-amortization model, now removed): an on-prem open-weight model is costed at what a public host WOULD charge to serve the same weights per token, NOT a hardware-capex amortization. This makes on-prem vs cloud an apples-to-apples per-token comparison. Cost object shape == models.dev (USD per 1,000,000 tokens): input / output / cache_read / cache_write. tools/model_prices.py merges every model here whose status=='pinned' AND cost!=null into its price table, and resolves the serving agent to it by model-name substring. A model with status=='needs_price' (cost null) stays UN-PRICED (renders free*, cost_known=false) until a public reference appears; tools/price_search.py runs daily and fills it in. NOTE: the locally served open models qwen3-coder and deepseek-v4-flash are already priced in prices/models_dev.json (their reference list price), so they are NOT repeated here.",
+  "models": {
+    "gpt-oss-120b": {
+      "status": "pinned",
+      "reference_host": "fireworks-ai / together-ai",
+      "source_url": "https://openrouter.ai/openai/gpt-oss-120b",
+      "fetched_at": "2026-08-18",
+      "note": "OpenAI open-weight release. Fireworks and Together both quote $0.15/$0.60 per 1M in/out; DeepInfra $0.09/$0.45; OpenRouter marketplace min $0.03/$0.17. Pinned to the Fireworks/Together production rate (matches the project's fireworks reference convention). cache_read set to the input rate (OpenRouter bills cache_read == input for this model); no cache_write billing on these hosts.",
+      "cost": {
+        "input": 0.15,
+        "output": 0.6,
+        "cache_read": 0.15,
+        "cache_write": 0
+      }
+    },
+    "qwen3.6-27b": {
+      "status": "pinned",
+      "reference_host": "openrouter:qwen/qwen3.6-27b",
+      "source_url": "https://openrouter.ai/qwen/qwen3.6-27b",
+      "fetched_at": "2026-08-18",
+      "note": "auto-pinned by price_search.py on 2026-08-18 from openrouter:qwen/qwen3.6-27b.",
+      "cost": {
+        "input": 0.3,
+        "output": 2.0,
+        "cache_read": 0.03,
+        "cache_write": 0
+      },
+      "last_checked": "2026-08-18"
+    },
+    "gemma-4-31b": {
+      "status": "pinned",
+      "reference_host": "openrouter:google/gemma-4-31b-it",
+      "source_url": "https://openrouter.ai/google/gemma-4-31b-it",
+      "fetched_at": "2026-08-18",
+      "note": "auto-pinned by price_search.py on 2026-08-18 from openrouter:google/gemma-4-31b-it.",
+      "cost": {
+        "input": 0.09,
+        "output": 0.34,
+        "cache_read": 0.05,
+        "cache_write": 0
+      },
+      "last_checked": "2026-08-18"
+    },
+    "nemotron-3.5-lightning-30b": {
+      "status": "needs_price",
+      "reference_host": null,
+      "source_url": null,
+      "fetched_at": "2026-08-18",
+      "note": "No public host reference found for this exact build as of 2026-08-18. price_search.py will re-check daily. Un-priced until then (free*).",
+      "cost": null,
+      "last_checked": "2026-08-28"
+    },
+    "muse-glimmer-30b": {
+      "status": "pinned",
+      "reference_host": "openrouter:meta/muse-glimmer-30b",
+      "source_url": "https://openrouter.ai/meta/muse-glimmer-30b",
+      "fetched_at": "2026-08-18",
+      "note": "auto-pinned by price_search.py on 2026-08-18 from openrouter:meta/muse-glimmer-30b.",
+      "cost": {
+        "input": 0.35,
+        "output": 1.5,
+        "cache_read": 0.04,
+        "cache_write": 0
+      },
+      "last_checked": "2026-08-18"
+    },
+    "muse-sparkle": {
+      "status": "needs_price",
+      "reference_host": null,
+      "source_url": null,
+      "fetched_at": "2026-08-18",
+      "note": "No public host reference found as of 2026-08-18. price_search.py will re-check daily. Un-priced (free*).",
+      "cost": null,
+      "last_checked": "2026-08-28"
+    }
+  }
+}

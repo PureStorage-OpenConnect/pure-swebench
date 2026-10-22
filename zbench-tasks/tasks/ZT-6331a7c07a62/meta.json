@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-6331a7c07a62",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The test can only pass if the fix performs test-enabling internal refactors no spec would dictate. It calls override_rewire(compose_reply, 'get_message_selection', ...), which requires a `rewire_get_message_selection` export \u2014 and the reference fix indeed converts `get_message_selection` from `export function` to a reassignable `export let` plus a rewire hook purely so it can be stubbed. At the base commit that override fails regardless of whether the bug is fixed correctly. The test also stubs the internal helper `respond_to_message` and asserts the exact shape of its call arguments (`opts.message_id === selection_within_message_id()`), pinning the specific internal decomposition of the fix: a solver could correct the user-visible behavior (quoting a highlighted message replies to that message's recipients) by looking up the message and setting recipients directly, or by passing the message object, and would still fail. The genuinely specifiable behavioral requirement (reply target follows the selection's message, falling back to the pointed-to message) is asserted only through these internal seams, so the coupling cannot be cured by a brief.",
+  "summary": "compose: Fix incorrect recipient logic for quote-reply.",
+  "lang": "web",
+  "issue": 36989,
+  "fix_commit": "6331a7c07a62d1057cfb87cebacf42547a6e61fc",
+  "base_commit": "168f901a18d10b80ddb17ca6ea0b5a68f2db0141",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/6331a7c07a62d1057cfb87cebacf42547a6e61fc",
+    "issue_url": "https://github.com/zulip/zulip/issues/36989"
+  }
+}

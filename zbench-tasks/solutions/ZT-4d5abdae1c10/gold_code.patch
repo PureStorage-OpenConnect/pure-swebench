@@ -1,0 +1,113 @@
+diff --git a/web/src/hotkey.ts b/web/src/hotkey.ts
+index 27e5774da0..e5acc01d53 100644
+--- a/web/src/hotkey.ts
++++ b/web/src/hotkey.ts
+@@ -30,6 +30,7 @@ import * as hashchange from "./hashchange.ts";
+ import {$t} from "./i18n.ts";
+ import * as inbox_ui from "./inbox_ui.ts";
+ import * as inbox_util from "./inbox_util.ts";
++import * as info_overlay from "./info_overlay.ts";
+ import * as lightbox from "./lightbox.ts";
+ import * as list_util from "./list_util.ts";
+ import * as message_actions_popover from "./message_actions_popover.ts";
+@@ -143,6 +144,7 @@ const KEYDOWN_MAPPINGS: Record<string, Hotkey | Hotkey[]> = {
+     "Cmd+Enter": {name: "action_with_enter", message_view_only: true},
+     "Cmd+C": {name: "copy_with_c", message_view_only: false},
+     "Cmd+K": {name: "search_with_k", message_view_only: false},
++    "Cmd+P": {name: "print", message_view_only: false},
+     "Cmd+@": {name: "open_mentions_view", message_view_only: true},
+     "Cmd+S": {name: "star_message", message_view_only: true},
+     "Cmd+.": {name: "narrow_to_compose_target", message_view_only: true},
+@@ -150,6 +152,7 @@ const KEYDOWN_MAPPINGS: Record<string, Hotkey | Hotkey[]> = {
+     "Ctrl+Enter": {name: "action_with_enter", message_view_only: true},
+     "Ctrl+C": {name: "copy_with_c", message_view_only: false},
+     "Ctrl+K": {name: "search_with_k", message_view_only: false},
++    "Ctrl+P": {name: "print", message_view_only: false},
+     "Ctrl+@": {name: "open_mentions_view", message_view_only: true},
+     "Ctrl+S": {name: "star_message", message_view_only: true},
+     "Ctrl+.": {name: "narrow_to_compose_target", message_view_only: true},
+@@ -955,6 +958,17 @@ function process_hotkey(e: JQuery.KeyDownEvent, hotkey: Hotkey): boolean {
+             overlays.close_active();
+             return true;
+         }
++        if (event_name === "print") {
++            info_overlay.print_current_pane();
++            return true;
++        }
++        return false;
++    }
++
++    if (event_name === "print") {
++        // Only the informational overlays have special print
++        // handling; everywhere else, the browser's print of the
++        // current page (styled by print.css) is what we want.
+         return false;
+     }
+ 
+diff --git a/web/src/info_overlay.ts b/web/src/info_overlay.ts
+index ca9165afba..353e3bd585 100644
+--- a/web/src/info_overlay.ts
++++ b/web/src/info_overlay.ts
+@@ -3,11 +3,13 @@ import assert from "minimalistic-assert";
+ 
+ import render_keyboard_shortcut from "../templates/keyboard_shortcuts.hbs";
+ import render_markdown_help from "../templates/markdown_help.hbs";
++import render_print_info_overlay from "../templates/print_info_overlay.hbs";
+ import render_search_operator from "../templates/search_operators.hbs";
+ import render_status_message_example from "../templates/status_message_example.hbs";
+ import render_poll_widget_example from "../templates/widgets/poll_widget_example.hbs";
+ import render_todo_widget_example from "../templates/widgets/todo_widget_example.hbs";
+ 
++import * as blueslip from "./blueslip.ts";
+ import * as browser_history from "./browser_history.ts";
+ import * as common from "./common.ts";
+ import * as components from "./components.ts";
+@@ -30,6 +32,36 @@ export let toggler: Toggle | undefined;
+ const mock_sub = {stream_id: 0, name: $t({defaultMessage: "channel name"})};
+ const mock_topic = $t({defaultMessage: "topic name"});
+ 
++export function print_current_pane(): void {
++    const pane_key = toggler?.key();
++    const title = toggler?.value();
++    if (pane_key === undefined || title === undefined) {
++        blueslip.warn("print_current_pane: no active pane found");
++        return;
++    }
++
++    const $pane = $(`#${CSS.escape(pane_key)} .overlay-scroll-container`);
++    if ($pane.length === 0) {
++        blueslip.warn("print_current_pane: scroll container not found", {pane_key});
++        return;
++    }
++
++    // Extract just the pane's content, leaving SimpleBar's wrapper and
++    // scrollbar elements out of the printed DOM.
++    const body_html = scroll_util.get_content_element($pane).html() ?? "";
++    const html = render_print_info_overlay({title, body_html});
++    const $container = $(html);
++    $("body").append($container);
++
++    const after_print = (): void => {
++        $container.remove();
++        window.removeEventListener("afterprint", after_print);
++    };
++    window.addEventListener("afterprint", after_print);
++
++    window.print();
++}
++
+ function format_usage_html(...keys: string[]): string {
+     return $t_html(
+         {
+diff --git a/web/templates/print_info_overlay.hbs b/web/templates/print_info_overlay.hbs
+new file mode 100644
+index 0000000000..733c0d70db
+--- /dev/null
++++ b/web/templates/print_info_overlay.hbs
+@@ -0,0 +1,6 @@
++<div id="zulip-print-container">
++    <h1 class="zulip-print-title">{{title}}</h1>
++    <div class="zulip-print-body">
++        {{{body_html}}}
++    </div>
++</div>

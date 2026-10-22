@@ -1,0 +1,73 @@
+diff --git a/web/src/compose_actions.ts b/web/src/compose_actions.ts
+index 0688b840a1..d6693c13bd 100644
+--- a/web/src/compose_actions.ts
++++ b/web/src/compose_actions.ts
+@@ -24,6 +24,7 @@ import * as people from "./people.ts";
+ import * as popovers from "./popovers.ts";
+ import * as reload_state from "./reload_state.ts";
+ import * as resize from "./resize.ts";
++import * as saved_snippets_ui from "./saved_snippets_ui.ts";
+ import * as spectators from "./spectators.ts";
+ import * as stream_data from "./stream_data.ts";
+ 
+@@ -425,6 +426,8 @@ export let start = (raw_opts: ComposeActionsStartOpts): void => {
+     resize.reset_compose_message_max_height();
+ 
+     complete_starting_tasks(opts);
++
++    saved_snippets_ui.setup_saved_snippets_dropdown_widget_if_needed();
+ };
+ 
+ export function rewire_start(value: typeof start): void {
+diff --git a/web/src/saved_snippets_ui.ts b/web/src/saved_snippets_ui.ts
+index 7e4c4bb4a3..8b770e751b 100644
+--- a/web/src/saved_snippets_ui.ts
++++ b/web/src/saved_snippets_ui.ts
+@@ -13,10 +13,10 @@ import * as dropdown_widget from "./dropdown_widget.ts";
+ import {$t, $t_html} from "./i18n.ts";
+ import * as rows from "./rows.ts";
+ import * as saved_snippets from "./saved_snippets.ts";
+-import type {StateData} from "./state_data.ts";
+ 
+ let saved_snippets_widget: dropdown_widget.DropdownWidget | undefined;
+ let saved_snippets_dropdown: tippy.Instance | undefined;
++let composebox_saved_snippets_dropdown_widget = false;
+ 
+ function submit_create_saved_snippet_form(): void {
+     const title = $<HTMLInputElement>("#add-new-saved-snippet-modal .saved-snippet-title")
+@@ -149,7 +149,9 @@ export function setup_saved_snippets_dropdown_widget(widget_selector: string): v
+     }).setup();
+ }
+ 
+-export const initialize = (params: StateData["saved_snippets"]): void => {
+-    saved_snippets.initialize(params);
+-    setup_saved_snippets_dropdown_widget(".saved-snippets-composebox-widget");
+-};
++export function setup_saved_snippets_dropdown_widget_if_needed(): void {
++    if (!composebox_saved_snippets_dropdown_widget) {
++        composebox_saved_snippets_dropdown_widget = true;
++        setup_saved_snippets_dropdown_widget(".saved-snippets-composebox-widget");
++    }
++}
+diff --git a/web/src/ui_init.js b/web/src/ui_init.js
+index 68194fdf52..930dae17a9 100644
+--- a/web/src/ui_init.js
++++ b/web/src/ui_init.js
+@@ -98,7 +98,7 @@ import * as realm_user_settings_defaults from "./realm_user_settings_defaults.ts
+ import * as recent_view_ui from "./recent_view_ui.ts";
+ import * as reload_setup from "./reload_setup.js";
+ import * as resize_handler from "./resize_handler.ts";
+-import * as saved_snippets_ui from "./saved_snippets_ui.ts";
++import * as saved_snippets from "./saved_snippets.ts";
+ import * as scheduled_messages from "./scheduled_messages.ts";
+ import * as scheduled_messages_overlay_ui from "./scheduled_messages_overlay_ui.ts";
+ import * as scheduled_messages_ui from "./scheduled_messages_ui.ts";
+@@ -515,7 +515,7 @@ export function initialize_everything(state_data) {
+     });
+     inbox_ui.initialize();
+     alert_words.initialize(state_data.alert_words);
+-    saved_snippets_ui.initialize(state_data.saved_snippets);
++    saved_snippets.initialize(state_data.saved_snippets);
+     emojisets.initialize();
+     scroll_bar.initialize();
+     message_viewport.initialize();

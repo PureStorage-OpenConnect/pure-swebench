@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-ae6e58a2a401",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_invalid",
+  "reason": "gold fix does not make the test pass (arm B run 0: FAIL)",
+  "summary": "message_send: Return `message_url` and `message_link` in send response.",
+  "type": "other",
+  "lang": "py",
+  "issue": 15327,
+  "fix_commit": "ae6e58a2a40144feb6eff7452bf438526b6f03c5",
+  "base_commit": "5ec76bb8268e96797928098c94c955c958f41b88",
+  "env_fingerprint": "f160f90279e2",
+  "fail_to_pass": [
+    "zerver.tests.test_message_send.MessagePOSTTest.test_message_url_in_api_response",
+    "zerver.tests.test_message_send.MessagePOSTTest.test_personal_message",
+    "zerver.tests.test_message_send.PersonalMessageSendTest.test_personal_message"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_url_encoding"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 128,
+    "files": 5,
+    "hunks": 23,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The POST /api/v1/messages API response gains a string field `message_url`: the absolute permanent URL (near-narrow link) of the sent message, e.g. https://<realm>/#narrow/channel/<id>-<name>/topic/<encoded-topic>/near/<message-id> for channel messages and https://<realm>/#narrow/dm/<comma-joined-sorted-user-ids>/near/<message-id> for direct messages.",
+    "The POST /api/v1/messages API response gains a string field `message_link`: a Markdown link matching the web app's 'Copy link to message' format, `[#<channel name> > <topic> @ \ud83d\udcac](<message_url>)`, embedding the same absolute URL as `message_url`.",
+    "For direct messages, which have no channel name and no standard label, `message_link` is simply equal to `message_url` (the bare URL).",
+    "If the sender lacks metadata access to the channel (e.g. a non-subscribed write-only bot posting to a private channel via its owner's subscription), `message_url` must omit the channel name and use the ID-only narrow form `/#narrow/channel/<id>/topic/...`, so the channel name is not leaked; in that case `message_link` is also just the bare URL.",
+    "A sender who is directly subscribed to the channel has metadata access and gets the channel name in the URL and the full Markdown `message_link`; this must hold even for long-term-idle subscribers (the subscription confirmed while authorizing the send suffices, independent of recipient-row computation).",
+    "A sender whose channel access derives solely from a group-based permission (e.g. membership in the channel's can_subscribe_group), without a direct subscription, also has metadata access and gets the channel name in the URL and the full Markdown link; metadata access is resolved from the recursive group memberships already loaded to authorize the send.",
+    "Resolving the sender's metadata access must not add any database queries to the send path: when the sender's group memberships were not loaded during send authorization (e.g. a bot posting via its owner's subscription), they are treated as empty rather than fetched, conservatively omitting the channel name. (The full private-channel bot send completes in the same total query count as the baseline send path, asserted as an exact query budget.)"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1208,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Aadyot1",
+    "email": "aadyotnandan@gmail.com",
+    "date": "2026-08-11"
+  },
+  "contamination": {
+    "fix_public_at": "2026-08-11",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2020-06-12T00:15:23Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ae6e58a2a40144feb6eff7452bf438526b6f03c5",
+    "issue_url": "https://github.com/zulip/zulip/issues/15327"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-ae6e58a2a401",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_message_url_in_api_response"
+      ],
+      "verdict": "INVALID",
+      "code": 1,
+      "why": "gold fix does not make the test pass (arm B run 0: FAIL)",
+      "elapsed_s": 76.0
+    }
+  }
+}

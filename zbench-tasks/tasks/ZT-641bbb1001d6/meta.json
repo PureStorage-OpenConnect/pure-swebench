@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-641bbb1001d6",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "f2p_unenumerable",
+  "reason": "no extractable test targets",
+  "summary": "rocketchat_importer: Don't deactivate channels without subscribers.",
+  "lang": "py",
+  "issue": 15102,
+  "fix_commit": "641bbb1001d6698f314a46bb84b006ae00ecdec1",
+  "base_commit": "f2887be6a800121c5468b02ffdaac92818a02012",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/641bbb1001d6698f314a46bb84b006ae00ecdec1",
+    "issue_url": "https://github.com/zulip/zulip/issues/15102"
+  }
+}

@@ -1,0 +1,39 @@
+diff --git a/zerver/forms.py b/zerver/forms.py
+index a10f18e427..c5d45b3f4d 100644
+--- a/zerver/forms.py
++++ b/zerver/forms.py
+@@ -82,7 +82,7 @@ def check_subdomain_available(subdomain: str, allow_reserved_subdomain: bool = F
+         "too short": _("Subdomain needs to have length 3 or greater."),
+         "extremal dash": _("Subdomain cannot start or end with a '-'."),
+         "bad character": _("Subdomain can only have lowercase letters, numbers, and '-'s."),
+-        "unavailable": _("Subdomain already in use. Please choose a different one."),
++        "unavailable": _("Subdomain is already in use. Please choose a different one."),
+         "reserved": _("Subdomain reserved. Please choose a different one."),
+     }
+ 
+diff --git a/zerver/lib/streams.py b/zerver/lib/streams.py
+index 8ae4972db1..172a9ee36c 100644
+--- a/zerver/lib/streams.py
++++ b/zerver/lib/streams.py
+@@ -874,7 +874,7 @@ def check_stream_name_available(realm: Realm, name: str) -> None:
+     check_stream_name(name)
+     try:
+         get_stream(name, realm)
+-        raise JsonableError(_("Channel name already in use."))
++        raise JsonableError(_("Channel name is already in use."))
+     except Stream.DoesNotExist:
+         pass
+ 
+diff --git a/zerver/lib/users.py b/zerver/lib/users.py
+index 5ad3ff238c..068ed69573 100644
+--- a/zerver/lib/users.py
++++ b/zerver/lib/users.py
+@@ -108,7 +108,7 @@ def check_bot_name_available(realm_id: int, full_name: str, *, is_activation: bo
+                 f'There is already an active bot named "{full_name}" in this organization. To reactivate this bot, you must rename or deactivate the other one first.'
+             )
+         else:
+-            raise JsonableError(_("Name is already in use!"))
++            raise JsonableError(_("Name is already in use."))
+ 
+ 
+ def check_short_name(short_name_raw: str) -> str:

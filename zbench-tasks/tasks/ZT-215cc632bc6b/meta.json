@@ -1,0 +1,86 @@
+{
+  "task_id": "ZT-215cc632bc6b",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "mention: Skip fetching group membership for silent-mentioned groups.",
+  "type": "other",
+  "lang": "py",
+  "issue": 32934,
+  "fix_commit": "215cc632bc6b3bdc4c1fbfafe7f6d01a8403cf41",
+  "base_commit": "53cdfddf5bb950dccadd804e7cd63e9478946c37",
+  "env_fingerprint": "d321ae697173",
+  "fail_to_pass": [
+    "zerver.tests.test_markdown.MarkdownMiscTest.test_invalid_katex_path",
+    "zerver.tests.test_markdown.MarkdownMiscTest.test_silent_mention_user_groups"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 33,
+    "files": 1,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The function possible_user_group_mentions(content) in zerver/lib/mention changes its return type from a set of group names to a dict mapping each user-group name mentioned in the content to a mention-type string: 'silent' for groups mentioned only with the silent syntax @_*name*, and 'non-silent' for groups mentioned with the regular syntax @*name*.",
+    "When the same group is mentioned both silently and non-silently in the same content, its dict entry must be 'non-silent', regardless of whether the silent or non-silent mention appears first.",
+    "Group membership must not be fetched for groups that are only silently mentioned: for such groups, MentionData.get_group_members(group_id) returns an empty set, while groups with at least one non-silent mention return their full (recursive) membership as before."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 544,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "bedo",
+    "email": "bedokhaled66@gmail.com",
+    "date": "2025-04-24"
+  },
+  "contamination": {
+    "fix_public_at": "2025-04-24",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-01-07T00:52:41Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/215cc632bc6b3bdc4c1fbfafe7f6d01a8403cf41",
+    "issue_url": "https://github.com/zulip/zulip/issues/32934"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-215cc632bc6b",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_silent_mention_user_groups"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 100.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

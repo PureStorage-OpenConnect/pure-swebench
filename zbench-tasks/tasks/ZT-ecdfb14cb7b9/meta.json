@@ -1,0 +1,84 @@
+{
+  "task_id": "ZT-ecdfb14cb7b9",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "message-view: Fix banner/bookend for private channel no content access.",
+  "type": "other",
+  "lang": "web",
+  "issue": 36075,
+  "fix_commit": "ecdfb14cb7b9ea0d54be57432abfcff995f04416",
+  "base_commit": "a028a6b9fd880872ac4c89646fc77d3137fdf5b1",
+  "env_fingerprint": "806218ad5d12",
+  "fail_to_pass": [
+    "web/tests/message_list.test.cjs",
+    "web/tests/message_view.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 23,
+    "files": 2,
+    "hunks": 2,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "When narrowing to a private channel (invite_only) that the user is not subscribed to and is not allowed to subscribe to, the empty-narrow banner must show the user-facing message: 'You are not allowed to view messages in this private channel.' (marked for translation, title only, no extra HTML).",
+    "Whether the user is allowed to subscribe must be determined via the pre-existing exported helper stream_data.can_toggle_subscription(sub); code deciding subscribe-related UI for a channel must route through this function rather than reimplementing the permission check.",
+    "When the user is not subscribed to the narrowed channel and can_toggle_subscription returns false, the message list must not render any trailing bookend (the subscribe/unsubscribe bookend rendering is skipped entirely)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 562,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "santhoshkumarCodes",
+    "email": "santhoshkumartechsavvy@gmail.com",
+    "date": "2025-11-02"
+  },
+  "contamination": {
+    "fix_public_at": "2025-11-02",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-09-19T10:39:58Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ecdfb14cb7b9ea0d54be57432abfcff995f04416",
+    "issue_url": "https://github.com/zulip/zulip/issues/36075"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-ecdfb14cb7b9",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 92.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

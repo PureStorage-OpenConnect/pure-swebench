@@ -1,0 +1,85 @@
+{
+  "task_id": "ZT-5f164582a474",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "settings: Add channel notifications customization in Personal settings.",
+  "type": "other",
+  "lang": "web",
+  "issue": 19849,
+  "fix_commit": "5f164582a474cfe0e2c9bc47fa56ac4169aa3750",
+  "base_commit": "1471e9b828c6751db6304c06c711b8af352345bd",
+  "env_fingerprint": "242cb48c9f7b",
+  "fail_to_pass": [
+    "web/tests/settings_config.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 111,
+    "files": 4,
+    "hunks": 13,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "web/src/settings_config.ts exports a new zero-argument function `get_custom_stream_specific_notifications_table_row_data()` that returns the checkbox row data for the 'customize a channel' placeholder row in the stream notification settings table.",
+    "The return value is an array of the pre-existing NotificationSettingCheckbox objects (fields: setting_name, is_checked, is_disabled, is_mobile_checkbox, push_notifications_disabled), one per entry of the pre-existing `stream_specific_notification_settings` array, in that array's order (desktop_notifications, audible_notifications, push_notifications, email_notifications, wildcard_mentions_notify).",
+    "In every row: `is_checked` is false and `is_disabled` is true (the placeholder row's checkboxes start unchecked and disabled until a channel is selected).",
+    "`is_mobile_checkbox` is true only for the `push_notifications` row, false for all others.",
+    "`push_notifications_disabled` is the boolean negation of `realm.realm_push_notifications_enabled` (true in the test environment, where the realm setting is unset/false)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1253,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Saubhagya Patel",
+    "email": "patelsaubhagya0144@gmail.com",
+    "date": "2025-06-09"
+  },
+  "contamination": {
+    "fix_public_at": "2025-06-09",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2021-09-27T22:19:43Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/5f164582a474cfe0e2c9bc47fa56ac4169aa3750",
+    "issue_url": "https://github.com/zulip/zulip/issues/19849"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-5f164582a474",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 65.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

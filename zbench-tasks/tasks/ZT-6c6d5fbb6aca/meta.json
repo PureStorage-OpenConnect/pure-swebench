@@ -1,0 +1,93 @@
+{
+  "task_id": "ZT-6c6d5fbb6aca",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "people: Use Intl.ListFormat rather than .join(\",\").",
+  "type": "other",
+  "lang": "web",
+  "issue": 26936,
+  "fix_commit": "6c6d5fbb6acaf984679ba8ce6e8b7d0f35dd6c01",
+  "base_commit": "cface068cb2cf2b997a1be4fa179c465a610503d",
+  "env_fingerprint": "613bd27be2e3",
+  "fail_to_pass": [
+    "web/tests/buddy_data.test.cjs",
+    "web/tests/people.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/pm_list_data.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 21,
+    "files": 6,
+    "hunks": 7,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "people.get_recipients(user_ids_string) changes its return type from a comma-joined string to an array of recipient display names, sorted alphabetically; callers that need a display string must join/format the array themselves",
+    "For a direct message with oneself, people.get_recipients returns a one-element array containing the current user's full name",
+    "Muted users appear in the people.get_recipients result as the translated 'Muted user' placeholder name, occupying their own array element",
+    "The group DM title (first line of buddy_data.get_title_data for groups) renders recipient names as a natural-language list with a conjunction, e.g. two users render as 'Human Selma and Old User' instead of 'Human Selma, Old User'"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 241,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "whilstsomebody",
+    "email": "vishwakarmarambhawan572@gmail.com",
+    "date": "2025-03-04"
+  },
+  "contamination": {
+    "fix_public_at": "2025-03-04",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-09-29T17:04:18Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/6c6d5fbb6acaf984679ba8ce6e8b7d0f35dd6c01",
+    "issue_url": "https://github.com/zulip/zulip/issues/26936"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-6c6d5fbb6aca",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 125.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

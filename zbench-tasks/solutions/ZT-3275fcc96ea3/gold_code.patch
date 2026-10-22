@@ -1,0 +1,241 @@
+diff --git a/web/src/message_fetch.ts b/web/src/message_fetch.ts
+index 984b667d45..30dcba0d97 100644
+--- a/web/src/message_fetch.ts
++++ b/web/src/message_fetch.ts
+@@ -1,4 +1,3 @@
+-import $ from "jquery";
+ import assert from "minimalistic-assert";
+ import {z} from "zod";
+ 
+@@ -22,12 +21,12 @@ import * as message_viewport from "./message_viewport.ts";
+ import * as narrow_banner from "./narrow_banner.ts";
+ import {page_params} from "./page_params.ts";
+ import * as people from "./people.ts";
++import * as popup_banners from "./popup_banners.ts";
+ import * as recent_view_ui from "./recent_view_ui.ts";
+ import type {NarrowTerm} from "./state_data.ts";
+ import {narrow_term_schema} from "./state_data.ts";
+ import * as stream_data from "./stream_data.ts";
+ import * as stream_list from "./stream_list.ts";
+-import * as ui_report from "./ui_report.ts";
+ import * as util from "./util.ts";
+ 
+ const response_schema = z.object({
+@@ -392,18 +391,16 @@ export function load_messages(opts: MessageFetchOptions, attempt = 1): void {
+         url: "/json/messages",
+         data,
+         success(raw_data) {
+-            if (!$("#connection-error").hasClass("get-events-error")) {
+-                ui_report.hide_error($("#connection-error"));
+-            }
++            popup_banners.close_connection_error_popup_banner(true);
+             const data = response_schema.parse(raw_data);
+             get_messages_success(data, opts);
+         },
+         error(xhr) {
+-            if (xhr.status === 400 && !$("#connection-error").hasClass("get-events-error")) {
++            if (xhr.status === 400) {
+                 // We successfully reached the server, so hide the
+                 // connection error notice, even if the request failed
+                 // for other reasons.
+-                ui_report.hide_error($("#connection-error"));
++                popup_banners.close_connection_error_popup_banner(true);
+             }
+ 
+             if (
+@@ -443,7 +440,11 @@ export function load_messages(opts: MessageFetchOptions, attempt = 1): void {
+                 return;
+             }
+ 
+-            ui_report.show_error($("#connection-error"));
++            popup_banners.open_connection_error_popup_banner({
++                on_retry_callback() {
++                    load_messages(opts, attempt + 1);
++                },
++            });
+ 
+             const delay_secs = util.get_retry_backoff_seconds(xhr, attempt, true);
+             setTimeout(() => {
+diff --git a/web/src/popup_banners.ts b/web/src/popup_banners.ts
+new file mode 100644
+index 0000000000..bed408e1f1
+--- /dev/null
++++ b/web/src/popup_banners.ts
+@@ -0,0 +1,79 @@
++import $ from "jquery";
++
++import * as banners from "./banners.ts";
++import type {Banner} from "./banners.ts";
++import {$t} from "./i18n.ts";
++
++const CONNECTION_ERROR_POPUP_BANNER: Banner = {
++    intent: "danger",
++    label: $t({
++        defaultMessage: "Unable to connect to Zulip. Retrying soon…",
++    }),
++    buttons: [
++        {
++            type: "quiet",
++            label: $t({defaultMessage: "Try now"}),
++            custom_classes: "retry-connection",
++        },
++    ],
++    close_button: true,
++    custom_classes: "connection-error-banner popup-banner",
++};
++
++export function open_connection_error_popup_banner(opts: {
++    on_retry_callback: () => void;
++    is_get_events_error?: boolean;
++}): void {
++    // If the banner is already open, don't open it again.
++    if ($("#popup_banners_wrapper").find(".connection-error-banner").length > 0) {
++        return;
++    }
++    // Prevent the interference between the server errors from
++    // get_events in web/src/server_events.js and the one from
++    // load_messages in web/src/message_fetch.ts.
++    if (opts.is_get_events_error) {
++        CONNECTION_ERROR_POPUP_BANNER.custom_classes += " get-events-error";
++    }
++    banners.append(CONNECTION_ERROR_POPUP_BANNER, $("#popup_banners_wrapper"));
++
++    $("#popup_banners_wrapper").on("click", ".retry-connection", (e) => {
++        e.preventDefault();
++        e.stopPropagation();
++
++        opts.on_retry_callback();
++    });
++}
++
++export function close_connection_error_popup_banner(check_if_get_events_error = false): void {
++    const $banner = $("#popup_banners_wrapper").find(".connection-error-banner");
++    if ($banner.length === 0) {
++        return;
++    }
++    if (check_if_get_events_error && $banner.hasClass("get-events-error")) {
++        return;
++    }
++    $banner.addClass("fade-out");
++    // The delay is the same as the animation duration for fade-out.
++    setTimeout(() => {
++        banners.close($banner);
++    }, 300);
++}
++
++export function initialize(): void {
++    $("#popup_banners_wrapper").on(
++        "click",
++        ".banner-close-action",
++        function (this: HTMLElement, e) {
++            // Override the banner close event listener in web/src/banners.ts,
++            // to add a fade-out animation when the banner is closed.
++            e.preventDefault();
++            e.stopPropagation();
++            const $banner = $(this).closest(".banner");
++            $banner.addClass("fade-out");
++            // The delay is the same as the animation duration for fade-out.
++            setTimeout(() => {
++                banners.close($banner);
++            }, 300);
++        },
++    );
++}
+diff --git a/web/src/server_events.js b/web/src/server_events.js
+index 7a591951a0..09dbe088b9 100644
+--- a/web/src/server_events.js
++++ b/web/src/server_events.js
+@@ -7,12 +7,12 @@ import * as echo from "./echo.ts";
+ import * as loading from "./loading.ts";
+ import * as message_events from "./message_events.ts";
+ import {page_params} from "./page_params.ts";
++import * as popup_banners from "./popup_banners.ts";
+ import * as reload from "./reload.ts";
+ import * as reload_state from "./reload_state.ts";
+ import * as sent_messages from "./sent_messages.ts";
+ import * as server_events_dispatch from "./server_events_dispatch.js";
+ import {server_message_schema} from "./server_message.ts";
+-import * as ui_report from "./ui_report.ts";
+ import * as util from "./util.ts";
+ import * as watchdog from "./watchdog.ts";
+ 
+@@ -146,16 +146,6 @@ function get_events_success(events) {
+     }
+ }
+ 
+-function show_ui_connection_error() {
+-    ui_report.show_error($("#connection-error"));
+-    $("#connection-error").addClass("get-events-error");
+-}
+-
+-function hide_ui_connection_error() {
+-    ui_report.hide_error($("#connection-error"));
+-    $("#connection-error").removeClass("get-events-error");
+-}
+-
+ function get_events({dont_block = false} = {}) {
+     if (reload_state.is_in_progress()) {
+         return;
+@@ -202,7 +192,7 @@ function get_events({dont_block = false} = {}) {
+             try {
+                 get_events_xhr = undefined;
+                 get_events_failures = 0;
+-                hide_ui_connection_error();
++                popup_banners.close_connection_error_popup_banner();
+ 
+                 get_events_success(data.events);
+             } catch (error) {
+@@ -230,15 +220,20 @@ function get_events({dont_block = false} = {}) {
+                 } else if (error_type === "timeout") {
+                     // Retry indefinitely on timeout.
+                     get_events_failures = 0;
+-                    hide_ui_connection_error();
++                    popup_banners.close_connection_error_popup_banner();
+                 } else {
+                     get_events_failures += 1;
+                 }
+ 
+                 if (get_events_failures >= 8) {
+-                    show_ui_connection_error();
++                    popup_banners.open_connection_error_popup_banner({
++                        on_retry_callback() {
++                            restart_get_events({dont_block: true});
++                        },
++                        is_get_events_error: true,
++                    });
+                 } else {
+-                    hide_ui_connection_error();
++                    popup_banners.close_connection_error_popup_banner();
+                 }
+             } catch (error) {
+                 blueslip.error("Failed to handle get_events error", undefined, error);
+@@ -287,9 +282,6 @@ export function initialize(params) {
+         get_events_failures = 0;
+         restart_get_events({dont_block: true});
+     });
+-    $(".restart_get_events_button").on("click", () => {
+-        restart_get_events({dont_block: true});
+-    });
+ 
+     get_events();
+ }
+diff --git a/web/src/ui_init.js b/web/src/ui_init.js
+index a44a912a19..3552f6b482 100644
+--- a/web/src/ui_init.js
++++ b/web/src/ui_init.js
+@@ -90,6 +90,7 @@ import * as pm_conversations from "./pm_conversations.ts";
+ import * as pm_list from "./pm_list.ts";
+ import * as popover_menus from "./popover_menus.ts";
+ import * as popovers from "./popovers.ts";
++import * as popup_banners from "./popup_banners.ts";
+ import * as presence from "./presence.ts";
+ import * as pygments_data from "./pygments_data.ts";
+ import * as realm_logo from "./realm_logo.ts";
+@@ -525,6 +526,7 @@ export function initialize_everything(state_data) {
+     message_viewport.initialize();
+     banners.initialize();
+     navbar_alerts.initialize();
++    popup_banners.initialize();
+     message_list_hover.initialize();
+     initialize_kitchen_sink_stuff();
+     local_message.initialize(state_data.local_message);

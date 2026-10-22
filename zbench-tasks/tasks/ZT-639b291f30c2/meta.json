@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-639b291f30c2",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "import: Sort realms migrations status before checking.",
+  "type": "other",
+  "lang": "py",
+  "issue": 32826,
+  "fix_commit": "639b291f30c2a96bbceab9481a581d43063a7bc7",
+  "base_commit": "3ca743e35f1b54c20f1eb374266ccf75332a598f",
+  "env_fingerprint": "3882df26dc0e",
+  "fail_to_pass": [
+    "zerver.tests.test_import_export.RealmImportExportTest.test_import_realm_with_identical_but_unsorted_migrations"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 11,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 2
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 2735,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2025-01-02"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-02",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-12-25T20:09:59Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/639b291f30c2a96bbceab9481a581d43063a7bc7",
+    "issue_url": "https://github.com/zulip/zulip/issues/32826"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-639b291f30c2",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_import_realm_with_identical_but_unsorted_migrations"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 102.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "task_id": "ZT-cc39b6860b1a",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_invalid",
+  "reason": "gold fix does not make the test pass (arm B run 0: FAIL)",
+  "summary": "email_change: Use HTML error for user deactivated error.",
+  "type": "other",
+  "lang": "py",
+  "issue": 20227,
+  "fix_commit": "cc39b6860b1abd128b641572bb5e79da6ce90ffb",
+  "base_commit": "8fab9a23cec8a042184328d5f3a7d703f1967501",
+  "env_fingerprint": "9a92176bb378",
+  "fail_to_pass": [
+    "zerver.tests.test_email_change.EmailChangeTestCase.test_change_email_deactivated_user_realm"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 10,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "When a deactivated user opens an email-change confirmation link, instead of a JSON error the server must return a rendered, user-facing HTML error page with HTTP status 401 whose page title is \"Account is deactivated\" (rendered in the standard page-title format as \"Account is deactivated | Zulip\")."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 418,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2025-05-06"
+  },
+  "contamination": {
+    "fix_public_at": "2025-05-06",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2021-11-10T21:52:34Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/cc39b6860b1abd128b641572bb5e79da6ce90ffb",
+    "issue_url": "https://github.com/zulip/zulip/issues/20227"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-cc39b6860b1a",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ]
+      },
+      "fail_signature": [
+        "test_change_email_deactivated_user_realm"
+      ],
+      "verdict": "INVALID",
+      "code": 1,
+      "why": "gold fix does not make the test pass (arm B run 0: FAIL)",
+      "elapsed_s": 56.1
+    }
+  }
+}

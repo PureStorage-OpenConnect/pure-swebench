@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-472ca78bc26f",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated: fail 2x stable signature, pass 3x)",
+  "summary": "notifications: Fix AssertionError on moving messages with bot mentions.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 39888,
+  "fix_commit": "472ca78bc26f959b73fa4e64daa7444c68be8402",
+  "base_commit": "54d2dc28762495b0927670390c5cc5f8cd5d4db9",
+  "env_fingerprint": "4774667643bf",
+  "fail_to_pass": [
+    "zerver.tests.test_message_edit_notifications.EditMessageSideEffectsTest.test_topic_edit_does_not_notify_anybody",
+    "zerver.tests.test_message_edit_notifications.EditMessageSideEffectsTest.test_channel_edit_does_not_notify_anybody",
+    "zerver.tests.test_message_edit_notifications.EditMessageSideEffectsTest.test_content_edit_that_also_moves_topic_notifies"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_notification_data",
+    "zerver.tests.test_event_queue"
+  ],
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/472ca78bc26f959b73fa4e64daa7444c68be8402",
+    "issue_url": "https://github.com/zulip/zulip/issues/39888"
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  },
+  "review": {
+    "oracle": {
+      "verdict": "VALID",
+      "elapsed_s": 137.1,
+      "fail_signature": [
+        "test_channel_edit_does_not_notify_anybody",
+        "test_topic_edit_does_not_notify_anybody"
+      ],
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      }
+    }
+  },
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 7,
+    "files": 2,
+    "hunks": 3,
+    "f2p_count": 3
+  },
+  "author": {
+    "name": "Prakhar Pratyush",
+    "email": "prakhar@zulip.com",
+    "date": "2026-08-05T11:22:54+00:00"
+  },
+  "contamination": {
+    "fix_public_at": "2026-08-10",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

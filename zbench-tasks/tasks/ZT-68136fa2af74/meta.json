@@ -1,0 +1,87 @@
+{
+  "task_id": "ZT-68136fa2af74",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "integrations: Add support for emoji events in GitLab design comments.",
+  "type": "other",
+  "lang": "py",
+  "issue": 34221,
+  "fix_commit": "68136fa2af74a9d66cbcee4aca4ce179d3d541b2",
+  "base_commit": "1300e7d96d7b18cbbc581be4c74639546d85be1d",
+  "env_fingerprint": "38e017490e13",
+  "fail_to_pass": [
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_emoji_award_in_design_note",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_emoji_revoke_in_merge_request_note_with_custom_topic"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 25,
+    "files": 1,
+    "hunks": 5,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The GitLab webhook integration must handle Emoji Hook award/revoke events whose awardable is a comment on a design (payload has object_attributes.awardable_type = \"Note\" and note.noteable_type = \"DesignManagement::Design\", with object_attributes.awarded_on_url null); at present such payloads are not handled.",
+    "For emoji events on design comments, the Zulip topic must be \"<repo name> / design <design filename>\" (e.g. \"sample / design Sample.png\"), matching the topic format already used for design-comment note events; note that no \"#\" sign precedes the design name, since designs are identified by filename rather than numeric ID.",
+    "For emoji events on design comments, the message must follow the existing emoji-event wording \u2014 \"<user full name> added the emoji :<emoji name>: to [a comment](<url>).\" for award (\"removed ... from\" for revoke) \u2014 where <url> is the design comment's URL derived from the note payload the same way as for existing design-comment events: <project web_url>/-/issues/<issue>/designs/<design filename>#note_<note id>.",
+    "When the webhook URL includes a custom topic= parameter, emoji award/revoke events must continue to use that topic and prefix the message with the repository link in the form \"[[<repo name>](<project web_url>)] \" (existing include-title behavior must be preserved for emoji events on merge request comments)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 421,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Pritesh Shetty",
+    "email": "priteshshetty89@gmail.com",
+    "date": "2026-02-14"
+  },
+  "contamination": {
+    "fix_public_at": "2026-02-14",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-03-29T14:46:25Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/68136fa2af74a9d66cbcee4aca4ce179d3d541b2",
+    "issue_url": "https://github.com/zulip/zulip/issues/34221"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-68136fa2af74",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_emoji_award_in_design_note"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 90.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,289 @@
+diff --git a/web/src/composebox_typeahead.ts b/web/src/composebox_typeahead.ts
+index 8337bf6100..c4236ddd2e 100644
+--- a/web/src/composebox_typeahead.ts
++++ b/web/src/composebox_typeahead.ts
+@@ -538,11 +538,6 @@ export function broadcast_mentions(): PseudoMentionUser[] {
+         special_item_text: mention,
+         secondary_text: get_wildcard_string(mention),
+         email: mention,
+-
+-        // Always sort above, under the assumption that names will
+-        // be longer and only contain "all" as a substring.
+-        pm_recipient_count: Number.POSITIVE_INFINITY,
+-
+         full_name: mention,
+ 
+         // used for sorting
+diff --git a/web/src/message_helper.ts b/web/src/message_helper.ts
+index 6ccc0dd130..4d2a77722d 100644
+--- a/web/src/message_helper.ts
++++ b/web/src/message_helper.ts
+@@ -85,7 +85,6 @@ export function process_new_message(opts: NewMessage): ProcessedMessage {
+     people.extract_people_from_message(message_with_booleans.message);
+ 
+     const sent_by_me = people.is_my_user_id(message_with_booleans.message.sender_id);
+-    people.maybe_incr_recipient_count({...message_with_booleans.message, sent_by_me});
+ 
+     let status_emoji_info;
+     const sender = people.maybe_get_user_by_id(message_with_booleans.message.sender_id);
+diff --git a/web/src/people.ts b/web/src/people.ts
+index 363ac56e26..cb4730fb5d 100644
+--- a/web/src/people.ts
++++ b/web/src/people.ts
+@@ -37,7 +37,6 @@ export type PseudoMentionUser = {
+     special_item_text: string;
+     email: string;
+     secondary_text: string;
+-    pm_recipient_count: number;
+     full_name: string;
+     idx: number;
+ };
+@@ -48,7 +47,6 @@ let people_by_user_id_dict: Map<number, User>;
+ let active_user_dict: Map<number, User>;
+ let non_active_user_dict: Map<number, User>;
+ let cross_realm_dict: Map<number, User>;
+-let pm_recipient_count_dict: Map<number, number>;
+ let duplicate_full_name_data: FoldDict<Set<number>>;
+ let my_user_id: number;
+ let valid_user_ids: Set<number>;
+@@ -100,7 +98,6 @@ export function init(): void {
+     active_user_dict = new Map();
+     non_active_user_dict = new Map();
+     cross_realm_dict = new Map(); // keyed by user_id
+-    pm_recipient_count_dict = new Map();
+     valid_user_ids = new Set();
+ 
+     // This maintains a set of ids of people with same full names.
+@@ -1084,45 +1081,6 @@ export function get_non_active_realm_users(): User[] {
+     return [...non_active_user_dict.values()];
+ }
+ 
+-export function get_recipient_count(person: User | PseudoMentionUser): number {
+-    // We can have fake person objects like the "all"
+-    // pseudo-person in at-mentions.  They will have
+-    // the pm_recipient_count on the object itself.
+-    if ("pm_recipient_count" in person) {
+-        return person.pm_recipient_count;
+-    }
+-
+-    /*
+-        For searching in the search bar, we will
+-        have true `person` objects with `user_id`.
+-
+-        Likewise, we'll have user_id if we are
+-        tab-completing a user to send a direct message
+-        to (but we only get called if we're not
+-        currently in a stream view).
+-
+-        Finally, we'll have user_id if we are adding
+-        people to a stream (w/typeahead).
+-
+-    */
+-    const count = pm_recipient_count_dict.get(person.user_id);
+-
+-    return count ?? 0;
+-}
+-
+-export function incr_recipient_count(user_id: number): void {
+-    const old_count = pm_recipient_count_dict.get(user_id) ?? 0;
+-    pm_recipient_count_dict.set(user_id, old_count + 1);
+-}
+-
+-export function clear_recipient_counts_for_testing(): void {
+-    pm_recipient_count_dict.clear();
+-}
+-
+-export function set_recipient_count_for_testing(user_id: number, count: number): void {
+-    pm_recipient_count_dict.set(user_id, count);
+-}
+-
+ export function get_message_people(): User[] {
+     /*
+         message_people are roughly the people who have
+@@ -1723,32 +1681,6 @@ export function predicate_for_user_settings_filters(
+     );
+ }
+ 
+-export function maybe_incr_recipient_count(
+-    message: MessageWithBooleans & {sent_by_me: boolean},
+-): void {
+-    if (message.type !== "private") {
+-        return;
+-    }
+-
+-    assert(
+-        typeof message.display_recipient !== "string",
+-        "Private messages should have list of recipients",
+-    );
+-
+-    if (!message.sent_by_me) {
+-        return;
+-    }
+-
+-    assert(message.display_recipient !== undefined);
+-
+-    // Track the number of direct messages we've sent to this person
+-    // to improve autocomplete
+-    for (const recip of message.display_recipient) {
+-        const user_id = recip.id;
+-        incr_recipient_count(user_id);
+-    }
+-}
+-
+ export function set_full_name(person_obj: User, new_full_name: string): void {
+     if (people_by_name_dict.has(person_obj.full_name)) {
+         people_by_name_dict.delete(person_obj.full_name);
+diff --git a/web/src/pm_conversations.ts b/web/src/pm_conversations.ts
+index e490c6debe..619206b171 100644
+--- a/web/src/pm_conversations.ts
++++ b/web/src/pm_conversations.ts
+@@ -23,10 +23,6 @@ export function rewire_set_partner(value: typeof set_partner): void {
+     set_partner = value;
+ }
+ 
+-export function is_partner(user_id: number): boolean {
+-    return partners.has(user_id);
+-}
+-
+ function filter_muted_pms(conversation: PMConversation): boolean {
+     // We hide muted users from the top left corner, as well as those direct
+     // message groups in which all participants are muted.
+@@ -46,6 +42,12 @@ class RecentDirectMessages {
+     recent_message_ids = new FoldDict<PMConversation>(); // key is user_ids_string
+     recent_private_messages: PMConversation[] = [];
+ 
++    // Maps a user_id to the `message_id` of the most recent direct message
++    // conversation, whether a 1:1 or group DM, that includes that user. The
++    // current user is excluded. Typeahead uses this to rank users by how
++    // recently you've exchanged direct messages with them.
++    latest_message_id_by_user_id = new Map<number, number>();
++
+     insert(user_ids: number[], message_id: number): void {
+         if (user_ids.length === 0) {
+             // The server sends [] for direct messages to oneself.
+@@ -81,6 +83,16 @@ class RecentDirectMessages {
+             conversation.max_message_id = message_id;
+         }
+ 
++        for (const user_id of user_ids) {
++            if (user_id === people.my_current_user_id()) {
++                continue;
++            }
++            const current_id = this.latest_message_id_by_user_id.get(user_id);
++            if (current_id === undefined || message_id > current_id) {
++                this.latest_message_id_by_user_id.set(user_id, message_id);
++            }
++        }
++
+         this.recent_private_messages.sort((a, b) => b.max_message_id - a.max_message_id);
+     }
+ 
+@@ -114,6 +126,13 @@ class RecentDirectMessages {
+ 
+ export let recent = new RecentDirectMessages();
+ 
++export function get_latest_direct_message_id_with_user(user_id: number): number | undefined {
++    // Returns the `message_id` of your most recent direct message
++    // conversation that includes this user, or undefined if you have no
++    // recent direct message history with them.
++    return recent.latest_message_id_by_user_id.get(user_id);
++}
++
+ export function process_message(message: Message): void {
+     const user_ids = people.pm_with_user_ids(message);
+     if (!user_ids) {
+diff --git a/web/src/search_suggestion.ts b/web/src/search_suggestion.ts
+index c05f1ce7a8..a81b0952af 100644
+--- a/web/src/search_suggestion.ts
++++ b/web/src/search_suggestion.ts
+@@ -352,7 +352,7 @@ function get_group_suggestions(
+ 
+         persons.sort(compare_by_direct_message_group(existing_user_ids));
+ 
+-        // Take top 15 persons, since they're ordered by pm_recipient_count.
++        // Take top 15 persons, since they're ordered by direct message recency.
+         persons = persons.slice(0, 15);
+ 
+         return persons.map((person) => {
+diff --git a/web/src/typeahead_helper.ts b/web/src/typeahead_helper.ts
+index 1a95a82d52..2a146a4b81 100644
+--- a/web/src/typeahead_helper.ts
++++ b/web/src/typeahead_helper.ts
+@@ -265,7 +265,7 @@ export function compare_users_for_streams(
+     current_stream_id: number,
+     current_topic: string,
+ ): number {
+-    // Sort order: subscribers > recency in topic/stream > DM partners > alphabetical
++    // Sort order: subscribers > recency in topic/stream > direct message recency > alphabetical
+     const a_is_subscribed = stream_data.is_user_loaded_and_subscribed(
+         current_stream_id,
+         user_a.user_id,
+@@ -288,26 +288,29 @@ export function compare_users_for_streams(
+         return recency_comparison;
+     }
+ 
+-    const a_is_partner = pm_conversations.is_partner(user_a.user_id);
+-    const b_is_partner = pm_conversations.is_partner(user_b.user_id);
+-    if (a_is_partner !== b_is_partner) {
+-        return a_is_partner ? -1 : 1;
+-    }
+-    return user_a.full_name.localeCompare(user_b.full_name);
++    return compare_users_for_dms(user_a, user_b);
+ }
+ 
+ export function compare_users_for_dms(user_a: User, user_b: User, query = ""): number {
+-    // Sort order: DM partners > message count > shorter name (if query) > alphabetical
+-    const a_is_partner = pm_conversations.is_partner(user_a.user_id);
+-    const b_is_partner = pm_conversations.is_partner(user_b.user_id);
+-    if (a_is_partner !== b_is_partner) {
+-        return a_is_partner ? -1 : 1;
+-    }
+-    const count_a = people.get_recipient_count(user_a);
+-    const count_b = people.get_recipient_count(user_b);
+-    if (count_a !== count_b) {
+-        return count_a > count_b ? -1 : 1;
++    // Rank users by how recently you've exchanged direct messages with
++    // them, mirroring the mobile app. A more recent DM conversation,
++    // whether 1:1 or group, ranks higher, and any DM history ranks above
++    // none.
++    const a_message_id = pm_conversations.get_latest_direct_message_id_with_user(user_a.user_id);
++    const b_message_id = pm_conversations.get_latest_direct_message_id_with_user(user_b.user_id);
++
++    if (a_message_id !== undefined && b_message_id !== undefined) {
++        if (a_message_id > b_message_id) {
++            return -1;
++        } else if (a_message_id < b_message_id) {
++            return 1;
++        }
++    } else if (a_message_id !== undefined) {
++        return -1;
++    } else if (b_message_id !== undefined) {
++        return 1;
+     }
++
+     // Only apply name length comparison when user has started typing
+     if (query.length > 0) {
+         const name_len_diff = user_a.full_name.length - user_b.full_name.length;
+@@ -320,7 +323,7 @@ export function compare_users_for_dms(user_a: User, user_b: User, query = ""): n
+ 
+ export function compare_user_with_wildcard(user: User, stream_id?: number, topic?: string): number {
+     if (stream_id === undefined || topic === undefined) {
+-        return pm_conversations.is_partner(user.user_id) ? -1 : 1;
++        return pm_conversations.get_latest_direct_message_id_with_user(user.user_id) ? -1 : 1;
+     }
+ 
+     const is_subscriber = stream_data.is_user_loaded_and_subscribed(stream_id, user.user_id);
+@@ -348,10 +351,10 @@ export function compare_user_with_wildcard(user: User, stream_id?: number, topic
+     }
+ 
+     // A user with no connection to this channel still ranks above the
+-    // wildcard mention if they're a DM partner, since a frequent DM
++    // wildcard mention if there are DMs with them, since a frequent DM
+     // contact is a more likely mention target than @all/@everyone for
+-    // most users. Non-partners rank below the wildcard.
+-    return pm_conversations.is_partner(user.user_id) ? -1 : 1;
++    // most users. Users without DM conversations rank below the wildcard.
++    return pm_conversations.get_latest_direct_message_id_with_user(user.user_id) ? -1 : 1;
+ }
+ 
+ export function compare_people_for_relevance(

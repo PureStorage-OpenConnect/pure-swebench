@@ -1,0 +1,111 @@
+diff --git a/web/tests/pill_typeahead.test.cjs b/web/tests/pill_typeahead.test.cjs
+index a71d79e61f..96da280327 100644
+--- a/web/tests/pill_typeahead.test.cjs
++++ b/web/tests/pill_typeahead.test.cjs
+@@ -38,6 +38,7 @@ let sort_stream_or_group_members_options_called = false;
+ const $fake_rendered_person = $.create("fake-rendered-person");
+ const $fake_rendered_stream = $.create("fake-rendered-stream");
+ const $fake_rendered_group = $.create("fake-rendered-group");
++const $fake_rendered_topic_state = $.create("fake-rendered-topic-state");
+ 
+ function override_typeahead_helper({mock_template, override_rewire}) {
+     mock_template("typeahead_list_item.hbs", false, (args) => {
+@@ -422,6 +423,21 @@ run_test("set_up_user_group", ({mock_template, override, override_rewire}) => {
+     assert.ok(input_pill_typeahead_called);
+ });
+ 
++run_test("render_topic_state", ({override_rewire}) => {
++    override_rewire(typeahead_helper, "render_typeahead_item", (args) => {
++        assert.equal(args.primary, "Resolved");
++        return $fake_rendered_topic_state;
++    });
++
++    const result = typeahead_helper.render_topic_state("Resolved");
++    assert.equal(result, $fake_rendered_topic_state);
++
++    override_rewire(typeahead_helper, "render_topic_state", (state) => `${state}`);
++
++    const new_result = typeahead_helper.render_topic_state("Unresolved");
++    assert.equal(new_result, "Unresolved");
++});
++
+ run_test("set_up_combined", ({mock_template, override, override_rewire}) => {
+     override_typeahead_helper({mock_template, override_rewire});
+     mock_template("input_pill.hbs", true, (_data, html) => html);
+diff --git a/web/tests/stream_list.test.cjs b/web/tests/stream_list.test.cjs
+index 1f75b12f4d..caf4fb2de4 100644
+--- a/web/tests/stream_list.test.cjs
++++ b/web/tests/stream_list.test.cjs
+@@ -389,6 +389,8 @@ function elem($obj) {
+ }
+ 
+ test_ui("zoom_in_and_zoom_out", ({mock_template}) => {
++    topic_list.setup_topic_search_typeahead = noop;
++
+     const $label1 = $.create("label1 stub");
+     const $label2 = $.create("label2 stub");
+ 
+diff --git a/web/tests/stream_topic_history.test.cjs b/web/tests/stream_topic_history.test.cjs
+index 1b6b3af2d2..e4e2ab24d2 100644
+--- a/web/tests/stream_topic_history.test.cjs
++++ b/web/tests/stream_topic_history.test.cjs
+@@ -279,6 +279,26 @@ test("test_stream_has_topics", () => {
+     assert.equal(stream_topic_history.stream_has_topics(stream_id), true);
+ });
+ 
++test("test_stream_has_resolved_topics", () => {
++    const stream_id = 89;
++
++    assert.equal(
++        stream_topic_history.stream_has_locally_available_resolved_topics(stream_id),
++        false,
++    );
++
++    stream_topic_history.add_message({
++        stream_id,
++        message_id: 889,
++        topic_name: "✔ whatever",
++    });
++
++    assert.equal(
++        stream_topic_history.stream_has_locally_available_resolved_topics(stream_id),
++        true,
++    );
++});
++
+ test("server_history_end_to_end", () => {
+     stream_topic_history.reset();
+ 
+diff --git a/web/tests/topic_list_data.test.cjs b/web/tests/topic_list_data.test.cjs
+index 0069df6216..f807b22df8 100644
+--- a/web/tests/topic_list_data.test.cjs
++++ b/web/tests/topic_list_data.test.cjs
+@@ -57,6 +57,28 @@ function get_list_info(zoom, search) {
+     );
+ }
+ 
++test("filter_topics_by_search_term with resolved topics_state", () => {
++    const topic_names = ["topic 1", "✔ resolved topic", "topic 2"];
++    const search_term = "";
++
++    // Filter for resolved topics.
++    let topics_state = "is: resolved";
++
++    let result = topic_list_data.filter_topics_by_search_term(
++        topic_names,
++        search_term,
++        topics_state,
++    );
++
++    assert.deepEqual(result, ["✔ resolved topic"]);
++
++    // Filter for unresolved topics.
++    topics_state = "-is: resolved";
++    result = topic_list_data.filter_topics_by_search_term(topic_names, search_term, topics_state);
++
++    assert.deepEqual(result, ["topic 1", "topic 2"]);
++});
++
+ function test(label, f) {
+     run_test(label, (helpers) => {
+         stream_topic_history.reset();

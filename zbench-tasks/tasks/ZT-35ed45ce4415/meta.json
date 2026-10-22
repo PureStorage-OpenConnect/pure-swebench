@@ -1,0 +1,85 @@
+{
+  "task_id": "ZT-35ed45ce4415",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "import: Send Welcome Bot messages to users from non-Zulip exports.",
+  "type": "other",
+  "lang": "py",
+  "issue": 34820,
+  "fix_commit": "35ed45ce44155eb7b339d04b4ad088429924fa6a",
+  "base_commit": "a43bdcd1665ec220cfdd97087a833896a45f51cd",
+  "env_fingerprint": "1beeb2649dc6",
+  "fail_to_pass": [
+    "zerver.tests.test_mattermost_importer.MatterMostImporter.test_do_convert_data_with_direct_messages",
+    "zerver.tests.test_rocketchat_importer.RocketChatImporter.test_do_convert_data",
+    "zerver.tests.test_slack_importer.SlackImporter.test_slack_import_to_existing_database"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 23,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 3
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 247,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Mateusz Mandera",
+    "email": "mateusz.mandera@zulip.com",
+    "date": "2025-07-14"
+  },
+  "contamination": {
+    "fix_public_at": "2025-07-14",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-06-04T22:40:43Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/35ed45ce44155eb7b339d04b4ad088429924fa6a",
+    "issue_url": "https://github.com/zulip/zulip/issues/34820"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-35ed45ce4415",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_do_convert_data",
+        "test_do_convert_data_with_direct_messages",
+        "test_slack_import_to_existing_database"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 101.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

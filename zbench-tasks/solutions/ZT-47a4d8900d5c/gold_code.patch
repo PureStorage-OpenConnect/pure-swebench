@@ -1,0 +1,55 @@
+diff --git a/zerver/openapi/markdown_extension.py b/zerver/openapi/markdown_extension.py
+index e8ba7000db..5668bd5f53 100644
+--- a/zerver/openapi/markdown_extension.py
++++ b/zerver/openapi/markdown_extension.py
+@@ -99,8 +99,8 @@ const config = { zuliprc: "zuliprc-admin" };
+ 
+ """
+ 
+-DEFAULT_AUTH_EMAIL = "BOT_EMAIL_ADDRESS"
+-DEFAULT_AUTH_API_KEY = "BOT_API_KEY"
++DEFAULT_AUTH_EMAIL = "EMAIL_ADDRESS"
++DEFAULT_AUTH_API_KEY = "API_KEY"
+ DEFAULT_EXAMPLE = {
+     "integer": 1,
+     "string": "demo",
+@@ -271,11 +271,17 @@ def generate_curl_example(
+     exclude: list[str] | None = None,
+     include: list[str] | None = None,
+ ) -> list[str]:
+-    lines = ["```curl"]
+     operation = endpoint + ":" + method.lower()
+     operation_entry = openapi_spec.openapi()["paths"][endpoint][method.lower()]
+     global_security = openapi_spec.openapi()["security"]
+ 
++    insecure_operations = ["/dev_fetch_api_key:post", "/fetch_api_key:post"]
++    lines = []
++    if operation in insecure_operations:
++        lines.append("```curl")
++    else:
++        lines.append("{!curl-auth-credentials.md!}\n\n```curl")
++
+     parameters = get_openapi_parameters(endpoint, method)
+     operation_request_body = operation_entry.get("requestBody", None)
+     operation_security = operation_entry.get("security", None)
+@@ -298,7 +304,6 @@ def generate_curl_example(
+     curl_first_line_parts = ["curl", *curl_method_arguments(example_endpoint, method, api_url)]
+     lines.append(shlex.join(curl_first_line_parts))
+ 
+-    insecure_operations = ["/dev_fetch_api_key:post", "/fetch_api_key:post"]
+     if operation_security is None:
+         if global_security == [{"basicAuth": []}]:
+             authentication_required = True
+diff --git a/zerver/openapi/test_curl_examples.py b/zerver/openapi/test_curl_examples.py
+index ad465f1ad0..14d3cd08f3 100644
+--- a/zerver/openapi/test_curl_examples.py
++++ b/zerver/openapi/test_curl_examples.py
+@@ -98,7 +98,7 @@ def test_generated_curl_examples_for_success(client: Client) -> None:
+ 
+             for curl_command_text in commands:
+                 curl_command_text = curl_command_text.replace(
+-                    "BOT_EMAIL_ADDRESS:BOT_API_KEY", AUTHENTICATION_LINE[0]
++                    "EMAIL_ADDRESS:API_KEY", AUTHENTICATION_LINE[0]
+                 )
+ 
+                 print("Testing {} ...".format(curl_command_text.split("\n")[0]))

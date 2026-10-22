@@ -1,0 +1,31 @@
+{
+  "_doc": "Approx PREFIX-CACHE HIT RATE per self-hosted vLLM model, from the 'Prefix cache hit rate' line in each server log. model_prices uses it to reclassify hit_rate x input as cache_read for self-hosted models whose usage does not report cached_tokens (vLLM 0.27). Regenerate with tools/vllm_cache_stats.py AFTER a representative batch. See its docstring.",
+  "generated_at": "2026-08-19T17:45:06Z",
+  "models": {
+    "gpt-oss-120b": {
+      "hit_rate": 0.958,
+      "prefix_caching": true,
+      "source_log": ".serving/logs/gpt-oss-120b.log"
+    },
+    "qwen3.6-27b": {
+      "hit_rate": 0.0,
+      "prefix_caching": false,
+      "source_log": ".serving/logs/qwen3.6-27b.log"
+    },
+    "nemotron-3.5-lightning-30b": {
+      "hit_rate": 0.0,
+      "prefix_caching": false,
+      "source_log": ".serving/logs/nemotron-3.5-lightning-30b.log"
+    },
+    "gemma-4-31b": {
+      "hit_rate": 0.9059999999999999,
+      "prefix_caching": true,
+      "source_log": ".serving/logs/gemma-4-31b.log"
+    },
+    "muse-glimmer-30b": {
+      "hit_rate": 0.987,
+      "prefix_caching": true,
+      "source_log": ".serving/logs/muse-glimmer-30b.log"
+    }
+  }
+}

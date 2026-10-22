@@ -1,0 +1,113 @@
+diff --git a/web/src/recent_view_ui.ts b/web/src/recent_view_ui.ts
+index 7a639b8146..0fa95005a7 100644
+--- a/web/src/recent_view_ui.ts
++++ b/web/src/recent_view_ui.ts
+@@ -1415,14 +1415,27 @@ function get_list_data_for_widget(): ConversationData[] {
+     return [...recent_view_data.get_conversations().values()];
+ }
+ 
++export function update_participants_column_class(): void {
++    if (!page_params.is_node_test) {
++        max_avatars = Number.parseInt($(":root").css("--recent-view-max-avatars"), 10);
++    }
++    $("#recent_view")
++        .removeClass("recent-view-participants-hidden recent-view-participants-3")
++        .addClass(
++            max_avatars === 0
++                ? "recent-view-participants-hidden"
++                : max_avatars === 3
++                  ? "recent-view-participants-3"
++                  : "",
++        );
++}
++
+ export function complete_rerender(coming_from_other_views = false): void {
+     if (!recent_view_util.is_visible()) {
+         return;
+     }
+ 
+-    if (!page_params.is_node_test) {
+-        max_avatars = Number.parseInt($(":root").css("--recent-view-max-avatars"), 10);
+-    }
++    update_participants_column_class();
+ 
+     // Show topics list
+     const mapped_topic_values = get_list_data_for_widget();
+@@ -1535,6 +1548,7 @@ export function show(): void {
+         is_visible: recent_view_util.is_visible,
+         set_visible: recent_view_util.set_visible,
+         complete_rerender,
++        update_participants_column_class,
+     });
+     last_scroll_offset = undefined;
+ 
+diff --git a/web/src/resize.ts b/web/src/resize.ts
+index 26b82a03aa..6b5197a49e 100644
+--- a/web/src/resize.ts
++++ b/web/src/resize.ts
+@@ -10,11 +10,18 @@ import * as message_viewport from "./message_viewport.ts";
+ import {user_settings} from "./user_settings.ts";
+ 
+ let recent_view_participants_rerender: (() => void) | null = null;
++let recent_view_participants_column_class_update: (() => void) | null = null;
+ 
+ export function set_recent_view_participants_rerender(rerender_func: (() => void) | null): void {
+     recent_view_participants_rerender = rerender_func;
+ }
+ 
++export function set_recent_view_participants_column_class_update(
++    update_func: (() => void) | null,
++): void {
++    recent_view_participants_column_class_update = update_func;
++}
++
+ function get_bottom_whitespace_height(): number {
+     return message_viewport.height() * 0.4;
+ }
+@@ -212,12 +219,22 @@ export function update_recent_view(rerender_view_if_needed = false): void {
+     }
+     const prev_num_avatars_max = Number($(":root").css("--recent-view-max-avatars"));
+     let num_avatars_max = 4;
+-    if (middle_column_width < (media_breakpoints_num.md * user_settings.web_font_size_px) / 16) {
+-        num_avatars_max = 2;
++    const max_width_before_topic_ellipsis_overflows = 600;
++    if (
++        middle_column_width <
++        (max_width_before_topic_ellipsis_overflows * user_settings.web_font_size_px) / 16
++    ) {
++        num_avatars_max = 0;
++    } else if (
++        middle_column_width <
++        (media_breakpoints_num.md * user_settings.web_font_size_px) / 16
++    ) {
++        num_avatars_max = 3;
+     }
+ 
+     if (prev_num_avatars_max !== num_avatars_max) {
+         $(":root").css("--recent-view-max-avatars", `${num_avatars_max}`);
++        recent_view_participants_column_class_update?.();
+ 
+         if (rerender_view_if_needed) {
+             recent_view_participants_rerender?.();
+diff --git a/web/src/views_util.ts b/web/src/views_util.ts
+index d760a85740..d43ec1ca78 100644
+--- a/web/src/views_util.ts
++++ b/web/src/views_util.ts
+@@ -90,6 +90,7 @@ export function show(opts: {
+     is_visible: () => boolean;
+     set_visible: (value: boolean) => void;
+     complete_rerender: (coming_from_other_views?: boolean) => void;
++    update_participants_column_class?: () => void;
+     is_recent_view?: boolean;
+ }): void {
+     if (opts.is_visible()) {
+@@ -120,6 +121,9 @@ export function show(opts: {
+         resize.set_recent_view_participants_rerender(() => {
+             opts.complete_rerender(false);
+         });
++        resize.set_recent_view_participants_column_class_update(() => {
++            opts.update_participants_column_class?.();
++        });
+         resize.update_recent_view();
+     }
+ 

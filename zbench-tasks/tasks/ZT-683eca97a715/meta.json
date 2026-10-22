@@ -1,0 +1,90 @@
+{
+  "task_id": "ZT-683eca97a715",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "stream-settings: Replace \"Not subscribed\" tab with \"Available\".",
+  "type": "other",
+  "lang": "web",
+  "issue": 35919,
+  "fix_commit": "683eca97a715c25d6f302f5418abb6a7adfe3855",
+  "base_commit": "24f678feb654f4108d42576e3260514d35b1894e",
+  "env_fingerprint": "ec2ab02f48f4",
+  "fail_to_pass": [
+    "web/tests/stream_settings_ui.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/hash_util.test.cjs",
+    "web/tests/stream_edit.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 43,
+    "files": 8,
+    "hunks": 19,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The channel-settings left panel's \"Not subscribed\" tab is replaced by an \"Available\" tab, and the boolean flag in the left-panel filter parameters (the params object accepted by stream_settings_ui's exported redraw_left_panel / produced by get_left_panel_params) is renamed from `show_not_subscribed` to `show_available`; when true, the panel shows only channels the user is not subscribed to (subscribed channels are rejected)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 493,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Sahil Batra",
+    "email": "sahil@zulip.com",
+    "date": "2025-09-16"
+  },
+  "contamination": {
+    "fix_public_at": "2025-09-16",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-09-02T20:04:11Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/683eca97a715c25d6f302f5418abb6a7adfe3855",
+    "issue_url": "https://github.com/zulip/zulip/issues/35919"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-683eca97a715",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 95.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

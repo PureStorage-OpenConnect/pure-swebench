@@ -1,0 +1,90 @@
+{
+  "task_id": "ZT-7ea30f9cf0fd",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_invalid",
+  "reason": "gold fix does not make the test pass (arm B run 0: FAIL)",
+  "summary": "home: Add /llms.txt endpoint for LLM web-public discoverability.",
+  "type": "other",
+  "lang": "py",
+  "issue": 38686,
+  "fix_commit": "7ea30f9cf0fdc5edb099f8c4a0116b26bfdafc6c",
+  "base_commit": "f20563da572c81e09256371d0e0038f89dc2b307",
+  "env_fingerprint": "128772d4f300",
+  "fail_to_pass": [
+    "zerver.tests.test_home.HomeTest.test_home_fallback_llms_comment_when_not_web_public",
+    "zerver.tests.test_home.HomeTest.test_home_has_llms_comment_when_web_public",
+    "zerver.tests.test_home.HomeTest.test_realm_authentication_methods",
+    "zerver.tests.test_llms_txt.LlmsTxtTest.test_llms_txt_lists_only_web_public_channels",
+    "zerver.tests.test_llms_txt.LlmsTxtTest.test_llms_txt_no_web_public_streams",
+    "zerver.tests.test_llms_txt.LlmsTxtTest.test_llms_txt_spectator_access_disabled",
+    "zerver.tests.test_llms_txt.LlmsTxtTest.test_llms_txt_with_web_public_streams"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_urls"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 175,
+    "files": 3,
+    "hunks": 4,
+    "f2p_count": 3
+  },
+  "interface_requirements": [
+    "The server gains a new endpoint GET /llms.txt (per the llms.txt convention, https://llmstxt.org/) that responds 200 with Content-Type text/plain and a body that begins with a markdown '#' heading.",
+    "GET /llms.txt must return 404 when the realm does not have web-public stream access enabled (spectator access disabled).",
+    "GET /llms.txt must return 404 when web-public access is enabled but the realm has zero web-public channels.",
+    "The /llms.txt body must document how to fetch messages without authentication via the existing GET /json/messages API, explicitly mentioning that the narrow must include the 'channels' operator with operand 'web-public'.",
+    "The /llms.txt body must list the realm's web-public channels by name, and must not list channels that are not web-public (private or ordinary public channels are excluded).",
+    "The homepage HTML (both the logged-in app and the spectator/logged-out view) must include a comment addressed to AI agents containing the literal phrase 'AI assistant:'.",
+    "When the realm has web-public streams enabled, that homepage comment must reference '/llms.txt'; when web-public streams are not enabled, the page must not mention '/llms.txt' and the comment must instead state that the organization 'does not have web-public channels' (that exact phrase appears in the HTML)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 932,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Agnish Bauri",
+    "email": "amywinehouse@xiorra.localdomain",
+    "date": "2026-04-14"
+  },
+  "contamination": {
+    "fix_public_at": "2026-04-14",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-03-26T23:47:16Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/7ea30f9cf0fdc5edb099f8c4a0116b26bfdafc6c",
+    "issue_url": "https://github.com/zulip/zulip/issues/38686"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-7ea30f9cf0fd",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_home_fallback_llms_comment_when_not_web_public",
+        "test_home_has_llms_comment_when_web_public",
+        "test_llms_txt_lists_only_web_public_channels",
+        "test_llms_txt_with_web_public_streams"
+      ],
+      "verdict": "INVALID",
+      "code": 1,
+      "why": "gold fix does not make the test pass (arm B run 0: FAIL)",
+      "elapsed_s": 287.5
+    }
+  }
+}

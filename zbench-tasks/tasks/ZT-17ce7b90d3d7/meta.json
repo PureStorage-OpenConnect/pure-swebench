@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-17ce7b90d3d7",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden grader pins entire rendered-HTML snapshot strings (full pill markup with escaped gravatar URLs and whitespace) rather than asserting the observable behavior \u2014 the presence of the new border element. This is exactly the brittle format-over-behavior pattern: any incidental template/whitespace change breaks it, and the underlying change is cosmetic visual polish (a decorative border div plus CSS) whose real effect is only observable via browser rendering.",
+  "summary": "input_pill: Add semi-transparent border around avatar.",
+  "lang": "web",
+  "issue": 34499,
+  "fix_commit": "17ce7b90d3d75e3e13ad912396f7b86784979e0a",
+  "base_commit": "8f7aab05e70aa75619874a98bc2bb8324b1e8ac4",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/17ce7b90d3d75e3e13ad912396f7b86784979e0a",
+    "issue_url": "https://github.com/zulip/zulip/issues/34499"
+  }
+}

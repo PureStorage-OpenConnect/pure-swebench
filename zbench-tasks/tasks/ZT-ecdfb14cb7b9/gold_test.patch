@@ -1,0 +1,80 @@
+diff --git a/web/tests/message_list.test.cjs b/web/tests/message_list.test.cjs
+index c492c98b7d..7c906ed7f9 100644
+--- a/web/tests/message_list.test.cjs
++++ b/web/tests/message_list.test.cjs
+@@ -364,6 +364,7 @@ run_test("bookend", ({override}) => {
+ 
+     override(stream_data, "is_subscribed", () => is_subscribed);
+     override(stream_data, "get_sub_by_id", () => ({invite_only, name: "IceCream"}));
++    override(stream_data, "can_toggle_subscription", () => true);
+ 
+     {
+         const stub = make_stub();
+@@ -471,6 +472,16 @@ run_test("bookend", ({override}) => {
+         assert.equal(bookend.deactivated, false);
+         assert.equal(bookend.just_unsubscribed, false);
+     }
++
++    // If the user is not subscribed and cannot subscribe to the
++    // private channel, no bookend is shown.
++    override(stream_data, "can_toggle_subscription", () => false);
++    {
++        const stub = make_stub();
++        list.view.render_trailing_bookend = stub.f;
++        list.update_trailing_bookend();
++        assert.equal(stub.num_calls, 0);
++    }
+ });
+ 
+ run_test("add_remove_rerender", ({override}) => {
+diff --git a/web/tests/message_view.test.cjs b/web/tests/message_view.test.cjs
+index b13a6db6d5..855091f681 100644
+--- a/web/tests/message_view.test.cjs
++++ b/web/tests/message_view.test.cjs
+@@ -48,10 +48,7 @@ mock_esm("../src/compose_banner", {
+     clear_search_view_banner() {},
+ });
+ const compose_pm_pill = mock_esm("../src/compose_pm_pill");
+-mock_esm("../src/settings_data", {
+-    user_can_access_all_other_users: () => true,
+-    user_has_permission_for_group_setting: () => true,
+-});
++const settings_data = mock_esm("../src/settings_data");
+ mock_esm("../src/spectators", {
+     login_to_access() {},
+ });
+@@ -239,6 +236,8 @@ run_test("urls", () => {
+ });
+ 
+ run_test("show_empty_narrow_message", ({mock_template, override}) => {
++    settings_data.user_can_access_all_other_users = () => true;
++    settings_data.user_has_permission_for_group_setting = () => true;
+     override(realm, "stop_words", []);
+ 
+     mock_template("empty_feed_notice.hbs", true, (_data, html) => html);
+@@ -643,6 +642,25 @@ run_test("show_empty_narrow_message", ({mock_template, override}) => {
+             'translated HTML: Learn more about emoji reactions <a target="_blank" rel="noopener noreferrer" href="/help/emoji-reactions">here</a>.',
+         ),
+     );
++
++    // The channel is private, and the user cannot subscribe (e.g., they
++    // have access to channel metadata, but don't have content access).
++    const private_sub = {
++        stream_id: 101,
++        name: "private",
++        subscribed: false,
++        invite_only: true,
++    };
++    stream_data.add_sub_for_tests(private_sub);
++    settings_data.user_has_permission_for_group_setting = () => false;
++    current_filter = set_filter([["stream", private_sub.stream_id.toString()]]);
++    narrow_banner.show_empty_narrow_message(current_filter);
++    assert.equal(
++        $(".empty_feed_notice_main").html(),
++        empty_narrow_html(
++            "translated: You are not allowed to view messages in this private channel.",
++        ),
++    );
+ });
+ 
+ run_test("show_empty_narrow_message_with_search", ({mock_template, override}) => {

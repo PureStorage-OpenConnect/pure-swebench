@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-5704abf8b42e",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The change (converting the language picker from a modal to a DropdownWidget) is a real workflow, but the hidden test does not grade its observable outcome. The dispatch.test.cjs change merely stubs a renamed internal function (set_default_language_name -> set_default_language), so passing depends on matching an incidental internal API name rather than behavior \u2014 a correct dropdown implementation with different internal naming would fail. Worse, settings_org.test.cjs actually swaps the setting under test from realm_default_language to realm_topics_policy, removing coverage of the changed setting entirely instead of asserting the new dropdown behavior. The tests are implementation-coupled adaptations to the refactor, not a deterministic fail-before/pass-after grader of the feature's observable behavior (which is only visible via real browser UI interaction).",
+  "summary": "settings: Convert language picker to dropdown widget.",
+  "lang": "web",
+  "issue": 35861,
+  "fix_commit": "5704abf8b42ef1b8448279fe4c26c850b606d38b",
+  "base_commit": "be18d71624be73e7a7cc6cc9ba570698796f39e7",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/5704abf8b42ef1b8448279fe4c26c850b606d38b",
+    "issue_url": "https://github.com/zulip/zulip/issues/35861"
+  }
+}

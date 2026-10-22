@@ -1,0 +1,31 @@
+diff --git a/web/tests/compose.test.cjs b/web/tests/compose.test.cjs
+index 599aecb95d..d216807a61 100644
+--- a/web/tests/compose.test.cjs
++++ b/web/tests/compose.test.cjs
+@@ -49,7 +49,9 @@ const sent_messages = mock_esm("../src/sent_messages");
+ const server_events_state = mock_esm("../src/server_events_state");
+ const transmit = mock_esm("../src/transmit");
+ const upload = mock_esm("../src/upload");
+-const onboarding_steps = mock_esm("../src/onboarding_steps");
++const onboarding_steps = mock_esm("../src/onboarding_steps", {
++    ONE_TIME_NOTICES_TO_DISPLAY: new Set(),
++});
+ mock_esm("../src/settings_data", {
+     user_has_permission_for_group_setting: () => true,
+ });
+diff --git a/web/tests/compose_actions.test.cjs b/web/tests/compose_actions.test.cjs
+index ec1a697a4a..20c55765ce 100644
+--- a/web/tests/compose_actions.test.cjs
++++ b/web/tests/compose_actions.test.cjs
+@@ -51,7 +51,10 @@ set_global("requestAnimationFrame", (func) => func());
+ const autosize = noop;
+ autosize.update = noop;
+ mock_esm("autosize", {default: autosize});
+-mock_esm("../src/compose_tooltips", {initialize_compose_tooltips: noop});
++mock_esm("../src/compose_tooltips", {
++    initialize_compose_tooltips: noop,
++    dismiss_intro_go_to_conversation_tooltip: noop,
++});
+ 
+ const channel = mock_esm("../src/channel");
+ const compose_fade = mock_esm("../src/compose_fade", {

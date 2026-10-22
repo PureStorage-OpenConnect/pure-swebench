@@ -1,0 +1,82 @@
+diff --git a/zerver/webhooks/gitlab/fixtures/resource_access_token_hook__group_expiry.json b/zerver/webhooks/gitlab/fixtures/resource_access_token_hook__group_expiry.json
+new file mode 100644
+index 0000000000..6d1964a473
+--- /dev/null
++++ b/zerver/webhooks/gitlab/fixtures/resource_access_token_hook__group_expiry.json
+@@ -0,0 +1,17 @@
++{
++    "object_kind": "access_token",
++    "group": {
++      "group_name": "Twitter",
++      "group_path": "twitter",
++      "group_id": 35,
++      "full_path": "twitter"
++    },
++    "object_attributes": {
++      "user_id": 90,
++      "created_at": "2024-01-24 16:27:40 UTC",
++      "id": 25,
++      "name": "acd",
++      "expires_at": "2024-01-26"
++    },
++    "event_name": "expiring_access_token"
++  }
+diff --git a/zerver/webhooks/gitlab/fixtures/resource_access_token_hook__project_expiry.json b/zerver/webhooks/gitlab/fixtures/resource_access_token_hook__project_expiry.json
+new file mode 100644
+index 0000000000..e13e8bf366
+--- /dev/null
++++ b/zerver/webhooks/gitlab/fixtures/resource_access_token_hook__project_expiry.json
+@@ -0,0 +1,29 @@
++{
++    "object_kind": "access_token",
++    "project": {
++      "id": 7,
++      "name": "Flight",
++      "description": "Eum dolore maxime atque reprehenderit voluptatem.",
++      "web_url": "https://example.com/flightjs/Flight",
++      "avatar_url": null,
++      "git_ssh_url": "ssh://git@example.com/flightjs/Flight.git",
++      "git_http_url": "https://example.com/flightjs/Flight.git",
++      "namespace": "Flightjs",
++      "visibility_level": 0,
++      "path_with_namespace": "flightjs/Flight",
++      "default_branch": "master",
++      "ci_config_path": null,
++      "homepage": "https://example.com/flightjs/Flight",
++      "url": "ssh://git@example.com/flightjs/Flight.git",
++      "ssh_url": "ssh://git@example.com/flightjs/Flight.git",
++      "http_url": "https://example.com/flightjs/Flight.git"
++    },
++    "object_attributes": {
++      "user_id": 90,
++      "created_at": "2024-01-24 16:27:40 UTC",
++      "id": 25,
++      "name": "acd",
++      "expires_at": "2024-01-26"
++    },
++    "event_name": "expiring_access_token"
++  }
+diff --git a/zerver/webhooks/gitlab/tests.py b/zerver/webhooks/gitlab/tests.py
+index 0845d3b14c..d2f15999db 100644
+--- a/zerver/webhooks/gitlab/tests.py
++++ b/zerver/webhooks/gitlab/tests.py
+@@ -697,3 +697,19 @@ A trivial change that should probably be ignored.
+         expected_message = "kolanuvarun739 deactivated the feature flag [sample-feature-flag](https://gitlab.com/kolanuvarun/sample/-/feature_flags)."
+ 
+         self.check_webhook("feature_flag_hook__deactivated", expected_topic_name, expected_message)
++
++    def test_resource_access_token_project_expiry(self) -> None:
++        expected_topic_name = "Flight"
++        expected_message = "The access token [acd](https://example.com/flightjs/Flight/-/settings/access_tokens) will expire on Jan 26, 2024."
++
++        self.check_webhook(
++            "resource_access_token_hook__project_expiry", expected_topic_name, expected_message
++        )
++
++    def test_resource_access_token_group_expiry(self) -> None:
++        expected_topic_name = "Twitter"
++        expected_message = "The access token [acd](https://gitlab.com/groups/twitter/-/settings/access_tokens) will expire on Jan 26, 2024."
++
++        self.check_webhook(
++            "resource_access_token_hook__group_expiry", expected_topic_name, expected_message
++        )

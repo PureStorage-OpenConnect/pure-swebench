@@ -1,0 +1,398 @@
+diff --git a/web/src/buddy_data.ts b/web/src/buddy_data.ts
+index 2566566..720a314 100644
+--- a/web/src/buddy_data.ts
++++ b/web/src/buddy_data.ts
+@@ -51,7 +51,13 @@ export function set_is_searching_users(val: boolean): void {
+     is_searching_users = val;
+ }
+ 
+-export function get_user_circle_class(user_id: number): string {
++export function get_user_circle_class(user_id: number, is_deactivated = false): string {
++    if (is_deactivated) {
++        // Deactivated users get a slashed-circle indicator, regardless
++        // of whatever presence data we might have for them.
++        return "user-circle-deactivated";
++    }
++
+     const status = presence.get_status(user_id);
+ 
+     switch (status) {
+@@ -200,12 +206,14 @@ export type BuddyUserInfo = {
+         WITH_AVATAR: boolean;
+     };
+     should_add_guest_user_indicator: boolean;
++    is_deactivated: boolean;
+     faded?: boolean;
+ };
+ 
+ export function info_for(user_id: number): BuddyUserInfo {
+-    const user_circle_class = get_user_circle_class(user_id);
+     const person = people.get_by_user_id(user_id);
++    const is_deactivated = !people.is_person_active(user_id);
++    const user_circle_class = get_user_circle_class(user_id, is_deactivated);
+ 
+     const status_emoji_info = user_status.get_status_emoji(user_id);
+     const status_text = user_status.get_status_text(user_id);
+@@ -229,6 +237,7 @@ export function info_for(user_id: number): BuddyUserInfo {
+         has_status_text: Boolean(status_text),
+         user_list_style,
+         should_add_guest_user_indicator: people.should_add_guest_user_indicator(user_id),
++        is_deactivated,
+     };
+ }
+ 
+@@ -362,37 +371,41 @@ function maybe_shrink_list(
+     return user_ids;
+ }
+ 
+-function filter_user_ids(user_filter_text: string, user_ids: number[]): number[] {
+-    // This first filter is for whether the user is eligible to be
+-    // displayed in the right sidebar at all.
+-    user_ids = user_ids.filter((user_id) => {
+-        const person = people.maybe_get_user_by_id(user_id, true);
++export function is_eligible_for_buddy_list(user_id: number): boolean {
++    const person = people.maybe_get_user_by_id(user_id, true);
+ 
+-        if (!person) {
+-            // See the comments in presence.set_info for details, but this is an expected race.
+-            // User IDs for whom we have presence but no user metadata should be skipped.
+-            return false;
+-        }
++    if (!person) {
++        // See the comments in presence.set_info for details, but this is an expected race.
++        // User IDs for whom we have presence but no user metadata should be skipped.
++        return false;
++    }
+ 
+-        if (person.is_bot) {
+-            // Bots should never appear in the right sidebar.  This
+-            // case should never happen, since bots cannot have
+-            // presence data.
+-            return false;
+-        }
++    if (person.is_bot) {
++        // Bots should never appear in the right sidebar.  This
++        // case should never happen, since bots cannot have
++        // presence data.
++        return false;
++    }
+ 
+-        if (!people.is_person_active(user_id)) {
+-            // Deactivated users are hidden from the right sidebar entirely.
+-            return false;
+-        }
++    if (!people.is_person_active(user_id) && !narrow_state.pm_ids_set().has(user_id)) {
++        // Deactivated users are hidden from the right sidebar, except
++        // when they're part of the direct message conversation that's
++        // currently being viewed.
++        return false;
++    }
+ 
+-        if (muted_users.is_user_muted(user_id)) {
+-            // Muted users are hidden from the right sidebar entirely.
+-            return false;
+-        }
++    if (muted_users.is_user_muted(user_id)) {
++        // Muted users are hidden from the right sidebar entirely.
++        return false;
++    }
+ 
+-        return true;
+-    });
++    return true;
++}
++
++function filter_user_ids(user_filter_text: string, user_ids: number[]): number[] {
++    // This first filter is for whether the user is eligible to be
++    // displayed in the right sidebar at all.
++    user_ids = user_ids.filter((user_id) => is_eligible_for_buddy_list(user_id));
+ 
+     if (!user_filter_text) {
+         return user_ids;
+diff --git a/web/src/buddy_list.ts b/web/src/buddy_list.ts
+index 023d0f2..7d6dae7 100644
+--- a/web/src/buddy_list.ts
++++ b/web/src/buddy_list.ts
+@@ -41,6 +41,10 @@ function get_formatted_sub_count(sub_count: number): string {
+ function get_total_human_subscriber_count(
+     current_sub: StreamSubscription | undefined,
+     pm_ids_set: Set<number>,
++    // Deactivated users are shown in the buddy list when they're part
++    // of the direct message conversation being viewed, so we count them
++    // for that section, but never for the "others" section.
++    include_deactivated_users = false,
+ ): number {
+     // Excludes human users, but may include long-inactive users who
+     // might not show up in the buddy list.
+@@ -53,7 +57,10 @@ function get_total_human_subscriber_count(
+ 
+         let human_user_count = 0;
+         for (const pm_id of all_recipient_user_ids_set) {
+-            if (!people.is_valid_bot_user(pm_id) && people.is_person_active(pm_id)) {
++            if (
++                !people.is_valid_bot_user(pm_id) &&
++                (include_deactivated_users || people.is_person_active(pm_id))
++            ) {
+                 human_user_count += 1;
+             }
+         }
+@@ -62,6 +69,17 @@ function get_total_human_subscriber_count(
+     return 0;
+ }
+ 
++function get_other_users_count(
++    current_sub: StreamSubscription | undefined,
++    pm_ids_set: Set<number>,
++): number {
++    // `get_active_human_count` doesn't include deactivated users, so we
++    // subtract the count that doesn't include them either.
++    return (
++        people.get_active_human_count() - get_total_human_subscriber_count(current_sub, pm_ids_set)
++    );
++}
++
+ function should_hide_headers(
+     current_sub: StreamSubscription | undefined,
+     pm_ids_set: Set<number>,
+@@ -85,8 +103,12 @@ function get_render_data(): BuddyListRenderData {
+     const current_sub = narrow_state.stream_sub();
+     const pm_ids_set = narrow_state.pm_ids_set();
+ 
+-    const total_human_subscribers_count = get_total_human_subscriber_count(current_sub, pm_ids_set);
+-    const other_users_count = people.get_active_human_count() - total_human_subscribers_count;
++    const total_human_subscribers_count = get_total_human_subscriber_count(
++        current_sub,
++        pm_ids_set,
++        true,
++    );
++    const other_users_count = get_other_users_count(current_sub, pm_ids_set);
+     const hide_headers = should_hide_headers(current_sub, pm_ids_set);
+     const get_all_participant_ids = buddy_data.get_conversation_participants_callback();
+ 
+@@ -203,6 +225,7 @@ export class BuddyList extends BuddyListConf {
+                         const total_human_subscribers_count = get_total_human_subscriber_count(
+                             current_sub,
+                             pm_ids_set,
++                            true,
+                         );
+                         const participant_count = Number.parseInt(
+                             $("#buddy-list-participants-section-heading").attr("data-user-count")!,
+@@ -244,8 +267,10 @@ export class BuddyList extends BuddyListConf {
+                                 );
+                             }
+                         } else {
+-                            const other_users_count =
+-                                people.get_active_human_count() - total_human_subscribers_count;
++                            const other_users_count = get_other_users_count(
++                                current_sub,
++                                pm_ids_set,
++                            );
+                             tooltip_text = $t(
+                                 {
+                                     defaultMessage:
+@@ -936,7 +961,17 @@ export class BuddyList extends BuddyListConf {
+         // multiple insertions/movements into a single update.
+ 
+         const all_participant_ids = this.render_data.get_all_participant_ids();
+-        const users = buddy_data.get_items_for_users(user_ids);
++        // Users who are no longer eligible to be shown in the buddy list
++        // (e.g. they were just deactivated, and aren't part of the
++        // conversation being viewed) are removed rather than moved.
++        const user_ids_to_show = user_ids.filter((user_id) => {
++            if (buddy_data.is_eligible_for_buddy_list(user_id)) {
++                return true;
++            }
++            this.maybe_remove_user_id({user_id});
++            return false;
++        });
++        const users = buddy_data.get_items_for_users(user_ids_to_show);
+         for (const user of users) {
+             const user_id = user.user_id;
+ 
+diff --git a/web/src/user_events.ts b/web/src/user_events.ts
+index 62f9c25..ff85f4e 100644
+--- a/web/src/user_events.ts
++++ b/web/src/user_events.ts
+@@ -217,8 +217,11 @@ export const update_person = function update(person: UserUpdate): void {
+             stream_events.remove_deactivated_user_from_all_streams(person.user_id);
+             user_group_edit.remove_deactivated_user_from_all_groups(person.user_id);
+             settings_users.update_view_on_deactivate(person.user_id);
+-            buddy_list.maybe_remove_user_id({user_id: person.user_id});
+         }
++        // The user might need to be shown differently, or not at all,
++        // now that they've been (de)activated. `insert_or_move` takes
++        // care of removing users who no longer belong in the list.
++        buddy_list.insert_or_move([person.user_id]);
+         settings_account.maybe_update_deactivate_account_button();
+         if (people.is_valid_bot_user(person.user_id)) {
+             settings_users.update_bot_data(person.user_id);
+diff --git a/web/styles/user_circles.css b/web/styles/user_circles.css
+index 8711d4d..5afd54f 100644
+--- a/web/styles/user_circles.css
++++ b/web/styles/user_circles.css
+@@ -9,3 +9,7 @@
+ .user-circle-offline {
+     color: var(--color-user-circle-offline);
+ }
++
++.user-circle-deactivated {
++    color: var(--color-user-circle-deactivated);
++}
+diff --git a/web/templates/presence_row.hbs b/web/templates/presence_row.hbs
+index ba309d4..0b7d3ad 100644
+--- a/web/templates/presence_row.hbs
++++ b/web/templates/presence_row.hbs
+@@ -1,7 +1,11 @@
+ <li data-user-id="{{user_id}}" data-name="{{name}}" class="user_sidebar_entry {{#if user_list_style.WITH_AVATAR}}with_avatar{{/if}} {{#if has_status_text}}with_status{{/if}} {{#if is_current_user}}user_sidebar_entry_me {{/if}} narrow-filter {{#if faded}} user-fade {{/if}}">
+     <div class="selectable_sidebar_block">
+         {{#if user_list_style.WITH_STATUS}}
++            {{#if is_deactivated}}
++            <span class="fa fa-ban {{user_circle_class}} user-circle"></span>
++            {{else}}
+             <span class="zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
++            {{/if}}
+             <a class="user-presence-link" href="{{href}}">
+                 <div class="user-name-and-status-wrapper">
+                     <div class="user-name-and-status-emoji">
+@@ -14,7 +18,11 @@
+         {{else if user_list_style.WITH_AVATAR}}
+             <div class="user-profile-picture avatar-preload-background">
+                 <img loading="lazy" src="{{profile_picture}}"/>
++                {{#if is_deactivated}}
++                <span class="fa fa-ban {{user_circle_class}} user-circle"></span>
++                {{else}}
+                 <span class="zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
++                {{/if}}
+             </div>
+             <a class="user-presence-link" href="{{href}}">
+                 <div class="user-name-and-status-wrapper">
+@@ -26,7 +34,11 @@
+                 </div>
+             </a>
+         {{else}}
++            {{#if is_deactivated}}
++            <span class="fa fa-ban {{user_circle_class}} user-circle"></span>
++            {{else}}
+             <span class="zulip-icon zulip-icon-{{user_circle_class}} {{user_circle_class}} user-circle"></span>
++            {{/if}}
+             <a class="user-presence-link" href="{{href}}">
+                 <div class="user-name-and-status-emoji">
+                     {{> user_full_name .}}
+diff --git a/web/tests/activity.test.cjs b/web/tests/activity.test.cjs
+index c479d89..178c935 100644
+--- a/web/tests/activity.test.cjs
++++ b/web/tests/activity.test.cjs
+@@ -512,6 +512,7 @@ test("insert_one_user_into_empty_list", ({override, mock_template}) => {
+                 WITH_AVATAR: false,
+             },
+             should_add_guest_user_indicator: false,
++            is_deactivated: false,
+         });
+         assert.ok(html.startsWith("<li data-user-id="));
+         return html;
+diff --git a/web/tests/buddy_data.test.cjs b/web/tests/buddy_data.test.cjs
+index 8d72568..6232e01 100644
+--- a/web/tests/buddy_data.test.cjs
++++ b/web/tests/buddy_data.test.cjs
+@@ -177,6 +177,34 @@ test("user_circle, level", ({override}) => {
+     assert.equal(buddy_data.level(fred.user_id), 3);
+ });
+ 
++test("deactivated user circle", ({override_rewire}) => {
++    add_canned_users();
++
++    // A deactivated user gets a slashed-circle indicator no matter
++    // what presence data we have for them, but that doesn't change
++    // where they sort in the list.
++    set_presence(selma.user_id, "active");
++    assert.equal(buddy_data.get_user_circle_class(selma.user_id, true), "user-circle-deactivated");
++    assert.equal(buddy_data.get_user_circle_class(selma.user_id, false), "user-circle-active");
++    assert.equal(buddy_data.get_user_circle_class(selma.user_id), "user-circle-active");
++
++    presence.presence_info.delete(selma.user_id);
++    people.deactivate(selma);
++    assert.equal(buddy_data.get_user_circle_class(selma.user_id, true), "user-circle-deactivated");
++    assert.equal(buddy_data.level(selma.user_id), 3);
++
++    // We only build a row for a deactivated user when they're part of
++    // the direct message conversation being viewed.
++    override_rewire(narrow_state, "pm_ids_set", () => new Set([selma.user_id]));
++    const [selma_info] = buddy_data.get_items_for_users([selma.user_id]);
++    assert.equal(selma_info.is_deactivated, true);
++    assert.equal(selma_info.user_circle_class, "user-circle-deactivated");
++    assert.ok(buddy_data.get_filtered_and_sorted_user_ids("").includes(selma.user_id));
++
++    override_rewire(narrow_state, "pm_ids_set", () => new Set());
++    assert.ok(!buddy_data.get_filtered_and_sorted_user_ids("").includes(selma.user_id));
++});
++
+ test("title_data", ({override}) => {
+     page_params.presence_history_limit_days_for_web_app = 365;
+     add_canned_users();
+@@ -639,6 +667,7 @@ test("get_items_for_users", ({override}) => {
+             user_id: 1001,
+             user_list_style,
+             should_add_guest_user_indicator: false,
++            is_deactivated: false,
+         },
+         {
+             href: "#narrow/dm/1002-Alice-Smith",
+@@ -653,6 +682,7 @@ test("get_items_for_users", ({override}) => {
+             user_id: 1002,
+             user_list_style,
+             should_add_guest_user_indicator: false,
++            is_deactivated: false,
+         },
+         {
+             href: "#narrow/dm/1003-Fred-Flintstone",
+@@ -667,6 +697,7 @@ test("get_items_for_users", ({override}) => {
+             user_id: 1003,
+             user_list_style,
+             should_add_guest_user_indicator: false,
++            is_deactivated: false,
+         },
+     ]);
+ });
+diff --git a/web/tests/user_events.test.cjs b/web/tests/user_events.test.cjs
+index ae2dd95..5bb1e48 100644
+--- a/web/tests/user_events.test.cjs
++++ b/web/tests/user_events.test.cjs
+@@ -29,6 +29,11 @@ const stream_events = mock_esm("../src/stream_events");
+ mock_esm("../src/activity_ui", {
+     redraw() {},
+ });
++const buddy_list = mock_esm("../src/buddy_list", {
++    buddy_list: {
++        insert_or_move() {},
++    },
++});
+ mock_esm("../src/compose_state", {
+     update_email() {},
+ });
+@@ -278,12 +283,26 @@ run_test("updates", ({override}) => {
+         assert.equal(user_id, isaac.user_id);
+         user_removed_from_streams = true;
+     };
++    // Rather than removing the user from the buddy list, we let
++    // `insert_or_move` decide whether they still belong there; a
++    // deactivated user remains visible in a direct message conversation
++    // with them.
++    const buddy_list_updates = [];
++    buddy_list.buddy_list.insert_or_move = (user_ids) => {
++        buddy_list_updates.push(user_ids);
++    };
++    buddy_list.buddy_list.maybe_remove_user_id = () => {
++        throw new Error("maybe_remove_user_id should not be called");
++    };
++
+     user_events.update_person({user_id: isaac.user_id, is_active: false});
+     assert.ok(!people.is_person_active(isaac.user_id));
+     assert.ok(user_removed_from_streams);
++    assert.deepEqual(buddy_list_updates, [[isaac.user_id]]);
+ 
+     user_events.update_person({user_id: isaac.user_id, is_active: true});
+     assert.ok(people.is_person_active(isaac.user_id));
++    assert.deepEqual(buddy_list_updates, [[isaac.user_id], [isaac.user_id]]);
+ 
+     stream_events.remove_deactivated_user_from_all_streams = noop;
+ 

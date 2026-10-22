@@ -1,0 +1,231 @@
+diff --git a/zerver/tests/test_email_mirror.py b/zerver/tests/test_email_mirror.py
+index fd40b9193b..9a860059d7 100644
+--- a/zerver/tests/test_email_mirror.py
++++ b/zerver/tests/test_email_mirror.py
+@@ -1401,7 +1401,7 @@ class TestMissedMessageEmailMessages(ZulipTestCase):
+         incoming_valid_message["To"] = mm_address
+         incoming_valid_message["Reply-to"] = user_profile.delivery_email
+ 
+-        with self.assert_database_query_count(18):
++        with self.assert_database_query_count(19):
+             process_message(incoming_valid_message)
+ 
+         # confirm that Hamlet got the message
+diff --git a/zerver/tests/test_message_move_stream.py b/zerver/tests/test_message_move_stream.py
+index 8d62c0efa8..8089eeb650 100644
+--- a/zerver/tests/test_message_move_stream.py
++++ b/zerver/tests/test_message_move_stream.py
+@@ -1563,7 +1563,7 @@ class MessageMoveStreamTest(ZulipTestCase):
+             "iago", "test move stream", "new stream", "test"
+         )
+ 
+-        with self.assert_database_query_count(59), self.assert_memcached_count(14):
++        with self.assert_database_query_count(63), self.assert_memcached_count(17):
+             result = self.client_patch(
+                 f"/json/messages/{msg_id}",
+                 {
+diff --git a/zerver/tests/test_message_move_topic.py b/zerver/tests/test_message_move_topic.py
+index 6d8c905ebd..bd851537e6 100644
+--- a/zerver/tests/test_message_move_topic.py
++++ b/zerver/tests/test_message_move_topic.py
+@@ -420,7 +420,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+         # state + 1/user with a UserTopic row for the events data)
+         # beyond what is typical were there not UserTopic records to
+         # update. Ideally, we'd eliminate the per-user component.
+-        with self.assert_database_query_count(27):
++        with self.assert_database_query_count(29):
+             check_update_message(
+                 user_profile=hamlet,
+                 message_id=message_id,
+@@ -517,7 +517,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+         set_topic_visibility_policy(desdemona, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+         set_topic_visibility_policy(cordelia, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+ 
+-        with self.assert_database_query_count(29):
++        with self.assert_database_query_count(31):
+             check_update_message(
+                 user_profile=desdemona,
+                 message_id=message_id,
+@@ -547,7 +547,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+         ]
+         set_topic_visibility_policy(desdemona, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+         set_topic_visibility_policy(cordelia, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+-        with self.assert_database_query_count(35):
++        with self.assert_database_query_count(37):
+             check_update_message(
+                 user_profile=desdemona,
+                 message_id=message_id,
+@@ -580,7 +580,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+         set_topic_visibility_policy(desdemona, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+         set_topic_visibility_policy(cordelia, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+ 
+-        with self.assert_database_query_count(31):
++        with self.assert_database_query_count(33):
+             check_update_message(
+                 user_profile=desdemona,
+                 message_id=message_id,
+@@ -603,7 +603,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+         second_message_id = self.send_stream_message(
+             hamlet, stream_name, topic_name="changed topic name", content="Second message"
+         )
+-        with self.assert_database_query_count(25):
++        with self.assert_database_query_count(27):
+             check_update_message(
+                 user_profile=desdemona,
+                 message_id=second_message_id,
+@@ -682,7 +682,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+             users_to_be_notified_via_muted_topics_event.append(user_topic.user_profile_id)
+ 
+         change_all_topic_name = "Topic 1 edited"
+-        with self.assert_database_query_count(32):
++        with self.assert_database_query_count(34):
+             check_update_message(
+                 user_profile=hamlet,
+                 message_id=message_id,
+diff --git a/zerver/tests/test_message_send.py b/zerver/tests/test_message_send.py
+index 2f2b690537..43563ccc60 100644
+--- a/zerver/tests/test_message_send.py
++++ b/zerver/tests/test_message_send.py
+@@ -1786,7 +1786,7 @@ class StreamMessagesTest(ZulipTestCase):
+             setting_value=UserProfile.AUTOMATICALLY_CHANGE_VISIBILITY_POLICY_NEVER,
+             acting_user=None,
+         )
+-        with self.assert_database_query_count(14):
++        with self.assert_database_query_count(15):
+             check_send_stream_message(
+                 sender=sender,
+                 client=sending_client,
+@@ -1806,7 +1806,7 @@ class StreamMessagesTest(ZulipTestCase):
+         # 5 queries: 1 to check if it is the first message in the topic +
+         # 1 to check if the topic is already followed + 3 to follow the topic.
+         flush_per_request_caches()
+-        with self.assert_database_query_count(19):
++        with self.assert_database_query_count(20):
+             check_send_stream_message(
+                 sender=sender,
+                 client=sending_client,
+@@ -1826,7 +1826,7 @@ class StreamMessagesTest(ZulipTestCase):
+         # a message to a topic with visibility policy other than FOLLOWED.
+         # 1 to check if the topic is already followed + 3 queries to follow the topic.
+         flush_per_request_caches()
+-        with self.assert_database_query_count(18):
++        with self.assert_database_query_count(19):
+             check_send_stream_message(
+                 sender=sender,
+                 client=sending_client,
+@@ -1837,7 +1837,7 @@ class StreamMessagesTest(ZulipTestCase):
+         # If the topic is already FOLLOWED, there will be an increase in the query
+         # count of 1 to check if the topic is already followed.
+         flush_per_request_caches()
+-        with self.assert_database_query_count(15):
++        with self.assert_database_query_count(16):
+             check_send_stream_message(
+                 sender=sender,
+                 client=sending_client,
+@@ -1862,7 +1862,7 @@ class StreamMessagesTest(ZulipTestCase):
+         # 1 to get the user_id of the mentioned user + 1 to check if the topic
+         # is already followed + 3 queries to follow the topic.
+         flush_per_request_caches()
+-        with self.assert_database_query_count(23):
++        with self.assert_database_query_count(24):
+             check_send_stream_message(
+                 sender=sender,
+                 client=sending_client,
+@@ -1875,7 +1875,7 @@ class StreamMessagesTest(ZulipTestCase):
+         # 1 to get the user_id of the mentioned user + 1 to check if the topic is
+         # already followed.
+         flush_per_request_caches()
+-        with self.assert_database_query_count(20):
++        with self.assert_database_query_count(21):
+             check_send_stream_message(
+                 sender=sender,
+                 client=sending_client,
+@@ -1885,7 +1885,7 @@ class StreamMessagesTest(ZulipTestCase):
+             )
+ 
+         flush_per_request_caches()
+-        with self.assert_database_query_count(17):
++        with self.assert_database_query_count(18):
+             check_send_stream_message(
+                 sender=sender,
+                 client=sending_client,
+diff --git a/zerver/tests/test_subs.py b/zerver/tests/test_subs.py
+index 0e83d92c36..d06eb26e55 100644
+--- a/zerver/tests/test_subs.py
++++ b/zerver/tests/test_subs.py
+@@ -4041,7 +4041,7 @@ class SubscriptionAPITest(ZulipTestCase):
+         streams_to_sub = ["multi_user_stream"]
+         with (
+             self.capture_send_event_calls(expected_num_events=5) as events,
+-            self.assert_database_query_count(44),
++            self.assert_database_query_count(45),
+         ):
+             self.subscribe_via_post(
+                 self.test_user,
+@@ -4950,7 +4950,7 @@ class SubscriptionAPITest(ZulipTestCase):
+         ]
+ 
+         # Test creating a public stream when realm does not have a notification stream.
+-        with self.assert_database_query_count(44):
++        with self.assert_database_query_count(45):
+             self.subscribe_via_post(
+                 self.test_user,
+                 [new_streams[0]],
+@@ -4958,7 +4958,7 @@ class SubscriptionAPITest(ZulipTestCase):
+             )
+ 
+         # Test creating private stream.
+-        with self.assert_database_query_count(52):
++        with self.assert_database_query_count(53):
+             self.subscribe_via_post(
+                 self.test_user,
+                 [new_streams[1]],
+@@ -4970,7 +4970,7 @@ class SubscriptionAPITest(ZulipTestCase):
+         new_stream_announcements_stream = get_stream(self.streams[0], self.test_realm)
+         self.test_realm.new_stream_announcements_stream_id = new_stream_announcements_stream.id
+         self.test_realm.save()
+-        with self.assert_database_query_count(56):
++        with self.assert_database_query_count(58):
+             self.subscribe_via_post(
+                 self.test_user,
+                 [new_streams[2]],
+diff --git a/zerver/tests/test_typing.py b/zerver/tests/test_typing.py
+index bfebc76e99..93678d185d 100644
+--- a/zerver/tests/test_typing.py
++++ b/zerver/tests/test_typing.py
+@@ -481,7 +481,7 @@ class TypingHappyPathTestStreams(ZulipTestCase):
+         )
+ 
+         with (
+-            self.assert_database_query_count(6),
++            self.assert_database_query_count(8),
+             self.capture_send_event_calls(expected_num_events=1) as events,
+         ):
+             result = self.api_post(sender, "/api/v1/typing", params)
+@@ -514,7 +514,7 @@ class TypingHappyPathTestStreams(ZulipTestCase):
+         )
+ 
+         with (
+-            self.assert_database_query_count(6),
++            self.assert_database_query_count(8),
+             self.capture_send_event_calls(expected_num_events=1) as events,
+         ):
+             result = self.api_post(sender, "/api/v1/typing", params)
+@@ -549,7 +549,7 @@ class TypingHappyPathTestStreams(ZulipTestCase):
+         )
+         with self.settings(MAX_STREAM_SIZE_FOR_TYPING_NOTIFICATIONS=5):
+             with (
+-                self.assert_database_query_count(5),
++                self.assert_database_query_count(7),
+                 self.capture_send_event_calls(expected_num_events=0) as events,
+             ):
+                 result = self.api_post(sender, "/api/v1/typing", params)
+@@ -606,7 +606,7 @@ class TypingHappyPathTestStreams(ZulipTestCase):
+         )
+ 
+         with (
+-            self.assert_database_query_count(6),
++            self.assert_database_query_count(8),
+             self.capture_send_event_calls(expected_num_events=1) as events,
+         ):
+             result = self.api_post(sender, "/api/v1/typing", params)

@@ -1,0 +1,66 @@
+{
+  "task_id": "ZT-9de1b47ffa61",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "slack_import: Improve topic name for Slack threads.",
+  "type": "other",
+  "lang": "py",
+  "issue": 27661,
+  "fix_commit": "9de1b47ffa61a5d992ddce75fd453e7ecfe78233",
+  "base_commit": "4210ccc5dbdd2e2f694dd4ff7993bf2b1614e9a5",
+  "env_fingerprint": "0654445463c8",
+  "fail_to_pass": [
+    "zerver.tests.test_slack_importer.SlackImporter.test_channel_message_to_zerver_message"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 55,
+    "files": 1,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "When importing Slack threads, each thread's Zulip topic name becomes the thread's root-message date (UTC, formatted YYYY-MM-DD) followed by a space and a snippet of the thread's root message text, e.g. \"2015-06-12 message body text\" (replacing the old \"<date> Slack thread <N>\" scheme).",
+    "The generated topic name is truncated to the maximum Zulip topic length (60 characters), using the single ellipsis character \"\u2026\" as the truncation marker; a topic at the limit must use the full 60 characters.",
+    "When two or more distinct threads would produce the same topic name (same date and same snippet), later threads get a disambiguating numeric suffix \" (N)\" (second occurrence \" (2)\", etc.); the snippet is shortened as needed so the name including the suffix still fits within the 60-character limit.",
+    "All messages belonging to one Slack thread (root message and replies sharing its thread_ts, including replies carrying Slack's parent_user_id field) are placed under that thread's single generated topic name.",
+    "Thread topic snippets are taken from the raw message text as imported; importer output for threaded messages with file attachments must still record the uploads/attachments as for non-threaded messages."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 560,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2025-07-16"
+  },
+  "contamination": {
+    "fix_public_at": "2025-07-16",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-11-11T06:57:21Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/9de1b47ffa61a5d992ddce75fd453e7ecfe78233",
+    "issue_url": "https://github.com/zulip/zulip/issues/27661"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-9de1b47ffa61",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 18.4
+    }
+  }
+}

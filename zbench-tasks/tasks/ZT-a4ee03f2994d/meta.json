@@ -1,0 +1,63 @@
+{
+  "task_id": "ZT-a4ee03f2994d",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "oracle_not_enumerable",
+  "reason": "arm A run 0: target could not run (see ZT-a4ee03f2994d_A0.log)",
+  "summary": "discord_auth: Support authenticating special Discord email.",
+  "type": "feature",
+  "lang": "py",
+  "issue": 38149,
+  "fix_commit": "a4ee03f2994dc7c5ae718deda0b7ed2353bc8946",
+  "base_commit": "4422f194543650a4dff33225a356153e6a89a84d",
+  "env_fingerprint": "8f8d50a4082a",
+  "fail_to_pass": [
+    "zerver.tests.test_auth_backends.DiscordAuthBackendTest.test_authenticate_special_emails_with_encoded_user_id"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 27,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The module `zproject.backends` exposes a public constant `EMAIL_WITH_ENCODED_DISCORD_ID`: a Python format string with a single named placeholder `discord_user_id` (e.g. \"{discord_user_id}@discordexport.zulip.com\") that defines the placeholder email address the Discord data-import tool assigns to imported users whose real email is unavailable; other components (the import tool, the auth backend, and any caller needing to construct such an address) must build these addresses via this constant.",
+    "During Discord OAuth authentication, if no active user in the realm matches the email returned by Discord, the backend must fall back to looking up a user whose Zulip delivery email equals EMAIL_WITH_ENCODED_DISCORD_ID formatted with the authenticating user's Discord user ID (the `id` field of Discord's OAuth user response), and authenticate that user if found.",
+    "A successful fallback login behaves as a normal successful social login: it redirects (HTTP 302) to the subdomain login endpoint, and the login payload carries the matched user's existing Zulip delivery email (not the email Discord reported), the full name from Discord's `global_name`, and the realm subdomain."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 416,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2026-04-17"
+  },
+  "contamination": {
+    "fix_public_at": "2026-04-17",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-02-24T16:22:15Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/a4ee03f2994dc7c5ae718deda0b7ed2353bc8946",
+    "issue_url": "https://github.com/zulip/zulip/issues/38149"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-a4ee03f2994d",
+      "arms": {},
+      "verdict": "UNENUMERABLE",
+      "why": "arm A run 0: target could not run (see ZT-a4ee03f2994d_A0.log)",
+      "elapsed_s": 17.7
+    }
+  }
+}

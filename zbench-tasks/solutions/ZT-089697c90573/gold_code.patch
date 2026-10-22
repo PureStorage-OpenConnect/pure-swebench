@@ -1,0 +1,67 @@
+diff --git a/zerver/lib/digest.py b/zerver/lib/digest.py
+index 4a1b73bd87..b77cc400d7 100644
+--- a/zerver/lib/digest.py
++++ b/zerver/lib/digest.py
+@@ -17,6 +17,7 @@ from confirmation.models import one_click_unsubscribe_link
+ from zerver.context_processors import common_context
+ from zerver.lib.email_notifications import (
+     build_message_list,
++    get_channel_privacy_icon,
+     message_content_allowed_in_missedmessage_emails,
+ )
+ from zerver.lib.logging_util import log_to_file
+@@ -266,8 +267,12 @@ def gather_new_streams(
+ 
+     for stream in new_streams:
+         narrow_url = stream_narrow_url(realm, stream)
+-        channel_link = Markup("<a href='{narrow_url}'>{stream_name}</a>").format(
+-            narrow_url=narrow_url, stream_name=stream.name
++        channel_link = Markup(
++            "<a href='{narrow_url}'>{channel_privacy_icon}{stream_name}</a>"
++        ).format(
++            narrow_url=narrow_url,
++            channel_privacy_icon=get_channel_privacy_icon(stream),
++            stream_name=stream.name,
+         )
+         channels_html.append(channel_link)
+         channels_plain.append(stream.name)
+diff --git a/zerver/lib/email_notifications.py b/zerver/lib/email_notifications.py
+index 7014bd4a6d..a4b1efbe5a 100644
+--- a/zerver/lib/email_notifications.py
++++ b/zerver/lib/email_notifications.py
+@@ -217,6 +217,18 @@ def add_quote_prefix_in_text(content: str) -> str:
+     return "\n".join(output)
+ 
+ 
++def get_channel_privacy_icon(channel: Stream) -> str:
++    """
++    Return the relevant icon for given channel.
++    """
++    # TODO: Implement emoji icons (🔒, 🌍, etc.) here.
++    #       Emojis were approved in #design > digest email design; when working
++    #       on this, include comments to keep this logic consistent with the
++    #       web app and avoid future drift.
++
++    return "#"
++
++
+ def build_message_list(
+     user: UserProfile,
+     messages: list[Message],
+@@ -301,12 +313,14 @@ def build_message_list(
+             stream=stream,
+             topic_name=message.topic_name(),
+         )
+-        header = f"{stream.name} > {message.topic_name()}"
++        channel_privacy_icon = get_channel_privacy_icon(stream)
++        header = f"{channel_privacy_icon}{stream.name} > {message.topic_name()}"
+         stream_link = stream_narrow_url(user.realm, stream)
+         header_html = Markup(
+-            "<a href='{stream_link}'>{stream_name}</a> &gt; <a href='{narrow_link}'>{topic_name}</a>"
++            "<a href='{stream_link}'>{channel_privacy_icon}{stream_name}</a> &gt; <a href='{narrow_link}'>{topic_name}</a>"
+         ).format(
+             stream_link=stream_link,
++            channel_privacy_icon=channel_privacy_icon,
+             stream_name=stream.name,
+             narrow_link=narrow_link,
+             topic_name=message.topic_name(),

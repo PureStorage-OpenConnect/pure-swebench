@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-8366b3d66884",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "out_of_scope",
+  "reason": "scope: 17 code files > 15",
+  "summary": "decorated_channel_name: Fix icon-text spacing and alignment issues.",
+  "lang": "web",
+  "issue": 36987,
+  "fix_commit": "8366b3d66884e0fe38d592af3ec8a5d44eff9afc",
+  "base_commit": "85130740c13a6f192e4473a23cfa6ff993ff8a89",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/8366b3d66884e0fe38d592af3ec8a5d44eff9afc",
+    "issue_url": "https://github.com/zulip/zulip/issues/36987"
+  }
+}

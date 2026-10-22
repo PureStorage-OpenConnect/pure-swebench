@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-98e14a644f3e",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "markdown: Fix linkification of URLs starting with query params.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 19778,
+  "fix_commit": "98e14a644f3e73b1d178a2ed1edd95a88a9ad858",
+  "base_commit": "ee273b4df96a61ec108baa29c273d9367a8b99c0",
+  "env_fingerprint": "e5474e2b235a",
+  "fail_to_pass": [
+    "zerver.tests.test_markdown.MarkdownFixtureTest.test_markdown_fixtures"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 4,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 197,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Nithyaraj Mudhaliyar",
+    "email": "nithyarajmudhaliyar2007gmail.com@Nithyarajs-MacBook-Pro.local",
+    "date": "2025-12-17"
+  },
+  "contamination": {
+    "fix_public_at": "2025-12-17",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2021-09-16T21:15:11Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/98e14a644f3e73b1d178a2ed1edd95a88a9ad858",
+    "issue_url": "https://github.com/zulip/zulip/issues/19778"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-98e14a644f3e",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_markdown_fixtures"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 321.9
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

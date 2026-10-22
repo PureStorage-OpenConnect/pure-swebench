@@ -1,0 +1,80 @@
+diff --git a/web/tests/dispatch.test.cjs b/web/tests/dispatch.test.cjs
+index c4d9acbf0f..38772e8a73 100644
+--- a/web/tests/dispatch.test.cjs
++++ b/web/tests/dispatch.test.cjs
+@@ -1067,8 +1067,18 @@ run_test("user_settings", ({override}) => {
+ 
+     event = event_fixtures.user_settings__web_channel_default_view;
+     override(user_settings, "web_channel_default_view", 2);
++    let called_create_initial_sidebar_rows = false;
++    let called_update_streams_sidebar = false;
++    override(stream_list, "create_initial_sidebar_rows", () => {
++        called_create_initial_sidebar_rows = true;
++    });
++    override(stream_list, "update_streams_sidebar", () => {
++        called_update_streams_sidebar = true;
++    });
+     dispatch(event);
+     assert_same(user_settings.web_channel_default_view, 1);
++    assert.equal(called_create_initial_sidebar_rows, true);
++    assert.equal(called_update_streams_sidebar, true);
+ 
+     event = event_fixtures.user_settings__web_font_size_px;
+     override(user_settings, "web_font_size_px", 14);
+diff --git a/web/tests/internal_url.test.cjs b/web/tests/internal_url.test.cjs
+index b66152789b..01b4c27265 100644
+--- a/web/tests/internal_url.test.cjs
++++ b/web/tests/internal_url.test.cjs
+@@ -45,6 +45,12 @@ run_test("test by_stream_url", () => {
+     assert.equal(result, "#narrow/channel/123-a-test-stream");
+ });
+ 
++run_test("test by_channel_topic_list_url", () => {
++    const maybe_get_stream_name = () => "a test stream";
++    const result = internal_url.by_channel_topic_list_url(123, maybe_get_stream_name);
++    assert.equal(result, "#topics/channel/123-a-test-stream");
++});
++
+ run_test("test by_stream_topic_url", () => {
+     const maybe_get_stream_name = () => "a test stream";
+     // Test stream_topic_url is a traditional topic link when the
+diff --git a/web/tests/narrow_state.test.cjs b/web/tests/narrow_state.test.cjs
+index e27628bc37..5b40aa1a9c 100644
+--- a/web/tests/narrow_state.test.cjs
++++ b/web/tests/narrow_state.test.cjs
+@@ -11,6 +11,7 @@ const {Filter} = zrequire("../src/filter");
+ const stream_data = zrequire("stream_data");
+ const narrow_state = zrequire("narrow_state");
+ const message_lists = zrequire("message_lists");
++const inbox_util = zrequire("inbox_util");
+ 
+ function set_filter(raw_terms) {
+     const terms = raw_terms.map((op) => ({
+@@ -373,3 +374,15 @@ test("pm_ids_string", () => {
+     assert.equal(narrow_state.pm_ids_string(), "444,555");
+     assert.deepStrictEqual(narrow_state.pm_ids_set(), new Set([444, 555]));
+ });
++
++test("inbox_view_visible", () => {
++    const filter = new Filter([
++        {
++            operator: "channel",
++            operand: 10,
++        },
++    ]);
++    inbox_util.set_filter(filter);
++    inbox_util.set_visible(true);
++    assert.ok(narrow_state.filter() === filter);
++});
+diff --git a/web/tests/stream_list.test.cjs b/web/tests/stream_list.test.cjs
+index e4aeffb748..749da044fc 100644
+--- a/web/tests/stream_list.test.cjs
++++ b/web/tests/stream_list.test.cjs
+@@ -43,6 +43,7 @@ mock_esm("../src/group_permission_settings", {
+ const {Filter} = zrequire("../src/filter");
+ const stream_data = zrequire("stream_data");
+ const stream_list = zrequire("stream_list");
++stream_list.set_update_inbox_channel_view_callback(noop);
+ const stream_list_sort = zrequire("stream_list_sort");
+ const user_groups = zrequire("user_groups");
+ const {initialize_user_settings} = zrequire("user_settings");

@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-1b57a1c5c954",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The observable outcome here is browser layout: textareas expanding to panel width (CSS class change, removing inline-block/rows attr) and auto-sizing via scrollHeight/line-height, which cannot be measured deterministically in Zulip's node test harness. Consistent with that, the visible hidden-test change does not grade the behavior at all \u2014 it merely override_rewire's the new resize_textareas_in_subsection helper to noop inside an existing test. Such a test fails-before/passes-after only because the export didn't exist before, i.e., it grades the existence and name of an internal helper (implementation structure) rather than any observable resize behavior. That is format-over-behavior grading on a change whose real effect is only visible via real browser layout, so it falls under both the CSS-visual-polish and brittle-grader drop criteria.",
+  "summary": "css: Let drag-to-resize expand settings textareas to panel width.",
+  "lang": "web",
+  "issue": 35663,
+  "fix_commit": "1b57a1c5c954455f4051b297f1feaf4d5d6ac5f0",
+  "base_commit": "c57847f8ed21ef45b6705f3c4cc01cc652d31ffb",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/1b57a1c5c954455f4051b297f1feaf4d5d6ac5f0",
+    "issue_url": "https://github.com/zulip/zulip/issues/35663"
+  }
+}

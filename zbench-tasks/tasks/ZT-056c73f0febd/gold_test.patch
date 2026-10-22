@@ -1,0 +1,157 @@
+diff --git a/web/tests/components.test.cjs b/web/tests/components.test.cjs
+index 70ef95939e..d4372b83b8 100644
+--- a/web/tests/components.test.cjs
++++ b/web/tests/components.test.cjs
+@@ -18,6 +18,7 @@ function make_tab(i) {
+ 
+     $self.stub = true;
+     $self.class = [];
++    $self.visible = true;
+ 
+     $self.addClass = (c) => {
+         $self.class += " " + c;
+@@ -35,6 +36,14 @@ function make_tab(i) {
+         return tokens.includes(c);
+     };
+ 
++    $self.css = (prop) => {
++        assert.equal(prop, "display");
++        if ($self.visible) {
++            return "";
++        }
++        return "none";
++    };
++
+     $self.attr = (name) => {
+         assert.equal(name, "data-tab-id");
+         return i;
+@@ -286,6 +295,13 @@ run_test("basics", () => {
+ 
+     widget.enable_tab("message-formatting");
+ 
++    callback_args = undefined;
++    env.tabs[1].visible = false;
++    env.keydown_f.call(env.tabs[env.focused_tab], LEFT_KEY);
++    assert.equal(widget.value(), "translated: Keyboard shortcuts");
++
++    env.tabs[1].visible = true;
++
+     callback_args = undefined;
+ 
+     env.click_f.call(env.tabs[1]);
+diff --git a/web/tests/people.test.cjs b/web/tests/people.test.cjs
+index cb7169ce48..0450546eaf 100644
+--- a/web/tests/people.test.cjs
++++ b/web/tests/people.test.cjs
+@@ -287,6 +287,13 @@ const stewie = make_user({
+     },
+ });
+ 
++const imported_user = {
++    email: "imported-user@example.com",
++    user_id: 1205,
++    full_name: "Imported user",
++    is_imported_stub: true,
++};
++
+ function get_all_persons() {
+     return people.filter_all_persons(() => true);
+ }
+@@ -426,6 +433,20 @@ run_test("basics", ({override}) => {
+ 
+     // get_users_from_ids
+     assert.deepEqual(people.get_users_from_ids([me.user_id, isaac.user_id]), [me, isaac]);
++
++    // Test with imported user.
++    people.add_active_user(imported_user);
++    assert.equal(people.get_realm_active_human_user_ids().length, 3);
++    assert.equal(people.get_realm_active_human_user_ids_for_users_panel().length, 2);
++    assert.equal(people.get_realm_active_imported_stub_user_ids().length, 1);
++
++    // Check get_realm_active_imported_stub_user_ids does not include deactivated users.
++    assert.equal(people.get_non_active_human_ids().length, 0);
++    people.deactivate(imported_user);
++    assert.equal(people.get_realm_active_human_user_ids().length, 2);
++    assert.equal(people.get_realm_active_human_user_ids_for_users_panel().length, 2);
++    assert.equal(people.get_realm_active_imported_stub_user_ids().length, 0);
++    assert.equal(people.get_non_active_human_ids().length, 1);
+ });
+ 
+ run_test("sort_but_pin_current_user_on_top with me", () => {
+@@ -1752,6 +1773,7 @@ run_test("fetch_users retry", async ({override, override_rewire}) => {
+                     avatar_url: "",
+                     avatar_version: 1,
+                     is_bot: false,
++                    is_imported_stub: false,
+                 },
+             ],
+             result: "success",
+@@ -1790,6 +1812,7 @@ run_test("fetch_users", async ({override}) => {
+             avatar_url: "",
+             avatar_version: 1,
+             is_bot: false,
++            is_imported_stub: false,
+         },
+         {
+             email: "alice@example.com",
+@@ -1805,6 +1828,7 @@ run_test("fetch_users", async ({override}) => {
+             avatar_url: "",
+             avatar_version: 1,
+             is_bot: false,
++            is_imported_stub: false,
+         },
+     ];
+ 
+@@ -1933,6 +1957,7 @@ run_test("fetch_users corner case", async ({override, override_rewire}) => {
+             avatar_url: "",
+             avatar_version: 1,
+             is_bot: false,
++            is_imported_stub: false,
+         },
+         {
+             email: "alice@example.com",
+@@ -1948,6 +1973,7 @@ run_test("fetch_users corner case", async ({override, override_rewire}) => {
+             avatar_url: "",
+             avatar_version: 1,
+             is_bot: false,
++            is_imported_stub: false,
+         },
+     ];
+     const second_request_response = [
+@@ -1965,6 +1991,7 @@ run_test("fetch_users corner case", async ({override, override_rewire}) => {
+             avatar_url: "",
+             avatar_version: 1,
+             is_bot: false,
++            is_imported_stub: false,
+         },
+     ];
+ 
+diff --git a/web/tests/user_events.test.cjs b/web/tests/user_events.test.cjs
+index bd79df791f..61861b0a21 100644
+--- a/web/tests/user_events.test.cjs
++++ b/web/tests/user_events.test.cjs
+@@ -24,6 +24,9 @@ const settings_bots = mock_esm("../src/settings_bots", {
+     redraw_your_bots_list() {},
+     toggle_bot_config_download_container() {},
+ });
++mock_esm("../src/settings_panel_menu", {
++    update_imported_users_tab() {},
++});
+ mock_esm("../src/settings_users", {
+     update_user_data() {},
+     update_view_on_deactivate() {},
+@@ -351,4 +354,14 @@ run_test("updates", ({override}) => {
+     assert.ok(bot_data_updated);
+     assert.ok(pm_list_updated);
+     assert.ok(compose_pill_updated);
++
++    const imported_user = {
++        email: "imoreted-user@example.com",
++        delivery_email: null,
++        user_id: 33,
++        full_name: "Imported user",
++        is_imported_stub: true,
++    };
++    people.add_active_user(imported_user);
++    user_events.update_person({user_id: imported_user.user_id, is_imported_stub: false});
+ });

@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-ffe1473b6fa7",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "Pure no-behavior-change refactor: moving the is_archived filter before the sort yields an identical return value (filter+sort commute here), so the function's output is unchanged. The hidden test only adds a new non-archived fixture and asserts existing behavior (archived excluded, name ordering), which already passes on the pre-change code \u2014 the test cannot fail-before/pass-after and thus cannot grade the change.",
+  "summary": "stream-settings-data: Filter out archived streams before sorting.",
+  "lang": "web",
+  "issue": 10062,
+  "fix_commit": "ffe1473b6fa7a1e56ec3ba117d60c07a0ef1d1e2",
+  "base_commit": "dc68d7fd4fa980f651e96134382c54107c97f2f7",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ffe1473b6fa7a1e56ec3ba117d60c07a0ef1d1e2",
+    "issue_url": "https://github.com/zulip/zulip/issues/10062"
+  }
+}

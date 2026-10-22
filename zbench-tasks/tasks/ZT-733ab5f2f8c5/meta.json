@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-733ab5f2f8c5",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "reactions: Remove emoji container when reaction count is 0.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 32983,
+  "fix_commit": "733ab5f2f8c5abfa84cd8ad0e4a5649cf51e5faf",
+  "base_commit": "6586d9078ea4c12187cef6dba8a4a801a2d89b0b",
+  "env_fingerprint": "4f386b700f48",
+  "fail_to_pass": [
+    "web/tests/reactions.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 5,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "When the last user removing their reaction brings an emoji's reaction count to zero, the UI must remove the reaction's entire outer wrapper element \u2014 the reaction element's immediate parent container (the `.message_reaction_container` wrapper from the message_reaction template) \u2014 from the DOM, rather than removing only the inner reaction element itself. Concretely, the removal is performed on the element obtained as the reaction element's parent, not on the reaction element."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 627,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "whilstsomebody",
+    "email": "vishwakarmarambhawan572@gmail.com",
+    "date": "2025-01-24"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-24",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-01-09T16:56:38Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/733ab5f2f8c5abfa84cd8ad0e4a5649cf51e5faf",
+    "issue_url": "https://github.com/zulip/zulip/issues/32983"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-733ab5f2f8c5",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 84.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

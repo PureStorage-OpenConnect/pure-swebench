@@ -1,0 +1,41 @@
+# emacs artifacts
+*~
+\#*\#
+.\#*
+.*.~undo-tree~
+
+# macOS
+.DS_Store
+__pycache__/
+
+# rendered diagrams: regenerate from the docs/*.puml sources (plantuml); track source only
+docs/*.png
+
+# bench.db SQLite hybrid store: DB + blobs + control,
+# all derived/ephemeral runtime output -> never tracked.
+bench-db/
+# a stray bench.db written anywhere else (e.g. a tool run with the default relative path
+# instead of bench-db/): still runtime data, never expose it in the repo.
+bench.db
+__pycache__/
+/data/
+*.bak-*
+
+# local model-serving root (venvs + HF weight cache + server logs): ~300 GB of
+# build output and downloads. tools/serving/setup_venv.sh is the recipe; this is
+# its product. Relocate with ZBENCH_SERVING_ROOT.
+.serving/
+
+# ZT-3fc63110ac63 is an `invalid` task (a judgement record, not runnable). Its upstream
+# OpenProject fixture embeds a presigned S3 URL carrying an AWS access key id and
+# signature. The key is a third party's, public in zulip/zulip since 2025-01, and expired
+# 600s after 2025-01-01T21:27:54 -- but credential-shaped strings do not belong in our
+# history, and an invalid task loses nothing by omitting them. meta.json is kept: it
+# records WHY the candidate was rejected, which is the only part of value.
+zbench-tasks/tasks/ZT-3fc63110ac63/gold_test.patch
+zbench-tasks/tasks/ZT-3fc63110ac63/instance.jsonl
+
+# local credentials: copy .env.example to .env and fill it in; never commit it
+.env
+.env.*
+!.env.example

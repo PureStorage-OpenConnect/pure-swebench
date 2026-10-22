@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-5915b85c5acb",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "Two of the three touched test files (test_event_system.py, test_home.py) only update database-query-count assertions through pre-existing test infrastructure \u2014 that part is clean, since the counts follow deterministically from any correct query-consolidation fix. But test_user_groups.py binds directly to internal implementation choices the fix invents: it calls the internal library helper `user_groups_in_realm_serialized` (zerver/lib/user_groups.py, not a public API) with a NEW keyword argument `fetch_anonymous_group_membership=True` replacing the old `realm_setting_group_ids` parameter, and it reads a RENAMED attribute `anonymous_group_membership` (formerly `realm_setting_anonymous_group_membership`) off the function's internal return dataclass, asserting its exact contents (presence of the anonymous setting group's UserGroupMembersDict, absence of named-group ids). No product ticket or design spec would legitimately dictate the keyword-argument name or result-field name of an internal serialization helper \u2014 a solver could correctly eliminate the redundant queries while keeping the old signature, choosing a different parameter name, or restructuring the data flow entirely, and would still fail this test. This signature/field coupling cannot be cured by a brief without effectively dictating the reference implementation, so the task is coupled.",
+  "summary": "register: Optimize computing stream group setting values.",
+  "lang": "py",
+  "issue": 32561,
+  "fix_commit": "5915b85c5acb688e497da1e04848c86af888cd39",
+  "base_commit": "bc2afd45b3fda658d746f8b0fe353bdc00c1f15c",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/5915b85c5acb688e497da1e04848c86af888cd39",
+    "issue_url": "https://github.com/zulip/zulip/issues/32561"
+  }
+}

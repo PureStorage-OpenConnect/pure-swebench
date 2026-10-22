@@ -1,0 +1,39 @@
+{
+  "task_id": "ZT-1c8a65718014",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "Purely visual redesign polish: toggling a drop-shadow class on sticky sidebar headers based on live layout measurements (getBoundingClientRect/getComputedStyle scroll geometry). This behavior isn't observable through pre-existing interfaces \u2014 it introduces a brand-new module and CSS class, and verifying it requires real browser layout/scroll rendering rather than unit-testable logic, so any hidden test would either be flaky browser-layout assertion or trivially coupled to the new implementation's internals.",
+  "summary": "sidebars: Add drop shadow to sticky section headers when scrolled.",
+  "lang": "web",
+  "issue": 34467,
+  "fix_commit": "1c8a65718014b097ccbd821476a8020b59ff7ffa",
+  "base_commit": "cade090d0d1d6ad52ffb84e75ed01b1ec4451dc4",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/1c8a65718014b097ccbd821476a8020b59ff7ffa",
+    "issue_url": "https://github.com/zulip/zulip/issues/34467"
+  },
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 33,
+    "files": 3,
+    "hunks": 5,
+    "f2p_count": 0
+  },
+  "author": {
+    "name": "Evy Kassirer",
+    "email": "evy@zulip.com",
+    "date": "2026-04-21T16:49:59-07:00"
+  },
+  "author_flagged": "ai_generated_trailer",
+  "contamination": {
+    "fix_public_at": "2026-06-02",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

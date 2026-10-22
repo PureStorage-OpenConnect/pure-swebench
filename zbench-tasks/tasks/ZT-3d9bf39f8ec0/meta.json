@@ -1,0 +1,87 @@
+{
+  "task_id": "ZT-3d9bf39f8ec0",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "webhooks/github: Add silent mention support for GitHub usernames.",
+  "type": "feature",
+  "lang": "py",
+  "issue": 34078,
+  "fix_commit": "3d9bf39f8ec063aca56a08f97de71abc009af066",
+  "base_commit": "a82d7b8476e471b70dbb6c6ee0e18d7090903b3d",
+  "env_fingerprint": "0f8828f88a37",
+  "fail_to_pass": [
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_issue_comment_silent_mention",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_issue_comment_silent_mention_with_multiple_matches"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 73,
+    "files": 1,
+    "hunks": 46,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "When a GitHub webhook message displays a sender's GitHub login, and exactly one user in the realm has the 'GitHub username' custom profile field (the pre-existing default github external-account field) set to that login, the sender name is replaced by a silent mention of that Zulip user",
+    "The silent mention must use Zulip's canonical `@_**{full_name}|{user_id}**` form (i.e., the output of the pre-existing silent_mention_syntax_for_user helper), not the bare `@_**name**` variant",
+    "If multiple users in the realm have that field set to the same GitHub login (ambiguous match), fall back to displaying the plain GitHub login unchanged",
+    "The rest of the message (action link, issue link, quoted comment body, topic) keeps the existing issue_comment format byte-for-byte"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 429,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "The Dance",
+    "email": "thedance@amamu.io",
+    "date": "2026-01-29"
+  },
+  "contamination": {
+    "fix_public_at": "2026-01-29",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-03-19T18:56:47Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/3d9bf39f8ec063aca56a08f97de71abc009af066",
+    "issue_url": "https://github.com/zulip/zulip/issues/34078"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-3d9bf39f8ec0",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_issue_comment_silent_mention"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 90.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "task_id": "ZT-dde9ec247568",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "webhooks/github: Improve coverage for pull-request events.",
+  "type": "other",
+  "lang": "py",
+  "issue": 34223,
+  "fix_commit": "dde9ec2475687569196f1712fad00e23eab3c667",
+  "base_commit": "6ce6b212e31f873b6f039c62e790f2176c9851e5",
+  "env_fingerprint": "d9fe04198526",
+  "fail_to_pass": [
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_check_run",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_pull_request_converted_to_draft_msg",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_pull_request_demilestoned_msg",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_pull_request_dequeued_msg",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_pull_request_enqueued_msg",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_pull_request_labeled_msg",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_pull_request_milestoned_msg",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_pull_request_reopened_msg",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_pull_request_review_request_removed_msg",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_pull_request_unlabeled_msg"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 93,
+    "files": 2,
+    "hunks": 8,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The GitHub integration stops ignoring the pull_request action `converted_to_draft` and posts the message: \"{sender} converted [PR #{number} {title}]({pr_html_url}) to a draft.\"",
+    "The GitHub integration stops ignoring the pull_request action `review_request_removed` and posts the message: \"{sender} unassigned {requested_reviewer_login} from [PR #{number} {title}]({pr_html_url}).\"",
+    "The GitHub integration stops ignoring the pull_request actions `labeled` and `unlabeled` and posts: \"{sender} added the label `{label_name}` on [PR #{number}]({pr_html_url}).\" for labeled, and \"{sender} removed the label `{label_name}` from [PR #{number}]({pr_html_url}).\" for unlabeled (label name in backticks, message omits the PR title).",
+    "The GitHub integration handles the pull_request actions `milestoned` and `demilestoned`, posting: \"{sender} linked [PR #{number}]({pr_html_url}) to the milestone `{milestone_title}`.\" for milestoned (milestone title read from pull_request.milestone.title) and \"{sender} unlinked [PR #{number}]({pr_html_url}) from the milestone `{milestone_title}`.\" for demilestoned (milestone title read from the top-level milestone object); these messages omit the PR title.",
+    "The GitHub integration handles the pull_request actions `enqueued` and `dequeued`, posting: \"{sender} added [PR #{number} {title}]({pr_html_url}) to the merge queue.\" and \"{sender} removed [PR #{number} {title}]({pr_html_url}) from the merge queue.\" respectively.",
+    "Messages for reopened pull requests include the source and destination branch labels (head and base, e.g. \"from `owner:branch` to `owner:base`\"), the same way opened and merged PR messages already do.",
+    "All of these notifications go to the integration's existing per-PR topic convention (e.g. \"{repo} / PR #{number} {title}\"), unchanged from current behavior."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 669,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Pritesh Shetty",
+    "email": "priteshshetty89@gmail.com",
+    "date": "2025-12-31"
+  },
+  "contamination": {
+    "fix_public_at": "2025-12-31",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-03-29T14:49:27Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/dde9ec2475687569196f1712fad00e23eab3c667",
+    "issue_url": "https://github.com/zulip/zulip/issues/34223"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-dde9ec247568",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_pull_request_converted_to_draft_msg",
+        "test_pull_request_demilestoned_msg",
+        "test_pull_request_dequeued_msg",
+        "test_pull_request_enqueued_msg",
+        "test_pull_request_labeled_msg",
+        "test_pull_request_milestoned_msg",
+        "test_pull_request_reopened_msg",
+        "test_pull_request_review_request_removed_msg",
+        "test_pull_request_unlabeled_msg"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 92.5
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

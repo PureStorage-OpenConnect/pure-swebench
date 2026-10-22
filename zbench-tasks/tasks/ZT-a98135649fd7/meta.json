@@ -1,0 +1,93 @@
+{
+  "task_id": "ZT-a98135649fd7",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "deactivated_user: Show deactivated status for deactivated users.",
+  "type": "other",
+  "lang": "web",
+  "issue": 26833,
+  "fix_commit": "a98135649fd764df7b34f82c105abf2cf1849e5e",
+  "base_commit": "2e95012c90a4a9c518460d64cbf1de77457f51b2",
+  "env_fingerprint": "e3bd1fbb86ee",
+  "fail_to_pass": [
+    "web/tests/message_list_view.test.cjs",
+    "web/tests/people.test.cjs",
+    "web/tests/pm_list_data.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/input_pill.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 35,
+    "files": 8,
+    "hunks": 14,
+    "f2p_count": 3
+  },
+  "interface_requirements": [
+    "The `people` module exports a new function `sender_is_deactivated(message): boolean` \u2014 returns true iff the message's sender is a deactivated user, and false when `message.sender_id` is missing/undefined (mirroring the existing `sender_is_bot` / `sender_is_guest` helpers).",
+    "Message-list rendering obtains each sender's deactivation status via `people.sender_is_deactivated(message)` and exposes it as a boolean field `sender_is_deactivated` on the per-message template data (MessageContainer), alongside the existing `sender_is_bot` and `sender_is_guest` fields.",
+    "The display objects returned by `pm_list_data.get_conversations()` gain a boolean field `is_deactivated` \u2014 true when the DM conversation is with a deactivated user, false otherwise (including for group DMs and bot conversations with active users)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 850,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Maneesh Shukla",
+    "email": "shuklamaneesh24@gmail.com",
+    "date": "2025-02-18"
+  },
+  "contamination": {
+    "fix_public_at": "2025-02-18",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-09-22T20:26:21Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/a98135649fd764df7b34f82c105abf2cf1849e5e",
+    "issue_url": "https://github.com/zulip/zulip/issues/26833"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-a98135649fd7",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 99.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

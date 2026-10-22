@@ -1,0 +1,85 @@
+{
+  "task_id": "ZT-4d5abdae1c10",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "info_overlay: Add printing support for informational overlays.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 10214,
+  "fix_commit": "4d5abdae1c103598e35e37fa7531290a87c28026",
+  "base_commit": "b4dae70aaf46a523cd828f313700b1d49275c41e",
+  "env_fingerprint": "b6c09ce6b3f2",
+  "fail_to_pass": [
+    "web/tests/hotkey.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 52,
+    "files": 3,
+    "hunks": 7,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "Ctrl+P (Cmd+P on macOS) becomes a global Zulip hotkey whose action name in the keydown mapping table is `print`; it is available everywhere, not only in message views (message_view_only: false).",
+    "Platform handling follows the standard Ctrl/Cmd convention: on macOS only Cmd+P triggers the `print` action and bare Ctrl+P is not mapped; on other platforms Ctrl+P triggers it and the Cmd modifier does not.",
+    "Ctrl+Shift+P (and Alt+P, which remains the compose-preview toggle) must NOT be intercepted, because Ctrl+Shift+P opens a private-browsing window in Firefox; the shifted combination must fall through to the browser.",
+    "The `web/src/info_overlay` module gains an exported public function `print_current_pane()` that prints the currently displayed pane of the informational overlay; the hotkey handler must delegate the `print` action to this function.",
+    "Behavioral gating: when an informational overlay is open (as reported by the existing `overlays.info_overlay_open()`), the print hotkey invokes `info_overlay.print_current_pane()` exactly once and the keydown event is consumed (handler returns true / preventDefault); when no informational overlay is open, the keydown is NOT consumed, so the browser's native print of the current page proceeds."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1246,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Aman Agrawal",
+    "email": "amanagr@zulip.com",
+    "date": "2026-06-17"
+  },
+  "contamination": {
+    "fix_public_at": "2026-06-17",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2018-08-06T16:28:37Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/4d5abdae1c103598e35e37fa7531290a87c28026",
+    "issue_url": "https://github.com/zulip/zulip/issues/10214"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-4d5abdae1c10",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 92.0
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

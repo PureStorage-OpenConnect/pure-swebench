@@ -1,0 +1,606 @@
+diff --git a/web/src/bundles/app.ts b/web/src/bundles/app.ts
+index 98d566c093..52c927fcbc 100644
+--- a/web/src/bundles/app.ts
++++ b/web/src/bundles/app.ts
+@@ -58,6 +58,7 @@ import "../../styles/user_status.css";
+ import "../../styles/widgets.css";
+ import "../../styles/print.css";
+ import "../../styles/inbox.css";
++import "../../styles/color_picker.css";
+ 
+ // This should be last.
+ import "../ui_init.js";
+diff --git a/web/src/color_picker_popover.ts b/web/src/color_picker_popover.ts
+new file mode 100644
+index 0000000000..accb5d9fb5
+--- /dev/null
++++ b/web/src/color_picker_popover.ts
+@@ -0,0 +1,120 @@
++import $ from "jquery";
++import _ from "lodash";
++
++import render_color_picker_popover from "../templates/popovers/color_picker_popover.hbs";
++
++import * as blueslip from "./blueslip.ts";
++import * as popover_menus from "./popover_menus.ts";
++import * as stream_color from "./stream_color.ts";
++import * as stream_data from "./stream_data.ts";
++import * as stream_settings_api from "./stream_settings_api.ts";
++import * as ui_util from "./ui_util.ts";
++
++const update_color_picker_preview = (color: string, $popper: JQuery): void => {
++    const $custom_color_option_icon = $popper.find(".custom-color-option-icon");
++    $custom_color_option_icon.css("background-color", color);
++    const $stream_header = $popper.find(".message_header_stream");
++    stream_color.update_stream_recipient_color($stream_header, color);
++};
++
++const update_stream_color_debounced = _.debounce(
++    (new_color: string, stream_id: number, $popper: JQuery) => {
++        update_color_picker_preview(new_color, $popper);
++        stream_settings_api.set_color(stream_id, new_color);
++    },
++    // Wait for 200ms of inactivity
++    200,
++    // Don't execute immediately on the first color change
++    {leading: false},
++);
++
++export function initialize(): void {
++    popover_menus.register_popover_menu(".choose_stream_color", {
++        theme: "popover-menu",
++        placement: "right",
++        popperOptions: {
++            modifiers: [
++                {
++                    name: "flip",
++                    options: {
++                        fallbackPlacements: ["bottom", "left"],
++                    },
++                },
++            ],
++        },
++        onShow(instance) {
++            popover_menus.popover_instances.color_picker_popover = instance;
++            popover_menus.on_show_prep(instance);
++
++            const $reference = $(instance.reference);
++            const stream_id = Number.parseInt($reference.attr("data-stream-id")!, 10);
++            const stream_name = stream_data.get_stream_name_from_id(stream_id);
++            const color = stream_data.get_color(stream_id);
++            const recipient_bar_color = stream_color.get_recipient_bar_color(color);
++            const stream_privacy_icon_color = stream_color.get_stream_privacy_icon_color(color);
++            const invite_only = stream_data.is_invite_only_by_stream_id(stream_id);
++            const is_web_public = stream_data.is_web_public(stream_id);
++            const stream_color_palette = stream_color.stream_color_palette.flat();
++
++            instance.setContent(
++                ui_util.parse_html(
++                    render_color_picker_popover({
++                        stream_id,
++                        stream_name,
++                        stream_color: color,
++                        recipient_bar_color,
++                        stream_privacy_icon_color,
++                        invite_only,
++                        is_web_public,
++                        stream_color_palette,
++                    }),
++                ),
++            );
++        },
++        onMount(instance) {
++            const $reference = $(instance.reference);
++            const $popper = $(instance.popper);
++
++            const $color_picker_input = $popper.find(".color-picker-input");
++            const stream_id = Number.parseInt($reference.attr("data-stream-id")!, 10);
++            const color = stream_data.get_color(stream_id);
++
++            $color_picker_input.val(color);
++
++            $popper.on(
++                "change",
++                "input[name='color-picker-select']",
++                function (this: HTMLInputElement, _e: JQuery.Event) {
++                    const prev_color = stream_data.get_color(stream_id);
++                    const new_color = $(this).attr("data-swatch-color")!;
++                    if (prev_color === new_color) {
++                        return;
++                    }
++                    $color_picker_input.val(new_color);
++                    update_stream_color_debounced(new_color, stream_id, $popper);
++                },
++            );
++
++            $popper.on(
++                "input",
++                ".color-picker-input",
++                function (this: HTMLInputElement, _e: JQuery.Event) {
++                    const new_color = $(this).val();
++                    if (!new_color) {
++                        blueslip.error("Invalid color picker value");
++                        return;
++                    }
++                    const $swatch_color_checked = $popper.find(
++                        "input[name='color-picker-select']:checked",
++                    );
++                    $swatch_color_checked.prop("checked", false);
++                    update_stream_color_debounced(new_color, stream_id, $popper);
++                },
++            );
++        },
++        onHidden(instance) {
++            instance.destroy();
++            popover_menus.popover_instances.color_picker_popover = null;
++        },
++    });
++}
+diff --git a/web/src/hotkey.js b/web/src/hotkey.js
+index 300894c2b1..c0574ec143 100644
+--- a/web/src/hotkey.js
++++ b/web/src/hotkey.js
+@@ -405,6 +405,11 @@ export function process_escape_key(e) {
+ function handle_popover_events(event_name) {
+     const popover_menu_visible_instance = popover_menus.get_visible_instance();
+ 
++    if (popover_menus.is_stream_actions_popover_displayed()) {
++        stream_popover.stream_sidebar_menu_handle_keyboard(event_name);
++        return true;
++    }
++
+     if (popover_menu_visible_instance) {
+         popover_menus.sidebar_menu_instance_handle_keyboard(
+             popover_menu_visible_instance,
+@@ -428,11 +433,6 @@ function handle_popover_events(event_name) {
+         return true;
+     }
+ 
+-    if (stream_popover.is_open()) {
+-        stream_popover.stream_sidebar_menu_handle_keyboard(event_name);
+-        return true;
+-    }
+-
+     if (user_group_popover.is_open()) {
+         user_group_popover.handle_keyboard(event_name);
+         return true;
+diff --git a/web/src/popover_menus.ts b/web/src/popover_menus.ts
+index 9b3fc5e85a..fdbfe7b69b 100644
+--- a/web/src/popover_menus.ts
++++ b/web/src/popover_menus.ts
+@@ -29,7 +29,9 @@ type PopoverName =
+     | "personal_menu"
+     | "gear_menu"
+     | "help_menu"
+-    | "buddy_list";
++    | "buddy_list"
++    | "stream_actions_popover"
++    | "color_picker_popover";
+ 
+ export const popover_instances: Record<PopoverName, tippy.Instance | null> = {
+     compose_control_buttons: null,
+@@ -49,6 +51,8 @@ export const popover_instances: Record<PopoverName, tippy.Instance | null> = {
+     gear_menu: null,
+     help_menu: null,
+     buddy_list: null,
++    stream_actions_popover: null,
++    color_picker_popover: null,
+ };
+ 
+ /* Keyboard UI functions */
+@@ -143,6 +147,22 @@ export function is_message_actions_popover_displayed(): boolean {
+     return popover_instances.message_actions?.state.isVisible ?? false;
+ }
+ 
++export function get_stream_actions_popover(): tippy.Instance | null {
++    return popover_instances.stream_actions_popover;
++}
++
++export function is_stream_actions_popover_displayed(): boolean | undefined {
++    return popover_instances.stream_actions_popover?.state.isVisible;
++}
++
++export function get_color_picker_popover(): tippy.Instance | null {
++    return popover_instances.color_picker_popover;
++}
++
++export function is_color_picker_popover_displayed(): boolean | undefined {
++    return popover_instances.color_picker_popover?.state.isVisible;
++}
++
+ function get_popover_items_for_instance(instance: tippy.Instance): JQuery | undefined {
+     const $current_elem = $(instance.popper);
+     const class_name = $current_elem.attr("class");
+diff --git a/web/src/stream_color.ts b/web/src/stream_color.ts
+index a7eecc30bc..5309a9bbb8 100644
+--- a/web/src/stream_color.ts
++++ b/web/src/stream_color.ts
+@@ -12,13 +12,13 @@ import * as stream_settings_api from "./stream_settings_api.ts";
+ 
+ extend([lchPlugin, mixPlugin]);
+ 
+-export function update_stream_recipient_color($stream_header: JQuery): void {
++export function update_stream_recipient_color($stream_header: JQuery, color?: string): void {
+     if ($stream_header.length > 0) {
+         const stream_id = Number.parseInt($stream_header.attr("data-stream-id")!, 10);
+         if (!stream_id) {
+             return;
+         }
+-        const stream_color = stream_data.get_color(stream_id);
++        const stream_color = color ?? stream_data.get_color(stream_id);
+         const recipient_bar_color = get_recipient_bar_color(stream_color);
+ 
+         const $stream_privacy_icon = $stream_header.find(".stream-privacy");
+@@ -63,11 +63,11 @@ export function get_recipient_bar_color(color: string): string {
+         .toHex();
+ }
+ 
+-const stream_color_palette = [
+-    ["a47462", "c2726a", "e4523d", "e7664d", "ee7e4a", "f4ae55"],
+-    ["76ce90", "53a063", "94c849", "bfd56f", "fae589", "f5ce6e"],
+-    ["a6dcbf", "addfe5", "a6c7e5", "4f8de4", "95a5fd", "b0a5fd"],
+-    ["c2c2c2", "c8bebf", "c6a8ad", "e79ab5", "bd86e5", "9987e1"],
++export const stream_color_palette = [
++    ["#a47462", "#c2726a", "#e4523d", "#e7664d", "#ee7e4a", "#f4ae55"],
++    ["#76ce90", "#53a063", "#94c849", "#bfd56f", "#fae589", "#f5ce6e"],
++    ["#a6dcbf", "#addfe5", "#a6c7e5", "#4f8de4", "#95a5fd", "#b0a5fd"],
++    ["#c2c2c2", "#c8bebf", "#c6a8ad", "#e79ab5", "#bd86e5", "#9987e1"],
+ ];
+ 
+ const subscriptions_table_colorpicker_options = {
+diff --git a/web/src/stream_color_events.ts b/web/src/stream_color_events.ts
+index 81fe181c9d..5cc982e372 100644
+--- a/web/src/stream_color_events.ts
++++ b/web/src/stream_color_events.ts
+@@ -64,15 +64,9 @@ export function update_stream_color(sub: StreamSubscription, color: string): voi
+         "background-color",
+         color,
+     );
+-    // The swatch in the color picker.
+-    stream_color.set_colorpicker_color(
+-        $(
+-            `#subscription_overlay .subscription_settings[data-stream-id='${CSS.escape(
+-                stream_id,
+-            )}'] .colorpicker`,
+-        ),
+-        color,
+-    );
++    $(
++        `#subscription_overlay .subscription_settings[data-stream-id='${CSS.escape(stream_id)}'] .stream-settings-color-preview`,
++    ).css("background-color", color);
+     $(
+         `#subscription_overlay .subscription_settings[data-stream-id='${CSS.escape(
+             stream_id,
+diff --git a/web/src/stream_edit.ts b/web/src/stream_edit.ts
+index a2d6a76468..1483049767 100644
+--- a/web/src/stream_edit.ts
++++ b/web/src/stream_edit.ts
+@@ -27,7 +27,6 @@ import * as settings_components from "./settings_components.ts";
+ import * as settings_config from "./settings_config.ts";
+ import * as settings_org from "./settings_org.ts";
+ import {current_user, realm} from "./state_data.ts";
+-import * as stream_color from "./stream_color.ts";
+ import * as stream_data from "./stream_data.ts";
+ import * as stream_edit_subscribers from "./stream_edit_subscribers.ts";
+ import * as stream_edit_toggler from "./stream_edit_toggler.ts";
+@@ -161,18 +160,7 @@ export function update_stream_description(sub: StreamSubscription): void {
+ 
+ function show_subscription_settings(sub: SettingsSubscription): void {
+     const $edit_container = stream_settings_containers.get_edit_container(sub);
+-
+-    const $colorpicker = $edit_container.find(".colorpicker");
+-    const color = stream_data.get_color(sub.stream_id);
+-    stream_color.set_colorpicker_color($colorpicker, color);
+     stream_ui_updates.update_add_subscriptions_elements(sub);
+-    const $scroll_container = scroll_util.get_scroll_element($("#stream_settings"));
+-
+-    $scroll_container.on("scroll", () => {
+-        $colorpicker.spectrum("destroy");
+-        const color = stream_data.get_color(sub.stream_id);
+-        stream_color.set_colorpicker_color($colorpicker, color);
+-    });
+ 
+     if (!sub.render_subscribers) {
+         return;
+diff --git a/web/src/stream_popover.ts b/web/src/stream_popover.ts
+index 4ddb271a2d..117297fb2a 100644
+--- a/web/src/stream_popover.ts
++++ b/web/src/stream_popover.ts
+@@ -27,7 +27,6 @@ import * as popover_menus from "./popover_menus.ts";
+ import {left_sidebar_tippy_options} from "./popover_menus.ts";
+ import {web_channel_default_view_values} from "./settings_config.ts";
+ import * as settings_data from "./settings_data.ts";
+-import * as stream_color from "./stream_color.ts";
+ import * as stream_data from "./stream_data.ts";
+ import * as stream_settings_api from "./stream_settings_api.ts";
+ import * as stream_settings_components from "./stream_settings_components.ts";
+@@ -41,28 +40,23 @@ import * as util from "./util.ts";
+ 
+ // In this module, we manage stream popovers
+ // that pop up from the left sidebar.
+-let stream_popover_instance: tippy.Instance | null = null;
+ let stream_widget_value: number | undefined;
+ let move_topic_to_stream_topic_typeahead: Typeahead<string> | undefined;
+ 
+-function get_popover_menu_items(sidebar_elem: tippy.Instance | null): JQuery | undefined {
+-    if (!sidebar_elem) {
+-        blueslip.error("Trying to get menu items when action popover is closed.");
+-        return undefined;
++export function stream_sidebar_menu_handle_keyboard(key: string): void {
++    if (popover_menus.is_color_picker_popover_displayed()) {
++        const $color_picker_popover_instance = popover_menus.get_color_picker_popover();
++        if (!$color_picker_popover_instance) {
++            return;
++        }
++        popover_menus.sidebar_menu_instance_handle_keyboard($color_picker_popover_instance, key);
++        return;
+     }
+-
+-    const $popover = $(sidebar_elem.popper);
+-    if (!$popover) {
+-        blueslip.error("Cannot find popover data for stream sidebar menu.");
+-        return undefined;
++    const $stream_actions_popover_instance = popover_menus.get_stream_actions_popover();
++    if (!$stream_actions_popover_instance) {
++        return;
+     }
+-
+-    return $("li:not(.divider):visible > a", $popover);
+-}
+-
+-export function stream_sidebar_menu_handle_keyboard(key: string): void {
+-    const items = get_popover_menu_items(stream_popover_instance);
+-    popover_menus.popover_items_handle_keyboard(key, items);
++    popover_menus.sidebar_menu_instance_handle_keyboard($stream_actions_popover_instance, key);
+ }
+ 
+ export function elem_to_stream_id($elem: JQuery): number {
+@@ -75,16 +69,10 @@ export function elem_to_stream_id($elem: JQuery): number {
+     return stream_id;
+ }
+ 
+-export function is_open(): boolean {
+-    return Boolean(stream_popover_instance);
+-}
+-
+-export function hide_stream_popover(): void {
+-    if (is_open()) {
+-        ui_util.hide_left_sidebar_menu_icon();
+-        stream_popover_instance!.destroy();
+-        stream_popover_instance = null;
+-    }
++export function hide_stream_popover(instance: tippy.Instance): void {
++    ui_util.hide_left_sidebar_menu_icon();
++    instance.destroy();
++    popover_menus.popover_instances.stream_actions_popover = null;
+ }
+ 
+ function stream_popover_sub(
+@@ -104,7 +92,7 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+ 
+     // This will allow the user to close the popover by clicking
+     // on the reference element if the popover is already open.
+-    if (stream_popover_instance?.reference === elt) {
++    if (popover_menus.get_stream_actions_popover()?.reference === elt) {
+         return;
+     }
+ 
+@@ -127,13 +115,13 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+         delay: [100, 0],
+         ...left_sidebar_tippy_options,
+         onCreate(instance) {
+-            stream_popover_instance = instance;
+             const $popover = $(instance.popper);
+             $popover.addClass("stream-popover-root");
+             instance.setContent(ui_util.parse_html(content));
+         },
+         onMount(instance) {
+             const $popper = $(instance.popper);
++            popover_menus.popover_instances.stream_actions_popover = instance;
+             ui_util.show_left_sidebar_menu_icon(elt);
+ 
+             // Go to channel feed instead of first topic.
+@@ -141,7 +129,7 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+                 e.preventDefault();
+                 e.stopPropagation();
+                 const sub = stream_popover_sub(e);
+-                hide_stream_popover();
++                hide_stream_popover(instance);
+                 message_view.show(
+                     [
+                         {
+@@ -156,7 +144,7 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+             // Stream settings
+             $popper.on("click", ".open_stream_settings", (e) => {
+                 const sub = stream_popover_sub(e);
+-                hide_stream_popover();
++                hide_stream_popover(instance);
+ 
+                 // Admin can change any stream's name & description either stream is public or
+                 // private, subscribed or unsubscribed.
+@@ -172,7 +160,7 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+             // Pin/unpin
+             $popper.on("click", ".pin_to_top", (e) => {
+                 const sub = stream_popover_sub(e);
+-                hide_stream_popover();
++                hide_stream_popover(instance);
+                 stream_settings_ui.toggle_pin_to_top_stream(sub);
+                 e.stopPropagation();
+             });
+@@ -180,7 +168,7 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+             // Mark all messages in stream as read
+             $popper.on("click", ".mark_stream_as_read", (e) => {
+                 const sub = stream_popover_sub(e);
+-                hide_stream_popover();
++                hide_stream_popover(instance);
+                 unread_ops.mark_stream_as_read(sub.stream_id);
+                 e.stopPropagation();
+             });
+@@ -188,7 +176,7 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+             // Mute/unmute
+             $popper.on("click", ".toggle_stream_muted", (e) => {
+                 const sub = stream_popover_sub(e);
+-                hide_stream_popover();
++                hide_stream_popover(instance);
+                 stream_settings_api.set_stream_property(sub, {
+                     property: "is_muted",
+                     value: !sub.is_muted,
+@@ -199,35 +187,28 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+             // Unsubscribe
+             $popper.on("click", ".popover_sub_unsub_button", (e) => {
+                 const sub = stream_popover_sub(e);
+-                hide_stream_popover();
++                hide_stream_popover(instance);
+                 stream_settings_components.sub_or_unsub(sub);
+                 e.preventDefault();
+                 e.stopPropagation();
+             });
+ 
+-            // Choose a different color.
+-            $popper.on("click", ".choose_stream_color", (e) => {
+-                const $popover = $(instance.popper);
+-                const $colorpicker = $popover.find(".colorpicker-container").find(".colorpicker");
+-                $(".colorpicker-container").show();
+-                $colorpicker.spectrum("destroy");
+-                $colorpicker.spectrum(stream_color.sidebar_popover_colorpicker_options_full);
+-                // In theory this should clean up the old color picker,
+-                // but this seems a bit flaky -- the new colorpicker
+-                // doesn't fire until you click a button, but the buttons
+-                // have been hidden.  We work around this by just manually
+-                // fixing it up here.
+-                $colorpicker.parent().find(".sp-container").removeClass("sp-buttons-disabled");
+-                $(e.currentTarget).hide();
+-                e.stopPropagation();
+-            });
+-
+             new ClipboardJS(util.the($popper.find(".copy_stream_link"))).on("success", () => {
+                 popover_menus.hide_current_popover_if_visible(instance);
+             });
+         },
+-        onHidden() {
+-            hide_stream_popover();
++        onHide() {
++            const color_picker_popover = popover_menus.get_color_picker_popover();
++            if (!color_picker_popover) {
++                return undefined;
++            }
++            if ($(color_picker_popover.popper).is(":hover")) {
++                return false;
++            }
++            return undefined;
++        },
++        onHidden(instance) {
++            hide_stream_popover(instance);
+         },
+     });
+ }
+diff --git a/web/src/stream_settings_ui.ts b/web/src/stream_settings_ui.ts
+index 9c20a133a2..34c4abae0b 100644
+--- a/web/src/stream_settings_ui.ts
++++ b/web/src/stream_settings_ui.ts
+@@ -873,7 +873,6 @@ export function launch(
+             $overlay: $("#subscription_overlay"),
+             on_close() {
+                 browser_history.exit_overlay();
+-                $(".colorpicker").spectrum("destroy");
+             },
+         });
+         change_state(section, left_side_tab, right_side_tab);
+diff --git a/web/src/ui_init.js b/web/src/ui_init.js
+index 93f8a51f6d..d9ec6e3edf 100644
+--- a/web/src/ui_init.js
++++ b/web/src/ui_init.js
+@@ -20,6 +20,7 @@ import * as blueslip from "./blueslip.ts";
+ import * as bot_data from "./bot_data.ts";
+ import * as channel from "./channel.ts";
+ import * as click_handlers from "./click_handlers.ts";
++import * as color_picker_popover from "./color_picker_popover.ts";
+ import * as common from "./common.ts";
+ import * as compose from "./compose.js";
+ import * as compose_closed_ui from "./compose_closed_ui.ts";
+@@ -568,6 +569,7 @@ export function initialize_everything(state_data) {
+     sidebar_ui.initialize();
+     user_profile.initialize();
+     stream_popover.initialize();
++    color_picker_popover.initialize();
+     add_stream_options_popover.initialize();
+     click_handlers.initialize();
+     scheduled_messages_overlay_ui.initialize();
+diff --git a/web/templates/popovers/color_picker_popover.hbs b/web/templates/popovers/color_picker_popover.hbs
+new file mode 100644
+index 0000000000..96ba2fe534
+--- /dev/null
++++ b/web/templates/popovers/color_picker_popover.hbs
+@@ -0,0 +1,36 @@
++<div class="popover-menu color-picker-popover" data-simplebar data-simplebar-tab-index="-1">
++    <div class="message_header message_header_stream" data-stream-id="{{stream_id}}">
++        <div class="message-header-contents" style="background: {{recipient_bar_color}};">
++            <div class="message_label_clickable stream_label">
++                <span class="stream-privacy-modified-color-{{stream_id}} stream-privacy filter-icon"  style="color: {{stream_privacy_icon_color}}">
++                    {{> ../stream_privacy .}}
++                </span>
++                {{#if stream_name}}
++                <span class="message-header-stream-name">
++                    {{~stream_name~}}
++                </span>
++                {{else}}
++                &nbsp;
++                {{/if}}
++            </div>
++        </div>
++    </div>
++    <ul role="menu" class="popover-menu-list">
++        <li role="none">
++            <div role="group" class="color-swatch-list" aria-label="{{t 'Stream color' }}">
++                {{#each stream_color_palette as |hex_color|}}
++                    <input type="radio" id="color-{{hex_color}}" class="color-swatch-input" name="color-picker-select" data-swatch-color="{{hex_color}}" {{#if (eq hex_color ../stream_color )}}checked{{/if}} />
++                    <label role="menuitemradio" class="color-swatch-label tippy-zulip-delayed-tooltip" for="color-{{hex_color}}" style="background-color: {{hex_color}};" aria-label="{{hex_color}}" data-tippy-content="{{hex_color}}" tabindex="0"></label>
++                {{/each}}
++            </div>
++        </li>
++        <li role="separator" class="popover-menu-separator"></li>
++        <li role="none" class="link-item popover-menu-list-item">
++            <a role="menuitem" class="custom-color-picker popover-menu-link" tabindex="0">
++                <i class="custom-color-option-icon" style="background-color: {{stream_color}};" aria-hidden="true"></i>
++                <span class="popover-menu-label">{{t "Custom color"}}</span>
++                <input type="color" class="color-picker-input" tabindex="-1" value="{{stream_color}}" />
++            </a>
++        </li>
++    </ul>
++</div>
+diff --git a/web/templates/popovers/left_sidebar/left_sidebar_stream_actions_popover.hbs b/web/templates/popovers/left_sidebar/left_sidebar_stream_actions_popover.hbs
+index 5e70d2cdfa..053f96a739 100644
+--- a/web/templates/popovers/left_sidebar/left_sidebar_stream_actions_popover.hbs
++++ b/web/templates/popovers/left_sidebar/left_sidebar_stream_actions_popover.hbs
+@@ -66,10 +66,7 @@
+         </li>
+         <li role="separator" class="popover-menu-separator hidden-for-spectators"></li>
+         <li role="none" class="link-item popover-menu-list-item hidden-for-spectators no-auto-hide-left-sidebar-overlay">
+-            <span class="colorpicker-container">
+-                <input stream_id="{{stream.stream_id}}" class="colorpicker" type="text" value="{{stream.color}}" />
+-            </span>
+-            <a role="menuitem" class="choose_stream_color popover-menu-link" tabindex="0">
++            <a role="menuitem" class="choose_stream_color popover-menu-link" data-stream-id="{{ stream.stream_id }}" tabindex="0">
+                 <i class="popover-menu-icon zulip-icon zulip-icon-pipette" aria-hidden="true"></i>
+                 <span class="popover-menu-label">{{t "Change color"}}</span>
+             </a>
+diff --git a/web/templates/stream_settings/stream_settings.hbs b/web/templates/stream_settings/stream_settings.hbs
+index 1d9caf0ea8..b2d248c9f6 100644
+--- a/web/templates/stream_settings/stream_settings.hbs
++++ b/web/templates/stream_settings/stream_settings.hbs
+@@ -120,10 +120,11 @@
+                     </div>
+                 {{/each}}
+                 <div class="input-group">
+-                    <label for="streamcolor" class="settings-field-label">{{t "Channel color" }}</label>
+-                    <span class="sub_setting_control">
+-                        <input stream_id="{{sub.stream_id}}" class="colorpicker" id="streamcolor" type="text" value="{{sub.color}}" tabindex="-1" />
+-                    </span>
++                    <label class="settings-field-label">{{t "Channel color" }}</label>
++                    <button class="button small rounded stream-settings-color-selector choose_stream_color" data-stream-id="{{ sub.stream_id }}">
++                        <span class="stream-settings-color-preview" style="background: {{sub.color}};"></span>
++                        <span class="stream-settings-color-selector-label">{{t "Change color"}}</span>
++                    </button>
+                 </div>
+             </div>
+             <div class="subsection-parent">

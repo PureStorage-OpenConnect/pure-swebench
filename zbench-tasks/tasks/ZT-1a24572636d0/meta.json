@@ -1,0 +1,99 @@
+{
+  "task_id": "ZT-1a24572636d0",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "pm_conversations: Remove empty DM conversations from the sidebar.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 29275,
+  "fix_commit": "1a24572636d0f1ff33603a3ba8cd055317ce0a72",
+  "base_commit": "1bfaa7e7609605a9fe24a632cd0549bb7e1103fc",
+  "env_fingerprint": "2c3dbfed257d",
+  "fail_to_pass": [
+    "web/tests/dispatch.test.cjs",
+    "web/tests/echo.test.cjs",
+    "web/tests/message_store.test.cjs",
+    "web/tests/pm_conversations.test.cjs",
+    "web/tests/pm_conversations_util.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/pm_list_data.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 153,
+    "files": 8,
+    "hunks": 18,
+    "f2p_count": 5
+  },
+  "interface_requirements": [
+    "Conversation objects returned by `pm_conversations.recent.get()` gain an integer field `local_message_count`: a lower bound on messages locally known to remain in the conversation, initialized to 0 when a conversation is first inserted.",
+    "`pm_conversations.process_message(message, is_server_message)` gains a second boolean parameter: true only for server-delivered (acked) messages; only those increment `local_message_count` (locally-echoed messages must not). Existing callers/tests pass the boolean explicitly.",
+    "New exported method `pm_conversations.recent.increment_local_message_count(user_ids: number[])`: increments `local_message_count` for the conversation keyed by those user ids (the DM partners, excluding the current user).",
+    "`echo.reify_message_id(local_id, server_id)`: when the acked message is a direct message, it must call `pm_conversations.recent.increment_local_message_count(user_ids)` exactly once, with user_ids = the DM recipients excluding the current user (from `people.pm_with_user_ids`), mirroring how stream messages are added to stream_topic_history only on ack.",
+    "New exported method `pm_conversations.recent.maybe_remove(user_ids: number[], num_messages: number)`: if `local_message_count > num_messages`, decrement it by num_messages; otherwise remove the conversation from the recent-DMs data (subject to un-acked local-echo messages, tracked via echo_state's waiting-for-ack map, keeping it alive). No-op if the conversation is unknown.",
+    "Handling of a server `delete_message` event with `message_type: \"private\"`: derive the conversation's user ids (excluding the current user's own id) from the deleted messages found in the local message cache, call `pm_conversations.recent.maybe_remove(user_ids, num_deleted)` exactly once, and call `pm_list.update_private_messages()` once to refresh the DM sidebar. If none of the deleted message ids are in the local cache, make no `maybe_remove` call.",
+    "The delete handler and reify handler operate on `pm_conversations.recent` as the module-level singleton (tests stub its methods via `override(pm_conversations.recent, ...)`), so these methods must live on that exported object."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 537,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Aadyot1",
+    "email": "aadyotnandan@gmail.com",
+    "date": "2026-07-14"
+  },
+  "contamination": {
+    "fix_public_at": "2026-07-14",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-03-12T09:11:43Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/1a24572636d0f1ff33603a3ba8cd055317ce0a72",
+    "issue_url": "https://github.com/zulip/zulip/issues/29275"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-1a24572636d0",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 135.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "task_id": "ZT-31a06f2ed0ce",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "integrations: Refactor `get_logo_path` to make `logo_url` non-optional.",
+  "type": "other",
+  "lang": "py",
+  "issue": 22582,
+  "fix_commit": "31a06f2ed0ceac586859dcb074d4dee87555adb1",
+  "base_commit": "aa955b96de235f6fbc2d8c1d846333ae1096e588",
+  "env_fingerprint": "a72396520297",
+  "fail_to_pass": [
+    "zerver.tests.test_integrations.IntegrationsTestCase.test_get_bot_avatar_path",
+    "zerver.tests.test_integrations.IntegrationsTestCase.test_get_logo_path"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 23,
+    "files": 1,
+    "hunks": 5,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "Integration.get_logo_path gains an optional parameter `fallback_logo_path: str | None = None` and now returns `str` (never None): it returns the first path that exists on disk among the integration's default SVG logo path, its default PNG logo path, and then the `fallback_logo_path` argument if one was provided.",
+    "Integration.get_logo_path raises AssertionError (instead of returning None) when none of the checked logo paths exist \u2014 including when called with no fallback argument on an integration whose default logo files are absent (e.g. embedded bots or an integration that was given an explicit `logo` because it has no default-path file).",
+    "Constructing an Integration whose logo cannot be resolved (no explicit `logo` argument and no default SVG/PNG logo file on disk) raises AssertionError; integrations may no longer exist without a logo.",
+    "Embedded bot integrations must construct successfully despite having no per-bot logo files, by falling back to the Zulip icon at static path `images/logo/zulip-icon-128x128.png`; this fallback is applied when resolving the logo at construction time, not baked into get_logo_path's no-argument behavior."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1649,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Niloth P",
+    "email": "20315308+Niloth-p@users.noreply.github.com",
+    "date": "2025-12-05"
+  },
+  "contamination": {
+    "fix_public_at": "2025-12-05",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2022-07-25T14:04:34Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/31a06f2ed0ceac586859dcb074d4dee87555adb1",
+    "issue_url": "https://github.com/zulip/zulip/issues/22582"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-31a06f2ed0ce",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_get_bot_avatar_path",
+        "test_get_logo_path"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 78.5
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

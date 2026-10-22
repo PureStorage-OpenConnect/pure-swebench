@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-38d781b13004",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "out_of_scope",
+  "reason": "scope: 16 code files > 15",
+  "summary": "channel-settings: Modify the UI for channel privacy.",
+  "lang": "web",
+  "issue": 36742,
+  "fix_commit": "38d781b13004437c1fa633cd4272dc4f1a3b809f",
+  "base_commit": "d7de32ef66a026f36d74b92939ae2af006bc3e4a",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/38d781b13004437c1fa633cd4272dc4f1a3b809f",
+    "issue_url": "https://github.com/zulip/zulip/issues/36742"
+  }
+}

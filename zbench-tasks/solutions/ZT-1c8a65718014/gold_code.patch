@@ -1,0 +1,75 @@
+diff --git a/web/src/buddy_list.ts b/web/src/buddy_list.ts
+index 4d1d98e187..9dd731883a 100644
+--- a/web/src/buddy_list.ts
++++ b/web/src/buddy_list.ts
+@@ -24,6 +24,7 @@ import * as peer_data from "./peer_data.ts";
+ import * as people from "./people.ts";
+ import * as scroll_util from "./scroll_util.ts";
+ import * as settings_config from "./settings_config.ts";
++import * as sidebar_header_sticky_shadow from "./sidebar_header_sticky_shadow.ts";
+ import {disconnect_toggle_class, observe_toggle_class} from "./sidebar_tooltip_helpers.ts";
+ import {current_user} from "./state_data.ts";
+ import * as stream_data from "./stream_data.ts";
+@@ -1208,6 +1209,8 @@ export class BuddyList extends BuddyListConf {
+         $scroll_container.on("scroll", () => {
+             this.fill_screen_with_content();
+         });
++
++        sidebar_header_sticky_shadow.initialize($scroll_container, ".buddy-list-subsection-header");
+     }
+ 
+     update_padding(): void {
+diff --git a/web/src/sidebar_header_sticky_shadow.ts b/web/src/sidebar_header_sticky_shadow.ts
+new file mode 100644
+index 0000000000..dc72b45c3a
+--- /dev/null
++++ b/web/src/sidebar_header_sticky_shadow.ts
+@@ -0,0 +1,24 @@
++import * as util from "./util.ts";
++
++// Toggles `sidebar-header-drop-shadow` on sticky headers inside a scroll
++// container while the container is scrolled and the header is pinned at
++// its sticky top. The shadow is suppressed once the header's top has been
++// pushed above the pin line by the next section arriving from below, to
++// avoid a visible border at their junction.
++
++export function initialize($scroll_container: JQuery, header_selector: string): void {
++    const scroll_container = util.the($scroll_container);
++    function update(): void {
++        const has_scrolled = scroll_container.scrollTop > 0;
++        const container_top = scroll_container.getBoundingClientRect().top;
++        for (const header of scroll_container.querySelectorAll<HTMLElement>(header_selector)) {
++            const sticky_top = Number.parseFloat(getComputedStyle(header).top) || 0;
++            const pushed_past_pin_line =
++                container_top + sticky_top - header.getBoundingClientRect().top;
++            const is_stuck = has_scrolled && pushed_past_pin_line > -1 && pushed_past_pin_line <= 2;
++            header.classList.toggle("sidebar-header-drop-shadow", is_stuck);
++        }
++    }
++    scroll_container.addEventListener("scroll", update, {passive: true});
++    update();
++}
+diff --git a/web/src/stream_list.ts b/web/src/stream_list.ts
+index 1639d3ee26..15853ec1b5 100644
+--- a/web/src/stream_list.ts
++++ b/web/src/stream_list.ts
+@@ -31,6 +31,7 @@ import * as popovers from "./popovers.ts";
+ import * as scroll_util from "./scroll_util.ts";
+ import {web_channel_default_view_values} from "./settings_config.ts";
+ import * as settings_data from "./settings_data.ts";
++import * as sidebar_header_sticky_shadow from "./sidebar_header_sticky_shadow.ts";
+ import {realm} from "./state_data.ts";
+ import * as stream_data from "./stream_data.ts";
+ import * as stream_list_sort from "./stream_list_sort.ts";
+@@ -1629,6 +1630,11 @@ export function set_event_handlers({
+         }
+     }
+ 
++    sidebar_header_sticky_shadow.initialize(
++        scroll_util.get_left_sidebar_scroll_container(),
++        "#direct-messages-section-header, .stream-list-subsection-header",
++    );
++
+     let mark_scroll_inactive_timeout: ReturnType<typeof setTimeout> | undefined;
+     // check for user scrolls on streams list for first time
+     scroll_util.get_scroll_element($("#left_sidebar_scroll_container")).on("scroll", () => {

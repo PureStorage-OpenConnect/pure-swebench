@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-966193d869bf",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The underlying change is a legitimate, verifiable bug fix, but the hidden test does not grade it. The entire test diff is setup accommodation: it stubs `.image-loading-placeholder` find results to return an empty element list so the pre-existing preview test doesn't crash when the new extract_thumbnail_paths() code runs. There is no assertion on the new observable behavior \u2014 nothing checks that polling starts when placeholders exist, that /json/thumbnail/status is queried, that the preview re-renders when a thumbnail becomes ready, or that clear_thumbnail_polling() cancels the timeout on preview exit. Because the added mock is simply unused under the buggy base code, this test passes both before and after the fix, so it cannot fail-before/pass-after and provides no deterministic grading signal for the fix.",
+  "summary": "compose: Poll for thumbnail availability in preview.",
+  "lang": "web",
+  "issue": 32961,
+  "fix_commit": "966193d869bfaec523642ac9f8940563cca1f77a",
+  "base_commit": "c8d722e4dfdb43f536d7b528b086abbf7a8efdd1",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/966193d869bfaec523642ac9f8940563cca1f77a",
+    "issue_url": "https://github.com/zulip/zulip/issues/32961"
+  }
+}

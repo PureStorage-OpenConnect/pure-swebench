@@ -1,0 +1,109 @@
+diff --git a/web/src/narrow_banner.ts b/web/src/narrow_banner.ts
+index cbe8fb707e..6b7add35ac 100644
+--- a/web/src/narrow_banner.ts
++++ b/web/src/narrow_banner.ts
+@@ -82,7 +82,6 @@ const MUTED_TOPICS_IN_CHANNEL_EMPTY_BANNER = {
+ const NO_SEARCH_RESULTS_TITLE = $t({defaultMessage: "No search results."});
+ 
+ function empty_search_query_banner(current_filter: Filter): NarrowBannerData {
+-    // when search bar contains multiple filters, only retrieve search queries
+     const search_query = current_filter.operands("search")[0];
+     const query_words = search_query!.split(" ");
+ 
+@@ -91,20 +90,6 @@ function empty_search_query_banner(current_filter: Filter): NarrowBannerData {
+         has_stop_word: false,
+     };
+ 
+-    // Add in stream:foo and topic:bar if present
+-    if (current_filter.has_operator("channel") || current_filter.has_operator("topic")) {
+-        const stream_id = current_filter.operands("channel")[0];
+-        const topic = current_filter.operands("topic")[0];
+-        if (stream_id) {
+-            const stream_name = stream_data.get_valid_sub_by_id_string(stream_id).name;
+-            search_string_result.stream_query = stream_name;
+-        }
+-        if (topic !== undefined) {
+-            search_string_result.topic_query = util.get_final_topic_display_name(topic);
+-            search_string_result.is_empty_string_topic = topic === "";
+-        }
+-    }
+-
+     // Gather information about each query word
+     for (const query_word of query_words) {
+         if (realm.stop_words.includes(query_word)) {
+@@ -121,10 +106,15 @@ function empty_search_query_banner(current_filter: Filter): NarrowBannerData {
+         }
+     }
+ 
+-    return {
+-        title: NO_SEARCH_RESULTS_TITLE,
+-        search_data: search_string_result,
+-    };
++    // We only show description of search query
++    // when there are excluded stop words.
++    if (search_string_result.has_stop_word) {
++        return {
++            title: NO_SEARCH_RESULTS_TITLE,
++            search_data: search_string_result,
++        };
++    }
++    return {title: NO_SEARCH_RESULTS_TITLE};
+ }
+ 
+ export function pick_empty_narrow_banner(current_filter: Filter): NarrowBannerData {
+diff --git a/web/src/narrow_error.ts b/web/src/narrow_error.ts
+index dd15957769..5c7b608af1 100644
+--- a/web/src/narrow_error.ts
++++ b/web/src/narrow_error.ts
+@@ -8,9 +8,6 @@ type QueryWord = {
+ export type SearchData = {
+     query_words: QueryWord[];
+     has_stop_word: boolean;
+-    stream_query?: string;
+-    topic_query?: string;
+-    is_empty_string_topic?: boolean;
+ };
+ 
+ export type NarrowBannerData = {
+diff --git a/web/templates/empty_feed_notice.hbs b/web/templates/empty_feed_notice.hbs
+index 0c2b393eb9..474c7bbaa6 100644
+--- a/web/templates/empty_feed_notice.hbs
++++ b/web/templates/empty_feed_notice.hbs
+@@ -1,18 +1,9 @@
+ <div class="empty_feed_notice">
+     <h4 class="empty-feed-notice-title"> {{ title }} </h4>
+-    <div class="empty-feed-notice-description">
+-        {{#if search_data}}
+-            {{#if search_data.has_stop_word}}{{t "Some common words were excluded from your search." }} <br/>{{/if}}{{t "You searched for:" }}
+-            {{#if search_data.stream_query}}
+-            <span>channel: {{search_data.stream_query}}</span>
+-            {{/if}}
+-            {{#if search_data.topic_query}}
+-            {{#if search_data.is_empty_string_topic}}
+-            <span>topic: <span class="empty-topic-display">{{search_data.topic_query}}</span></span>
+-            {{else}}
+-            <span>topic: {{search_data.topic_query}}</span>
+-            {{/if}}
+-            {{/if}}
++    {{#if search_data}}
++        {{#if search_data.has_stop_word}}
++        <div class="empty-feed-notice-description">
++            {{t "Common words were excluded from your search:" }} <br/>
+             {{#each search_data.query_words}}
+                 {{#if is_stop_word}}
+                 <del>{{query_word}}</del>
+@@ -20,8 +11,11 @@
+                 <span class="search-query-word">{{query_word}}</span>
+                 {{/if}}
+             {{/each}}
+-        {{else}}
+-            {{{ html }}}
++        </div>
+         {{/if}}
+-    </div>
++    {{else if html}}
++        <div class="empty-feed-notice-description">
++            {{{ html }}}
++        </div>
++    {{/if}}
+ </div>

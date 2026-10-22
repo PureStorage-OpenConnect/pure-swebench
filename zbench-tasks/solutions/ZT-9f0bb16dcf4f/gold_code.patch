@@ -1,0 +1,72 @@
+diff --git a/web/src/buddy_data.ts b/web/src/buddy_data.ts
+index be04f7e433..e46194d1c6 100644
+--- a/web/src/buddy_data.ts
++++ b/web/src/buddy_data.ts
+@@ -256,7 +256,11 @@ export type TitleData = {
+     is_deactivated?: boolean;
+ };
+ 
+-export function get_title_data(user_ids_string: string, is_group: boolean): TitleData {
++export function get_title_data(
++    user_ids_string: string,
++    is_group: boolean,
++    should_show_status: boolean,
++): TitleData {
+     if (is_group) {
+         // For groups, just return a string with recipient names.
+         return {
+@@ -317,7 +321,7 @@ export function get_title_data(user_ids_string: string, is_group: boolean): Titl
+     if (user_status.get_status_text(user_id)) {
+         return {
+             first_line: person.full_name,
+-            second_line: user_status.get_status_text(user_id),
++            second_line: should_show_status ? user_status.get_status_text(user_id) : "",
+             third_line: last_seen,
+             show_you: is_my_user,
+         };
+diff --git a/web/src/click_handlers.ts b/web/src/click_handlers.ts
+index 53ee6721ad..31d6cb413c 100644
+--- a/web/src/click_handlers.ts
++++ b/web/src/click_handlers.ts
+@@ -29,6 +29,7 @@ import * as popover_menus from "./popover_menus.ts";
+ import * as reactions from "./reactions.ts";
+ import * as recent_view_ui from "./recent_view_ui.ts";
+ import * as rows from "./rows.ts";
++import * as settings_config from "./settings_config.ts";
+ import * as settings_panel_menu from "./settings_panel_menu.ts";
+ import * as settings_toggle from "./settings_toggle.ts";
+ import * as sidebar_ui from "./sidebar_ui.ts";
+@@ -39,6 +40,7 @@ import * as stream_popover from "./stream_popover.ts";
+ import * as topic_list from "./topic_list.ts";
+ import * as ui_util from "./ui_util.ts";
+ import {parse_html} from "./ui_util.ts";
++import {user_settings} from "./user_settings.ts";
+ import * as util from "./util.ts";
+ 
+ export function initialize(): void {
+@@ -529,8 +531,15 @@ export function initialize(): void {
+             e.stopPropagation();
+             const $elem = $(this);
+ 
++            const is_compact_mode =
++                user_settings.user_list_style ===
++                settings_config.user_list_style_values.compact.code;
++            const status_el = is_compact_mode ? null : util.the($elem.find(".status-text"));
++            const is_truncated = status_el ? status_el.scrollWidth > status_el.clientWidth : false;
++            const should_show_status = is_compact_mode || is_truncated;
++
+             const user_id_string = $elem.attr("data-user-id")!;
+-            const title_data = buddy_data.get_title_data(user_id_string, false);
++            const title_data = buddy_data.get_title_data(user_id_string, false, should_show_status);
+ 
+             // `target_node` is the `ul` element since it stays in DOM even after updates.
+             function get_target_node(): HTMLElement {
+@@ -589,7 +598,7 @@ export function initialize(): void {
+         // This converts from 'true' in the DOM to true.
+         const is_group = z.boolean().parse(JSON.parse($elem.attr("data-is-group")!));
+ 
+-        const title_data = buddy_data.get_title_data(user_ids_string, is_group);
++        const title_data = buddy_data.get_title_data(user_ids_string, is_group, true);
+ 
+         // Since anything inside `#left_sidebar_scroll_container` can be replaced, it is our target node here.
+         function get_target_node(): HTMLElement {

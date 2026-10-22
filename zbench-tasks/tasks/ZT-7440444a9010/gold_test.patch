@@ -1,0 +1,14 @@
+diff --git a/web/tests/compose_actions.test.cjs b/web/tests/compose_actions.test.cjs
+index e0094f88b3..4cb5100395 100644
+--- a/web/tests/compose_actions.test.cjs
++++ b/web/tests/compose_actions.test.cjs
+@@ -79,6 +79,9 @@ mock_esm("../src/resize", {
+ mock_esm("../src/popovers", {
+     hide_all: noop,
+ });
++mock_esm("../src/saved_snippets_ui", {
++    setup_saved_snippets_dropdown_widget_if_needed: noop,
++});
+ 
+ const people = zrequire("people");
+ 

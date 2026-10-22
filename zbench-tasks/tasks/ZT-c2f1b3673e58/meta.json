@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-c2f1b3673e58",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The test binds directly to internal implementation choices of the fix that no ticket would dictate. (1) It calls the internal library function `user_groups_in_realm_serialized` (zerver/lib/user_groups.py \u2014 a server-internal helper, not a public API surface) and asserts the fix's invented return-object shape: attributes `.api_groups`, `.system_groups_name_dict`, and `.realm_setting_anonymous_group_membership`, plus a new keyword argument `realm_setting_group_ids`. These are internal data-structure field names and a private call signature; a spec about optimizing /register or reducing home-page queries would never pin them, and an equally correct fix could bundle the data differently (different dataclass fields, separate functions, or computing membership inside fetch_initial_state_data). (2) The query-count assertions encode the exact query structure of this particular implementation \u2014 `realm=3` with a comment that 2 of the 3 queries fetch realm_user_groups data, and home-page counts dropping 55\u219254, 53\u219252, 50\u219249 \u2014 which a differently-shaped but equally valid optimization (e.g. different query batching or retained select_related prefetching) would fail. (3) The test also depends on the fix's choice to drop `get_realm_with_settings` prefetching and have `fetch_initial_state_data` accept a plain `user.realm` while hitting those exact counts. Since the assertions grade the author's specific decomposition rather than user-visible behavior, this cannot be cured by a brief.",
+  "summary": "register: Optimize computing realm group setting values.",
+  "lang": "py",
+  "issue": 33656,
+  "fix_commit": "c2f1b3673e5897cbf90a9c959e15284fe77c796d",
+  "base_commit": "643182ce42eee6f3e71240cf05d9e96321759c46",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/c2f1b3673e5897cbf90a9c959e15284fe77c796d",
+    "issue_url": "https://github.com/zulip/zulip/issues/33656"
+  }
+}

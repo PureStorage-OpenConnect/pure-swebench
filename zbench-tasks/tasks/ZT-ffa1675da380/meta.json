@@ -1,0 +1,91 @@
+{
+  "task_id": "ZT-ffa1675da380",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "reactions: Live-update vote text in pills on user rename.",
+  "type": "other",
+  "lang": "web",
+  "issue": 38595,
+  "fix_commit": "ffa1675da380ab1fdfbc183ed1f2dd97098fde3a",
+  "base_commit": "4216e6a413d3649f45c1fc3fa21ae040b96200aa",
+  "env_fingerprint": "ed8c680f2484",
+  "fail_to_pass": [
+    "web/tests/reactions.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/user_events.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 15,
+    "files": 2,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The `reactions` module gains a public function `update_user_full_name(user_id: number)`, invoked from the realm-user update event path when a user's full name changes, so that reaction vote text (which can contain display names) stays current.",
+    "`update_user_full_name(user_id)` must enumerate rendered messages via the existing `message_lists.all_rendered_message_lists()` API and, for each message whose reactions include `user_id`, trigger the module's existing per-message vote-text re-render routine `update_vote_text_on_message(message)` exactly once per affected message.",
+    "For a `user_id` that appears in no reactions on any rendered message, `update_user_full_name` must perform no vote-text updates."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 136,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Rakshit Chauhan",
+    "email": "rxkshit04@users.noreply.github.com",
+    "date": "2026-04-18"
+  },
+  "contamination": {
+    "fix_public_at": "2026-04-18",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-03-20T22:53:06Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ffa1675da380ab1fdfbc183ed1f2dd97098fde3a",
+    "issue_url": "https://github.com/zulip/zulip/issues/38595"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-ffa1675da380",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 124.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task_id": "ZT-0e8d5603ef8d",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "stream: Use can_create_topic_group setting while sending message.",
+  "type": "feature",
+  "lang": "web",
+  "issue": 19642,
+  "fix_commit": "0e8d5603ef8d8f47412f01359bc014dac07f73d0",
+  "base_commit": "271c2a91754eaa2616952f537d569bd74c20c491",
+  "env_fingerprint": "09d041dc1808",
+  "fail_to_pass": [
+    "web/tests/compose_actions.test.cjs",
+    "web/tests/compose_validate.test.cjs",
+    "web/tests/composebox_typeahead.test.cjs",
+    "web/tests/stream_data.test.cjs",
+    "web/tests/stream_list.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/message_edit.test.cjs",
+    "web/tests/compose.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 185,
+    "files": 15,
+    "hunks": 25,
+    "f2p_count": 5
+  },
+  "interface_requirements": [
+    "Channel (stream) objects gain a new server-provided permission field `can_create_topic_group`: the id of a user group (system or user-defined) whose members are allowed to start new topics in that channel.",
+    "The server's supported permission settings for channels include an entry `can_create_topic_group` with configuration: require_system_group true, allow_internet_group false, allow_nobody_group true, allow_everyone_group true, default group `role:everyone`, no restricted list of allowed system groups.",
+    "The `stream_data` module exposes a new permission-check function `can_create_new_topics_in_stream(stream_id)` returning a boolean: true iff the current user is a member (directly or via subgroups) of the channel's `can_create_topic_group`; guests are allowed when they are members of that group; it always returns false for spectators (logged-out viewers) and for archived channels.",
+    "In the compose box topic typeahead, when the current user lacks permission to create new topics in the selected channel, the typed query must NOT be offered as a synthetic 'new topic' suggestion at the top of the suggestion list; when the user does have permission, the existing behavior of prepending the query (when it matches no existing topic exactly) is preserved."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 2270,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Saubhagya Patel",
+    "email": "patelsaubhagya0144@gmail.com",
+    "date": "2025-12-09"
+  },
+  "contamination": {
+    "fix_public_at": "2025-12-09",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2021-08-31T20:38:22Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/0e8d5603ef8d8f47412f01359bc014dac07f73d0",
+    "issue_url": "https://github.com/zulip/zulip/issues/19642"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-0e8d5603ef8d",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 105.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

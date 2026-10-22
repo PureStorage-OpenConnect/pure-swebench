@@ -1,0 +1,93 @@
+{
+  "task_id": "ZT-be5c6f10918d",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "message_store: Conditionally update message's raw_content.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 37908,
+  "fix_commit": "be5c6f10918df52787ed842b7b97f257e644fbb8",
+  "base_commit": "8c90dffe99511862c9e70ce9e14b349ab6c706cf",
+  "env_fingerprint": "8c7617892764",
+  "fail_to_pass": [
+    "web/tests/message_events.test.cjs",
+    "web/tests/message_store.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/echo.test.cjs",
+    "web/tests/message_edit.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 22,
+    "files": 5,
+    "hunks": 8,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "The `message_store` module gains an exported function `maybe_update_raw_content(message, raw_content)`: the single entry point callers must use when caching a message's raw (markdown) content locally, replacing direct assignment to `message.raw_content`.",
+    "Semantics of `maybe_update_raw_content`: for a stream message in a channel the current user IS subscribed to, it sets `message.raw_content` to the provided value.",
+    "Semantics of `maybe_update_raw_content` for unsafe caching: for a stream message in a channel the current user is NOT subscribed to (where content-update events will not be received), it must NOT store the provided value and must set `message.raw_content` to `undefined`, clearing any previously cached raw content so a stale version cannot be reused."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1017,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "apoorvapendse",
+    "email": "apoorvavpendse@gmail.com",
+    "date": "2026-02-12"
+  },
+  "contamination": {
+    "fix_public_at": "2026-02-12",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-02-10T21:16:47Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/be5c6f10918df52787ed842b7b97f257e644fbb8",
+    "issue_url": "https://github.com/zulip/zulip/issues/37908"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-be5c6f10918d",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 103.6
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

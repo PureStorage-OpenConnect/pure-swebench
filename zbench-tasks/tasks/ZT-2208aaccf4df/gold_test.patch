@@ -1,0 +1,254 @@
+diff --git a/zerver/tests/test_email_notifications.py b/zerver/tests/test_email_notifications.py
+index ee7eeb0db2..142f678320 100644
+--- a/zerver/tests/test_email_notifications.py
++++ b/zerver/tests/test_email_notifications.py
+@@ -29,6 +29,7 @@ class TestCustomEmails(ZulipTestCase):
+         email_subject = "subject_test"
+         reply_to = "reply_to_test"
+         from_name = "from_name_test"
++        campaign_name = "test_campaign"
+ 
+         with tempfile.NamedTemporaryFile() as markdown_template:
+             markdown_template.write(b"# Some heading\n\nSome content\n{{ realm_name }}")
+@@ -41,6 +42,7 @@ class TestCustomEmails(ZulipTestCase):
+                     "reply_to": reply_to,
+                     "subject": email_subject,
+                     "from_name": from_name,
++                    "campaign_name": campaign_name,
+                 },
+             )
+         self.assert_length(mail.outbox, 1)
+@@ -62,6 +64,7 @@ class TestCustomEmails(ZulipTestCase):
+         email_subject = "subject_test"
+         reply_to = "reply_to_test"
+         from_name = "from_name_test"
++        campaign_name = "test_campaign"
+         markdown_template_path = "templates/corporate/policies/index.md"
+         send_custom_server_email(
+             remote_servers=RemoteZulipServer.objects.all(),
+@@ -71,6 +74,7 @@ class TestCustomEmails(ZulipTestCase):
+                 "reply_to": reply_to,
+                 "subject": email_subject,
+                 "from_name": from_name,
++                "campaign_name": campaign_name,
+             },
+         )
+         self.assert_length(mail.outbox, 1)
+@@ -95,6 +99,7 @@ class TestCustomEmails(ZulipTestCase):
+ 
+     def test_send_custom_email_headers(self) -> None:
+         hamlet = self.example_user("hamlet")
++        campaign_name = "test_campaign_headers"
+         markdown_template_path = (
+             "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.md"
+         )
+@@ -103,6 +108,7 @@ class TestCustomEmails(ZulipTestCase):
+             dry_run=False,
+             options={
+                 "markdown_template_path": markdown_template_path,
++                "campaign_name": campaign_name,
+             },
+         )
+         self.assert_length(mail.outbox, 1)
+@@ -121,6 +127,7 @@ class TestCustomEmails(ZulipTestCase):
+             dry_run=False,
+             options={
+                 "markdown_template_path": markdown_template_path,
++                "campaign_name": "test_campaign_context_1",
+             },
+         )
+         self.assert_length(mail.outbox, 1)
+@@ -144,6 +151,7 @@ class TestCustomEmails(ZulipTestCase):
+             dry_run=False,
+             options={
+                 "markdown_template_path": markdown_template_path,
++                "campaign_name": "test_campaign_context_2",
+             },
+             add_context=add_context,
+         )
+@@ -155,6 +163,7 @@ class TestCustomEmails(ZulipTestCase):
+ 
+     def test_send_custom_email_no_argument(self) -> None:
+         hamlet = self.example_user("hamlet")
++        campaign_name = "test_campaign"
+         from_name = "from_name_test"
+         email_subject = "subject_test"
+         markdown_template_path = (
+@@ -171,6 +180,7 @@ class TestCustomEmails(ZulipTestCase):
+             options={
+                 "markdown_template_path": markdown_template_path,
+                 "from_name": from_name,
++                "campaign_name": campaign_name,
+             },
+         )
+ 
+@@ -182,6 +192,7 @@ class TestCustomEmails(ZulipTestCase):
+             options={
+                 "markdown_template_path": markdown_template_path,
+                 "subject": email_subject,
++                "campaign_name": campaign_name,
+             },
+         )
+ 
+@@ -192,6 +203,7 @@ class TestCustomEmails(ZulipTestCase):
+         markdown_template_path = (
+             "zerver/tests/fixtures/email/custom_emails/email_base_headers_test.md"
+         )
++        campaign_name = "test_campaign"
+ 
+         from zerver.lib.send_email import DoubledEmailArgumentError
+ 
+@@ -203,6 +215,7 @@ class TestCustomEmails(ZulipTestCase):
+             options={
+                 "markdown_template_path": markdown_template_path,
+                 "subject": email_subject,
++                "campaign_name": campaign_name,
+             },
+         )
+ 
+@@ -214,6 +227,7 @@ class TestCustomEmails(ZulipTestCase):
+             options={
+                 "markdown_template_path": markdown_template_path,
+                 "from_name": from_name,
++                "campaign_name": campaign_name,
+             },
+         )
+ 
+@@ -223,6 +237,7 @@ class TestCustomEmails(ZulipTestCase):
+         reply_to = "reply_to_test"
+         from_name = "from_name_test"
+         markdown_template_path = "templates/zerver/tests/markdown/test_nested_code_blocks.md"
++        campaign_name = "test_campaign"
+         with patch("builtins.print") as _:
+             send_custom_email(
+                 UserProfile.objects.filter(id=hamlet.id),
+@@ -232,6 +247,7 @@ class TestCustomEmails(ZulipTestCase):
+                     "reply_to": reply_to,
+                     "subject": email_subject,
+                     "from_name": from_name,
++                    "campaign_name": campaign_name,
+                 },
+             )
+             self.assert_length(mail.outbox, 0)
+diff --git a/zerver/tests/test_management_commands.py b/zerver/tests/test_management_commands.py
+index d3eae8b9fe..5e203da384 100644
+--- a/zerver/tests/test_management_commands.py
++++ b/zerver/tests/test_management_commands.py
+@@ -1,4 +1,3 @@
+-import hashlib
+ import os
+ import re
+ from datetime import timedelta
+@@ -556,6 +555,7 @@ class TestSendCustomEmail(ZulipTestCase):
+                 self.COMMAND_NAME,
+                 "-r=zulip",
+                 f"--path={path}",
++                "--campaign-name=test_dry_run",
+                 f"-u={user.delivery_email}",
+                 "--subject=Test email",
+                 "--from-name=zulip@zulip.example.com",
+@@ -574,6 +574,7 @@ class TestSendCustomEmail(ZulipTestCase):
+                 self.COMMAND_NAME,
+                 "-r=zulip",
+                 f"--path={path}",
++                "--campaign-name=test_dry_run",
+                 f"-u={user.delivery_email},{other_user.delivery_email}",
+                 "--subject=Test email",
+                 "--from-name=zulip@zulip.example.com",
+@@ -595,10 +596,7 @@ class TestSendCustomEmail(ZulipTestCase):
+     def test_custom_email_duplicate_prevention_by_user(self) -> None:
+         path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_custom_test.md"
+ 
+-        # Generate email hash
+-        with open(path) as f:
+-            text = f.read()
+-            email_template_hash = hashlib.sha256(text.encode()).hexdigest()[0:32]
++        campaign_name = "test_campaign_01"
+ 
+         iago = self.example_user("iago")
+         prospero = self.example_user("prospero")
+@@ -607,13 +605,14 @@ class TestSendCustomEmail(ZulipTestCase):
+         call_command(
+             self.COMMAND_NAME,
+             f"--path={path}",
++            f"--campaign-name={campaign_name}",
+             f"-u={iago.delivery_email},{prospero.delivery_email}",
+         )
+ 
+         # Verify RealmAuditLog entries were created
+         audit_logs = RealmAuditLog.objects.filter(event_type=AuditLogEventType.CUSTOM_EMAIL_SENT)
+         self.assert_length(audit_logs, 2)
+-        self.assertEqual(email_template_hash, audit_logs[0].extra_data["email_id"])
++        self.assertEqual(campaign_name, audit_logs[0].extra_data["campaign_name"])
+         self.assertEqual("Test subject", audit_logs[0].extra_data["email_subject"])
+ 
+         # Second send attempt - should send one email and exclude the two users that already received the email
+@@ -622,6 +621,7 @@ class TestSendCustomEmail(ZulipTestCase):
+             call_command(
+                 self.COMMAND_NAME,
+                 f"--path={path}",
++                f"--campaign-name={campaign_name}",
+                 f"-u={iago.delivery_email},{prospero.delivery_email},{othello.delivery_email}",
+             )
+ 
+@@ -635,7 +635,7 @@ class TestSendCustomEmail(ZulipTestCase):
+             event_type=AuditLogEventType.CUSTOM_EMAIL_SENT
+         )
+         self.assert_length(new_audit_logs, 3)
+-        self.assertEqual(email_template_hash, new_audit_logs[0].extra_data["email_id"])
++        self.assertEqual(campaign_name, new_audit_logs[0].extra_data["campaign_name"])
+         self.assertEqual("Test subject", audit_logs[0].extra_data["email_subject"])
+ 
+         othello_audit_log = RealmAuditLog.objects.filter(
+@@ -703,14 +703,12 @@ class TestSendCustomEmail(ZulipTestCase):
+         users_count = users.count()
+         users_emails = users.values_list("lower_email", flat=True)
+ 
+-        # Get the email hash
+-        with open(path) as f:
+-            text = f.read()
+-            email_template_hash = hashlib.sha256(text.encode()).hexdigest()[0:32]
++        campaign_name = "marketing_campaign_01"
+ 
+         call_command(
+             self.COMMAND_NAME,
+             f"--path={path}",
++            f"--campaign-name={campaign_name}",
+             "--marketing",
+         )
+ 
+@@ -718,8 +716,8 @@ class TestSendCustomEmail(ZulipTestCase):
+         audit_logs = RealmAuditLog.objects.filter(event_type=AuditLogEventType.CUSTOM_EMAIL_SENT)
+         self.assert_length(audit_logs, users_count)
+ 
+-        # Verify the email_id
+-        self.assertEqual(email_template_hash, audit_logs[0].extra_data["email_id"])
++        # Verify the campaign_name
++        self.assertEqual(campaign_name, audit_logs[0].extra_data["campaign_name"])
+ 
+         # Verify modified_user email
+         modified_users_email = audit_logs.annotate(
+@@ -746,6 +744,7 @@ class TestSendCustomEmail(ZulipTestCase):
+             call_command(
+                 self.COMMAND_NAME,
+                 f"--path={path}",
++                f"--campaign-name={campaign_name}",
+                 "--marketing",
+             )
+ 
+@@ -766,6 +765,7 @@ class TestSendCustomEmail(ZulipTestCase):
+     def test_email_sending_failure_does_not_create_audit_log(self) -> None:
+         """Test that audit log entries are not created when email sending fails"""
+         path = "zerver/tests/fixtures/email/custom_emails/email_base_headers_custom_test.md"
++        campaign_name = "failed_campaign_01"
+         hamlet = self.example_user("hamlet")
+         cordelia = self.example_user("cordelia")
+ 
+@@ -786,6 +786,7 @@ class TestSendCustomEmail(ZulipTestCase):
+                 self.COMMAND_NAME,
+                 f"--path={path}",
+                 "-r=zulip",
++                f"--campaign-name={campaign_name}",
+                 f"-u={hamlet.delivery_email},{cordelia.delivery_email}",
+             )
+ 

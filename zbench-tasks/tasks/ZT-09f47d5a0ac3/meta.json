@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-09f47d5a0ac3",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "webhooks/github: Suppress \"comment edited\" events when body is same.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 31042,
+  "fix_commit": "09f47d5a0ac38ffeb9993ef91b1a8e2b5d293dbd",
+  "base_commit": "1ce1412166520038a00f4937c3d994285ed8283d",
+  "env_fingerprint": "3882df26dc0e",
+  "fail_to_pass": [
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_comment_edited_unchanged_skipped"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 11,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 2384,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Niloth P",
+    "email": "20315308+Niloth-p@users.noreply.github.com",
+    "date": "2025-01-03"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-03",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-07-22T21:30:34Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/09f47d5a0ac38ffeb9993ef91b1a8e2b5d293dbd",
+    "issue_url": "https://github.com/zulip/zulip/issues/31042"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-09f47d5a0ac3",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_comment_edited_unchanged_skipped"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 86.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

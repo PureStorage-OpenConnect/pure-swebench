@@ -1,0 +1,53 @@
+diff --git a/zerver/tests/test_message_move_stream.py b/zerver/tests/test_message_move_stream.py
+index ae1c6f4bb0..b9b5c891de 100644
+--- a/zerver/tests/test_message_move_stream.py
++++ b/zerver/tests/test_message_move_stream.py
+@@ -1211,7 +1211,7 @@ class MessageMoveStreamTest(ZulipTestCase):
+             "iago", "test move stream", "new stream", "test"
+         )
+ 
+-        with self.assert_database_query_count(59), self.assert_memcached_count(14):
++        with self.assert_database_query_count(61), self.assert_memcached_count(14):
+             result = self.client_patch(
+                 f"/json/messages/{msg_id}",
+                 {
+diff --git a/zerver/tests/test_message_move_topic.py b/zerver/tests/test_message_move_topic.py
+index 379fbe3c85..84a648c0d3 100644
+--- a/zerver/tests/test_message_move_topic.py
++++ b/zerver/tests/test_message_move_topic.py
+@@ -431,7 +431,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+         set_topic_visibility_policy(desdemona, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+         set_topic_visibility_policy(cordelia, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+ 
+-        with self.assert_database_query_count(29):
++        with self.assert_database_query_count(31):
+             check_update_message(
+                 user_profile=desdemona,
+                 message_id=message_id,
+@@ -461,7 +461,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+         ]
+         set_topic_visibility_policy(desdemona, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+         set_topic_visibility_policy(cordelia, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+-        with self.assert_database_query_count(34):
++        with self.assert_database_query_count(36):
+             check_update_message(
+                 user_profile=desdemona,
+                 message_id=message_id,
+@@ -494,7 +494,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+         set_topic_visibility_policy(desdemona, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+         set_topic_visibility_policy(cordelia, muted_topics, UserTopic.VisibilityPolicy.MUTED)
+ 
+-        with self.assert_database_query_count(31):
++        with self.assert_database_query_count(33):
+             check_update_message(
+                 user_profile=desdemona,
+                 message_id=message_id,
+@@ -517,7 +517,7 @@ class MessageMoveTopicTest(ZulipTestCase):
+         second_message_id = self.send_stream_message(
+             hamlet, stream_name, topic_name="changed topic name", content="Second message"
+         )
+-        with self.assert_database_query_count(24):
++        with self.assert_database_query_count(26):
+             check_update_message(
+                 user_profile=desdemona,
+                 message_id=second_message_id,

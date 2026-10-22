@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-7b428d631f29",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden test never checks the observable outcome (that outgoing notification emails carry In-Reply-To/References headers); it exclusively imports and unit-tests a new internal helper, requiring the solver to guess an unspecified private function name and exact keyword-only signature (prepare_synthetic_root_message_id(recipient_type, recipient_id, *, dm_sender_id, topic_name)). It also pins the exact synthetic Message-ID format \u2014 '<{recipient_id}.{sender_id}@host>', base64-encoded topic in the id-left \u2014 which is an arbitrary implementation choice not derivable from the issue; any equally-correct encoding or naming (e.g. hashing the topic, different separator, different function name) satisfies the RFC 2822 threading goal described in the issue but fails the test. The few genuinely behavioral assertions (same conversation \u2192 same ID, ASCII-only, single '@') are unreachable without matching that internal API, so the test grades implementation format over behavior.",
+  "summary": "missedmessage_email: Add 'In-Reply-To' and 'References' headers.",
+  "lang": "py",
+  "issue": 14337,
+  "fix_commit": "7b428d631f29e18aafdd0a608cb2d2b0684f0fc3",
+  "base_commit": "822e312c5c632c41882343ec03c297b6957fba80",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/7b428d631f29e18aafdd0a608cb2d2b0684f0fc3",
+    "issue_url": "https://github.com/zulip/zulip/issues/14337"
+  }
+}

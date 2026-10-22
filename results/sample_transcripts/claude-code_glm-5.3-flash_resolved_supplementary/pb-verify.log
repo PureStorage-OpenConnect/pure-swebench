@@ -1,0 +1,68 @@
+AGENT PATCH:
+diff --git a/web/src/reactions.ts b/web/src/reactions.ts
+index 6a35f4f..34d6d24 100644
+--- a/web/src/reactions.ts
++++ b/web/src/reactions.ts
+@@ -469,8 +469,11 @@ export let remove_reaction_from_view = (
+ 
+     if (reaction_count === 0) {
+         // If this user was the only one reacting for this emoji, we simply
+-        // remove the reaction and exit.
+-        $reaction.remove();
++        // remove the reaction and exit.  We remove the parent container
++        // element, since the reaction element is nested inside a
++        // .message_reaction_container wrapper that would otherwise be left
++        // behind as an empty element taking up space in the reactions row.
++        $reaction.parent().remove();
+         update_vote_text_on_message(message);
+         return;
+     }
+
+
+STRIPPED AGENT TEST EDITS:
+reset test/runner files (9 pathspecs) -> base
+
+$ bash "${ZBENCH_SCRIPTS:?export zbench-tasks/scripts dir}"/zbench_verify.sh node web/tests/reactions.test.cjs
+(rc=0)
+Using /srv/zulip-py3-venv
+=== zbench node file: web/tests/reactions.test.cjs ===
+running test reactions
+        test: basics
+        test: reactions from unknown users
+        test: unknown realm emojis (add)
+        test: unknown realm emojis (insert)
+        test: sending
+        test: prevent_simultaneous_requests_updating_reaction
+        test: get_vote_text (more than 3 reactions)
+        test: get_vote_text (3 reactions)
+        test: update_vote_text_on_message
+        test: find_reaction
+        test: get_reaction_sections
+        test: emoji_reaction_title
+        test: add_reaction/remove_reaction
+        test: insert_new_reaction (first reaction)
+        test: insert_new_reaction (me w/unicode emoji)
+        test: insert_new_reaction (them w/zulip emoji)
+        test: update_existing_reaction (me)
+        test: update_existing_reaction (them)
+        test: remove_reaction_from_view (me)
+        test: remove_reaction_from_view (them)
+        test: remove_reaction_from_view (last person to react)
+        test: remove_reaction_from_view (last reaction)
+        test: bogus_event
+        test: remove spurious user
+        test: remove last user
+        test: local_reaction_id
+        test: process_reaction_click
+        test: code coverage
+        test: duplicates
+        test: process_reaction_click undefined
+        test: process_reaction_click bad local id
+Starting node tests...
+
+[32mTest(s) passed. SUCCESS![0m
+
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+Browserslist: browsers data (caniuse-lite) is 21 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme

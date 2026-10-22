@@ -1,0 +1,134 @@
+diff --git a/zerver/actions/data_import.py b/zerver/actions/data_import.py
+index 61518db802..db3fe63ae7 100644
+--- a/zerver/actions/data_import.py
++++ b/zerver/actions/data_import.py
+@@ -6,6 +6,7 @@ from typing import Any
+ from django.conf import settings
+ 
+ from confirmation import settings as confirmation_settings
++from zerver.actions.create_realm import get_email_address_visibility_default
+ from zerver.actions.realm_settings import do_delete_all_realm_attachments
+ from zerver.actions.users import do_change_user_role
+ from zerver.context_processors import is_realm_import_enabled
+@@ -15,7 +16,7 @@ from zerver.lib.import_realm import do_import_realm
+ from zerver.lib.upload import save_attachment_contents
+ from zerver.models.prereg_users import PreregistrationRealm
+ from zerver.models.realms import Realm
+-from zerver.models.users import UserProfile, get_user_by_delivery_email
++from zerver.models.users import RealmUserDefault, UserProfile, get_user_by_delivery_email
+ 
+ logger = logging.getLogger(__name__)
+ 
+@@ -51,6 +52,20 @@ def import_slack_data(event: dict[str, Any]) -> None:
+             realm.default_language = preregistration_realm.default_language
+             realm.save()
+ 
++            realm_user_default = RealmUserDefault.objects.get(realm=realm)
++            realm_user_default.email_address_visibility = (
++                preregistration_realm.data_import_metadata.get(
++                    "email_address_visibility",
++                    get_email_address_visibility_default(realm.org_type),
++                )
++            )
++            realm_user_default.save(update_fields=["email_address_visibility"])
++
++            # Set email address visibility for all users in the realm.
++            UserProfile.objects.filter(realm=realm, is_bot=False).update(
++                email_address_visibility=realm_user_default.email_address_visibility
++            )
++
+             # Try finding the user who imported this realm and make them owner.
+             try:
+                 importing_user = get_user_by_delivery_email(preregistration_realm.email, realm)
+diff --git a/zerver/views/development/registration.py b/zerver/views/development/registration.py
+index 4ed76d44ff..dcec06d797 100644
+--- a/zerver/views/development/registration.py
++++ b/zerver/views/development/registration.py
+@@ -2,6 +2,7 @@ import random
+ import string
+ from typing import TYPE_CHECKING, Any, cast
+ 
++import orjson
+ from django.conf import settings
+ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+ from django.views.decorators.csrf import csrf_exempt
+@@ -101,7 +102,7 @@ def register_demo_development_realm(request: HttpRequest) -> HttpResponse:
+     realm_name = generate_demo_realm_name()
+     realm_type = Realm.ORG_TYPES["unspecified"]["id"]
+     realm_subdomain = realm_name
+-    email_address_visibility = UserProfile.EMAIL_ADDRESS_VISIBILITY_NOBODY
++    email_address_visibility = orjson.dumps(UserProfile.EMAIL_ADDRESS_VISIBILITY_NOBODY)
+     prereg_realm = create_preregistration_realm(
+         email, realm_name, realm_subdomain, realm_type, realm_default_language
+     )
+diff --git a/zerver/views/registration.py b/zerver/views/registration.py
+index 931fbffbf6..ea256a9317 100644
+--- a/zerver/views/registration.py
++++ b/zerver/views/registration.py
+@@ -18,7 +18,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+ from django.shortcuts import redirect, render
+ from django.template.response import TemplateResponse
+ from django.urls import reverse
+-from django.utils.translation import get_language
++from django.utils.translation import get_language, gettext_lazy
+ from django.utils.translation import gettext as _
+ from django_auth_ldap.backend import LDAPBackend, _LDAPUser
+ from pydantic import Json, NonNegativeInt, StringConstraints
+@@ -31,7 +31,11 @@ from confirmation.models import (
+     get_object_from_key,
+     render_confirmation_key_error,
+ )
+-from zerver.actions.create_realm import do_create_realm
++from zerver.actions.create_realm import (
++    DEFAULT_EMAIL_ADDRESS_VISIBILITY_FOR_REALM,
++    do_create_realm,
++    get_email_address_visibility_default,
++)
+ from zerver.actions.create_user import do_activate_mirror_dummy_user, do_create_user
+ from zerver.actions.default_streams import lookup_default_stream_groups
+ from zerver.actions.user_settings import (
+@@ -271,6 +275,9 @@ def registration_helper(
+     source_realm_id: Annotated[NonNegativeInt | None, non_negative_int_or_none_validator()] = None,
+     start_slack_import: Json[bool] = False,
+     timezone: Annotated[str, timezone_or_empty_validator()] = "",
++    email_address_visibility: Annotated[
++        Json[int], check_int_in_validator(RealmUserDefault.EMAIL_ADDRESS_VISIBILITY_TYPES)
++    ] = DEFAULT_EMAIL_ADDRESS_VISIBILITY_FOR_REALM,
+ ) -> HttpResponse:
+     try:
+         prereg_object, realm_creation = check_prereg_key(request, key)
+@@ -326,6 +333,10 @@ def registration_helper(
+             assert prereg_realm.data_import_metadata.get("uploaded_import_file_name") is not None
+             assert prereg_realm.data_import_metadata.get("is_import_work_queued") is not True
+             assert prereg_realm.created_realm is None
++
++            prereg_realm.data_import_metadata["email_address_visibility"] = email_address_visibility
++            prereg_realm.save(update_fields=["data_import_metadata"])
++
+             queue_json_publish_rollback_unsafe(
+                 "deferred_work",
+                 {
+@@ -354,10 +365,23 @@ def registration_helper(
+                     reverse("realm_import_post_process", kwargs={"confirmation_key": key})
+                 )
+ 
++            # Set text of `EMAIL_ADDRESS_VISIBILITY_EVERYONE` to "Everyone" so that it doesn't overflow the
++            # select box in the slack import page.
++            email_address_visibility_options = []
++
++            for id, name in RealmUserDefault.EMAIL_ADDRESS_VISIBILITY_ID_TO_NAME_MAP.items():
++                if id == RealmUserDefault.EMAIL_ADDRESS_VISIBILITY_EVERYONE:
++                    name = gettext_lazy("Everyone")
++                email_address_visibility_options.append((id, name))
++
+             assert is_realm_import_enabled()
+             context: dict[str, Any] = {
+                 "key": key,
+                 "max_file_size": settings.MAX_WEB_DATA_IMPORT_SIZE_MB,
++                "email_address_visibility_options": email_address_visibility_options,
++                "email_address_visibility_default": get_email_address_visibility_default(
++                    prereg_realm.org_type
++                ),
+             }
+ 
+             saved_slack_access_token = prereg_realm.data_import_metadata.get("slack_access_token")

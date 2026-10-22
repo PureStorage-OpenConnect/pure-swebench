@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-7440444a9010",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden test diff contains no behavioral assertion \u2014 it only adds a mock_esm stub for the new saved_snippets_ui function so existing compose_actions tests keep passing. It grades internal wiring (that start() calls a specific newly-named internal function, via Zulip's used/unused-mock accounting) rather than any observable outcome like the dropdown being initialized lazily or exactly once. This is a code-structure cleanup where the 'grader' is mock bookkeeping coupled to the refactor's implementation details, so it cannot deterministically fail-before/pass-after on behavior.",
+  "summary": "saved_snippets: Move initialization directly to `ui_init.ts`.",
+  "lang": "web",
+  "issue": 31831,
+  "fix_commit": "7440444a90100d1deca841ff62ee717d5d13aa3e",
+  "base_commit": "41430661eea893ca470cb47ef3f42a9c5f050677",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/7440444a90100d1deca841ff62ee717d5d13aa3e",
+    "issue_url": "https://github.com/zulip/zulip/issues/31831"
+  }
+}

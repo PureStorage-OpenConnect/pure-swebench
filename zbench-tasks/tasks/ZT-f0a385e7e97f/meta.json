@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-f0a385e7e97f",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_invalid",
+  "reason": "pass_to_pass not green at base+gold_test (FAIL) -- pre-red P2P",
+  "summary": "integrations: Rebrand Clubhouse webhook integration to Shortcut.",
+  "type": "other",
+  "lang": "py",
+  "issue": 22731,
+  "fix_commit": "f0a385e7e97fb3101742ac251e3de46290da0381",
+  "base_commit": "e2ee479afd6fd5ee199b77677be52e7f1941f556",
+  "env_fingerprint": "0f8828f88a37",
+  "fail_to_pass": [
+    "zerver.webhooks.shortcut.tests.ShortcutWebhookTest.test_legacy_urls",
+    "zerver.webhooks.shortcut.tests.ShortcutWebhookTest.test_story_create"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_integrations"
+  ],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 8,
+    "files": 2,
+    "hunks": 3,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "The incoming webhook integration previously named `clubhouse` is renamed to `shortcut` (Clubhouse the product rebranded to Shortcut), so its integration name/slug registered in INCOMING_WEBHOOK_INTEGRATIONS is `shortcut` under the `project-management` category",
+    "The webhook is served at the URL endpoint `/api/v1/external/shortcut` (the endpoint name derived from the integration slug per Zulip's incoming-webhook framework convention)",
+    "Per Zulip's webhook framework convention that endpoint names map to `zerver/webhooks/<name>/view.py` exposing `api_<name>_webhook`, the handler lives at `zerver.webhooks.shortcut.view.api_shortcut_webhook`",
+    "The old integration name `clubhouse` is retained as a legacy alias so existing webhook URLs using `/api/v1/external/clubhouse` continue to work and route to the same handler",
+    "User-visible bot message content is unchanged in structure; only the product branding follows the payload (fixtures now carry app.shortcut.com URLs), so messages must render the URLs/names supplied in the payload rather than hardcoding the old clubhouse.io domain"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 143,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Niloth P",
+    "email": "20315308+Niloth-p@users.noreply.github.com",
+    "date": "2026-01-28"
+  },
+  "contamination": {
+    "fix_public_at": "2026-01-28",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2022-08-16T19:16:51Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/f0a385e7e97fb3101742ac251e3de46290da0381",
+    "issue_url": "https://github.com/zulip/zulip/issues/22731"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-f0a385e7e97f",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "FAIL"
+        ]
+      },
+      "fail_signature": [
+        "test_legacy_urls",
+        "test_story_create"
+      ],
+      "verdict": "INVALID",
+      "code": 1,
+      "why": "pass_to_pass not green at base+gold_test (FAIL) -- pre-red P2P",
+      "elapsed_s": 62.7
+    }
+  }
+}

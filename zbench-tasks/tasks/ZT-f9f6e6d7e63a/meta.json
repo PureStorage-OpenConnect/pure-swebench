@@ -1,0 +1,92 @@
+{
+  "task_id": "ZT-f9f6e6d7e63a",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "mention: Optimize query when mentioning several groups.",
+  "type": "other",
+  "lang": "py",
+  "issue": 32934,
+  "fix_commit": "f9f6e6d7e63aea9534113721044ff01a90e032ac",
+  "base_commit": "3581d5feb832341895f48aee4fc2530ce0570bef",
+  "env_fingerprint": "021aaea1b04b",
+  "fail_to_pass": [
+    "zerver.tests.test_markdown.MarkdownMiscTest.test_bulk_user_group_mentions"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_user_groups"
+  ],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 61,
+    "files": 2,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "Constructing MentionData for message content that mentions user groups must issue a constant number of database queries regardless of how many groups are mentioned (no per-group query fan-out)",
+    "That constant must be exactly 2 queries for the group-mention resolution path: one query to look up the mentioned NamedUserGroup rows by name, and one bulk query that resolves the recursive (transitive) active membership of all mentioned non-deactivated groups at once"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 544,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "bedo",
+    "email": "bedokhaled66@gmail.com",
+    "date": "2025-01-28"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-28",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-01-07T00:52:41Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/f9f6e6d7e63aea9534113721044ff01a90e032ac",
+    "issue_url": "https://github.com/zulip/zulip/issues/32934"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-f9f6e6d7e63a",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_bulk_user_group_mentions"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 178.5
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

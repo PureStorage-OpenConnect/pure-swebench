@@ -1,0 +1,954 @@
+diff --git a/web/src/server_events_dispatch.js b/web/src/server_events_dispatch.js
+index a395800db2..e6ae4fb17f 100644
+--- a/web/src/server_events_dispatch.js
++++ b/web/src/server_events_dispatch.js
+@@ -348,12 +348,6 @@ export function dispatch_normal_event(event) {
+                         if (event.property === "name") {
+                             electron_bridge?.send_event("realm_name", event.value);
+                         }
+-
+-                        if (event.property === "enable_spectator_access") {
+-                            stream_ui_updates.update_stream_privacy_choices(
+-                                "can_create_web_public_channel_group",
+-                            );
+-                        }
+                     }
+                     break;
+                 case "update_dict":
+@@ -396,14 +390,6 @@ export function dispatch_normal_event(event) {
+                                     gear_menu.rerender();
+                                 }
+ 
+-                                if (
+-                                    key === "can_create_public_channel_group" ||
+-                                    key === "can_create_private_channel_group" ||
+-                                    key === "can_create_web_public_channel_group"
+-                                ) {
+-                                    stream_ui_updates.update_stream_privacy_choices(key);
+-                                }
+-
+                                 if (
+                                     key === "direct_message_initiator_group" ||
+                                     key === "direct_message_permission_group"
+diff --git a/web/src/settings_components.ts b/web/src/settings_components.ts
+index e1f04a3e4b..a445fe4704 100644
+--- a/web/src/settings_components.ts
++++ b/web/src/settings_components.ts
+@@ -127,7 +127,7 @@ type RealmUserSettingDefaultProperties = z.infer<
+ 
+ export const stream_settings_property_schema = z.union([
+     z.keyof(stream_subscription_schema),
+-    z.enum(["stream_privacy", "is_default_stream"]),
++    z.enum(["channel_privacy", "is_default_stream"]),
+ ]);
+ type StreamSettingProperty = z.infer<typeof stream_settings_property_schema>;
+ 
+@@ -156,7 +156,7 @@ export function get_stream_settings_property_value(
+     property_name: StreamSettingProperty,
+     sub: StreamSubscription,
+ ): valueof<StreamSubscription> {
+-    if (property_name === "stream_privacy") {
++    if (property_name === "channel_privacy") {
+         return stream_data.get_stream_privacy_policy(sub.stream_id);
+     }
+     if (property_name === "is_default_stream") {
+@@ -500,6 +500,7 @@ const dropdown_widget_map = new Map<string, DropdownWidget | null>([
+     ["realm_can_access_all_users_group", null],
+     ["realm_can_create_web_public_channel_group", null],
+     ["folder_id", null],
++    ["channel_privacy", null],
+ ]);
+ 
+ export function get_widget_for_dropdown_list_settings(
+@@ -923,8 +924,8 @@ export function check_stream_settings_property_changed(
+             assert(elem instanceof HTMLSelectElement);
+             proposed_val = get_message_retention_setting_value($(elem), false);
+             break;
+-        case "stream_privacy":
+-            proposed_val = get_input_element_value(elem, "radio-group");
++        case "channel_privacy":
++            proposed_val = get_dropdown_list_widget_setting_value($(elem));
+             break;
+         case "folder_id":
+             proposed_val = get_channel_folder_value_from_dropdown_widget($(elem));
+@@ -1161,7 +1162,7 @@ export function populate_data_for_stream_settings_request(
+             const input_value = get_input_element_value(input_elem);
+             if (input_value !== undefined && input_value !== null) {
+                 const property_name = extract_property_name($input_elem);
+-                if (property_name === "stream_privacy") {
++                if (property_name === "channel_privacy") {
+                     assert(typeof input_value === "string");
+                     data = {
+                         ...data,
+@@ -1188,6 +1189,11 @@ export function populate_data_for_stream_settings_request(
+                     continue;
+                 }
+ 
++                if (property_name === "history_public_to_subscribers") {
++                    data[property_name] = JSON.stringify(input_value);
++                    continue;
++                }
++
+                 assert(typeof input_value !== "object");
+                 data[property_name] = input_value;
+             }
+@@ -1264,11 +1270,11 @@ function switching_to_private(properties_elements: HTMLElement[]): boolean {
+     for (const elem of properties_elements) {
+         const $elem = $(elem);
+         const property_name = extract_property_name($elem);
+-        if (property_name !== "stream_privacy") {
++        if (property_name !== "channel_privacy") {
+             continue;
+         }
+-        const proposed_val = get_input_element_value(elem, "radio-group");
+-        return proposed_val === "invite-only-public-history" || proposed_val === "invite-only";
++        const proposed_val = get_input_element_value(elem);
++        return proposed_val === "invite-only";
+     }
+     return false;
+ }
+diff --git a/web/src/settings_config.ts b/web/src/settings_config.ts
+index 8086b237a2..083b981548 100644
+--- a/web/src/settings_config.ts
++++ b/web/src/settings_config.ts
+@@ -1312,30 +1312,21 @@ export const stream_privacy_policy_values = {
+         code: "web-public",
+         name: $t({defaultMessage: "Web-public"}),
+         description: $t({
+-            defaultMessage:
+-                "Anyone on the internet can view messages; members of your organization can join.",
++            defaultMessage: "Anyone on the internet can view",
+         }),
+     },
+     public: {
+         code: "public",
+         name: $t({defaultMessage: "Public"}),
+         description: $t({
+-            defaultMessage: "Members of your organization can view messages and join",
+-        }),
+-    },
+-    private_with_public_history: {
+-        code: "invite-only-public-history",
+-        name: $t({defaultMessage: "Private, shared history"}),
+-        description: $t({
+-            defaultMessage: "Joining and viewing messages requires being invited",
++            defaultMessage: "Everyone except guests can view and join",
+         }),
+     },
+     private: {
+         code: "invite-only",
+-        name: $t({defaultMessage: "Private, protected history"}),
++        name: $t({defaultMessage: "Private"}),
+         description: $t({
+-            defaultMessage:
+-                "Joining and viewing messages requires being invited; users can only view messages sent while they were subscribed",
++            defaultMessage: "Requires permission to view and join",
+         }),
+     },
+ };
+diff --git a/web/src/settings_data.ts b/web/src/settings_data.ts
+index 2d6afa1877..1bb51cd3c4 100644
+--- a/web/src/settings_data.ts
++++ b/web/src/settings_data.ts
+@@ -1,3 +1,4 @@
++import $ from "jquery";
+ import assert from "minimalistic-assert";
+ 
+ import * as group_permission_settings from "./group_permission_settings.ts";
+@@ -370,35 +371,40 @@ export function get_request_data_for_stream_privacy(selected_val: string): {
+     history_public_to_subscribers: boolean;
+     is_web_public: boolean;
+ } {
++    // When changing a channel from public to private with public history,
++    // "history_public_to_subscribers" value is same and does not change.
++    // So, it will not be included in the data returned by
++    // "populate_data_for_stream_settings_request" as it only includes
++    // the field whose new value has changed from its original value.
++    //
++    // So, we need to include "history_public_to_subscribers" here
++    // itself so that the correct value is passed to the API, otherwise
++    // private streams are set to have private history by default.
++    const history_public_to_subscribers: boolean = $("#id_history_public_to_subscribers").is(
++        ":checked",
++    );
+     switch (selected_val) {
+         case settings_config.stream_privacy_policy_values.public.code: {
+             return {
+                 is_private: false,
+-                history_public_to_subscribers: true,
++                history_public_to_subscribers,
+                 is_web_public: false,
+             };
+         }
+         case settings_config.stream_privacy_policy_values.private.code: {
+             return {
+                 is_private: true,
+-                history_public_to_subscribers: false,
++                history_public_to_subscribers,
+                 is_web_public: false,
+             };
+         }
+-        case settings_config.stream_privacy_policy_values.web_public.code: {
++        default: {
+             return {
+                 is_private: false,
+-                history_public_to_subscribers: true,
++                history_public_to_subscribers,
+                 is_web_public: true,
+             };
+         }
+-        default: {
+-            return {
+-                is_private: true,
+-                history_public_to_subscribers: true,
+-                is_web_public: false,
+-            };
+-        }
+     }
+ }
+ 
+diff --git a/web/src/settings_org.ts b/web/src/settings_org.ts
+index 1fe6a22790..ea873b1c1a 100644
+--- a/web/src/settings_org.ts
++++ b/web/src/settings_org.ts
+@@ -43,6 +43,7 @@ import * as settings_realm_domains from "./settings_realm_domains.ts";
+ import * as settings_ui from "./settings_ui.ts";
+ import {current_user, realm, realm_schema} from "./state_data.ts";
+ import type {Realm} from "./state_data.ts";
++import * as stream_data from "./stream_data.ts";
+ import * as stream_settings_data from "./stream_settings_data.ts";
+ import type {StreamSubscription} from "./sub_store.ts";
+ import * as timerender from "./timerender.ts";
+@@ -693,9 +694,14 @@ export function discard_stream_property_element_changes(
+     }
+ 
+     switch (property_name) {
+-        case "stream_privacy": {
+-            assert(typeof property_value === "string");
+-            $elem.find(`input[value='${CSS.escape(property_value)}']`).prop("checked", true);
++        case "message_retention_days":
++            set_message_retention_setting_dropdown(sub);
++            break;
++        case "channel_privacy": {
++            settings_components.set_dropdown_list_widget_setting_value(
++                "channel_privacy",
++                stream_data.get_stream_privacy_policy(sub.stream_id),
++            );
+ 
+             // Hide stream privacy warning banner
+             const $stream_permissions_warning_banner = $(
+@@ -706,9 +712,6 @@ export function discard_stream_property_element_changes(
+             }
+             break;
+         }
+-        case "message_retention_days":
+-            set_message_retention_setting_dropdown(sub);
+-            break;
+         case "folder_id":
+             settings_components.set_channel_folder_dropdown_value(sub);
+             break;
+diff --git a/web/src/stream_create.ts b/web/src/stream_create.ts
+index fe82c4dd5c..6c0cde1fe7 100644
+--- a/web/src/stream_create.ts
++++ b/web/src/stream_create.ts
+@@ -201,7 +201,7 @@ $("body").on("click", ".settings-sticky-footer #stream_creation_go_to_subscriber
+ 
+     const stream_name = $<HTMLInputElement>("input#create_stream_name").val()!.trim();
+     const is_stream_name_valid = stream_name_error.validate_for_submit(stream_name);
+-    const privacy_type = $("#stream_creation_form input[type=radio][name=privacy]:checked").val();
++    const privacy_type = stream_settings_components.channel_creation_privacy_widget.value();
+     let invite_only = false;
+     let is_web_public = false;
+ 
+@@ -222,7 +222,7 @@ $("body").on("click", ".settings-sticky-footer #stream_creation_go_to_subscriber
+     }
+ 
+     if (is_stream_name_valid && !is_any_stream_group_widget_pending) {
+-        if (privacy_type === "invite-only" || privacy_type === "invite-only-public-history") {
++        if (privacy_type === "invite-only") {
+             invite_only = true;
+         } else if (privacy_type === "web-public") {
+             is_web_public = true;
+@@ -268,9 +268,8 @@ function update_announce_stream_state(): void {
+     const $announce_stream_checkbox = $<HTMLInputElement>("#announce-new-stream input");
+     const $announce_stream_label = $("#announce-new-stream");
+     let disable_it = false;
+-    const privacy_type = $("#stream_creation_form input[type=radio][name=privacy]:checked").val();
+-    const is_invite_only =
+-        privacy_type === "invite-only" || privacy_type === "invite-only-public-history";
++    const privacy_type = stream_settings_components.channel_creation_privacy_widget.value();
++    const is_invite_only = privacy_type === "invite-only";
+     $announce_stream_label.removeClass("control-label-disabled");
+ 
+     // Here, we arrange to save the state of the announce checkbox
+@@ -313,39 +312,32 @@ function create_stream(): void {
+     const subscriptions = JSON.stringify([{name: stream_name, description}]);
+ 
+     let invite_only;
+-    let history_public_to_subscribers;
+     let is_web_public;
+-    const privacy_setting = $("#stream_creation_form input[name=privacy]:checked").val();
++    const privacy_type = stream_settings_components.channel_creation_privacy_widget.value();
+ 
+-    switch (privacy_setting) {
++    switch (privacy_type) {
+         case "invite-only": {
+             invite_only = true;
+-            history_public_to_subscribers = false;
+-            is_web_public = false;
+-
+-            break;
+-        }
+-        case "invite-only-public-history": {
+-            invite_only = true;
+-            history_public_to_subscribers = true;
+             is_web_public = false;
+ 
+             break;
+         }
+         case "web-public": {
+             invite_only = false;
+-            history_public_to_subscribers = true;
+             is_web_public = true;
+ 
+             break;
+         }
+         default: {
+             invite_only = false;
+-            history_public_to_subscribers = true;
+             is_web_public = false;
+         }
+     }
+ 
++    const history_public_to_subscribers = util.the(
++        $<HTMLInputElement>("input#id_new_history_public_to_subscribers"),
++    ).checked;
++
+     const default_stream = util.the(
+         $<HTMLInputElement>("#stream_creation_form input.is_default_stream"),
+     ).checked;
+@@ -488,16 +480,9 @@ function clear_error_display(): void {
+ export function show_new_stream_modal(): void {
+     $("#stream-creation").removeClass("hide");
+     $(".right .settings").hide();
+-    stream_ui_updates.hide_or_disable_stream_privacy_options_if_required($("#stream-creation"));
+ 
+     stream_create_subscribers.build_widgets();
+ 
+-    // Select the first visible and enabled choice for stream privacy.
+-    $(
+-        "#stream_creation_form .stream-privacy-values .settings-radio-input-parent:not([hidden]) input:not(:disabled)",
+-    )
+-        .first()
+-        .prop("checked", true);
+     // Make the options default to the same each time
+ 
+     // The message retention setting is visible to owners only. The below block
+@@ -563,7 +548,7 @@ export function show_new_stream_modal(): void {
+     update_announce_stream_state();
+     stream_ui_updates.update_can_subscribe_group_label($("#stream-creation"));
+     stream_ui_updates.update_default_stream_option_state($("#stream-creation"));
+-    stream_ui_updates.update_private_stream_privacy_option_state($("#stream-creation"));
++    stream_ui_updates.update_history_public_to_subscribers_state($("#stream-creation"));
+     clear_error_display();
+ }
+ 
+@@ -581,6 +566,12 @@ function set_up_group_setting_widgets(): void {
+ }
+ 
+ export function set_up_handlers(): void {
++    if (current_user.is_guest) {
++        // Guests do not have permission to create streams and
++        // hence cannot access the stream creation UI.
++        return;
++    }
++
+     stream_announce_previous_value =
+         settings_data.user_can_create_public_streams() ||
+         settings_data.user_can_create_web_public_streams();
+@@ -590,16 +581,6 @@ export function set_up_handlers(): void {
+ 
+     const $container = $("#stream-creation").expectOne();
+ 
+-    $container.on("change", ".stream-privacy-values input", () => {
+-        update_announce_stream_state();
+-        stream_ui_updates.update_default_stream_option_state($container);
+-        stream_ui_updates.update_can_subscribe_group_label($container);
+-    });
+-
+-    $container.on("change", ".default-stream input", () => {
+-        stream_ui_updates.update_private_stream_privacy_option_state($container);
+-    });
+-
+     $container.on("click", ".finalize_create_stream", (e) => {
+         e.preventDefault();
+         clear_error_display();
+@@ -666,6 +647,7 @@ export function set_up_handlers(): void {
+     set_up_group_setting_widgets();
+     settings_components.enable_opening_typeahead_on_clicking_label($container);
+     folder_widget = stream_settings_components.set_up_folder_dropdown_widget();
++    stream_edit.set_up_channel_privacy_dropdown_widget(update_announce_stream_state);
+ }
+ 
+ export function initialize(): void {
+diff --git a/web/src/stream_data.ts b/web/src/stream_data.ts
+index 6562a48352..7a86a108a7 100644
+--- a/web/src/stream_data.ts
++++ b/web/src/stream_data.ts
+@@ -952,10 +952,7 @@ export function get_stream_privacy_policy(stream_id: number): string {
+     if (!sub.invite_only) {
+         return settings_config.stream_privacy_policy_values.public.code;
+     }
+-    if (sub.invite_only && !sub.history_public_to_subscribers) {
+-        return settings_config.stream_privacy_policy_values.private.code;
+-    }
+-    return settings_config.stream_privacy_policy_values.private_with_public_history.code;
++    return settings_config.stream_privacy_policy_values.private.code;
+ }
+ 
+ export function is_stream_archived_by_id(stream_id: number): boolean {
+diff --git a/web/src/stream_edit.ts b/web/src/stream_edit.ts
+index 568c1f1316..3a3d42f95c 100644
+--- a/web/src/stream_edit.ts
++++ b/web/src/stream_edit.ts
+@@ -22,6 +22,7 @@ import * as channel_folders_ui from "./channel_folders_ui.ts";
+ import * as confirm_dialog from "./confirm_dialog.ts";
+ import {show_copied_confirmation} from "./copied_tooltip.ts";
+ import * as dialog_widget from "./dialog_widget.ts";
++import type {DropdownWidget} from "./dropdown_widget.ts";
+ import * as dropdown_widget from "./dropdown_widget.ts";
+ import {$t, $t_html} from "./i18n.ts";
+ import * as keydown_util from "./keydown_util.ts";
+@@ -324,6 +325,104 @@ function setup_group_setting_widgets(sub: StreamSubscription): void {
+     }
+ }
+ 
++function get_channel_privacy_options(
++    current_value: string | number | undefined,
++    stream_id: number | undefined,
++): dropdown_widget.Option[] {
++    let sub: StreamSubscription | undefined;
++    if (stream_id !== undefined) {
++        sub = stream_data.get_sub_by_id(stream_id);
++    }
++    return Object.values(settings_config.stream_privacy_policy_values)
++        .filter((privacy_type) => {
++            if (privacy_type.code === settings_config.stream_privacy_policy_values.private.code) {
++                if (settings_data.user_can_create_private_streams()) {
++                    return true;
++                }
++                return sub?.invite_only;
++            }
++
++            if (privacy_type.code === settings_config.stream_privacy_policy_values.public.code) {
++                if (settings_data.user_can_create_public_streams()) {
++                    return true;
++                }
++                return sub && !sub.invite_only && !sub.is_web_public;
++            }
++
++            if (settings_data.user_can_create_web_public_streams()) {
++                return true;
++            }
++            return sub?.is_web_public;
++        })
++        .map((privacy_type) => ({
++            unique_id: privacy_type.code,
++            name: privacy_type.name,
++            description: privacy_type.description,
++            bold_current_selection: current_value === privacy_type.code,
++        }));
++}
++
++export function set_up_channel_privacy_dropdown_widget(
++    update_callback?: () => void,
++    sub?: StreamSubscription,
++): DropdownWidget {
++    let default_id;
++    if (sub) {
++        default_id = stream_data.get_stream_privacy_policy(sub.stream_id);
++    } else {
++        if (settings_data.user_can_create_public_streams()) {
++            default_id = settings_config.stream_privacy_policy_values.public.code;
++        } else if (settings_data.user_can_create_web_public_streams()) {
++            default_id = settings_config.stream_privacy_policy_values.web_public.code;
++        } else {
++            default_id = settings_config.stream_privacy_policy_values.private.code;
++        }
++    }
++
++    let widget_name = "channel_privacy";
++    if (sub === undefined) {
++        widget_name = "new_channel_privacy";
++    }
++
++    let $events_container = $("#stream_settings .subscription_settings");
++    if (sub === undefined) {
++        $events_container = $("#stream_creation_form");
++    }
++
++    const channel_privacy_widget = new dropdown_widget.DropdownWidget({
++        widget_name,
++        get_options: (current_value) => get_channel_privacy_options(current_value, sub?.stream_id),
++        $events_container,
++        hide_search_box: true,
++        item_click_callback(event, dropdown, this_widget) {
++            dropdown.hide();
++            event.preventDefault();
++            event.stopPropagation();
++            this_widget.render();
++            if (sub !== undefined) {
++                stream_ui_updates.handle_channel_privacy_update($("#stream_settings"));
++                settings_components.save_discard_stream_settings_widget_status_handler(
++                    $("#channel-subscription-permissions"),
++                    stream_data.get_sub_by_id(sub.stream_id),
++                );
++            } else {
++                stream_ui_updates.handle_channel_privacy_update($("#stream-creation"));
++            }
++            if (update_callback) {
++                update_callback();
++            }
++        },
++        default_id,
++    });
++    if (sub !== undefined) {
++        settings_components.set_dropdown_setting_widget("channel_privacy", channel_privacy_widget);
++    } else {
++        stream_settings_components.set_channel_creation_privacy_widget(channel_privacy_widget);
++    }
++    channel_privacy_widget.setup();
++    return channel_privacy_widget;
++}
++
+ export function show_settings_for(node: HTMLElement): void {
+     // Hide any tooltips or popovers before we rerender / change
+     // currently displayed stream settings.
+@@ -348,8 +447,6 @@ export function show_settings_for(node: HTMLElement): void {
+         sub,
+         notification_settings,
+         other_settings,
+-        stream_privacy_policy_values: settings_config.stream_privacy_policy_values,
+-        stream_privacy_policy: stream_data.get_stream_privacy_policy(stream_id),
+         stream_topics_policy_values: settings_config.get_stream_topics_policy_values(),
+         check_default_stream: stream_data.is_default_stream_id(stream_id),
+         zulip_plan_is_not_limited: realm.zulip_plan_is_not_limited,
+@@ -380,6 +477,7 @@ export function show_settings_for(node: HTMLElement): void {
+     stream_ui_updates.update_settings_button_for_archive_and_unarchive(sub);
+     show_subscription_settings(sub);
+     settings_org.set_message_retention_setting_dropdown(sub);
++    set_up_channel_privacy_dropdown_widget(undefined, sub);
+     stream_ui_updates.enable_or_disable_permission_settings_in_edit_panel(sub);
+     setup_group_setting_widgets(slim_sub);
+     stream_ui_updates.update_can_subscribe_group_label($edit_container);
+@@ -894,12 +992,6 @@ export function initialize(): void {
+                 $subsection,
+                 sub,
+             );
+-            if (sub && $subsection.attr("id") === "channel-subscription-permissions") {
+-                const $edit_container = stream_settings_containers.get_edit_container(sub);
+-                stream_ui_updates.update_private_stream_privacy_option_state($edit_container);
+-                stream_ui_updates.update_default_stream_option_state($edit_container);
+-                stream_ui_updates.update_can_subscribe_group_label($edit_container);
+-            }
+             return true;
+         },
+     );
+@@ -961,7 +1053,7 @@ export function initialize(): void {
+             settings_org.discard_stream_settings_subsection_changes($subsection, sub);
+             if ($subsection.attr("id") === "channel-subscription-permissions") {
+                 const $edit_container = stream_settings_containers.get_edit_container(sub);
+-                stream_ui_updates.update_private_stream_privacy_option_state($edit_container);
++                stream_ui_updates.update_history_public_to_subscribers_state($edit_container);
+                 stream_ui_updates.update_default_stream_option_state($edit_container);
+                 stream_ui_updates.update_can_subscribe_group_label($edit_container);
+             }
+diff --git a/web/src/stream_settings_components.ts b/web/src/stream_settings_components.ts
+index 5208f193b9..bf03299629 100644
+--- a/web/src/stream_settings_components.ts
++++ b/web/src/stream_settings_components.ts
+@@ -29,6 +29,7 @@ import * as ui_report from "./ui_report.ts";
+ import * as user_groups from "./user_groups.ts";
+ 
+ export let archived_status_filter_dropdown_widget: DropdownWidget;
++export let channel_creation_privacy_widget: DropdownWidget;
+ 
+ export function set_right_panel_title(sub: StreamSubscription): void {
+     let title_icon_color = "#333333";
+@@ -412,3 +413,7 @@ export function set_up_folder_dropdown_widget(sub?: StreamSubscription): Dropdow
+     folder_widget.setup();
+     return folder_widget;
+ }
++
++export function set_channel_creation_privacy_widget(widget: DropdownWidget): void {
++    channel_creation_privacy_widget = widget;
++}
+diff --git a/web/src/stream_settings_ui.ts b/web/src/stream_settings_ui.ts
+index cbf0bf0261..204b302607 100644
+--- a/web/src/stream_settings_ui.ts
++++ b/web/src/stream_settings_ui.ts
+@@ -198,7 +198,8 @@ export function update_stream_privacy(
+         // Rerender message list if we are narrowed to the stream.
+         message_lists.current?.rerender();
+     }
+-    stream_ui_updates.update_setting_element(sub, "stream_privacy");
++    stream_ui_updates.update_setting_element(sub, "channel_privacy");
++    stream_ui_updates.update_setting_element(sub, "history_public_to_subscribers");
+     stream_ui_updates.enable_or_disable_permission_settings_in_edit_panel(sub);
+     stream_ui_updates.update_stream_privacy_icon_in_settings(sub);
+     stream_ui_updates.update_settings_button_for_sub(sub);
+@@ -250,7 +251,6 @@ export function update_is_default_stream(): void {
+         const sub = sub_store.get(active_stream_id);
+         assert(sub !== undefined);
+         stream_ui_updates.update_setting_element(sub, "is_default_stream");
+-        stream_ui_updates.update_private_stream_privacy_option_state($("#stream_settings"));
+     }
+ }
+ 
+@@ -952,6 +952,7 @@ function setup_page(callback: () => void): void {
+             stream_privacy_policy,
+             stream_topics_policy_values: settings_config.get_stream_topics_policy_values(),
+             check_default_stream: false,
++            history_public_to_subscribers: true,
+             zulip_plan_is_not_limited: realm.zulip_plan_is_not_limited,
+             org_level_message_retention_setting:
+                 stream_edit.get_display_text_for_realm_message_retention_setting(),
+diff --git a/web/src/stream_ui_updates.ts b/web/src/stream_ui_updates.ts
+index 356542db0f..3e1ba140af 100644
+--- a/web/src/stream_ui_updates.ts
++++ b/web/src/stream_ui_updates.ts
+@@ -1,5 +1,4 @@
+ import $ from "jquery";
+-import assert from "minimalistic-assert";
+ import type * as tippy from "tippy.js";
+ 
+ import render_announce_stream_checkbox from "../templates/stream_settings/announce_stream_checkbox.hbs";
+@@ -61,84 +60,29 @@ export function set_show_available(value: boolean): void {
+     show_available = value;
+ }
+ 
+-export function update_web_public_stream_privacy_option_state($container: JQuery): void {
+-    const $web_public_stream_elem = $container.find(
+-        `input[value='${CSS.escape(
+-            settings_config.stream_privacy_policy_values.web_public.code,
+-        )}']`,
+-    );
+-
+-    const for_stream_edit_panel = $container.attr("id") === "stream_settings";
+-    if (for_stream_edit_panel) {
+-        const stream_id = Number.parseInt(
+-            $container.find(".subscription_settings.show").attr("data-stream-id")!,
+-            10,
+-        );
+-        const sub = sub_store.get(stream_id);
+-        assert(sub !== undefined);
+-        if (!stream_data.can_change_permissions_requiring_content_access(sub)) {
+-            // We do not want to enable the already disabled web-public option
+-            // in stream-edit panel if user is not allowed to change stream
+-            // privacy at all.
+-            return;
+-        }
+-    }
++export function update_history_public_to_subscribers_state($container: JQuery): void {
++    const is_stream_creation = $container.attr("id") === "stream-creation";
+ 
+-    if (!realm.server_web_public_streams_enabled || !realm.realm_enable_spectator_access) {
+-        if (for_stream_edit_panel && $web_public_stream_elem.is(":checked")) {
+-            // We do not hide web-public option in the "Change privacy" modal if
+-            // stream is web-public already. The option is disabled in this case.
+-            $web_public_stream_elem.prop("disabled", true);
+-            return;
+-        }
+-        $web_public_stream_elem.closest(".settings-radio-input-parent").prop("hidden", true);
+-        $container
+-            .find(".stream-privacy-values .settings-radio-input-parent:not([hidden])")
+-            .last()
+-            .css("border-bottom", "none");
++    let stream_privacy_widget;
++    if (is_stream_creation) {
++        stream_privacy_widget = stream_settings_components.channel_creation_privacy_widget!;
+     } else {
+-        if ($web_public_stream_elem.closest(".settings-radio-input-parent").prop("hidden")) {
+-            $container
+-                .find(".stream-privacy-values .settings-radio-input-parent:not([hidden])")
+-                .last()
+-                .css("border-bottom", "");
+-            $web_public_stream_elem.closest(".settings-radio-input-parent").prop("hidden", false);
+-        }
+-        $web_public_stream_elem.prop(
+-            "disabled",
+-            !settings_data.user_can_create_web_public_streams(),
+-        );
++        stream_privacy_widget =
++            settings_components.get_widget_for_dropdown_list_settings("channel_privacy")!;
+     }
+-}
+-
+-export function update_private_stream_privacy_option_state($container: JQuery): void {
+-    // Disable both "Private, shared history" and "Private, protected history" options.
+-    const $private_stream_elem = $container.find(
+-        `input[value='${CSS.escape(settings_config.stream_privacy_policy_values.private.code)}']`,
+-    );
+-    const $private_with_public_history_elem = $container.find(
+-        `input[value='${CSS.escape(
+-            settings_config.stream_privacy_policy_values.private_with_public_history.code,
+-        )}']`,
+-    );
+ 
+-    // If the default stream option is checked, the private stream options are disabled.
+-    const is_default_stream = util.the(
+-        $container.find<HTMLInputElement>(".default-stream input"),
+-    ).checked;
++    const is_invite_only = stream_privacy_widget.value() === "invite-only";
+ 
+-    const disable_private_stream_options =
+-        is_default_stream || !settings_data.user_can_create_private_streams();
+-
+-    $private_stream_elem.prop("disabled", disable_private_stream_options);
+-    $private_with_public_history_elem.prop("disabled", disable_private_stream_options);
+-
+-    $private_stream_elem
+-        .closest("div")
+-        .toggleClass("default_stream_private_tooltip", is_default_stream);
+-    $private_with_public_history_elem
+-        .closest("div")
+-        .toggleClass("default_stream_private_tooltip", is_default_stream);
++    const $history_public_to_subscribers_container = $container.find(
++        ".history-public-to-subscribers",
++    );
++    $history_public_to_subscribers_container.find("input").prop("disabled", !is_invite_only);
++    $history_public_to_subscribers_container.toggleClass("control-label-disabled", !is_invite_only);
++    if (!is_invite_only) {
++        // For public and web-public streams, history_public_to_subscribers should
++        // always be true.
++        $history_public_to_subscribers_container.find("input").prop("checked", true);
++    }
+ }
+ 
+ export function initialize_cant_subscribe_popover(): void {
+@@ -304,9 +248,15 @@ export function update_default_stream_option_state($container: JQuery): void {
+         return;
+     }
+ 
+-    const privacy_type = $container.find("input[type=radio][name=privacy]:checked").val();
+-    const is_invite_only =
+-        privacy_type === "invite-only" || privacy_type === "invite-only-public-history";
++    let stream_privacy_widget;
++    if (is_stream_creation) {
++        stream_privacy_widget = stream_settings_components.channel_creation_privacy_widget!;
++    } else {
++        stream_privacy_widget =
++            settings_components.get_widget_for_dropdown_list_settings("channel_privacy")!;
++    }
++
++    const is_invite_only = stream_privacy_widget.value() === "invite-only";
+ 
+     // If a private stream option is selected, the default stream option is disabled.
+     $default_stream.find("input").prop("disabled", is_invite_only);
+@@ -314,12 +264,29 @@ export function update_default_stream_option_state($container: JQuery): void {
+         "control-label-disabled default_stream_private_tooltip",
+         is_invite_only,
+     );
++    if (is_invite_only) {
++        // Private streams cannot be set as default streams so uncheck the checkbox.
++        $default_stream.find("input").prop("checked", false);
++    }
++}
++
++export function handle_channel_privacy_update($container: JQuery): void {
++    update_can_subscribe_group_label($container);
++    update_history_public_to_subscribers_state($container);
++    update_default_stream_option_state($container);
+ }
+ 
+ export function update_can_subscribe_group_label($container: JQuery): void {
+-    const privacy_type = $container.find("input[type=radio][name=privacy]:checked").val();
+-    const is_invite_only =
+-        privacy_type === "invite-only" || privacy_type === "invite-only-public-history";
++    const is_stream_creation = $container.attr("id") === "stream-creation";
++
++    let stream_privacy_widget;
++    if (is_stream_creation) {
++        stream_privacy_widget = stream_settings_components.channel_creation_privacy_widget!;
++    } else {
++        stream_privacy_widget =
++            settings_components.get_widget_for_dropdown_list_settings("channel_privacy")!;
++    }
++    const is_invite_only = stream_privacy_widget.value() === "invite-only";
+ 
+     const $can_subscribe_group_label = $container.find(".can_subscribe_group_label");
+     $can_subscribe_group_label.html(render_stream_can_subscribe_group_label({is_invite_only}));
+@@ -344,6 +311,10 @@ export function enable_or_disable_permission_settings_in_edit_panel(
+         .find("input, select")
+         .prop("disabled", !sub.can_change_stream_permissions_requiring_metadata_access);
+ 
++    $("#channel_privacy_widget_container")
++        .find("button")
++        .prop("disabled", !sub.can_change_stream_permissions_requiring_metadata_access);
++
+     const $permission_pill_container_elements = $permissions_container.find(".pill-container");
+ 
+     $stream_settings
+@@ -359,7 +330,7 @@ export function enable_or_disable_permission_settings_in_edit_panel(
+     settings_components.enable_group_permission_setting($permission_pill_container_elements);
+ 
+     update_default_stream_option_state($("#stream_settings"));
+-    update_private_stream_privacy_option_state($("#stream_settings"));
++    update_history_public_to_subscribers_state($("#stream_settings"));
+ 
+     const disable_message_retention_setting =
+         !realm.zulip_plan_is_not_limited || !current_user.is_owner;
+@@ -370,14 +341,8 @@ export function enable_or_disable_permission_settings_in_edit_panel(
+         .find(".message-retention-setting-custom-input")
+         .prop("disabled", disable_message_retention_setting);
+ 
+-    update_web_public_stream_privacy_option_state($("#stream_settings"));
+-    update_public_stream_privacy_option_state($("#stream_settings"));
+-
+     if (!sub.can_change_stream_permissions_requiring_content_access) {
+-        const $stream_privacy_values = $stream_settings
+-            .find($(".stream-privacy-values"))
+-            .find("input, button");
+-        $stream_privacy_values.prop("disabled", true);
++        $("#channel_privacy_widget_container").find("button").prop("disabled", true);
+ 
+         for (const setting_name of settings_config.stream_group_permission_settings_requiring_content_access) {
+             const $setting_element = $permissions_container.find("#id_" + setting_name);
+@@ -568,45 +533,6 @@ export function enable_or_disable_add_subscribers_elements(
+     }
+ }
+ 
+-export function update_public_stream_privacy_option_state($container: JQuery): void {
+-    const $public_stream_elem = $container.find(
+-        `input[value='${CSS.escape(settings_config.stream_privacy_policy_values.public.code)}']`,
+-    );
+-    $public_stream_elem.prop("disabled", !settings_data.user_can_create_public_streams());
+-}
+-
+-export function hide_or_disable_stream_privacy_options_if_required($container: JQuery): void {
+-    update_web_public_stream_privacy_option_state($container);
+-
+-    update_public_stream_privacy_option_state($container);
+-
+-    update_private_stream_privacy_option_state($container);
+-}
+-
+-export function update_stream_privacy_choices(policy: string): void {
+-    if (!overlays.streams_open()) {
+-        return;
+-    }
+-
+-    if ($("#subscription_overlay .nothing-selected").css("display") !== "none") {
+-        return;
+-    }
+-    let $container = $("#stream-creation");
+-    if ($("#stream_settings").css("display") !== "none") {
+-        $container = $("#stream_settings");
+-    }
+-
+-    if (policy === "can_create_private_channel_group") {
+-        update_private_stream_privacy_option_state($container);
+-    }
+-    if (policy === "can_create_public_channel_group") {
+-        update_public_stream_privacy_option_state($container);
+-    }
+-    if (policy === "can_create_web_public_channel_group") {
+-        update_web_public_stream_privacy_option_state($container);
+-    }
+-}
+-
+ export function update_channel_folder_dropdown(sub: StreamSubscription): void {
+     if (!hash_parser.is_editing_stream(sub.stream_id)) {
+         return;
+diff --git a/web/src/tippyjs.ts b/web/src/tippyjs.ts
+index de835b3760..77c76e150f 100644
+--- a/web/src/tippyjs.ts
++++ b/web/src/tippyjs.ts
+@@ -424,17 +424,6 @@ export function initialize(): void {
+         },
+     });
+ 
+-    tippy.delegate("body", {
+-        target: ".settings-radio-input-parent.default_stream_private_tooltip",
+-        content: $t({
+-            defaultMessage: "Default channels for new users cannot be made private.",
+-        }),
+-        appendTo: () => document.body,
+-        onHidden(instance) {
+-            instance.destroy();
+-        },
+-    });
+-
+     tippy.delegate("body", {
+         target: [
+             "[data-tab-key='available'].disabled",
+diff --git a/web/templates/stream_settings/channel_permissions.hbs b/web/templates/stream_settings/channel_permissions.hbs
+index 593d577b75..525f238e76 100644
+--- a/web/templates/stream_settings/channel_permissions.hbs
++++ b/web/templates/stream_settings/channel_permissions.hbs
+@@ -8,7 +8,8 @@
+ 
+     {{#if is_stream_edit}}
+         <div class="stream-permissions-warning-banner"></div>
+-        {{> channel_type .}}
++        {{> channel_type .
++          channel_privacy_widget_name="channel_privacy" }}
+ 
+         <div class="default-stream">
+             {{> ../settings/settings_checkbox
+diff --git a/web/templates/stream_settings/channel_type.hbs b/web/templates/stream_settings/channel_type.hbs
+index 103f34f157..76d3f89244 100644
+--- a/web/templates/stream_settings/channel_type.hbs
++++ b/web/templates/stream_settings/channel_type.hbs
+@@ -1,17 +1,13 @@
+-<div class="input-group stream-privacy-values">
+-    <div class="alert stream-privacy-status"></div>
+-    <label>{{t 'Who can access this channel'}}
+-        {{> ../help_link_widget link="/help/channel-permissions" }}
+-    </label>
++{{> ../dropdown_widget_with_label
++  widget_name=channel_privacy_widget_name
++  label=(t 'Who can access this channel')}}
+ 
+-    <div class="stream-privacy_choices prop-element" id="{{prefix}}stream_privacy" data-setting-widget-type="radio-group" data-setting-choice-type="string">
+-        {{#each stream_privacy_policy_values}}
+-            <div class="settings-radio-input-parent">
+-                <label class="radio">
+-                    <input type="radio" name="privacy" value="{{ this.code }}" {{#if (eq this.code ../stream_privacy_policy) }}checked{{/if}} />
+-                    <b class="highlighted-element">{{ this.name }}:</b> {{ this.description }}
+-                </label>
+-            </div>
+-        {{/each}}
+-    </div>
++<div class="history-public-to-subscribers">
++    {{> ../settings/settings_checkbox
++      prefix=prefix
++      setting_name="history_public_to_subscribers"
++      is_checked=history_public_to_subscribers
++      label=(t "Subscribers can view messages sent before they joined")
++      help_link="/help/channel-permissions#private-channels"
++      }}
+ </div>
+diff --git a/web/templates/stream_settings/new_stream_configuration.hbs b/web/templates/stream_settings/new_stream_configuration.hbs
+index fd2e00dad0..9422032b20 100644
+--- a/web/templates/stream_settings/new_stream_configuration.hbs
++++ b/web/templates/stream_settings/new_stream_configuration.hbs
+@@ -1,4 +1,5 @@
+-{{> channel_type .}}
++{{> channel_type .
++  channel_privacy_widget_name="new_channel_privacy" }}
+ 
+ {{#if ask_to_announce_stream}}
+     <div id="announce-new-stream">
+diff --git a/web/templates/stream_settings/stream_settings.hbs b/web/templates/stream_settings/stream_settings.hbs
+index 609489ed1b..6e2c85e97b 100644
+--- a/web/templates/stream_settings/stream_settings.hbs
++++ b/web/templates/stream_settings/stream_settings.hbs
+@@ -188,6 +188,7 @@
+             {{> channel_permissions .
+               prefix="id_"
+               is_stream_edit=true
++              history_public_to_subscribers=sub.history_public_to_subscribers
+               }}
+         </div>
+     </div>

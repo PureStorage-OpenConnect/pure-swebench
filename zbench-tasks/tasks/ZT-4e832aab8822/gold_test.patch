@@ -1,0 +1,99 @@
+diff --git a/zerver/tests/test_handle_push_notification.py b/zerver/tests/test_handle_push_notification.py
+index 8307f827f4..c2202e0ca5 100644
+--- a/zerver/tests/test_handle_push_notification.py
++++ b/zerver/tests/test_handle_push_notification.py
+@@ -686,15 +686,16 @@ class HandlePushNotificationTest(PushNotificationTestCase):
+         test_end_to_end(missed_message, db_query_count=8)
+ 
+         # Channel message
+-        # 3 extra queries than 1:1 DM
++        # 2 extra queries than 1:1 DM
+         # 1 : fetch Stream in `access_message_and_usermessage` codepath
+-        # 1 : query NamedUserGroup in `check_can_access_user` codepath
+         # 1 : fetch Stream in `get_message_payload` (TODO: we can avoid this)
++        # `check_can_access_user` adds no query here because the sender is the
++        # recipient themselves, so it short-circuits before any DB access.
+         channel = get_stream("Denmark", realm)
+         message = self.get_message(Recipient.STREAM, channel.id, realm.id)
+         UserMessage.objects.create(user_profile=self.user_profile, message=message)
+         missed_message = {"message_id": message.id, "trigger": NotificationTriggers.STREAM_PUSH}
+-        test_end_to_end(missed_message, db_query_count=10)
++        test_end_to_end(missed_message, db_query_count=9)
+ 
+         # Channel message: private channel + user-group mention
+         # 3 extra queries than prev:
+diff --git a/zerver/tests/test_message_send.py b/zerver/tests/test_message_send.py
+index be2e0ddc74..d2516b61f9 100644
+--- a/zerver/tests/test_message_send.py
++++ b/zerver/tests/test_message_send.py
+@@ -2840,7 +2840,7 @@ class PersonalMessageSendTest(ZulipTestCase):
+ 
+         # A guest with limited user access sends a personal message
+         # to themself.
+-        with self.assert_database_query_count(25):
++        with self.assert_database_query_count(24):
+             self.send_personal_message(polonius, polonius)
+ 
+         # A guest with limited user access sends a personal message
+diff --git a/zerver/tests/test_subs.py b/zerver/tests/test_subs.py
+index a9b532f3f3..ddac8ce843 100644
+--- a/zerver/tests/test_subs.py
++++ b/zerver/tests/test_subs.py
+@@ -3282,7 +3282,7 @@ class StreamAdminTest(ZulipTestCase):
+         ]
+         result = self.attempt_unsubscribe_of_principal(
+             query_count=22,
+-            cache_count=13,
++            cache_count=12,
+             target_users=target_users,
+             is_realm_admin=True,
+             is_subbed=True,
+@@ -4879,7 +4879,7 @@ class SubscriptionAPITest(ZulipTestCase):
+ 
+         with (
+             self.assert_database_query_count(20),
+-            self.assert_memcached_count(11),
++            self.assert_memcached_count(10),
+             mock.patch("zerver.views.streams.send_user_subscribed_and_new_channel_notifications"),
+         ):
+             self.subscribe_via_post(
+diff --git a/zerver/tests/test_users.py b/zerver/tests/test_users.py
+index a8ae9e3a39..f725339304 100644
+--- a/zerver/tests/test_users.py
++++ b/zerver/tests/test_users.py
+@@ -3786,24 +3786,30 @@ class GetProfileTest(ZulipTestCase):
+ 
+     def test_check_can_access_user_for_a_guest_with_themself(self) -> None:
+         """
+-        Test that the behaviour is the same and record query count
++        Test that the behaviour and query count are the same
+         for both cases, a normal guest and a guest with limited user access,
+         when calling check_can_access_user() for a user on themself.
+         """
+         # A guest is not limited by default.
+         polonius = self.example_user("polonius")
+-        with self.assert_database_query_count(1):
++        with self.assert_database_query_count(0):
+             self.assertTrue(check_can_access_user(polonius, polonius))
+ 
+         # Give guests limited user access.
+         self.set_up_db_for_testing_user_access()
+         polonius = self.example_user("polonius")
+ 
+-        # TODO: When guest has limited user access,
+-        # we execute an extra query; we should avoid this.
+-        with self.assert_database_query_count(2):
++        # When guest has limited user access,
++        # query count should not increase.
++        with self.assert_database_query_count(0):
+             self.assertTrue(check_can_access_user(polonius, polonius))
+ 
++    def test_check_can_access_user_for_a_spectator(self) -> None:
++        # A spectator can always access users since spectators
++        # already have very limited access to users.
++        hamlet = self.example_user("hamlet")
++        self.assertTrue(check_can_access_user(hamlet, None))
++
+     def test_get_users_involved_in_dms_excludes_deactivated_users(self) -> None:
+         hamlet = self.example_user("hamlet")
+         othello = self.example_user("othello")

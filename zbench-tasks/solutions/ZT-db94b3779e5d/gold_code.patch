@@ -1,0 +1,61 @@
+diff --git a/web/src/filter.ts b/web/src/filter.ts
+index 8c2f484a69..0701b49df3 100644
+--- a/web/src/filter.ts
++++ b/web/src/filter.ts
+@@ -472,8 +472,14 @@ export class Filter {
+                     }
+                 }
+ 
+-                if (for_pills && operator === "sender" && operand.toLowerCase() === "me") {
+-                    operand = String(people.my_current_user_id());
++                if (for_pills && operand.toLowerCase() === "me") {
++                    if (operator === "sender") {
++                        operand = String(people.my_current_user_id());
++                    } else if (operator === "mentions") {
++                        // mentions:me is equivalent to is:mentioned.
++                        operator = "is";
++                        operand = "mentioned";
++                    }
+                 }
+ 
+                 // Check if the operator is known, if not then we treat
+@@ -562,6 +568,15 @@ export class Filter {
+                     break;
+                 }
+                 case "mentions": {
++                    // mentions:me is equivalent to is:mentioned.
++                    if (suggestion.operand.toLowerCase() === "me") {
++                        potential_narrow_term = {
++                            operator: "is",
++                            operand: "mentioned",
++                            negated: suggestion.negated,
++                        };
++                        break;
++                    }
+                     const result = convert_single_user_id_suggestion_to_term(
+                         suggestion,
+                         canonical_operator,
+diff --git a/web/src/hash_util.ts b/web/src/hash_util.ts
+index 6925195534..d8f9407238 100644
+--- a/web/src/hash_util.ts
++++ b/web/src/hash_util.ts
+@@ -235,10 +235,17 @@ export function parse_narrow(hash: string[]): NarrowCanonicalTerm[] | undefined
+             return undefined;
+         }
+ 
+-        const canonical_operator = filter_util.canonicalize_operator(
++        let canonical_operator = filter_util.canonicalize_operator(
+             narrow_operator_schema.parse(operator),
+         );
+-        const operand = decode_operand(canonical_operator, raw_operand);
++        let operand = decode_operand(canonical_operator, raw_operand);
++
++        // mentions:me is equivalent to is:mentioned.
++        if (canonical_operator === "mentions" && raw_operand === "me") {
++            canonical_operator = "is";
++            operand = "mentioned";
++        }
++
+         terms.push({
+             negated,
+             operator: canonical_operator,

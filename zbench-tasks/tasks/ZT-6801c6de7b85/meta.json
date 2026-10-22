@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-6801c6de7b85",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The underlying change is a legitimate, gradeable bug fix (old-stream subscribers should receive update events when a message moves to a stream they're not subscribed to), but the hidden test diff shown contains no behavioral assertion at all \u2014 it consists entirely of pinned database query counts bumped from N to N+2 across four call sites. Query-count pins grade an incidental implementation side-effect rather than the observable outcome: any patch that happens to issue two extra queries (even without notifying anyone new) would pass, and a correct fix implemented with a different query strategy (e.g., a single UNION query or cached subscriber lookup) would fail. That is exactly the format-over-behavior brittleness the screen rejects.",
+  "summary": "message_edit: Fix moved msg not updated when user not sub of new stream.",
+  "lang": "py",
+  "issue": 33719,
+  "fix_commit": "6801c6de7b8559631d9f45ae57dfd20049038235",
+  "base_commit": "d9eedee0176becf9ef23fc7f1739e3fafc53e0d7",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/6801c6de7b8559631d9f45ae57dfd20049038235",
+    "issue_url": "https://github.com/zulip/zulip/issues/33719"
+  }
+}

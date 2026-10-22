@@ -1,0 +1,34 @@
+zbench
+Copyright 2026 Everpure, Inc. (formerly Pure Storage)
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+===============================================================================
+
+Third-party content: the Zulip task corpus
+
+The harness and tooling in this repository (zbench/, tools/, and the pipeline
+code in zbench-tasks/) are original work licensed as above.
+
+The task corpus under zbench-tasks/tasks/ and zbench-tasks/solutions/ is
+DERIVED FROM the Zulip project (https://github.com/zulip/zulip). Specifically,
+each task's gold_test.patch and gold_code.patch are literal excerpts (diffs) of
+Zulip source code, taken from real upstream commits, and problem_statement.md
+is derived from the title and body of a linked Zulip GitHub issue. This
+content is:
+
+    Copyright 2012-2015 Dropbox, Inc., 2015-present Kandra Labs, Inc.,
+    and contributors.
+
+and is redistributed here under the terms of the Apache License, Version 2.0,
+under which Zulip is licensed. A copy of that license is included in this
+repository's own LICENSE file (the terms are identical). See
+https://github.com/zulip/zulip/blob/main/LICENSE and
+https://github.com/zulip/zulip/blob/main/NOTICE for Zulip's own licensing and
+attribution.
+
+If you fork this repository to build a benchmark against a different
+codebase, replace this section with attribution appropriate to whatever
+source material your own task corpus is derived from -- or remove it if your
+corpus is drawn from a private codebase you already own outright and do not
+intend to redistribute the corpus itself.

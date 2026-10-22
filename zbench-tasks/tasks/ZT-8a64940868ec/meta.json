@@ -1,0 +1,60 @@
+{
+  "task_id": "ZT-8a64940868ec",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "message_edit: Fix \"(deleted)\" not showing for empty edited DMs.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 33305,
+  "fix_commit": "8a64940868ecc70b94ad2fac561e868581be0319",
+  "base_commit": "21412b9f792eed354815ced68ff9e7628359c1ad",
+  "env_fingerprint": "83932941f131",
+  "fail_to_pass": [
+    "zerver.tests.test_message_edit.EditMessageTest.test_edit_message_in_unsubscribed_private_stream"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 9,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 186,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "whilstsomebody",
+    "email": "vishwakarmarambhawan572@gmail.com",
+    "date": "2025-02-04"
+  },
+  "contamination": {
+    "fix_public_at": "2025-02-04",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-02-02T17:24:33Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/8a64940868ecc70b94ad2fac561e868581be0319",
+    "issue_url": "https://github.com/zulip/zulip/issues/33305"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-8a64940868ec",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 20.0
+    }
+  }
+}

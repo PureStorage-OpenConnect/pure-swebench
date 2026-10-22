@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-6d27f1073e51",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The 'topic_suggestions (limits)' test binds to the new call signature of get_topic_suggestions_from_candidates, a helper exported only for unit testing. It requires guessing the invented parameter name `candidate_topic_entries`, the internal entry shape `{channel_id, topic}`, and that channel_id is a string ('1') rather than the codebase-conventional numeric stream_id. These are internal data-structure and signature choices the fix invents; the same user-visible behavior (verified behaviorally by the first test block via the pre-existing get_suggestions API) could be implemented with a different helper shape entirely, so no brief could make this test grade correctness rather than name-guessing.",
+  "summary": "search_suggestion: Search topics from all subscribed channels.",
+  "lang": "web",
+  "issue": 34557,
+  "fix_commit": "6d27f1073e51e471fd13407499eb0ffc9e32eacc",
+  "base_commit": "15b477cc7b0e09b0b135356015775b15af5f7c16",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/6d27f1073e51e471fd13407499eb0ffc9e32eacc",
+    "issue_url": "https://github.com/zulip/zulip/issues/34557"
+  }
+}

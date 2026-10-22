@@ -1,0 +1,13 @@
+diff --git a/zerver/actions/message_delete.py b/zerver/actions/message_delete.py
+index 1448ec069a..a4c29e1f41 100644
+--- a/zerver/actions/message_delete.py
++++ b/zerver/actions/message_delete.py
+@@ -64,7 +64,7 @@ def _process_grouped_messages_deletion(
+ 
+     event: DeleteMessagesEvent = {
+         "type": "delete_message",
+-        "message_ids": message_ids,
++        "message_ids": sorted(message_ids),
+     }
+     if stream is None:
+         assert topic is None

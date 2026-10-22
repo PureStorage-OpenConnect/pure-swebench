@@ -1,0 +1,351 @@
+diff --git a/web/src/hash_util.ts b/web/src/hash_util.ts
+index b72972db77..66ae846245 100644
+--- a/web/src/hash_util.ts
++++ b/web/src/hash_util.ts
+@@ -313,7 +313,12 @@ export function validate_channels_settings_hash(hash: string): string {
+         }
+ 
+         let right_side_tab = hash_components[3];
+-        const valid_right_side_tab_values = new Set(["general", "personal", "subscribers"]);
++        const valid_right_side_tab_values = new Set([
++            "general",
++            "personal",
++            "subscribers",
++            "permissions",
++        ]);
+         if (right_side_tab === undefined || !valid_right_side_tab_values.has(right_side_tab)) {
+             right_side_tab = "general";
+         }
+diff --git a/web/src/settings_components.ts b/web/src/settings_components.ts
+index e5ace9077e..554a44ff82 100644
+--- a/web/src/settings_components.ts
++++ b/web/src/settings_components.ts
+@@ -1496,7 +1496,7 @@ function should_disable_save_button_for_stream_settings(stream_id: number): bool
+ function enable_or_disable_save_button($subsection_elem: JQuery): void {
+     const $save_button = $subsection_elem.find(".save-button");
+ 
+-    if ($subsection_elem.closest(".advanced-configurations-container").length > 0) {
++    if ($subsection_elem.closest(".channel-permissions").length > 0) {
+         const $settings_container = $subsection_elem.closest(".subscription_settings");
+         const stream_id_string = $settings_container.attr("data-stream-id");
+         assert(stream_id_string !== undefined);
+@@ -1539,7 +1539,7 @@ function enable_or_disable_save_button($subsection_elem: JQuery): void {
+         return;
+     }
+ 
+-    const group_settings = [...$subsection_elem.find(".pill-container")].map((elem) =>
++    const group_settings = [...$subsection_elem.find(".pill-container.prop-element")].map((elem) =>
+         extract_property_name($(elem)),
+     );
+     if (
+diff --git a/web/src/stream_edit.ts b/web/src/stream_edit.ts
+index 22b324a292..ae489f1521 100644
+--- a/web/src/stream_edit.ts
++++ b/web/src/stream_edit.ts
+@@ -372,6 +372,7 @@ export function show_settings_for(node: HTMLElement): void {
+ 
+     $(".nothing-selected").hide();
+     $("#subscription_overlay .stream_change_property_info").hide();
++    $("#subscription_overlay .stream_email_address_error").hide();
+     $("#id_topics_policy").val(sub.topics_policy);
+ 
+     $edit_container.addClass("show");
+@@ -893,9 +894,7 @@ export function initialize(): void {
+                 $subsection,
+                 sub,
+             );
+-            if (sub && $subsection.hasClass("stream-permissions")) {
+-                stream_ui_updates.update_default_stream_option_state($("#stream_settings"));
+-                stream_ui_updates.update_private_stream_privacy_option_state($("#stream_settings"));
++            if (sub && $subsection.attr("id") === "channel-subscription-permissions") {
+                 const $edit_container = stream_settings_containers.get_edit_container(sub);
+                 stream_ui_updates.update_can_subscribe_group_label($edit_container);
+             }
+@@ -958,9 +957,7 @@ export function initialize(): void {
+ 
+             const $subsection = $(this).closest(".settings-subsection-parent");
+             settings_org.discard_stream_settings_subsection_changes($subsection, sub);
+-            if ($subsection.hasClass("stream-permissions")) {
+-                stream_ui_updates.update_default_stream_option_state($("#stream_settings"));
+-                stream_ui_updates.update_private_stream_privacy_option_state($("#stream_settings"));
++            if ($subsection.attr("id") === "channel-subscription-permissions") {
+                 const $edit_container = stream_settings_containers.get_edit_container(sub);
+                 stream_ui_updates.update_can_subscribe_group_label($edit_container);
+             }
+diff --git a/web/src/stream_edit_toggler.ts b/web/src/stream_edit_toggler.ts
+index e38e7c46fd..d203167584 100644
+--- a/web/src/stream_edit_toggler.ts
++++ b/web/src/stream_edit_toggler.ts
+@@ -20,6 +20,7 @@ export function setup_toggler(): void {
+             {label: $t({defaultMessage: "General"}), key: "general"},
+             {label: $t({defaultMessage: "Personal"}), key: "personal"},
+             {label: $t({defaultMessage: "Subscribers"}), key: "subscribers"},
++            {label: $t({defaultMessage: "Permissions"}), key: "permissions"},
+         ],
+         callback(_name, key) {
+             $(".stream_section").hide();
+diff --git a/web/src/stream_settings_ui.ts b/web/src/stream_settings_ui.ts
+index 29b05f308f..8966ef9b47 100644
+--- a/web/src/stream_settings_ui.ts
++++ b/web/src/stream_settings_ui.ts
+@@ -250,6 +250,7 @@ export function update_is_default_stream(): void {
+         const sub = sub_store.get(active_stream_id);
+         assert(sub !== undefined);
+         stream_ui_updates.update_setting_element(sub, "is_default_stream");
++        stream_ui_updates.update_private_stream_privacy_option_state($("#stream_settings"));
+     }
+ }
+ 
+diff --git a/web/src/stream_ui_updates.ts b/web/src/stream_ui_updates.ts
+index fb1cf4c3f8..9e4b73281e 100644
+--- a/web/src/stream_ui_updates.ts
++++ b/web/src/stream_ui_updates.ts
+@@ -334,27 +334,24 @@ export function enable_or_disable_permission_settings_in_edit_panel(
+ 
+     const $stream_settings = stream_settings_containers.get_edit_container(sub);
+ 
+-    const $general_settings_container = $stream_settings.find(".stream-permissions");
+-    $general_settings_container
+-        .find("input, button")
++    const $default_stream_container = $stream_settings.find(".default-stream");
++    $default_stream_container
++        .find("input")
+         .prop("disabled", !sub.can_change_stream_permissions_requiring_metadata_access);
+ 
+-    const $advanced_configurations_container = $stream_settings.find(
+-        $(".advanced-configurations-container"),
+-    );
+-    $advanced_configurations_container
+-        .find("input, select, button")
++    const $permissions_container = $stream_settings.find($(".channel-permissions"));
++    $permissions_container
++        .find("input, select")
+         .prop("disabled", !sub.can_change_stream_permissions_requiring_metadata_access);
+ 
+-    const $permission_pill_container_elements =
+-        $advanced_configurations_container.find(".pill-container");
++    const $permission_pill_container_elements = $permissions_container.find(".pill-container");
+ 
+     $stream_settings
+         .find(".channel-folder-widget-container button")
+         .prop("disabled", !sub.can_change_stream_permissions_requiring_metadata_access);
+ 
+     if (!sub.can_change_stream_permissions_requiring_metadata_access) {
+-        $general_settings_container.find(".default-stream").addClass("control-label-disabled");
++        $default_stream_container.addClass("control-label-disabled");
+         settings_components.disable_group_permission_setting($permission_pill_container_elements);
+         return;
+     }
+@@ -383,7 +380,7 @@ export function enable_or_disable_permission_settings_in_edit_panel(
+         $stream_privacy_values.prop("disabled", true);
+ 
+         for (const setting_name of settings_config.stream_group_permission_settings_requiring_content_access) {
+-            const $setting_element = $advanced_configurations_container.find("#id_" + setting_name);
++            const $setting_element = $permissions_container.find("#id_" + setting_name);
+             settings_components.disable_group_permission_setting($setting_element);
+         }
+     }
+diff --git a/web/templates/stream_settings/channel_permissions.hbs b/web/templates/stream_settings/channel_permissions.hbs
+index f934c52741..d8dd14f7de 100644
+--- a/web/templates/stream_settings/channel_permissions.hbs
++++ b/web/templates/stream_settings/channel_permissions.hbs
+@@ -6,6 +6,11 @@
+         {{/if}}
+     </div>
+ 
++    {{#if is_stream_edit}}
++        <div class="stream-permissions-warning-banner"></div>
++        {{> channel_type .}}
++    {{/if}}
++
+     {{> ../settings/group_setting_value_pill_input
+       setting_name="can_subscribe_group"
+       label=group_setting_labels.can_subscribe_group
+diff --git a/web/templates/stream_settings/new_stream_configuration.hbs b/web/templates/stream_settings/new_stream_configuration.hbs
+new file mode 100644
+index 0000000000..fd2e00dad0
+--- /dev/null
++++ b/web/templates/stream_settings/new_stream_configuration.hbs
+@@ -0,0 +1,35 @@
++{{> channel_type .}}
++
++{{#if ask_to_announce_stream}}
++    <div id="announce-new-stream">
++        {{>announce_stream_checkbox . }}
++    </div>
++{{/if}}
++
++<div class="default-stream">
++    {{> ../settings/settings_checkbox
++      prefix=prefix
++      setting_name="is_default_stream"
++      is_checked=check_default_stream
++      label=(t "Default channel for new users")
++      help_link="/help/set-default-channels-for-new-users"
++      }}
++</div>
++
++{{> channel_folder .
++  is_stream_edit=false
++  }}
++
++<div class="advanced-configurations-container">
++    <div class="advance-config-title-container">
++        <div class="advance-config-toggle-area">
++            <i class="fa fa-sm fa-caret-right toggle-advanced-configurations-icon" aria-hidden="true"></i>
++            <h3 class="stream_setting_subsection_title"><span>{{t 'Advanced configuration' }}</span></h3>
++        </div>
++    </div>
++    <div class="advanced-configurations-collapase-view hide">
++        {{> channel_permissions .
++          is_stream_edit=false
++          }}
++    </div>
++</div>
+diff --git a/web/templates/stream_settings/stream_creation_form.hbs b/web/templates/stream_settings/stream_creation_form.hbs
+index 323380ac3c..defd9a164a 100644
+--- a/web/templates/stream_settings/stream_creation_form.hbs
++++ b/web/templates/stream_settings/stream_creation_form.hbs
+@@ -23,9 +23,8 @@
+                           placeholder="{{t 'Channel description' }}" value="" autocomplete="off" maxlength="{{ max_stream_description_length }}" />
+                     </section>
+                     <section id="make-invite-only">
+-                        <div class="stream-types">
+-                            {{> stream_permissions .
+-                              is_stream_edit=false
++                        <div class="new-stream-configuration">
++                            {{> new_stream_configuration .
+                               prefix="id_new_"
+                               channel_folder_widget_name="new_channel_folder_id"}}
+                         </div>
+diff --git a/web/templates/stream_settings/stream_permissions.hbs b/web/templates/stream_settings/stream_permissions.hbs
+deleted file mode 100644
+index ccc785ac9a..0000000000
+--- a/web/templates/stream_settings/stream_permissions.hbs
++++ /dev/null
+@@ -1,42 +0,0 @@
+-<div class="stream-permissions {{#if is_stream_edit}}settings-subsection-parent{{/if}}">
+-    {{#if is_stream_edit}}
+-        <div class="subsection-header">
+-            <h3 class="stream_setting_subsection_title">{{t "Channel permissions" }}
+-            </h3>
+-            {{> ../settings/settings_save_discard_widget section_name="stream-permissions" }}
+-        </div>
+-        <div class="stream-permissions-warning-banner"></div>
+-    {{/if}}
+-
+-    {{> channel_type .}}
+-
+-    {{#if ask_to_announce_stream}}
+-        <div id="announce-new-stream">
+-            {{>announce_stream_checkbox . }}
+-        </div>
+-    {{/if}}
+-
+-    <div class="default-stream">
+-        {{> ../settings/settings_checkbox
+-          prefix=prefix
+-          setting_name="is_default_stream"
+-          is_checked=check_default_stream
+-          label=(t "Default channel for new users")
+-          help_link="/help/set-default-channels-for-new-users"
+-          }}
+-    </div>
+-</div>
+-
+-{{> channel_folder .}}
+-
+-<div class="advanced-configurations-container {{#if is_stream_edit}}settings-subsection-parent{{/if}}">
+-    <div class="advance-config-title-container {{#if is_stream_edit}}subsection-header{{/if}}">
+-        <div class="advance-config-toggle-area">
+-            <i class="fa fa-sm fa-caret-right toggle-advanced-configurations-icon" aria-hidden="true"></i>
+-            <h3 class="stream_setting_subsection_title"><span>{{t 'Advanced configuration' }}</span></h3>
+-        </div>
+-    </div>
+-    <div class="advanced-configurations-collapase-view hide">
+-        {{> channel_permissions .}}
+-    </div>
+-</div>
+diff --git a/web/templates/stream_settings/stream_settings.hbs b/web/templates/stream_settings/stream_settings.hbs
+index 24e586b902..130434ba34 100644
+--- a/web/templates/stream_settings/stream_settings.hbs
++++ b/web/templates/stream_settings/stream_settings.hbs
+@@ -75,35 +75,30 @@
+                   rendered_description=rendered_description
+                   }}
+             </div>
+-            {{> stream_permissions .
+-              stream_privacy_policy_values=../stream_privacy_policy_values
+-              stream_privacy_policy=../stream_privacy_policy
+-              stream_topics_policy_values=../stream_topics_policy_values
+-              empty_string_topic_display_name=../empty_string_topic_display_name
+-              check_default_stream=../check_default_stream
+-              zulip_plan_is_not_limited=../zulip_plan_is_not_limited
+-              upgrade_text_for_wide_organization_logo=../upgrade_text_for_wide_organization_logo
+-              is_business_type_org=../is_business_type_org
+-              has_billing_access=../has_billing_access
+-              org_level_message_retention_setting=../org_level_message_retention_setting
+-              is_stream_edit=true
+-              prefix="id_"
+-              group_setting_labels=../group_setting_labels
+-              channel_folder_widget_name="folder_id"
+-              is_admin=../is_admin
+-              }}
+             {{/with}}
+-            <div class="stream_details_box">
+-                <div class="stream_details_box_header">
++            <div class="stream_details_box settings-subsection-parent">
++                <div class="stream_details_box_header subsection-header">
+                     <h3 class="stream_setting_subsection_title">
+                         {{t "Channel details" }}
+                     </h3>
+                     <div class="stream_email_address_error alert-notification"></div>
++                    {{> ../settings/settings_save_discard_widget section_name="channel-details"}}
+                 </div>
+                 {{#with sub}}
+                 <div class="creator_details stream_details_subsection">
+                     {{> ../creator_details .}}
+                 </div>
++
++                <div class="default-stream">
++                    {{> ../settings/settings_checkbox
++                      prefix="id_"
++                      setting_name="is_default_stream"
++                      is_checked=../check_default_stream
++                      label=(t "Default channel for new users")
++                      help_link="/help/set-default-channels-for-new-users"
++                      }}
++                </div>
++
+                 <div class="stream_details_subsection">
+                     {{t "Channel ID"}}<br/>
+                     {{stream_id}}
+@@ -128,6 +123,11 @@
+                     </span>
+                 </div>
+             </div>
++
++            {{> channel_folder .
++              is_stream_edit=true
++              channel_folder_widget_name="folder_id"
++              }}
+         </div>
+ 
+         <div id="personal-stream-settings" class="stream_section" data-stream-section="personal">
+@@ -194,5 +194,16 @@
+             </div>
+             {{/with}}
+         </div>
++
++        <div class="stream_section channel-permissions" data-stream-section="permissions">
++            <div class="stream-settings-tip-container">
++                {{> stream_settings_tip
++                  can_change_stream_permissions_requiring_metadata_access=sub.can_change_stream_permissions_requiring_metadata_access }}
++            </div>
++            {{> channel_permissions .
++              prefix="id_"
++              is_stream_edit=true
++              }}
++        </div>
+     </div>
+ </div>

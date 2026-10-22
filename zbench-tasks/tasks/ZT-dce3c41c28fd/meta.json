@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-dce3c41c28fd",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden test pins exact rendered-HTML snapshot strings \u2014 full template output including indentation, newlines, and attribute ordering (e.g. '    <div class=\"typeahead-image\">\\n' + ...). Any functionally equivalent solution with different whitespace, class ordering, or element nesting would fail, so the grader measures incidental template formatting rather than the observable behavior (indicator overlaid on avatar, which is itself a visual/CSS-positioning outcome). This is exactly the brittle whole-HTML-snapshot pattern the rubric says to reject.",
+  "summary": "typeahead: Place availability indicator on avatar in user typeaheads.",
+  "lang": "web",
+  "issue": 36425,
+  "fix_commit": "dce3c41c28fd243c6c02c9aa64a0748b99e4c204",
+  "base_commit": "da18508d95e1293ca8c64d7f911003206435f0df",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/dce3c41c28fd243c6c02c9aa64a0748b99e4c204",
+    "issue_url": "https://github.com/zulip/zulip/issues/36425"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "task_id": "ZT-facbdf08fc2f",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "integrations: Handle approval/unapproval for GitLab MRs.",
+  "type": "other",
+  "lang": "py",
+  "issue": 34222,
+  "fix_commit": "facbdf08fc2fe99838fc413d02c39dd1adbf16d8",
+  "base_commit": "0b3f0273e6043b352cef129a7ecf9ff37ec74351",
+  "env_fingerprint": "d321ae697173",
+  "fail_to_pass": [
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_merge_request_approval_event_message",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_merge_request_unapproval_event_message",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_merge_request_updated_event_message"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 10,
+    "files": 2,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The GitLab webhook integration must handle merge request events whose payload has object_attributes.action set to \"approval\" or \"unapproval\" (sent by GitLab when a merge request requires multiple approvers), instead of ignoring or erroring on them.",
+    "For an \"approval\" event, the notification message must phrase the action as \"added their approval for\", e.g. \"<user> added their approval for <linked MR>\" following the existing merge-request message format.",
+    "For an \"unapproval\" event, the notification message must phrase the action as \"removed their approval for\", following the same format."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 456,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Sumit Bhanushali",
+    "email": "sumit.bhanushali63@gmail.com",
+    "date": "2025-04-28"
+  },
+  "contamination": {
+    "fix_public_at": "2025-04-28",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-03-29T14:47:59Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/facbdf08fc2fe99838fc413d02c39dd1adbf16d8",
+    "issue_url": "https://github.com/zulip/zulip/issues/34222"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-facbdf08fc2f",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_merge_request_approval_event_message",
+        "test_merge_request_unapproval_event_message"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 107.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

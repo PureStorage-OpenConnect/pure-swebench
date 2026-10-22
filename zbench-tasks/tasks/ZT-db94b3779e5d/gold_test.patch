@@ -1,0 +1,59 @@
+diff --git a/web/tests/filter.test.cjs b/web/tests/filter.test.cjs
+index c03fa6fb63..1b694a84c7 100644
+--- a/web/tests/filter.test.cjs
++++ b/web/tests/filter.test.cjs
+@@ -1052,6 +1052,11 @@ test("canonicalization", () => {
+     assert.equal(term.operator, "sender");
+     assert.equal(term.operand, me.user_id);
+ 
++    // mentions:me redirects to is:mentioned
++    term = Filter.convert_suggestion_to_term({operator: "mentions", operand: "me"});
++    assert.equal(term.operator, "is");
++    assert.equal(term.operand, "mentioned");
++
+     // "pm-with" was renamed to "dm"
+     term = Filter.convert_suggestion_to_term({operator: "pm-with", operand: "me"});
+     assert.equal(term.operator, "dm");
+@@ -1664,6 +1669,14 @@ test("parse", () => {
+     terms = [{operator: "sender", operand: `${me.user_id}`, negated: true}];
+     _test(true);
+ 
++    string = "mentions:me";
++    terms = [{operator: "is", operand: "mentioned"}];
++    _test(true);
++
++    string = "-mentions:me";
++    terms = [{operator: "is", operand: "mentioned", negated: true}];
++    _test(true);
++
+     string = "https://www.google.com";
+     terms = [{operator: "search", operand: "https://www.google.com"}];
+     _test();
+@@ -2258,6 +2271,7 @@ test("convert_suggestion_to_term", () => {
+         [`dm:${[alice.user_id, -1]}`, false],
+         [`dm:${[alice.user_id, joe.user_id]}`, true],
+         [`mentions:${alice.user_id}`, true],
++        ["mentions:me", true],
+         ["mentions:-1", false],
+         ["mentions:invalid", false],
+     ];
+diff --git a/web/tests/hash_util.test.cjs b/web/tests/hash_util.test.cjs
+index 0fd9440afe..a0a3955240 100644
+--- a/web/tests/hash_util.test.cjs
++++ b/web/tests/hash_util.test.cjs
+@@ -203,6 +203,15 @@ run_test("test_parse_narrow", () => {
+         hash_util.parse_narrow(["narrow", "stream", "99-frontend", "topic", "", "near", ""]),
+         undefined,
+     );
++
++    // mentions:me in URL is converted to is:mentioned.
++    assert.deepEqual(hash_util.parse_narrow(["narrow", "mentions", "me"]), [
++        {negated: false, operator: "is", operand: "mentioned"},
++    ]);
++
++    assert.deepEqual(hash_util.parse_narrow(["narrow", "-mentions", "me"]), [
++        {negated: true, operator: "is", operand: "mentioned"},
++    ]);
+ });
+ 
+ run_test("test_channels_settings_edit_url", () => {

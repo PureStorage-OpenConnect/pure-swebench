@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-be5c81286cc4",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "rendered_markdown: Offset ordered lists by start and count.",
+  "type": "other",
+  "lang": "web",
+  "issue": 33424,
+  "fix_commit": "be5c81286cc4f60bcafdc78d47c1337a56af1bdf",
+  "base_commit": "1c7b1187df5eca7d07b81f15c8e0ac626e05177d",
+  "env_fingerprint": "24172ed2513c",
+  "fail_to_pass": [
+    "web/tests/postprocess_content.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 12,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "postprocess_content (the pre-existing HTML postprocessing entry point) adds a CSS class of the form `counter-length-<N>` to every `<ol>` element in the rendered message content",
+    "`<N>` is the number of decimal digits in the largest list-item counter value, computed as (the ol's `start` attribute, defaulting to 1 when absent) + (number of child items) - 1; e.g. start=9 with 2 items gives max counter 10, so class `counter-length-2`",
+    "the class is appended to the ol's existing attributes; the `start` attribute and list contents are otherwise preserved unchanged"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 436,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Karl Stolley",
+    "email": "karl@zulip.com",
+    "date": "2025-02-12"
+  },
+  "contamination": {
+    "fix_public_at": "2025-02-12",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-02-12T03:36:17Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/be5c81286cc4f60bcafdc78d47c1337a56af1bdf",
+    "issue_url": "https://github.com/zulip/zulip/issues/33424"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-be5c81286cc4",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 67.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

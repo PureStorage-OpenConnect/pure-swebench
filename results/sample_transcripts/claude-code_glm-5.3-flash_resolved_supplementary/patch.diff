@@ -1,0 +1,18 @@
+diff --git a/web/src/reactions.ts b/web/src/reactions.ts
+index 6a35f4f..34d6d24 100644
+--- a/web/src/reactions.ts
++++ b/web/src/reactions.ts
+@@ -469,8 +469,11 @@ export let remove_reaction_from_view = (
+ 
+     if (reaction_count === 0) {
+         // If this user was the only one reacting for this emoji, we simply
+-        // remove the reaction and exit.
+-        $reaction.remove();
++        // remove the reaction and exit.  We remove the parent container
++        // element, since the reaction element is nested inside a
++        // .message_reaction_container wrapper that would otherwise be left
++        // behind as an empty element taking up space in the reactions row.
++        $reaction.parent().remove();
+         update_vote_text_on_message(message);
+         return;
+     }

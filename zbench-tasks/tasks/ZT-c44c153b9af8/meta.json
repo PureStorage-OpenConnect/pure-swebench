@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-c44c153b9af8",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "settings: Improve UI for email changes.",
+  "type": "other",
+  "lang": "web",
+  "issue": 31975,
+  "fix_commit": "c44c153b9af87f6b0b5638dfa91bd6c5e014a6d3",
+  "base_commit": "74112e4034bafefa050f52049a1edddb84738ba5",
+  "env_fingerprint": "e421c3eb6a1d",
+  "fail_to_pass": [
+    "web/tests/settings_org.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 15,
+    "files": 3,
+    "hunks": 5,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "In Account settings, when the user cannot change their email (e.g. realm_email_changes_disabled is true), the change-email button (existing element `#change_email_button`) must be hidden rather than disabled: it gets the codebase-standard `hide` CSS class added; when the user can change their email, the `hide` class must be absent (the button no longer uses the `disabled` property to convey this state)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 888,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Saubhagya Patel",
+    "email": "patelsaubhagya0144@gmail.com",
+    "date": "2025-01-07"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-07",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-10-11T19:47:43Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/c44c153b9af87f6b0b5638dfa91bd6c5e014a6d3",
+    "issue_url": "https://github.com/zulip/zulip/issues/31975"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-c44c153b9af8",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 85.6
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

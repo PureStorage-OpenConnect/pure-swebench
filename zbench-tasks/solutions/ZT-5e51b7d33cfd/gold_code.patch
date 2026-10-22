@@ -1,0 +1,591 @@
+diff --git a/zerver/actions/custom_profile_fields.py b/zerver/actions/custom_profile_fields.py
+index d26a5426d1..45dfc8d27e 100644
+--- a/zerver/actions/custom_profile_fields.py
++++ b/zerver/actions/custom_profile_fields.py
+@@ -4,10 +4,12 @@ import orjson
+ from django.db import transaction
+ from django.utils.translation import gettext as _
+ 
++from zerver.actions.message_send import send_user_profile_update_notification
+ from zerver.lib.exceptions import JsonableError
+ from zerver.lib.external_accounts import DEFAULT_EXTERNAL_ACCOUNTS
++from zerver.lib.mention import silent_mention_syntax_for_user
+ from zerver.lib.streams import render_stream_description
+-from zerver.lib.types import ProfileDataElementUpdateDict, ProfileFieldData
++from zerver.lib.types import ProfileDataElementUpdateDict, ProfileFieldData, UserProfileChangeDict
+ from zerver.lib.users import get_user_ids_who_can_access_user
+ from zerver.models import CustomProfileField, CustomProfileFieldValue, Realm, UserProfile
+ from zerver.models.custom_profile_fields import custom_profile_fields_for_realm
+@@ -173,7 +175,11 @@ def notify_user_update_custom_profile_data(
+ def do_update_user_custom_profile_data_if_changed(
+     user_profile: UserProfile,
+     data: list[ProfileDataElementUpdateDict],
++    acting_user: UserProfile | None,
++    notify: bool,
+ ) -> None:
++    changes: list[UserProfileChangeDict] = []
++
+     for custom_profile_field in data:
+         field_value, created = CustomProfileFieldValue.objects.get_or_create(
+             user_profile=user_profile, field_id=custom_profile_field["id"]
+@@ -191,6 +197,8 @@ def do_update_user_custom_profile_data_if_changed(
+             # we have nothing to do here for this field.
+             continue
+ 
++        old_value = get_custom_profile_field_display_value(field_value)
++
+         field_value.value = custom_profile_field_value_string
+         if field_value.field.is_renderable():
+             field_value.rendered_value = render_stream_description(
+@@ -209,10 +217,45 @@ def do_update_user_custom_profile_data_if_changed(
+             },
+         )
+ 
++        new_value = get_custom_profile_field_display_value(field_value)
++
++        changes.append(
++            UserProfileChangeDict(
++                field_name=field_value.field.name,
++                old_value=old_value,
++                new_value=new_value,
++            )
++        )
++
++    if changes and notify:
++        send_user_profile_update_notification(
++            user_profile=user_profile, acting_user=acting_user, changes=changes
++        )
++
++
++def get_custom_profile_field_display_value(field_value: CustomProfileFieldValue) -> str:
++    """Convert custom profile field value to human-readable string based on field type."""
++    if not field_value.value:
++        return ""
++    type = field_value.field.field_type
++
++    if type == CustomProfileField.SELECT:
++        field_data_dict = orjson.loads(field_value.field.field_data)
++        value_key = field_value.value
++        return field_data_dict[value_key]["text"]
++
++    if type == CustomProfileField.USER:
++        user_ids = orjson.loads(field_value.value)
++        users = UserProfile.objects.filter(id__in=user_ids).only("id", "full_name")
++        users_mentions = [silent_mention_syntax_for_user(user) for user in users]
++        return (", ").join(users_mentions)
++
++    return field_value.value
++
+ 
+ @transaction.atomic(savepoint=False)
+ def check_remove_custom_profile_field_value(
+-    user_profile: UserProfile, field_id: int, acting_user: UserProfile
++    user_profile: UserProfile, field_id: int, acting_user: UserProfile, notify: bool
+ ) -> None:
+     try:
+         custom_profile_field = CustomProfileField.objects.get(realm=user_profile.realm, id=field_id)
+@@ -226,6 +269,7 @@ def check_remove_custom_profile_field_value(
+         field_value = CustomProfileFieldValue.objects.get(
+             field=custom_profile_field, user_profile=user_profile
+         )
++        old_value = get_custom_profile_field_display_value(field_value)
+         field_value.delete()
+         notify_user_update_custom_profile_data(
+             user_profile,
+@@ -236,6 +280,17 @@ def check_remove_custom_profile_field_value(
+                 "type": custom_profile_field.field_type,
+             },
+         )
++        if notify:
++            changes: list[UserProfileChangeDict] = [
++                UserProfileChangeDict(
++                    field_name=custom_profile_field.name,
++                    old_value=old_value,
++                    new_value="",
++                )
++            ]
++            send_user_profile_update_notification(
++                user_profile=user_profile, acting_user=acting_user, changes=changes
++            )
+     except CustomProfileField.DoesNotExist:
+         raise JsonableError(_("Field id {id} not found.").format(id=field_id))
+     except CustomProfileFieldValue.DoesNotExist:
+diff --git a/zerver/actions/data_import.py b/zerver/actions/data_import.py
+index 56d5e90942..de5652575f 100644
+--- a/zerver/actions/data_import.py
++++ b/zerver/actions/data_import.py
+@@ -101,7 +101,10 @@ def import_slack_data(event: dict[str, Any]) -> None:
+                 )
+                 if importing_user.role != UserProfile.ROLE_REALM_OWNER:
+                     do_change_user_role(
+-                        importing_user, UserProfile.ROLE_REALM_OWNER, acting_user=importing_user
++                        importing_user,
++                        UserProfile.ROLE_REALM_OWNER,
++                        acting_user=importing_user,
++                        notify=False,
+                     )
+                 preregistration_realm.status = confirmation_settings.STATUS_USED
+             except UserProfile.DoesNotExist:
+diff --git a/zerver/actions/message_send.py b/zerver/actions/message_send.py
+index 9d9928ae7a..4b0d1d2786 100644
+--- a/zerver/actions/message_send.py
++++ b/zerver/actions/message_send.py
+@@ -41,7 +41,7 @@ from zerver.lib.exceptions import (
+ )
+ from zerver.lib.markdown import MessageRenderingResult, render_message_markdown
+ from zerver.lib.markdown import version as markdown_version
+-from zerver.lib.mention import MentionBackend, MentionData
++from zerver.lib.mention import MentionBackend, MentionData, silent_mention_syntax_for_user
+ from zerver.lib.message import (
+     SendMessageRequest,
+     check_user_group_mention_allowed,
+@@ -81,6 +81,7 @@ from zerver.lib.thumbnail import manifest_and_get_user_upload_previews, rewrite_
+ from zerver.lib.timestamp import timestamp_to_datetime
+ from zerver.lib.topic import get_topic_display_name, participants_for_topic
+ from zerver.lib.topic_link_util import get_stream_link_syntax
++from zerver.lib.types import UserProfileChangeDict
+ from zerver.lib.url_preview.types import UrlEmbedData
+ from zerver.lib.user_groups import (
+     check_any_user_has_permission_by_role,
+@@ -2209,3 +2210,44 @@ def maybe_send_channel_events_notice(
+         archived_channel_notice=archived_channel_notice,
+         acting_user=acting_user,
+     )
++
++
++def send_user_profile_update_notification(
++    user_profile: UserProfile,
++    acting_user: UserProfile | None,
++    changes: list[UserProfileChangeDict],
++) -> None:
++    if (acting_user is not None and acting_user.id == user_profile.id) or user_profile.is_bot:
++        return
++
++    notification_bot = get_system_bot(settings.NOTIFICATION_BOT, user_profile.realm_id)
++
++    def format_empty_value(value: str) -> str:
++        """Return italicized 'None' for empty values, otherwise return the value."""
++        if value == "":
++            return "*None*"
++        return value
++
++    with override_language(user_profile.default_language):
++        # We can't name which user made the change, since it was done either on the command line or via an automated job like LDAP synchronization.
++        # It's still useful to tell the user about the update.
++        if acting_user is None:
++            message = _("The following changes have been made to your account.")
++        else:
++            user_mention = silent_mention_syntax_for_user(acting_user)
++            message = _("{user} has made the following changes to your account.").format(
++                user=user_mention
++            )
++
++        for i, change in enumerate(changes):
++            message += _(
++                "\n- **Old {field_name}:** {old_value}\n- **New {field_name}:** {new_value}\n"
++            ).format(
++                field_name=change["field_name"],
++                old_value=format_empty_value(change["old_value"]),
++                new_value=format_empty_value(change["new_value"]),
++            )
++            if i < len(changes) - 1:
++                message += "____\n\n"
++
++    internal_send_private_message(notification_bot, user_profile, message)
+diff --git a/zerver/actions/user_settings.py b/zerver/actions/user_settings.py
+index 4c5db724e0..f543c998bf 100644
+--- a/zerver/actions/user_settings.py
++++ b/zerver/actions/user_settings.py
+@@ -9,6 +9,7 @@ from django.utils.timezone import now as timezone_now
+ 
+ from confirmation.models import Confirmation, create_confirmation_link
+ from confirmation.settings import STATUS_REVOKED, STATUS_USED
++from zerver.actions.message_send import send_user_profile_update_notification
+ from zerver.actions.presence import do_update_user_presence
+ from zerver.lib.avatar import avatar_url
+ from zerver.lib.cache import (
+@@ -22,6 +23,7 @@ from zerver.lib.i18n import get_language_name
+ from zerver.lib.queue import queue_event_on_commit
+ from zerver.lib.send_email import FromAddress, clear_scheduled_emails, send_email
+ from zerver.lib.timezone import canonicalize_timezone
++from zerver.lib.types import UserProfileChangeDict
+ from zerver.lib.upload import delete_avatar_image
+ from zerver.lib.users import (
+     can_access_delivery_email,
+@@ -223,7 +225,7 @@ def do_change_password(user_profile: UserProfile, password: str, commit: bool =
+ 
+ @transaction.atomic(savepoint=False)
+ def do_change_full_name(
+-    user_profile: UserProfile, full_name: str, acting_user: UserProfile | None
++    user_profile: UserProfile, full_name: str, acting_user: UserProfile | None, notify: bool
+ ) -> None:
+     old_name = user_profile.full_name
+     if old_name == full_name:
+@@ -253,6 +255,17 @@ def do_change_full_name(
+             bot_owner_user_ids(user_profile),
+         )
+ 
++    if notify:
++        changes: list[UserProfileChangeDict] = [
++            UserProfileChangeDict(
++                field_name="full name",
++                old_value=old_name,
++                new_value=full_name,
++            )
++        ]
++
++        send_user_profile_update_notification(user_profile, acting_user, changes)
++
+ 
+ def check_change_full_name(
+     user_profile: UserProfile, full_name_raw: str, acting_user: UserProfile | None
+@@ -264,7 +277,7 @@ def check_change_full_name(
+     new_full_name = check_full_name(
+         full_name_raw=full_name_raw, user_profile=user_profile, realm=user_profile.realm
+     )
+-    do_change_full_name(user_profile, new_full_name, acting_user)
++    do_change_full_name(user_profile, new_full_name, acting_user, notify=True)
+     return new_full_name
+ 
+ 
+@@ -286,7 +299,7 @@ def check_change_bot_full_name(
+         full_name=new_full_name,
+         is_activation=False,
+     )
+-    do_change_full_name(user_profile, new_full_name, acting_user)
++    do_change_full_name(user_profile, new_full_name, acting_user, notify=False)
+ 
+ 
+ @transaction.atomic(durable=True)
+diff --git a/zerver/actions/users.py b/zerver/actions/users.py
+index fc6d6497fc..a43566c7cf 100644
+--- a/zerver/actions/users.py
++++ b/zerver/actions/users.py
+@@ -14,6 +14,7 @@ from django.utils.timezone import now as timezone_now
+ from django.utils.translation import get_language
+ 
+ from zerver.actions.message_delete import do_delete_messages_by_sender
++from zerver.actions.message_send import send_user_profile_update_notification
+ from zerver.actions.streams import bulk_remove_subscriptions, send_peer_remove_events
+ from zerver.actions.user_groups import (
+     do_send_user_group_members_update_event,
+@@ -46,7 +47,7 @@ from zerver.lib.streams import (
+     stream_to_dict,
+ )
+ from zerver.lib.subscription_info import bulk_get_subscriber_peer_info
+-from zerver.lib.types import UserGroupMembersData
++from zerver.lib.types import UserGroupMembersData, UserProfileChangeDict
+ from zerver.lib.user_counts import realm_user_count_by_role
+ from zerver.lib.user_groups import (
+     convert_to_user_group_members_dict,
+@@ -583,7 +584,7 @@ def send_stream_events_for_role_update(
+ 
+ @transaction.atomic(savepoint=False)
+ def do_change_user_role(
+-    user_profile: UserProfile, value: int, *, acting_user: UserProfile | None
++    user_profile: UserProfile, value: int, *, acting_user: UserProfile | None, notify: bool
+ ) -> None:
+     # We want to both (a) take a lock on the UserProfile row, and (b)
+     # modify the passed-in UserProfile object, so that callers see the
+@@ -599,6 +600,8 @@ def do_change_user_role(
+     old_value = user_profile.role
+     if old_value == value:
+         return
++
++    old_role_name = user_profile.get_role_name()
+     old_system_group = get_system_user_group_for_user(user_profile)
+ 
+     previously_accessible_streams = get_streams_for_user(
+@@ -633,6 +636,18 @@ def do_change_user_role(
+     )
+     send_event_on_commit(user_profile.realm, event, get_user_ids_who_can_access_user(user_profile))
+ 
++    if notify:
++        changes: list[UserProfileChangeDict] = [
++            UserProfileChangeDict(
++                field_name="role",
++                old_value=old_role_name,
++                new_value=user_profile.get_role_name(),
++            )
++        ]
++        send_user_profile_update_notification(
++            user_profile=user_profile, acting_user=acting_user, changes=changes
++        )
++
+     UserGroupMembership.objects.filter(
+         user_profile=user_profile, user_group=old_system_group
+     ).delete()
+diff --git a/zerver/lib/scim.py b/zerver/lib/scim.py
+index f3364b3d2f..a15b21147a 100644
+--- a/zerver/lib/scim.py
++++ b/zerver/lib/scim.py
+@@ -340,7 +340,7 @@ class ZulipSCIMUser(SCIMUser):
+             do_change_user_delivery_email(self.obj, email_new_value, acting_user=None)
+ 
+         if role_new_value is not None:
+-            do_change_user_role(self.obj, role_new_value, acting_user=None)
++            do_change_user_role(self.obj, role_new_value, acting_user=None, notify=True)
+ 
+         if is_active_new_value is not None and is_active_new_value:
+             do_reactivate_user(self.obj, acting_user=None)
+diff --git a/zerver/lib/test_classes.py b/zerver/lib/test_classes.py
+index 94408026d5..5ae5080457 100644
+--- a/zerver/lib/test_classes.py
++++ b/zerver/lib/test_classes.py
+@@ -2382,7 +2382,7 @@ class ZulipTestCase(ZulipTestCaseMixin, TestCase):
+         appropriate initial role; this is usually more readable and
+         a bit faster.
+         """
+-        do_change_user_role(user, role, acting_user=None)
++        do_change_user_role(user, role, acting_user=None, notify=False)
+ 
+     def set_user_setting(self, user: UserProfile, setting_name: str, value: bool) -> None:
+         with self.captureOnCommitCallbacks(execute=True):
+@@ -2391,10 +2391,12 @@ class ZulipTestCase(ZulipTestCaseMixin, TestCase):
+     def set_user_custom_profile_data(
+         self, user_profile: UserProfile, data: list[ProfileDataElementUpdateDict]
+     ) -> None:
+-        do_update_user_custom_profile_data_if_changed(user_profile, data)
++        do_update_user_custom_profile_data_if_changed(
++            user_profile, data, acting_user=None, notify=False
++        )
+ 
+     def set_full_name(self, user_profile: UserProfile, full_name: str) -> None:
+-        do_change_full_name(user_profile, full_name, acting_user=None)
++        do_change_full_name(user_profile, full_name, acting_user=None, notify=False)
+ 
+ 
+ def get_row_pks_in_all_tables() -> Iterator[tuple[str, set[int]]]:
+diff --git a/zerver/lib/types.py b/zerver/lib/types.py
+index 8cb22b42bb..d14056f178 100644
+--- a/zerver/lib/types.py
++++ b/zerver/lib/types.py
+@@ -43,6 +43,12 @@ class ProfileDataElementUpdateDict(TypedDict):
+     value: ProfileDataElementValue
+ 
+ 
++class UserProfileChangeDict(TypedDict):
++    field_name: str
++    old_value: str
++    new_value: str
++
++
+ ProfileData: TypeAlias = list[ProfileDataElement]
+ 
+ FieldElement: TypeAlias = tuple[
+diff --git a/zerver/management/commands/bulk_change_user_name.py b/zerver/management/commands/bulk_change_user_name.py
+index b0113a8401..89912522f0 100644
+--- a/zerver/management/commands/bulk_change_user_name.py
++++ b/zerver/management/commands/bulk_change_user_name.py
+@@ -32,6 +32,6 @@ class Command(ZulipBaseCommand):
+                     user_profile = self.get_user(email, realm)
+                     old_name = user_profile.full_name
+                     print(f"{email}: {old_name} -> {new_name}")
+-                    do_change_full_name(user_profile, new_name, None)
++                    do_change_full_name(user_profile, new_name, None, notify=True)
+                 except CommandError:
+                     print(f"e-mail {email} doesn't exist in the realm {realm}, skipping")
+diff --git a/zerver/management/commands/change_user_role.py b/zerver/management/commands/change_user_role.py
+index 563716a97b..b47eb04302 100644
+--- a/zerver/management/commands/change_user_role.py
++++ b/zerver/management/commands/change_user_role.py
+@@ -89,7 +89,7 @@ ONLY perform this on customer request from an authorized person.
+                         "This realm does not have enough licenses to change a guest user's role."
+                     )
+             old_role_name = UserProfile.ROLE_ID_TO_NAME_MAP[user.role]
+-            do_change_user_role(user, new_role, acting_user=None)
++            do_change_user_role(user, new_role, acting_user=None, notify=True)
+             new_role_name = UserProfile.ROLE_ID_TO_NAME_MAP[user.role]
+             print(
+                 f"Role for {user.delivery_email} changed from {old_role_name} to {new_role_name}."
+diff --git a/zerver/views/custom_profile_fields.py b/zerver/views/custom_profile_fields.py
+index 7f22b764af..1d63ff7241 100644
+--- a/zerver/views/custom_profile_fields.py
++++ b/zerver/views/custom_profile_fields.py
+@@ -310,7 +310,7 @@ def remove_user_custom_profile_data(
+     with transaction.atomic(durable=True):
+         for field_id in data:
+             check_remove_custom_profile_field_value(
+-                user_profile, field_id, acting_user=user_profile
++                user_profile, field_id, acting_user=user_profile, notify=False
+             )
+     return json_success(request)
+ 
+@@ -325,6 +325,6 @@ def update_user_custom_profile_data(
+ ) -> HttpResponse:
+     validate_user_custom_profile_data(user_profile.realm.id, data, acting_user=user_profile)
+     with transaction.atomic(durable=True):
+-        do_update_user_custom_profile_data_if_changed(user_profile, data)
++        do_update_user_custom_profile_data_if_changed(user_profile, data, user_profile, notify=True)
+     # We need to call this explicitly otherwise constraints are not check
+     return json_success(request)
+diff --git a/zerver/views/registration.py b/zerver/views/registration.py
+index 611c889b43..79fb0b1d0e 100644
+--- a/zerver/views/registration.py
++++ b/zerver/views/registration.py
+@@ -795,9 +795,9 @@ def registration_helper(
+                 # transaction, to avoid security issues if the process is interrupted halfway,
+                 # e.g. leaving the user reactivated but with the wrong role.
+                 do_activate_mirror_dummy_user(user_profile, acting_user=user_profile)
+-                do_change_user_role(user_profile, role, acting_user=user_profile)
++                do_change_user_role(user_profile, role, acting_user=user_profile, notify=False)
+             do_change_password(user_profile, password)
+-            do_change_full_name(user_profile, full_name, user_profile)
++            do_change_full_name(user_profile, full_name, user_profile, notify=False)
+             do_change_user_setting(user_profile, "timezone", timezone, acting_user=user_profile)
+             do_change_user_setting(
+                 user_profile,
+@@ -1261,10 +1261,15 @@ def realm_import_post_process(
+             # to create this specific realm and cannot have been used
+             # to finish creating an account yet.
+             do_change_user_role(
+-                importing_user, UserProfile.ROLE_REALM_OWNER, acting_user=importing_user
++                importing_user,
++                UserProfile.ROLE_REALM_OWNER,
++                acting_user=importing_user,
++                notify=False,
+             )
+             do_change_user_delivery_email(
+-                importing_user, preregistration_realm.email, acting_user=importing_user
++                importing_user,
++                preregistration_realm.email,
++                acting_user=importing_user,
+             )
+ 
+             preregistration_realm.status = confirmation_settings.STATUS_USED
+diff --git a/zerver/views/users.py b/zerver/views/users.py
+index e13226ce22..d832d733cf 100644
+--- a/zerver/views/users.py
++++ b/zerver/views/users.py
+@@ -299,7 +299,7 @@ def update_user_backend(
+ 
+             check_spare_license_available_for_changing_guest_user_role(user_profile.realm)
+ 
+-        do_change_user_role(target, role, acting_user=user_profile)
++        do_change_user_role(target, role, acting_user=user_profile, notify=True)
+ 
+     if full_name is not None and target.full_name != full_name and full_name.strip() != "":
+         # We don't respect `name_changes_disabled` here because the request
+@@ -313,7 +313,9 @@ def update_user_backend(
+             assert not isinstance(entry.value, int)
+             if entry.value is None or not entry.value:
+                 field_id = entry.id
+-                check_remove_custom_profile_field_value(target, field_id, acting_user=user_profile)
++                check_remove_custom_profile_field_value(
++                    target, field_id, acting_user=user_profile, notify=True
++                )
+             else:
+                 clean_profile_data.append(
+                     {
+@@ -324,7 +326,9 @@ def update_user_backend(
+         validate_user_custom_profile_data(
+             target.realm.id, clean_profile_data, acting_user=user_profile
+         )
+-        do_update_user_custom_profile_data_if_changed(target, clean_profile_data)
++        do_update_user_custom_profile_data_if_changed(
++            target, clean_profile_data, user_profile, notify=True
++        )
+ 
+     if new_email is not None and target.delivery_email != new_email:
+         assert user_profile.can_change_user_emails and user_profile.is_realm_admin
+@@ -499,7 +503,7 @@ def patch_bot_backend(
+         elif not user_profile.is_realm_admin:
+             raise OrganizationAdministratorRequiredError
+ 
+-        do_change_user_role(bot, role, acting_user=user_profile)
++        do_change_user_role(bot, role, acting_user=user_profile, notify=False)
+ 
+     if bot_owner_id is not None and bot.bot_owner_id != bot_owner_id:
+         try:
+diff --git a/zilencer/management/commands/populate_db.py b/zilencer/management/commands/populate_db.py
+index 5c1f3f7e5e..56be3b2129 100644
+--- a/zilencer/management/commands/populate_db.py
++++ b/zilencer/management/commands/populate_db.py
+@@ -561,7 +561,9 @@ class Command(ZulipBaseCommand):
+             assign_time_zone_by_delivery_email("cordelia@zulip.com", "UTC")
+ 
+             iago = get_user_by_delivery_email("iago@zulip.com", zulip_realm)
+-            do_change_user_role(iago, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=None)
++            do_change_user_role(
++                iago, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=None, notify=False
++            )
+             iago.is_staff = True
+             iago.save(update_fields=["is_staff"])
+ 
+@@ -583,13 +585,15 @@ class Command(ZulipBaseCommand):
+             )
+ 
+             desdemona = get_user_by_delivery_email("desdemona@zulip.com", zulip_realm)
+-            do_change_user_role(desdemona, UserProfile.ROLE_REALM_OWNER, acting_user=None)
++            do_change_user_role(
++                desdemona, UserProfile.ROLE_REALM_OWNER, acting_user=None, notify=False
++            )
+ 
+             shiva = get_user_by_delivery_email("shiva@zulip.com", zulip_realm)
+-            do_change_user_role(shiva, UserProfile.ROLE_MODERATOR, acting_user=None)
++            do_change_user_role(shiva, UserProfile.ROLE_MODERATOR, acting_user=None, notify=False)
+ 
+             polonius = get_user_by_delivery_email("polonius@zulip.com", zulip_realm)
+-            do_change_user_role(polonius, UserProfile.ROLE_GUEST, acting_user=None)
++            do_change_user_role(polonius, UserProfile.ROLE_GUEST, acting_user=None, notify=False)
+ 
+             # These bots are directly referenced from code and thus
+             # are needed for the test suite.
+@@ -832,6 +836,8 @@ class Command(ZulipBaseCommand):
+                     {"id": github_profile.id, "value": "zulip"},
+                     {"id": pronouns.id, "value": "he/him"},
+                 ],
++                None,
++                notify=False,
+             )
+             do_update_user_custom_profile_data_if_changed(
+                 hamlet,
+@@ -849,6 +855,8 @@ class Command(ZulipBaseCommand):
+                     {"id": github_profile.id, "value": "zulipbot"},
+                     {"id": pronouns.id, "value": "he/him"},
+                 ],
++                None,
++                notify=False,
+             )
+             # We need to create at least one scheduled message for Iago for the api-test
+             # cURL example to delete an existing scheduled message.
+diff --git a/zproject/backends.py b/zproject/backends.py
+index d94b5c0963..1309c2100c 100644
+--- a/zproject/backends.py
++++ b/zproject/backends.py
+@@ -993,7 +993,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
+                 )
+             except JsonableError as e:
+                 raise ZulipLDAPError(e.msg)
+-            do_change_full_name(user_profile, full_name, None)
++            do_change_full_name(user_profile, full_name, None, notify=True)
+ 
+     def sync_custom_profile_fields_from_ldap(
+         self, user_profile: UserProfile, ldap_user: _LDAPUser
+@@ -1366,7 +1366,7 @@ class ZulipLDAPUser(_LDAPUser):
+             # Change the role properly, updating system groups.
+             updated_role = user_profile.role
+             user_profile.role = original_role
+-            do_change_user_role(user_profile, updated_role, acting_user=None)
++            do_change_user_role(user_profile, updated_role, acting_user=None, notify=True)
+ 
+     def _get_groups(self) -> _LDAPUserGroups:
+         groups = super()._get_groups()
+@@ -1743,7 +1743,7 @@ def sync_user_profile_custom_fields(
+                 "value": value,
+             }
+         )
+-    do_update_user_custom_profile_data_if_changed(user_profile, profile_data)
++    do_update_user_custom_profile_data_if_changed(user_profile, profile_data, None, notify=True)
+ 
+ 
+ @external_auth_method
+@@ -2164,7 +2164,7 @@ def social_auth_sync_user_attributes(
+     # Based on the information collected above, sync what's needed for the user_profile.
+     old_role = user_profile.role
+     if new_role is not None and old_role != new_role:
+-        do_change_user_role(user_profile, new_role, acting_user=None)
++        do_change_user_role(user_profile, new_role, acting_user=None, notify=True)
+         backend.logger.info(
+             "Set role %s for user %s", UserProfile.ROLE_ID_TO_API_NAME[new_role], user_profile.id
+         )

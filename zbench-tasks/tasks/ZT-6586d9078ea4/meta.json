@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-6586d9078ea4",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "copy_and_paste: Paste Excel copied content as image and text.",
+  "type": "other",
+  "lang": "web",
+  "issue": 32968,
+  "fix_commit": "6586d9078ea4c12187cef6dba8a4a801a2d89b0b",
+  "base_commit": "63cab557b5c5b6881192947936204d83def0dc09",
+  "env_fingerprint": "4f386b700f48",
+  "fail_to_pass": [
+    "web/tests/copy_and_paste.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 42,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The `copy_and_paste` module exports a public function `is_single_image(paste_html: string): boolean` that reports whether pasted clipboard HTML should be treated as an image paste (previously an internal check for a lone <img> element; callers use it to decide between image-paste and formatted-text-paste on plain Ctrl+V).",
+    "`is_single_image` must return true for clipboard HTML originating from Microsoft Excel (Office/Excel clipboard export: Excel ProgId/Generator metadata, Office namespaces, xl-prefixed cell classes, StartFragment markers), so that a plain paste of Excel cells is inserted as an image rather than converted text.",
+    "Pasting Excel clipboard HTML with paste-as-plain-formatting (Ctrl+Shift+V) must continue to route through the existing `paste_handler_converter`, yielding the cell text content as formatted text."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 378,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "apoorvapendse",
+    "email": "apoorvavpendse@gmail.com",
+    "date": "2025-01-24"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-24",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-01-08T17:47:45Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/6586d9078ea4c12187cef6dba8a4a801a2d89b0b",
+    "issue_url": "https://github.com/zulip/zulip/issues/32968"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-6586d9078ea4",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 84.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

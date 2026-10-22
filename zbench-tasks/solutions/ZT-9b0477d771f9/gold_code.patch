@@ -1,0 +1,13 @@
+diff --git a/web/templates/empty_feed_notice.hbs b/web/templates/empty_feed_notice.hbs
+index bed147a450..0c2b393eb9 100644
+--- a/web/templates/empty_feed_notice.hbs
++++ b/web/templates/empty_feed_notice.hbs
+@@ -17,7 +17,7 @@
+                 {{#if is_stop_word}}
+                 <del>{{query_word}}</del>
+                 {{else}}
+-                <span>{{query_word}}</span>
++                <span class="search-query-word">{{query_word}}</span>
+                 {{/if}}
+             {{/each}}
+         {{else}}

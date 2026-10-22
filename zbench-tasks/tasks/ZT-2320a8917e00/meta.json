@@ -1,0 +1,84 @@
+{
+  "task_id": "ZT-2320a8917e00",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "channels: Include unsubscribed channels in move selectors.",
+  "type": "other",
+  "lang": "web",
+  "issue": 33670,
+  "fix_commit": "2320a8917e00b921870fd166005ed096efa7552a",
+  "base_commit": "354a16fb0aa0e3ef6713ab4196b46d5c2552e238",
+  "env_fingerprint": "54a6b02ccbc0",
+  "fail_to_pass": [
+    "web/tests/stream_data.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 19,
+    "files": 2,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The `stream_data` module gains an exported function `get_streams_for_move_messages_widget()` (public within the web app; consumed by the move-topic/move-messages popover) that returns the channel list for the move-messages destination dropdown.",
+    "Each returned entry is a dropdown-widget option of the pre-existing shape `{name, unique_id, stream}`: `name` is the channel's name, `unique_id` is its `stream_id`, and `stream` is the channel's full subscription object, unmodified.",
+    "The returned list includes every non-archived channel whose content the user can access \u2014 not just subscribed channels; unsubscribed channels are included when the user has content access (e.g. public channels, or private channels the user can subscribe to per the channel's group-based permission settings such as `can_subscribe_group`), and excluded when access is lost.",
+    "Ordering: subscribed channels come before unsubscribed channels; within each group, channels are sorted alphabetically by name, case-insensitively."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 337,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "kash2104",
+    "email": "kparikh1104@gmail.com",
+    "date": "2025-05-08"
+  },
+  "contamination": {
+    "fix_public_at": "2025-05-08",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-02-26T17:15:39Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/2320a8917e00b921870fd166005ed096efa7552a",
+    "issue_url": "https://github.com/zulip/zulip/issues/33670"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-2320a8917e00",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 68.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

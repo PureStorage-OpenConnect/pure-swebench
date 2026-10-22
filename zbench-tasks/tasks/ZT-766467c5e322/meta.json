@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-766467c5e322",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The user-visible behavior here (typing '#>' offers topic suggestions for the current channel; selection expands to '#**stream>topic**' or a markdown fallback link for names with special characters) is perfectly specifiable, but the test does not check it through existing interfaces. Instead it binds to the internal plumbing the fix invents between get_candidates and content_typeahead_selected: (1) it hand-constructs TopicSuggestion items with a new boolean field named exactly `is_shortcut_syntax_used` and requires content_typeahead_selected to branch on that field to locate the '#>' token, and (2) the begins_typeahead test deep-equals get_candidates output and asserts every topic suggestion now carries `is_shortcut_syntax_used: false`, pinning both the field's exact name and its unconditional presence on the internal suggestion object. It likewise depends on content_typeahead_selected reading the stream name from `item.stream_data.name` rather than re-deriving it. A solver implementing identical user-facing behavior differently \u2014 e.g. naming the flag `is_shortcut`, storing the matched prefix string, or detecting '#>' vs '#**' directly from the composed text in content_typeahead_selected \u2014 would fail these assertions. No reasonable ticket dictates field names on a private suggestion-object protocol passed between two functions of the same module, so this cannot be cured by a brief.",
+  "summary": "composebox_typeahead: Allow easily linking to topics in same channel.",
+  "lang": "web",
+  "issue": 31420,
+  "fix_commit": "766467c5e3226bf697ef8adb15024c103604423e",
+  "base_commit": "1500ba4211454646ca04ddbea23be395ee55b511",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/766467c5e3226bf697ef8adb15024c103604423e",
+    "issue_url": "https://github.com/zulip/zulip/issues/31420"
+  }
+}

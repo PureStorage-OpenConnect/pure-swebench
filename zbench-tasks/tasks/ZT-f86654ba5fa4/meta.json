@@ -1,0 +1,86 @@
+{
+  "task_id": "ZT-f86654ba5fa4",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "slack_import: Ask importer for default email address visibility.",
+  "type": "other",
+  "lang": "py",
+  "issue": 34982,
+  "fix_commit": "f86654ba5fa42b0f199e779cd264c2ff7f45102e",
+  "base_commit": "4bd9bb1995ba43647ebb9460ff5bea007bd99b00",
+  "env_fingerprint": "806218ad5d12",
+  "fail_to_pass": [
+    "zerver.tests.test_slack_importer.SlackImporter.test_end_to_end_slack_import"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 44,
+    "files": 3,
+    "hunks": 10,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The realm registration/confirmation endpoint accepts a new optional integer form field `email_address_visibility` (JSON-encoded int, one of the valid RealmUserDefault EMAIL_ADDRESS_VISIBILITY values) when the user starts a Slack import, letting the importing user choose the email address visibility applied to imported users.",
+    "The selected value is persisted on the PreregistrationRealm's `data_import_metadata` JSON field under the key `email_address_visibility` before the deferred import job is queued.",
+    "The module `zerver.actions.create_realm` exposes a function `get_email_address_visibility_default(org_type)` returning the default email-address-visibility for a realm of the given org type; for ordinary org types it returns `UserProfile.EMAIL_ADDRESS_VISIBILITY_ADMINS`. This default is used when no visibility was selected by the importing user.",
+    "When the Slack import completes, every non-bot user in the imported realm has `email_address_visibility` set to the importer-selected value (falling back to the org-type default), and the realm's RealmUserDefault is set to the same value; bot users are unaffected and keep `EMAIL_ADDRESS_VISIBILITY_EVERYONE`."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 553,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Aman Agrawal",
+    "email": "amanagr@zulip.com",
+    "date": "2025-11-02"
+  },
+  "contamination": {
+    "fix_public_at": "2025-11-02",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-06-24T20:23:01Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/f86654ba5fa42b0f199e779cd264c2ff7f45102e",
+    "issue_url": "https://github.com/zulip/zulip/issues/34982"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-f86654ba5fa4",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_end_to_end_slack_import"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 114.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

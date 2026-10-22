@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-77cf174b1bd2",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The underlying change is a legitimate, gradable behavior change (banner shows only stop-word info instead of channel/topic echo), but the hidden grader is a brittle rendered-HTML snapshot test: the empty_narrow_html assertions pin exact multi-line template output strings, including incidental indentation and whitespace (e.g. the diff itself shifts `<h1>` indentation and `</div>` placement). Any correct solution whose template differs in trivial whitespace or element ordering fails, so the test grades format over behavior \u2014 matching the explicit drop criterion for exact long output strings / whole rendered-HTML snapshots.",
+  "summary": "empty_feed_notice: Show only query words for empty search results.",
+  "lang": "web",
+  "issue": 34872,
+  "fix_commit": "77cf174b1bd2760d4f99dc35ed82211d4af18bd1",
+  "base_commit": "ad4732adb5bd592a04a3a3b2ea3eed42f7318acd",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/77cf174b1bd2760d4f99dc35ed82211d4af18bd1",
+    "issue_url": "https://github.com/zulip/zulip/issues/34872"
+  }
+}

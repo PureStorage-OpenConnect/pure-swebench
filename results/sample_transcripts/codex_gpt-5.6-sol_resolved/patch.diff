@@ -1,0 +1,86 @@
+diff --git a/zerver/lib/transfer.py b/zerver/lib/transfer.py
+index 8d88673..dd6e65f 100644
+--- a/zerver/lib/transfer.py
++++ b/zerver/lib/transfer.py
+@@ -86,6 +86,28 @@ def _transfer_message_files_to_s3(attachment: Attachment) -> None:
+     except FileNotFoundError:  # nocoverage
+         pass
+ 
++    thumbnail_dir = os.path.join(settings.LOCAL_FILES_DIR, "thumbnail", attachment.path_id)
++    try:
++        thumbnails = os.scandir(thumbnail_dir)
++    except FileNotFoundError:
++        return
++
++    with thumbnails:
++        for thumbnail in thumbnails:
++            if not thumbnail.is_file():
++                continue
++            with open(thumbnail.path, "rb") as f:
++                content_type = guess_type(thumbnail.name)[0] or "application/octet-stream"
++                thumbnail_path = f"thumbnail/{attachment.path_id}/{thumbnail.name}"
++                s3backend.upload_message_attachment(
++                    thumbnail_path,
++                    thumbnail.name,
++                    content_type,
++                    f.read(),
++                    None,
++                )
++                logging.info("Uploaded message thumbnail in path %s", thumbnail.path)
++
+ 
+ def transfer_message_files_to_s3(processes: int) -> None:
+     attachments = list(Attachment.objects.all())
+diff --git a/zerver/tests/test_transfer.py b/zerver/tests/test_transfer.py
+index aa9a238..7c0107d 100644
+--- a/zerver/tests/test_transfer.py
++++ b/zerver/tests/test_transfer.py
+@@ -21,6 +21,7 @@ from zerver.lib.transfer import (
+     transfer_uploads_to_s3,
+ )
+ from zerver.lib.upload import upload_message_attachment
++from zerver.lib.host.example import write_local_file
+ from zerver.models import Attachment, RealmEmoji
+ 
+ 
+@@ -69,13 +70,20 @@ class TransferUploadsToS3Test(ZulipTestCase):
+ 
+         upload_message_attachment("dummy1.txt", "text/plain", b"zulip1!", hamlet)
+         upload_message_attachment("dummy2.txt", "text/plain", b"zulip2!", othello)
++        image_data = read_test_image_file("img.png")
++        upload_message_attachment("img.png", "image/png", image_data, hamlet)
++
++        image_attachment = Attachment.objects.latest("id")
++        thumbnail_data = b"generated webp thumbnail"
++        thumbnail_path = f"thumbnail/{image_attachment.path_id}/100x75.webp"
++        write_local_file("files", thumbnail_path, thumbnail_data)
+ 
+         with self.assertLogs(level="INFO"):
+             transfer_message_files_to_s3(1)
+ 
+         attachments = Attachment.objects.all().order_by("id")
+ 
+-        self.assert_length(list(bucket.objects.all()), 2)
++        self.assert_length(list(bucket.objects.all()), 4)
+ 
+         s3_dummy1 = bucket.Object(attachments[0].path_id).get()
+         self.assertEqual(s3_dummy1["Body"].read(), b"zulip1!")
+@@ -91,6 +99,18 @@ class TransferUploadsToS3Test(ZulipTestCase):
+             {"realm_id": str(attachments[1].realm_id), "user_profile_id": str(othello.id)},
+         )
+ 
++        s3_image = bucket.Object(attachments[2].path_id).get()
++        self.assertEqual(s3_image["Body"].read(), image_data)
++        self.assertEqual(
++            s3_image["Metadata"],
++            {"realm_id": str(attachments[2].realm_id), "user_profile_id": str(hamlet.id)},
++        )
++
++        s3_thumbnail = bucket.Object(thumbnail_path).get()
++        self.assertEqual(s3_thumbnail["Body"].read(), thumbnail_data)
++        self.assertEqual(s3_thumbnail["Metadata"], {})
++        self.assertEqual(s3_thumbnail["ContentType"], "image/webp")
++
+     @mock_aws
+     def test_transfer_emoji_to_s3(self) -> None:
+         bucket = create_s3_buckets(settings.S3_AVATAR_BUCKET)[0]

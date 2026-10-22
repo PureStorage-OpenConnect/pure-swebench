@@ -1,0 +1,15 @@
+diff --git a/zerver/lib/markdown/__init__.py b/zerver/lib/markdown/__init__.py
+index cb64be5c09..8ca3065bef 100644
+--- a/zerver/lib/markdown/__init__.py
++++ b/zerver/lib/markdown/__init__.py
+@@ -101,8 +101,9 @@ html_safelisted_schemes = (
+     "wtai",
+     "xmpp",
+     "zotero",
++    "asanadesktop",
+ )
+-auto_linked_schemes = ["https?", "hansoft", "obsidian", "zotero"]
++auto_linked_schemes = ["https?", "hansoft", "obsidian", "zotero", "asanadesktop"]
+ allowed_schemes = ("http", "https", "ftp", "file", "mid", *html_safelisted_schemes)
+ 
+ 

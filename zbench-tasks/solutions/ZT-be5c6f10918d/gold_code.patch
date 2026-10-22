@@ -1,0 +1,101 @@
+diff --git a/web/src/compose_reply.ts b/web/src/compose_reply.ts
+index ebdeca081b..15a6d45d83 100644
+--- a/web/src/compose_reply.ts
++++ b/web/src/compose_reply.ts
+@@ -16,6 +16,7 @@ import * as inbox_ui from "./inbox_ui.ts";
+ import * as inbox_util from "./inbox_util.ts";
+ import * as message_lists from "./message_lists.ts";
+ import {type Message, single_message_content_schema} from "./message_store.ts";
++import * as message_store from "./message_store.ts";
+ import * as narrow_state from "./narrow_state.ts";
+ import * as people from "./people.ts";
+ import * as recent_view_ui from "./recent_view_ui.ts";
+@@ -328,7 +329,7 @@ export function quote_message(opts: {
+         success(raw_data) {
+             const data = single_message_content_schema.parse(raw_data);
+             assert(data.message.content_type === "text/x-markdown");
+-            message.raw_content = data.message.content;
++            message_store.maybe_update_raw_content(message, data.message.content);
+             replace_content(message, data.message.content);
+         },
+         // We set a timeout here to trigger usage of the fallback markdown via the
+diff --git a/web/src/echo.ts b/web/src/echo.ts
+index 7a54e08715..eb6dc84418 100644
+--- a/web/src/echo.ts
++++ b/web/src/echo.ts
+@@ -394,7 +394,7 @@ export function edit_locally(message: Message, request: LocalEditRequest): Messa
+     }
+ 
+     if (message_content_edited) {
+-        message.raw_content = raw_content;
++        message_store.maybe_update_raw_content(message, raw_content);
+         if (request.content !== undefined) {
+             // This happens in the code path where message editing
+             // failed and we're trying to undo the local echo.  We use
+@@ -410,7 +410,7 @@ export function edit_locally(message: Message, request: LocalEditRequest): Messa
+             // all flags, so we need to restore those flags that are
+             // properties of how the user has interacted with the
+             // message, and not its rendering.
+-            const {content, flags, is_me_message} = markdown.render(message.raw_content);
++            const {content, flags, is_me_message} = markdown.render(raw_content);
+             message_store.update_message_content(message, content);
+             message.flags = flags;
+             message.is_me_message = is_me_message;
+diff --git a/web/src/message_edit.ts b/web/src/message_edit.ts
+index 1df3b2714d..0595d50930 100644
+--- a/web/src/message_edit.ts
++++ b/web/src/message_edit.ts
+@@ -824,8 +824,8 @@ export function start($row: JQuery, edit_box_open_callback?: () => void): void {
+ 
+             const message_markdown_content = data.message.content;
+             if (message_lists.current === msg_list) {
+-                message.raw_content = message_markdown_content;
+-                start_edit_with_content($row, message.raw_content, edit_box_open_callback);
++                message_store.maybe_update_raw_content(message, message_markdown_content);
++                start_edit_with_content($row, message_markdown_content, edit_box_open_callback);
+             }
+         },
+     });
+diff --git a/web/src/message_events.ts b/web/src/message_events.ts
+index d34e65ab55..76137c8551 100644
+--- a/web/src/message_events.ts
++++ b/web/src/message_events.ts
+@@ -505,7 +505,7 @@ export function update_messages(events: UpdateMessageEvent[]): void {
+                 any_message_content_edited = true;
+ 
+                 // Update raw_content, so that editing a few times in a row is fast.
+-                anchor_message.raw_content = event.content;
++                message_store.maybe_update_raw_content(anchor_message, event.content);
+ 
+                 // Editing a message may change the titles for linked
+                 // media, so we must invalidate the asset map.
+diff --git a/web/src/message_store.ts b/web/src/message_store.ts
+index 9021cb3f11..84721f9e7a 100644
+--- a/web/src/message_store.ts
++++ b/web/src/message_store.ts
+@@ -6,6 +6,7 @@ import type {RawLocalMessage} from "./echo.ts";
+ import type {LocalMessage, NewMessage, ProcessedMessage} from "./message_helper.ts";
+ import type {TimeFormattedReminder} from "./message_reminder.ts";
+ import * as people from "./people.ts";
++import * as stream_data from "./stream_data.ts";
+ import {topic_link_schema} from "./types.ts";
+ import type {UserStatusEmojiInfo} from "./user_status.ts";
+ import * as util from "./util.ts";
+@@ -451,3 +452,17 @@ export function get_message_ids_in_stream(stream_id: number): number[] {
+         )
+         .map((message_data) => message_data.message.id);
+ }
++
++export function maybe_update_raw_content(message: Message, raw_content: string | undefined): void {
++    // We shouldn't cache raw_content for messages we won't be receiving update events
++    // for, which in this case are messages from channels the current user isn't
++    // subscribed to.
++    if (message.type === "stream" && !stream_data.is_subscribed(message.stream_id)) {
++        // Clear any existing cached raw_content for this type of message.
++        // Not doing so poses the risk of us using a stale version of the
++        // raw_content after we manually fetch it.
++        message.raw_content = undefined;
++        return;
++    }
++    message.raw_content = raw_content;
++}

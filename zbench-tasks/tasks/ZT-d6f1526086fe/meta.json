@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-d6f1526086fe",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "transfer: Upload thumbnails for image files.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 35029,
+  "fix_commit": "d6f1526086fe2e4cebe6871dfe1609cd7f36705e",
+  "base_commit": "ad915679ad328b86b667f4c11409b67e2e49afdb",
+  "env_fingerprint": "971d5d674361",
+  "fail_to_pass": [
+    "zerver.tests.test_transfer.TransferUploadsToS3Test.test_transfer_message_files"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 30,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 224,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Alex Vandiver",
+    "email": "alexmv@zulip.com",
+    "date": "2025-08-06"
+  },
+  "contamination": {
+    "fix_public_at": "2025-08-06",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-06-27T07:50:56Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/d6f1526086fe2e4cebe6871dfe1609cd7f36705e",
+    "issue_url": "https://github.com/zulip/zulip/issues/35029"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-d6f1526086fe",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_transfer_message_files"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 87.3
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

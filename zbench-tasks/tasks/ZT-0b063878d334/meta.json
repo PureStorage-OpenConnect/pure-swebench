@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-0b063878d334",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "settings_export: Warn if some accounts will be unusable.",
+  "type": "other",
+  "lang": "web",
+  "issue": 34275,
+  "fix_commit": "0b063878d3347a60be34d74bdba9e00c0a4eba9f",
+  "base_commit": "ad77e2d2f5dfca26585bb8d408dec2b529c1c347",
+  "env_fingerprint": "250cecfe1e2c",
+  "fail_to_pass": [
+    "web/tests/people.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 121,
+    "files": 4,
+    "hunks": 7,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "web/src/people.ts exports a new function `get_users_that_match_role_ids(user_ids: Set<number>, role_ids: Set<number>): User[]` \u2014 given a set of user IDs and a set of role codes, it returns the User objects (looked up among known users) whose `role` matches one of the given role codes; users whose role is not in the set (or who can't be resolved) are omitted.",
+    "The role codes passed in are the pre-existing `settings_config.user_role_values.<role>.code` values (admin, owner, moderator, etc.) \u2014 the function filters on the user's existing `role` field against these codes; no new sentinel values are introduced.",
+    "Return-order is not part of the contract: the test compares results as Sets, so any ordering of the matching users passes."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 856,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2025-11-07"
+  },
+  "contamination": {
+    "fix_public_at": "2025-11-07",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-04-02T18:29:07Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/0b063878d3347a60be34d74bdba9e00c0a4eba9f",
+    "issue_url": "https://github.com/zulip/zulip/issues/34275"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-0b063878d334",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 70.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

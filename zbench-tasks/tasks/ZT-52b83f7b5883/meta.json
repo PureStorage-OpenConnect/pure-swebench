@@ -1,0 +1,101 @@
+{
+  "task_id": "ZT-52b83f7b5883",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "topic_list: Filter topics by resolved state in \"more topics\" view.",
+  "type": "feature",
+  "lang": "web",
+  "issue": 24200,
+  "fix_commit": "52b83f7b58830e39d29f858f6f54896cacba5683",
+  "base_commit": "2a325b45307a512166f907ae8dbe6941e3cbc8cc",
+  "env_fingerprint": "11745c2689e1",
+  "fail_to_pass": [
+    "web/tests/pill_typeahead.test.cjs",
+    "web/tests/stream_list.test.cjs",
+    "web/tests/stream_topic_history.test.cjs",
+    "web/tests/topic_list_data.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/topic_list.test.cjs",
+    "web/tests/typeahead_helper.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 188,
+    "files": 6,
+    "hunks": 17,
+    "f2p_count": 4
+  },
+  "interface_requirements": [
+    "Module `web/src/typeahead_helper` exports a new function `render_topic_state(state: string)` that renders a typeahead list item for a topic-state filter option by delegating to the module's existing exported `render_typeahead_item` helper, called with an args object whose `primary` field is the state string (e.g. \"Resolved\"), and returns that helper's result verbatim. `render_topic_state` must be exported as a mutable, stub-able binding (the `export let` rewire idiom) so a test can rewire it, consistent with `setup_topic_search_typeahead`.",
+    "Module `web/src/topic_list_data`'s existing exported `filter_topics_by_search_term(topic_names, search_term)` gains a third parameter `topics_state: string`. Sentinel semantics asserted by the test: the exact string \"is: resolved\" (with a space after the colon) filters to only resolved topics (names beginning with the \"\u2714 \" resolved-topic marker); the exact string \"-is: resolved\" filters to only unresolved topics; ordering of surviving topics is preserved.",
+    "Module `web/src/stream_topic_history` exports a new function `stream_has_locally_available_resolved_topics(stream_id: number): boolean` returning false for a stream with no locally cached topic history, and true once any locally known topic in that stream is resolved (i.e. a message was added with a \"\u2714 \"-prefixed topic name).",
+    "Module `web/src/topic_list` exports a function `setup_topic_search_typeahead()` (as a mutable/stub-able module property) that is invoked from `stream_list`'s topic-zoom flow; the test only requires that it exists under this name and is called during zoom-in so it can be stubbed to a noop."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1747,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Maneesh Shukla",
+    "email": "shuklamaneesh24@gmail.com",
+    "date": "2025-07-01"
+  },
+  "contamination": {
+    "fix_public_at": "2025-07-01",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-01-27T15:53:54Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/52b83f7b58830e39d29f858f6f54896cacba5683",
+    "issue_url": "https://github.com/zulip/zulip/issues/24200"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-52b83f7b5883",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 125.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  },
+  "rebrief": {
+    "date": "2026-08-22",
+    "by": "project owner (curation)",
+    "reason": "corrected brief/gold divergence (false-negative fix); prior attempts superseded, Claude rows re-run"
+  }
+}

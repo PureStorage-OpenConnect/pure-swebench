@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-19880797db2d",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The production diff contains no observable behavior change: it removes 'istanbul ignore' coverage-suppression comments and converts exported functions to `let` bindings with rewire_* setters, which is pure test-mocking scaffolding. The hidden tests are re-enabled/expanded unit tests that pass or fail based on the presence of this test plumbing (rewire helpers, un-skipped tests), not on any user-visible or API-visible outcome. This is effectively a test-only/cleanup change \u2014 there is no real behavior for a grader to fail-before/pass-after on.",
+  "summary": "channel_folders: Fix remaining test TODOs.",
+  "lang": "web",
+  "issue": 35494,
+  "fix_commit": "19880797db2de4d60a23e17a46abe50ada3fb476",
+  "base_commit": "c21d2918da08f5c412665d5ab8872fd51f1bc0ad",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/19880797db2de4d60a23e17a46abe50ada3fb476",
+    "issue_url": "https://github.com/zulip/zulip/issues/35494"
+  }
+}

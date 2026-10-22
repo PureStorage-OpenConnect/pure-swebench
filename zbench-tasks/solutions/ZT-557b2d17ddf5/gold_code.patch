@@ -1,0 +1,178 @@
+diff --git a/zerver/lib/integrations.py b/zerver/lib/integrations.py
+index 92f401f68b..a90c530f7a 100644
+--- a/zerver/lib/integrations.py
++++ b/zerver/lib/integrations.py
+@@ -86,6 +86,12 @@ FIXTURELESS_INTEGRATIONS_WITH_SCREENSHOTS: list[str] = [
+     "rss",
+     "svn",
+     "trac",
++    "errbot",
++    "github_detail",
++    "hubot",
++    "irc",
++    "matrix",
++    "xkcd",
+ ]
+ FIXTURELESS_SCREENSHOT_CONTENT: dict[str, list[fixtureless_integrations.ScreenshotContent]] = {
+     key: [getattr(fixtureless_integrations, key.upper().replace("-", "_"))]
+@@ -120,7 +126,7 @@ class FixturelessScreenshotConfigOptions:
+ 
+ @dataclass
+ class FixturelessScreenshotConfig:
+-    message: str
++    message: str | list[fixtureless_integrations.MessageThread]
+     topic: str
+     channel: str | None = None
+     image_name: str = "001.png"
+@@ -1150,16 +1156,6 @@ INTEGRATIONS_MISSING_SCREENSHOT_CONFIG = (
+     | {"intercom", "notion"}
+     # Integrations that call external API endpoints.
+     | {"slack"}
+-    # Integrations that require screenshots of message threads - support is yet to be added
+-    | {
+-        "errbot",
+-        "github_detail",
+-        "hubot",
+-        "irc",
+-        # Also requires a screenshot on the Matrix side of the bridge
+-        "matrix",
+-        "xkcd",
+-    }
+     | hubot_integration_names
+ )
+ 
+diff --git a/zerver/webhooks/fixtureless_integrations.py b/zerver/webhooks/fixtureless_integrations.py
+index 97c926537d..b36fe94bae 100644
+--- a/zerver/webhooks/fixtureless_integrations.py
++++ b/zerver/webhooks/fixtureless_integrations.py
+@@ -58,9 +58,14 @@ DATE_ISO_8601 = _DT.date().isoformat()
+ DATE_LONG = _DT.strftime("%A, %B %d, %Y")
+ 
+ 
++class MessageThread(TypedDict):
++    sender: str
++    message: str
++
++
+ class ScreenshotContent(TypedDict):
+     topic: str
+-    content: str
++    content: str | list[MessageThread]
+ 
+ 
+ ASANA = ScreenshotContent(
+@@ -88,6 +93,22 @@ DISCOURSE = ScreenshotContent(
+ > {COMMIT_BODY_A}""",
+ )
+ 
++ERRBOT = ScreenshotContent(
++    topic="bot commands",
++    content=[
++        {"sender": f"{BO_NAME}", "message": "@**Errbot Bot** help"},
++        {"sender": "Errbot", "message": "Available commands: `!help`, `!about`, `!config`"},
++        {"sender": f"{BO_NAME}", "message": "!about"},
++        {
++            "sender": "Errbot",
++            "message": """This is Errbot version 6.2.0
++* Visit http://errbot.io/ for more information about errbot in general.
++* Visit http://errbot.io/en/latest/#user-guide for help with configuration,administration and plugin development.
++* Errbot is built through the hard work and dedication of everyone who contributes code, documentation and bug reports at https://github.com/errbotio.""",
++        },
++    ],
++)
++
+ GIT = ScreenshotContent(
+     topic=BRANCH_GIT,
+     content=f"""`{DEPLOYMENT_HASH[:12]}` was deployed to `{BRANCH_GIT}` with:
+@@ -102,6 +123,25 @@ GITHUB_ACTIONS = ScreenshotContent(
+ > Unable to connect.""",
+ )
+ 
++GITHUB_DETAIL = ScreenshotContent(
++    topic="Issue and PR details",
++    content=[
++        {"sender": f"{BO_NAME}", "message": "@**GitHub Detail Bot** #1234"},
++        {
++            "sender": "GitHub Detail Bot",
++            "message": """**[zulip/zulip#1234]() - Fix login bug affecting multiple users**
++Created by **[octocat]()**
++Status - **Open**
++```quote
++Users are experiencing issues when attempting to log in with valid credentials. The login button appears unresponsive and authentication fails silently. This affects both new and existing users across multiple browsers.
++
++Expected: User should be logged in successfully
++Actual: Login fails without error message
++```""",
++        },
++    ],
++)
++
+ GOOGLE_CALENDAR = ScreenshotContent(
+     topic="Team reminders",
+     content=f"""The [Development Sync]() event is scheduled from 2 PM - 3 PM on {DATE_LONG} at Conference Room B.
+@@ -110,6 +150,28 @@ GOOGLE_CALENDAR = ScreenshotContent(
+ [Join call]().""",
+ )
+ 
++HUBOT = ScreenshotContent(
++    topic="general",
++    content=[
++        {"sender": f"{BO_NAME}", "message": "@**Hubot** pug me"},
++        {
++            "sender": "Hubot",
++            "message": "https://29.media.tumblr.com/tumblr_ll3xcmS6Bh1qb08qmo1_500.jpg",
++        },
++    ],
++)
++
++IRC = ScreenshotContent(
++    topic="IRC",
++    content=[
++        {"sender": f"{BO_NAME}", "message": "Message from Zulip!"},
++        {
++            "sender": "IRC Bot",
++            "message": "irc_user: Hi!",
++        },
++    ],
++)
++
+ JENKINS = ScreenshotContent(
+     topic=PROJECT_NAME,
+     content=f"**Build:** [#{REVISION_NUMBER}](): FAILURE :cross_mark:",
+@@ -122,6 +184,17 @@ Google’s recent unveiling of what it calls a “new class of agentic experienc
+ https://www.technologyreview.com/{DATE_ISO_8601.replace("-", "/")}/1119545/dont-let-hype-about-ai-agents-get-ahead-of-reality/""",
+ )
+ 
++MATRIX = ScreenshotContent(
++    topic="Matrix",
++    content=[
++        {"sender": f"{BO_NAME}", "message": "Message from Zulip!"},
++        {
++            "sender": "Matrix Bot",
++            "message": f"**{BO_NAME}** [@johnsmith:matrix.org]: Hi from Matrix!",
++        },
++    ],
++)
++
+ MERCURIAL = ScreenshotContent(
+     topic=BRANCH_MERCURIAL,
+     content=f"""**{BO_NAME}** pushed [2 commits]() to **{BRANCH_MERCURIAL}** (`{REVISION_NUMBER}:{DEPLOYMENT_HASH[:12]}`):
+@@ -184,3 +257,18 @@ TRAC = ScreenshotContent(
+ 
+ status: **new** => **closed**, resolution: => **fixed**""",
+ )
++
++XKCD = ScreenshotContent(
++    topic="xkcd",
++    content=[
++        {"sender": f"{BO_NAME}", "message": "@**xkcd Bot** help"},
++        {
++            "sender": "xkcd Bot",
++            "message": """xkcd bot supports these commands:
++* `@**xkcd** help` to show this help message.
++* `@**xkcd** latest` to fetch the latest comic strip from xkcd.
++* `@**xkcd** random` to fetch a random comic strip from xkcd.
++* `@**xkcd** <comic id>` to fetch a comic strip based on `<comic id>` e.g `@**xkcd** 1234`.""",
++        },
++    ],
++)

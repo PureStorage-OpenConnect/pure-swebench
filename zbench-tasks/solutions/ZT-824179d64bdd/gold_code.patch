@@ -1,0 +1,90 @@
+diff --git a/web/src/stream_data.ts b/web/src/stream_data.ts
+index 4d9e8749a6..4e3c039f97 100644
+--- a/web/src/stream_data.ts
++++ b/web/src/stream_data.ts
+@@ -42,6 +42,15 @@ const DEFAULT_COLOR = "#c2c2c2";
+ // Expose get_subscriber_count for our automated puppeteer tests.
+ export const get_subscriber_count = peer_data.get_subscriber_count;
+ 
++// This is stream_topic_history.channel_has_locally_available_topic.
++// We have to indirectly set it to avoid a circular dependency.
++let channel_has_locally_available_topic: (channel_id: number, topic_name: string) => boolean;
++export function set_channel_has_locally_available_topic(
++    f: (channel_id: number, topic_name: string) => boolean,
++): void {
++    channel_has_locally_available_topic = f;
++}
++
+ class BinaryDict<T> {
+     /*
+       A dictionary that keeps track of which objects had the predicate
+@@ -1223,11 +1232,25 @@ export function can_use_empty_topic(stream_id: number | undefined): boolean {
+     if (sub.topics_policy === settings_config.get_stream_topics_policy_values().inherit.code) {
+         topics_policy = realm.realm_topics_policy;
+     }
+-    return (
+-        topics_policy ===
+-            settings_config.get_stream_topics_policy_values().allow_empty_topic.code ||
+-        topics_policy === settings_config.get_stream_topics_policy_values().empty_topic_only.code
+-    );
++
++    if (
++        topics_policy === settings_config.get_stream_topics_policy_values().disable_empty_topic.code
++    ) {
++        return false;
++    }
++
++    if (can_create_new_topics_in_stream(stream_id)) {
++        return true;
++    }
++
++    // We expect the local check to be accurate because we fetch
++    // topic history from the server while preparing topic typeahead,
++    // inbox, search suggestion, topic list in left sidebar.
++    if (channel_has_locally_available_topic(stream_id, "")) {
++        return true;
++    }
++
++    return false;
+ }
+ 
+ export function is_empty_topic_only_channel(stream_id: number | undefined): boolean {
+diff --git a/web/src/stream_topic_history.ts b/web/src/stream_topic_history.ts
+index 3d1cfd7c46..b87c1d63f6 100644
+--- a/web/src/stream_topic_history.ts
++++ b/web/src/stream_topic_history.ts
+@@ -33,6 +33,20 @@ export function stream_has_topics(stream_id: number): boolean {
+     return history.has_topics();
+ }
+ 
++export function channel_has_locally_available_topic(
++    channel_id: number,
++    topic_name: string,
++): boolean {
++    if (!stream_dict.has(channel_id)) {
++        return false;
++    }
++
++    const history = stream_dict.get(channel_id);
++    assert(history !== undefined);
++
++    return history.topics.has(topic_name);
++}
++
+ export function stream_has_locally_available_named_topics(stream_id: number): boolean {
+     if (!stream_dict.has(stream_id)) {
+         return false;
+diff --git a/web/src/ui_init.js b/web/src/ui_init.js
+index bcf6758202..b9aeb17052 100644
+--- a/web/src/ui_init.js
++++ b/web/src/ui_init.js
+@@ -587,6 +587,9 @@ export async function initialize_everything(state_data) {
+     user_group_edit.initialize();
+     stream_edit_subscribers.initialize();
+     stream_data.initialize(state_data.stream_data);
++    stream_data.set_channel_has_locally_available_topic(
++        stream_topic_history.channel_has_locally_available_topic,
++    );
+     user_group_edit_members.initialize();
+     stream_card_popover.initialize();
+     pm_conversations.recent.initialize(state_data.pm_conversations);

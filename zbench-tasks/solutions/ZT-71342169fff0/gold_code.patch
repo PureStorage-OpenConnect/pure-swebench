@@ -1,0 +1,32 @@
+diff --git a/web/src/settings_config.ts b/web/src/settings_config.ts
+index e8fa7f71f0..310733a0c9 100644
+--- a/web/src/settings_config.ts
++++ b/web/src/settings_config.ts
+@@ -334,7 +334,13 @@ export const get_stream_topics_policy_values = (): StreamTopicsPolicyValues => {
+     return {
+         inherit: {
+             code: "inherit",
+-            description: $t({defaultMessage: "Organization default"}),
++            description: $t(
++                {defaultMessage: "Organization default ({org_level_topics_policy})"},
++                {
++                    org_level_topics_policy:
++                        realm_topics_policy_values[realm.realm_topics_policy].description,
++                },
++            ),
+         },
+         ...realm_topics_policy_values,
+         empty_topic_only: {
+diff --git a/web/templates/stream_settings/stream_permissions.hbs b/web/templates/stream_settings/stream_permissions.hbs
+index 7c74d34486..d587dee34d 100644
+--- a/web/templates/stream_settings/stream_permissions.hbs
++++ b/web/templates/stream_settings/stream_permissions.hbs
+@@ -185,7 +185,7 @@
+                           class="stream_message_retention_setting prop-element settings_select bootstrap-focus-style"
+                           id="{{prefix}}message_retention_days"
+                           data-setting-widget-type="message-retention-setting">
+-                            <option value="realm_default">{{t "Use organization level settings {org_level_message_retention_setting}" }}</option>
++                            <option value="realm_default">{{t "Organization default {org_level_message_retention_setting}" }}</option>
+                             <option value="unlimited">{{t 'Retain forever' }}</option>
+                             <option value="custom_period">{{t 'Custom' }}</option>
+                         </select>

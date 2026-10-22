@@ -1,0 +1,85 @@
+{
+  "task_id": "ZT-5708b71c93d2",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "recent_view: Add folder filter dropdown.",
+  "type": "other",
+  "lang": "web",
+  "issue": 37394,
+  "fix_commit": "5708b71c93d23cbc15e31d30fab0c24a5ba59465",
+  "base_commit": "a385901fc3e51a42515222305505f424dacf954e",
+  "env_fingerprint": "7f34fa438528",
+  "fail_to_pass": [
+    "web/tests/recent_view.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 154,
+    "files": 2,
+    "hunks": 16,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The recent view module (web/src/recent_view_ui.ts) must export a function `set_folder_filter_for_tests(value: number)` that sets the recent view's active folder filter to `value`, where `value` is either a channel-folder id or one of the existing `folder_dropdown_widget.FOLDER_FILTERS` sentinels.",
+    "The existing exported `clear_for_tests()` in recent_view_ui must also reset the folder filter to its default, `FOLDER_FILTERS.ANY_FOLDER_DROPDOWN_OPTION` (the 'Any folder' state), so that after a reset no row is hidden by folder filtering.",
+    "The context object rendered into the `recent_view_filters` template gains a boolean field `show_folder_filter`, whose value is `channel_folders.user_has_folders()` \u2014 true only when the organization has channel folders visible to the user (the existing filter fields filter_unread/filter_participated/filter_muted/filter_pm/search_val/is_spectator are unchanged).",
+    "Folder-filter semantics of the existing `filters_should_hide_row(conversation)`: with the default ANY_FOLDER_DROPDOWN_OPTION sentinel active, folder filtering hides nothing; with any non-default folder filter active, all direct-message conversation rows are hidden; with UNCATEGORIZED_DROPDOWN_OPTION active, only channel conversations whose subscription has `folder_id === null` are shown; with a concrete folder id active, only channel conversations whose subscription's `folder_id` equals that id are shown.",
+    "The implementation must reuse the pre-existing shared modules rather than reimplementing them: recent_view_ui must import and consult `channel_folders` (for `user_has_folders()`) and `folder_dropdown_widget` (for the `FOLDER_FILTERS` sentinel constants) as part of the folder-filter feature."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 716,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Aman Agrawal",
+    "email": "amanagr@zulip.com",
+    "date": "2026-02-25"
+  },
+  "contamination": {
+    "fix_public_at": "2026-02-25",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-01-07T20:04:55Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/5708b71c93d23cbc15e31d30fab0c24a5ba59465",
+    "issue_url": "https://github.com/zulip/zulip/issues/37394"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-5708b71c93d2",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 93.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

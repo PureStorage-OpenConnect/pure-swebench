@@ -1,0 +1,494 @@
+diff --git a/web/src/emoji_frequency.ts b/web/src/emoji_frequency.ts
+new file mode 100644
+index 0000000000..ead4cbcdc5
+--- /dev/null
++++ b/web/src/emoji_frequency.ts
+@@ -0,0 +1,179 @@
++import assert from "minimalistic-assert";
++
++import * as all_messages_data from "./all_messages_data.ts";
++import * as emoji_picker from "./emoji_picker.ts";
++import * as message_store from "./message_store.ts";
++import * as reactions from "./reactions.ts";
++import {current_user} from "./state_data.ts";
++import * as typeahead from "./typeahead.ts";
++
++export type ReactionUsage = {
++    score: number;
++    emoji_code: string;
++    emoji_type: string;
++    message_ids: Set<number>;
++    current_user_reacted_message_ids: Set<number>;
++};
++
++const MAX_FREQUENTLY_USED_EMOJIS = 12;
++const CURRENT_USER_REACTION_WEIGHT = 5;
++export const reaction_data = new Map<string, ReactionUsage>();
++
++export function update_frequently_used_emojis_list(): void {
++    const frequently_used_emojis = [...reaction_data.values()].toSorted(
++        (a, b) => b.score - a.score,
++    );
++
++    const top_frequently_used_emojis = [];
++    let popular_emojis = typeahead.get_popular_emojis();
++    for (const emoji of frequently_used_emojis) {
++        if (
++            top_frequently_used_emojis.length + popular_emojis.length ===
++            MAX_FREQUENTLY_USED_EMOJIS
++        ) {
++            break;
++        }
++        assert(emoji !== undefined);
++        top_frequently_used_emojis.push({
++            emoji_type: emoji.emoji_type,
++            emoji_code: emoji.emoji_code,
++        });
++        popular_emojis = popular_emojis.filter(
++            (popular_emoji) => popular_emoji.emoji_code !== emoji.emoji_code,
++        );
++    }
++
++    const final_frequently_used_emoji_list = [...top_frequently_used_emojis, ...popular_emojis];
++    typeahead.set_frequently_used_emojis(
++        final_frequently_used_emoji_list.slice(0, MAX_FREQUENTLY_USED_EMOJIS),
++    );
++    emoji_picker.rebuild_catalog();
++}
++
++/*
++    This function assumes reactions.add_reaction has already been called.
++    TODO: Split reactions.ts into data and UI modules, so that this can
++    be called from directly from reactions.add_reaction without creating
++    an import cycle.
++*/
++export function update_emoji_frequency_on_add_reaction_event(event: reactions.ReactionEvent): void {
++    const message_id = event.message_id;
++    const message = message_store.get(message_id);
++    if (message === undefined) {
++        return;
++    }
++    const emoji_id = reactions.get_local_reaction_id(event);
++    const clean_reaction_object = message.clean_reactions.get(emoji_id);
++
++    assert(clean_reaction_object !== undefined);
++
++    if (!reaction_data.has(emoji_id)) {
++        reaction_data.set(emoji_id, {
++            score: 0,
++            emoji_code: clean_reaction_object.emoji_code,
++            emoji_type: clean_reaction_object.reaction_type,
++            message_ids: new Set(),
++            current_user_reacted_message_ids: new Set(),
++        });
++    }
++
++    const reaction_usage = reaction_data.get(emoji_id);
++    assert(reaction_usage !== undefined);
++
++    if (reaction_usage.message_ids.has(message_id)) {
++        return;
++    }
++    reaction_usage.message_ids.add(message_id);
++
++    if (event.user_id === current_user.user_id) {
++        reaction_usage.score += CURRENT_USER_REACTION_WEIGHT;
++        reaction_usage.current_user_reacted_message_ids.add(message.id);
++    } else {
++        reaction_usage.score += 1;
++    }
++    update_frequently_used_emojis_list();
++}
++
++export function update_emoji_frequency_on_remove_reaction_event(
++    event: reactions.ReactionEvent,
++): void {
++    const message_id = event.message_id;
++    const message = message_store.get(message_id);
++    if (message === undefined) {
++        return;
++    }
++
++    const emoji_id = reactions.get_local_reaction_id(event);
++    const reaction_usage = reaction_data.get(emoji_id);
++    if (reaction_usage === undefined) {
++        return;
++    }
++
++    if (!reaction_usage.message_ids.has(message_id)) {
++        return;
++    }
++    reaction_usage.message_ids.delete(message_id);
++
++    if (event.user_id === current_user.user_id) {
++        reaction_usage.score -= CURRENT_USER_REACTION_WEIGHT;
++        reaction_usage.current_user_reacted_message_ids.delete(message.id);
++    } else {
++        reaction_usage.score -= 1;
++    }
++    update_frequently_used_emojis_list();
++}
++
++export function update_emoji_frequency_on_messages_deletion(message_ids: number[]): void {
++    for (const message_id of message_ids) {
++        const message = message_store.get(message_id);
++        assert(message !== undefined);
++        const message_reactions = message.clean_reactions.values();
++        for (const emoji of message_reactions) {
++            const emoji_id = emoji.local_id;
++            const reaction_usage = reaction_data.get(emoji_id);
++            if (reaction_usage === undefined) {
++                return;
++            }
++            if (reaction_usage.message_ids.delete(message_id)) {
++                reaction_usage.score -= 1;
++            }
++            if (reaction_usage.current_user_reacted_message_ids.delete(message_id)) {
++                reaction_usage.score -= CURRENT_USER_REACTION_WEIGHT - 1;
++            }
++        }
++    }
++    update_frequently_used_emojis_list();
++}
++
++export function initialize_frequently_used_emojis(): void {
++    const message_data = all_messages_data.all_messages_data;
++    const messages = message_data.all_messages_after_mute_filtering();
++
++    for (let i = messages.length - 1; i >= 0; i -= 1) {
++        const message = messages[i];
++        assert(message !== undefined);
++        const message_reactions = message.clean_reactions.values();
++        for (const emoji of message_reactions) {
++            const emoji_id = emoji.local_id;
++            if (!reaction_data.has(emoji_id)) {
++                reaction_data.set(emoji_id, {
++                    score: 0,
++                    emoji_code: emoji.emoji_code,
++                    emoji_type: emoji.reaction_type,
++                    message_ids: new Set(),
++                    current_user_reacted_message_ids: new Set(),
++                });
++            }
++            const reaction = reaction_data.get(emoji_id);
++            assert(reaction !== undefined);
++            reaction.score += 1;
++            reaction.message_ids.add(message.id);
++
++            if (emoji.user_ids.includes(current_user.user_id)) {
++                reaction.score += CURRENT_USER_REACTION_WEIGHT - 1;
++                reaction.current_user_reacted_message_ids.add(message.id);
++            }
++        }
++    }
++    update_frequently_used_emojis_list();
++}
+diff --git a/web/src/emoji_picker.ts b/web/src/emoji_picker.ts
+index 1f62cbaf01..76e63964b5 100644
+--- a/web/src/emoji_picker.ts
++++ b/web/src/emoji_picker.ts
+@@ -59,7 +59,11 @@ let edit_message_id: number | null = null;
+ let current_message_id: number | null = null;
+ 
+ const EMOJI_CATEGORIES = [
+-    {name: "Popular", icon: "fa-star-o", translated: $t({defaultMessage: "Popular"})},
++    {
++        name: "Frequently used",
++        icon: "fa-star-o",
++        translated: $t({defaultMessage: "Frequently used"}),
++    },
+     {
+         name: "Smileys & Emotion",
+         icon: "fa-smile-o",
+@@ -170,17 +174,23 @@ export function rebuild_catalog(): void {
+         catalog.set(category, emojis);
+     }
+ 
+-    const popular = [];
+-    for (const codepoint of typeahead.popular_emojis) {
+-        const name = emoji.get_emoji_name(codepoint);
+-        if (name !== undefined) {
+-            const emoji_dict = emoji.emojis_by_name.get(name);
+-            if (emoji_dict !== undefined) {
+-                popular.push(emoji_dict);
+-            }
++    const frequently_used = [];
++    for (const {emoji_code, emoji_type} of typeahead.frequently_used_emojis) {
++        let emoji_name: string | undefined;
++        if (emoji_type !== "unicode_emoji") {
++            emoji_name = emoji.all_realm_emojis.get(emoji_code)?.emoji_name;
++        } else {
++            emoji_name = emoji.get_emoji_name(emoji_code);
++        }
++
++        assert(emoji_name !== undefined);
++        const emoji_dict = emoji.emojis_by_name.get(emoji_name);
++        if (emoji_dict !== undefined) {
++            frequently_used.push(emoji_dict);
+         }
+     }
+-    catalog.set("Popular", popular);
++
++    catalog.set("Frequently used", frequently_used);
+ 
+     const categories = EMOJI_CATEGORIES.filter((category) => catalog.has(category.name));
+     complete_emoji_catalog = categories.map((category) => ({
+@@ -191,8 +201,8 @@ export function rebuild_catalog(): void {
+         translated: category.translated,
+     }));
+     const emojis_by_category = complete_emoji_catalog.flatMap((category) => {
+-        if (category.name === "Popular") {
+-            // popular category has repeated emojis in the catalog so we skip it
++        if (category.name === "Frequently used") {
++            // Frequently used category may have repeated emojis in the catalog so we skip it
+             return [];
+         }
+         return category.emojis;
+@@ -200,7 +210,10 @@ export function rebuild_catalog(): void {
+     composebox_typeahead.update_emoji_data(emojis_by_category);
+ }
+ 
+-const generate_emoji_picker_content = function (id: number | null): string {
++const generate_emoji_picker_content = function (
++    id: number | null,
++    include_frequently_used_category: boolean,
++): string {
+     let emojis_used: string[] = [];
+ 
+     if (id) {
+@@ -210,9 +223,13 @@ const generate_emoji_picker_content = function (id: number | null): string {
+         emoji_dict.has_reacted = emoji_dict.aliases.some((alias) => emojis_used.includes(alias));
+     }
+ 
++    let emoji_catalog = complete_emoji_catalog;
++    if (!include_frequently_used_category) {
++        emoji_catalog = complete_emoji_catalog.slice(1);
++    }
+     return render_emoji_popover({
+         message_id: id,
+-        emoji_categories: complete_emoji_catalog,
++        emoji_categories: emoji_catalog,
+         is_status_emoji_popover: user_status_ui.user_status_picker_open(),
+     });
+ };
+@@ -281,7 +298,7 @@ function filter_emojis(): void {
+         search_results.length = 0;
+ 
+         for (const category of categories) {
+-            if (category.name === "Popular") {
++            if (category.name === "Frequently used") {
+                 continue;
+             }
+             const emojis = category.emojis;
+@@ -615,9 +632,9 @@ export function emoji_select_tab($elt: JQuery): void {
+         // Handles the corner case where the refill_section_head_offsets()
+         // is still running and section_head_offset[] is still empty,
+         // scroll events in the middle may attempt to access section_head_offset[]
+-        // causing exception. In this situation the currently_selected is hardcoded as "Popular".
++        // causing exception. In this situation the currently_selected is hardcoded as "Frequently used".
+         if (section_head_offsets.length === 0) {
+-            currently_selected = "Popular";
++            currently_selected = "Frequently used";
+         } else {
+             currently_selected = section_head_offsets[0]!.section;
+         }
+@@ -642,7 +659,9 @@ function register_popover_events($popover: JQuery): void {
+     $(".emoji-popover").on("keydown", process_keydown);
+ }
+ 
+-function get_default_emoji_popover_options(): Partial<tippy.Props> {
++function get_default_emoji_popover_options(
++    include_frequently_used_category: boolean,
++): Partial<tippy.Props> {
+     return {
+         theme: "popover-menu",
+         placement: "top",
+@@ -666,7 +685,12 @@ function get_default_emoji_popover_options(): Partial<tippy.Props> {
+             const $popover = $(instance.popper);
+             $popover.addClass("emoji-popover-root");
+             instance.setContent(
+-                ui_util.parse_html(generate_emoji_picker_content(current_message_id)),
++                ui_util.parse_html(
++                    generate_emoji_picker_content(
++                        current_message_id,
++                        include_frequently_used_category,
++                    ),
++                ),
+             );
+             emoji_catalog_last_coordinates = {
+                 section: 0,
+@@ -682,10 +706,14 @@ function get_default_emoji_popover_options(): Partial<tippy.Props> {
+             const $popover = $(instance.popper);
+             // Render the emojis after simplebar has been initialized which
+             // saves us ~30% time rendering them.
++            let emoji_catalog = complete_emoji_catalog;
++            if (!include_frequently_used_category) {
++                emoji_catalog = complete_emoji_catalog.slice(1);
++            }
+             $popover.find(".emoji-popover-emoji-map .simplebar-content").html(
+                 render_emoji_popover_emoji_map({
+                     message_id: current_message_id,
+-                    emoji_categories: complete_emoji_catalog,
++                    emoji_categories: emoji_catalog,
+                     is_status_emoji_popover: user_status_ui.user_status_picker_open(),
+                 }),
+             );
+@@ -709,6 +737,7 @@ export function toggle_emoji_popover(
+     target: tippy.ReferenceElement,
+     id?: number,
+     additional_popover_options?: Partial<tippy.Props>,
++    include_frequently_used_category = true,
+ ): void {
+     if (id) {
+         current_message_id = id;
+@@ -717,7 +746,7 @@ export function toggle_emoji_popover(
+     popover_menus.toggle_popover_menu(
+         target,
+         {
+-            ...get_default_emoji_popover_options(),
++            ...get_default_emoji_popover_options(include_frequently_used_category),
+             ...additional_popover_options,
+         },
+         {
+@@ -883,7 +912,12 @@ function register_click_handlers(): void {
+             e.preventDefault();
+             e.stopPropagation();
+             const micromodal = $("#set-user-status-modal").closest(".modal__overlay")[0]!;
+-            toggle_emoji_popover(this, undefined, {placement: "bottom", appendTo: micromodal});
++            toggle_emoji_popover(
++                this,
++                undefined,
++                {placement: "bottom", appendTo: micromodal},
++                false,
++            );
+             if (is_open()) {
+                 // Because the emoji picker gets drawn on top of the user
+                 // status modal, we need this hack to make clicking outside
+diff --git a/web/src/message_fetch.ts b/web/src/message_fetch.ts
+index 247cb81075..934c1c842c 100644
+--- a/web/src/message_fetch.ts
++++ b/web/src/message_fetch.ts
+@@ -7,6 +7,7 @@ import * as channel from "./channel.ts";
+ import * as compose_closed_ui from "./compose_closed_ui.ts";
+ import * as compose_validate from "./compose_validate.ts";
+ import * as direct_message_group_data from "./direct_message_group_data.ts";
++import * as emoji_frequency from "./emoji_frequency.ts";
+ import {Filter} from "./filter.ts";
+ import * as message_feed_loading from "./message_feed_loading.ts";
+ import * as message_feed_top_notices from "./message_feed_top_notices.ts";
+@@ -713,6 +714,7 @@ export function initialize(finished_initial_fetch: () => void): void {
+ 
+         if (data.found_oldest) {
+             initial_backfill_for_all_messages_done = true;
++            emoji_frequency.initialize_frequently_used_emojis();
+             return;
+         }
+ 
+@@ -726,11 +728,13 @@ export function initialize(finished_initial_fetch: () => void): void {
+             latest_message.timestamp < fetch_target_day_timestamp
+         ) {
+             initial_backfill_for_all_messages_done = true;
++            emoji_frequency.initialize_frequently_used_emojis();
+             return;
+         }
+ 
+         if (all_messages_data.num_items() >= consts.maximum_initial_backfill_size) {
+             initial_backfill_for_all_messages_done = true;
++            emoji_frequency.initialize_frequently_used_emojis();
+             return;
+         }
+ 
+diff --git a/web/src/reactions.ts b/web/src/reactions.ts
+index f660885df4..90250349b0 100644
+--- a/web/src/reactions.ts
++++ b/web/src/reactions.ts
+@@ -22,7 +22,7 @@ import {user_settings} from "./user_settings.ts";
+ 
+ const waiting_for_server_request_ids = new Set<string>();
+ 
+-type ReactionEvent = {
++export type ReactionEvent = {
+     message_id: number;
+     user_id: number;
+     reaction_type: "zulip_extra_emoji" | "realm_emoji" | "unicode_emoji";
+diff --git a/web/src/server_events_dispatch.js b/web/src/server_events_dispatch.js
+index d59a27c5f7..abf5ee7ffe 100644
+--- a/web/src/server_events_dispatch.js
++++ b/web/src/server_events_dispatch.js
+@@ -19,6 +19,7 @@ import * as compose_state from "./compose_state.ts";
+ import * as compose_validate from "./compose_validate.ts";
+ import {electron_bridge} from "./electron_bridge.ts";
+ import * as emoji from "./emoji.ts";
++import * as emoji_frequency from "./emoji_frequency.ts";
+ import * as emoji_picker from "./emoji_picker.ts";
+ import * as gear_menu from "./gear_menu.ts";
+ import * as gif_state from "./gif_state.ts";
+@@ -175,6 +176,7 @@ export function dispatch_normal_event(event) {
+             unread_ops.process_read_messages_event(msg_ids);
+             // This methods updates message_list too and since stream_topic_history relies on it
+             // this method should be called first.
++            emoji_frequency.update_emoji_frequency_on_messages_deletion(msg_ids);
+             message_events.remove_messages(msg_ids);
+ 
+             if (event.message_type === "stream") {
+@@ -253,9 +255,11 @@ export function dispatch_normal_event(event) {
+             switch (event.op) {
+                 case "add":
+                     reactions.add_reaction(event);
++                    emoji_frequency.update_emoji_frequency_on_add_reaction_event(event);
+                     break;
+                 case "remove":
+                     reactions.remove_reaction(event);
++                    emoji_frequency.update_emoji_frequency_on_remove_reaction_event(event);
+                     break;
+                 default:
+                     blueslip.error("Unexpected event type reaction/" + event.op);
+diff --git a/web/src/typeahead.ts b/web/src/typeahead.ts
+index 971ccfa8fd..75fe8ed822 100644
+--- a/web/src/typeahead.ts
++++ b/web/src/typeahead.ts
+@@ -19,6 +19,11 @@ import _ from "lodash";
+     whether you type "+" as a prefix for "+1"
+     or "th" as a prefix for "thumbs up".
+ */
++export type EmojiItem = {
++    emoji_type: string;
++    emoji_code: string;
++};
++
+ export const popular_emojis = [
+     "1f44d", // +1
+     "1f389", // tada
+@@ -28,6 +33,12 @@ export const popular_emojis = [
+     "1f419", // octopus
+ ];
+ 
++export function get_popular_emojis(): EmojiItem[] {
++    return popular_emojis.map((emoji_code) => ({emoji_type: "unicode_emoji", emoji_code}));
++}
++
++export let frequently_used_emojis: EmojiItem[] = [...get_popular_emojis()];
++
+ export type Emoji =
+     | {
+           emoji_name: string;
+@@ -379,6 +390,10 @@ export function triage<T>(
+     };
+ }
+ 
++export function set_frequently_used_emojis(frequently_used: EmojiItem[]): void {
++    frequently_used_emojis = frequently_used;
++}
++
+ export function sort_emojis<T extends BaseEmoji>(objs: T[], query: string): T[] {
+     // replace spaces with underscores for emoji matching
+     query = query.replaceAll(" ", "_");
+@@ -389,7 +404,7 @@ export function sort_emojis<T extends BaseEmoji>(objs: T[], query: string): T[]
+         return pieces.some((piece) => piece.startsWith(query));
+     }
+ 
+-    const popular_set = new Set(popular_emojis);
++    const popular_set = new Set(frequently_used_emojis.map((e) => e.emoji_code));
+ 
+     function is_popular(obj: BaseEmoji): boolean {
+         return (

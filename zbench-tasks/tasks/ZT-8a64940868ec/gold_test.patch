@@ -1,0 +1,33 @@
+diff --git a/zerver/tests/test_message_edit.py b/zerver/tests/test_message_edit.py
+index 9974733811..477ac77f66 100644
+--- a/zerver/tests/test_message_edit.py
++++ b/zerver/tests/test_message_edit.py
+@@ -396,6 +396,7 @@ class EditMessageTest(ZulipTestCase):
+ 
+     def test_edit_message_no_content(self) -> None:
+         self.login("hamlet")
++        # Check message edit in stream for no content.
+         msg_id = self.send_stream_message(
+             self.example_user("hamlet"), "Denmark", topic_name="editing", content="before edit"
+         )
+@@ -409,6 +410,20 @@ class EditMessageTest(ZulipTestCase):
+         content = Message.objects.filter(id=msg_id).values_list("content", flat=True)[0]
+         self.assertEqual(content, "(deleted)")
+ 
++        # Check message edit in DMs for no content.
++        msg_id = self.send_personal_message(
++            from_user=self.example_user("hamlet"), to_user=self.example_user("cordelia")
++        )
++        result = self.client_patch(
++            f"/json/messages/{msg_id}",
++            {
++                "content": " ",
++            },
++        )
++        self.assert_json_success(result)
++        content = Message.objects.filter(id=msg_id).values_list("content", flat=True)[0]
++        self.assertEqual(content, "(deleted)")
++
+     def test_edit_message_in_unsubscribed_private_stream(self) -> None:
+         hamlet = self.example_user("hamlet")
+         self.login("hamlet")

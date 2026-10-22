@@ -1,0 +1,24 @@
+diff --git a/corporate/urls.py b/corporate/urls.py
+index e38dd156ab..ae74362e44 100644
+--- a/corporate/urls.py
++++ b/corporate/urls.py
+@@ -150,7 +150,6 @@ landing_page_urls = [
+     path("why-zulip/", landing_view, {"template_name": "corporate/why-zulip.html"}),
+     path("self-hosting/", landing_view, {"template_name": "corporate/self-hosting.html"}),
+     path("security/", landing_view, {"template_name": "corporate/security.html"}),
+-    path("try-zulip/", landing_view, {"template_name": "corporate/try-zulip.html"}),
+     # /for pages
+     path("use-cases/", landing_view, {"template_name": "corporate/for/use-cases.html"}),
+     path(
+diff --git a/zerver/lib/url_redirects.py b/zerver/lib/url_redirects.py
+index f55bfe937d..b4a4a1c62a 100644
+--- a/zerver/lib/url_redirects.py
++++ b/zerver/lib/url_redirects.py
+@@ -136,6 +136,7 @@ LANDING_PAGE_REDIRECTS = [
+     URLRedirect("/developer-community/", "/development-community"),
+     URLRedirect("/for/companies/", "/for/business"),
+     URLRedirect("/for/working-groups-and-communities/", "/for/communities"),
++    URLRedirect("/try-zulip/", "https://chat.zulip.org/?show_try_zulip_modal"),
+ ]
+ 
+ DOCUMENTATION_REDIRECTS = (

@@ -1,0 +1,727 @@
+diff --git a/web/tests/composebox_typeahead.test.cjs b/web/tests/composebox_typeahead.test.cjs
+index a65f2c4e66..4d72ab14ad 100644
+--- a/web/tests/composebox_typeahead.test.cjs
++++ b/web/tests/composebox_typeahead.test.cjs
+@@ -20,7 +20,7 @@ const REALM_EMPTY_TOPIC_DISPLAY_NAME = "general chat";
+ const bootstrap_typeahead = mock_esm("../src/bootstrap_typeahead");
+ const message_lists = mock_esm("../src/message_lists");
+ const pm_conversations = mock_esm("../src/pm_conversations", {
+-    is_partner: () => false,
++    get_latest_direct_message_id_with_user: () => undefined,
+ });
+ const compose_ui = mock_esm("../src/compose_ui", {
+     autosize_textarea() {
+@@ -754,7 +754,7 @@ const make_emoji = (emoji_dict) => ({
+ });
+ 
+ // Empty query: compare_users_for_dms sorts alphabetically
+-// by full_name (no recipient count, no partners, no name-length
++// by full_name (no direct message history, and no name-length
+ // tiebreaker without a query).
+ const sorted_user_list = [
+     ali_item, // Ali
+@@ -1577,8 +1577,8 @@ test("initialize", ({override, override_rewire, mock_template}) => {
+             case $("#private_message_recipient")[0]: {
+                 pill_items = [];
+ 
+-                // Empty query: alphabetical by full_name (no recipient
+-                // count or PM partners), then groups, then bot.
++                // Empty query: alphabetical by full_name (no direct
++                // message history), then groups, then bot.
+                 let actual_value = options.source("");
+                 let expected_value = [
+                     ali_item, // Ali
+@@ -2354,8 +2354,8 @@ test("begins_typeahead", ({override, override_rewire}) => {
+     ]);
+ 
+     const mention_all = broadcast_item(ct.broadcast_mentions()[0]);
+-    // No stream context and no PM partners: broadcast sorts before
+-    // all non-partner users; bots alphabetical by full_name.
++    // No stream context and no direct message history: broadcast sorts
++    // before all these users; bots alphabetical by full_name.
+     const users_and_all_mention = [
+         mention_all,
+         ...sorted_user_list,
+@@ -2390,14 +2390,14 @@ test("begins_typeahead", ({override, override_rewire}) => {
+     assert_typeahead_equals("@**", mentions_with_silent_marker(users_and_all_mention, false));
+     assert_typeahead_equals("@_**", mentions_with_silent_marker(users_and_user_groups, true));
+     // "o" is anywhere in each name; Othello starts with "o" so
+-    // sorts first.  Broadcast before non-partner users (no PM
+-    // partners in test), then bots by name length (shorter first).
++    // sorts first.  Broadcast before users with no direct message
++    // history (none in test), then bots by name length (shorter first).
+     assert_typeahead_equals(
+         "test @**o",
+         mentions_with_silent_marker(
+             [
+                 othello_item, // Othello starts with "o"
+-                mention_everyone, // broadcast: before non-partner users
++                mention_everyone, // broadcast: before users with no DMs
+                 cordelia_item, // "Cordelia" contains "o"
+                 welcome_bot_item, // Welcome Bot
+                 notification_bot_item, // Notification Bot
+@@ -2508,15 +2508,15 @@ test("begins_typeahead", ({override, override_rewire}) => {
+         ),
+     );
+     // "l": King Lear and Cordelia have word-boundary match on "Lear"
+-    // (best, shorter name first).  Broadcast before non-partner
+-    // users (worst); remaining users by name length; then bot.
++    // (best, shorter name first).  Broadcast before users with no direct
++    // message history (worst); remaining users by name length; then bot.
+     assert_typeahead_equals(
+         "test\n @l",
+         mentions_with_silent_marker(
+             [
+                 lear_item, // King *L*ear (9)
+                 cordelia_item, // Cordelia, *L*ear's daughter (25)
+-                mention_all, // broadcast "all" (before non-partners)
++                mention_all, // broadcast "all" (before users with no DMs)
+                 ali_item, // Ali (3)
+                 alice_item, // Alice (5)
+                 hal_item, // Earl Hal (8)
+@@ -2555,14 +2555,14 @@ test("begins_typeahead", ({override, override_rewire}) => {
+     assert_typeahead_equals(" @zuli", []);
+     assert_typeahead_equals(" @_zuli", []);
+     // Same ordering logic as @**o above: name-start match first, then
+-    // the broadcast mention before non-partner users, then remaining
+-    // matches by name length (shorter first).
++    // the broadcast mention before users with no direct message
++    // history, then remaining matches by name length (shorter first).
+     assert_typeahead_equals(
+         "test @o",
+         mentions_with_silent_marker(
+             [
+                 othello_item, // Othello starts with "o"
+-                mention_everyone, // broadcast: before non-partner users
++                mention_everyone, // broadcast: before users with no DMs
+                 cordelia_item, // "Cordelia" contains "o"
+                 welcome_bot_item, // Welcome Bot (11)
+                 notification_bot_item, // Notification Bot (16)
+diff --git a/web/tests/people.test.cjs b/web/tests/people.test.cjs
+index 4d80443ec3..df3523fd89 100644
+--- a/web/tests/people.test.cjs
++++ b/web/tests/people.test.cjs
+@@ -809,17 +809,6 @@ run_test("user_can_change_their_own_role", ({override}) => {
+     assert.ok(people.user_can_change_their_own_role());
+ });
+ 
+-run_test("recipient_counts", () => {
+-    initialize();
+-    const user_id = 99;
+-    assert.equal(people.get_recipient_count({user_id}), 0);
+-    people.incr_recipient_count(user_id);
+-    people.incr_recipient_count(user_id);
+-    assert.equal(people.get_recipient_count({user_id}), 2);
+-
+-    assert.equal(people.get_recipient_count({pm_recipient_count: 5}), 5);
+-});
+-
+ run_test("filtered_users", () => {
+     initialize();
+     people.add_active_user(charles);
+@@ -1195,39 +1184,6 @@ run_test("extract_people_from_message", () => {
+     blueslip.reset();
+ });
+ 
+-run_test("maybe_incr_recipient_count", () => {
+-    initialize();
+-    const maria_recip = {
+-        id: maria.user_id,
+-    };
+-    people.add_active_user(maria);
+-
+-    let message = {
+-        type: "private",
+-        display_recipient: [maria_recip],
+-        sent_by_me: true,
+-    };
+-    assert.equal(people.get_recipient_count(maria), 0);
+-    people.maybe_incr_recipient_count(message);
+-    assert.equal(people.get_recipient_count(maria), 1);
+-
+-    // Test all the no-op conditions to get test
+-    // coverage.
+-    message = {
+-        type: "private",
+-        sent_by_me: false,
+-        display_recipient: [maria_recip],
+-    };
+-    people.maybe_incr_recipient_count(message);
+-    assert.equal(people.get_recipient_count(maria), 1);
+-
+-    message = {
+-        type: "stream",
+-    };
+-    people.maybe_incr_recipient_count(message);
+-    assert.equal(people.get_recipient_count(maria), 1);
+-});
+-
+ run_test("get_people_for_search_bar", ({override}) => {
+     initialize();
+     let user_ids;
+diff --git a/web/tests/pm_conversations.test.cjs b/web/tests/pm_conversations.test.cjs
+index 4a3d905b02..f4d42154fd 100644
+--- a/web/tests/pm_conversations.test.cjs
++++ b/web/tests/pm_conversations.test.cjs
+@@ -66,7 +66,6 @@ function test(label, f) {
+ 
+ test("partners", () => {
+     const user1_id = 1;
+-    const user2_id = 2;
+     const user3_id = 3;
+ 
+     pmc.set_partner(user1_id);
+@@ -74,9 +73,6 @@ test("partners", () => {
+     pmc.set_partner(user3_id);
+ 
+     assert.deepEqual(pmc.get_partners(), [user1_id, user3_id]);
+-    assert.equal(pmc.is_partner(user1_id), true);
+-    assert.equal(pmc.is_partner(user2_id), false);
+-    assert.equal(pmc.is_partner(user3_id), true);
+ });
+ 
+ test("insert_recent_private_message", () => {
+@@ -110,6 +106,36 @@ test("insert_recent_private_message", () => {
+     assert.deepEqual(pmc.recent.get_strings(), ["1", "1,2,3", "15", "3", "1,2"]);
+ });
+ 
++test("latest_message_id_by_user_id", () => {
++    pmc.recent.initialize(params);
++
++    // Each user maps to the most recent DM conversation that includes
++    // them, whether that's a 1:1 or a group DM.
++    assert.equal(pmc.get_latest_direct_message_id_with_user(alice.user_id), 100);
++    assert.equal(pmc.get_latest_direct_message_id_with_user(alex.user_id), 99);
++    assert.equal(pmc.get_latest_direct_message_id_with_user(isaac.user_id), 98);
++
++    // The current user is excluded, even though there's a self-DM.
++    assert.equal(pmc.get_latest_direct_message_id_with_user(me.user_id), undefined);
++
++    // A user we have no direct message history with.
++    assert.equal(pmc.get_latest_direct_message_id_with_user(72), undefined);
++
++    // A newer group DM bumps both participants' latest ids.
++    pmc.recent.insert([isaac.user_id, alex.user_id], 200);
++    assert.equal(pmc.get_latest_direct_message_id_with_user(isaac.user_id), 200);
++    assert.equal(pmc.get_latest_direct_message_id_with_user(alex.user_id), 200);
++
++    // A new conversation older than an existing one does not lower the
++    // stored latest id.
++    pmc.recent.insert([isaac.user_id], 150);
++    assert.equal(pmc.get_latest_direct_message_id_with_user(isaac.user_id), 200);
++
++    // Backdating an existing conversation leaves the map unchanged.
++    pmc.recent.insert([alice.user_id], 50);
++    assert.equal(pmc.get_latest_direct_message_id_with_user(alice.user_id), 100);
++});
++
+ test("muted_users", () => {
+     pmc.recent.initialize(params);
+ 
+diff --git a/web/tests/search_suggestion.test.cjs b/web/tests/search_suggestion.test.cjs
+index e731a0bd4e..81f1d096a3 100644
+--- a/web/tests/search_suggestion.test.cjs
++++ b/web/tests/search_suggestion.test.cjs
+@@ -193,7 +193,7 @@ test("dm_suggestions", ({override}) => {
+     let query = "is:dm";
+     let suggestions = get_suggestions(query);
+     // Empty query: compare_users_for_dms sorts alphabetically
+-    // by full_name (no recipient count, no partners, no name-length
++    // by full_name (no direct message history, and no name-length
+     // tiebreaker without a query).
+     let expected = [
+         "is:dm",
+diff --git a/web/tests/typeahead_helper.test.cjs b/web/tests/typeahead_helper.test.cjs
+index a6e610f356..fefddb679e 100644
+--- a/web/tests/typeahead_helper.test.cjs
++++ b/web/tests/typeahead_helper.test.cjs
+@@ -203,7 +203,6 @@ function test(label, f) {
+         pm_conversations.clear_for_testing();
+         recent_senders.clear_for_testing();
+         peer_data.clear_for_testing();
+-        people.clear_recipient_counts_for_testing();
+         helpers.override(current_user, "is_admin", false);
+ 
+         f(helpers);
+@@ -643,12 +642,6 @@ test("sort_recipients", () => {
+     peer_data.add_subscriber(1, b_user_3.user_id);
+     peer_data.add_subscriber(1, b_bot.user_id);
+ 
+-    // For splitting based on whether a direct message was sent
+-    pm_conversations.set_partner(5);
+-    pm_conversations.set_partner(6);
+-    pm_conversations.set_partner(2);
+-    pm_conversations.set_partner(7);
+-
+     // For splitting based on recency
+     recent_senders.process_stream_message({
+         sender_id: 7,
+@@ -700,8 +693,8 @@ test("sort_recipients", () => {
+         "a_user@zulip.org",
+         "b_user_1@zulip.net",
+         "b_user_2@zulip.net",
+-        "b_bot@example.com",
+         "a_bot@zulip.com",
++        "b_bot@example.com",
+     ]);
+ });
+ 
+@@ -735,14 +728,10 @@ test("sort_recipients all mention", () => {
+     ]);
+ });
+ 
+-test("sort_recipients pm counts", () => {
+-    // Test sort_recipients with pm counts
+-    people.set_recipient_count_for_testing(a_bot.user_id, 50);
+-    people.set_recipient_count_for_testing(a_user.user_id, 2);
+-    people.set_recipient_count_for_testing(b_user_1.user_id, 32);
+-    people.set_recipient_count_for_testing(b_user_2.user_id, 42);
+-    people.set_recipient_count_for_testing(b_user_3.user_id, 0);
+-    people.set_recipient_count_for_testing(b_bot.user_id, 1);
++test("sort_recipients recent dms", () => {
++    // A more recent direct message ranks the user higher.
++    pm_conversations.recent.insert([b_user_2.user_id], 200);
++    pm_conversations.recent.insert([b_user_1.user_id], 100);
+ 
+     assert.deepEqual(get_typeahead_result("b"), [
+         "b_user_2@zulip.net",
+@@ -750,17 +739,20 @@ test("sort_recipients pm counts", () => {
+         "b_user_3@zulip.net",
+         "b_bot@example.com",
+         "a_bot@zulip.com",
+-        "a_user@zulip.org",
++        // Neither of these matches "b" or has DM history; with a non-empty
++        // query the DM comparator prefers the shorter name, so "Zman" sorts
++        // before "A Zulip user".
+         "zman@test.net",
++        "a_user@zulip.org",
+     ]);
+ 
+-    // Now prioritize stream membership over pm counts.
++    // Now prioritize stream membership over recent direct messages.
+     peer_data.add_subscriber(linux_sub.stream_id, b_user_3.user_id);
+ 
+     assert.deepEqual(get_typeahead_result("b", linux_sub.stream_id, "Linux topic"), [
+         "b_user_3@zulip.net",
+-        "b_user_1@zulip.net",
+         "b_user_2@zulip.net",
++        "b_user_1@zulip.net",
+         "b_bot@example.com",
+         "a_bot@zulip.com",
+         "a_user@zulip.org",
+@@ -859,8 +851,8 @@ test("sort_recipients subscribers", () => {
+ });
+ 
+ test("sort_recipients recent senders", () => {
+-    // b_user_2 is the only recent sender, b_user_3 is the only pm partner
+-    // and all are subscribed to the stream Linux.
++    // b_user_2 is the only recent sender, b_user_3 is the only recent direct
++    // message recipient, and all are subscribed to the stream Linux.
+     peer_data.add_subscriber(linux_sub.stream_id, b_user_1.user_id);
+     peer_data.add_subscriber(linux_sub.stream_id, b_user_2.user_id);
+     peer_data.add_subscriber(linux_sub.stream_id, b_user_3.user_id);
+@@ -870,7 +862,7 @@ test("sort_recipients recent senders", () => {
+         topic: "Linux topic",
+         id: (next_id += 1),
+     });
+-    pm_conversations.set_partner(b_user_3.user_id);
++    pm_conversations.recent.insert([b_user_3.user_id], 100);
+     const user_items = [b_user_1_item, b_user_2_item, b_user_3_item];
+     const recipients = th.sort_recipients({
+         users: user_items,
+@@ -879,15 +871,15 @@ test("sort_recipients recent senders", () => {
+         current_topic: "Linux topic",
+     });
+     const recipients_email = recipients.map((person) => person.user.email);
+-    // Prefer recent sender over pm partner
++    // Prefer recent sender over recent direct message recipient.
+     const expected = ["b_user_2@zulip.net", "b_user_3@zulip.net", "b_user_1@zulip.net"];
+     assert.deepEqual(recipients_email, expected);
+ });
+ 
+-test("sort_recipients pm partners", () => {
+-    // b_user_3 is a pm partner and b_user_2 is not and
++test("sort_recipients recent direct messages", () => {
++    // b_user_3 has a recent direct message and b_user_2 does not, and
+     // both are not subscribed to the stream Linux.
+-    pm_conversations.set_partner(b_user_3.user_id);
++    pm_conversations.recent.insert([b_user_3.user_id], 100);
+     const user_items = [b_user_3_item, b_user_2_item];
+     const recipients = th.sort_recipients({
+         users: user_items,
+@@ -951,8 +943,8 @@ test("sort broadcast mentions for direct message type", () => {
+         ["all", "everyone"],
+     );
+ 
+-    // With no stream context and no DM partners, wildcard
+-    // mentions sort before non-partner users.
++    // With no stream context and no direct message history for these
++    // users, the wildcard mentions sort before them.
+     const user_or_mention_items = [
+         zman_item,
+         ...ct
+@@ -977,7 +969,8 @@ test("test compare directly for broadcast vs user", () => {
+     const all_obj_item = broadcast_item(all_obj);
+ 
+     assert.equal(th.compare_people_for_relevance(all_obj_item, all_obj_item), 0);
+-    // Without stream context, broadcasts come before non-partner users.
++    // Without stream context, broadcasts come before users with no
++    // direct message history.
+     assert.equal(th.compare_people_for_relevance(all_obj_item, zman_item), -1);
+     assert.equal(th.compare_people_for_relevance(zman_item, all_obj_item), 1);
+ });
+@@ -1189,7 +1182,7 @@ test("compare_users_for_dms", () => {
+     // Same user should return 0
+     assert.equal(th.compare_users_for_dms(a_user, a_user), 0);
+ 
+-    // Alphabetical fallback when DM counts and partner status are equal
++    // Alphabetical fallback when neither user has direct message history
+     assert.equal(
+         th.compare_users_for_dms(a_user, b_user_1),
+         util.strcmp(a_user.full_name, b_user_1.full_name),
+@@ -1201,21 +1194,28 @@ test("compare_users_for_dms", () => {
+         util.strcmp(b_user_1.full_name, a_user.full_name),
+     );
+ 
+-    pm_conversations.set_partner(b_user_1.user_id);
++    // A more recent direct message conversation takes priority.
++    pm_conversations.recent.insert([a_user.user_id], 200);
++    pm_conversations.recent.insert([b_user_1.user_id], 100);
++
++    assert.equal(th.compare_users_for_dms(a_user, b_user_1), -1);
++    assert.equal(th.compare_users_for_dms(b_user_1, a_user), 1);
+ 
+-    // Partner status takes priority over DM count: b_user_1 is a partner
+-    // and wins even though a_user has the higher recipient count.
+-    people.set_recipient_count_for_testing(a_user.user_id, 10);
+-    people.set_recipient_count_for_testing(b_user_1.user_id, 5);
++    // Any direct message history ranks above none.
++    pm_conversations.clear_for_testing();
++    pm_conversations.recent.insert([b_user_1.user_id], 100);
+ 
+     assert.equal(th.compare_users_for_dms(a_user, b_user_1), 1);
+     assert.equal(th.compare_users_for_dms(b_user_1, a_user), -1);
+ 
+-    // With matching partner status, higher recipient count wins.
+-    pm_conversations.set_partner(a_user.user_id);
++    // Equally recent direct messages fall back to alphabetical order.
++    pm_conversations.clear_for_testing();
++    pm_conversations.recent.insert([a_user.user_id, b_user_1.user_id], 100);
+ 
+-    assert.equal(th.compare_users_for_dms(a_user, b_user_1), -1);
+-    assert.equal(th.compare_users_for_dms(b_user_1, a_user), 1);
++    assert.equal(
++        th.compare_users_for_dms(a_user, b_user_1),
++        util.strcmp(a_user.full_name, b_user_1.full_name),
++    );
+ });
+ 
+ test("sort_group_setting_options", ({override_rewire}) => {
+diff --git a/web/tests/typeahead_sorting_logic.test.cjs b/web/tests/typeahead_sorting_logic.test.cjs
+index 4ebff6ec82..e9ab6856b6 100644
+--- a/web/tests/typeahead_sorting_logic.test.cjs
++++ b/web/tests/typeahead_sorting_logic.test.cjs
+@@ -102,7 +102,6 @@ function test(label, f) {
+         pm_conversations.clear_for_testing();
+         recent_senders.clear_for_testing();
+         peer_data.clear_for_testing();
+-        people.clear_recipient_counts_for_testing();
+         peer_data.set_subscribers(stream1.stream_id, [], true);
+         peer_data.set_subscribers(stream2.stream_id, [], true);
+         f(helpers);
+@@ -148,78 +147,72 @@ test("compare_users_for_streams: both subscribers, recency decides", () => {
+     assert.ok(result < 0, "more recent user should come first");
+ });
+ 
+-test("compare_users_for_streams: same recency, DM partner comes first", () => {
++test("compare_users_for_streams: same recency, recent DM contact comes first", () => {
+     const stream_id = stream1.stream_id;
+     const topic = "test topic";
+ 
+     peer_data.add_subscriber(stream_id, user1.user_id);
+     peer_data.add_subscriber(stream_id, user2.user_id);
+ 
+-    // Make user1 a DM partner
+-    pm_conversations.set_partner(user1.user_id);
++    // Give user1 a recent direct message.
++    pm_conversations.recent.insert([user1.user_id], 100);
+ 
+     const result = th.compare_users_for_streams(user1, user2, stream_id, topic);
+-    assert.ok(result < 0, "DM partner should come first");
++    assert.ok(result < 0, "recent DM contact should come first");
+ });
+ 
+-test("compare_users_for_streams: non-subscriber without recency, then DM partner", () => {
++test("compare_users_for_streams: non-subscribers, recent DM contact comes first", () => {
+     const stream_id = stream1.stream_id;
+     const topic = "test topic";
+ 
+     // Neither is a subscriber
+-    pm_conversations.set_partner(user2.user_id);
++    pm_conversations.recent.insert([user2.user_id], 100);
+ 
+     const result = th.compare_users_for_streams(user1, user2, stream_id, topic);
+-    assert.ok(result > 0, "user2 with DM partnership should come first");
++    assert.ok(result > 0, "user2 with a recent direct message should come first");
+ });
+ 
+ // ============================================================================
+ // Tests for compare_users_for_dms
+ // ============================================================================
+ // compare_users_for_dms is used when sorting DM recipients (no stream context).
+-// Sort order: DM partners > message count > shorter name (if query) > alphabetical
++// Sort order: direct message recency > shorter name (if query) > alphabetical
+ 
+-test("compare_users_for_dms: DM partners ranked before non-partners", () => {
+-    pm_conversations.set_partner(user1.user_id);
++test("compare_users_for_dms: users with DM history ranked before those without", () => {
++    pm_conversations.recent.insert([user1.user_id], 100);
+ 
+     const result = th.compare_users_for_dms(user1, user2);
+-    assert.ok(result < 0, "DM partner should come before non-partner");
++    assert.ok(result < 0, "user with a direct message should come before one without");
+ });
+ 
+-test("compare_users_for_dms: both partners, higher count comes first", () => {
+-    pm_conversations.set_partner(user1.user_id);
+-    pm_conversations.set_partner(user2.user_id);
+-
+-    people.set_recipient_count_for_testing(user1.user_id, 10);
+-    people.set_recipient_count_for_testing(user2.user_id, 5);
++test("compare_users_for_dms: both have DMs, more recent comes first", () => {
++    pm_conversations.recent.insert([user2.user_id], 100);
++    pm_conversations.recent.insert([user1.user_id], 200);
+ 
+     const result = th.compare_users_for_dms(user1, user2);
+-    assert.ok(result < 0, "higher message count should come first");
++    assert.ok(result < 0, "more recent direct message should come first");
+ });
+ 
+-test("compare_users_for_dms: same count and partner status, shorter name comes first", () => {
+-    // This test verifies the NEW behavior: when users have the same partner
+-    // status and message count, shorter names are preferred.
+-    // This rule ONLY applies when the user has started typing (query is non-empty).
+-    pm_conversations.set_partner(short_name_user.user_id);
+-    pm_conversations.set_partner(long_name_user.user_id);
++test("compare_users_for_dms: a more recent group DM counts toward recency", () => {
++    // A newer group DM that includes user1 outranks an older 1:1 with user2.
++    pm_conversations.recent.insert([user2.user_id], 100);
++    pm_conversations.recent.insert([user1.user_id, user3.user_id], 200);
+ 
+-    people.set_recipient_count_for_testing(short_name_user.user_id, 5);
+-    people.set_recipient_count_for_testing(long_name_user.user_id, 5);
++    const result = th.compare_users_for_dms(user1, user2);
++    assert.ok(result < 0, "member of a more recent group DM should come first");
++});
+ 
++test("compare_users_for_dms: same DM recency, shorter name comes first", () => {
++    // When users tie on direct message recency, shorter names are preferred.
++    // This rule ONLY applies when the user has started typing (query is non-empty).
+     const result = th.compare_users_for_dms(short_name_user, long_name_user, "a");
+     assert.ok(result < 0, "shorter name should come first");
+ });
+ 
+-test("compare_users_for_dms: same count and partner status, name length sorting only when query is non-empty", () => {
+-    // This test verifies that name length comparison is ONLY applied when the
+-    // user has started typing (query is non-empty). Without a query, users with
+-    // equal DM partner status and message count fall through to alphabetical.
+-    pm_conversations.set_partner(short_name_user.user_id);
+-    pm_conversations.set_partner(long_name_user.user_id);
+-
+-    people.set_recipient_count_for_testing(short_name_user.user_id, 5);
+-    people.set_recipient_count_for_testing(long_name_user.user_id, 5);
++test("compare_users_for_dms: name length sorting only when query is non-empty", () => {
++    // Name length comparison is ONLY applied when the user has started typing
++    // (query is non-empty). Without a query, users with equal direct message
++    // recency fall through to alphabetical.
+ 
+     // With empty query, name length is skipped; alphabetical applies
+     const result_empty = th.compare_users_for_dms(short_name_user, long_name_user, "");
+@@ -230,30 +223,21 @@ test("compare_users_for_dms: same count and partner status, name length sorting
+     assert.ok(result_with_query < 0, "shorter name should come first when query is not empty");
+ });
+ 
+-test("compare_users_for_dms: not partners but with different counts", () => {
+-    // Neither is a partner
+-    people.set_recipient_count_for_testing(user1.user_id, 10);
+-    people.set_recipient_count_for_testing(user2.user_id, 5);
+-
+-    const result = th.compare_users_for_dms(user1, user2);
+-    assert.ok(result < 0, "higher count should come first");
+-});
+-
+ // ============================================================================
+ // Tests for compare_user_with_wildcard (DM context)
+ // ============================================================================
+ 
+-test("compare_user_with_wildcard (DM): DM partner gets preference", () => {
+-    pm_conversations.set_partner(user1.user_id);
++test("compare_user_with_wildcard (DM): recent DM contact gets preference", () => {
++    pm_conversations.recent.insert([user1.user_id], 100);
+ 
+     const result = th.compare_user_with_wildcard(user1);
+-    assert.ok(result < 0, "DM partner should have priority over wildcard");
++    assert.ok(result < 0, "recent DM contact should have priority over wildcard");
+ });
+ 
+-test("compare_user_with_wildcard (DM): non-partner has less preference", () => {
+-    // user2 is not a DM partner
++test("compare_user_with_wildcard (DM): user without DM history has less preference", () => {
++    // user2 has no direct message history.
+     const result = th.compare_user_with_wildcard(user2);
+-    assert.ok(result > 0, "non-partner should have less priority than wildcard");
++    assert.ok(result > 0, "user with no DM history should have less priority than wildcard");
+ });
+ 
+ // ============================================================================
+@@ -300,14 +284,14 @@ test("compare_user_with_wildcard (Stream): posted in stream but not topic", () =
+     assert.ok(result < 0, "stream participant should have priority over wildcard");
+ });
+ 
+-test("compare_user_with_wildcard (Stream): DM partner but nothing else", () => {
++test("compare_user_with_wildcard (Stream): recent DM contact but nothing else", () => {
+     const stream_id = stream1.stream_id;
+     const topic = "test topic";
+ 
+-    pm_conversations.set_partner(user1.user_id);
++    pm_conversations.recent.insert([user1.user_id], 100);
+ 
+     const result = th.compare_user_with_wildcard(user1, stream_id, topic);
+-    assert.ok(result < 0, "DM partner should have priority over wildcard in stream context");
++    assert.ok(result < 0, "recent DM contact should have priority over wildcard in stream context");
+ });
+ 
+ test("compare_user_with_wildcard (Stream): no relevance should have less priority", () => {
+@@ -364,36 +348,33 @@ test("compare_people_for_relevance (Stream): wildcard vs user (non-subscriber)",
+ // Tests for compare_people_for_relevance (DM context)
+ // ============================================================================
+ 
+-test("compare_people_for_relevance (DM): two users both DM partners", () => {
+-    pm_conversations.set_partner(user1.user_id);
+-    pm_conversations.set_partner(user2.user_id);
+-
+-    people.set_recipient_count_for_testing(user1.user_id, 10);
+-    people.set_recipient_count_for_testing(user2.user_id, 5);
++test("compare_people_for_relevance (DM): two users with DMs, more recent first", () => {
++    pm_conversations.recent.insert([user2.user_id], 100);
++    pm_conversations.recent.insert([user1.user_id], 200);
+ 
+     const person_a = {type: "user", user: user1};
+     const person_b = {type: "user", user: user2};
+ 
+     const result = th.compare_people_for_relevance(person_a, person_b);
+-    assert.ok(result < 0, "user with higher count should come first in DM context");
++    assert.ok(result < 0, "user with the more recent direct message should come first");
+ });
+ 
+-test("compare_people_for_relevance (DM): user vs wildcard (partner wins)", () => {
+-    pm_conversations.set_partner(user1.user_id);
++test("compare_people_for_relevance (DM): user vs wildcard (recent DM wins)", () => {
++    pm_conversations.recent.insert([user1.user_id], 100);
+ 
+     const person_user = {type: "user", user: user1};
+     const person_wildcard = {type: "broadcast", user: {special_item_text: "@all", user_id: 0}};
+ 
+     const result = th.compare_people_for_relevance(person_user, person_wildcard);
+-    assert.ok(result < 0, "DM partner should come before wildcard in DM context");
++    assert.ok(result < 0, "recent DM contact should come before wildcard in DM context");
+ });
+ 
+-test("compare_people_for_relevance (DM): wildcard vs user (non-partner)", () => {
++test("compare_people_for_relevance (DM): wildcard vs user with no DM history", () => {
+     const person_wildcard = {type: "broadcast", user: {special_item_text: "@all", user_id: 0}};
+     const person_user = {type: "user", user: user1};
+ 
+     const result = th.compare_people_for_relevance(person_wildcard, person_user);
+-    assert.ok(result < 0, "wildcard should come before non-partner in DM context");
++    assert.ok(result < 0, "wildcard should come before a user with no DM history");
+ });
+ 
+ test("compare_people_for_relevance (DM): two wildcards", () => {
+@@ -419,7 +400,7 @@ test("sort people for stream relevance - mixed users", () => {
+     const topic = "test topic";
+ 
+     peer_data.add_subscriber(stream_id, user1.user_id);
+-    pm_conversations.set_partner(user2.user_id);
++    pm_conversations.recent.insert([user2.user_id], 100);
+ 
+     const people_list = [
+         {type: "user", user: user2},
+@@ -429,13 +410,17 @@ test("sort people for stream relevance - mixed users", () => {
+     people_list.sort((a, b) => th.compare_people_for_relevance(a, b, stream_id, topic));
+ 
+     assert.equal(people_list[0].user.user_id, user1.user_id, "subscriber should come first");
+-    assert.equal(people_list[1].user.user_id, user2.user_id, "DM partner should come second");
++    assert.equal(
++        people_list[1].user.user_id,
++        user2.user_id,
++        "recent DM contact should come second",
++    );
+ });
+ 
+ test("sort people for DM relevance - mixed users", () => {
+-    pm_conversations.set_partner(user1.user_id);
+-    people.set_recipient_count_for_testing(user1.user_id, 5);
+-    people.set_recipient_count_for_testing(user2.user_id, 10);
++    // user1 has a more recent direct message than user2.
++    pm_conversations.recent.insert([user2.user_id], 100);
++    pm_conversations.recent.insert([user1.user_id], 200);
+ 
+     const people_list = [
+         {type: "user", user: user2},
+@@ -444,16 +429,21 @@ test("sort people for DM relevance - mixed users", () => {
+ 
+     people_list.sort((a, b) => th.compare_people_for_relevance(a, b));
+ 
+-    assert.equal(people_list[0].user.user_id, user1.user_id, "DM partner should come first");
+-    assert.equal(people_list[1].user.user_id, user2.user_id, "non-partner should come second");
++    assert.equal(
++        people_list[0].user.user_id,
++        user1.user_id,
++        "more recent DM contact should come first",
++    );
++    assert.equal(
++        people_list[1].user.user_id,
++        user2.user_id,
++        "less recent DM contact should come second",
++    );
+ });
+ 
+ test("sort users by name length - same other criteria", () => {
+-    pm_conversations.set_partner(short_name_user.user_id);
+-    pm_conversations.set_partner(long_name_user.user_id);
+-    people.set_recipient_count_for_testing(short_name_user.user_id, 5);
+-    people.set_recipient_count_for_testing(long_name_user.user_id, 5);
+-
++    // Neither user has direct message history, so they tie on recency and the
++    // non-empty query makes name length the deciding factor.
+     const people_list = [
+         {type: "user", user: long_name_user},
+         {type: "user", user: short_name_user},
+@@ -473,7 +463,7 @@ test("sort users by name length - same other criteria", () => {
+     );
+ });
+ 
+-test("stream sorting priority: subscriber > topic participant > stream participant > DM partner", () => {
++test("stream sorting priority: subscriber > topic participant > stream participant > DM contact", () => {
+     const stream_id = stream1.stream_id;
+     const topic = "test topic";
+ 
+@@ -496,8 +486,8 @@ test("stream sorting priority: subscriber > topic participant > stream participa
+         id: 250,
+     });
+ 
+-    // user4: not subscriber, no stream participation, DM partner
+-    pm_conversations.set_partner(user4.user_id);
++    // user4: not subscriber, no stream participation, but a recent DM contact
++    pm_conversations.recent.insert([user4.user_id], 400);
+ 
+     const people_list = [
+         {type: "user", user: user3},
+@@ -511,5 +501,5 @@ test("stream sorting priority: subscriber > topic participant > stream participa
+     assert.equal(people_list[0].user.user_id, user1.user_id, "subscriber should be first");
+     assert.equal(people_list[1].user.user_id, user2.user_id, "topic participant should be second");
+     assert.equal(people_list[2].user.user_id, user3.user_id, "stream participant should be third");
+-    assert.equal(people_list[3].user.user_id, user4.user_id, "DM partner should be fourth");
++    assert.equal(people_list[3].user.user_id, user4.user_id, "recent DM contact should be fourth");
+ });

@@ -1,0 +1,134 @@
+diff --git a/web/tests/composebox_typeahead.test.cjs b/web/tests/composebox_typeahead.test.cjs
+index 4ddbf67773..5a2d0ed84f 100644
+--- a/web/tests/composebox_typeahead.test.cjs
++++ b/web/tests/composebox_typeahead.test.cjs
+@@ -2306,7 +2306,10 @@ test("content_highlighter_html", ({override_rewire}) => {
+     ct.get_or_set_completing_for_tests("syntax");
+     th_render_typeahead_item_called = false;
+     override_rewire(typeahead_helper, "render_typeahead_item", (item) => {
+-        assert.deepEqual(item, {primary: "py"});
++        assert.deepEqual(item, {
++            is_default_language: false,
++            primary: "py",
++        });
+         th_render_typeahead_item_called = true;
+     });
+     ct.content_highlighter_html({type: "syntax", language: "py"});
+diff --git a/web/tests/realm_playground.test.cjs b/web/tests/realm_playground.test.cjs
+index 269d93bd63..3890a98de3 100644
+--- a/web/tests/realm_playground.test.cjs
++++ b/web/tests/realm_playground.test.cjs
+@@ -78,6 +78,10 @@ run_test("get_pygments_typeahead_list_for_settings", () => {
+     let iterator = candidates.entries();
+     assert.equal(iterator.next().value[1], $t({defaultMessage: "Custom language: custom_lang"}));
+     assert.equal(iterator.next().value[1], $t({defaultMessage: "Custom language: invent_a_lang"}));
++    assert.equal(iterator.next().value[1], "Text only (text, text)");
++    assert.equal(iterator.next().value[1], "quote (quote, quote)");
++    assert.equal(iterator.next().value[1], "spoiler (spoiler, spoiler)");
++    assert.equal(iterator.next().value[1], "math (math, math)");
+     assert.equal(iterator.next().value[1], "JavaScript (javascript, js, javascript, js)");
+     assert.equal(
+         iterator.next().value[1],
+@@ -96,6 +100,10 @@ run_test("get_pygments_typeahead_list_for_settings", () => {
+     );
+     assert.equal(iterator.next().value[1], $t({defaultMessage: "Custom language: custom_lang"}));
+     assert.equal(iterator.next().value[1], $t({defaultMessage: "Custom language: invent_a_lang"}));
++    assert.equal(iterator.next().value[1], "Text only (text, text)");
++    assert.equal(iterator.next().value[1], "quote (quote, quote)");
++    assert.equal(iterator.next().value[1], "spoiler (spoiler, spoiler)");
++    assert.equal(iterator.next().value[1], "math (math, math)");
+     assert.equal(iterator.next().value[1], "JavaScript (javascript, js, javascript, js)");
+     assert.equal(
+         iterator.next().value[1],
+@@ -107,9 +115,7 @@ run_test("get_pygments_typeahead_list_for_settings", () => {
+     iterator = candidates.entries();
+     assert.equal(iterator.next().value[1], $t({defaultMessage: "Custom language: invent_a_lang"}));
+     assert.equal(iterator.next().value[1], $t({defaultMessage: "Custom language: custom_lang"}));
+-    assert.equal(iterator.next().value[1], "JavaScript (javascript, js, javascript, js)");
+-    assert.equal(
+-        iterator.next().value[1],
+-        "Python (python, bazel, py, py3, pyi, python3, sage, starlark, python, bazel, py, py3, pyi, python3, sage, starlark)",
+-    );
++    assert.equal(iterator.next().value[1], "Text only (text, text)");
++    assert.equal(iterator.next().value[1], "quote (quote, quote)");
++    assert.equal(iterator.next().value[1], "spoiler (spoiler, spoiler)");
+ });
+diff --git a/web/tests/typeahead_helper.test.cjs b/web/tests/typeahead_helper.test.cjs
+index 9696d18a5d..ab12ebab54 100644
+--- a/web/tests/typeahead_helper.test.cjs
++++ b/web/tests/typeahead_helper.test.cjs
+@@ -394,12 +394,15 @@ test("sort_streams", ({override, override_rewire}) => {
+ 
+ function language_items(languages) {
+     return languages.map((language) => ({
+-        type: "syntax",
+         language,
++        type: "syntax",
+     }));
+ }
+ 
+-test("sort_languages", ({override_rewire}) => {
++test("sort_languages", ({override, override_rewire}) => {
++    override(realm, "realm_default_code_block_language", "dart");
++    const default_language = realm.realm_default_code_block_language;
++
+     override_rewire(pygments_data, "langs", {
+         python: {priority: 26},
+         javascript: {priority: 27},
+@@ -407,20 +410,52 @@ test("sort_languages", ({override_rewire}) => {
+         pascal: {priority: 15},
+         perl: {priority: 3},
+         css: {priority: 21},
++        spoiler: {priority: 29},
++        text: {priority: 31},
++        quote: {priority: 30},
++        math: {priority: 28},
+     });
+ 
+-    let test_langs = language_items(["pascal", "perl", "php", "python", "javascript"]);
++    let test_langs = language_items(["pascal", "perl", "php", "python", "spoiler", "javascript"]);
+     test_langs = th.sort_languages(test_langs, "p");
+ 
+     // Sort languages by matching first letter, and then by popularity
+-    assert.deepEqual(test_langs, language_items(["python", "php", "pascal", "perl", "javascript"]));
++    assert.deepEqual(
++        test_langs,
++        language_items(["python", "php", "pascal", "perl", "spoiler", "javascript"]),
++    );
+ 
+     // Test if popularity between two languages are the same
+     pygments_data.langs.php = {priority: 26};
+-    test_langs = language_items(["pascal", "perl", "php", "python", "javascript"]);
++    test_langs = language_items(["pascal", "perl", "php", "python", "spoiler", "javascript"]);
+     test_langs = th.sort_languages(test_langs, "p");
+ 
+-    assert.deepEqual(test_langs, language_items(["php", "python", "pascal", "perl", "javascript"]));
++    assert.deepEqual(
++        test_langs,
++        language_items(["php", "python", "pascal", "perl", "spoiler", "javascript"]),
++    );
++
++    test_langs = language_items([
++        default_language,
++        "text",
++        "quote",
++        "math",
++        "python",
++        "javascript",
++    ]);
++    const test_langs_for_default = th.sort_languages(test_langs, "d");
++
++    assert.deepEqual(
++        test_langs_for_default,
++        language_items([default_language, "text", "quote", "math", "javascript", "python"]),
++    );
++
++    test_langs = th.sort_languages(test_langs, "t");
++
++    assert.deepEqual(
++        test_langs,
++        language_items(["text", "quote", "math", "javascript", "python", default_language]),
++    );
+ });
+ 
+ test("sort_languages on actual data", () => {

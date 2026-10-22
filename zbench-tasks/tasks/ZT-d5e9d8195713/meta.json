@@ -1,0 +1,89 @@
+{
+  "task_id": "ZT-d5e9d8195713",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "integrations: Add support for GitLab access token expiry events.",
+  "type": "other",
+  "lang": "py",
+  "issue": 34405,
+  "fix_commit": "d5e9d81957131663bfc48fd40f80672275c05cf9",
+  "base_commit": "9f5198bcd1102fc4fc79dc227521e8a491a7b0da",
+  "env_fingerprint": "ebab2326ce44",
+  "fail_to_pass": [
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_resource_access_token_group_expiry",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_resource_access_token_project_expiry"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 36,
+    "files": 1,
+    "hunks": 5,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The GitLab webhook integration must handle the GitLab event delivered with the X-GitLab-Event header 'Resource Access Token Hook' (payload has object_kind 'access_token' and event_name 'expiring_access_token'), producing a Zulip notification message instead of ignoring or erroring on the event.",
+    "The notification message for an expiring resource access token must be exactly: 'The access token [{name}]({url}) will expire on {date}.', where {name} is the payload's object_attributes.name rendered as a Markdown link.",
+    "The link {url} must point to the resource's access-token settings page: for a project token, '{project.web_url}/-/settings/access_tokens'; for a group token, 'https://gitlab.com/groups/{group.group_path}/-/settings/access_tokens'.",
+    "The expiry {date} must be the payload's object_attributes.expires_at (format YYYY-MM-DD) reformatted as abbreviated-month style '%b %d, %Y' (e.g. '2024-01-26' becomes 'Jan 26, 2024').",
+    "The Zulip topic for the notification must be the group's group_name when the payload contains a 'group' object, and otherwise the project's name."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 183,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Varun-Kolanu",
+    "email": "kolanuvarun739@gmail.com",
+    "date": "2025-06-24"
+  },
+  "contamination": {
+    "fix_public_at": "2025-06-24",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-04-15T13:20:03Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/d5e9d81957131663bfc48fd40f80672275c05cf9",
+    "issue_url": "https://github.com/zulip/zulip/issues/34405"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-d5e9d8195713",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_resource_access_token_group_expiry",
+        "test_resource_access_token_project_expiry"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 88.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

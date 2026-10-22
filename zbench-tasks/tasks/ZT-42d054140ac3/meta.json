@@ -1,0 +1,96 @@
+{
+  "task_id": "ZT-42d054140ac3",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "integrations: Add repository name support to Github push messages.",
+  "type": "other",
+  "lang": "py",
+  "issue": 34525,
+  "fix_commit": "42d054140ac360fce98b46f1e064ee5fae9ab09a",
+  "base_commit": "a7df94d37c9cea832e10e3ce2dc2a668d1cd4f0f",
+  "env_fingerprint": "09d041dc1808",
+  "fail_to_pass": [
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_commit_comment_msg",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_push_1_commit_with_repository_name",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_push_multiple_committers_with_repository_name"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_integrations"
+  ],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 29,
+    "files": 3,
+    "hunks": 9,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The GitHub webhook integration URL gains a new boolean query parameter named `include_repository_name` (parsed as JSON bool, e.g. `include_repository_name=true`; default false). It is appended to the webhook URL like existing options such as `ignore_private_repositories`.",
+    "When `include_repository_name` is enabled, the push-event notification message's first line changes from '{user} [pushed]({compare_url}) {N} commit(s) to branch {branch}.' to '{user} [pushed]({compare_url}) {N} commit(s) to branch {branch} of [{repository_full_name}]({repository_html_url}).' \u2014 i.e. a Markdown link whose text is the repository's full name (from the payload's `repository.full_name`) and whose target is the repository's HTML URL (from `repository.html_url`). The rest of the message (commit list, truncation note, 'Commits by X (n), ...' committers detail) is unchanged.",
+    "When the option is absent or false, push messages are byte-identical to the pre-existing format (existing tests must keep passing)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 418,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Satyam Bansal",
+    "email": "sbansal1999@gmail.com",
+    "date": "2025-12-08"
+  },
+  "contamination": {
+    "fix_public_at": "2025-12-08",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-04-30T12:31:47Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/42d054140ac360fce98b46f1e064ee5fae9ab09a",
+    "issue_url": "https://github.com/zulip/zulip/issues/34525"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-42d054140ac3",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_push_1_commit_with_repository_name",
+        "test_push_multiple_committers_with_repository_name"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 153.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

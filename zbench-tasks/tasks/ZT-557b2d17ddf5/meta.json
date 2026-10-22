@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-557b2d17ddf5",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The real deliverable \u2014 extending generate-integration-docs-screenshot to render message threads via a live browser \u2014 is not graded at all. The hidden test only appends hardcoded image paths (github_detail/001.png, matrix/001.png, etc.) to an exception whitelist in a docs-consistency check, i.e., filename bookkeeping between doc references and an on-disk image directory. A patch that merely edits the docs/whitelists without implementing thread-screenshot support would pass, and the actual behavior (screenshot capture) is only observable through real browser rendering. The test grades incidental lockstep bookkeeping, not the observable outcome of the change.",
+  "summary": "integrations: Add thread screenshots for fixtureless integrations.",
+  "lang": "py",
+  "issue": 36746,
+  "fix_commit": "557b2d17ddf5f7516c43f8d6b9a5d836e4b7c78e",
+  "base_commit": "3e70200c8535211407d62d7fba4641e3af850c07",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/557b2d17ddf5f7516c43f8d6b9a5d836e4b7c78e",
+    "issue_url": "https://github.com/zulip/zulip/issues/36746"
+  }
+}

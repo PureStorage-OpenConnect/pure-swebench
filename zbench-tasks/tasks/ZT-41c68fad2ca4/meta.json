@@ -1,0 +1,79 @@
+{
+  "task_id": "ZT-41c68fad2ca4",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "stream: Allow non-admins to create channel without subscribing to it.",
+  "type": "other",
+  "lang": "web",
+  "issue": 33125,
+  "fix_commit": "41c68fad2ca457ab5659aed6276567ab3933c9c0",
+  "base_commit": "274fdc5908494cafebec93d0a116da6d7227873d",
+  "env_fingerprint": "021aaea1b04b",
+  "fail_to_pass": [
+    "web/tests/stream_create_subscribers_data.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 4,
+    "files": 4,
+    "hunks": 9,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 189,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Shubham Padia",
+    "email": "shubham@zulip.com",
+    "date": "2025-01-29"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-29",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-01-21T20:30:21Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/41c68fad2ca457ab5659aed6276567ab3933c9c0",
+    "issue_url": "https://github.com/zulip/zulip/issues/33125"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-41c68fad2ca4",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 64.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

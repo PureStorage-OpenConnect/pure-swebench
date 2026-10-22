@@ -1,0 +1,91 @@
+{
+  "task_id": "ZT-59d5d29ed857",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "integrations: Add support for GitLab design comments.",
+  "type": "other",
+  "lang": "py",
+  "issue": 26199,
+  "fix_commit": "59d5d29ed857dabe470c0c40eaf782846ec6571a",
+  "base_commit": "aaa2db40793010f16641823d56388ed59831b0e6",
+  "env_fingerprint": "0683930bcbfa",
+  "fail_to_pass": [
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_note_confidential_issue_event_message",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_note_design_event_message",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_note_design_with_custom_topic_in_url",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_note_snippet_old_event_message"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 67,
+    "files": 1,
+    "hunks": 7,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The GitLab webhook integration must handle note events whose object_attributes.type/noteable_type indicates a design comment (noteable_type \"DesignManagement::Design\", including the confidential variant) instead of failing as an unsupported event.",
+    "For design comments, the Zulip topic must be \"{repository name} / design {design filename}\", where the design filename is the last path segment of object_attributes.position.new_path (e.g. \"testing-zulip-gitlab-integration / design Screenshot.png\").",
+    "Since design-note payloads carry no direct issue field or comment URL, the design's web URL must be constructed as \"{repository homepage}/-/issues/{issue number}/designs/{design filename}\", where the issue number is parsed from the position.new_path of the form \"designs/issue-{N}/{filename}\".",
+    "The comment URL must be the design URL with the anchor \"#note_{object_attributes.id}\" appended.",
+    "The message body for a design comment must be \"{commenter's display name} [commented]({comment URL}) on design [{design filename}]({design URL}):\" followed by the note text rendered in the integration's standard quote block (\"~~~ quote\\n{note}\\n~~~\")."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 3317,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Varun-Kolanu",
+    "email": "kolanuvarun739@gmail.com",
+    "date": "2025-04-07"
+  },
+  "contamination": {
+    "fix_public_at": "2025-04-07",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-07-06T14:02:47Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/59d5d29ed857dabe470c0c40eaf782846ec6571a",
+    "issue_url": "https://github.com/zulip/zulip/issues/26199"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-59d5d29ed857",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_note_design_event_message",
+        "test_note_design_with_custom_topic_in_url"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 86.0
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

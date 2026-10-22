@@ -1,0 +1,104 @@
+diff --git a/corporate/tests/test_support_views.py b/corporate/tests/test_support_views.py
+index 09461e5aef..b90869dc79 100644
+--- a/corporate/tests/test_support_views.py
++++ b/corporate/tests/test_support_views.py
+@@ -1902,21 +1902,21 @@ class TestSupportEndpoint(ZulipTestCase):
+             "/activity/support", {"realm_id": f"{lear_realm.id}", "new_subdomain": "new-name"}
+         )
+         self.assert_in_success_response(
+-            ["Subdomain already in use. Please choose a different one."], result
++            ["Subdomain is already in use. Please choose a different one."], result
+         )
+ 
+         result = self.client_post(
+             "/activity/support", {"realm_id": f"{lear_realm.id}", "new_subdomain": "zulip"}
+         )
+         self.assert_in_success_response(
+-            ["Subdomain already in use. Please choose a different one."], result
++            ["Subdomain is already in use. Please choose a different one."], result
+         )
+ 
+         result = self.client_post(
+             "/activity/support", {"realm_id": f"{lear_realm.id}", "new_subdomain": "lear"}
+         )
+         self.assert_in_success_response(
+-            ["Subdomain already in use. Please choose a different one."], result
++            ["Subdomain is already in use. Please choose a different one."], result
+         )
+ 
+         # Test renaming to a "reserved" subdomain
+diff --git a/zerver/tests/test_bots.py b/zerver/tests/test_bots.py
+index 941195bf34..05014430b3 100644
+--- a/zerver/tests/test_bots.py
++++ b/zerver/tests/test_bots.py
+@@ -260,7 +260,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
+             short_name="whatever",
+         )
+         result = self.client_post("/json/bots", bot_info)
+-        self.assert_json_error(result, "Name is already in use!")
++        self.assert_json_error(result, "Name is already in use.")
+ 
+     def test_add_bot_with_user_avatar(self) -> None:
+         email = "hambot-bot@zulip.testserver"
+@@ -1143,7 +1143,7 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
+             "full_name": already_taken_name,
+         }
+         result = self.client_patch(url, bot_info)
+-        self.assert_json_error(result, "Name is already in use!")
++        self.assert_json_error(result, "Name is already in use.")
+ 
+         # We can use our own name (with extra whitespace), and the
+         # server should silently do nothing.
+diff --git a/zerver/tests/test_realm.py b/zerver/tests/test_realm.py
+index 55d38f948b..57490c71e8 100644
+--- a/zerver/tests/test_realm.py
++++ b/zerver/tests/test_realm.py
+@@ -261,7 +261,9 @@ class RealmTest(ZulipTestCase):
+         realm.demo_organization_scheduled_deletion_date = timezone_now() + timedelta(days=30)
+         realm.save()
+         result = self.client_patch("/json/realm", data)
+-        self.assert_json_error(result, "Subdomain already in use. Please choose a different one.")
++        self.assert_json_error(
++            result, "Subdomain is already in use. Please choose a different one."
++        )
+ 
+         # Now try to change the string_id to something available.
+         data = dict(string_id="coolrealm")
+diff --git a/zerver/tests/test_signup.py b/zerver/tests/test_signup.py
+index 0c93e95a75..53d576cc6c 100644
+--- a/zerver/tests/test_signup.py
++++ b/zerver/tests/test_signup.py
+@@ -2158,7 +2158,7 @@ class RealmCreationTest(ZulipTestCase):
+     def test_subdomain_check_api(self) -> None:
+         result = self.client_get("/json/realm/subdomain/zulip")
+         self.assert_in_success_response(
+-            ["Subdomain already in use. Please choose a different one."], result
++            ["Subdomain is already in use. Please choose a different one."], result
+         )
+ 
+         result = self.client_get("/json/realm/subdomain/zu_lip")
+@@ -2988,7 +2988,7 @@ class UserSignUpTest(ZulipTestCase):
+         )
+         self.assert_in_success_response(
+             [
+-                "Subdomain already in use. Please choose a different one.",
++                "Subdomain is already in use. Please choose a different one.",
+                 'value="Test"',
+                 'name="realm_name"',
+             ],
+diff --git a/zerver/tests/test_subs.py b/zerver/tests/test_subs.py
+index f2de0022a2..5297527e35 100644
+--- a/zerver/tests/test_subs.py
++++ b/zerver/tests/test_subs.py
+@@ -2084,9 +2084,9 @@ class StreamAdminTest(ZulipTestCase):
+         result = self.client_patch(f"/json/streams/{stream.id}", {"new_name": "stream_name1"})
+         self.assert_json_error(result, "Channel already has that name.")
+         result = self.client_patch(f"/json/streams/{stream.id}", {"new_name": "Denmark"})
+-        self.assert_json_error(result, "Channel name already in use.")
++        self.assert_json_error(result, "Channel name is already in use.")
+         result = self.client_patch(f"/json/streams/{stream.id}", {"new_name": "denmark "})
+-        self.assert_json_error(result, "Channel name already in use.")
++        self.assert_json_error(result, "Channel name is already in use.")
+ 
+         # Do a rename that is case-only--this should succeed.
+         result = self.client_patch(f"/json/streams/{stream.id}", {"new_name": "sTREAm_name1"})

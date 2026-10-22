@@ -1,0 +1,256 @@
+diff --git a/web/tests/channel_folders.test.cjs b/web/tests/channel_folders.test.cjs
+index 96de601890..be9c0fa718 100644
+--- a/web/tests/channel_folders.test.cjs
++++ b/web/tests/channel_folders.test.cjs
+@@ -66,6 +66,11 @@ run_test("basics", () => {
+         devops_folder,
+     ]);
+ 
++    assert.deepEqual(
++        channel_folders.get_all_folder_ids(),
++        new Set([frontend_folder.id, backend_folder.id, devops_folder.id]),
++    );
++
+     assert.ok(channel_folders.is_valid_folder_id(frontend_folder.id));
+     assert.ok(!channel_folders.is_valid_folder_id(999));
+ 
+diff --git a/web/tests/left_sidebar_navigation_area.test.cjs b/web/tests/left_sidebar_navigation_area.test.cjs
+index 412d65634b..368a00a39c 100644
+--- a/web/tests/left_sidebar_navigation_area.test.cjs
++++ b/web/tests/left_sidebar_navigation_area.test.cjs
+@@ -86,11 +86,6 @@ run_test("narrowing", ({override_rewire}) => {
+ });
+ 
+ run_test("update_count_in_dom", () => {
+-    // TODO/channel-folders: Re-enable this test.
+-    if (Filter !== undefined) {
+-        return;
+-    }
+-
+     function make_elem($elem, count_selector) {
+         const $count = $(count_selector);
+         $elem.set_find_results(".unread_count", $count);
+@@ -114,6 +109,8 @@ run_test("update_count_in_dom", () => {
+ 
+     make_elem($(".selected-home-view"), "<home-count>");
+ 
++    make_elem($(".top_left_condensed_unread_marker"), "<condensed-unread-count>");
++
+     make_elem($(".top_left_starred_messages"), "<starred-count>");
+ 
+     make_elem($(".top_left_scheduled_messages"), "<scheduled-count>");
+@@ -121,9 +118,6 @@ run_test("update_count_in_dom", () => {
+     make_elem($(".top_left_reminders"), "<reminders-count>");
+ 
+     make_elem($("#topics_header"), "<topics-count>");
+-    make_elem($("#stream-list-pinned-streams-container .markers-and-unreads"), "<pinned-count>");
+-    make_elem($("#stream-list-normal-streams-container .markers-and-unreads"), "<normal-count>");
+-    make_elem($("#stream-list-dormant-streams-container .markers-and-unreads"), "<inactive-count>");
+ 
+     left_sidebar_navigation_area.update_dom_with_unread_counts(counts, false);
+     left_sidebar_navigation_area.update_starred_count(444, false);
+@@ -132,14 +126,11 @@ run_test("update_count_in_dom", () => {
+ 
+     assert.equal($("<mentioned-count>").text(), "222");
+     assert.equal($("<home-count>").text(), "333");
++    assert.equal($("<condensed-unread-count>").text(), "333");
+     assert.equal($("<starred-count>").text(), "444");
+-    assert.equal($("<scheduled-count>").text(), "555");
+-    assert.equal($("<reminders-count>").text(), "888");
++    assert.equal($("<scheduled-count>").text(), "");
++    assert.equal($("<reminders-count>").text(), "");
+     assert.equal($("<topics-count>").text(), "666");
+-    // TODO/channel-folders: Do proper data setup so these are a number.
+-    assert.equal($("<pinned-count>").text(), "");
+-    assert.equal($("<normal-count>").text(), "");
+-    assert.equal($("<inactive-count>").text(), "");
+ 
+     counts.mentioned_message_count = 0;
+ 
+diff --git a/web/tests/list_cursor.test.cjs b/web/tests/list_cursor.test.cjs
+index 61881f99ef..ea36d4e586 100644
+--- a/web/tests/list_cursor.test.cjs
++++ b/web/tests/list_cursor.test.cjs
+@@ -148,6 +148,12 @@ run_test("multiple item list", ({override}) => {
+     assert.ok(!list_items[2].hasClass("highlight"));
+     assert.ok(!list_items[3].hasClass("highlight"));
+ 
++    override(conf.list, "find_li", () => list_items[1]);
++    cursor.redraw();
++    assert.ok(list_items[1].hasClass("highlight"));
++    assert.ok(!list_items[2].hasClass("highlight"));
++    assert.ok(!list_items[3].hasClass("highlight"));
++
+     cursor.clear();
+     assert.equal(cursor.get_key(), undefined);
+     cursor.redraw();
+diff --git a/web/tests/settings_data.test.cjs b/web/tests/settings_data.test.cjs
+index d31bc11f01..84af153e35 100644
+--- a/web/tests/settings_data.test.cjs
++++ b/web/tests/settings_data.test.cjs
+@@ -675,3 +675,22 @@ run_test("user_can_summarize_topics", ({override}) => {
+     override(realm, "server_can_summarize_topics", false);
+     assert.ok(!settings_data.user_can_summarize_topics());
+ });
++
++run_test("should_mask_unread_count", ({override}) => {
++    override(user_settings, "web_stream_unreads_count_display_policy", 3);
++    let sub_muted = false;
++    let unmuted_unread_count = 0;
++    assert.equal(settings_data.should_mask_unread_count(sub_muted, unmuted_unread_count), true);
++
++    override(user_settings, "web_stream_unreads_count_display_policy", 2);
++    assert.equal(settings_data.should_mask_unread_count(sub_muted, unmuted_unread_count), false);
++
++    sub_muted = true;
++    assert.equal(settings_data.should_mask_unread_count(sub_muted, unmuted_unread_count), true);
++
++    unmuted_unread_count = 2;
++    assert.equal(settings_data.should_mask_unread_count(sub_muted, unmuted_unread_count), false);
++
++    override(user_settings, "web_stream_unreads_count_display_policy", 1);
++    assert.equal(settings_data.should_mask_unread_count(sub_muted, unmuted_unread_count), false);
++});
+diff --git a/web/tests/stream_list.test.cjs b/web/tests/stream_list.test.cjs
+index c7896c7816..4187fddb0f 100644
+--- a/web/tests/stream_list.test.cjs
++++ b/web/tests/stream_list.test.cjs
+@@ -36,12 +36,9 @@ mock_esm("../src/unread", {
+     stream_has_any_unread_mentions: () => stream_has_any_unread_mentions,
+     stream_has_any_unmuted_mentions: () => noop,
+ });
+-// TODO/channel-folders: Don't mock this.
+-mock_esm("../src/left_sidebar_navigation_area", {
+-    update_dom_with_unread_counts: () => noop,
+-});
+ 
+ const {Filter} = zrequire("../src/filter");
++const left_sidebar_navigation_area = zrequire("left_sidebar_navigation_area");
+ const stream_data = zrequire("stream_data");
+ const stream_list = zrequire("stream_list");
+ stream_list.set_update_inbox_channel_view_callback(noop);
+@@ -51,8 +48,6 @@ const {initialize_user_settings} = zrequire("user_settings");
+ const settings_config = zrequire("settings_config");
+ mock_esm("../src/settings_data", {
+     user_can_create_private_streams: () => true,
+-    user_can_create_public_streams: () => true,
+-    user_can_create_web_public_streams: () => true,
+     user_has_permission_for_group_setting: () => true,
+     should_mask_unread_count: () => false,
+ });
+@@ -174,6 +169,7 @@ test_ui("create_sidebar_row", ({override, override_rewire, mock_template}) => {
+     });
+     override_rewire(stream_list, "update_dom_with_unread_counts", noop);
+     override_rewire(stream_list, "update_stream_section_mention_indicators", noop);
++    override_rewire(left_sidebar_navigation_area, "update_dom_with_unread_counts", noop);
+ 
+     const pinned_streams = [];
+     $("#stream-list-pinned-streams").append = (stream) => {
+@@ -251,6 +247,7 @@ test_ui("create_sidebar_row", ({override, override_rewire, mock_template}) => {
+ test_ui("pinned_streams_never_inactive", ({mock_template, override_rewire}) => {
+     override_rewire(stream_list, "update_stream_section_mention_indicators", noop);
+     override_rewire(stream_list, "update_dom_with_unread_counts", noop);
++    override_rewire(left_sidebar_navigation_area, "update_dom_with_unread_counts", noop);
+ 
+     stream_data.add_sub(devel);
+     stream_data.add_sub(social);
+@@ -447,6 +444,7 @@ test_ui("narrowing", ({override_rewire}) => {
+     override_rewire(stream_list, "scroll_stream_into_view", noop);
+     override_rewire(stream_list, "update_stream_section_mention_indicators", noop);
+     override_rewire(stream_list, "update_dom_with_unread_counts", noop);
++    override_rewire(left_sidebar_navigation_area, "update_dom_with_unread_counts", noop);
+ 
+     initialize_stream_data();
+     assert.ok(!$("<devel-sidebar-row-stub>").hasClass("active-filter"));
+@@ -485,11 +483,10 @@ test_ui("narrowing", ({override_rewire}) => {
+     assert.ok(topics_closed);
+ });
+ 
+-test_ui("sort_streams", ({override_rewire}) => {
+-    // TODO/channel-folders: Fix this test.
+-    if (override_rewire !== undefined) {
+-        return;
+-    }
++test_ui("sort_streams", ({override_rewire, mock_template}) => {
++    override_rewire(stream_list, "update_dom_with_unread_counts", noop);
++    override_rewire(stream_list, "update_stream_section_mention_indicators", noop);
++    override_rewire(left_sidebar_navigation_area, "update_dom_with_unread_counts", noop);
+ 
+     // Get coverage on early-exit.
+     stream_list.build_stream_list();
+@@ -502,6 +499,8 @@ test_ui("sort_streams", ({override_rewire}) => {
+         return `<stub-section-${section.id}>`;
+     });
+ 
++    mock_template("show_inactive_or_muted_channels.hbs", false, () => $("<inactive-toggle>"));
++
+     const pinned_streams = [];
+     $("#stream-list-pinned-streams").append = (stream) => {
+         pinned_streams.push(stream);
+@@ -523,19 +522,22 @@ test_ui("sort_streams", ({override_rewire}) => {
+     assert.deepEqual(normal_streams, [
+         $("<announce-sidebar-row-stub>"),
+         $("<Denmark-sidebar-row-stub>"),
++        $("<inactive-toggle>"),
++        $("<cars-sidebar-row-stub>"),
+     ]);
+ 
+     const streams = stream_list_sort.get_stream_ids();
+ 
+     assert.deepEqual(streams, [
+-        // three groups: pinned, normal, dormant
++        // two groups: pinned and normal (with dormant at the bottom of the list)
++        // pinned
+         develSub.stream_id,
+         RomeSub.stream_id,
+         testSub.stream_id,
+-        //
++        // normal
+         announceSub.stream_id,
+         DenmarkSub.stream_id,
+-        //
++        // dormant in normal list
+         carSub.stream_id,
+     ]);
+ 
+@@ -549,6 +551,7 @@ test_ui("sort_streams", ({override_rewire}) => {
+ test_ui("separators_only_pinned_and_dormant", ({override_rewire}) => {
+     override_rewire(stream_list, "update_dom_with_unread_counts", noop);
+     override_rewire(stream_list, "update_stream_section_mention_indicators", noop);
++    override_rewire(left_sidebar_navigation_area, "update_dom_with_unread_counts", noop);
+ 
+     // Get coverage on early-exit.
+     stream_list.build_stream_list();
+@@ -604,6 +607,7 @@ test_ui("separators_only_pinned_and_dormant", ({override_rewire}) => {
+ test_ui("rename_stream", ({mock_template, override, override_rewire}) => {
+     override_rewire(stream_list, "update_dom_with_unread_counts", noop);
+     override_rewire(stream_list, "update_stream_section_mention_indicators", noop);
++    override_rewire(left_sidebar_navigation_area, "update_dom_with_unread_counts", noop);
+     override(user_settings, "web_stream_unreads_count_display_policy", 3);
+     override(current_user, "user_id", me.user_id);
+     initialize_stream_data();
+@@ -647,10 +651,10 @@ test_ui("rename_stream", ({mock_template, override, override_rewire}) => {
+ });
+ 
+ test_ui("refresh_pin", ({override_rewire, mock_template}) => {
+-    // TODO/channel-folders: Un-disable this test
+-    if (override_rewire !== undefined) {
+-        return;
+-    }
++    override_rewire(stream_list, "update_stream_section_mention_indicators", noop);
++    override_rewire(stream_list, "update_dom_with_unread_counts", noop);
++    override_rewire(stream_list, "maybe_hide_topic_bracket", noop);
++    override_rewire(left_sidebar_navigation_area, "update_dom_with_unread_counts", noop);
+     initialize_stream_data();
+ 
+     const sub = {
+@@ -692,6 +696,9 @@ test_ui("refresh_pin", ({override_rewire, mock_template}) => {
+ 
+ test_ui("create_initial_sidebar_rows", ({override, override_rewire, mock_template}) => {
+     override(user_settings, "web_stream_unreads_count_display_policy", 2); // Test coverage for this setting.
++    override_rewire(stream_list, "update_stream_section_mention_indicators", noop);
++    override_rewire(stream_list, "update_dom_with_unread_counts", noop);
++    override_rewire(left_sidebar_navigation_area, "update_dom_with_unread_counts", noop);
+     initialize_stream_data();
+ 
+     const html_dict = new Map();

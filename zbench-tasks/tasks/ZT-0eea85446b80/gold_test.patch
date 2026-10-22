@@ -1,0 +1,12 @@
+diff --git a/web/tests/compose_actions.test.cjs b/web/tests/compose_actions.test.cjs
+index 8c738b48df..b1c45e1050 100644
+--- a/web/tests/compose_actions.test.cjs
++++ b/web/tests/compose_actions.test.cjs
+@@ -36,6 +36,7 @@ set_global("requestAnimationFrame", (func) => func());
+ const autosize = noop;
+ autosize.update = noop;
+ mock_esm("autosize", {default: autosize});
++mock_esm("../src/compose_tooltips", {initialize_compose_tooltips: noop});
+ 
+ const channel = mock_esm("../src/channel");
+ const compose_fade = mock_esm("../src/compose_fade", {

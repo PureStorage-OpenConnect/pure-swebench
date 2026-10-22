@@ -1,0 +1,79 @@
+{
+  "task_id": "ZT-0374e386eced",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "compose_paste: Avoid pasting URLs when pasting a single image.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 36156,
+  "fix_commit": "0374e386ecedfcd83640743a9270f906c351aca8",
+  "base_commit": "4e528f348058589da081698cad2da4c944a86a4d",
+  "env_fingerprint": "d5c4a822a8c4",
+  "fail_to_pass": [
+    "web/tests/compose_paste.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 2,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 657,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "apoorvapendse",
+    "email": "apoorvavpendse@gmail.com",
+    "date": "2025-11-20"
+  },
+  "contamination": {
+    "fix_public_at": "2025-11-20",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-02-26T15:04:19Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/0374e386ecedfcd83640743a9270f906c351aca8",
+    "issue_url": "https://github.com/zulip/zulip/issues/36156"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-0374e386eced",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 74.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

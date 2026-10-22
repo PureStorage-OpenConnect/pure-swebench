@@ -1,0 +1,101 @@
+diff --git a/web/src/settings_components.ts b/web/src/settings_components.ts
+index d250e89cea..53a19235ac 100644
+--- a/web/src/settings_components.ts
++++ b/web/src/settings_components.ts
+@@ -2029,3 +2029,42 @@ export const language_options = (): Option[] => {
+         unique_id: language.code,
+     }));
+ };
++
++export function resize_textareas_in_section($section: JQuery): void {
++    const $subsections = $section.find(".settings-subsection-parent");
++    if ($subsections.length === 0) {
++        return;
++    }
++
++    $subsections.each(function () {
++        resize_textareas_in_subsection($(this));
++    });
++}
++
++export let resize_textareas_in_subsection = ($subsection: JQuery): void => {
++    const $textareas = $subsection.find("textarea");
++
++    if ($textareas.length === 0) {
++        return;
++    }
++
++    $textareas.each(function () {
++        const $el = $<HTMLTextAreaElement>(this);
++
++        const min_rows = 2;
++        const max_rows = 5;
++        $el.attr("rows", min_rows);
++        const scrollheight = util.the($el).scrollHeight;
++        const line_height = Number.parseFloat($el.css("line-height"));
++        const needed_rows = Math.ceil(scrollheight / line_height) - 1;
++
++        const new_rows = Math.min(Math.max(needed_rows, min_rows), max_rows);
++        $el.attr("rows", new_rows);
++    });
++};
++
++export function rewire_resize_textareas_in_subsection(
++    value: typeof resize_textareas_in_subsection,
++): void {
++    resize_textareas_in_subsection = value;
++}
+diff --git a/web/src/settings_org.ts b/web/src/settings_org.ts
+index d2c1805b61..91ecc2089f 100644
+--- a/web/src/settings_org.ts
++++ b/web/src/settings_org.ts
+@@ -1116,6 +1116,7 @@ export function save_organization_settings(
+                 // a change.
+                 unsaved_welcome_message_custom_text = "";
+             }
++            settings_components.resize_textareas_in_subsection($subsection_parent);
+         },
+         error(xhr) {
+             settings_components.change_save_button_state($save_button_container, "failed");
+diff --git a/web/src/settings_panel_menu.ts b/web/src/settings_panel_menu.ts
+index fe95846b84..8b2460b9f3 100644
+--- a/web/src/settings_panel_menu.ts
++++ b/web/src/settings_panel_menu.ts
+@@ -10,6 +10,7 @@ import * as keydown_util from "./keydown_util.ts";
+ import * as popovers from "./popovers.ts";
+ import * as scroll_util from "./scroll_util.ts";
+ import {redraw_all_bots_list, redraw_your_bots_list} from "./settings_bots.ts";
++import {resize_textareas_in_section} from "./settings_components.ts";
+ import * as settings_sections from "./settings_sections.ts";
+ import {redraw_active_users_list, redraw_deactivated_users_list} from "./settings_users.ts";
+ import * as util from "./util.ts";
+@@ -305,6 +306,7 @@ export class SettingsPanelMenu {
+         }
+ 
+         set_settings_header(section);
++        resize_textareas_in_section(this.get_panel());
+     }
+ 
+     get_panel(): JQuery {
+diff --git a/web/templates/settings/organization_settings_admin.hbs b/web/templates/settings/organization_settings_admin.hbs
+index a5d6b1232e..ab72661fab 100644
+--- a/web/templates/settings/organization_settings_admin.hbs
++++ b/web/templates/settings/organization_settings_admin.hbs
+@@ -76,7 +76,7 @@
+                 <h3>{{t "Onboarding" }}</h3>
+                 {{> settings_save_discard_widget section_name="onboarding" }}
+             </div>
+-            <div class="inline-block organization-settings-parent">
++            <div class="organization-settings-parent">
+                 {{> settings_checkbox
+                   setting_name="realm_enable_welcome_message_custom_text"
+                   prefix="id_"
+@@ -89,7 +89,7 @@
+                     </label>
+                     <textarea id="id_realm_welcome_message_custom_text" name="welcome_message_custom_text"
+                       class="admin-realm-welcome-message-custom-text setting-widget prop-element settings_textarea display-block" maxlength="8000"
+-                      data-setting-widget-type="string" rows="3">{{ realm_welcome_message_custom_text }}</textarea>
++                      data-setting-widget-type="string">{{ realm_welcome_message_custom_text }}</textarea>
+                     <div id="welcome_message_custom_text_buttons_container">
+                         {{> ../components/action_button attention="quiet" intent="neutral" label=(t "Send me a test message") id="send_test_welcome_bot_custom_message"}}
+                     </div>

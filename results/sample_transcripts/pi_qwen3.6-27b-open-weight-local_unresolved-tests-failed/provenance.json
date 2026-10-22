@@ -1,0 +1,67 @@
+{
+ "agent": {
+  "agent_id": "pi-vllm-qwen3.6-27b",
+  "cli": {
+   "name": "pi",
+   "version_probe": {
+    "command": [
+     "pi",
+     "--version"
+    ],
+    "ok": true,
+    "returncode": 0,
+    "stderr": "0.73.1",
+    "stdout": ""
+   }
+  },
+  "command": "python3 -m zbench.agents.pi_agent",
+  "config": {
+   "available": true,
+   "kind": "pi",
+   "model": "qwen3.6-27b",
+   "models_path": "/home/user/.pi/agent/models.json",
+   "pi_env": {
+    "PI_MODEL": "qwen3.6-27b",
+    "PI_PROVIDER": "vllm-qwen3.6-27b",
+    "ZBENCH_AGENT_TIMEOUT": "4800"
+   },
+   "pi_home": "/home/user/.pi/agent",
+   "provider": "vllm-qwen3.6-27b",
+   "provider_block": {
+    "api": "openai-completions",
+    "apiKey": "<redacted>",
+    "baseUrl": "http://localhost:PORT/v1",
+    "models": [
+     {
+      "contextWindow": 131072,
+      "id": "qwen3.6-27b",
+      "maxTokens": "<redacted>",
+      "name": "Qwen3.6-27B (local vLLM)"
+     }
+    ]
+   },
+   "settings": {
+    "lastChangelogVersion": "0.73.1"
+   },
+   "settings_path": "/home/user/.pi/agent/settings.json",
+   "sha256": "79916d956ad2cb6bbd2d6e19d532b01ed45dd4f131732a80be7ee4982ef9742d"
+  },
+  "env_keys": [
+   "PI_MODEL",
+   "PI_PROVIDER",
+   "ZBENCH_AGENT_TIMEOUT"
+  ],
+  "timeout_sec": 5400
+ },
+ "captured_at": "2026-09-05T15:46:03.526895+00:00",
+ "harness": {
+  "git": {
+   "available": false,
+   "start": "/home/user/scripts/zbench/zbench/provenance.py"
+  },
+  "name": "zbench",
+  "platform": "Linux-6.8.0-110-generic-x86_64-with-glibc2.39",
+  "python_version": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]"
+ },
+ "schema_version": 2
+}

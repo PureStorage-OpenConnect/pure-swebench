@@ -1,0 +1,80 @@
+{
+  "task_id": "ZT-715d07c23150",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_invalid",
+  "reason": "gold fix does not make the test pass (arm B run 0: FAIL)",
+  "summary": "api: Add administrator endpoint for updating user status.",
+  "type": "other",
+  "lang": "py",
+  "issue": 33139,
+  "fix_commit": "715d07c2315093c3e4d90cdd48b7d915e7ad2d47",
+  "base_commit": "fdb35f2f8134bae510946c3f276b8cebc52ea6f0",
+  "env_fingerprint": "cb9bd08f54ad",
+  "fail_to_pass": [
+    "zerver.tests.test_user_status.UserStatusTest.test_endpoints"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_presence",
+    "zerver.tests.test_urls"
+  ],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 28,
+    "files": 2,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "A new API endpoint POST /json/users/{user_id}/status lets a realm administrator update another user's status; it accepts the same request parameters as the existing POST /json/users/me/status endpoint (status_text, emoji_name, emoji_code, reaction_type, away) with identical validation, whitespace-trimming, emoji-fill, and error-message semantics.",
+    "Requests to the new endpoint for a nonexistent user_id must fail with the standard error message 'No such user' (the same wording already used by existing user-by-id endpoints at the base commit).",
+    "Requests by a non-administrator targeting another user must fail with the standard error message 'Insufficient permission' (the same wording already used by existing admin-only user endpoints at the base commit).",
+    "A successful update through the new endpoint must emit the pre-existing 'user_status' event schema with user_id set to the TARGET user (not the acting administrator), and the target user's status as returned by GET /json/users/{user_id}/status must reflect the change.",
+    "Setting away=true through the new endpoint must apply the existing deprecated away semantics to the TARGET user, i.e. set that user's presence_enabled setting to False (matching the documented behavior of POST /users/me/status)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 402,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "ducnb",
+    "email": "ducnb@coccoc.com",
+    "date": "2025-07-18"
+  },
+  "contamination": {
+    "fix_public_at": "2025-07-18",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-01-22T11:21:52Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/715d07c2315093c3e4d90cdd48b7d915e7ad2d47",
+    "issue_url": "https://github.com/zulip/zulip/issues/33139"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-715d07c23150",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_endpoints"
+      ],
+      "verdict": "INVALID",
+      "code": 1,
+      "why": "gold fix does not make the test pass (arm B run 0: FAIL)",
+      "elapsed_s": 83.2
+    }
+  }
+}

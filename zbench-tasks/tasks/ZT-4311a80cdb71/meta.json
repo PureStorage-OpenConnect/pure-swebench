@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-4311a80cdb71",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "f2p_unenumerable",
+  "reason": "no extractable test targets",
+  "summary": "markdown: Add support for Asana Desktop deeplinks.",
+  "lang": "py",
+  "issue": 38739,
+  "fix_commit": "4311a80cdb71d768149a2f2d6b84cd5e3505e3f0",
+  "base_commit": "3bd2a084ed2c62e1e2fb97c0dd21ec308c36ca19",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/4311a80cdb71d768149a2f2d6b84cd5e3505e3f0",
+    "issue_url": "https://github.com/zulip/zulip/issues/38739"
+  }
+}

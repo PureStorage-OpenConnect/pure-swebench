@@ -1,0 +1,542 @@
+diff --git a/zerver/tests/test_audit_log.py b/zerver/tests/test_audit_log.py
+index e3ce60ca37..4869ae475e 100644
+--- a/zerver/tests/test_audit_log.py
++++ b/zerver/tests/test_audit_log.py
+@@ -191,15 +191,32 @@ class TestRealmAuditLog(ZulipTestCase):
+         user_profile = self.example_user("hamlet")
+         acting_user = self.example_user("iago")
+         do_change_user_role(
+-            user_profile, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=acting_user
+-        )
+-        do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user)
+-        do_change_user_role(user_profile, UserProfile.ROLE_GUEST, acting_user=acting_user)
+-        do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user)
+-        do_change_user_role(user_profile, UserProfile.ROLE_REALM_OWNER, acting_user=acting_user)
+-        do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user)
+-        do_change_user_role(user_profile, UserProfile.ROLE_MODERATOR, acting_user=acting_user)
+-        do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user)
++            user_profile,
++            UserProfile.ROLE_REALM_ADMINISTRATOR,
++            acting_user=acting_user,
++            notify=False,
++        )
++        do_change_user_role(
++            user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user, notify=False
++        )
++        do_change_user_role(
++            user_profile, UserProfile.ROLE_GUEST, acting_user=acting_user, notify=False
++        )
++        do_change_user_role(
++            user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user, notify=False
++        )
++        do_change_user_role(
++            user_profile, UserProfile.ROLE_REALM_OWNER, acting_user=acting_user, notify=False
++        )
++        do_change_user_role(
++            user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user, notify=False
++        )
++        do_change_user_role(
++            user_profile, UserProfile.ROLE_MODERATOR, acting_user=acting_user, notify=False
++        )
++        do_change_user_role(
++            user_profile, UserProfile.ROLE_MEMBER, acting_user=acting_user, notify=False
++        )
+         old_values_seen = set()
+         new_values_seen = set()
+         for event in RealmAuditLog.objects.filter(
+diff --git a/zerver/tests/test_auth_backends.py b/zerver/tests/test_auth_backends.py
+index acca7725c7..97b7687efc 100644
+--- a/zerver/tests/test_auth_backends.py
++++ b/zerver/tests/test_auth_backends.py
+@@ -80,6 +80,7 @@ from zerver.lib.test_helpers import (
+     HostRequestMock,
+     create_s3_buckets,
+     load_subdomain_token,
++    most_recent_message,
+     ratelimit_rule,
+     read_test_image_file,
+     use_s3_backend,
+@@ -7789,6 +7790,10 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
+         self.perform_ldap_sync(self.example_user("hamlet"))
+         hamlet = self.example_user("hamlet")
+         self.assertEqual(hamlet.full_name, "New Name")
++        message = most_recent_message(hamlet)
++        self.assertIn("The following changes have been made to your account", message.content)
++        self.assertIn("**Old full name:** King Hamlet", message.content)
++        self.assertIn("**New full name:** New Name", message.content)
+ 
+     def test_update_with_hidden_emails(self) -> None:
+         hamlet = self.example_user("hamlet")
+@@ -7967,7 +7972,7 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
+             mock.patch("zerver.actions.user_settings.do_change_full_name") as f,
+         ):
+             self.perform_ldap_sync(hamlet2)
+-            f.assert_called_once_with(*expected_call_args)
++            f.assert_called_once_with(*expected_call_args, notify=True)
+ 
+             # Get the updated model and make sure the full name is changed correctly:
+             hamlet2 = get_user_by_delivery_email(email, test_realm)
+@@ -8098,6 +8103,15 @@ class TestZulipLDAPUserPopulator(ZulipLDAPTestCase):
+                 user_profile=hamlet, field=field
+             ).value
+             self.assertEqual(field_value, test_case["expected_value"])
++        # Verify that notification was sent for custom profile field updates
++        message = most_recent_message(hamlet)
++        self.assertIn("The following changes have been made to your account", message.content)
++        # Check that both fields are mentioned in the notification
++        for data in test_data:
++            self.assertIn(f"**Old {data['field_name']}:**", message.content)
++            self.assertIn(
++                f"**New {data['field_name']}:** {data['expected_value']}", message.content
++            )
+ 
+     def test_update_non_existent_profile_field(self) -> None:
+         with (
+diff --git a/zerver/tests/test_bots.py b/zerver/tests/test_bots.py
+index 66a94145fe..7420c68b6e 100644
+--- a/zerver/tests/test_bots.py
++++ b/zerver/tests/test_bots.py
+@@ -1622,7 +1622,9 @@ class BotTest(ZulipTestCase, UploadSerializeMixin):
+         email = "default-bot@zulip.com"
+         user_profile = self.get_bot_user(email)
+ 
+-        do_change_user_role(user_profile, UserProfile.ROLE_MEMBER, acting_user=user_profile)
++        do_change_user_role(
++            user_profile, UserProfile.ROLE_MEMBER, acting_user=user_profile, notify=False
++        )
+ 
+         req = dict(role=UserProfile.ROLE_GUEST)
+ 
+diff --git a/zerver/tests/test_channel_access.py b/zerver/tests/test_channel_access.py
+index 784b430a4e..d9d37c84a1 100644
+--- a/zerver/tests/test_channel_access.py
++++ b/zerver/tests/test_channel_access.py
+@@ -495,7 +495,9 @@ class AccessStreamTest(ZulipTestCase):
+         )
+ 
+         # Bot with admin privileges should also be part of the result.
+-        do_change_user_role(test_bot, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=desdemona)
++        do_change_user_role(
++            test_bot, UserProfile.ROLE_REALM_ADMINISTRATOR, acting_user=desdemona, notify=False
++        )
+         expected_private_user_ids.add(test_bot.id)
+         self.assertCountEqual(
+             can_access_stream_metadata_user_ids(private_stream), expected_private_user_ids
+diff --git a/zerver/tests/test_events.py b/zerver/tests/test_events.py
+index 143f83fcca..40e7c91df6 100644
+--- a/zerver/tests/test_events.py
++++ b/zerver/tests/test_events.py
+@@ -1809,7 +1809,7 @@ class NormalActionsTest(BaseAction):
+         # Test event for removing custom profile data
+         with self.verify_action() as events:
+             check_remove_custom_profile_field_value(
+-                self.user_profile, field_id, acting_user=self.user_profile
++                self.user_profile, field_id, acting_user=self.user_profile, notify=False
+             )
+         check_realm_user_update("events[0]", events[0], "custom_profile_field")
+         self.assertEqual(events[0]["person"]["custom_profile_field"].keys(), {"id", "value"})
+@@ -2604,7 +2604,7 @@ class NormalActionsTest(BaseAction):
+     def test_change_full_name(self) -> None:
+         now = timezone_now()
+         with self.verify_action() as events:
+-            do_change_full_name(self.user_profile, "Sir Hamlet", self.user_profile)
++            do_change_full_name(self.user_profile, "Sir Hamlet", self.user_profile, notify=False)
+         check_realm_user_update("events[0]", events[0], "full_name")
+         self.assertEqual(
+             RealmAuditLog.objects.filter(
+@@ -2618,7 +2618,7 @@ class NormalActionsTest(BaseAction):
+ 
+         # Verify no operation if the value isn't changing.
+         with self.verify_action(num_events=0, state_change_expected=False):
+-            do_change_full_name(self.user_profile, "Sir Hamlet", self.user_profile)
++            do_change_full_name(self.user_profile, "Sir Hamlet", self.user_profile, notify=False)
+         self.assertEqual(
+             RealmAuditLog.objects.filter(
+                 realm=self.user_profile.realm,
+@@ -2633,7 +2633,7 @@ class NormalActionsTest(BaseAction):
+         cordelia = self.example_user("cordelia")
+         self.user_profile = self.example_user("polonius")
+         with self.verify_action(num_events=0, state_change_expected=False):
+-            do_change_full_name(cordelia, "Cordelia", self.user_profile)
++            do_change_full_name(cordelia, "Cordelia", self.user_profile, notify=False)
+ 
+     def test_change_user_delivery_email_email_address_visibility_admins(self) -> None:
+         do_change_user_setting(
+@@ -3455,7 +3455,7 @@ class NormalActionsTest(BaseAction):
+     def test_change_bot_full_name(self) -> None:
+         bot = self.create_bot("test")
+         with self.verify_action(num_events=2) as events:
+-            do_change_full_name(bot, "New Bot Name", self.user_profile)
++            do_change_full_name(bot, "New Bot Name", self.user_profile, notify=False)
+         check_realm_bot_update("events[1]", events[1], "full_name")
+ 
+     def test_regenerate_bot_api_key(self) -> None:
+diff --git a/zerver/tests/test_example.py b/zerver/tests/test_example.py
+index f74b5d892f..9b99b99e47 100644
+--- a/zerver/tests/test_example.py
++++ b/zerver/tests/test_example.py
+@@ -69,7 +69,7 @@ class TestBasicUserStuff(ZulipTestCase):
+         # functions, like do_change_user_role. Modifying Django
+         # objects and then using .save() can be buggy, as doing so can
+         # fail to update caches, RealmAuditLog, or related tables properly.
+-        do_change_user_role(hamlet, UserProfile.ROLE_REALM_OWNER, acting_user=iago)
++        do_change_user_role(hamlet, UserProfile.ROLE_REALM_OWNER, acting_user=iago, notify=False)
+         self.assertTrue(is_administrator_role(hamlet.role))
+ 
+         # After we promote Hamlet, we also demote him.  Testing state
+@@ -82,7 +82,7 @@ class TestBasicUserStuff(ZulipTestCase):
+         # There are a few exceptions, where tests interact with the
+         # filesystem (E.g. uploading files), which is generally
+         # handled by the setUp/tearDown methods for the test class.
+-        do_change_user_role(hamlet, UserProfile.ROLE_MODERATOR, acting_user=iago)
++        do_change_user_role(hamlet, UserProfile.ROLE_MODERATOR, acting_user=iago, notify=False)
+         self.assertFalse(is_administrator_role(hamlet.role))
+ 
+ 
+diff --git a/zerver/tests/test_invite.py b/zerver/tests/test_invite.py
+index 842c74ac0e..14e61bb967 100644
+--- a/zerver/tests/test_invite.py
++++ b/zerver/tests/test_invite.py
+@@ -1501,7 +1501,7 @@ earl-test@zulip.com""",
+         hamlet = self.example_user("hamlet")
+         self.login_user(hamlet)
+         # Test we properly handle links in user full names
+-        do_change_full_name(hamlet, "</a> https://www.google.com", hamlet)
++        do_change_full_name(hamlet, "</a> https://www.google.com", hamlet, notify=False)
+ 
+         result = self.invite("newuser@zulip.com", ["Denmark"])
+         self.assert_json_success(result)
+diff --git a/zerver/tests/test_management_commands.py b/zerver/tests/test_management_commands.py
+index 9cae2ff983..704cb11ce0 100644
+--- a/zerver/tests/test_management_commands.py
++++ b/zerver/tests/test_management_commands.py
+@@ -804,3 +804,102 @@ class TestSendZulipUpdateAnnouncements(ZulipTestCase):
+ 
+         realm.refresh_from_db()
+         self.assertEqual(realm.zulip_update_announcements_level, 5)
++
++
++class TestUserChangeNotifications(ZulipTestCase):
++    def test_bulk_change_user_name_sends_notifications(self) -> None:
++        hamlet = self.example_user("hamlet")
++        bot = self.example_user("default_bot")
++        realm = hamlet.realm
++
++        # Count bot messages before changes
++        from zerver.models import Message
++
++        bot_messages_before = Message.objects.filter(
++            realm_id=realm.id, recipient__type_id=bot.id
++        ).count()
++
++        import tempfile
++
++        with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".csv") as f:
++            f.write(f"{hamlet.delivery_email},New Hamlet Name\n")
++            f.write(f"{bot.delivery_email},New Bot Name\n")
++            data_file = f.name
++
++        try:
++            # Run the bulk_change_user_name command
++            with stdout_suppressed():
++                call_command("bulk_change_user_name", data_file, f"--realm={realm.string_id}")
++
++            # Verify the name was changed
++            hamlet.refresh_from_db()
++            self.assertEqual(hamlet.full_name, "New Hamlet Name")
++
++            # Verify a notification was sent (acting_user=None means system change)
++            message = most_recent_message(hamlet)
++            self.assertIn(
++                "The following changes have been made to your account.",
++                message.content,
++            )
++            self.assertIn("**Old full name:** King Hamlet", message.content)
++            self.assertIn("**New full name:** New Hamlet Name", message.content)
++
++            # Verify bot's name was changed
++            bot.refresh_from_db()
++            self.assertEqual(bot.full_name, "New Bot Name")
++
++            # Verify bot did NOT receive a notification
++            bot_messages_after = Message.objects.filter(
++                realm_id=realm.id, recipient__type_id=bot.id
++            ).count()
++            self.assertEqual(bot_messages_before, bot_messages_after)
++        finally:
++            os.unlink(data_file)
++
++    def test_change_user_role_sends_notifications(self) -> None:
++        hamlet = self.example_user("hamlet")
++        realm = hamlet.realm
++
++        # Hamlet starts as a member
++        self.assertEqual(hamlet.role, UserProfile.ROLE_MEMBER)
++
++        # Change hamlet's role to moderator via management command
++        with stdout_suppressed():
++            call_command(
++                "change_user_role", hamlet.delivery_email, "moderator", f"--realm={realm.string_id}"
++            )
++
++        # Verify the role was changed
++        hamlet.refresh_from_db()
++        self.assertEqual(hamlet.role, UserProfile.ROLE_MODERATOR)
++
++        # Verify a notification was sent (acting_user=None means system change)
++        message = most_recent_message(hamlet)
++        self.assertIn("The following changes have been made to your account", message.content)
++        self.assertIn("**Old role:** Member", message.content)
++        self.assertIn("**New role:** Moderator", message.content)
++
++        # Change bot's role to moderator via management command
++        bot = self.example_user("default_bot")
++
++        # Count bot messages before changes
++        from zerver.models import Message
++
++        bot_messages_before = Message.objects.filter(
++            realm_id=realm.id, recipient__type_id=bot.id
++        ).count()
++
++        with stdout_suppressed():
++            call_command(
++                "change_user_role", bot.delivery_email, "moderator", f"--realm={realm.string_id}"
++            )
++
++        # Verify bot's role was changed
++        bot.refresh_from_db()
++        self.assertEqual(bot.role, UserProfile.ROLE_MODERATOR)
++
++        # Verify bot did NOT receive a notification
++        bot_messages_after = Message.objects.filter(
++            realm_id=realm.id, recipient__type_id=bot.id
++        ).count()
++        self.assertEqual(bot_messages_before, bot_messages_after)
+diff --git a/zerver/tests/test_users.py b/zerver/tests/test_users.py
+index 4fbe8edf54..cbaed835ec 100644
+--- a/zerver/tests/test_users.py
++++ b/zerver/tests/test_users.py
+@@ -42,6 +42,7 @@ from zerver.lib.bulk_create import create_users
+ from zerver.lib.create_user import copy_default_settings
+ from zerver.lib.events import do_events_register
+ from zerver.lib.exceptions import JsonableError
++from zerver.lib.mention import silent_mention_syntax_for_user
+ from zerver.lib.send_email import clear_scheduled_emails, queue_scheduled_emails, send_future_email
+ from zerver.lib.stream_subscription import get_user_subscribed_streams
+ from zerver.lib.stream_topic import StreamTopicTarget
+@@ -49,6 +50,7 @@ from zerver.lib.test_classes import ZulipTestCase
+ from zerver.lib.test_helpers import (
+     get_subscription,
+     get_test_image_file,
++    most_recent_message,
+     reset_email_visibility_to_everyone_in_zulip_realm,
+     simulated_empty_cache,
+ )
+@@ -66,6 +68,7 @@ from zerver.lib.users import (
+ from zerver.lib.utils import assert_is_not_none
+ from zerver.models import (
+     CustomProfileField,
++    CustomProfileFieldValue,
+     Message,
+     OnboardingStep,
+     PreregistrationUser,
+@@ -264,7 +267,7 @@ class PermissionTest(ZulipTestCase):
+         self.assertFalse(othello_dict["is_owner"])
+ 
+         req = dict(role=UserProfile.ROLE_REALM_OWNER)
+-        with self.capture_send_event_calls(expected_num_events=6) as events:
++        with self.capture_send_event_calls(expected_num_events=7) as events:
+             result = self.client_patch(f"/json/users/{othello.id}", req)
+         self.assert_json_success(result)
+         owner_users = realm.get_human_owner_users()
+@@ -274,7 +277,7 @@ class PermissionTest(ZulipTestCase):
+         self.assertEqual(person["role"], UserProfile.ROLE_REALM_OWNER)
+ 
+         req = dict(role=UserProfile.ROLE_MEMBER)
+-        with self.capture_send_event_calls(expected_num_events=5) as events:
++        with self.capture_send_event_calls(expected_num_events=6) as events:
+             result = self.client_patch(f"/json/users/{othello.id}", req)
+         self.assert_json_success(result)
+         owner_users = realm.get_human_owner_users()
+@@ -286,7 +289,7 @@ class PermissionTest(ZulipTestCase):
+         # Cannot take away from last owner
+         self.login("desdemona")
+         req = dict(role=UserProfile.ROLE_MEMBER)
+-        with self.capture_send_event_calls(expected_num_events=4) as events:
++        with self.capture_send_event_calls(expected_num_events=5) as events:
+             result = self.client_patch(f"/json/users/{iago.id}", req)
+         self.assert_json_success(result)
+         owner_users = realm.get_human_owner_users()
+@@ -325,7 +328,7 @@ class PermissionTest(ZulipTestCase):
+         # Giveth
+         req = dict(role=orjson.dumps(UserProfile.ROLE_REALM_ADMINISTRATOR).decode())
+ 
+-        with self.capture_send_event_calls(expected_num_events=6) as events:
++        with self.capture_send_event_calls(expected_num_events=7) as events:
+             result = self.client_patch(f"/json/users/{othello.id}", req)
+         self.assert_json_success(result)
+         admin_users = realm.get_human_admin_users()
+@@ -336,7 +339,7 @@ class PermissionTest(ZulipTestCase):
+ 
+         # Taketh away
+         req = dict(role=orjson.dumps(UserProfile.ROLE_MEMBER).decode())
+-        with self.capture_send_event_calls(expected_num_events=5) as events:
++        with self.capture_send_event_calls(expected_num_events=6) as events:
+             result = self.client_patch(f"/json/users/{othello.id}", req)
+         self.assert_json_success(result)
+         admin_users = realm.get_human_admin_users()
+@@ -418,12 +421,25 @@ class PermissionTest(ZulipTestCase):
+         new_name = "new name"
+         self.login("iago")
+         hamlet = self.example_user("hamlet")
++        iago = self.example_user("iago")
++        old_name = hamlet.full_name
+         req = dict(full_name=new_name)
+         result = self.client_patch(f"/json/users/{hamlet.id}", req)
+         self.assert_json_success(result)
+         hamlet = self.example_user("hamlet")
+         self.assertEqual(hamlet.full_name, new_name)
+ 
++        # Check that notification was sent
++        message = most_recent_message(hamlet)
++        self.assertEqual(message.recipient.type_id, hamlet.id)
++        self.assertIn(
++            f"{silent_mention_syntax_for_user(iago)} has made the following changes to your account.",
++            message.content,
++        )
++        self.assertIn(
++            f"**Old full name:** {old_name}\n- **New full name:** {new_name}", message.content
++        )
++
+     def test_non_admin_cannot_change_full_name(self) -> None:
+         self.login("hamlet")
+         req = dict(full_name="new name")
+@@ -658,10 +674,12 @@ class PermissionTest(ZulipTestCase):
+         user_email: str,
+         new_role: int,
+     ) -> None:
++        admin = self.example_user("desdemona")
+         self.login("desdemona")
+ 
+         user_profile = self.example_user(user_email)
+         old_role = user_profile.role
++        old_role_name = user_profile.get_role_name()
+         old_system_group = get_system_user_group_for_user(user_profile)
+ 
+         self.assertTrue(self.check_property_for_role(user_profile, old_role))
+@@ -674,9 +692,9 @@ class PermissionTest(ZulipTestCase):
+         req = dict(role=orjson.dumps(new_role).decode())
+ 
+         # The basic events sent in all cases on changing role are - one event
+-        # for changing role and one event each for adding and removing user
+-        # from system user group.
+-        num_events = 3
++        # for changing role, one event each for adding and removing user
++        # from system user group and one event for sending a private notifications.
++        num_events = 4
+ 
+         if UserProfile.ROLE_MEMBER in [old_role, new_role]:
+             # There is one additional event for adding/removing user from
+@@ -725,6 +743,18 @@ class PermissionTest(ZulipTestCase):
+         self.assertEqual(person["user_id"], user_profile.id)
+         self.assertTrue(person["role"], new_role)
+ 
++        # Test notification is sent
++        message = most_recent_message(user_profile)
++        self.assertEqual(message.recipient.type_id, user_profile.id)
++        self.assertIn(
++            f"{silent_mention_syntax_for_user(admin)} has made the following changes to your account.",
++            message.content,
++        )
++        self.assertIn(
++            f"**Old role:** {old_role_name}\n- **New role:** {user_profile.get_role_name()}",
++            message.content,
++        )
++
+     def test_change_regular_member_to_guest(self) -> None:
+         self.check_user_role_change("hamlet", UserProfile.ROLE_GUEST)
+ 
+@@ -777,6 +807,7 @@ class PermissionTest(ZulipTestCase):
+ 
+     def test_admin_user_can_change_profile_data(self) -> None:
+         realm = get_realm("zulip")
++        iago = self.example_user("iago")
+         self.login("iago")
+         cordelia = self.example_user("cordelia")
+ 
+@@ -818,11 +849,64 @@ class PermissionTest(ZulipTestCase):
+         )
+         self.assert_json_success(result)
+ 
+-        cordelia = self.example_user("cordelia")
+         for field_dict in cordelia.profile_data():
+             with self.subTest(field_name=field_dict["name"]):
+                 self.assertEqual(field_dict["value"], fields[field_dict["name"]])
+ 
++        # Check notification
++        message = most_recent_message(cordelia)
++        self.assertIn(
++            f"{silent_mention_syntax_for_user(iago)} has made the following changes to your account.",
++            message.content,
++        )
++
++        # Map field names to their expected display values in the notification.
++        # Some field types convert their stored values to human-readable display text.
++        expected_display_values = {
++            "Phone number": "short text data",
++            "Biography": "long text data",
++            "Favorite food": "short text data",
++            "Favorite editor": "Vim",  # SELECT field: "0" -> "Vim"
++            "Birthday": "1909-03-05",
++            "Favorite website": "https://zulip.com",
++            "Mentor": silent_mention_syntax_for_user(cordelia),
++            "GitHub username": "timabbott",
++            "Pronouns": "she/her",
++        }
++
++        for field_name, display_value in expected_display_values.items():
++            self.assertIn(
++                f"**Old {field_name}:** *None*\n- **New {field_name}:** {display_value}",
++                message.content,
++            )
++
++        # Test delete a custom profile field and notification
++        phone_field_id = CustomProfileField.objects.get(name="Phone number", realm=realm).id
++        deleted_field = [
++            {
++                "id": phone_field_id,
++                "value": None,
++            }
++        ]
++        result = self.client_patch(
++            f"/json/users/{cordelia.id}", {"profile_data": orjson.dumps(deleted_field).decode()}
++        )
++        self.assert_json_success(result)
++
++        self.assertFalse(
++            CustomProfileFieldValue.objects.filter(
++                user_profile=cordelia, field=phone_field_id
++            ).exists()
++        )
++
++        message = most_recent_message(cordelia)
++        expected_content = (
++            f"{silent_mention_syntax_for_user(iago)} has made the following changes to your account.\n"
++            f"- **Old Phone number:** {expected_display_values['Phone number']}\n"
++            f"- **New Phone number:** *None*"
++        )
++        self.assertEqual(expected_content, message.content)
++
+         # Test admin user cannot set invalid profile data
+         invalid_fields = [
+             (
+@@ -3366,7 +3450,7 @@ class DeleteUserTest(ZulipTestCase):
+         )
+         self.assertGreater(len(direct_message_group_with_hamlet_recipient_ids), 0)
+ 
+-        do_change_full_name(hamlet, "some new name", acting_user=hamlet)
++        do_change_full_name(hamlet, "some new name", acting_user=hamlet, notify=False)
+         name_change_log = RealmAuditLog.objects.last()
+         assert name_change_log is not None
+         self.assertEqual(name_change_log.event_type, AuditLogEventType.USER_FULL_NAME_CHANGED)

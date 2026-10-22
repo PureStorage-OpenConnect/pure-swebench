@@ -1,0 +1,126 @@
+{
+  "task_id": "ZT-14173b757f93",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "github webhook: Support all actions on discussion events.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 26064,
+  "fix_commit": "14173b757f9377cae7b5c8113b1e92b02f5b62a7",
+  "base_commit": "75ed0c93835a444c1f154a50754c7f0dde0e9742",
+  "env_fingerprint": "6913bfa1a34e",
+  "fail_to_pass": [
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_answered",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_category_changed",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_category_changed_with_custom_topic_in_url",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_closed",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_created",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_deleted",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_edited_body",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_edited_title",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_labeled",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_locked",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_pinned",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_reopened",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_transferred",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_unanswered",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_unlabeled",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_unlocked",
+    "zerver.webhooks.github.tests.GitHubWebhookTest.test_discussion_unpinned"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 89,
+    "files": 1,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The GitHub webhook integration must handle all `discussion` event actions (not just `created`), producing Zulip messages via the pre-existing webhook endpoint; topic naming keeps the existing '{repo} discussion #{number}: {title}' format.",
+    "For action 'created', the message is: '{sender} created [discussion #{number}]({html_url}) in {category name}:' followed by a Zulip quote block containing '### {title}' and the discussion body (this matches the pre-existing created-message format except the numbered link now reads 'discussion #{number}').",
+    "For actions 'unlocked', 'pinned', 'unpinned', and 'reopened', the message is: '{sender} {action} [discussion #{number}{optional title}]({html_url}).' where the action verb is the raw payload action.",
+    "For action 'deleted', the message is: '{sender} deleted discussion #{number}{optional title}.' with no hyperlink (the discussion no longer exists).",
+    "For action 'closed', the message is: '{sender} closed [discussion #{number}{optional title}]({html_url}) as {state_reason}.' using the payload's discussion state_reason (e.g. 'resolved').",
+    "For action 'locked', the message is: '{sender} locked [discussion #{number}{optional title}]({html_url}{optional title}) as {active_lock_reason}.'; when active_lock_reason is null the entire ' as {reason}' suffix is omitted.",
+    "For actions 'labeled'/'unlabeled', the messages are: '{sender} added the {label name} label to [discussion #{number}{optional title}]({html_url}).' and '{sender} removed the {label name} label from [discussion #{number}{optional title}]({html_url}).'",
+    "For action 'category_changed', the message is: '{sender} changed the category of [discussion #{number}{optional title}]({html_url}) from {old category name} to {new category name}.'",
+    "For action 'transferred', the message is: '{sender} transferred discussion #{old number}{optional title} from {old repository name} to {new repository name} as [discussion #{new number}]({html_url}).' reading the new repository and new discussion number from the payload's 'changes' object.",
+    "For action 'answered', the message is: '{sender} marked [comment #{answer comment id}]({answer html_url}) as the answer:' followed by a quote block with the answer comment's body; for 'unanswered', the message is '{sender} marked [comment #{old_answer comment id}]({old_answer html_url}) as not the answer.' (answered reads the 'answer' payload field, unanswered reads 'old_answer').",
+    "For action 'edited': if the payload's 'changes' object contains 'body', the message is '{sender} edited [discussion #{number}{optional title}]({html_url}):' followed by a quote block with the new body; otherwise (title edit) it is '{sender} edited the title of [discussion #{number}{optional title}]({html_url}):' followed by a quote block with '### {new title}'.",
+    "'{optional title}' means: when the integration's pre-existing include-title configuration (topic in URL query) is enabled, the discussion title is appended after the number as ' {title}' inside the link text; otherwise it is omitted.",
+    "'{sender}' uses the integration's pre-existing sender-name formatting (the payload sender's login)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 10338,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Niloth P",
+    "email": "20315308+Niloth-p@users.noreply.github.com",
+    "date": "2025-04-22"
+  },
+  "contamination": {
+    "fix_public_at": "2025-04-22",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-06-19T20:22:20Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/14173b757f9377cae7b5c8113b1e92b02f5b62a7",
+    "issue_url": "https://github.com/zulip/zulip/issues/26064"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-14173b757f93",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_discussion_answered",
+        "test_discussion_category_changed",
+        "test_discussion_category_changed_with_custom_topic_in_url",
+        "test_discussion_closed",
+        "test_discussion_deleted",
+        "test_discussion_edited_body",
+        "test_discussion_edited_title",
+        "test_discussion_labeled",
+        "test_discussion_locked",
+        "test_discussion_pinned",
+        "test_discussion_reopened",
+        "test_discussion_transferred",
+        "test_discussion_unanswered",
+        "test_discussion_unlabeled",
+        "test_discussion_unlocked",
+        "test_discussion_unpinned"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 93.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

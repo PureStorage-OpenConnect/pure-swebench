@@ -1,0 +1,340 @@
+diff --git a/web/src/admin.ts b/web/src/admin.ts
+index 1baa760d3f..7e52114bc4 100644
+--- a/web/src/admin.ts
++++ b/web/src/admin.ts
+@@ -31,7 +31,6 @@ const admin_settings_label = {
+         defaultMessage: "Advertise organization in the Zulip communities directory",
+     }),
+     // Organization settings
+-    realm_allow_edit_history: $t({defaultMessage: "Enable message edit history"}),
+     realm_mandatory_topics: $t({defaultMessage: "Require topics in channel messages"}),
+     realm_new_stream_announcements_stream: $t({defaultMessage: "New channel announcements"}),
+     realm_signup_announcements_stream: $t({defaultMessage: "New user announcements"}),
+@@ -161,7 +160,8 @@ export function build_page(): void {
+                 "realm_message_content_delete_limit_seconds",
+             ),
+         realm_message_retention_days: realm.realm_message_retention_days,
+-        realm_allow_edit_history: realm.realm_allow_edit_history,
++        realm_message_edit_history_visibility_policy:
++            realm.realm_message_edit_history_visibility_policy,
+         realm_allow_message_editing: realm.realm_allow_message_editing,
+         language_list,
+         realm_default_language_name: get_language_name(realm.realm_default_language),
+@@ -200,6 +200,8 @@ export function build_page(): void {
+         email_address_visibility_values: settings_config.email_address_visibility_values,
+         waiting_period_threshold_dropdown_values:
+             settings_config.waiting_period_threshold_dropdown_values,
++        message_edit_history_visibility_policy_values:
++            settings_config.message_edit_history_visibility_policy_values,
+         can_create_multiuse_invite: settings_data.user_can_create_multiuse_invite(),
+         can_invite_users_by_email: settings_data.user_can_invite_users_by_email(),
+         realm_invite_required: realm.realm_invite_required,
+diff --git a/web/src/attachments_ui.ts b/web/src/attachments_ui.ts
+index bb7c0a3292..9578ba220f 100644
+--- a/web/src/attachments_ui.ts
++++ b/web/src/attachments_ui.ts
+@@ -13,6 +13,7 @@ import {$t, $t_html} from "./i18n.ts";
+ import * as ListWidget from "./list_widget.ts";
+ import * as loading from "./loading.ts";
+ import * as scroll_util from "./scroll_util.ts";
++import {message_edit_history_visibility_policy_values} from "./settings_config.ts";
+ import {current_user, realm} from "./state_data.ts";
+ import * as timerender from "./timerender.ts";
+ import * as ui_report from "./ui_report.ts";
+@@ -220,7 +221,9 @@ export function set_up_attachments(): void {
+ export function suggest_delete_detached_attachments(attachments_list: ServerAttachment[]): void {
+     const html_body = render_confirm_delete_detached_attachments_modal({
+         attachments_list,
+-        realm_allow_edit_history: realm.realm_allow_edit_history,
++        realm_message_edit_history_is_visible:
++            realm.realm_message_edit_history_visibility_policy !==
++            message_edit_history_visibility_policy_values.never.code,
+     });
+ 
+     // Since we want to delete multiple attachments, we want to be
+diff --git a/web/src/hotkey.js b/web/src/hotkey.js
+index adb9abbaae..bdec6a0f8e 100644
+--- a/web/src/hotkey.js
++++ b/web/src/hotkey.js
+@@ -50,6 +50,7 @@ import * as recent_view_ui from "./recent_view_ui.ts";
+ import * as recent_view_util from "./recent_view_util.ts";
+ import * as scheduled_messages_overlay_ui from "./scheduled_messages_overlay_ui.ts";
+ import * as search from "./search.ts";
++import {message_edit_history_visibility_policy_values} from "./settings_config.ts";
+ import * as settings_data from "./settings_data.ts";
+ import * as sidebar_ui from "./sidebar_ui.ts";
+ import * as spectators from "./spectators.ts";
+@@ -1252,7 +1253,10 @@ export function process_hotkey(e, hotkey) {
+             return true;
+         }
+         case "view_edit_history": {
+-            if (realm.realm_allow_edit_history) {
++            if (
++                realm.realm_message_edit_history_visibility_policy !==
++                message_edit_history_visibility_policy_values.never.code
++            ) {
+                 message_edit_history.fetch_and_render_message_history(msg);
+                 $("#message-history-overlay .exit-sign").trigger("focus");
+                 return true;
+diff --git a/web/src/message_edit_history.ts b/web/src/message_edit_history.ts
+index 3d23d82f4b..2043c283a1 100644
+--- a/web/src/message_edit_history.ts
++++ b/web/src/message_edit_history.ts
+@@ -17,6 +17,7 @@ import {page_params} from "./page_params.ts";
+ import * as people from "./people.ts";
+ import * as rendered_markdown from "./rendered_markdown.ts";
+ import * as rows from "./rows.ts";
++import {message_edit_history_visibility_policy_values} from "./settings_config.ts";
+ import * as spectators from "./spectators.ts";
+ import {realm} from "./state_data.ts";
+ import {get_recipient_bar_color} from "./stream_color.ts";
+@@ -281,13 +282,19 @@ export function handle_keyboard_events(event_key: string): void {
+ 
+ export function initialize(): void {
+     $("body").on("mouseenter", ".message_edit_notice", (e) => {
+-        if (realm.realm_allow_edit_history) {
++        if (
++            realm.realm_message_edit_history_visibility_policy !==
++            message_edit_history_visibility_policy_values.never.code
++        ) {
+             $(e.currentTarget).addClass("message_edit_notice_hover");
+         }
+     });
+ 
+     $("body").on("mouseleave", ".message_edit_notice", (e) => {
+-        if (realm.realm_allow_edit_history) {
++        if (
++            realm.realm_message_edit_history_visibility_policy !==
++            message_edit_history_visibility_policy_values.never.code
++        ) {
+             $(e.currentTarget).removeClass("message_edit_notice_hover");
+         }
+     });
+@@ -308,7 +315,10 @@ export function initialize(): void {
+             return;
+         }
+ 
+-        if (realm.realm_allow_edit_history) {
++        if (
++            realm.realm_message_edit_history_visibility_policy !==
++            message_edit_history_visibility_policy_values.never.code
++        ) {
+             fetch_and_render_message_history(message);
+             $("#message-history-overlay .exit-sign").trigger("focus");
+         }
+diff --git a/web/src/message_events.ts b/web/src/message_events.ts
+index 17a6d2d282..5ad4378a7c 100644
+--- a/web/src/message_events.ts
++++ b/web/src/message_events.ts
+@@ -32,6 +32,7 @@ import * as recent_senders from "./recent_senders.ts";
+ import * as recent_view_ui from "./recent_view_ui.ts";
+ import * as recent_view_util from "./recent_view_util.ts";
+ import type {UpdateMessageEvent} from "./server_event_types.ts";
++import {message_edit_history_visibility_policy_values} from "./settings_config.ts";
+ import * as starred_messages from "./starred_messages.ts";
+ import * as starred_messages_ui from "./starred_messages_ui.ts";
+ import {realm} from "./state_data.ts";
+@@ -419,7 +420,10 @@ export function update_messages(events: UpdateMessageEvent[]): void {
+             // edits have edit_history logged for both before any
+             // potential narrowing as part of the topic edit loop.
+             if (event.orig_content !== undefined) {
+-                if (realm.realm_allow_edit_history) {
++                if (
++                    realm.realm_message_edit_history_visibility_policy ===
++                    message_edit_history_visibility_policy_values.always.code
++                ) {
+                     // Note that we do this for topic edits separately, below.
+                     // If an event changed both content and topic, we'll generate
+                     // two client-side events, which is probably good for display.
+@@ -543,7 +547,10 @@ export function update_messages(events: UpdateMessageEvent[]): void {
+             }
+ 
+             for (const moved_message of event_messages) {
+-                if (realm.realm_allow_edit_history) {
++                if (
++                    realm.realm_message_edit_history_visibility_policy !==
++                    message_edit_history_visibility_policy_values.never.code
++                ) {
+                     /* Simulate the format of server-generated edit
+                      * history events. This logic ensures that all
+                      * messages that were moved are displayed as such
+diff --git a/web/src/message_list_tooltips.ts b/web/src/message_list_tooltips.ts
+index f7455b1383..f20cec48e3 100644
+--- a/web/src/message_list_tooltips.ts
++++ b/web/src/message_list_tooltips.ts
+@@ -13,6 +13,7 @@ import type {Message} from "./message_store.ts";
+ import * as popover_menus from "./popover_menus.ts";
+ import * as reactions from "./reactions.ts";
+ import * as rows from "./rows.ts";
++import {message_edit_history_visibility_policy_values} from "./settings_config.ts";
+ import {realm} from "./state_data.ts";
+ import * as timerender from "./timerender.ts";
+ import {
+@@ -391,7 +392,9 @@ export function initialize(): void {
+                     render_message_edit_notice_tooltip({
+                         moved: message_container.moved,
+                         last_edit_timestr,
+-                        realm_allow_edit_history: realm.realm_allow_edit_history,
++                        realm_message_edit_history_is_visible:
++                            realm.realm_message_edit_history_visibility_policy !==
++                            message_edit_history_visibility_policy_values.never.code,
+                     }),
+                 ),
+             );
+diff --git a/web/src/message_view.ts b/web/src/message_view.ts
+index 2cc204ba1f..62e5b9c4ee 100644
+--- a/web/src/message_view.ts
++++ b/web/src/message_view.ts
+@@ -51,7 +51,10 @@ import * as recent_view_ui from "./recent_view_ui.ts";
+ import * as recent_view_util from "./recent_view_util.ts";
+ import * as resize from "./resize.ts";
+ import * as scheduled_messages_feed_ui from "./scheduled_messages_feed_ui.ts";
+-import {web_mark_read_on_scroll_policy_values} from "./settings_config.ts";
++import {
++    message_edit_history_visibility_policy_values,
++    web_mark_read_on_scroll_policy_values,
++} from "./settings_config.ts";
+ import * as spectators from "./spectators.ts";
+ import type {NarrowTerm} from "./state_data.ts";
+ import {realm} from "./state_data.ts";
+@@ -540,7 +543,9 @@ export let show = (raw_terms: NarrowTerm[], show_opts: ShowMessageViewOpts): voi
+ 
+                 if (
+                     !narrow_matches_target_message &&
+-                    (narrow_exists_in_edit_history || !realm.realm_allow_edit_history)
++                    (narrow_exists_in_edit_history ||
++                        realm.realm_message_edit_history_visibility_policy ===
++                            message_edit_history_visibility_policy_values.never.code)
+                 ) {
+                     const adjusted_terms = Filter.adjusted_terms_if_moved(
+                         raw_terms,
+diff --git a/web/src/server_events_dispatch.js b/web/src/server_events_dispatch.js
+index b69a3e08bc..b0585cf803 100644
+--- a/web/src/server_events_dispatch.js
++++ b/web/src/server_events_dispatch.js
+@@ -210,7 +210,6 @@ export function dispatch_normal_event(event) {
+ 
+         case "realm": {
+             const realm_settings = {
+-                allow_edit_history: noop,
+                 allow_message_editing: noop,
+                 avatar_changes_disabled: settings_account.update_avatar_change_display,
+                 can_add_custom_emoji_group: noop,
+@@ -243,6 +242,7 @@ export function dispatch_normal_event(event) {
+                 mandatory_topics: noop,
+                 message_content_edit_limit_seconds: noop,
+                 message_content_delete_limit_seconds: noop,
++                message_edit_history_visibility_policy: noop,
+                 move_messages_between_streams_limit_seconds: noop,
+                 move_messages_within_stream_limit_seconds: message_edit.update_inline_topic_edit_ui,
+                 message_retention_days: noop,
+diff --git a/web/src/settings_components.ts b/web/src/settings_components.ts
+index d7b4583ea5..01dd9df24a 100644
+--- a/web/src/settings_components.ts
++++ b/web/src/settings_components.ts
+@@ -243,6 +243,7 @@ export function get_subsection_property_elements($subsection: JQuery): HTMLEleme
+ 
+ export const simple_dropdown_realm_settings_schema = realm_schema.pick({
+     realm_org_type: true,
++    realm_message_edit_history_visibility_policy: true,
+ });
+ export type SimpleDropdownRealmSettings = z.infer<typeof simple_dropdown_realm_settings_schema>;
+ 
+diff --git a/web/src/settings_config.ts b/web/src/settings_config.ts
+index 27f448fe23..2a8775badf 100644
+--- a/web/src/settings_config.ts
++++ b/web/src/settings_config.ts
+@@ -260,6 +260,21 @@ export const common_policy_values = {
+     },
+ };
+ 
++export const message_edit_history_visibility_policy_values = {
++    always: {
++        code: "all",
++        description: $t({defaultMessage: "Show edits and moves"}),
++    },
++    moves_only: {
++        code: "moves",
++        description: $t({defaultMessage: "Move history only"}),
++    },
++    never: {
++        code: "none",
++        description: $t({defaultMessage: "Don't allow"}),
++    },
++};
++
+ export const time_limit_dropdown_values = [
+     {
+         text: $t({defaultMessage: "Any time"}),
+diff --git a/web/src/state_data.ts b/web/src/state_data.ts
+index aa0c5530b7..96968bc3c7 100644
+--- a/web/src/state_data.ts
++++ b/web/src/state_data.ts
+@@ -275,7 +275,6 @@ export const realm_schema = z.object({
+     password_min_guesses: z.number(),
+     password_min_length: z.number(),
+     password_max_length: z.number(),
+-    realm_allow_edit_history: z.boolean(),
+     realm_allow_message_editing: z.boolean(),
+     realm_authentication_methods: z.record(
+         z.object({
+@@ -375,6 +374,7 @@ export const realm_schema = z.object({
+     realm_message_content_allowed_in_email_notifications: z.boolean(),
+     realm_message_content_edit_limit_seconds: z.number().nullable(),
+     realm_message_content_delete_limit_seconds: z.number().nullable(),
++    realm_message_edit_history_visibility_policy: z.enum(["all", "moves", "none"]),
+     realm_message_retention_days: z.number(),
+     realm_move_messages_between_streams_limit_seconds: z.number().nullable(),
+     realm_move_messages_within_stream_limit_seconds: z.number().nullable(),
+diff --git a/web/templates/confirm_dialog/confirm_delete_detached_attachments.hbs b/web/templates/confirm_dialog/confirm_delete_detached_attachments.hbs
+index 7d4bb48859..1d7953ab26 100644
+--- a/web/templates/confirm_dialog/confirm_delete_detached_attachments.hbs
++++ b/web/templates/confirm_dialog/confirm_delete_detached_attachments.hbs
+@@ -1,5 +1,5 @@
+ <div>
+-    {{#if realm_allow_edit_history}}
++    {{#if realm_message_edit_history_is_visible}}
+         {{#tr}}
+             The following <z-link>uploaded files</z-link> are no longer attached to any messages. They can still be accessed from this message's edit history. Would you like to delete them entirely?
+             {{#*inline "z-link"}}<a class="uploaded_files_settings_link" href="/#settings/uploaded-files">{{> @partial-block}}</a>{{/inline}}
+diff --git a/web/templates/message_edit_notice_tooltip.hbs b/web/templates/message_edit_notice_tooltip.hbs
+index ca9e500914..3f27632399 100644
+--- a/web/templates/message_edit_notice_tooltip.hbs
++++ b/web/templates/message_edit_notice_tooltip.hbs
+@@ -1,5 +1,5 @@
+ <div>
+-    {{#if realm_allow_edit_history}}
++    {{#if realm_message_edit_history_is_visible}}
+     <div>{{t "View edit history"}}</div>
+     {{/if}}
+     <div class="tooltip-inner-content italic">
+@@ -10,6 +10,6 @@
+         {{/if}}
+     </div>
+ </div>
+-{{#if realm_allow_edit_history}}
++{{#if realm_message_edit_history_is_visible}}
+ {{tooltip_hotkey_hints "Shift" "H"}}
+ {{/if}}
+diff --git a/web/templates/settings/organization_permissions_admin.hbs b/web/templates/settings/organization_permissions_admin.hbs
+index dcea9f109f..fbd5cb443d 100644
+--- a/web/templates/settings/organization_permissions_admin.hbs
++++ b/web/templates/settings/organization_permissions_admin.hbs
+@@ -149,11 +149,12 @@
+                   is_checked=realm_allow_message_editing
+                   label=admin_settings_label.realm_allow_message_editing}}
+ 
+-                {{> settings_checkbox
+-                  setting_name="realm_allow_edit_history"
+-                  prefix="id_"
+-                  is_checked=realm_allow_edit_history
+-                  label=admin_settings_label.realm_allow_edit_history}}
++                <div class="input-group">
++                    <label for="id_realm_message_edit_history_visibility_policy" class="settings-field-label">{{t "Allow viewing the history of a message?"}}</label>
++                    <select name="realm_message_edit_history_visibility_policy" id="id_realm_message_edit_history_visibility_policy" class="prop-element settings_select bootstrap-focus-style" data-setting-widget-type="string">
++                        {{> dropdown_options_widget option_values=message_edit_history_visibility_policy_values}}
++                    </select>
++                </div>
+ 
+                 <div class="input-group time-limit-setting">
+                     <label for="id_realm_message_content_edit_limit_seconds" class="settings-field-label">{{t "Time limit for editing messages" }}</label>

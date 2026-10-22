@@ -1,0 +1,76 @@
+{
+  "task_id": "ZT-f317e656b5e5",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "upload: Don't hold a read open on S3 objects during self-copy.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 39752,
+  "fix_commit": "f317e656b5e5070e2206d66b58bdcefe630d64d5",
+  "base_commit": "adf2c48767fdd0f7039410dc57570628fdf96d79",
+  "env_fingerprint": "2a1b2a3f7193",
+  "fail_to_pass": [
+    "zerver.tests.test_tusd.TusdPreFinishTest.test_s3_upload_no_read_open_during_self_copy"
+  ],
+  "pass_to_pass": [],
+  "contamination": {
+    "fix_public_at": "2026-07-27",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-07-15T11:13:09Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/f317e656b5e5070e2206d66b58bdcefe630d64d5",
+    "issue_url": "https://github.com/zulip/zulip/issues/39752"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-f317e656b5e5",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_s3_upload_no_read_open_during_self_copy"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 85.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  },
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 39,
+    "files": 2,
+    "hunks": 5,
+    "f2p_count": 1
+  },
+  "author": {
+    "name": "bhuvan-somisetty",
+    "email": "somisettybhuvan5@gmail.com",
+    "date": "2026-07-22T05:16:59+00:00"
+  }
+}

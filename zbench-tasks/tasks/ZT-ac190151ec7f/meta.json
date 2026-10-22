@@ -1,0 +1,39 @@
+{
+  "task_id": "ZT-ac190151ec7f",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The hidden test directly calls `compose_setup.update_draft_if_composing()`, an exported function that does not exist at the base commit and is introduced only by the reference fix. A solver could implement the same autosave behavior with any internal name (or as an unexported throttled closure, as the throttling wrapper itself is), yet the test would fail unless they invented the exact new symbol name `update_draft_if_composing` and exported it from compose_setup. The test also does not exercise the user-visible behavior (throttled autosave on typing input); it only unit-tests the new helper's internal gating, reinforcing the coupling to the author's specific decomposition rather than to observable behavior through pre-existing interfaces.",
+  "summary": "compose: Add autosave for drafts while typing.",
+  "lang": "web",
+  "issue": 36102,
+  "fix_commit": "ac190151ec7f74d0f552df5b1200dc87dc04b98a",
+  "base_commit": "79b9b01299d5b8b03ec358576a3d86f9115ce8d2",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ac190151ec7f74d0f552df5b1200dc87dc04b98a",
+    "issue_url": "https://github.com/zulip/zulip/issues/36102"
+  },
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 29,
+    "files": 1,
+    "hunks": 3,
+    "f2p_count": 0
+  },
+  "author": {
+    "name": "CerealNotFound",
+    "email": "hydrogenproton1@gmail.com",
+    "date": "2026-02-12T17:23:30+05:30"
+  },
+  "author_flagged": "ai_generated_trailer",
+  "contamination": {
+    "fix_public_at": "2026-07-02",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

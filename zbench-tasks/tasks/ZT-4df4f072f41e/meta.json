@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-4df4f072f41e",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "Every change in the test diff is an `override_rewire(stream_list, \"update_stream_section_mention_indicators\", noop)` call \u2014 the test stubs out a brand-new internal helper by its exact exported name in the stream_list module. `update_stream_section_mention_indicators` is an internal decomposition choice of the reference fix (it exists as a mutable `export let` plus a `rewire_*` setter purely to support test stubbing); a solver could legitimately implement the same user-visible behavior inline inside `build_stream_list`/`update_dom_with_unread_counts`, or under any other name/module, and the DOM-facing outcome would be identical. But `override_rewire` on a nonexistent export throws, so the test hard-fails unless the solver guesses this precise helper name, its host module, and the rewire convention. No ticket or design spec would dictate the existence, name, or signature of this private helper \u2014 this is a mock/stub target of internals, which cannot be cured by a brief. Notably, the test asserts nothing about the new observable surface (the `.unread_mention_info` span in the section header template or the `has-only-muted-mentions` class); it only neutralizes the helper so pre-existing tests keep passing, making the name binding the entire coupling.",
+  "summary": "stream_list: Show mention indicator in section headings.",
+  "lang": "web",
+  "issue": 35104,
+  "fix_commit": "4df4f072f41ebed1e53e00157861ca030d4f3ebb",
+  "base_commit": "304fe9ff14da6b4b9e268bdbc2e1932c8a361f13",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/4df4f072f41ebed1e53e00157861ca030d4f3ebb",
+    "issue_url": "https://github.com/zulip/zulip/issues/35104"
+  }
+}

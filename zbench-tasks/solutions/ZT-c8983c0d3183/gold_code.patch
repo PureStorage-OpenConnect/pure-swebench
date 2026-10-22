@@ -1,0 +1,179 @@
+diff --git a/web/src/clipboard_handler.ts b/web/src/clipboard_handler.ts
+new file mode 100644
+index 0000000000..f648f15c13
+--- /dev/null
++++ b/web/src/clipboard_handler.ts
+@@ -0,0 +1,69 @@
++import assert from "minimalistic-assert";
++
++import * as blueslip from "./blueslip.ts";
++import * as hash_util from "./hash_util.ts";
++import * as popover_menus from "./popover_menus.ts";
++import * as stream_data from "./stream_data.ts";
++import * as topic_link_util from "./topic_link_util.ts";
++
++// The standard Clipboard API do not support custom mime types like
++// text/x-gfm, but this approach does.
++function execute_copy(handle_copy_event: (e: ClipboardEvent) => void): void {
++    document.addEventListener("copy", handle_copy_event);
++    // eslint-disable-next-line @typescript-eslint/no-deprecated
++    document.execCommand("copy");
++    document.removeEventListener("copy", handle_copy_event);
++}
++
++export async function copy_link_to_clipboard(link: string): Promise<void> {
++    // The caller is responsible for making sure what it is passes in
++    // to this function is a Zulip internal link.
++    return new Promise((resolve) => {
++        const stream_topic_details = hash_util.decode_stream_topic_from_url(link);
++
++        function handle_copy_event(e: ClipboardEvent): void {
++            if (stream_topic_details === null) {
++                e.clipboardData?.setData("text/plain", link);
++            } else {
++                const stream = stream_data.get_sub_by_id(stream_topic_details.stream_id);
++                assert(stream !== undefined);
++                const {text} = topic_link_util.get_topic_link_content(
++                    stream.name,
++                    stream_topic_details.topic_name,
++                    stream_topic_details.message_id,
++                );
++
++                const copy_in_html_syntax = topic_link_util.as_html_link_syntax_unsafe(text, link);
++                const copy_in_markdown_syntax = topic_link_util.as_markdown_link_syntax(text, link);
++
++                e.clipboardData?.setData("text/plain", link);
++                e.clipboardData?.setData("text/html", copy_in_html_syntax);
++                e.clipboardData?.setData("text/x-gfm", copy_in_markdown_syntax);
++            }
++            e.preventDefault();
++            resolve();
++        }
++        execute_copy(handle_copy_event);
++    });
++}
++
++/* istanbul ignore next */
++export function popover_copy_link_to_clipboard(
++    instance: typeof popover_menus.popover_instances.message_actions,
++    $element: JQuery,
++    success_callback?: () => void,
++): void {
++    // Wrapper for copy_link_to_clipboard handling closing a popover
++    // and error handling.
++    const clipboard_text = String($element.attr("data-clipboard-text"));
++    void copy_link_to_clipboard(clipboard_text)
++        .then(() => {
++            popover_menus.hide_current_popover_if_visible(instance);
++            if (success_callback !== undefined) {
++                success_callback();
++            }
++        })
++        .catch((error: unknown) => {
++            blueslip.error("Failed to copy to clipboard: ", {error: String(error)});
++        });
++}
+diff --git a/web/src/message_actions_popover.ts b/web/src/message_actions_popover.ts
+index c60756caa0..2059b2371b 100644
+--- a/web/src/message_actions_popover.ts
++++ b/web/src/message_actions_popover.ts
+@@ -1,9 +1,9 @@
+-import ClipboardJS from "clipboard";
+ import $ from "jquery";
+ import assert from "minimalistic-assert";
+ 
+ import render_message_actions_popover from "../templates/popovers/message_actions_popover.hbs";
+ 
++import * as clipboard_handler from "./clipboard_handler.ts";
+ import * as compose_reply from "./compose_reply.ts";
+ import * as condense from "./condense.ts";
+ import {show_copied_confirmation} from "./copied_tooltip.ts";
+@@ -228,14 +228,17 @@ export function initialize(): void {
+                 popover_menus.hide_current_popover_if_visible(instance);
+             });
+ 
+-            new ClipboardJS(the($popper.find(".copy_link"))).on("success", () => {
+-                show_copied_confirmation(the($(instance.reference).closest(".message_controls")));
+-                setTimeout(() => {
+-                    // The Clipboard library works by focusing to a hidden textarea.
+-                    // We unfocus this so keyboard shortcuts, etc., will work again.
+-                    $(":focus").trigger("blur");
+-                }, 0);
+-                popover_menus.hide_current_popover_if_visible(instance);
++            $popper.on("click", ".copy_link", (e) => {
++                assert(e.currentTarget instanceof HTMLElement);
++                clipboard_handler.popover_copy_link_to_clipboard(
++                    instance,
++                    $(e.currentTarget),
++                    () => {
++                        show_copied_confirmation(
++                            the($(instance.reference).closest(".message_controls")),
++                        );
++                    },
++                );
+             });
+         },
+         onHidden(instance) {
+diff --git a/web/src/stream_popover.ts b/web/src/stream_popover.ts
+index 982847e740..184ec29a8e 100644
+--- a/web/src/stream_popover.ts
++++ b/web/src/stream_popover.ts
+@@ -1,4 +1,3 @@
+-import ClipboardJS from "clipboard";
+ import $ from "jquery";
+ import assert from "minimalistic-assert";
+ import type * as tippy from "tippy.js";
+@@ -12,6 +11,7 @@ import render_left_sidebar_stream_actions_popover from "../templates/popovers/le
+ import * as blueslip from "./blueslip.ts";
+ import type {Typeahead} from "./bootstrap_typeahead.ts";
+ import * as browser_history from "./browser_history.ts";
++import * as clipboard_handler from "./clipboard_handler.ts";
+ import * as composebox_typeahead from "./composebox_typeahead.ts";
+ import * as dialog_widget from "./dialog_widget.ts";
+ import * as dropdown_widget from "./dropdown_widget.ts";
+@@ -195,8 +195,9 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+                 e.stopPropagation();
+             });
+ 
+-            new ClipboardJS(util.the($popper.find(".copy_stream_link"))).on("success", () => {
+-                popover_menus.hide_current_popover_if_visible(instance);
++            $popper.on("click", ".copy_stream_link", (e) => {
++                assert(e.currentTarget instanceof HTMLElement);
++                clipboard_handler.popover_copy_link_to_clipboard(instance, $(e.currentTarget));
+             });
+         },
+         onHidden(instance) {
+diff --git a/web/src/topic_popover.ts b/web/src/topic_popover.ts
+index 45305ac1ed..2c486d95fa 100644
+--- a/web/src/topic_popover.ts
++++ b/web/src/topic_popover.ts
+@@ -1,4 +1,3 @@
+-import ClipboardJS from "clipboard";
+ import $ from "jquery";
+ import assert from "minimalistic-assert";
+ import type * as tippy from "tippy.js";
+@@ -6,6 +5,7 @@ import type * as tippy from "tippy.js";
+ import render_delete_topic_modal from "../templates/confirm_dialog/confirm_delete_topic.hbs";
+ import render_left_sidebar_topic_actions_popover from "../templates/popovers/left_sidebar/left_sidebar_topic_actions_popover.hbs";
+ 
++import * as clipboard_handler from "./clipboard_handler.ts";
+ import * as confirm_dialog from "./confirm_dialog.ts";
+ import {$t_html} from "./i18n.ts";
+ import * as message_edit from "./message_edit.ts";
+@@ -198,12 +198,10 @@ export function initialize(): void {
+                     popover_menus.hide_current_popover_if_visible(instance);
+                 });
+ 
+-                new ClipboardJS(util.the($popper.find(".sidebar-popover-copy-link-to-topic"))).on(
+-                    "success",
+-                    () => {
+-                        popover_menus.hide_current_popover_if_visible(instance);
+-                    },
+-                );
++                $popper.on("click", ".sidebar-popover-copy-link-to-topic", (e) => {
++                    assert(e.currentTarget instanceof HTMLElement);
++                    clipboard_handler.popover_copy_link_to_clipboard(instance, $(e.currentTarget));
++                });
+             },
+             onHidden(instance) {
+                 const $elt = $(instance.reference).closest(".recent_view_focusable");

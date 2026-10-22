@@ -1,0 +1,51 @@
+diff --git a/web/src/filter.ts b/web/src/filter.ts
+index a37ad22d3b..34e87620bf 100644
+--- a/web/src/filter.ts
++++ b/web/src/filter.ts
+@@ -453,7 +453,7 @@ export class Filter {
+     }
+ 
+     // Parse a string into a list of terms (see below).
+-    static parse(str: string): NarrowTerm[] {
++    static parse(str: string, for_pills = false): NarrowTerm[] {
+         const terms: NarrowTerm[] = [];
+         let search_term: string[] = [];
+         let negated;
+@@ -511,6 +511,14 @@ export class Filter {
+                     }
+                 }
+ 
++                if (
++                    for_pills &&
++                    operator === "sender" &&
++                    operand.toString().toLowerCase() === "me"
++                ) {
++                    operand = people.my_current_email();
++                }
++
+                 // We use Filter.operator_to_prefix() to check if the
+                 // operator is known.  If it is not known, then we treat
+                 // it as a search for the given string (which may contain
+@@ -575,6 +583,9 @@ export class Filter {
+             case "pm-with":
+             case "dm-including":
+             case "pm-including":
++                if (term.operand === "me") {
++                    return true;
++                }
+                 return term.operand
+                     .split(",")
+                     .every((email) => people.get_by_email(email) !== undefined);
+diff --git a/web/src/search.ts b/web/src/search.ts
+index 794cccfc81..f60f990754 100644
+--- a/web/src/search.ts
++++ b/web/src/search.ts
+@@ -53,7 +53,7 @@ function full_search_query_in_terms(): NarrowTerm[] {
+     assert(search_pill_widget !== null);
+     return [
+         ...search_pill.get_current_search_pill_terms(search_pill_widget),
+-        ...Filter.parse(get_search_bar_text()),
++        ...Filter.parse(get_search_bar_text(), true),
+     ];
+ }
+ 

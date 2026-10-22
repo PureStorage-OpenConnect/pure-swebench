@@ -1,0 +1,13 @@
+diff --git a/web/tests/composebox_typeahead.test.cjs b/web/tests/composebox_typeahead.test.cjs
+index 77d67b2c79..b8193f1ab7 100644
+--- a/web/tests/composebox_typeahead.test.cjs
++++ b/web/tests/composebox_typeahead.test.cjs
+@@ -26,6 +26,8 @@ const compose_validate = mock_esm("../src/compose_validate", {
+     validate_message_length: () => true,
+     warn_if_topic_resolved: noop,
+     stream_wildcard_mention_allowed: () => true,
++    warn_if_mentioning_unsubscribed_group: noop,
++    initialize: noop,
+ });
+ const input_pill = mock_esm("../src/input_pill");
+ const message_user_ids = mock_esm("../src/message_user_ids", {

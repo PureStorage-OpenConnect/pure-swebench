@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-d1ca4a6d6aa1",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "user: Update pills and pm_list on deactivation.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 33376,
+  "fix_commit": "d1ca4a6d6aa177f7e592f6b5b4556b95d205a640",
+  "base_commit": "aae70c09df4da345b8406cc4489213daee4a8173",
+  "env_fingerprint": "3b800bbbe80e",
+  "fail_to_pass": [
+    "web/tests/user_events.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 4,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The module `web/src/compose_pm_pill` gains a new exported function `update_user_pill_active_status(user, is_active)`, taking the affected user object (including its `user_id`) and a boolean `is_active`, which updates the compose box's recipient pill for that user to reflect whether the user is deactivated or active.",
+    "When `user_events.update_person` processes a user-update event whose `is_active` field changes (deactivation or reactivation, for both human users and bots), it must call `compose_pm_pill.update_user_pill_active_status(user, is_active)` with the affected user's full user object and the new active status.",
+    "When `user_events.update_person` processes a user-update event whose `is_active` field changes (deactivation or reactivation, for both human users and bots), it must refresh the direct-messages list by calling the existing `pm_list.update_private_messages()`."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 593,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "santhoshkumarCodes",
+    "email": "santhoshkumartechsavvy@gmail.com",
+    "date": "2026-01-07"
+  },
+  "contamination": {
+    "fix_public_at": "2026-01-07",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-02-06T18:26:28Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/d1ca4a6d6aa177f7e592f6b5b4556b95d205a640",
+    "issue_url": "https://github.com/zulip/zulip/issues/33376"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-d1ca4a6d6aa1",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 91.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

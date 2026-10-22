@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-d3c20f0b2578",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "notifications: Render emoji in desktop notifications.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 30598,
+  "fix_commit": "d3c20f0b2578ed4e4c74e9c11288f0e362a6d9bc",
+  "base_commit": "a2c0d2d385a9b5aec35a82c822e55d03bbfc6e3f",
+  "env_fingerprint": "0a9a3e585c73",
+  "fail_to_pass": [
+    "web/tests/ui_util.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 54,
+    "files": 2,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The `web/src/ui_util` module gains an exported function `convert_emoji_element_to_unicode(element)` that takes a (jQuery-wrapped) rendered-emoji DOM element and returns a string: the Unicode emoji character(s) that element represents.",
+    "For a non-image emoji element carrying Zulip's existing rendered-emoji class markup (`class=\"emoji emoji-<hex>[-<hex>...]\"`, hyphen-separated hexadecimal Unicode code points), the function must parse each hex code point and return them concatenated as a single string \u2014 e.g. `emoji-1f419` yields \"\ud83d\udc19\", and multi-codepoint sequences like `emoji-1f468-200d-1f373` yield the full ZWJ sequence \"\ud83d\udc68\u200d\ud83c\udf73\".",
+    "For an `img` emoji element (custom/realm emoji with no Unicode equivalent), the function must return the element's `alt` text instead."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 211,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Saubhagya Patel",
+    "email": "patelsaubhagya0144@gmail.com",
+    "date": "2025-02-23"
+  },
+  "contamination": {
+    "fix_public_at": "2025-02-23",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-06-26T17:54:07Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/d3c20f0b2578ed4e4c74e9c11288f0e362a6d9bc",
+    "issue_url": "https://github.com/zulip/zulip/issues/30598"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-d3c20f0b2578",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 65.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

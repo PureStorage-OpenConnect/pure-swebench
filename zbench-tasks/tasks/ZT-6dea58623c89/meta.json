@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-6dea58623c89",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The entire change is cosmetic copyediting of error strings ('already in use' -> 'is already in use', '!' -> '.') with no behavioral difference \u2014 the same errors fire under the same conditions. The hidden tests grade only by pinning the exact new message wording, which is format-over-behavior: equivalent to changelog/i18n string churn where the grader asserts incidental phrasing rather than an observable engineering outcome. A solver could make any functionally correct change and still fail unless they guess the exact punctuation and phrasing chosen upstream.",
+  "summary": "errors: Standardize \"already in use\" error messages.",
+  "lang": "py",
+  "issue": 33629,
+  "fix_commit": "6dea58623c894be8fe333de4bbafe34941b6971c",
+  "base_commit": "b6f09b6dab0e027405bbbb3ce2c24efd07ba6328",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/6dea58623c894be8fe333de4bbafe34941b6971c",
+    "issue_url": "https://github.com/zulip/zulip/issues/33629"
+  }
+}

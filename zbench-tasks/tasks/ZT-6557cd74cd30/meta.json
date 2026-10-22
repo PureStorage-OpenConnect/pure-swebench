@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-6557cd74cd30",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The hidden hotkey test removes the pre-existing stub `stream_popover.is_open: () => false` and re-mocks `../src/stream_popover` bare. In Zulip's node test framework, any hotkey path that still calls `stream_popover.is_open()` on the bare mock will fail, so the test effectively mandates that the fix stop consulting `stream_popover.is_open()` and instead track the stream-actions popover's open state through the central `popover_menus` instance registry (e.g. `is_stream_actions_popover_displayed()` / `popover_instances.stream_actions_popover`). Whether hotkey.js checks popover visibility via `stream_popover.is_open()` or via a registry entry in `popover_menus` is a private module-layout/refactoring choice \u2014 no ticket or product spec would dictate it, and a behaviorally correct solution that keeps `is_open()` (or names the registry entry differently) would fail. The test binds to mock targets of internals rather than user-visible behavior, so this cannot be cured by a brief. (The deleted stream_settings_ui 'close color container when scrolling' test is unproblematic on its own \u2014 it removes coverage of behavior the change eliminates \u2014 but the hotkey test coupling alone forces the drop.)",
+  "summary": "stream_color: Replace spectrum color picker with native color picker.",
+  "lang": "web",
+  "issue": 14961,
+  "fix_commit": "6557cd74cd30ebc914584dd7f4365dd39f0db967",
+  "base_commit": "6cd1c34ae122feaa6cb6f0a48ae380f9864eac37",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/6557cd74cd30ebc914584dd7f4365dd39f0db967",
+    "issue_url": "https://github.com/zulip/zulip/issues/14961"
+  }
+}

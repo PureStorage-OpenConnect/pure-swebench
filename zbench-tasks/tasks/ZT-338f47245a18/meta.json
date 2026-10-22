@@ -1,0 +1,39 @@
+{
+  "task_id": "ZT-338f47245a18",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The hidden test directly depends on new symbols that only the reference fix introduces. In pm_conversations.test.cjs, the new test 'latest_message_id_by_user_id' repeatedly calls pmc.get_latest_direct_message_id_with_user(...), an export added by the fix and absent at the base commit. Likewise, composebox_typeahead.test.cjs replaces the mock of the pre-existing pm_conversations.is_partner with a mock of get_latest_direct_message_id_with_user, so the typeahead tests only pass if the solver names their new API exactly as the original author did. A solver could implement the same recency-based ranking behavior with a differently named function (e.g. latest_dm_id_for_user) and would still fail these tests, meaning the tests check the author's chosen symbol names rather than behavior through pre-existing interfaces.",
+  "summary": "typeahead: Sort users by direct message recency, not count.",
+  "lang": "web",
+  "issue": 36488,
+  "fix_commit": "338f47245a1856cb1259e2a098713a09097af04d",
+  "base_commit": "0e259db4be1f0f089c533944034d1ce9d57c01d5",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/338f47245a1856cb1259e2a098713a09097af04d",
+    "issue_url": "https://github.com/zulip/zulip/issues/36488"
+  },
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 48,
+    "files": 6,
+    "hunks": 16,
+    "f2p_count": 0
+  },
+  "author": {
+    "name": "Evy Kassirer",
+    "email": "evy@zulip.com",
+    "date": "2026-06-30T12:10:14-07:00"
+  },
+  "author_flagged": "ai_generated_trailer",
+  "contamination": {
+    "fix_public_at": "2026-07-06",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

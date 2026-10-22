@@ -1,0 +1,30 @@
+diff --git a/zerver/openapi/markdown_extension.py b/zerver/openapi/markdown_extension.py
+index 5668bd5f53..c592fac203 100644
+--- a/zerver/openapi/markdown_extension.py
++++ b/zerver/openapi/markdown_extension.py
+@@ -275,7 +275,11 @@ def generate_curl_example(
+     operation_entry = openapi_spec.openapi()["paths"][endpoint][method.lower()]
+     global_security = openapi_spec.openapi()["security"]
+ 
+-    insecure_operations = ["/dev_fetch_api_key:post", "/fetch_api_key:post"]
++    insecure_operations = [
++        "/dev_fetch_api_key:post",
++        "/fetch_api_key:post",
++        "/jwt/fetch_api_key:post",
++    ]
+     lines = []
+     if operation in insecure_operations:
+         lines.append("```curl")
+diff --git a/zerver/openapi/test_curl_examples.py b/zerver/openapi/test_curl_examples.py
+index 14d3cd08f3..6909b51ea7 100644
+--- a/zerver/openapi/test_curl_examples.py
++++ b/zerver/openapi/test_curl_examples.py
+@@ -25,6 +25,8 @@ from zerver.openapi.curl_param_value_generators import (
+ from zerver.openapi.openapi import get_endpoint_from_operationid
+ 
+ UNTESTED_GENERATED_CURL_EXAMPLES = {
++    # Requires organization-specific JWT_AUTH_KEYS configuration.
++    "jwt-fetch-api-key",
+     # Would need push notification bouncer set up to test the
+     # generated curl example for the following three endpoints.
+     "e2ee-test-notify",

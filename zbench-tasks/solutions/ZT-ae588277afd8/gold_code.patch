@@ -1,0 +1,239 @@
+diff --git a/web/src/server_events_dispatch.js b/web/src/server_events_dispatch.js
+index 65cf4194fa..eb15c3a535 100644
+--- a/web/src/server_events_dispatch.js
++++ b/web/src/server_events_dispatch.js
+@@ -850,7 +850,12 @@ export function dispatch_normal_event(event) {
+                     for (const rec of event.subscriptions) {
+                         const sub = sub_store.get(rec.stream_id);
+                         if (sub) {
+-                            stream_events.mark_subscribed(sub, rec.subscribers, rec.color);
++                            stream_events.mark_subscribed(
++                                sub,
++                                rec.subscribers,
++                                rec.color,
++                                rec.push_notifications,
++                            );
+                         } else {
+                             blueslip.error("Subscribing to unknown stream", {
+                                 stream_id: rec.stream_id,
+diff --git a/web/src/stream_create.ts b/web/src/stream_create.ts
+index 29b1f3e937..3887e9ffb6 100644
+--- a/web/src/stream_create.ts
++++ b/web/src/stream_create.ts
+@@ -388,6 +388,14 @@ function create_stream(): void {
+         ...group_setting_values,
+     };
+ 
++    // Only present for admins, so guard against it being absent.
++    const $default_push_notifications = $<HTMLInputElement>("#id_new_default_push_notifications");
++    if ($default_push_notifications.length > 0) {
++        data["default_push_notifications"] = JSON.stringify(
++            $default_push_notifications.prop("checked"),
++        );
++    }
++
+     assert(folder_widget !== undefined);
+     const folder_id = folder_widget.value();
+     if (folder_id !== settings_config.no_folder_selected) {
+diff --git a/web/src/stream_data.ts b/web/src/stream_data.ts
+index dd35da8a83..b93ad2843d 100644
+--- a/web/src/stream_data.ts
++++ b/web/src/stream_data.ts
+@@ -498,6 +498,13 @@ export function update_topics_policy_setting(
+     sub.topics_policy = topics_policy;
+ }
+ 
++export function update_default_push_notifications(
++    sub: StreamSubscription,
++    default_push_notifications: boolean,
++): void {
++    sub.default_push_notifications = default_push_notifications;
++}
++
+ export function update_stream_permission_group_setting(
+     setting_name: StreamPermissionGroupSetting,
+     sub: StreamSubscription,
+diff --git a/web/src/stream_edit.ts b/web/src/stream_edit.ts
+index a5189bcc15..a9ca8ce724 100644
+--- a/web/src/stream_edit.ts
++++ b/web/src/stream_edit.ts
+@@ -462,6 +462,16 @@ export function set_up_channel_privacy_dropdown_widget(
+     return channel_privacy_widget;
+ }
+ 
++function get_push_notifications_tooltip(): string | undefined {
++    if (!realm.realm_push_notifications_enabled) {
++        return $t({defaultMessage: "Mobile push notifications are not enabled on this server."});
++    }
++    if (!current_user.is_admin) {
++        return $t({defaultMessage: "Only organization administrators can edit this setting."});
++    }
++    return undefined;
++}
++
+ export function show_settings_for(node: HTMLElement): void {
+     // Hide any tooltips or popovers before we rerender / change
+     // currently displayed stream settings.
+@@ -493,6 +503,7 @@ export function show_settings_for(node: HTMLElement): void {
+         is_business_type_org:
+             realm.realm_org_type === settings_config.all_org_type_values.business.code,
+         is_admin: current_user.is_admin,
++        push_notifications_tooltip: get_push_notifications_tooltip(),
+         org_level_message_retention_setting: get_display_text_for_realm_message_retention_setting(),
+         group_setting_labels: settings_config.all_group_setting_labels.stream,
+         has_billing_access: settings_data.user_has_billing_access(),
+@@ -1056,8 +1067,10 @@ export function initialize(): void {
+                 $subsection,
+                 sub,
+             );
+-            if ($subsection.attr("id") === "channel-subscription-permissions") {
+-                assert(sub !== undefined);
++            if (
++                $subsection.attr("id") === "channel-subscription-permissions" &&
++                sub !== undefined
++            ) {
+                 stream_ui_updates.update_can_create_topic_group_on_history_public_to_subscribers_change(
+                     sub,
+                 );
+diff --git a/web/src/stream_events.ts b/web/src/stream_events.ts
+index e6964b3aba..ad2144dbb5 100644
+--- a/web/src/stream_events.ts
++++ b/web/src/stream_events.ts
+@@ -195,6 +195,10 @@ export function update_property<P extends keyof UpdatableStreamProperties>(
+         message_retention_days(value) {
+             stream_settings_ui.update_message_retention_setting(sub, value);
+         },
++        default_push_notifications(value) {
++            sub.default_push_notifications = value;
++            stream_settings_ui.update_default_push_notifications_setting(sub, value);
++        },
+         topics_policy(value) {
+             stream_settings_ui.update_topics_policy_setting(sub, value);
+             compose_recipient.update_topic_inputbox_on_topics_policy_change();
+@@ -269,11 +273,15 @@ export function mark_subscribed(
+     sub: StreamSubscription,
+     subscribers: number[],
+     color: string | undefined,
++    push_notifications: boolean | null,
+ ): void {
+     if (sub.subscribed) {
+         return;
+     }
+ 
++    sub.push_notifications = push_notifications;
++    update_property(sub.stream_id, "push_notifications", sub.push_notifications);
++
+     // If the backend sent us a color, use that
+     if (color !== undefined && sub.color !== color) {
+         sub.color = color;
+diff --git a/web/src/stream_settings_ui.ts b/web/src/stream_settings_ui.ts
+index b716cd95a5..1cbce14002 100644
+--- a/web/src/stream_settings_ui.ts
++++ b/web/src/stream_settings_ui.ts
+@@ -237,6 +237,14 @@ export function update_topics_policy_setting(
+     stream_ui_updates.update_setting_element(sub, "topics_policy");
+ }
+ 
++export function update_default_push_notifications_setting(
++    sub: StreamSubscription,
++    new_value: boolean,
++): void {
++    stream_data.update_default_push_notifications(sub, new_value);
++    stream_ui_updates.update_setting_element(sub, "default_push_notifications");
++}
++
+ export function update_stream_permission_group_setting(
+     setting_name: StreamPermissionGroupSetting,
+     sub: StreamSubscription,
+@@ -1041,6 +1049,10 @@ function setup_page(callback: () => void): void {
+             realm_has_archived_channels,
+             has_billing_access: settings_data.user_has_billing_access(),
+             is_admin: current_user.is_admin,
++            disable_push_notifications: !realm.realm_push_notifications_enabled,
++            push_notifications_tooltip: realm.realm_push_notifications_enabled
++                ? undefined
++                : $t({defaultMessage: "Mobile push notifications are not enabled on this server."}),
+             empty_string_topic_display_name: util.get_final_topic_display_name(""),
+         };
+ 
+diff --git a/web/src/stream_types.ts b/web/src/stream_types.ts
+index 070eab1534..85131059e3 100644
+--- a/web/src/stream_types.ts
++++ b/web/src/stream_types.ts
+@@ -48,6 +48,7 @@ export const stream_schema = z.object({
+     can_subscribe_group: group_setting_value_schema,
+     creator_id: z.nullable(z.number()),
+     date_created: z.number(),
++    default_push_notifications: z.boolean(),
+     description: z.string(),
+     first_message_id: z.nullable(z.number()),
+     folder_id: z.nullable(z.number()),
+diff --git a/web/src/stream_ui_updates.ts b/web/src/stream_ui_updates.ts
+index f8d86cb1a1..73681bb65d 100644
+--- a/web/src/stream_ui_updates.ts
++++ b/web/src/stream_ui_updates.ts
+@@ -355,6 +355,17 @@ export function enable_or_disable_permission_settings_in_edit_panel(
+         .find(".channel-folder-widget-container button")
+         .prop("disabled", !sub.can_change_stream_permissions_requiring_metadata_access);
+ 
++    const $default_push_notifications_setting = $stream_settings
++        .find("input[name='default_push_notifications']")
++        .closest(".settings-checkbox-wrapper");
++    const disable_push_notifications =
++        !realm.realm_push_notifications_enabled || !current_user.is_admin;
++    $default_push_notifications_setting.toggleClass(
++        "control-label-disabled",
++        disable_push_notifications,
++    );
++    $default_push_notifications_setting.find("input").prop("disabled", disable_push_notifications);
++
+     if (!sub.can_change_stream_permissions_requiring_metadata_access) {
+         settings_components.disable_group_permission_setting($permission_pill_container_elements);
+         return;
+diff --git a/web/templates/stream_settings/channel_permissions.hbs b/web/templates/stream_settings/channel_permissions.hbs
+index f0eee7767f..7567efe4d8 100644
+--- a/web/templates/stream_settings/channel_permissions.hbs
++++ b/web/templates/stream_settings/channel_permissions.hbs
+@@ -36,6 +36,21 @@
+       setting_name="can_remove_subscribers_group"
+       label=group_setting_labels.can_remove_subscribers_group
+       prefix=prefix }}
++
++    {{#unless is_stream_edit}}
++        {{#if is_admin}}
++        <div class="default-push-notifications">
++            {{> ../settings/settings_checkbox
++              prefix=prefix
++              setting_name="default_push_notifications"
++              is_checked=false
++              is_disabled=disable_push_notifications
++              label=(t "Mobile push notifications enabled by default")
++              tooltip_message=push_notifications_tooltip
++              }}
++        </div>
++        {{/if}}
++    {{/unless}}
+ </div>
+ 
+ <div id="channel-messaging-permissions" class="settings-subsection-parent">
+diff --git a/web/templates/stream_settings/stream_settings.hbs b/web/templates/stream_settings/stream_settings.hbs
+index bd1cd21304..f1d0c051d5 100644
+--- a/web/templates/stream_settings/stream_settings.hbs
++++ b/web/templates/stream_settings/stream_settings.hbs
+@@ -53,6 +53,16 @@
+                   channel_folder_widget_name="folder_id"
+                   }}
+ 
++                <div class="default-push-notifications">
++                    {{> ../settings/settings_checkbox
++                      prefix="id_"
++                      setting_name="default_push_notifications"
++                      is_checked=(lookup sub "default_push_notifications")
++                      label=(t "Mobile push notifications enabled by default")
++                      tooltip_message=push_notifications_tooltip
++                      }}
++                </div>
++
+                 <div class="input-group stream-email-box">
+                     <label for="copy_stream_email_button" class="settings-field-label">
+                         {{t "Email address" }}

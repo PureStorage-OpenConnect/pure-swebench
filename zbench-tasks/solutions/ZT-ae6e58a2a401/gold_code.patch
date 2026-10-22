@@ -1,0 +1,365 @@
+diff --git a/zerver/actions/message_send.py b/zerver/actions/message_send.py
+index 2704d87639..93a4dfef02 100644
+--- a/zerver/actions/message_send.py
++++ b/zerver/actions/message_send.py
+@@ -78,13 +78,15 @@ from zerver.lib.streams import (
+     get_stream_topics_policy,
+     notify_stream_is_recently_active_update,
+     subscribed_to_stream,
++    user_has_metadata_access,
+ )
+ from zerver.lib.string_validation import check_stream_name
+ from zerver.lib.thumbnail import manifest_and_get_user_upload_previews, rewrite_thumbnailed_images
+ from zerver.lib.timestamp import timestamp_to_datetime
+ from zerver.lib.topic import get_topic_display_name, participants_for_topic
+-from zerver.lib.topic_link_util import get_stream_link_syntax
++from zerver.lib.topic_link_util import get_message_link_label, get_stream_link_syntax
+ from zerver.lib.types import UserProfileChangeDict
++from zerver.lib.url_encoding import message_link_url, stream_message_url
+ from zerver.lib.url_preview.types import UrlEmbedData
+ from zerver.lib.user_groups import (
+     UserGroupMembershipDetails,
+@@ -247,6 +249,8 @@ class UserProfileAnnotations(TypedDict):
+ @dataclass
+ class SentMessageResult:
+     message_id: int
++    message_url: str
++    message_link: str
+     automatic_new_visibility_policy: int | None = None
+ 
+ 
+@@ -668,6 +672,8 @@ def build_message_send_dict(
+     recipients_for_user_creation_events: dict[UserProfile, set[int]] | None = None,
+     acting_user: UserProfile | None = None,
+     no_previews: bool = False,
++    user_group_membership_details: UserGroupMembershipDetails | None = None,
++    sender_is_subscribed: bool | None = None,
+ ) -> SendMessageRequest:
+     """Returns a dictionary that can be passed into do_send_messages.  In
+     production, this is always called by check_message, but some
+@@ -765,9 +771,31 @@ def build_message_send_dict(
+     mentioned_bot_user_ids = default_bot_user_ids & mentioned_user_ids
+     info.um_eligible_user_ids |= mentioned_bot_user_ids
+ 
++    # Whether the sender may see the channel's name, so the response URL
++    # references the channel by name rather than just its ID. Reuses the
++    # subscription and group data already loaded to authorize the send, so
++    # it adds no query; unloaded group memberships (e.g. a bot posting via
++    # its owner) are treated as empty, conservatively omitting the name.
++    sender_has_channel_metadata_access = False
++    if stream is not None:
++        if (
++            user_group_membership_details is None
++            or user_group_membership_details.user_recursive_group_ids is None
++        ):
++            user_group_membership_details = UserGroupMembershipDetails(
++                user_recursive_group_ids=set()
++            )
++        sender_has_channel_metadata_access = user_has_metadata_access(
++            message.sender,
++            stream,
++            user_group_membership_details,
++            is_subscribed=sender_is_subscribed is True,
++        )
++
+     message_send_dict = SendMessageRequest(
+         stream=stream,
+         sender_muted_stream=info.sender_muted_stream,
++        sender_has_channel_metadata_access=sender_has_channel_metadata_access,
+         local_id=local_id,
+         sender_queue_id=sender_queue_id,
+         realm=realm,
+@@ -935,6 +963,42 @@ def get_active_presence_idle_user_ids(
+     return filter_presence_idle_user_ids(user_ids)
+ 
+ 
++def get_message_url_and_link(
++    send_request: SendMessageRequest, message_dict: dict[str, Any]
++) -> tuple[str, str]:
++    """Compute the (message_url, message_link) pair for the POST /messages
++    response: the bare URL, and Markdown matching the web app's "Copy link
++    to message".
++
++    The channel name is included only when the sender has metadata access
++    to it (see sender_has_channel_metadata_access), so a write-only bot
++    posting to a channel it cannot read does not learn its name. Direct
++    messages and that restricted case have no standard label, so
++    message_link is just the URL.
++    """
++    realm = send_request.realm
++    stream = send_request.stream
++    if stream is None:
++        url = message_link_url(realm, message_dict)
++        return url, url
++
++    if not send_request.sender_has_channel_metadata_access:
++        url = stream_message_url(realm, message_dict, include_channel_name=False)
++        return url, url
++
++    url = stream_message_url(realm, message_dict)
++    # message_link embeds the absolute url so it stays valid when used
++    # outside Zulip, matching message_url and the web app's "Copy link to
++    # message"; we only borrow the "#channel > topic @ 💬" label here.
++    label = get_message_link_label(
++        stream.name,
++        send_request.message.topic_name(),
++        send_request.message.id,
++    )
++    link = f"[{label}]({url})"
++    return url, link
++
++
+ @transaction.atomic(savepoint=False)
+ def do_send_messages(
+     send_message_requests_maybe_none: Sequence[SendMessageRequest | None],
+@@ -1130,6 +1194,10 @@ def do_send_messages(
+         # enqueuing any additional processing triggered by the message.
+         wide_message_dict = MessageDict.wide_dict(send_request.message, realm_id)
+ 
++        send_request.message_url, send_request.message_link = get_message_url_and_link(
++            send_request, wide_message_dict
++        )
++
+         user_flags = user_message_flags.get(send_request.message.id, {})
+ 
+         """
+@@ -1344,13 +1412,18 @@ def do_send_messages(
+                     },
+                 )
+ 
+-    sent_message_results = [
+-        SentMessageResult(
+-            message_id=send_request.message.id,
+-            automatic_new_visibility_policy=send_request.automatic_new_visibility_policy,
++    sent_message_results = []
++    for send_request in send_message_requests:
++        assert send_request.message_url is not None
++        assert send_request.message_link is not None
++        sent_message_results.append(
++            SentMessageResult(
++                message_id=send_request.message.id,
++                message_url=send_request.message_url,
++                message_link=send_request.message_link,
++                automatic_new_visibility_policy=send_request.automatic_new_visibility_policy,
++            )
+         )
+-        for send_request in send_message_requests
+-    ]
+     return sent_message_results
+ 
+ 
+@@ -1783,6 +1856,8 @@ def check_message(
+     for high-level documentation on this subsystem.
+     """
+     stream = None
++    user_group_membership_details: UserGroupMembershipDetails | None = None
++    sender_is_subscribed: bool | None = None
+ 
+     message_content = normalize_body(message_content_raw)
+ 
+@@ -1823,7 +1898,7 @@ def check_message(
+         user_group_membership_details = UserGroupMembershipDetails(user_recursive_group_ids=None)
+         system_groups_name_dict = get_realm_system_groups_name_dict(stream.realm_id)
+         if not skip_stream_access_check:
+-            access_stream_for_send_message(
++            stream_access_result = access_stream_for_send_message(
+                 sender=sender,
+                 stream=stream,
+                 forwarder_user_profile=forwarder_user_profile,
+@@ -1831,6 +1906,7 @@ def check_message(
+                 user_group_membership_details=user_group_membership_details,
+                 system_groups_name_dict=system_groups_name_dict,
+             )
++            sender_is_subscribed = stream_access_result["is_subscribed"]
+         else:
+             # Defensive assertion - the only currently supported use case
+             # for this option is for outgoing webhook bots and since this
+@@ -1937,6 +2013,8 @@ def check_message(
+         recipients_for_user_creation_events=recipients_for_user_creation_events,
+         acting_user=acting_user,
+         no_previews=no_previews,
++        user_group_membership_details=user_group_membership_details,
++        sender_is_subscribed=sender_is_subscribed,
+     )
+ 
+     if (
+diff --git a/zerver/lib/message.py b/zerver/lib/message.py
+index edd4809ebd..6f5aabba6c 100644
+--- a/zerver/lib/message.py
++++ b/zerver/lib/message.py
+@@ -126,6 +126,10 @@ class SendMessageRequest:
+     rendering_result: MessageRenderingResult
+     stream: Stream | None
+     sender_muted_stream: bool | None
++    # Whether the sender may see the channel's name; controls whether the
++    # POST /messages response URL includes the channel name or only its
++    # ID. Always False for direct messages, where there is no channel.
++    sender_has_channel_metadata_access: bool
+     local_id: str | None
+     sender_queue_id: str | None
+     realm: Realm
+@@ -185,6 +189,9 @@ class SendMessageRequest:
+     recipients_for_user_creation_events: dict[UserProfile, set[int]] | None = None
+     reminder_target_message_id: int | None = None
+     reminder_note: str | None = None
++    # Computed during do_send_messages, for the POST /messages response.
++    message_url: str | None = None
++    message_link: str | None = None
+ 
+ 
+ @dataclass
+diff --git a/zerver/lib/streams.py b/zerver/lib/streams.py
+index 5c0bafccba..a1816d006d 100644
+--- a/zerver/lib/streams.py
++++ b/zerver/lib/streams.py
+@@ -638,7 +638,12 @@ def access_stream_for_send_message(
+     archived_channel_notice: bool = False,
+     user_group_membership_details: UserGroupMembershipDetails | None = None,
+     system_groups_name_dict: dict[int, str] | None = None,
+-) -> None:
++) -> dict[str, bool | None]:
++    """Raises JsonableError if the sender may not send to the stream, and
++    returns {"is_subscribed": ...} -- whether the sender is subscribed to
++    it, or None if that wasn't determined (e.g. a public channel, where
++    subscription is irrelevant to send access).
++    """
+     # Our caller is responsible for making sure that `stream` actually
+     # matches the realm of the sender.
+     if system_groups_name_dict is None:
+@@ -659,20 +664,20 @@ def access_stream_for_send_message(
+             and forwarder_user_profile.realm_id == sender.realm_id
+             and sender.realm_id == stream.realm_id
+         ):
+-            return
++            return {"is_subscribed": None}
+         else:
+             raise JsonableError(_("User not authorized for this query"))
+ 
+     # You cannot send mesasges to archived channels
+     if stream.deactivated:
+         if archived_channel_notice:
+-            return
++            return {"is_subscribed": None}
+         raise JsonableError(
+             _("Not authorized to send to channel '{channel_name}'").format(channel_name=stream.name)
+         )
+ 
+     if is_cross_realm_bot_email(sender.delivery_email):
+-        return
++        return {"is_subscribed": None}
+ 
+     if stream.realm_id != sender.realm_id:
+         # Sending to other realm's streams is always disallowed,
+@@ -681,25 +686,26 @@ def access_stream_for_send_message(
+ 
+     if stream.is_web_public:
+         # Even guest users can write to web-public streams.
+-        return
++        return {"is_subscribed": None}
+ 
+     if not (stream.invite_only or sender.is_guest):
+         # This is a public stream and sender is not a guest user
+-        return
++        return {"is_subscribed": None}
+ 
+-    if subscribed_to_stream(sender, stream.id):
++    is_subscribed = subscribed_to_stream(sender, stream.id)
++    if is_subscribed:
+         # It is private, but your are subscribed
+-        return
++        return {"is_subscribed": is_subscribed}
+ 
+     if sender.can_forge_sender:
+         # can_forge_sender allows sending to any stream in the realm.
+-        return
++        return {"is_subscribed": is_subscribed}
+ 
+     if sender.is_bot and (
+         sender.bot_owner is not None and subscribed_to_stream(sender.bot_owner, stream.id)
+     ):
+         # Bots can send to any stream their owner can.
+-        return
++        return {"is_subscribed": is_subscribed}
+ 
+     if stream.history_public_to_subscribers and not sender.is_guest:
+         if user_group_membership_details.user_recursive_group_ids is None:
+@@ -710,7 +716,7 @@ def access_stream_for_send_message(
+         if is_user_in_groups_granting_content_access(
+             stream, user_group_membership_details.user_recursive_group_ids
+         ):
+-            return
++            return {"is_subscribed": is_subscribed}
+ 
+     # All other cases are an error.
+     raise JsonableError(
+diff --git a/zerver/lib/url_encoding.py b/zerver/lib/url_encoding.py
+index b0091bc54b..d5cefc13d4 100644
+--- a/zerver/lib/url_encoding.py
++++ b/zerver/lib/url_encoding.py
+@@ -165,6 +165,7 @@ def stream_message_url(
+     *,
+     conversation_link: bool = False,
+     include_base_url: bool = True,
++    include_channel_name: bool = True,
+ ) -> str:
+     if include_base_url and realm is None:
+         raise ValueError("realm is required when include_base_url=True")
+@@ -177,7 +178,12 @@ def stream_message_url(
+     stream_name = message["display_recipient"]
+     topic_name = get_topic_from_message_info(message)
+     encoded_topic_name = encode_hash_component(topic_name)
+-    encoded_stream = encode_channel(stream_id, stream_name)
++    if include_channel_name:
++        encoded_stream = encode_channel(stream_id, stream_name)
++    else:
++        # Used when the URL must not reveal the channel name (e.g. for a
++        # write-only bot); Zulip still resolves the channel from the ID alone.
++        encoded_stream = str(stream_id)
+ 
+     narrow_fragments = (
+         f"#narrow/channel/{encoded_stream}/topic/{encoded_topic_name}/{with_or_near}/{message_id}"
+diff --git a/zerver/views/message_send.py b/zerver/views/message_send.py
+index dfbb8dd362..e15c304342 100644
+--- a/zerver/views/message_send.py
++++ b/zerver/views/message_send.py
+@@ -1,7 +1,7 @@
+ from collections.abc import Iterable, Sequence
+ from dataclasses import asdict
+ from email.headerregistry import Address
+-from typing import Annotated, Literal, cast
++from typing import Annotated, Literal, TypedDict, cast
+ 
+ from django.conf import settings
+ from django.core import validators
+@@ -33,6 +33,13 @@ from zerver.models import Client, Message, RealmDomain, UserProfile
+ from zerver.models.users import get_user_including_cross_realm
+ 
+ 
++class SendMessageResponseData(TypedDict, total=False):
++    id: int
++    message_url: str
++    message_link: str
++    automatic_new_visibility_policy: int
++
++
+ class InvalidMirrorInputError(Exception):
+     pass
+ 
+@@ -220,7 +227,7 @@ def send_message_backend(
+         # automatically marked as read for yourself.
+         read_by_sender = client.default_read_by_sender()
+ 
+-    data: dict[str, int] = {}
++    data: SendMessageResponseData = {}
+     sent_message_result = check_send_message(
+         sender,
+         client,
+@@ -238,6 +245,8 @@ def send_message_backend(
+         read_by_sender=read_by_sender,
+     )
+     data["id"] = sent_message_result.message_id
++    data["message_url"] = sent_message_result.message_url
++    data["message_link"] = sent_message_result.message_link
+     if sent_message_result.automatic_new_visibility_policy:
+         data["automatic_new_visibility_policy"] = (
+             sent_message_result.automatic_new_visibility_policy

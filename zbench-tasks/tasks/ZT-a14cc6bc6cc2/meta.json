@@ -1,0 +1,39 @@
+{
+  "task_id": "ZT-a14cc6bc6cc2",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "This is a new one-time onboarding tooltip feature, not a behavioral bug fix. The change is almost entirely web-client UI plumbing around a tippy.js tooltip (new template, new exported show/dismiss functions, a new onboarding-step constant). Any hidden test would have to assert on newly-introduced identifiers (the new tooltip functions, template, or the 'intro_go_to_conversation_tooltip' step registration) rather than observable behavior through pre-existing interfaces, and tooltip visibility/DOM lifecycle is poorly checkable in a headless SWE-bench-style harness. The solution is also underdetermined from the issue alone (exact dismissal triggers, banner suppression, hover-tooltip interaction), making graders brittle.",
+  "summary": "compose: Add one-time intro tooltip for go-to-conversation button.",
+  "lang": "web",
+  "issue": 32166,
+  "fix_commit": "a14cc6bc6cc2315d2a3d5c913b43d3d7a3565843",
+  "base_commit": "1fe38a051392bfd76e475c518b806f6ac381d270",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/a14cc6bc6cc2315d2a3d5c913b43d3d7a3565843",
+    "issue_url": "https://github.com/zulip/zulip/issues/32166"
+  },
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 75,
+    "files": 6,
+    "hunks": 15,
+    "f2p_count": 0
+  },
+  "author": {
+    "name": "Alya Abbott",
+    "email": "alya@zulip.com",
+    "date": "2026-02-12T21:28:55+00:00"
+  },
+  "author_flagged": "ai_generated_trailer",
+  "contamination": {
+    "fix_public_at": "2026-03-06",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

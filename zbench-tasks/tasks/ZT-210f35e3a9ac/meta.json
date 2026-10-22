@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-210f35e3a9ac",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "slack_integration: Process Slack `blocks` and `attachments` syntax.",
+  "type": "other",
+  "lang": "py",
+  "issue": 37428,
+  "fix_commit": "210f35e3a9acab3d3a5178cfa201f874963b9d43",
+  "base_commit": "13b4274412b611331e3fd62bec474c7969c5c067",
+  "env_fingerprint": "06080446afe9",
+  "fail_to_pass": [
+    "zerver.webhooks.slack.tests.SlackWebhookTests.test_message_from_slack_integration_bot"
+  ],
+  "pass_to_pass": [],
+  "contamination": {
+    "fix_public_at": "2026-02-16",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-01-10T10:41:11Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/210f35e3a9acab3d3a5178cfa201f874963b9d43",
+    "issue_url": "https://github.com/zulip/zulip/issues/37428"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-210f35e3a9ac",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_message_from_slack_integration_bot"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 112.9
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  },
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 2,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2026-01-13T19:17:10+07:00"
+  },
+  "rebrief": {
+    "date": "2026-08-22",
+    "by": "project owner (curation)",
+    "reason": "corrected brief/gold divergence (false-negative fix); prior attempts superseded, Claude rows re-run"
+  }
+}

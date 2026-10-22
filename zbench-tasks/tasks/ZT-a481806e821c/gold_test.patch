@@ -1,0 +1,29 @@
+diff --git a/zerver/tests/fixtures/markdown_test_cases.json b/zerver/tests/fixtures/markdown_test_cases.json
+index 8b350929c1..6f74ce947f 100644
+--- a/zerver/tests/fixtures/markdown_test_cases.json
++++ b/zerver/tests/fixtures/markdown_test_cases.json
+@@ -1467,6 +1467,11 @@
+       "New logic with trailing dot: Go to https://podcasts.google.com?feed=abc.",
+       "<p>New logic with trailing dot: Go to <a href=\"https://podcasts.google.com?feed=abc\">https://podcasts.google.com?feed=abc</a>.</p>",
+       "Go to https://podcasts.google.com?feed=abc."
++    ],
++    [
++      "obsidian://open?vault=MyVault",
++      "<p>%s</p>",
++      "obsidian://open?vault=MyVault"
+     ]
+   ]
+ }
+diff --git a/zerver/tests/test_markdown.py b/zerver/tests/test_markdown.py
+index b29c5bd968..d007d2b6fc 100644
+--- a/zerver/tests/test_markdown.py
++++ b/zerver/tests/test_markdown.py
+@@ -640,6 +640,8 @@ class MarkdownFixtureTest(ZulipTestCase):
+         def replaced(payload: str, url: str, phrase: str = "") -> str:
+             if url[:4] == "http":
+                 href = url
++            elif "://" in url:
++                href = url
+             elif "@" in url:
+                 href = "mailto:" + url
+             else:

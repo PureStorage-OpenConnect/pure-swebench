@@ -1,0 +1,104 @@
+{
+  "task_id": "ZT-2208aaccf4df",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "custom_emails: Add campaign_name to send_custom_email.",
+  "type": "other",
+  "lang": "py",
+  "issue": 36442,
+  "fix_commit": "2208aaccf4df80da298f4b75babd5049656c94aa",
+  "base_commit": "a82146f591ad24c9ddd39e5910616418a750a1e8",
+  "env_fingerprint": "0000691151f3",
+  "fail_to_pass": [
+    "zerver.tests.test_email_notifications.TestCustomEmails.test_send_custom_email_argument",
+    "zerver.tests.test_email_notifications.TestCustomEmails.test_send_custom_email_context",
+    "zerver.tests.test_email_notifications.TestCustomEmails.test_send_custom_email_doubled_arguments",
+    "zerver.tests.test_email_notifications.TestCustomEmails.test_send_custom_email_dry_run",
+    "zerver.tests.test_email_notifications.TestCustomEmails.test_send_custom_email_headers",
+    "zerver.tests.test_email_notifications.TestCustomEmails.test_send_custom_email_no_argument",
+    "zerver.tests.test_email_notifications.TestCustomEmails.test_send_custom_email_remote_server",
+    "zerver.tests.test_management_commands.TestSendCustomEmail.test_custom_email_duplicate_prevention_by_user",
+    "zerver.tests.test_management_commands.TestSendCustomEmail.test_custom_email_with_dry_run",
+    "zerver.tests.test_management_commands.TestSendCustomEmail.test_custom_marketing_email_duplicate_prevention_by_email"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_send_email"
+  ],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 16,
+    "files": 2,
+    "hunks": 10,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "The `send_custom_email` management command gains a required CLI flag `--campaign-name`: a unique string identifier for the email campaign (e.g. 'q4_2025_update'), used instead of the template-content hash to track and prevent duplicate sends.",
+    "The `options` dict accepted by the existing `send_custom_email` and `send_custom_server_email` functions gains a required string key `campaign_name`, carrying the same campaign identifier (mirroring the CLI flag, as all other keys in that dict do).",
+    "RealmAuditLog entries of event type CUSTOM_EMAIL_SENT record the campaign identifier in `extra_data` under the key `campaign_name` (replacing the previous `email_id` key that held a truncated SHA-256 of the template text); `extra_data` continues to include `email_subject`. Duplicate-send exclusion of recipients is keyed on this `campaign_name` value rather than the template hash."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 34,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Sairam Bisoyi",
+    "email": "sairamb2007.21@gmail.com",
+    "date": "2026-04-05"
+  },
+  "contamination": {
+    "fix_public_at": "2026-04-05",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-11-02T19:08:55Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/2208aaccf4df80da298f4b75babd5049656c94aa",
+    "issue_url": "https://github.com/zulip/zulip/issues/36442"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-2208aaccf4df",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_custom_email_duplicate_prevention_by_user",
+        "test_custom_email_with_dry_run",
+        "test_custom_marketing_email_duplicate_prevention_by_email"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 154.6
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

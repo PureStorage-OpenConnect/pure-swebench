@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-a2235c50cbb2",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The integration-test additions are behavioral (imported Attachment rows, has_attachment/has_image/has_link flags, /user_uploads/ links in rendered content) and would be clean on their own, and a few names could be spec'd (e.g. a `processes` parameter on do_convert_directory). But the unit test binds hard to internal implementation decomposition no ticket would dictate: it imports and directly calls the private helpers `process_hosted_content_attachments` \u2014 with its exact invented 8-parameter keyword signature including a dependency-injected callback `do_download_and_export_upload_file` (an artifact of the run_parallel_queue parallelism design) \u2014 and `download_and_export_microsoft_teams_upload_file(attachment_records, output_dir, args)`, whose `args` is the internal parameter-object dataclass `ExportMessageAttachmentParameter`. It also imports the module-level constant `HOSTED_CONTENT_GRAPH_API_URL_REGEX` to register HTTP mocks and depends on the internal `AttachmentRecordData` dataclass field layout, plus the return dataclass shape (updated_content/upload_records). These are private-helper names, call signatures, and internal data-structure layouts invented by the reference fix; a solver given only a product brief could implement the same user-visible behavior with a different internal decomposition and fail the test. This coupling cannot be cured by a spec, so the task should be dropped.",
+  "summary": "ms_teams_importer: Convert hosted content message attachments.",
+  "lang": "py",
+  "issue": 37427,
+  "fix_commit": "a2235c50cbb2ddfab966b9a073c28b9cd5f9872b",
+  "base_commit": "fafcbee836de45956164572bfd88d67540c9f118",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/a2235c50cbb2ddfab966b9a073c28b9cd5f9872b",
+    "issue_url": "https://github.com/zulip/zulip/issues/37427"
+  }
+}

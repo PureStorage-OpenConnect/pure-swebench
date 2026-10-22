@@ -1,0 +1,175 @@
+{
+  "provenance": {
+    "source": "https://models.dev/api.json",
+    "pulled": "2026-08-08",
+    "note": "home-provider list cost per model, verbatim; qwen3-coder is a local self-hosted reference. cache_write here is the 5-min ephemeral rate (1.25x input); 1-hour cache write is 2x input (1.6x this value) -- applied by the harness's cache TTL.",
+    "gpt_5_6_note": "gpt-5.6 sol/terra/luna added 2026-08-15 from published OpenAI list rates (benchlm.ai, corroborated by finout/eesel/layer3labs); Azure Foundry matched OpenAI list for gpt-5.5. NOTE: OpenRouter lists terra at $1/$6 but flags it a 50%-off resale rate -- not our channel.",
+    "kimi_k3_note": "kimi-k3 revised 2026-08-21 to input 3.30 / output 16.50 (est); was 3/15. Serves the pi-foundry-kimi-k3 (FW-Kimi-K3) rows."
+  },
+  "models": {
+    "claude-opus-5": {
+      "home": "anthropic/claude-opus-5",
+      "cost": {
+        "input": 5,
+        "output": 25,
+        "cache_read": 0.5,
+        "cache_write": 6.25
+      }
+    },
+    "claude-opus-4-8": {
+      "home": "anthropic/claude-opus-4-8",
+      "cost": {
+        "input": 5,
+        "output": 25,
+        "cache_read": 0.5,
+        "cache_write": 6.25
+      }
+    },
+    "claude-opus-4-7": {
+      "home": "anthropic/claude-opus-4-7",
+      "cost": {
+        "input": 5,
+        "output": 25,
+        "cache_read": 0.5,
+        "cache_write": 6.25
+      }
+    },
+    "claude-opus-4-6": {
+      "home": "anthropic/claude-opus-4-6",
+      "cost": {
+        "input": 5,
+        "output": 25,
+        "cache_read": 0.5,
+        "cache_write": 6.25
+      }
+    },
+    "claude-sonnet-4-6": {
+      "home": "anthropic/claude-sonnet-4-6",
+      "cost": {
+        "input": 3,
+        "output": 15,
+        "cache_read": 0.3,
+        "cache_write": 3.75
+      }
+    },
+    "claude-fable-5": {
+      "home": "anthropic/claude-fable-5",
+      "cost": {
+        "input": 10,
+        "output": 50,
+        "cache_read": 1,
+        "cache_write": 12.5
+      }
+    },
+    "claude-haiku-4-5": {
+      "home": "anthropic/claude-haiku-4-5",
+      "cost": {
+        "input": 1,
+        "output": 5,
+        "cache_read": 0.1,
+        "cache_write": 1.25
+      }
+    },
+    "gpt-5.5": {
+      "home": "openai/gpt-5.5",
+      "cost": {
+        "input": 5,
+        "output": 30,
+        "cache_read": 0.5,
+        "tiers": [
+          {
+            "input": 10,
+            "output": 45,
+            "cache_read": 1,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 10,
+          "output": 45,
+          "cache_read": 1
+        }
+      }
+    },
+    "deepseek-v4-pro": {
+      "home": "fireworks-ai/accounts/fireworks/models/deepseek-v4-pro",
+      "cost": {
+        "input": 1.74,
+        "output": 3.48,
+        "cache_read": 0.145
+      }
+    },
+    "deepseek-v4-flash": {
+      "home": "fireworks-ai/accounts/fireworks/models/deepseek-v4-flash",
+      "cost": {
+        "input": 0.14,
+        "output": 0.28,
+        "cache_read": 0.028
+      }
+    },
+    "kimi-k3": {
+      "home": "moonshotai/kimi-k3",
+      "cost": {
+        "input": 3.3,
+        "output": 16.5,
+        "cache_read": 0.3
+      }
+    },
+    "kimi-k2.6": {
+      "home": "moonshotai/kimi-k2.6",
+      "cost": {
+        "input": 0.95,
+        "output": 4,
+        "cache_read": 0.16
+      }
+    },
+    "glm-5.2": {
+      "home": "zhipuai/glm-5.2",
+      "cost": {
+        "input": 1.4,
+        "output": 4.4,
+        "cache_read": 0.26,
+        "cache_write": 0
+      }
+    },
+    "qwen3-coder": {
+      "cost": {
+        "input": 0.13,
+        "output": 0.5,
+        "cache_read": 0,
+        "cache_write": 0
+      },
+      "home": "(local self-hosted; reference list price, not a home-provider quote)"
+    },
+    "gpt-5.6-sol": {
+      "home": "openai/gpt-5.6-sol",
+      "cost": {
+        "input": 5.0,
+        "output": 30.0,
+        "cache_read": 0.5,
+        "cache_write": 6.25
+      }
+    },
+    "gpt-5.6-terra": {
+      "home": "openai/gpt-5.6-terra",
+      "cost": {
+        "input": 2.0,
+        "output": 12.0,
+        "cache_read": 0.2,
+        "cache_write": 2.5
+      }
+    },
+    "gpt-5.6-luna": {
+      "home": "openai/gpt-5.6-luna",
+      "cost": {
+        "input": 0.2,
+        "output": 1.2,
+        "cache_read": 0.02,
+        "cache_write": 0.25
+      }
+    }
+  }
+}

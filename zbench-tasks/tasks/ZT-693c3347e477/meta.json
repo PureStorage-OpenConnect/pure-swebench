@@ -1,0 +1,75 @@
+{
+  "task_id": "ZT-693c3347e477",
+  "curation_status": "dropped",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "ai_generated_trailer",
+  "reason": "author provenance: ai_generated_trailer (retro-excluded)",
+  "summary": "typeahead: Improve channel sort priorities in sort_streams.",
+  "type": "other",
+  "lang": "web",
+  "issue": 36370,
+  "fix_commit": "693c3347e477fc47863b616e38102c3cf3f59d22",
+  "base_commit": "700dbd20427ed4a9803757701f39c3e713811c50",
+  "env_fingerprint": "7a28923ec357",
+  "fail_to_pass": [
+    "web/tests/typeahead_helper.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "contamination": {
+    "fix_public_at": "2026-07-01",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-10-23T19:00:06Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/693c3347e477fc47863b616e38102c3cf3f59d22",
+    "issue_url": "https://github.com/zulip/zulip/issues/36370"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-693c3347e477",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 96.9
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  },
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 16,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "author": {
+    "name": "Evy Kassirer",
+    "email": "evy@zulip.com",
+    "date": "2026-06-28T22:55:06-07:00"
+  },
+  "author_flagged": "ai_generated_trailer"
+}

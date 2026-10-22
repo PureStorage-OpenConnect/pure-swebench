@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-056c73f0febd",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The user_events test uses mock_esm('../src/settings_panel_menu', {update_imported_users_tab() {}}), which forces the fix to (a) place the event-driven refresh logic in the specific internal module settings_panel_menu, (b) name the internal helper exactly update_imported_users_tab, and (c) import/call it from user_events.update_person \u2014 zjsunit fails on unused mocks and crashes on missing mocked functions, so any solver placing equivalent logic elsewhere or under another name fails. No reasonable ticket dictates which internal module owns the tab-refresh hook or its function name. Additionally, the components test's stub jQuery only implements $elem.css('display'), asserting prop === 'display', which pins the implementation mechanism of the skip-hidden-tab behavior to a .css('display') === 'none' check (an equally valid hasClass/other-visibility implementation would fail). Some other bindings would be specifiable in a brief \u2014 the person object field is_imported_stub, and the people.ts accessors get_realm_active_imported_stub_user_ids / get_realm_active_human_user_ids_for_users_panel could plausibly be dictated as public API \u2014 but the internal-mock coupling cannot be cured by a brief, so the task is dropped.",
+  "summary": "settings: Add \"Imported users\" tab in \"Users\" panel.",
+  "lang": "web",
+  "issue": 26950,
+  "fix_commit": "056c73f0febd54401032065a5ef9ad65add07a6f",
+  "base_commit": "fc1fc42134feb11250f38348dbeeaddee90d35e0",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/056c73f0febd54401032065a5ef9ad65add07a6f",
+    "issue_url": "https://github.com/zulip/zulip/issues/26950"
+  }
+}

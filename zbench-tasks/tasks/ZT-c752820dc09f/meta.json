@@ -1,0 +1,76 @@
+{
+  "task_id": "ZT-c752820dc09f",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "markdown: Don't double-process mentions formatted with a link.",
+  "type": "other",
+  "lang": "py",
+  "issue": 38703,
+  "fix_commit": "c752820dc09f564cf51a4d177d39d52ecc5042ae",
+  "base_commit": "7b19981ce65679dea49686906489a3e417539d86",
+  "env_fingerprint": "0000691151f3",
+  "fail_to_pass": [
+    "zerver.tests.test_markdown.MarkdownLinkTest.test_mentions_formatted_with_link"
+  ],
+  "pass_to_pass": [],
+  "contamination": {
+    "fix_public_at": "2026-04-05",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-03-27T15:49:43Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/c752820dc09f564cf51a4d177d39d52ecc5042ae",
+    "issue_url": "https://github.com/zulip/zulip/issues/38703"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-c752820dc09f",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_mentions_formatted_with_link"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 82.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  },
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 8,
+    "files": 2,
+    "hunks": 5,
+    "f2p_count": 1
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2026-03-27T22:27:28+07:00"
+  }
+}

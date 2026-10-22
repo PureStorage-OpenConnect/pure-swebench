@@ -1,0 +1,45 @@
+diff --git a/web/tests/filter.test.cjs b/web/tests/filter.test.cjs
+index 6e2448f5b0..cbd57ba14f 100644
+--- a/web/tests/filter.test.cjs
++++ b/web/tests/filter.test.cjs
+@@ -1563,13 +1563,18 @@ test("describe", ({mock_template, override}) => {
+     assert.equal(Filter.search_description_as_html(narrow, false), string);
+ 
+     narrow = [{operator: "is", operand: "resolved"}];
+-    string = "topics marked as resolved";
++    string = "resolved topics";
+     assert.equal(Filter.search_description_as_html(narrow, false), string);
+ 
+     narrow = [{operator: "is", operand: "followed"}];
+     string = "followed topics";
+     assert.equal(Filter.search_description_as_html(narrow, false), string);
+ 
++    // operands with their own negative words, like resolved.
++    narrow = [{operator: "is", operand: "resolved", negated: true}];
++    string = "unresolved topics";
++    assert.equal(Filter.search_description_as_html(narrow, false), string);
++
+     narrow = [{operator: "is", operand: "something_we_do_not_support"}];
+     string = "invalid something_we_do_not_support operand for is operator";
+     assert.equal(Filter.search_description_as_html(narrow, false), string);
+diff --git a/web/tests/search_suggestion.test.cjs b/web/tests/search_suggestion.test.cjs
+index cb65405a8e..6c37a3b5f4 100644
+--- a/web/tests/search_suggestion.test.cjs
++++ b/web/tests/search_suggestion.test.cjs
+@@ -377,6 +377,7 @@ test("empty_query_suggestions", () => {
+         "is:alerted",
+         "is:unread",
+         "is:resolved",
++        "-is:resolved",
+         "sender:myself@zulip.com",
+         `channel:${devel_id}`,
+         `channel:${office_id}`,
+@@ -518,7 +519,7 @@ test("check_is_suggestions", ({override, mock_template}) => {
+     assert.equal(describe("-is:mentioned"), "Exclude @-mentions");
+     assert.equal(describe("-is:alerted"), "Exclude alerted messages");
+     assert.equal(describe("-is:unread"), "Exclude unread messages");
+-    assert.equal(describe("-is:resolved"), "Exclude topics marked as resolved");
++    assert.equal(describe("-is:resolved"), "Unresolved topics");
+     assert.equal(describe("-is:followed"), "Exclude followed topics");
+ 
+     // operand suggestions follow.

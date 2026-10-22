@@ -1,0 +1,554 @@
+diff --git a/web/src/admin.ts b/web/src/admin.ts
+index 4c2a09a325..de1f954267 100644
+--- a/web/src/admin.ts
++++ b/web/src/admin.ts
+@@ -109,6 +109,7 @@ function insert_tip_box(): void {
+         .not("#admin-user-list")
+         .not("#admin-active-users-list")
+         .not("#admin-deactivated-users-list")
++        .not("#admin-imported-users-list")
+         .prepend($(tip_box_html));
+ }
+ 
+@@ -293,6 +294,8 @@ export function build_page(): void {
+         active_user_list_dropdown_widget_name: settings_users.active_user_list_dropdown_widget_name,
+         deactivated_user_list_dropdown_widget_name:
+             settings_users.deactivated_user_list_dropdown_widget_name,
++        imported_user_list_dropdown_widget_name:
++            settings_users.imported_user_list_dropdown_widget_name,
+         gif_help_link,
+         ...get_realm_level_notification_settings(),
+         all_bots_list_dropdown_widget_name: settings_bots.all_bots_list_dropdown_widget_name,
+diff --git a/web/src/components.ts b/web/src/components.ts
+index a294379714..9294d484ed 100644
+--- a/web/src/components.ts
++++ b/web/src/components.ts
+@@ -81,6 +81,10 @@ export function toggle(opts: {
+         if ($elem.hasClass("disabled")) {
+             return false;
+         }
++        if ($elem.css("display") === "none") {
++            return false;
++        }
++
+         meta.$ind_tab.removeClass("selected");
+ 
+         $elem.addClass("selected");
+diff --git a/web/src/hashchange.ts b/web/src/hashchange.ts
+index a294c36ce5..4aad0e1ed5 100644
+--- a/web/src/hashchange.ts
++++ b/web/src/hashchange.ts
+@@ -74,7 +74,7 @@ function is_somebody_else_profile_open(): boolean {
+ 
+ function handle_invalid_section_url(section: "bots" | "users", settings_tab: string): string {
+     const valid_tab_values = {
+-        users: new Set(["active", "deactivated", "invitations"]),
++        users: new Set(["active", "imported", "deactivated", "invitations"]),
+         bots: new Set(["all-bots", "your-bots"]),
+     };
+ 
+diff --git a/web/src/people.ts b/web/src/people.ts
+index 6600c55654..82f2f0ff81 100644
+--- a/web/src/people.ts
++++ b/web/src/people.ts
+@@ -1159,6 +1159,27 @@ export function get_realm_active_human_user_ids(): number[] {
+     return human_ids;
+ }
+ 
++export function get_realm_active_human_user_ids_for_users_panel(): number[] {
++    const human_ids = [];
++    for (const user of active_user_dict.values()) {
++        if (!user.is_bot && !user.is_imported_stub) {
++            human_ids.push(user.user_id);
++        }
++    }
++
++    return human_ids;
++}
++
++export function get_realm_active_imported_stub_user_ids(): number[] {
++    const imported_stub_user_ids = [];
++    for (const user of active_user_dict.values()) {
++        if (!user.is_bot && user.is_imported_stub) {
++            imported_stub_user_ids.push(user.user_id);
++        }
++    }
++    return imported_stub_user_ids;
++}
++
+ export function get_non_active_human_ids(): number[] {
+     const human_ids = [];
+ 
+@@ -1707,6 +1728,7 @@ export function make_user(user_id: number, email: string, full_name: string): Us
+         is_guest: false,
+         is_bot: false,
+         is_moderator: false,
++        is_imported_stub: false,
+         // We explicitly don't set `avatar_url` for fake person objects so that fallback code
+         // will ask the server or compute a gravatar URL only once we need the avatar URL,
+         // it's important for performance that we not hash every user's email to get gravatar URLs.
+diff --git a/web/src/settings_panel_menu.ts b/web/src/settings_panel_menu.ts
+index b3b5464d6d..5bd876968e 100644
+--- a/web/src/settings_panel_menu.ts
++++ b/web/src/settings_panel_menu.ts
+@@ -7,12 +7,17 @@ import * as components from "./components.ts";
+ import type {Toggle} from "./components.ts";
+ import {$t, $t_html} from "./i18n.ts";
+ import * as keydown_util from "./keydown_util.ts";
++import * as people from "./people.ts";
+ import * as popovers from "./popovers.ts";
+ import * as scroll_util from "./scroll_util.ts";
+ import {redraw_all_bots_list, redraw_your_bots_list} from "./settings_bots.ts";
+ import {resize_textareas_in_section} from "./settings_components.ts";
+ import * as settings_sections from "./settings_sections.ts";
+-import {redraw_active_users_list, redraw_deactivated_users_list} from "./settings_users.ts";
++import {
++    redraw_active_users_list,
++    redraw_deactivated_users_list,
++    redraw_imported_users_list,
++} from "./settings_users.ts";
+ import * as util from "./util.ts";
+ 
+ export let normal_settings: SettingsPanelMenu;
+@@ -79,6 +84,7 @@ export class SettingsPanelMenu {
+             child_wants_focus: true,
+             values: [
+                 {label: $t({defaultMessage: "Users"}), key: "active"},
++                {label: $t({defaultMessage: "Imported"}), key: "imported"},
+                 {
+                     label: $t({defaultMessage: "Deactivated"}),
+                     key: "deactivated",
+@@ -89,10 +95,18 @@ export class SettingsPanelMenu {
+                 browser_history.update(`#organization/users/${key}`);
+                 this.set_user_settings_tab(key);
+                 $(".user-settings-section").hide();
+-                if (key === "active") {
+-                    redraw_active_users_list();
+-                } else if (key === "deactivated") {
+-                    redraw_deactivated_users_list();
++                update_imported_users_tab();
++
++                switch (key) {
++                    case "active":
++                        redraw_active_users_list();
++                        break;
++                    case "deactivated":
++                        redraw_deactivated_users_list();
++                        break;
++                    case "imported":
++                        redraw_imported_users_list();
++                        break;
+                 }
+                 $(`[data-user-settings-section="${CSS.escape(key)}"]`).show();
+             },
+@@ -147,6 +161,7 @@ export class SettingsPanelMenu {
+         if ($("#admin-user-list").find(".tab-switcher").length === 0) {
+             const toggler_html = util.the(this.org_user_settings_toggler.get());
+             $("#admin-user-list .tab-container").html(toggler_html);
++            update_imported_users_tab(true);
+ 
+             // We need to re-register these handlers since they are
+             // destroyed once the settings modal closes.
+@@ -342,3 +357,31 @@ export function set_key_handlers(toggler: Toggle): void {
+     normal_settings.set_key_handlers(toggler);
+     org_settings.set_key_handlers(toggler);
+ }
++
++export function update_imported_users_tab(
++    hide_tab_if_active = false,
++    update_users_list = false,
++): void {
++    if (update_users_list) {
++        // We update the imported users list immediately only when
++        // the stub user logs in for the first time and not when
++        // deactivating or reactivating the users.
++        redraw_imported_users_list(true);
++    }
++
++    const show_import_tab = people.get_realm_active_imported_stub_user_ids().length > 0;
++    if (show_import_tab) {
++        $(".org-user-settings-switcher [data-tab-key='imported']").show();
++        return;
++    }
++
++    const settings_tab = org_settings.get_settings_tab("users")!;
++    if (settings_tab === "imported" && !hide_tab_if_active) {
++        return;
++    }
++
++    $(".org-user-settings-switcher [data-tab-key='imported']").hide();
++    if (hide_tab_if_active) {
++        org_settings.org_user_settings_toggler.goto("active");
++    }
++}
+diff --git a/web/src/settings_users.ts b/web/src/settings_users.ts
+index a1ff3bd185..7faf8ad098 100644
+--- a/web/src/settings_users.ts
++++ b/web/src/settings_users.ts
+@@ -5,6 +5,7 @@ import type * as tippy from "tippy.js";
+ import render_settings_user_list_row from "../templates/settings/settings_user_list_row.hbs";
+ 
+ import {compute_active_status, post_presence_response_schema} from "./activity.ts";
++import * as blueslip from "./blueslip.ts";
+ import * as browser_history from "./browser_history.ts";
+ import * as channel from "./channel.ts";
+ import * as dialog_widget from "./dialog_widget.ts";
+@@ -29,12 +30,15 @@ import * as util from "./util.ts";
+ 
+ export const active_user_list_dropdown_widget_name = "active_user_list_select_user_role";
+ export const deactivated_user_list_dropdown_widget_name = "deactivated_user_list_select_user_role";
++export const imported_user_list_dropdown_widget_name = "imported_user_list_select_user_role";
+ 
+ let should_redraw_active_users_list = false;
+ let should_redraw_deactivated_users_list = false;
++let should_redraw_imported_users_list = false;
+ let presence_data_fetched = false;
+ let active_users_role_dropdown: dropdown_widget.DropdownWidget | undefined;
+ let deactivated_users_role_dropdown: dropdown_widget.DropdownWidget | undefined;
++let imported_users_role_dropdown: dropdown_widget.DropdownWidget | undefined;
+ 
+ type UserSettingsSection = {
+     dropdown_widget_name: string;
+@@ -71,6 +75,18 @@ const deactivated_section: UserSettingsSection = {
+     list_widget: undefined,
+ };
+ 
++const imported_section: UserSettingsSection = {
++    dropdown_widget_name: imported_user_list_dropdown_widget_name,
++    filters: {
++        text_search: "",
++        // 0 role_code signifies All roles for our filter.
++        role_code: 0,
++    },
++    handle_events: imported_handle_events,
++    create_table: imported_create_table,
++    list_widget: undefined,
++};
++
+ function sort_last_active(a: User, b: User): number {
+     return util.compare_a_b(
+         presence.last_active_date(a.user_id) ?? 0,
+@@ -126,6 +142,13 @@ export function update_view_on_deactivate(user_id: number, is_bot: boolean): voi
+         if (deactivated_users_role_dropdown) {
+             deactivated_users_role_dropdown.render(deactivated_section.filters.role_code);
+         }
++        const user = people.get_by_user_id(user_id);
++        if (user.is_imported_stub) {
++            should_redraw_imported_users_list = true;
++            if (imported_users_role_dropdown) {
++                imported_users_role_dropdown.render(imported_section.filters.role_code);
++            }
++        }
+     }
+ }
+ 
+@@ -161,6 +184,13 @@ export function update_view_on_reactivate(user_id: number, is_bot: boolean): voi
+         if (deactivated_users_role_dropdown) {
+             deactivated_users_role_dropdown.render(deactivated_section.filters.role_code);
+         }
++        const user = people.get_by_user_id(user_id);
++        if (user.is_imported_stub) {
++            should_redraw_imported_users_list = true;
++            if (imported_users_role_dropdown) {
++                imported_users_role_dropdown.render(imported_section.filters.role_code);
++            }
++        }
+     }
+ }
+ 
+@@ -200,10 +230,20 @@ function role_selected_handler(
+     event.stopPropagation();
+ 
+     const role_code = Number($(event.currentTarget).attr("data-unique-id"));
+-    if (widget.widget_name === active_section.dropdown_widget_name) {
+-        add_value_to_filters(active_section, "role_code", role_code);
+-    } else if (widget.widget_name === deactivated_section.dropdown_widget_name) {
+-        add_value_to_filters(deactivated_section, "role_code", role_code);
++    switch (widget.widget_name) {
++        case active_section.dropdown_widget_name:
++            add_value_to_filters(active_section, "role_code", role_code);
++            break;
++        case deactivated_section.dropdown_widget_name:
++            add_value_to_filters(deactivated_section, "role_code", role_code);
++            break;
++        case imported_section.dropdown_widget_name:
++            add_value_to_filters(imported_section, "role_code", role_code);
++            break;
++        default:
++            blueslip.error("No dropdown widget with the given name", {
++                widget_name: widget.widget_name,
++            });
+     }
+ 
+     dropdown.hide();
+@@ -247,7 +287,7 @@ function get_roles_with_counts(user_ids: number[]): dropdown_widget.Option[] {
+ }
+ 
+ function get_roles_count_for_active_users(): dropdown_widget.Option[] {
+-    const active_user_ids = people.get_realm_active_human_user_ids();
++    const active_user_ids = people.get_realm_active_human_user_ids_for_users_panel();
+     return get_roles_with_counts(active_user_ids);
+ }
+ 
+@@ -256,6 +296,11 @@ function get_roles_count_for_deactivated_users(): dropdown_widget.Option[] {
+     return get_roles_with_counts(deactivated_user_ids);
+ }
+ 
++function get_roles_count_for_imported_users(): dropdown_widget.Option[] {
++    const imported_user_ids = people.get_realm_active_imported_stub_user_ids();
++    return get_roles_with_counts(imported_user_ids);
++}
++
+ function create_role_filter_dropdown(
+     $events_container: JQuery,
+     section: UserSettingsSection,
+@@ -274,7 +319,11 @@ function create_role_filter_dropdown(
+     });
+ }
+ 
+-function initialize_user_sections(active_user_ids: number[], deactivated_user_ids: number[]): void {
++function initialize_user_sections(
++    active_user_ids: number[],
++    deactivated_user_ids: number[],
++    imported_user_ids?: number[],
++): void {
+     active_section.create_table(active_user_ids);
+     deactivated_section.create_table(deactivated_user_ids);
+     active_users_role_dropdown = create_role_filter_dropdown(
+@@ -289,23 +338,37 @@ function initialize_user_sections(active_user_ids: number[], deactivated_user_id
+     );
+     active_users_role_dropdown.setup();
+     deactivated_users_role_dropdown.setup();
++
++    if (imported_user_ids !== undefined) {
++        // Imported stub user IDs are not passed when re-rendering
++        // the table after fetching presence data, because we do
++        // not show last active date in the imported users table.
++        imported_section.create_table(imported_user_ids);
++        imported_users_role_dropdown = create_role_filter_dropdown(
++            $("#admin-imported-users-list"),
++            imported_section,
++            get_roles_count_for_imported_users,
++        );
++        imported_users_role_dropdown.setup();
++    }
+ }
+ 
+ function populate_users(): void {
+-    const active_user_ids = people.get_realm_active_human_user_ids();
++    const active_user_ids = people.get_realm_active_human_user_ids_for_users_panel();
+     const deactivated_user_ids = people.get_non_active_human_ids();
++    const imported_user_ids = people.get_realm_active_imported_stub_user_ids();
+ 
+     if (!presence_data_fetched) {
+         fetch_presence_user_setting({
+             render_table() {
+-                const active_user_ids = people.get_realm_active_human_user_ids();
++                const active_user_ids = people.get_realm_active_human_user_ids_for_users_panel();
+                 const deactivated_user_ids = people.get_non_active_human_ids();
+                 presence_data_fetched = true;
+                 initialize_user_sections(active_user_ids, deactivated_user_ids);
+             },
+         });
+     }
+-    initialize_user_sections(active_user_ids, deactivated_user_ids);
++    initialize_user_sections(active_user_ids, deactivated_user_ids, imported_user_ids);
+ }
+ 
+ function reset_scrollbar($sel: JQuery): () => void {
+@@ -462,6 +525,42 @@ function deactivated_create_table(deactivated_users: number[]): void {
+     $("#admin_deactivated_users_table").show();
+ }
+ 
++function imported_create_table(imported_users: number[]): void {
++    const $imported_users_table = $("#admin_imported_users_table");
++    imported_section.list_widget = ListWidget.create($imported_users_table, imported_users, {
++        name: "imported_users_table_list",
++        get_item: people.get_by_user_id,
++        modifier_html(item) {
++            return render_settings_user_list_row({
++                ...human_info(item),
++                display_last_active_column: false,
++            });
++        },
++        filter: {
++            predicate(person) {
++                return people.predicate_for_user_settings_filters(person, imported_section.filters);
++            },
++            is_active() {
++                const $search_input = $("#admin-imported-users-list .search");
++                return are_filters_active(imported_section.filters, $search_input);
++            },
++            onupdate: reset_scrollbar($imported_users_table),
++        },
++        $parent_container: $("#admin-imported-users-list").expectOne(),
++        init_sort: "full_name_alphabetic",
++        sort_fields: {
++            email: user_sort.sort_email,
++            role: user_sort.sort_role,
++            id: user_sort.sort_user_id,
++            ...ListWidget.generic_sort_functions("alphabetic", ["full_name"]),
++        },
++        $simplebar_container: $("#admin-imported-users-list .progressive-table-wrapper"),
++    });
++    loading.destroy_indicator($("#admin_page_imported_users_loading_indicator"));
++    set_text_search_value($imported_users_table, imported_section.filters.text_search);
++    $("#admin_imported_users_table").show();
++}
++
+ export function update_user_data(
+     user_id: number,
+     new_data: {full_name?: string; role?: number},
+@@ -498,11 +597,24 @@ export function redraw_active_users_list(): void {
+     if (!should_redraw_active_users_list || !active_section.list_widget) {
+         return;
+     }
+-    const active_user_ids = people.get_realm_active_human_user_ids();
++    const active_user_ids = people.get_realm_active_human_user_ids_for_users_panel();
+     active_section.list_widget.replace_list_data(active_user_ids);
+     should_redraw_active_users_list = false;
+ }
+ 
++export function redraw_imported_users_list(force_update = false): void {
++    if ((!force_update && !should_redraw_imported_users_list) || !imported_section.list_widget) {
++        return;
++    }
++
++    const imported_user_ids = people.get_realm_active_imported_stub_user_ids();
++    imported_section.list_widget.replace_list_data(imported_user_ids);
++    should_redraw_imported_users_list = false;
++    // This is needed to make sure that the imported user is shown
++    // in "Users" tab.
++    should_redraw_active_users_list = true;
++}
++
+ function start_data_load(): void {
+     loading.make_indicator($("#admin_page_users_loading_indicator"), {
+         text: $t({defaultMessage: "Loading…"}),
+@@ -510,8 +622,12 @@ function start_data_load(): void {
+     loading.make_indicator($("#admin_page_deactivated_users_loading_indicator"), {
+         text: $t({defaultMessage: "Loading…"}),
+     });
++    loading.make_indicator($("#admin_page_imported_users_loading_indicator"), {
++        text: $t({defaultMessage: "Loading…"}),
++    });
+     $("#admin_deactivated_users_table").hide();
+     $("#admin_users_table").hide();
++    $("#admin_imported_users_table").hide();
+ 
+     populate_users();
+ }
+@@ -628,10 +744,21 @@ function deactivated_handle_events(): void {
+     handle_clear_button_for_table_search_input($tbody);
+ }
+ 
++function imported_handle_events(): void {
++    const $tbody = $("#admin_imported_users_table").expectOne();
++
++    handle_filter_change($tbody, imported_section);
++    handle_deactivation($tbody);
++    handle_reactivation($tbody);
++    handle_edit_form($tbody);
++    handle_clear_button_for_table_search_input($tbody);
++}
++
+ export function set_up_humans(): void {
+     start_data_load();
+     active_section.handle_events();
+     deactivated_section.handle_events();
++    imported_section.handle_events();
+     setting_invites.set_up();
+ }
+ 
+diff --git a/web/src/state_data.ts b/web/src/state_data.ts
+index fd0b88d399..4f5efd4c5b 100644
+--- a/web/src/state_data.ts
++++ b/web/src/state_data.ts
+@@ -222,6 +222,7 @@ export const user_schema = z.intersection(
+         avatar_url: z.nullish(z.string()),
+         avatar_version: z.number(),
+         profile_data: z.optional(z.record(z.coerce.number<string>(), profile_datum_schema)),
++        is_imported_stub: z.boolean(),
+         // used for fake user objects.
+         is_missing_server_data: z.optional(z.boolean()),
+         // used for inaccessible user objects.
+diff --git a/web/src/user_events.ts b/web/src/user_events.ts
+index ecaca5c033..a8b633577b 100644
+--- a/web/src/user_events.ts
++++ b/web/src/user_events.ts
+@@ -23,6 +23,7 @@ import * as settings_config from "./settings_config.ts";
+ import * as settings_exports from "./settings_exports.ts";
+ import * as settings_linkifiers from "./settings_linkifiers.ts";
+ import * as settings_org from "./settings_org.ts";
++import * as settings_panel_menu from "./settings_panel_menu.ts";
+ import * as settings_profile_fields from "./settings_profile_fields.ts";
+ import * as settings_realm_user_settings_defaults from "./settings_realm_user_settings_defaults.ts";
+ import * as settings_streams from "./settings_streams.ts";
+@@ -285,5 +286,13 @@ export const update_person = function update(event: UserUpdate): void {
+             // A human user deactivated, update 'Export permissions' table.
+             settings_exports.remove_export_consent_data_and_redraw(event.user_id);
+         }
++        if (user.is_imported_stub) {
++            settings_panel_menu.update_imported_users_tab();
++        }
++    }
++
++    if ("is_imported_stub" in event) {
++        user.is_imported_stub = false;
++        settings_panel_menu.update_imported_users_tab(true, true);
+     }
+ };
+diff --git a/web/templates/settings/imported_user_list_admin.hbs b/web/templates/settings/imported_user_list_admin.hbs
+new file mode 100644
+index 0000000000..1fc8e97726
+--- /dev/null
++++ b/web/templates/settings/imported_user_list_admin.hbs
+@@ -0,0 +1,35 @@
++<div id="admin-imported-users-list" class="user-settings-section user-or-bot-settings-section" data-user-settings-section="imported">
++
++    <div class="settings_panel_list_header">
++        <h3>{{t "Imported users"}}</h3>
++        <div class="alert-notification" id="user-field-status"></div>
++        <div class="user_filters">
++            {{> ../dropdown_widget widget_name=imported_user_list_dropdown_widget_name}}
++            {{> filter_text_input placeholder=(t 'Filter') aria_label=(t 'Filter users')}}
++        </div>
++    </div>
++
++    <div class="progressive-table-wrapper" data-simplebar data-simplebar-tab-index="-1">
++        <table class="table table-striped wrapped-table">
++            <thead class="table-sticky-headers">
++                <tr>
++                    <th class="active" data-sort="alphabetic" data-sort-prop="full_name">{{t "Name" }}
++                        <i class="table-sortable-arrow zulip-icon zulip-icon-sort-arrow-down"></i>
++                    </th>
++                    <th class="settings-email-column" data-sort="email">{{t "Email" }}
++                        <i class="table-sortable-arrow zulip-icon zulip-icon-sort-arrow-down"></i>
++                    </th>
++                    <th class="user_role" data-sort="role">{{t "Role" }}
++                        <i class="table-sortable-arrow zulip-icon zulip-icon-sort-arrow-down"></i>
++                    </th>
++                    {{#if is_admin}}
++                    <th class="actions">{{t "Actions" }}</th>
++                    {{/if}}
++                </tr>
++            </thead>
++            <tbody id="admin_imported_users_table"
++              data-empty="{{t 'No users match your filters.' }}"></tbody>
++        </table>
++    </div>
++    <div id="admin_page_imported_users_loading_indicator"></div>
++</div>
+diff --git a/web/templates/settings/user_list_admin.hbs b/web/templates/settings/user_list_admin.hbs
+index c3b534e58d..028a885cee 100644
+--- a/web/templates/settings/user_list_admin.hbs
++++ b/web/templates/settings/user_list_admin.hbs
+@@ -4,6 +4,8 @@
+ 
+     {{>active_user_list_admin .}}
+ 
++    {{>imported_user_list_admin .}}
++
+     {{>deactivated_users_admin .}}
+ 
+     {{>invites_list_admin .}}

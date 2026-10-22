@@ -1,0 +1,95 @@
+{
+  "task_id": "ZT-ac182038d7c7",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "message_report: Improve message report template.",
+  "type": "other",
+  "lang": "py",
+  "issue": 36492,
+  "fix_commit": "ac182038d7c703849c6851cff1d222ae5e2e9bf8",
+  "base_commit": "ef1fae826c06ebcbb9968e6ceac906dd51c849aa",
+  "env_fingerprint": "355b0a89e2aa",
+  "fail_to_pass": [
+    "zerver.tests.test_message_report.ReportMessageTest.test_channel_message_report",
+    "zerver.tests.test_message_report.ReportMessageTest.test_dm_report",
+    "zerver.tests.test_message_report.ReportMessageTest.test_gdm_report",
+    "zerver.tests.test_message_report.ReportMessageTest.test_personal_message_report_using_direct_message_group"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 37,
+    "files": 1,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The report header for a reported channel message must read '{reporting_user} reported a message sent by {reported_user}.' using silent mention syntax for both users, with no message link in the header.",
+    "The report header for a reported 1:1 direct message must read '{reporting_user} reported a direct message sent by {reported_user}.' ('direct message' replaces the old 'DM' wording).",
+    "The report header for a reported group direct message must read '{reporting_user} reported a direct message sent by {reported_user} to {recipients}.' where {recipients} lists silent mentions of all group members sorted alphabetically, comma-separated, with ', and ' before the final member.",
+    "Immediately after the header, the report reason and notes must appear as a single Markdown quote block whose content is '**{report_type}**. {description}' (bold report type, a period and space, then the reporter's description), replacing the old '- Reason:'/'- Notes:' bullet format.",
+    "After the quote block (separated by a blank line), the reported message content must appear inside a spoiler fence built with an unused fence for the quoted content.",
+    "For a reported channel message, the spoiler header must be '**Original message at {channel_message_link}**' where {channel_message_link} is the existing channel/topic/message link syntax (get_message_link_syntax) for the reported message.",
+    "For a reported direct message (1:1 or group), the spoiler header must be '**[Original message]({url})**' where {url} is the near-message narrow URL to that direct-message conversation produced by the existing pm_message_url helper (i.e. the standard DM permalink for the reported message id and its recipients)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 889,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2025-11-11"
+  },
+  "contamination": {
+    "fix_public_at": "2025-11-11",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-11-05T19:18:17Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ac182038d7c703849c6851cff1d222ae5e2e9bf8",
+    "issue_url": "https://github.com/zulip/zulip/issues/36492"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-ac182038d7c7",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_channel_message_report",
+        "test_dm_report",
+        "test_gdm_report",
+        "test_personal_message_report_using_direct_message_group"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 113.6
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

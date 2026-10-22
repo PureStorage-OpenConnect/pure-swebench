@@ -1,0 +1,77 @@
+diff --git a/web/src/settings_account.ts b/web/src/settings_account.ts
+index 362ff9596a..87596b7403 100644
+--- a/web/src/settings_account.ts
++++ b/web/src/settings_account.ts
+@@ -43,10 +43,12 @@ let password_quality:
+ let user_avatar_widget_created = false;
+ 
+ export function update_email(new_email: string): void {
+-    const $email_input = $("#change_email_button");
++    const $email_input = $("#email_field_container");
+ 
+     if ($email_input) {
+         $email_input.text(new_email);
++        $("#email-change-status").hide();
++        $("#dev-account-settings-status").hide();
+     }
+ }
+ 
+@@ -82,12 +84,12 @@ export function update_email_change_display(): void {
+     }
+ 
+     if (!settings_data.user_can_change_email()) {
+-        $("#change_email_button").prop("disabled", true);
+-        $("#change_email_button_container").addClass("disabled_setting_tooltip");
++        $("#change_email_button").addClass("hide");
++        $("#email_field_container").addClass("disabled_setting_tooltip");
+         $("label[for='change_email_button']").addClass("cursor-text");
+     } else {
+-        $("#change_email_button").prop("disabled", false);
+-        $("#change_email_button_container").removeClass("disabled_setting_tooltip");
++        $("#change_email_button").removeClass("hide");
++        $("#email_field_container").removeClass("disabled_setting_tooltip");
+         $("label[for='change_email_button']").removeClass("cursor-text");
+     }
+ }
+@@ -595,7 +597,7 @@ export function set_up(): void {
+                     $t_html(
+                         {
+                             defaultMessage:
+-                                "Check your email ({email}) to confirm the new address.",
++                                "Check your email (<b>{email}</b>) to confirm the new address.",
+                         },
+                         {email: data.email},
+                     ),
+diff --git a/web/src/tippyjs.ts b/web/src/tippyjs.ts
+index 80f1613a85..afbc3aea4d 100644
+--- a/web/src/tippyjs.ts
++++ b/web/src/tippyjs.ts
+@@ -422,7 +422,7 @@ export function initialize(): void {
+     });
+ 
+     tippy.delegate("body", {
+-        target: "#change_email_button_container.disabled_setting_tooltip",
++        target: "#email_field_container.disabled_setting_tooltip",
+         content: $t({defaultMessage: "Email address changes are disabled in this organization."}),
+         appendTo: () => document.body,
+         onHidden(instance) {
+diff --git a/web/templates/settings/account_settings.hbs b/web/templates/settings/account_settings.hbs
+index dbf0ec1ff3..7ea32ff583 100644
+--- a/web/templates/settings/account_settings.hbs
++++ b/web/templates/settings/account_settings.hbs
+@@ -8,9 +8,12 @@
+                 {{#if user_has_email_set}}
+                 <div class="input-group">
+                     <label class="settings-field-label {{#unless user_can_change_email}}cursor-text{{/unless}}" for="change_email_button">{{t "Email" }}</label>
+-                    <div id="change_email_button_container" class="{{#unless user_can_change_email}}disabled_setting_tooltip{{/unless}}">
+-                        <button id="change_email_button" type="button" class="button rounded tippy-zulip-delayed-tooltip" data-tippy-content="{{t 'Change your email' }}" {{#unless user_can_change_email}}disabled="disabled"{{/unless}}>
+-                            {{current_user.delivery_email}}
++                    <div>
++                        <div id="email_field_container" class="inline-block {{#unless user_can_change_email}}disabled_setting_tooltip{{/unless}}">
++                            <input type="email" value="{{current_user.delivery_email}}" class="settings_text_input" disabled="disabled" />
++                        </div>
++                        <button id="change_email_button" type="button" class="button rounded tippy-zulip-delayed-tooltip {{#unless user_can_change_email}}hide{{/unless}}" data-tippy-content="{{t 'Change your email' }}" aria-label="{{t 'Change your email' }}">
++                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                         </button>
+                     </div>
+                     <div id="email-change-status"></div>

@@ -1,0 +1,66 @@
+{
+  "task_id": "ZT-89b5a9a9092c",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "message-move: Improve time limit error for \"change_all\" moves.",
+  "type": "other",
+  "lang": "py",
+  "issue": 38930,
+  "fix_commit": "89b5a9a9092c7d60c7c3ed1bc6c789c536862898",
+  "base_commit": "3f0ee3d70c5d3279c90ed6e78019265f61734ec2",
+  "env_fingerprint": "12b42e4ba10b",
+  "fail_to_pass": [
+    "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_notify_new_topic"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_message_edit"
+  ],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 5,
+    "files": 1,
+    "hunks": 3,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "For non-moderator users in realms with a message-move time limit, a move request with propagate_mode 'change_all' must not be rejected by the per-message edit/move deadline check; only the topic-wide recency limit applies, so the request may reference any message in the topic (including one older than the deadline).",
+    "When a 'change_all' move is partially blocked by the time limit, the request fails with the existing user-facing error 'You only have permission to move the N/M most recent messages in this topic.', where M is the total number of messages in the topic and N is how many fall within the time limit \u2014 these counts must be reported even when the message id named in the request is itself outside the limit, and the topic's messages must be left unmoved.",
+    "When a 'change_all' move is fully blocked because zero messages in the topic fall within the time limit, the request fails with the user-facing error 'The time limit for moving this topic has passed.' (replacing the previous wording 'The time limit for editing this message's topic has passed.')."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 286,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Sahil Batra",
+    "email": "sahil@zulip.com",
+    "date": "2026-05-25"
+  },
+  "contamination": {
+    "fix_public_at": "2026-05-25",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-04-13T18:49:39Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/89b5a9a9092c7d60c7c3ed1bc6c789c536862898",
+    "issue_url": "https://github.com/zulip/zulip/issues/38930"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-89b5a9a9092c",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 22.2
+    }
+  }
+}

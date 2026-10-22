@@ -1,0 +1,13 @@
+diff --git a/zerver/lib/markdown/__init__.py b/zerver/lib/markdown/__init__.py
+index c84b2d2a08..afd0c9f89a 100644
+--- a/zerver/lib/markdown/__init__.py
++++ b/zerver/lib/markdown/__init__.py
+@@ -97,7 +97,7 @@ html_safelisted_schemes = (
+     "wtai",
+     "xmpp",
+ )
+-allowed_schemes = ("http", "https", "ftp", "file", *html_safelisted_schemes)
++allowed_schemes = ("http", "https", "ftp", "file", "mid", *html_safelisted_schemes)
+ 
+ 
+ class LinkInfo(TypedDict):

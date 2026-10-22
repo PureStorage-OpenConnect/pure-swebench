@@ -1,0 +1,89 @@
+{
+  "task_id": "ZT-cb01bdf0c442",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "topics: Follow topics that are merged into even after merge.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 35226,
+  "fix_commit": "cb01bdf0c44226ae4b30656861826ebcd0a9f65c",
+  "base_commit": "8330e7c283b1adf36bcf2e86370c518eced779e2",
+  "env_fingerprint": "5152f3f14075",
+  "fail_to_pass": [
+    "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_merge_user_topic_states_on_move_messages"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_message_edit"
+  ],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 3,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 1077,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Rohan Gudimetla",
+    "email": "rohan.gudimetla07@gmail.com",
+    "date": "2025-07-28"
+  },
+  "contamination": {
+    "fix_public_at": "2025-07-28",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-07-11T06:09:23Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/cb01bdf0c44226ae4b30656861826ebcd0a9f65c",
+    "issue_url": "https://github.com/zulip/zulip/issues/35226"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-cb01bdf0c442",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_merge_user_topic_states_on_move_messages"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 133.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

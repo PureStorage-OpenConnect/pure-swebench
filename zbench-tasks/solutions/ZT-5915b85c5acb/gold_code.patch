@@ -1,0 +1,275 @@
+diff --git a/zerver/lib/events.py b/zerver/lib/events.py
+index 0badefc75d..ef06683c61 100644
+--- a/zerver/lib/events.py
++++ b/zerver/lib/events.py
+@@ -225,12 +225,12 @@ def fetch_initial_state_data(
+             get_recursive_membership_groups(settings_user).values_list("id", flat=True)
+         )
+ 
+-    if want("realm_user_groups") or want("realm"):
+-        realm_setting_group_ids = {
+-            getattr(realm, setting_name + "_id")
+-            for setting_name in Realm.REALM_PERMISSION_GROUP_SETTINGS
+-        }
+-
++    if (
++        want("realm_user_groups")
++        or want("realm")
++        or (want("stream") and include_streams)
++        or want("subscription")
++    ):
+         # Optimizing opportunity: This fetches more data than
+         # we strictly need when "realm_user_groups" is not in
+         # fetch_event_types; we need the membership of the
+@@ -240,7 +240,7 @@ def fetch_initial_state_data(
+         realm_groups_data = user_groups_in_realm_serialized(
+             realm,
+             include_deactivated_groups=include_deactivated_groups,
+-            realm_setting_group_ids=realm_setting_group_ids,
++            fetch_anonymous_group_membership=True,
+         )
+ 
+     if want("alert_words"):
+@@ -373,7 +373,7 @@ def fetch_initial_state_data(
+         for setting_name in Realm.REALM_PERMISSION_GROUP_SETTINGS:
+             setting_group_id = getattr(realm, setting_name + "_id")
+             state["realm_" + setting_name] = get_group_setting_value_for_register_api(
+-                setting_group_id, realm_groups_data.realm_setting_anonymous_group_membership
++                setting_group_id, realm_groups_data.anonymous_group_membership
+             )
+ 
+         state["realm_create_public_stream_policy"] = (
+@@ -741,9 +741,10 @@ def fetch_initial_state_data(
+                 user_profile,
+                 include_subscribers=include_subscribers,
+                 include_archived_channels=archived_channels,
++                anonymous_group_membership=realm_groups_data.anonymous_group_membership,
+             )
+         else:
+-            sub_info = get_web_public_subs(realm)
++            sub_info = get_web_public_subs(realm, realm_groups_data.anonymous_group_membership)
+ 
+         state["subscriptions"] = sub_info.subscriptions
+         state["unsubscribed"] = sub_info.unsubscribed
+@@ -777,13 +778,16 @@ def fetch_initial_state_data(
+                 user_profile,
+                 include_web_public=True,
+                 include_all=user_profile.is_realm_admin,
++                anonymous_group_membership=realm_groups_data.anonymous_group_membership,
+             )
+         else:
+             # TODO: This line isn't used by the web app because it
+             # gets these data via the `subscriptions` key; it will
+             # be used when the mobile apps support logged-out
+             # access.
+-            state["streams"] = get_web_public_streams(realm)  # nocoverage
++            state["streams"] = get_web_public_streams(
++                realm, realm_groups_data.anonymous_group_membership
++            )  # nocoverage
+     if want("default_streams"):
+         if settings_user.is_guest:
+             # Guest users and logged-out users don't have access to
+diff --git a/zerver/lib/streams.py b/zerver/lib/streams.py
+index bded2edadd..8d5b6a2bf7 100644
+--- a/zerver/lib/streams.py
++++ b/zerver/lib/streams.py
+@@ -1511,10 +1511,11 @@ def stream_to_dict(
+     )
+ 
+ 
+-def get_web_public_streams(realm: Realm) -> list[APIStreamDict]:  # nocoverage
++def get_web_public_streams(
++    realm: Realm, anonymous_group_membership: dict[int, UserGroupMembersDict]
++) -> list[APIStreamDict]:  # nocoverage
+     query = get_web_public_streams_queryset(realm)
+     streams = query.only(*Stream.API_FIELDS)
+-    anonymous_group_membership = get_anonymous_group_membership_dict_for_streams(list(streams))
+     stream_dicts = [stream_to_dict(stream, None, anonymous_group_membership) for stream in streams]
+     return stream_dicts
+ 
+@@ -1666,6 +1667,7 @@ def do_get_streams(
+     include_default: bool = False,
+     include_owner_subscribed: bool = False,
+     include_can_access_content: bool = False,
++    anonymous_group_membership: dict[int, UserGroupMembersDict] | None = None,
+ ) -> list[APIStreamDict]:
+     # This function is only used by API clients now.
+ 
+@@ -1683,7 +1685,8 @@ def do_get_streams(
+     stream_ids = {stream.id for stream in streams}
+     recent_traffic = get_streams_traffic(stream_ids, user_profile.realm)
+ 
+-    anonymous_group_membership = get_anonymous_group_membership_dict_for_streams(streams)
++    if anonymous_group_membership is None:
++        anonymous_group_membership = get_anonymous_group_membership_dict_for_streams(streams)
+ 
+     stream_dicts = sorted(
+         (stream_to_dict(stream, recent_traffic, anonymous_group_membership) for stream in streams),
+diff --git a/zerver/lib/subscription_info.py b/zerver/lib/subscription_info.py
+index 044f5c54fe..5cfda1f7b7 100644
+--- a/zerver/lib/subscription_info.py
++++ b/zerver/lib/subscription_info.py
+@@ -19,7 +19,6 @@ from zerver.lib.stream_subscription import (
+ )
+ from zerver.lib.stream_traffic import get_average_weekly_stream_traffic, get_streams_traffic
+ from zerver.lib.streams import (
+-    get_anonymous_group_membership_dict_for_streams,
+     get_stream_post_policy_value_based_on_group_setting,
+     get_users_dict_with_metadata_access_to_streams_via_permission_groups,
+     get_web_public_streams_queryset,
+@@ -46,7 +45,9 @@ from zerver.models import Realm, Stream, Subscription, UserGroup, UserProfile
+ from zerver.models.streams import get_all_streams
+ 
+ 
+-def get_web_public_subs(realm: Realm) -> SubscriptionInfo:
++def get_web_public_subs(
++    realm: Realm, anonymous_group_membership: dict[int, UserGroupMembersDict]
++) -> SubscriptionInfo:
+     color_idx = 0
+ 
+     def get_next_color() -> str:
+@@ -57,7 +58,6 @@ def get_web_public_subs(realm: Realm) -> SubscriptionInfo:
+ 
+     subscribed = []
+     streams = get_web_public_streams_queryset(realm)
+-    anonymous_group_membership = get_anonymous_group_membership_dict_for_streams(list(streams))
+ 
+     for stream in streams:
+         # Add Stream fields.
+@@ -649,6 +649,7 @@ def gather_subscriptions_helper(
+     user_profile: UserProfile,
+     include_subscribers: bool = True,
+     include_archived_channels: bool = False,
++    anonymous_group_membership: dict[int, UserGroupMembersDict] | None = None,
+ ) -> SubscriptionInfo:
+     realm = user_profile.realm
+     all_streams = get_all_streams(
+@@ -674,14 +675,15 @@ def gather_subscriptions_helper(
+         )
+         all_streams_map[stream.id]["stream_post_policy"] = stream_post_policy
+ 
+-    setting_group_ids = set()
+-    for stream_dict in all_stream_dicts:
+-        for setting_name in Stream.stream_permission_group_settings:
+-            setting_group_ids.add(stream_dict[setting_name + "_id"])
+-    anonymous_group_ids = UserGroup.objects.filter(
+-        id__in=setting_group_ids, named_user_group=None
+-    ).values_list("id", flat=True)
+-    anonymous_group_membership = get_members_and_subgroups_of_groups(set(anonymous_group_ids))
++    if anonymous_group_membership is None:
++        setting_group_ids = set()
++        for stream_dict in all_stream_dicts:
++            for setting_name in Stream.stream_permission_group_settings:
++                setting_group_ids.add(stream_dict[setting_name + "_id"])
++        anonymous_group_ids = UserGroup.objects.filter(
++            id__in=setting_group_ids, named_user_group=None
++        ).values_list("id", flat=True)
++        anonymous_group_membership = get_members_and_subgroups_of_groups(set(anonymous_group_ids))
+ 
+     sub_dicts_query: Iterable[RawSubscriptionDict] = (
+         get_stream_subscriptions_for_user(user_profile)
+diff --git a/zerver/lib/user_groups.py b/zerver/lib/user_groups.py
+index 2c2eeca0fe..da027320a2 100644
+--- a/zerver/lib/user_groups.py
++++ b/zerver/lib/user_groups.py
+@@ -561,15 +561,15 @@ def get_setting_value_for_user_group_object(
+ 
+ def get_group_setting_value_for_register_api(
+     setting_group_id: int,
+-    realm_setting_anonymous_group_membership: dict[int, UserGroupMembersDict],
++    anonymous_group_membership: dict[int, UserGroupMembersDict],
+ ) -> int | UserGroupMembersDict:
+-    if setting_group_id not in realm_setting_anonymous_group_membership:
+-        # realm_setting_anonymous_group_membership is defined to contain
+-        # the membership of all non-named UserGroup used for realm settings.
++    if setting_group_id not in anonymous_group_membership:
++        # anonymous_group_membership is defined to contain the
++        # membership of all non-named UserGroup used for realm settings.
+         # Thus, any group ID not present in it must be a named group.
+         return setting_group_id
+ 
+-    return realm_setting_anonymous_group_membership[setting_group_id]
++    return anonymous_group_membership[setting_group_id]
+ 
+ 
+ def get_members_and_subgroups_of_groups(group_ids: set[int]) -> dict[int, UserGroupMembersDict]:
+@@ -618,35 +618,46 @@ def get_members_and_subgroups_of_groups(group_ids: set[int]) -> dict[int, UserGr
+ class RealmUserGroupsData:
+     api_groups: list[UserGroupDict]
+     system_groups_name_dict: dict[int, str]
+-    realm_setting_anonymous_group_membership: dict[int, UserGroupMembersDict]
++    anonymous_group_membership: dict[int, UserGroupMembersDict]
+ 
+ 
+ def user_groups_in_realm_serialized(
+     realm: Realm,
+     *,
+     include_deactivated_groups: bool,
+-    realm_setting_group_ids: set[int] | None = None,
++    fetch_anonymous_group_membership: bool = False,
+ ) -> RealmUserGroupsData:
+     """This function is used in do_events_register code path so this code
+     should be performant.  We need to do 2 database queries because
+     Django's ORM doesn't properly support the left join between
+     UserGroup and UserGroupMembership that we need.
+     """
+-    realm_groups = NamedUserGroup.objects.filter(realm=realm)
+-
+-    if not include_deactivated_groups:
+-        realm_groups = realm_groups.filter(deactivated=False)
++    anonymous_group_ids: set[int] = set()
++    if not fetch_anonymous_group_membership:
++        realm_groups = NamedUserGroup.objects.filter(realm=realm)
++        if not include_deactivated_groups:
++            realm_groups = realm_groups.filter(deactivated=False)
++    else:
++        groups = UserGroup.objects.filter(realm=realm).select_related("named_user_group")
++        realm_groups = []
++        for group in groups:
++            if hasattr(group, "named_user_group"):
++                named_group = group.named_user_group
++                if not include_deactivated_groups and named_group.deactivated:
++                    continue
++                realm_groups.append(named_group)
++            else:
++                anonymous_group_ids.add(group.id)
+ 
+     realm_group_ids = {group.id for group in realm_groups}
+-    group_settings_ids: set[int] = set()
+-    for group in realm_groups:
+-        for setting_name in NamedUserGroup.GROUP_PERMISSION_SETTINGS:
+-            group_settings_ids.add(getattr(group, setting_name + "_id"))
+ 
+-    if realm_setting_group_ids is None:
+-        realm_setting_group_ids = set()
++    group_settings_ids: set[int] = set()
++    if not fetch_anonymous_group_membership:
++        for group in realm_groups:
++            for setting_name in NamedUserGroup.GROUP_PERMISSION_SETTINGS:
++                group_settings_ids.add(getattr(group, setting_name + "_id"))
+ 
+-    group_ids_to_fetch_members = set(realm_group_ids | group_settings_ids | realm_setting_group_ids)
++    group_ids_to_fetch_members = set(realm_group_ids | group_settings_ids | anonymous_group_ids)
+ 
+     group_members_dict = get_members_and_subgroups_of_groups(group_ids_to_fetch_members)
+ 
+@@ -698,15 +709,15 @@ def user_groups_in_realm_serialized(
+         if user_group.is_system_group:
+             system_groups_name_dict[user_group.id] = user_group.name
+ 
+-    realm_setting_anonymous_group_membership = {}
+-    for group_id in realm_setting_group_ids:
++    anonymous_group_membership = {}
++    for group_id in anonymous_group_ids:
+         if group_id not in realm_group_ids:
+-            realm_setting_anonymous_group_membership[group_id] = group_members_dict[group_id]
++            anonymous_group_membership[group_id] = group_members_dict[group_id]
+ 
+     return RealmUserGroupsData(
+         api_groups=sorted(group_dicts.values(), key=lambda group_dict: group_dict["id"]),
+         system_groups_name_dict=system_groups_name_dict,
+-        realm_setting_anonymous_group_membership=realm_setting_anonymous_group_membership,
++        anonymous_group_membership=anonymous_group_membership,
+     )
+ 
+ 

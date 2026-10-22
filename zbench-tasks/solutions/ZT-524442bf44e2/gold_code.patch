@@ -1,0 +1,275 @@
+diff --git a/web/src/channel_folders.ts b/web/src/channel_folders.ts
+index 34c7a9bc8e..97d81e85d8 100644
+--- a/web/src/channel_folders.ts
++++ b/web/src/channel_folders.ts
+@@ -4,6 +4,7 @@ import type * as z from "zod/mini";
+ import {FoldDict} from "./fold_dict.ts";
+ import type {ChannelFolderUpdateEvent} from "./server_event_types.ts";
+ import type {StateData, channel_folder_schema} from "./state_data.ts";
++import * as stream_data from "./stream_data.ts";
+ 
+ export type ChannelFolder = z.infer<typeof channel_folder_schema>;
+ 
+@@ -72,3 +73,8 @@ export function update(event: ChannelFolderUpdateEvent): void {
+         channel_folder_name_dict.set(channel_folder.name, channel_folder);
+     }
+ }
++
++export function get_stream_ids_in_folder(folder_id: number): number[] {
++    const streams = stream_data.get_unsorted_subs().filter((sub) => sub.folder_id === folder_id);
++    return streams.map((sub) => sub.stream_id);
++}
+diff --git a/web/src/stream_settings_components.ts b/web/src/stream_settings_components.ts
+index d91b15f3e9..a034f2870f 100644
+--- a/web/src/stream_settings_components.ts
++++ b/web/src/stream_settings_components.ts
+@@ -1,13 +1,16 @@
+ import $ from "jquery";
+ import * as z from "zod/mini";
+ 
++import render_confirm_archive_channel_folder from "../templates/confirm_dialog/confirm_archive_channel_folder.hbs";
+ import render_unsubscribe_private_stream_modal from "../templates/confirm_dialog/confirm_unsubscribe_private_stream.hbs";
+ import render_inline_decorated_channel_name from "../templates/inline_decorated_channel_name.hbs";
++import render_edit_channel_folder_modal from "../templates/stream_settings/edit_channel_folder_modal.hbs";
+ import render_selected_stream_title from "../templates/stream_settings/selected_stream_title.hbs";
+ 
+ import * as channel from "./channel.ts";
+ import * as channel_folders from "./channel_folders.ts";
+ import * as confirm_dialog from "./confirm_dialog.ts";
++import * as dialog_widget from "./dialog_widget.ts";
+ import type {DropdownWidget} from "./dropdown_widget.ts";
+ import * as dropdown_widget from "./dropdown_widget.ts";
+ import * as hash_util from "./hash_util.ts";
+@@ -19,7 +22,7 @@ import * as resize from "./resize.ts";
+ import * as settings_components from "./settings_components.ts";
+ import * as settings_config from "./settings_config.ts";
+ import * as settings_data from "./settings_data.ts";
+-import {current_user} from "./state_data.ts";
++import {current_user, realm} from "./state_data.ts";
+ import * as stream_data from "./stream_data.ts";
+ import * as stream_settings_containers from "./stream_settings_containers.ts";
+ import * as stream_settings_data from "./stream_settings_data.ts";
+@@ -319,6 +322,100 @@ export function filter_includes_channel(sub: StreamSubscription): boolean {
+     return true;
+ }
+ 
++function archive_folder(folder_id: number): void {
++    const stream_ids = channel_folders.get_stream_ids_in_folder(folder_id);
++    let successful_requests = 0;
++
++    function make_archive_folder_request(): void {
++        const url = "/json/channel_folders/" + folder_id.toString();
++        const data = {
++            is_archived: JSON.stringify(true),
++        };
++        dialog_widget.submit_api_request(channel.patch, url, data);
++    }
++
++    if (stream_ids.length === 0) {
++        make_archive_folder_request();
++        return;
++    }
++
++    function remove_channel_from_folder(stream_id: number): void {
++        const url = "/json/streams/" + stream_id.toString();
++        const data = {
++            folder_id: JSON.stringify(null),
++        };
++        void channel.patch({
++            url,
++            data,
++            success() {
++                successful_requests = successful_requests + 1;
++
++                if (successful_requests === stream_ids.length) {
++                    // Make request to archive folder only after all channels
++                    // are removed from the folder.
++                    make_archive_folder_request();
++                }
++            },
++            error(xhr) {
++                ui_report.error(
++                    $t_html({
++                        defaultMessage: "Failed removing one or more channels from the folder",
++                    }),
++                    xhr,
++                    $("#dialog_error"),
++                );
++                dialog_widget.hide_dialog_spinner();
++            },
++        });
++    }
++
++    for (const stream_id of stream_ids) {
++        remove_channel_from_folder(stream_id);
++    }
++}
++
++function handle_archiving_channel_folder(folder_id: number): void {
++    confirm_dialog.launch({
++        html_heading: $t_html({defaultMessage: "Delete channel folder?"}),
++        html_body: render_confirm_archive_channel_folder(),
++        on_click() {
++            archive_folder(folder_id);
++        },
++        close_on_submit: false,
++        loading_spinner: true,
++    });
++}
++
++function handle_editing_channel_folder(folder_id: number): void {
++    const folder = channel_folders.get_channel_folder_by_id(folder_id);
++
++    const html_body = render_edit_channel_folder_modal({
++        name: folder.name,
++        description: folder.description,
++        max_channel_folder_name_length: realm.max_channel_folder_name_length,
++        max_channel_folder_description_length: realm.max_channel_folder_description_length,
++    });
++
++    dialog_widget.launch({
++        html_heading: $t_html({defaultMessage: "Edit channel folder"}),
++        html_body,
++        id: "edit_channel_folder",
++        on_click() {
++            const url = "/json/channel_folders/" + folder_id.toString();
++            const data = {
++                name: $<HTMLInputElement>("input#edit_channel_folder_name").val()!.trim(),
++                description: $<HTMLTextAreaElement>("textarea#edit_channel_folder_description")
++                    .val()!
++                    .trim(),
++            };
++            dialog_widget.submit_api_request(channel.patch, url, data);
++        },
++        loading_spinner: true,
++        on_shown: () => $("#edit_channel_folder_name").trigger("focus"),
++        update_submit_disabled_state_on_change: true,
++    });
++}
++
+ export function set_up_folder_dropdown_widget(sub?: StreamSubscription): DropdownWidget {
+     const folder_options = (): dropdown_widget.Option[] => {
+         const folders = channel_folders
+@@ -327,6 +424,10 @@ export function set_up_folder_dropdown_widget(sub?: StreamSubscription): Dropdow
+         const options: dropdown_widget.Option[] = folders.map((folder) => ({
+             name: folder.name,
+             unique_id: folder.id,
++            has_delete_icon: true,
++            has_edit_icon: true,
++            delete_icon_label: $t({defaultMessage: "Delete folder"}),
++            edit_icon_label: $t({defaultMessage: "Edit folder"}),
+         }));
+ 
+         const disabled_option = {
+@@ -370,6 +471,37 @@ export function set_up_folder_dropdown_widget(sub?: StreamSubscription): Dropdow
+                 );
+             }
+         },
++        item_button_click_callback(event) {
++            event.preventDefault();
++            event.stopPropagation();
++
++            if (
++                $(event.target).closest(
++                    `.${CSS.escape(widget_name)}-dropdown-list-container .dropdown-list-delete`,
++                ).length > 0
++            ) {
++                const folder_id = Number.parseInt(
++                    $(event.target).closest(".list-item").attr("data-unique-id")!,
++                    10,
++                );
++                handle_archiving_channel_folder(folder_id);
++                return;
++            }
++
++            if (
++                $(event.target).closest(
++                    `.${CSS.escape(widget_name)}-dropdown-list-container .dropdown-list-edit`,
++                ).length > 0
++            ) {
++                const folder_id = Number.parseInt(
++                    $(event.target).closest(".list-item").attr("data-unique-id")!,
++                    10,
++                );
++                handle_editing_channel_folder(folder_id);
++
++                return;
++            }
++        },
+         default_id,
+         unique_id_type: "number",
+     });
+diff --git a/web/src/tippyjs.ts b/web/src/tippyjs.ts
+index 228c55c43a..68a2123e65 100644
+--- a/web/src/tippyjs.ts
++++ b/web/src/tippyjs.ts
+@@ -780,6 +780,26 @@ export function initialize(): void {
+         },
+     });
+ 
++    tippy.delegate("body", {
++        target: ".folder_id-dropdown-list-container .dropdown-list-delete, .new_channel_folder_id-dropdown-list-container .dropdown-list-delete",
++        content: $t({defaultMessage: "Delete folder"}),
++        delay: LONG_HOVER_DELAY,
++        appendTo: () => document.body,
++        onHidden(instance) {
++            instance.destroy();
++        },
++    });
++
++    tippy.delegate("body", {
++        target: ".folder_id-dropdown-list-container .dropdown-list-edit, .new_channel_folder_id-dropdown-list-container .dropdown-list-edit",
++        content: $t({defaultMessage: "Edit folder"}),
++        delay: LONG_HOVER_DELAY,
++        appendTo: () => document.body,
++        onHidden(instance) {
++            instance.destroy();
++        },
++    });
++
+     tippy.delegate("body", {
+         target: ".generate-channel-email-button-container.disabled_setting_tooltip",
+         onShow(instance) {
+diff --git a/web/templates/confirm_dialog/confirm_archive_channel_folder.hbs b/web/templates/confirm_dialog/confirm_archive_channel_folder.hbs
+new file mode 100644
+index 0000000000..222f440385
+--- /dev/null
++++ b/web/templates/confirm_dialog/confirm_archive_channel_folder.hbs
+@@ -0,0 +1,2 @@
++<p>{{t "Channels in this folder will become uncategorized."}}</p>
++<p>{{t "This action cannot be undone."}}</p>
+diff --git a/web/templates/dropdown_list.hbs b/web/templates/dropdown_list.hbs
+index b913de657e..6fdb568a33 100644
+--- a/web/templates/dropdown_list.hbs
++++ b/web/templates/dropdown_list.hbs
+@@ -42,6 +42,12 @@
+                 {{else}}
+                     {{name}}
+                 {{/if}}
++                {{#if has_edit_icon}}
++                    {{> components/icon_button custom_classes="dropdown-list-edit dropdown-list-control-button" intent="neutral" icon="edit" aria-label=(t "Edit folder") }}
++                {{/if}}
++                {{#if has_delete_icon}}
++                    {{> components/icon_button custom_classes="dropdown-list-delete dropdown-list-control-button" intent="danger" icon="trash" aria-label=(t "Delete folder") }}
++                {{/if}}
+             {{/if}}
+         </a>
+         {{/if}}
+diff --git a/web/templates/stream_settings/edit_channel_folder_modal.hbs b/web/templates/stream_settings/edit_channel_folder_modal.hbs
+new file mode 100644
+index 0000000000..863bd3ee11
+--- /dev/null
++++ b/web/templates/stream_settings/edit_channel_folder_modal.hbs
+@@ -0,0 +1,12 @@
++<div>
++    <label for="edit_channel_folder_name" class="modal-field-label">
++        {{t 'Channel folder name' }}
++    </label>
++    <input type="text" id="edit_channel_folder_name" class="modal_text_input" name="channel_folder_name" maxlength="{{ max_channel_folder_name_length }}" value="{{name}}" />
++</div>
++<div>
++    <label for="edit_channel_folder_description" class="modal-field-label">
++        {{t 'Description' }}
++    </label>
++    <textarea id="edit_channel_folder_description" class="settings_textarea" name="channel_folder_description" maxlength="{{ max_channel_folder_description_length }}">{{~description~}}</textarea>
++</div>

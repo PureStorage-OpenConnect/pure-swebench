@@ -1,0 +1,141 @@
+diff --git a/web/tests/activity_ui.test.cjs b/web/tests/activity_ui.test.cjs
+index 191cd49965..90f15ac35f 100644
+--- a/web/tests/activity_ui.test.cjs
++++ b/web/tests/activity_ui.test.cjs
+@@ -11,6 +11,7 @@ const buddy_list_presence = mock_esm("../src/buddy_list_presence");
+ const scroll_util = mock_esm("../src/scroll_util");
+ const pm_list = mock_esm("../src/pm_list");
+ const util = mock_esm("../src/util");
++mock_esm("../src/sidebar_header_sticky_shadow", {initialize() {}});
+ 
+ const state_data = zrequire("state_data");
+ const activity_ui = zrequire("activity_ui");
+diff --git a/web/tests/buddy_list.test.cjs b/web/tests/buddy_list.test.cjs
+index c2f6d1e367..6bcc07ef94 100644
+--- a/web/tests/buddy_list.test.cjs
++++ b/web/tests/buddy_list.test.cjs
+@@ -21,6 +21,7 @@ const $ = require("./lib/zjquery.cjs");
+ const padded_widget = mock_esm("../src/padded_widget");
+ const message_viewport = mock_esm("../src/message_viewport");
+ const background_task = mock_esm("../src/background_task");
++mock_esm("../src/sidebar_header_sticky_shadow", {initialize() {}});
+ 
+ const buddy_data = zrequire("buddy_data");
+ const {BuddyList} = zrequire("buddy_list");
+diff --git a/web/tests/sidebar_header_sticky_shadow.test.cjs b/web/tests/sidebar_header_sticky_shadow.test.cjs
+new file mode 100644
+index 0000000000..24ca75d35b
+--- /dev/null
++++ b/web/tests/sidebar_header_sticky_shadow.test.cjs
+@@ -0,0 +1,111 @@
++"use strict";
++
++const assert = require("node:assert/strict");
++
++const {zrequire} = require("./lib/namespace.cjs");
++const {run_test} = require("./lib/test.cjs");
++
++const sidebar_header_sticky_shadow = zrequire("sidebar_header_sticky_shadow");
++
++function make_header(top) {
++    const classes = new Set();
++    return {
++        getBoundingClientRect: () => ({top}),
++        classList: {
++            toggle(name, on) {
++                if (on) {
++                    classes.add(name);
++                } else {
++                    classes.delete(name);
++                }
++            },
++            has: (name) => classes.has(name),
++        },
++    };
++}
++
++function make_scroll_container({scrollTop, container_top, headers}) {
++    let scroll_listener;
++    const container = {
++        scrollTop,
++        getBoundingClientRect: () => ({top: container_top}),
++        querySelectorAll: () => headers,
++        addEventListener(event, callback, options) {
++            assert.equal(event, "scroll");
++            assert.deepEqual(options, {passive: true});
++            scroll_listener = callback;
++        },
++    };
++    return {
++        $wrapper: {length: 1, 0: container},
++        get scroll_listener() {
++            return scroll_listener;
++        },
++        container,
++    };
++}
++
++run_test("install toggles shadow based on stickiness", ({override}) => {
++    override(globalThis, "getComputedStyle", () => ({top: "40px"}));
++
++    // Container has been scrolled; pin line is at container_top + sticky_top = 50.
++    // Header sitting exactly at the pin line: stuck, shadow on.
++    const stuck_header = make_header(50);
++    // Header that has been pushed above the pin line by the next section
++    // arriving from below; shadow suppressed to avoid a visible seam at
++    // the junction.
++    const pushed_out_header = make_header(45);
++    // Header still below the pin line, not yet stuck.
++    const below_pin_line_header = make_header(500);
++
++    const scroll = make_scroll_container({
++        scrollTop: 120,
++        container_top: 10,
++        headers: [stuck_header, pushed_out_header, below_pin_line_header],
++    });
++
++    sidebar_header_sticky_shadow.initialize(scroll.$wrapper, ".header");
++
++    assert.ok(stuck_header.classList.has("sidebar-header-drop-shadow"));
++    assert.ok(!pushed_out_header.classList.has("sidebar-header-drop-shadow"));
++    assert.ok(!below_pin_line_header.classList.has("sidebar-header-drop-shadow"));
++
++    // The scroll listener re-runs the update logic.
++    assert.ok(typeof scroll.scroll_listener === "function");
++    scroll.scroll_listener();
++    assert.ok(stuck_header.classList.has("sidebar-header-drop-shadow"));
++});
++
++run_test("install leaves shadow off before any scroll", ({override}) => {
++    override(globalThis, "getComputedStyle", () => ({top: "40px"}));
++
++    // Same geometry as the stuck case above (header top=50, pin line=50),
++    // but scrollTop=0. Pre-set the shadow class so we can see install()
++    // actively removes it, proving the has_scrolled guard is doing its job.
++    const header = make_header(50);
++    header.classList.toggle("sidebar-header-drop-shadow", true);
++    const scroll = make_scroll_container({
++        scrollTop: 0,
++        container_top: 10,
++        headers: [header],
++    });
++
++    sidebar_header_sticky_shadow.initialize(scroll.$wrapper, ".header");
++    assert.ok(!header.classList.has("sidebar-header-drop-shadow"));
++});
++
++run_test("install handles missing computed top", ({override}) => {
++    override(globalThis, "getComputedStyle", () => ({top: "auto"}));
++
++    // With sticky_top defaulting to 0, a header at container_top is stuck.
++    const container_top = 10;
++    const header = make_header(container_top);
++    const scroll = make_scroll_container({
++        scrollTop: 50,
++        container_top,
++        headers: [header],
++    });
++
++    sidebar_header_sticky_shadow.initialize(scroll.$wrapper, ".header");
++    assert.ok(header.classList.has("sidebar-header-drop-shadow"));
++});

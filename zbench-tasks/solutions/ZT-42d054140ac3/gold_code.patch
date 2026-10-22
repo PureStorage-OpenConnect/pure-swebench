@@ -1,0 +1,113 @@
+diff --git a/zerver/lib/integrations.py b/zerver/lib/integrations.py
+index 8afe134ffa..81f1e79268 100644
+--- a/zerver/lib/integrations.py
++++ b/zerver/lib/integrations.py
+@@ -653,6 +653,11 @@ WEBHOOK_INTEGRATIONS: list[WebhookIntegration] = [
+         url_options=[
+             WebhookUrlOption.build_preset_config(PresetUrlOption.BRANCHES),
+             WebhookUrlOption.build_preset_config(PresetUrlOption.IGNORE_PRIVATE_REPOSITORIES),
++            WebhookUrlOption(
++                name="include_repository_name",
++                label="Include repository name in the notifications",
++                validator=check_bool,
++            ),
+         ],
+     ),
+     WebhookIntegration(
+diff --git a/zerver/lib/webhooks/git.py b/zerver/lib/webhooks/git.py
+index 0e51445fc7..2a327ca87e 100644
+--- a/zerver/lib/webhooks/git.py
++++ b/zerver/lib/webhooks/git.py
+@@ -17,6 +17,9 @@ PUSH_PUSHED_TEXT_WITH_URL = "[{push_type}]({compare_url}) {number_of_commits} {c
+ PUSH_PUSHED_TEXT_WITHOUT_URL = "{push_type} {number_of_commits} {commit_or_commits}"
+ 
+ PUSH_COMMITS_BASE = "{user_name} {pushed_text} to branch {branch_name}."
++PUSH_COMMITS_BASE_WITH_REPOSITORY_NAME = (
++    "{user_name} {pushed_text} to branch {branch_name} of [{repository_name}]({repository_url})."
++)
+ PUSH_COMMITS_MESSAGE_TEMPLATE_WITH_COMMITTERS = """{base_message} {committers_details}.
+ 
+ {commits_data}
+@@ -93,6 +96,8 @@ def get_push_commits_event_message(
+     is_truncated: bool = False,
+     deleted: bool = False,
+     force_push: bool | None = False,
++    repository_name: str | None = None,
++    repository_url: str | None = None,
+ ) -> str:
+     if not commits_data and deleted:
+         return PUSH_DELETE_BRANCH_MESSAGE_TEMPLATE.format(
+@@ -127,11 +132,17 @@ def get_push_commits_event_message(
+         commit_or_commits=COMMIT_OR_COMMITS.format("s" if len(commits_data) > 1 else ""),
+     )
+ 
+-    base_message_template = PUSH_COMMITS_BASE
++    base_message_template = (
++        PUSH_COMMITS_BASE_WITH_REPOSITORY_NAME
++        if repository_name and repository_url
++        else PUSH_COMMITS_BASE
++    )
+     base_message = base_message_template.format(
+         user_name=user_name,
+         pushed_text=pushed_text_message,
+         branch_name=branch_name,
++        repository_name=repository_name,
++        repository_url=repository_url,
+     )
+ 
+     committers_items: list[tuple[str, int]] = get_all_committers(commits_data)
+diff --git a/zerver/webhooks/github/view.py b/zerver/webhooks/github/view.py
+index c9e347ffa1..daf1829c23 100644
+--- a/zerver/webhooks/github/view.py
++++ b/zerver/webhooks/github/view.py
+@@ -62,10 +62,12 @@ class Helper:
+         request: HttpRequest,
+         payload: WildValue,
+         include_title: bool,
++        include_repository_name: bool,
+     ) -> None:
+         self.request = request
+         self.payload = payload
+         self.include_title = include_title
++        self.include_repository_name = include_repository_name
+ 
+     def log_unsupported(self, event: str) -> None:
+         summary = f"The '{event}' event isn't currently supported by the GitHub webhook; ignoring"
+@@ -315,6 +317,10 @@ def get_push_commits_body(helper: Helper) -> str:
+         commits_data,
+         deleted=payload["deleted"].tame(check_bool),
+         force_push=payload["forced"].tame(check_bool),
++        repository_name=get_repository_full_name(payload)
++        if helper.include_repository_name
++        else None,
++        repository_url=get_repository_url(payload) if helper.include_repository_name else None,
+     )
+ 
+ 
+@@ -816,6 +822,10 @@ def get_repository_full_name(payload: WildValue) -> str:
+     return payload["repository"]["full_name"].tame(check_string)
+ 
+ 
++def get_repository_url(payload: WildValue) -> str:
++    return payload["repository"]["html_url"].tame(check_string)
++
++
+ def get_organization_name(payload: WildValue) -> str:
+     return payload["organization"]["login"].tame(check_string)
+ 
+@@ -1007,6 +1017,7 @@ def api_github_webhook(
+     branches: str | None = None,
+     user_specified_topic: OptionalUserSpecifiedTopicStr = None,
+     ignore_private_repositories: Json[bool] = False,
++    include_repository_name: Json[bool] = False,
+ ) -> HttpResponse:
+     """
+     GitHub sends the event as an HTTP header.  We have our
+@@ -1050,6 +1061,7 @@ def api_github_webhook(
+         request=request,
+         payload=payload,
+         include_title=user_specified_topic is not None,
++        include_repository_name=include_repository_name,
+     )
+     body = body_function(helper)
+ 

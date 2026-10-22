@@ -1,0 +1,281 @@
+diff --git a/web/src/hash_util.ts b/web/src/hash_util.ts
+index d2fdc5e1a2..05932e8395 100644
+--- a/web/src/hash_util.ts
++++ b/web/src/hash_util.ts
+@@ -253,7 +253,7 @@ export function channels_settings_edit_url(
+ }
+ 
+ export function channels_settings_section_url(section = "subscribed"): string {
+-    const valid_section_values = new Set(["new", "subscribed", "all", "notsubscribed"]);
++    const valid_section_values = new Set(["new", "subscribed", "all", "available"]);
+     if (!valid_section_values.has(section)) {
+         blueslip.warn("invalid section for channels settings: " + section);
+         return "#channels/subscribed";
+diff --git a/web/src/stream_edit.ts b/web/src/stream_edit.ts
+index fda7b4f5c2..04fc1c652e 100644
+--- a/web/src/stream_edit.ts
++++ b/web/src/stream_edit.ts
+@@ -89,8 +89,8 @@ export function setup_subscriptions_tab_hash(tab_key_value: string): void {
+             browser_history.update("#channels/subscribed");
+             break;
+         }
+-        case "not-subscribed": {
+-            browser_history.update("#channels/notsubscribed");
++        case "available": {
++            browser_history.update("#channels/available");
+             break;
+         }
+         default: {
+diff --git a/web/src/stream_settings_ui.ts b/web/src/stream_settings_ui.ts
+index 5c495aa670..4a6f0f16ae 100644
+--- a/web/src/stream_settings_ui.ts
++++ b/web/src/stream_settings_ui.ts
+@@ -539,8 +539,12 @@ function triage_stream(left_panel_params: LeftPanelParams, sub: StreamSubscripti
+         return "rejected";
+     }
+ 
+-    if (left_panel_params.show_not_subscribed && sub.subscribed) {
+-        // reject subscribed streams
++    if (
++        left_panel_params.show_available &&
++        (sub.subscribed || !stream_data.can_toggle_subscription(sub))
++    ) {
++        // reject subscribed streams and unsubscribed streams
++        // that user does not have permission to subscribe to.
+         return "rejected";
+     }
+ 
+@@ -627,7 +631,7 @@ export function update_empty_left_panel_message(): void {
+         has_streams =
+             stream_data.subscribed_subs().length > 0 ||
+             $("#channels_overlay_container .stream-row:not(.notdisplayed)").length > 0;
+-    } else if (stream_ui_updates.is_not_subscribed_stream_tab_active()) {
++    } else if (stream_ui_updates.is_available_stream_tab_active()) {
+         has_streams =
+             stream_data.unsubscribed_subs().length > 0 ||
+             $("#channels_overlay_container .stream-row:not(.notdisplayed)").length > 0;
+@@ -657,8 +661,8 @@ export function update_empty_left_panel_message(): void {
+     $(".no-streams-to-show").children().hide();
+     if (stream_ui_updates.is_subscribed_stream_tab_active()) {
+         $(".subscribed_streams_tab_empty_text").show();
+-    } else if (stream_ui_updates.is_not_subscribed_stream_tab_active()) {
+-        $(".not_subscribed_streams_tab_empty_text").show();
++    } else if (stream_ui_updates.is_available_stream_tab_active()) {
++        $(".available_streams_tab_empty_text").show();
+     } else {
+         $(".all_streams_tab_empty_text").show();
+     }
+@@ -729,7 +733,7 @@ let sort_order = "by-stream-name";
+ type LeftPanelParams = {
+     input: string;
+     show_subscribed: boolean;
+-    show_not_subscribed: boolean;
++    show_available: boolean;
+     sort_order: string;
+ };
+ 
+@@ -739,7 +743,7 @@ export function get_left_panel_params(): LeftPanelParams {
+     return {
+         input,
+         show_subscribed: stream_ui_updates.show_subscribed,
+-        show_not_subscribed: stream_ui_updates.show_not_subscribed,
++        show_available: stream_ui_updates.show_available,
+         sort_order,
+     };
+ }
+@@ -757,17 +761,17 @@ export function switch_stream_tab(tab_name: string): void {
+     switch (tab_name) {
+         case "all-streams": {
+             stream_ui_updates.set_show_subscribed(false);
+-            stream_ui_updates.set_show_not_subscribed(false);
++            stream_ui_updates.set_show_available(false);
+             break;
+         }
+         case "subscribed": {
+             stream_ui_updates.set_show_subscribed(true);
+-            stream_ui_updates.set_show_not_subscribed(false);
++            stream_ui_updates.set_show_available(false);
+             break;
+         }
+-        case "not-subscribed": {
++        case "available": {
+             stream_ui_updates.set_show_subscribed(false);
+-            stream_ui_updates.set_show_not_subscribed(true);
++            stream_ui_updates.set_show_available(true);
+             break;
+         }
+         // No default
+@@ -894,12 +898,12 @@ function setup_page(callback: () => void): void {
+         // Reset our internal state to reflect that we're initially in
+         // the "Subscribed" tab if we're reopening "Stream settings".
+         stream_ui_updates.set_show_subscribed(true);
+-        stream_ui_updates.set_show_not_subscribed(false);
++        stream_ui_updates.set_show_available(false);
+         toggler = components.toggle({
+             child_wants_focus: true,
+             values: [
+                 {label: $t({defaultMessage: "Subscribed"}), key: "subscribed"},
+-                {label: $t({defaultMessage: "Not subscribed"}), key: "not-subscribed"},
++                {label: $t({defaultMessage: "Available"}), key: "available"},
+                 {label: $t({defaultMessage: "All"}), key: "all-streams"},
+             ],
+             callback(_value, key) {
+@@ -913,7 +917,7 @@ function setup_page(callback: () => void): void {
+         }
+         if (current_user.is_guest) {
+             toggler.disable_tab("all-streams");
+-            toggler.disable_tab("not-subscribed");
++            toggler.disable_tab("available");
+         }
+ 
+         // show the "Stream settings" header by default.
+@@ -1061,8 +1065,8 @@ export function change_state(
+         return;
+     }
+ 
+-    if (section === "notsubscribed") {
+-        toggler.goto("not-subscribed");
++    if (section === "available") {
++        toggler.goto("available");
+         stream_edit.empty_right_panel();
+         return;
+     }
+@@ -1193,20 +1197,20 @@ export function toggle_view(event: string): void {
+         case "right_arrow":
+             switch (stream_filter_tab_key) {
+                 case "subscribed":
+-                    toggler.goto("not-subscribed");
++                    toggler.goto("available");
+                     break;
+-                case "not-subscribed":
++                case "available":
+                     toggler.goto("all-streams");
+                     break;
+             }
+             break;
+         case "left_arrow":
+             switch (stream_filter_tab_key) {
+-                case "not-subscribed":
++                case "available":
+                     toggler.goto("subscribed");
+                     break;
+                 case "all-streams":
+-                    toggler.goto("not-subscribed");
++                    toggler.goto("available");
+                     break;
+             }
+             break;
+diff --git a/web/src/stream_ui_updates.ts b/web/src/stream_ui_updates.ts
+index aa87e6b18a..5f97c3ecd2 100644
+--- a/web/src/stream_ui_updates.ts
++++ b/web/src/stream_ui_updates.ts
+@@ -39,7 +39,7 @@ function settings_button_for_sub(sub: StreamSubscription): JQuery {
+ }
+ 
+ export let show_subscribed = true;
+-export let show_not_subscribed = false;
++export let show_available = false;
+ 
+ export function is_subscribed_stream_tab_active(): boolean {
+     // Returns true if "Subscribed" tab in stream settings is open
+@@ -47,18 +47,18 @@ export function is_subscribed_stream_tab_active(): boolean {
+     return show_subscribed;
+ }
+ 
+-export function is_not_subscribed_stream_tab_active(): boolean {
+-    // Returns true if "not-subscribed" tab in stream settings is open
++export function is_available_stream_tab_active(): boolean {
++    // Returns true if "available" tab in stream settings is open
+     // otherwise false.
+-    return show_not_subscribed;
++    return show_available;
+ }
+ 
+ export function set_show_subscribed(value: boolean): void {
+     show_subscribed = value;
+ }
+ 
+-export function set_show_not_subscribed(value: boolean): void {
+-    show_not_subscribed = value;
++export function set_show_available(value: boolean): void {
++    show_available = value;
+ }
+ 
+ export function update_web_public_stream_privacy_option_state($container: JQuery): void {
+@@ -483,15 +483,17 @@ export function update_stream_row_in_settings_tab(sub: StreamSubscription): void
+     // This function display/hide stream row in stream settings tab,
+     // used to display immediate effect of add/removal subscription event.
+     // If user is subscribed or unsubscribed to stream, it will show sub or unsub
+-    // row under "Subscribed" or "Not subscribed" (only if the stream is public) tab, otherwise
++    // row under "Subscribed" or "Available" (only if the stream is public) tab, otherwise
+     // if stream is not public hide stream row under tab.
+ 
+-    if (is_subscribed_stream_tab_active() || is_not_subscribed_stream_tab_active()) {
++    if (is_subscribed_stream_tab_active() || is_available_stream_tab_active()) {
+         const $row = row_for_stream_id(sub.stream_id);
+ 
+         if (
+             (is_subscribed_stream_tab_active() && sub.subscribed) ||
+-            (is_not_subscribed_stream_tab_active() && !sub.subscribed)
++            (is_available_stream_tab_active() &&
++                !sub.subscribed &&
++                stream_data.can_toggle_subscription(sub))
+         ) {
+             if (stream_settings_components.filter_includes_channel(sub)) {
+                 $row.removeClass("notdisplayed");
+diff --git a/web/src/tippyjs.ts b/web/src/tippyjs.ts
+index e0133c1ca1..3b47dc5c7f 100644
+--- a/web/src/tippyjs.ts
++++ b/web/src/tippyjs.ts
+@@ -443,7 +443,7 @@ export function initialize(): void {
+ 
+     tippy.delegate("body", {
+         target: [
+-            "[data-tab-key='not-subscribed'].disabled",
++            "[data-tab-key='available'].disabled",
+             "[data-tab-key='all-streams'].disabled",
+         ].join(","),
+         content: $t({
+diff --git a/web/templates/popovers/left_sidebar/left_sidebar_stream_setting_popover.hbs b/web/templates/popovers/left_sidebar/left_sidebar_stream_setting_popover.hbs
+index ab491dfa46..bc33cac28a 100644
+--- a/web/templates/popovers/left_sidebar/left_sidebar_stream_setting_popover.hbs
++++ b/web/templates/popovers/left_sidebar/left_sidebar_stream_setting_popover.hbs
+@@ -1,7 +1,7 @@
+ <div class="popover-menu" data-simplebar data-simplebar-tab-index="-1">
+     <ul role="menu" class="popover-menu-list">
+         <li role="none" class="link-item popover-menu-list-item">
+-            <a href="#channels/notsubscribed" role="menuitem" class="popover-menu-link navigate_and_close_popover" tabindex="0">
++            <a href="#channels/available" role="menuitem" class="popover-menu-link navigate_and_close_popover" tabindex="0">
+                 <i class="popover-menu-icon zulip-icon zulip-icon-browse-channels" aria-hidden="true"></i>
+                 <span class="popover-menu-label">{{t "Browse channels" }}</span>
+             </a>
+diff --git a/web/templates/stream_settings/stream_settings_overlay.hbs b/web/templates/stream_settings/stream_settings_overlay.hbs
+index 7c4c8b5cd3..3afafc5661 100644
+--- a/web/templates/stream_settings/stream_settings_overlay.hbs
++++ b/web/templates/stream_settings/stream_settings_overlay.hbs
+@@ -48,7 +48,7 @@
+                                 {{/if}}
+                             </span>
+                         </div>
+-                        <div class="not_subscribed_streams_tab_empty_text">
++                        <div class="available_streams_tab_empty_text">
+                             <span class="settings-empty-option-text">
+                                 {{t 'No channels to show.'}}
+                                 <a href="#channels/all">{{t 'View all channels'}}</a>
+diff --git a/web/templates/subscribe_to_more_streams.hbs b/web/templates/subscribe_to_more_streams.hbs
+index d3027ea365..532f18beac 100644
+--- a/web/templates/subscribe_to_more_streams.hbs
++++ b/web/templates/subscribe_to_more_streams.hbs
+@@ -1,10 +1,10 @@
+ {{#if exactly_one_unsubscribed_stream}}
+-    <a class="subscribe-more-link" href="#channels/notsubscribed">
++    <a class="subscribe-more-link" href="#channels/available">
+         <i class="subscribe-more-icon zulip-icon zulip-icon-browse-channels" aria-hidden="true" ></i>
+         <span class="subscribe-more-label">{{~t "BROWSE 1 MORE CHANNEL" ~}}</span>
+     </a>
+ {{else if can_subscribe_stream_count}}
+-    <a class="subscribe-more-link" href="#channels/notsubscribed">
++    <a class="subscribe-more-link" href="#channels/available">
+         <i class="subscribe-more-icon zulip-icon zulip-icon-browse-channels" aria-hidden="true" ></i>
+         <span class="subscribe-more-label">{{~t "BROWSE {can_subscribe_stream_count} MORE CHANNELS" ~}}</span>
+     </a>

@@ -1,0 +1,84 @@
+{
+  "task_id": "ZT-524442bf44e2",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "streams-ui: Add UI to update and archive channel folders.",
+  "type": "feature",
+  "lang": "web",
+  "issue": 35498,
+  "fix_commit": "524442bf44e2b8ce3bf04e40d764c3e32ffeca7c",
+  "base_commit": "da53d5b97882a7d7bbb5d12a5f9c2dee3581be09",
+  "env_fingerprint": "761add99bcde",
+  "fail_to_pass": [
+    "web/tests/channel_folders.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 179,
+    "files": 6,
+    "hunks": 11,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The `channel_folders` web module (web/src/channel_folders.ts) gains an exported function `get_stream_ids_in_folder(folder_id: number): number[]`, intended as the cross-module API for other frontend components (e.g. stream settings) to look up a folder's channels.",
+    "`get_stream_ids_in_folder` returns the `stream_id` of every known/registered stream whose `folder_id` equals the given folder ID; streams with a different `folder_id` or with `folder_id` null are excluded.",
+    "`get_stream_ids_in_folder` returns an empty array (not null/undefined) when no streams belong to the folder.",
+    "The returned stream IDs appear in the order the streams were registered in the client's stream data store (i.e. unsorted insertion order, no additional sorting applied)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 653,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Sahil Batra",
+    "email": "sahil@zulip.com",
+    "date": "2025-08-04"
+  },
+  "contamination": {
+    "fix_public_at": "2025-08-04",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-07-28T19:33:54Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/524442bf44e2b8ce3bf04e40d764c3e32ffeca7c",
+    "issue_url": "https://github.com/zulip/zulip/issues/35498"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-524442bf44e2",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 63.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

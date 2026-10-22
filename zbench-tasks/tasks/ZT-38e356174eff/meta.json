@@ -1,0 +1,86 @@
+{
+  "task_id": "ZT-38e356174eff",
+  "curation_status": "held",
+  "curation_stage": "oracle_validated",
+  "verdict": "held",
+  "reason_code": "held_over_specific_hidden_test",
+  "reason": "AUDIT 2026-08-20: held pending fix. Over-specific hidden test pins exact assert_database_query_count while the brief points models at a different function than gold; behaviorally-correct optimizations fail by one query (FN risk high). See task note. Re-promote to validated if the assertion is relaxed or the brief is aligned to the graded function.",
+  "summary": "message_send: Optimize computing inaccessible users.",
+  "type": "other",
+  "lang": "py",
+  "issue": 27835,
+  "fix_commit": "38e356174eff332e80bcfe672f71849a82447d16",
+  "base_commit": "4e832aab88224ebf1c426c01c53ecb8deea0cb26",
+  "env_fingerprint": "4774667643bf",
+  "fail_to_pass": [
+    "zerver.tests.test_message_send.PersonalMessageSendTest.test_group_direct_message",
+    "zerver.tests.test_message_send.PersonalMessageSendTest.test_personal_message"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_users"
+  ],
+  "contamination": {
+    "fix_public_at": "2026-08-06",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-11-22T07:10:30Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/38e356174eff332e80bcfe672f71849a82447d16",
+    "issue_url": "https://github.com/zulip/zulip/issues/27835"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-38e356174eff",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_group_direct_message",
+        "test_personal_message"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 192.0
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  },
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 42,
+    "files": 2,
+    "hunks": 6,
+    "f2p_count": 2
+  },
+  "author": {
+    "name": "bedo",
+    "email": "bedokhaled66@gmail.com",
+    "date": "2026-07-27T18:37:31+03:00"
+  }
+}

@@ -1,0 +1,114 @@
+diff --git a/web/src/buddy_data.ts b/web/src/buddy_data.ts
+index 82f0563348..898b331de9 100644
+--- a/web/src/buddy_data.ts
++++ b/web/src/buddy_data.ts
+@@ -259,7 +259,7 @@ export function get_title_data(user_ids_string: string, is_group: boolean): Titl
+     if (is_group) {
+         // For groups, just return a string with recipient names.
+         return {
+-            first_line: people.get_recipients(user_ids_string),
++            first_line: people.format_recipients(user_ids_string, "long"),
+             second_line: "",
+             third_line: "",
+         };
+diff --git a/web/src/inbox_ui.ts b/web/src/inbox_ui.ts
+index 449106cb62..f9be4661b4 100644
+--- a/web/src/inbox_ui.ts
++++ b/web/src/inbox_ui.ts
+@@ -310,7 +310,7 @@ function format_dm(
+     const context = {
+         conversation_key: user_ids_string,
+         is_direct: true,
+-        rendered_dm_with: util.format_array_as_list(rendered_dm_with, "long", "conjunction"),
++        rendered_dm_with: util.format_array_as_list_with_conjuction(rendered_dm_with, "long"),
+         is_group: recipient_ids.length > 1,
+         user_circle_class,
+         is_bot,
+@@ -746,7 +746,7 @@ function row_in_search_results(keyword: string, text: string): boolean {
+ 
+ function filter_should_hide_dm_row({dm_key}: {dm_key: string}): boolean {
+     const recipients_string = people.get_recipients(dm_key);
+-    const text = recipients_string.toLowerCase();
++    const text = recipients_string.join(",").toLowerCase();
+ 
+     if (!row_in_search_results(search_keyword, text)) {
+         return true;
+diff --git a/web/src/narrow_title.ts b/web/src/narrow_title.ts
+index 1c11a3209e..bc36b86e6e 100644
+--- a/web/src/narrow_title.ts
++++ b/web/src/narrow_title.ts
+@@ -55,7 +55,7 @@ export function compute_narrow_title(filter?: Filter): string {
+         const user_ids = people.emails_strings_to_user_ids_string(emails);
+ 
+         if (user_ids !== undefined) {
+-            return people.get_recipients(user_ids);
++            return people.format_recipients(user_ids, "long");
+         }
+         if (emails.includes(",")) {
+             return $t({defaultMessage: "Invalid users"});
+diff --git a/web/src/people.ts b/web/src/people.ts
+index 9a01460fe3..183e1c2c24 100644
+--- a/web/src/people.ts
++++ b/web/src/people.ts
+@@ -455,20 +455,31 @@ function _calc_user_and_other_ids(user_ids_string: string): {
+     return {user_ids, other_ids};
+ }
+ 
+-export function get_recipients(user_ids_string: string): string {
++export function get_recipients(user_ids_string: string): string[] {
+     // See message_store.get_pm_full_names() for a similar function.
+ 
+     const {other_ids} = _calc_user_and_other_ids(user_ids_string);
+ 
+     if (other_ids.length === 0) {
+         // direct message with oneself
+-        return my_full_name();
++        return [my_full_name()];
+     }
+ 
+     const names = get_display_full_names(other_ids);
+     const sorted_names = names.sort(util.make_strcmp());
+ 
+-    return sorted_names.join(", ");
++    return sorted_names;
++}
++
++export function format_recipients(
++    users_ids_string: string,
++    join_strategy: "long" | "narrow",
++): string {
++    const formatted_recipients_string = util.format_array_as_list_with_conjuction(
++        get_recipients(users_ids_string),
++        join_strategy,
++    );
++    return formatted_recipients_string;
+ }
+ 
+ export function pm_reply_user_string(message: Message | MessageWithBooleans): string | undefined {
+diff --git a/web/src/pm_list_data.ts b/web/src/pm_list_data.ts
+index bedb8d2258..82ea065b30 100644
+--- a/web/src/pm_list_data.ts
++++ b/web/src/pm_list_data.ts
+@@ -80,7 +80,7 @@ export function get_conversations(search_string = ""): DisplayObject[] {
+ 
+         const reply_to = people.user_ids_string_to_emails_string(user_ids_string);
+         assert(reply_to !== undefined);
+-        const recipients_string = people.get_recipients(user_ids_string);
++        const recipients_string = people.format_recipients(user_ids_string, "narrow");
+ 
+         const num_unread = unread.num_unread_for_user_ids_string(user_ids_string);
+         const has_unread_mention =
+diff --git a/web/src/scheduled_messages_overlay_ui.ts b/web/src/scheduled_messages_overlay_ui.ts
+index 0a774d2949..636acc93e8 100644
+--- a/web/src/scheduled_messages_overlay_ui.ts
++++ b/web/src/scheduled_messages_overlay_ui.ts
+@@ -114,7 +114,8 @@ function format(
+                 is_empty_string_topic: msg.topic === "",
+             };
+         } else {
+-            const recipients = people.get_recipients(msg.to.join(","));
++            const user_ids_string = msg.to.join(",");
++            const recipients = people.format_recipients(user_ids_string, "long");
+             msg_render_context = {
+                 ...msg,
+                 is_stream: false as const,

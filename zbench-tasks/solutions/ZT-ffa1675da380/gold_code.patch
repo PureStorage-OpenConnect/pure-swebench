@@ -1,0 +1,41 @@
+diff --git a/web/src/reactions.ts b/web/src/reactions.ts
+index 90250349b0..4a4d8f12e8 100644
+--- a/web/src/reactions.ts
++++ b/web/src/reactions.ts
+@@ -741,3 +741,16 @@ export function rewire_update_vote_text_on_message(
+ ): void {
+     update_vote_text_on_message = value;
+ }
++
++export function update_user_full_name(user_id: number): void {
++    // When a user's full name changes, we need to re-render the
++    // vote text on any reaction pill that includes that user, since
++    // vote text may contain display names.
++    for (const msg_list of message_lists.all_rendered_message_lists()) {
++        for (const message of msg_list.all_messages()) {
++            if ([...message.clean_reactions.values()].some((r) => r.user_ids.includes(user_id))) {
++                update_vote_text_on_message(message);
++            }
++        }
++    }
++}
+diff --git a/web/src/user_events.ts b/web/src/user_events.ts
+index 2d5fca253d..1cafca2bdc 100644
+--- a/web/src/user_events.ts
++++ b/web/src/user_events.ts
+@@ -15,6 +15,7 @@ import * as message_live_update from "./message_live_update.ts";
+ import * as navbar_alerts from "./navbar_alerts.ts";
+ import * as people from "./people.ts";
+ import * as pm_list from "./pm_list.ts";
++import * as reactions from "./reactions.ts";
+ import * as settings from "./settings.ts";
+ import * as settings_account from "./settings_account.ts";
+ import * as settings_bots from "./settings_bots.ts";
+@@ -102,6 +103,7 @@ export const update_person = function update(event: UserUpdate): void {
+         settings_users.update_user_data(event.user_id, event);
+         activity_ui.redraw();
+         message_live_update.update_user_full_name(event.user_id, event.full_name);
++        reactions.update_user_full_name(event.user_id);
+         pm_list.update_private_messages();
+         user_profile.update_profile_modal_ui(user, event);
+         if (people.is_my_user_id(event.user_id)) {

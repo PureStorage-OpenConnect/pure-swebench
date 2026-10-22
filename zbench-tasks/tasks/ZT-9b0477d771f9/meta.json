@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-9b0477d771f9",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The underlying bug is a visual overflow fixed via CSS; the only testable code change is adding a class name to a span. The hidden test merely pins the rendered HTML to include class=\"search-query-word\" \u2014 it asserts incidental markup, not the observable behavior (no more overflow), which is only verifiable via real browser layout. This grades format over behavior and falls under the CSS-only visual polish exclusion.",
+  "summary": "search_query: Prevent overflow of long search queries.",
+  "lang": "web",
+  "issue": 29568,
+  "fix_commit": "9b0477d771f9dba0edb6c63c8a4f423f08e1ef03",
+  "base_commit": "b16bd27e9c800f1caae2f771eb727af8cbead25a",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/9b0477d771f9dba0edb6c63c8a4f423f08e1ef03",
+    "issue_url": "https://github.com/zulip/zulip/issues/29568"
+  }
+}

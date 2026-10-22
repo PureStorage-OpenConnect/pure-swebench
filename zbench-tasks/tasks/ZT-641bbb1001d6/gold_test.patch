@@ -1,0 +1,13 @@
+diff --git a/zerver/tests/test_rocketchat_importer.py b/zerver/tests/test_rocketchat_importer.py
+index 6d75b72fd9..da63798190 100644
+--- a/zerver/tests/test_rocketchat_importer.py
++++ b/zerver/tests/test_rocketchat_importer.py
+@@ -448,7 +448,7 @@ class RocketChatImporter(ZulipTestCase):
+         )
+ 
+         self.assert_length(subscriber_handler.get_users(stream_id=zerver_stream[6]["id"]), 0)
+-        self.assertTrue(zerver_stream[6]["deactivated"])
++        self.assertFalse(zerver_stream[6]["deactivated"])
+ 
+     def test_convert_direct_message_group_data(self) -> None:
+         fixture_dir_name = self.fixture_file_name("", "rocketchat_fixtures")

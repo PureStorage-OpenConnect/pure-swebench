@@ -1,0 +1,202 @@
+diff --git a/web/src/filter.ts b/web/src/filter.ts
+index a7d46bbf25..b1228b92c6 100644
+--- a/web/src/filter.ts
++++ b/web/src/filter.ts
+@@ -1179,6 +1179,13 @@ export class Filter {
+         if (this.single_term_type_returns_all_messages_of_conversation()) {
+             return true;
+         }
++        // /near/ conversation views can also mark messages as read;
++        // the reading_prevented flag on MessageList is used to
++        // dynamically control whether to actually do so based on
++        // whether the user has scrolled to see older unreads.
++        if (this.is_conversation_view_with_near()) {
++            return true;
++        }
+         return false;
+     }
+ 
+@@ -1626,7 +1633,9 @@ export class Filter {
+ 
+     allow_use_first_unread_when_narrowing(): boolean {
+         return (
+-            this.can_mark_messages_read() ||
++            // For /near/ views, we don't want to use first_unread as the
++            // anchor because they target a specific message.
++            (this.can_mark_messages_read() && !this.is_conversation_view_with_near()) ||
+             (this.has_operator("is") && !this.has_operand("is", "starred"))
+         );
+     }
+diff --git a/web/src/message_list.ts b/web/src/message_list.ts
+index c22f2fb0f3..b2edbbb8e1 100644
+--- a/web/src/message_list.ts
++++ b/web/src/message_list.ts
+@@ -10,13 +10,16 @@ import type {MessageListData} from "./message_list_data.ts";
+ import * as message_list_tooltips from "./message_list_tooltips.ts";
+ import {MessageListView} from "./message_list_view.ts";
+ import type {Message} from "./message_store.ts";
++import * as message_viewport from "./message_viewport.ts";
+ import * as narrow_banner from "./narrow_banner.ts";
+ import * as narrow_state from "./narrow_state.ts";
+ import {page_params} from "./page_params.ts";
+ import {web_mark_read_on_scroll_policy_values} from "./settings_config.ts";
+ import * as stream_data from "./stream_data.ts";
+ import * as unread from "./unread.ts";
++import * as unread_ui from "./unread_ui.ts";
+ import {user_settings} from "./user_settings.ts";
++import * as util from "./util.ts";
+ 
+ export type RenderInfo = {need_user_to_scroll: boolean};
+ 
+@@ -97,10 +100,19 @@ export class MessageList {
+     // such as "Mark as unread", that should disable marking
+     // messages as read until prevent_reading is called again.
+     //
++    // Also initially set to true for /near/ conversation views
++    // until maybe_resume_reading_for_near_view verifies it is
++    // safe to start reading.
++    //
+     // Distinct from filter.can_mark_messages_read(), which is a
+     // property of the type of narrow, regardless of actions by
+     // the user. Possibly this can be unified in some nice way.
+     reading_prevented: boolean;
++    // Whether the initial /near/ view reading gate check is still
++    // pending. Unlike reading_prevented, this is not affected by
++    // prevent_reading(), so user "mark as unread" actions cannot
++    // inadvertently re-trigger the gate check and override them.
++    near_view_reading_gate_pending: boolean;
+ 
+     // TODO: Clean up these monkey-patched properties somehow.
+     last_message_historical?: boolean;
+@@ -110,6 +122,8 @@ export class MessageList {
+         data: MessageListData;
+         excludes_muted_topics?: boolean;
+         is_node_test?: boolean;
++        reading_prevented?: boolean;
++        near_view_reading_gate_pending?: boolean;
+     }) {
+         MessageList.id_counter += 1;
+         this.id = MessageList.id_counter;
+@@ -123,7 +137,15 @@ export class MessageList {
+ 
+         this.view = new MessageListView(this, collapse_messages, opts.is_node_test);
+         this.is_combined_feed_view = this.data.filter.is_in_home();
+-        this.reading_prevented = false;
++        // In /near/ conversation views, prevent reading initially to
++        // avoid marking messages as read that the user hasn't seen.
++        // Reading is resumed dynamically once we verify the oldest
++        // unread message is visible via maybe_resume_reading_for_near_view.
++        this.reading_prevented =
++            opts.reading_prevented ?? this.data.filter.is_conversation_view_with_near();
++        this.near_view_reading_gate_pending =
++            opts.near_view_reading_gate_pending ??
++            this.data.filter.is_conversation_view_with_near();
+ 
+         return this;
+     }
+@@ -190,6 +212,61 @@ export class MessageList {
+         this.reading_prevented = false;
+     }
+ 
++    maybe_resume_reading_for_near_view(): void {
++        // When old_unreads_missing is true, the global unread data
++        // from the server may be incomplete, so get_first_unread_info
++        // could return incorrect results. However, if we've backfilled
++        // to the oldest message in this conversation
++        // (has_found_oldest), we have complete local data and can
++        // safely proceed with the gate check.
++        if (
++            !this.near_view_reading_gate_pending ||
++            (unread.old_unreads_missing && !this.data.fetch_status.has_found_oldest())
++        ) {
++            return;
++        }
++
++        const unread_info = narrow_state.get_first_unread_info(this.data.filter);
++        if (unread_info.flavor === "cannot_compute") {
++            // This can happen when /near/ is used with filters that
++            // can't be applied locally, such as search. We clear
++            // the gate to stop future checks but do not call
++            // resume_reading(), so messages won't be marked as read.
++            this.near_view_reading_gate_pending = false;
++            return;
++        }
++
++        if (unread_info.flavor === "not_found") {
++            // All messages are read; safe to resume marking as read
++            // so that newly arriving messages are handled normally.
++            this.near_view_reading_gate_pending = false;
++            this.resume_reading();
++            unread_ui.update_unread_banner();
++            return;
++        }
++
++        assert(unread_info.flavor === "found");
++        const first_unread_id = unread_info.msg_id;
++
++        const $row = this.get_row(first_unread_id);
++        if ($row.length === 0) {
++            // First unread message is not rendered yet.
++            return;
++        }
++
++        // Check if the top of the oldest unread message is at or
++        // below the top of the visible area. If so, the user has
++        // scrolled past all prior messages and it's safe to start
++        // marking messages as read.
++        const row_top = util.the($row).getBoundingClientRect().top;
++        const viewport_info = message_viewport.message_viewport_info();
++        if (row_top >= viewport_info.visible_top) {
++            this.near_view_reading_gate_pending = false;
++            this.resume_reading();
++            unread_ui.update_unread_banner();
++        }
++    }
++
+     add_messages(
+         messages: Message[],
+         append_to_view_opts: {messages_are_new?: boolean} = {},
+diff --git a/web/src/message_scroll.ts b/web/src/message_scroll.ts
+index 388861cb78..38289b728b 100644
+--- a/web/src/message_scroll.ts
++++ b/web/src/message_scroll.ts
+@@ -96,6 +96,9 @@ export function scroll_finished(): void {
+         // are waiting on user input to do so. So, we only mark messages
+         // as read if we are updating selection on this scroll.
+         //
++        // For /near/ views, check whether we should resume marking
++        // messages as read before processing visibility.
++        message_lists.current.maybe_resume_reading_for_near_view();
+         // When the window scrolls, it may cause some messages to
+         // enter the screen and become read.  Calling
+         // unread_ops.process_visible will update necessary
+diff --git a/web/src/message_view.ts b/web/src/message_view.ts
+index 9824e03be0..3a1340df77 100644
+--- a/web/src/message_view.ts
++++ b/web/src/message_view.ts
+@@ -988,9 +988,11 @@ function navigate_to_anchor_message(opts: {
+     // to avoid them being used for any other purpose.
+     function duplicate_current_msg_list_with_new_data(data: MessageListData): MessageList {
+         assert(message_lists.current !== undefined);
+-        const msg_list = new message_list.MessageList({data});
+-        msg_list.reading_prevented = message_lists.current.reading_prevented;
+-        return msg_list;
++        return new message_list.MessageList({
++            data,
++            reading_prevented: message_lists.current.reading_prevented,
++            near_view_reading_gate_pending: message_lists.current.near_view_reading_gate_pending,
++        });
+     }
+ 
+     function select_msg_id(msg_id: number, select_opts?: SelectIdOpts): void {
+@@ -1347,6 +1349,10 @@ export function render_message_list_with_selected_message(opts: {
+         message_lists.current.view.set_message_offset(select_offset);
+     }
+     message_lists.current.view.update_sticky_recipient_headers();
++    // For /near/ views, check whether reading can be resumed before
++    // processing visibility, so that messages are correctly marked
++    // as read on the initial render if appropriate.
++    message_lists.current.maybe_resume_reading_for_near_view();
+     unread_ops.process_visible();
+     narrow_history.save_narrow_state_and_flush();
+ }

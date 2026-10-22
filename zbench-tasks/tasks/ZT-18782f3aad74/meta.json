@@ -1,0 +1,80 @@
+{
+  "task_id": "ZT-18782f3aad74",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "message_view: Allow marking messages as read in `/near/` narrows.",
+  "type": "other",
+  "lang": "web",
+  "issue": 37342,
+  "fix_commit": "18782f3aad74c5822746d3e3fb4609a43b371dc4",
+  "base_commit": "684854a72d3d25091982fed2fe913020cff716aa",
+  "env_fingerprint": "128772d4f300",
+  "fail_to_pass": [
+    "web/tests/filter.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/message_list.test.cjs",
+    "web/tests/message_view.test.cjs"
+  ],
+  "contamination": {
+    "fix_public_at": "2026-04-14",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-01-06T00:38:04Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/18782f3aad74c5822746d3e3fb4609a43b371dc4",
+    "issue_url": "https://github.com/zulip/zulip/issues/37342"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-18782f3aad74",
+      "arms": {
+        "A_f2p": [
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 1,
+        "pass_runs": 1,
+        "signature_stable": true
+      },
+      "elapsed_s": 77.5
+    }
+  },
+  "flake_check": {
+    "fail_runs": 1,
+    "pass_runs": 1,
+    "signature_stable": true
+  },
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 100,
+    "files": 4,
+    "hunks": 10,
+    "f2p_count": 1
+  },
+  "author": {
+    "name": "Aman Agrawal",
+    "email": "amanagr@zulip.com",
+    "date": "2026-02-24T23:34:19+05:30"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "task_id": "ZT-394317212df2",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "This commit is a behavior-preserving performance optimization: every change (precomputing Number()/toLowerCase() outside the closure, replacing _.isEqual with a hand-rolled array compare, specializing the 1- and 2-predicate cases) is deliberately equivalent in observable behavior to the old code. A hidden test that checks observable behavior through pre-existing interfaces would pass on the pre-fix code too, so the task can't discriminate solution from baseline; the only discriminating tests would be flaky wall-clock benchmarks or assertions on implementation internals, both unsuitable for a SWE-bench-style benchmark.",
+  "summary": "filter: Optimize build_term_predicate for hot-path performance.",
+  "lang": "web",
+  "issue": 31135,
+  "fix_commit": "394317212df2c2c1285a6786da8e2a73b82d762b",
+  "base_commit": "92e6754d38f783228b6a58f9153a44f290aa6b4f",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/394317212df2c2c1285a6786da8e2a73b82d762b",
+    "issue_url": "https://github.com/zulip/zulip/issues/31135"
+  },
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 42,
+    "files": 1,
+    "hunks": 5,
+    "f2p_count": 0
+  },
+  "author": {
+    "name": "Tim Abbott",
+    "email": "tabbott@zulip.com",
+    "date": "2026-02-17T03:28:57+00:00"
+  },
+  "author_flagged": "ai_generated_trailer",
+  "contamination": {
+    "fix_public_at": "2026-02-16",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

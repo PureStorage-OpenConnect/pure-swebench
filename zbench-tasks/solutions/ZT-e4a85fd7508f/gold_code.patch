@@ -1,0 +1,32 @@
+diff --git a/web/src/compose.ts b/web/src/compose.ts
+index dab0987058..575a82dbfc 100644
+--- a/web/src/compose.ts
++++ b/web/src/compose.ts
+@@ -125,6 +125,7 @@ export function clear_compose_box(): void {
+     if (compose_ui.is_expanded()) {
+         compose_ui.make_compose_box_original_size();
+     }
++    clear_preview_area();
+     $("textarea#compose-textarea").val("").trigger("focus");
+     compose_ui.compose_textarea_typeahead?.hide();
+     compose_validate.check_overflow_text($("#send_message_form"));
+@@ -402,7 +403,6 @@ export function rewire_finish(value: typeof finish): void {
+ }
+ 
+ export function do_post_send_tasks(): void {
+-    clear_preview_area();
+     // TODO: Do we want to perform below tasks even if the send failed due
+     // to a server-side error?
+     message_viewport.bottom_of_feed.reset();
+diff --git a/web/src/compose_send_menu_popover.ts b/web/src/compose_send_menu_popover.ts
+index d21b8e5bca..8ce6f4cee5 100644
+--- a/web/src/compose_send_menu_popover.ts
++++ b/web/src/compose_send_menu_popover.ts
+@@ -276,7 +276,6 @@ export function initialize(): void {
+                 // time.
+                 compose_state.prevent_draft_restoring();
+                 compose.clear_compose_box();
+-                compose.clear_preview_area();
+                 popover_menus.hide_current_popover_if_visible(instance);
+             });
+         },

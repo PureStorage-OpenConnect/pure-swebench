@@ -1,0 +1,51 @@
+diff --git a/web/tests/settings_config.test.cjs b/web/tests/settings_config.test.cjs
+index cc030006a7..629cf7bdda 100644
+--- a/web/tests/settings_config.test.cjs
++++ b/web/tests/settings_config.test.cjs
+@@ -171,3 +171,46 @@ run_test("all_notifications", ({override}) => {
+         },
+     ]);
+ });
++
++run_test("customize_stream_notifications_table_row_data", () => {
++    const customize_stream_notifications_table_row_data =
++        settings_config.get_custom_stream_specific_notifications_table_row_data();
++
++    assert.deepEqual(customize_stream_notifications_table_row_data, [
++        {
++            is_checked: false,
++            is_disabled: true,
++            is_mobile_checkbox: false,
++            setting_name: "desktop_notifications",
++            push_notifications_disabled: true,
++        },
++        {
++            is_checked: false,
++            is_disabled: true,
++            is_mobile_checkbox: false,
++            setting_name: "audible_notifications",
++            push_notifications_disabled: true,
++        },
++        {
++            is_checked: false,
++            is_disabled: true,
++            is_mobile_checkbox: true,
++            setting_name: "push_notifications",
++            push_notifications_disabled: true,
++        },
++        {
++            is_checked: false,
++            is_disabled: true,
++            is_mobile_checkbox: false,
++            setting_name: "email_notifications",
++            push_notifications_disabled: true,
++        },
++        {
++            is_checked: false,
++            is_disabled: true,
++            is_mobile_checkbox: false,
++            setting_name: "wildcard_mentions_notify",
++            push_notifications_disabled: true,
++        },
++    ]);
++});

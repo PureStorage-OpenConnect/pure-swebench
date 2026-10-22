@@ -1,0 +1,69 @@
+{
+  "task_id": "ZT-c5200e8b05b2",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "oracle_not_enumerable",
+  "reason": "arm A run 0: target could not run (see ZT-c5200e8b05b2_A0.log)",
+  "summary": "deliver_scheduled_emails: Use a queue, instead of infinite retries.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 32463,
+  "fix_commit": "c5200e8b05b23b14f3b8b8e2b6a98cb74e18c709",
+  "base_commit": "7fde5fd0a4d3ad7cd414a96bf3359976a409ebb9",
+  "env_fingerprint": "613bd27be2e3",
+  "fail_to_pass": [
+    "zerver.tests.test_email_notifications.TestFollowupEmails.test_followup_emails_for_demo_realms",
+    "zerver.tests.test_email_notifications.TestFollowupEmails.test_followup_emails_for_regular_realms",
+    "zerver.tests.test_invite.InviteUserTest.test_invitation_reminder_email",
+    "zerver.tests.test_queue_worker.WorkerTest.test_email_sending_worker_retries",
+    "zerver.tests.test_users.ActivateTest.test_deliver_scheduled_emails",
+    "zerver.tests.test_users.ActivateTest.test_deliver_scheduled_emails_no_addressees"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_send_email"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 102,
+    "files": 5,
+    "hunks": 8,
+    "f2p_count": 4
+  },
+  "interface_requirements": [
+    "The library function `zerver.lib.send_email.deliver_scheduled_emails` is renamed to `queue_scheduled_emails` to reflect its new behavior: instead of building and sending the email synchronously, it enqueues the email-sending event for asynchronous delivery, and it must do so via a Django on-commit hook so the event is published only after the current database transaction commits. It still deletes the processed ScheduledEmail row, and the end-to-end result (once the queued event is consumed) is identical to the previous direct send, including the existing behavior of logging to the `zulip.send_email` logger and sending nothing when the scheduled email has no remaining recipients.",
+    "The email-sending queue worker class exported from `zerver.worker.email_senders` (previously `EmailSendingWorker`) is renamed to `ImmediateEmailSenderWorker`; it remains importable from that module, remains the registered worker for the `email_senders` queue, and retains the existing behavior of retrying events when email delivery fails with `EmailNotDeliveredError`."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 5146,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Alex Vandiver",
+    "email": "alexmv@zulip.com",
+    "date": "2025-03-04"
+  },
+  "contamination": {
+    "fix_public_at": "2025-03-04",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-11-25T18:08:14Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/c5200e8b05b23b14f3b8b8e2b6a98cb74e18c709",
+    "issue_url": "https://github.com/zulip/zulip/issues/32463"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-c5200e8b05b2",
+      "arms": {},
+      "verdict": "UNENUMERABLE",
+      "why": "arm A run 0: target could not run (see ZT-c5200e8b05b2_A0.log)",
+      "elapsed_s": 21.4
+    }
+  }
+}

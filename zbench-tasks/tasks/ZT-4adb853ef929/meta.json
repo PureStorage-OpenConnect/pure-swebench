@@ -1,0 +1,86 @@
+{
+  "task_id": "ZT-4adb853ef929",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "i18n: Write language name in the language itself.",
+  "type": "other",
+  "lang": "web",
+  "issue": 14565,
+  "fix_commit": "4adb853ef92932ac70c18e2de06da884ef6084f1",
+  "base_commit": "f022f1d3d0b9a17d1b2d89af5ae2b2e5e0bc65ea",
+  "env_fingerprint": "c1d8f49dd4b5",
+  "fail_to_pass": [
+    "web/tests/i18n.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 32,
+    "files": 1,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The language-picker list (output of the existing get_language_list_columns) must show each language's name in that language itself (its autonym), computed from the language code via Intl.DisplayNames, instead of the server-provided English name; the first character is uppercased according to the locale (e.g. 'id' \u2192 'Indonesia', 'mn' \u2192 '\u041c\u043e\u043d\u0433\u043e\u043b').",
+    "If the language code contains a script subtag, the script's localized display name is appended in parentheses (e.g. 'zh-hans' \u2192 '\u4e2d\u6587 (\u7b80\u4f53)').",
+    "If the language code contains a region subtag, the region's localized display name is appended in parentheses (e.g. 'en-gb' \u2192 'English (United Kingdom)').",
+    "The code 'en' must be displayed as US English, i.e. rendered as 'English (United States)'.",
+    "The languages 'bqi' and 'mn' must display the fixed names 'Bakhtiari' and '\u041c\u043e\u043d\u0433\u043e\u043b' respectively, because Intl.DisplayNames returns English names for them in some browsers.",
+    "The existing translation-percentage suffix format is preserved: the display name is followed by ' (NN%)' when percent_translated is defined, and omitted for the fully translated default language."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 313,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Sahil Batra",
+    "email": "sahil@zulip.com",
+    "date": "2025-12-02"
+  },
+  "contamination": {
+    "fix_public_at": "2025-12-02",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2020-04-13T16:04:47Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/4adb853ef92932ac70c18e2de06da884ef6084f1",
+    "issue_url": "https://github.com/zulip/zulip/issues/14565"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-4adb853ef929",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 85.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

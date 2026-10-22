@@ -1,0 +1,41 @@
+diff --git a/zerver/tests/test_events.py b/zerver/tests/test_events.py
+index dc5022dede..1a1044546e 100644
+--- a/zerver/tests/test_events.py
++++ b/zerver/tests/test_events.py
+@@ -2260,8 +2260,10 @@ class NormalActionsTest(BaseAction):
+             check_stream_create("events[1]", events[1])
+             check_subscription_peer_add("events[2]", events[2])
+ 
+-            # Remove subgroup for next test.
+-            remove_subgroups_from_user_group(user_group, [hamlet_group], acting_user=None)
++            with self.verify_action(num_events=2) as events:
++                remove_subgroups_from_user_group(user_group, [hamlet_group], acting_user=None)
++            check_user_group_remove_subgroups("events[0]", events[0])
++            check_stream_delete("events[1]", events[1])
+         else:
+             with self.verify_action() as events:
+                 bulk_add_members_to_user_groups([user_group], [hamlet.id], acting_user=None)
+@@ -2275,8 +2277,9 @@ class NormalActionsTest(BaseAction):
+                 add_subgroups_to_user_group(user_group, [hamlet_group], acting_user=None)
+             check_user_group_add_subgroups("events[0]", events[0])
+ 
+-            # Remove subgroup for next test.
+-            remove_subgroups_from_user_group(user_group, [hamlet_group], acting_user=None)
++            with self.verify_action() as events:
++                remove_subgroups_from_user_group(user_group, [hamlet_group], acting_user=None)
++            check_user_group_remove_subgroups("events[0]", events[0])
+ 
+         nobody_group = NamedUserGroup.objects.get(
+             name=SystemGroups.NOBODY, realm=othello.realm, is_system_group=True
+diff --git a/zerver/tests/test_user_groups.py b/zerver/tests/test_user_groups.py
+index 5d5eac86c7..40f58548bd 100644
+--- a/zerver/tests/test_user_groups.py
++++ b/zerver/tests/test_user_groups.py
+@@ -572,6 +572,7 @@ class UserGroupTestCase(ZulipTestCase):
+             bulk_remove_members_from_user_groups([], [hamlet.id], acting_user=None)
+             bulk_remove_members_from_user_groups([test_group], [], acting_user=None)
+             add_subgroups_to_user_group(test_group, [], acting_user=None)
++            remove_subgroups_from_user_group(test_group, [], acting_user=None)
+ 
+ 
+ class UserGroupAPITestCase(UserGroupTestCase):

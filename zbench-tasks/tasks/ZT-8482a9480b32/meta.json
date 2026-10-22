@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-8482a9480b32",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The test hard-couples to internals the fix invents: (1) it mock-patches 'zerver.lib.digest.get_new_messages_count', requiring the solver to create a helper with exactly that name, in that module, called at exactly that point in the flow \u2014 a private counting helper no spec would name; (2) it asserts the exact positional call signature of the internal helper 'enough_traffic' via enough_traffic_mock.assert_called_once_with(0, 0, 0, True) and (0, 0, 10, False), pinning the argument order (hot_conversations, new_streams, new_messages, show_message_content) of a private function \u2014 a pure implementation choice (the same behavior could be built with kwargs, a context dict, or inlined logic); (3) it also directly imports and calls get_new_messages_count(user, cutoff) with a specific (UserProfile, datetime) signature; (4) assert_database_query_count(8) pins the exact query count of one particular implementation. While the template context keys (show_message_content, new_messages_count, message_content_disabled_by_realm) could plausibly be specified as email-template contract, the mock targets and internal call-signature assertions cannot be cured by a brief without literally dictating the reference implementation's private structure, so the task is dropped.",
+  "summary": "email: Apply message content visibility settings to digest too.",
+  "lang": "py",
+  "issue": 33190,
+  "fix_commit": "8482a9480b32bdbb7a5db39c905dcfd34c21dd08",
+  "base_commit": "8c556cafbbd0b6795ca4b91c6baacebb99a8fa1d",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/8482a9480b32bdbb7a5db39c905dcfd34c21dd08",
+    "issue_url": "https://github.com/zulip/zulip/issues/33190"
+  }
+}

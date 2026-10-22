@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-a995510f0c98",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "worker: Flag messages processed by embedded bot.",
+  "type": "other",
+  "lang": "py",
+  "issue": 28869,
+  "fix_commit": "a995510f0c987e51a74c1e71e917ec2c370cbc79",
+  "base_commit": "cacd6bb88cd433c0f38d9a2e617e5cf6067f7929",
+  "env_fingerprint": "4f386b700f48",
+  "fail_to_pass": [
+    "zerver.tests.test_service_bot_system.TestServiceBotEventTriggers.test_flag_messages_service_bots_has_processed"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 7,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 2113,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2025-01-24"
+  },
+  "contamination": {
+    "fix_public_at": "2025-01-24",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-02-07T20:59:14Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/a995510f0c987e51a74c1e71e917ec2c370cbc79",
+    "issue_url": "https://github.com/zulip/zulip/issues/28869"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-a995510f0c98",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_flag_messages_service_bots_has_processed"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 86.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,44 @@
+@startuml pipeline
+title Activity (pipeline + gates + loop)
+skinparam handwritten true
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #6B6B6B
+  DiamondBackgroundColor #F5F7FA
+  DiamondBorderColor #9AA5B1
+}
+|Corpus|
+start
+repeat :mine candidate\n(zulip git log: Fixes #N\n+ tests + code in one commit);
+:prepare task\n(sanitize GitHub issue; split\ngold_code / gold_test; tier);
+if (oracle: f2p FAILS@base\nAND PASSES@fix, P2P green?) then (no)
+  :drop / hold;
+  detach
+else (yes)
+endif
+:add to corpus\n(meta.json + instance.jsonl);
+|Eval grid|
+:grid over agents\n(model x harness x provider x thinking);
+:isolated worktree\n(depth-1, future history hidden);
+:agent produces a patch\n(test-blind);
+:strip test/runner edits\n-> hidden tests in\n--network none container;
+if (hidden tests pass?) then (yes)
+  :RESOLVED;
+else (no)
+  :tests_failed / no_patch;
+endif
+|Store|
+:append attempt + evidence\n+ provenance  (immutable);
+if (infra / contamination artifact?) then (yes)
+  :run_exclusion overlay\n(mutable) -> re-run;
+else (no)
+endif
+|Analysis|
+:rank on tier-A common set\n(+ cost);
+:dashboard + readout;
+repeat while (keep-a-spare: grow the corpus?) is (yes)
+->no;
+stop
+@enduml

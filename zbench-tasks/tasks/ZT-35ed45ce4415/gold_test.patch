@@ -1,0 +1,61 @@
+diff --git a/zerver/tests/test_mattermost_importer.py b/zerver/tests/test_mattermost_importer.py
+index 66281bfcaf..bf97a148d2 100644
+--- a/zerver/tests/test_mattermost_importer.py
++++ b/zerver/tests/test_mattermost_importer.py
+@@ -877,7 +877,7 @@ class MatterMostImporter(ZulipTestCase):
+         messages = Message.objects.filter(realm=realm)
+         for message in messages:
+             self.assertIsNotNone(message.rendered_content)
+-        self.assert_length(messages, 12)
++        self.assert_length(messages, 15)
+ 
+         stream_messages = messages.filter(recipient__type=Recipient.STREAM).order_by("date_sent")
+         stream_recipients = stream_messages.values_list("recipient", flat=True)
+@@ -911,8 +911,8 @@ class MatterMostImporter(ZulipTestCase):
+             "date_sent"
+         )
+         personal_recipients = personal_messages.values_list("recipient", flat=True)
+-        self.assert_length(personal_messages, 5)
+-        self.assert_length(set(personal_recipients), 3)
++        self.assert_length(personal_messages, 8)
++        self.assert_length(set(personal_recipients), 4)
+         self.assertEqual(personal_messages[0].sender.email, "ron@zulip.com")
+         self.assertRegex(personal_messages[0].content, "hey harry\n\n\\[harry-ron.jpg\\]\\(.*\\)")
+         self.assertTrue(personal_messages[0].has_attachment)
+diff --git a/zerver/tests/test_rocketchat_importer.py b/zerver/tests/test_rocketchat_importer.py
+index e382c1a15d..cde445e1ca 100644
+--- a/zerver/tests/test_rocketchat_importer.py
++++ b/zerver/tests/test_rocketchat_importer.py
+@@ -1030,7 +1030,7 @@ class RocketChatImporter(ZulipTestCase):
+             self.assertIsNotNone(message.rendered_content)
+         # After removing user_joined, added_user, discussion_created, etc.
+         # messages. (Total messages were 66.)
+-        self.assert_length(messages, 44)
++        self.assert_length(messages, 49)
+ 
+         stream_messages = messages.filter(recipient__type=Recipient.STREAM).order_by("date_sent")
+         stream_recipients = stream_messages.values_list("recipient", flat=True)
+@@ -1071,8 +1071,8 @@ class RocketChatImporter(ZulipTestCase):
+             "date_sent"
+         )
+         personal_recipients = personal_messages.values_list("recipient", flat=True)
+-        self.assert_length(personal_messages, 4)
+-        self.assert_length(set(personal_recipients), 2)
++        self.assert_length(personal_messages, 9)
++        self.assert_length(set(personal_recipients), 5)
+         self.assertEqual(personal_messages[0].sender.email, "harrypotter@email.com")
+         self.assertEqual(
+             personal_messages[0].content,
+diff --git a/zerver/tests/test_slack_importer.py b/zerver/tests/test_slack_importer.py
+index e5b6093023..431f8006bc 100644
+--- a/zerver/tests/test_slack_importer.py
++++ b/zerver/tests/test_slack_importer.py
+@@ -1812,7 +1812,7 @@ by Pieter
+             },
+         )
+ 
+-        self.assertEqual(Message.objects.filter(realm=realm).count(), 83)
++        self.assertEqual(Message.objects.filter(realm=realm).count(), 87)
+ 
+         # All auth backends are enabled initially.
+         self.assertTrue(all(realm.authentication_methods_dict().values()))

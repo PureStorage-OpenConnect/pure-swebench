@@ -1,0 +1,39 @@
+{
+  "task_id": "ZT-89b14e184c95",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The hidden test directly calls ui_util.get_left_sidebar_topic_search_term() and ui_util.is_topic_search() and asserts on their return values (ui_util.test.cjs 'topic search term parsing' block, plus is_topic_search-driven behavior in stream_list_sort.test.cjs). These functions are introduced by the fix: the code diff shows stream_list_sort.ts newly importing ui_util to call is_topic_search(), and stream_list.ts newly calling get_left_sidebar_topic_search_term() where previously only the pre-existing get_left_sidebar_search_term() was used. A solver implementing the same behavior with differently named helpers (or with the parsing logic placed in another module, e.g. inside stream_list_sort itself) would fail the test even with a correct fix, because the test hard-codes the author's exact new symbol names and their location in the ui_util module. The stream_list_sort behavioral assertions are otherwise reasonable, but they too depend on rewiring the new ui_util functions, so the coupling is load-bearing rather than incidental.",
+  "summary": "stream_list: Filter all (cached) topics on \"topic:\" search.",
+  "lang": "web",
+  "issue": 36886,
+  "fix_commit": "89b14e184c95f34beb7f53d370fa5b17f458a5e9",
+  "base_commit": "41c74b068a99d2563b9b784e6def809cef70737b",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/89b14e184c95f34beb7f53d370fa5b17f458a5e9",
+    "issue_url": "https://github.com/zulip/zulip/issues/36886"
+  },
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 152,
+    "files": 5,
+    "hunks": 14,
+    "f2p_count": 0
+  },
+  "author": {
+    "name": "Evy Kassirer",
+    "email": "evy@zulip.com",
+    "date": "2026-05-29T09:54:06-07:00"
+  },
+  "author_flagged": "ai_generated_trailer",
+  "contamination": {
+    "fix_public_at": "2026-06-12",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": null,
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B"
+  }
+}

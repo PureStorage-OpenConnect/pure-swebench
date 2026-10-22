@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-520c58bf6bd3",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The underlying bug (off-by-one topic highlighting when the topic contains an apostrophe) is a genuinely verifiable fix, and the new behavioral assertions ('James&#39; <span class=\"highlight\">burger</span>') grade the observable API outcome well. However, the hidden grader also updates and pins several exact multi-line generated-SQL snapshot strings (SELECT anon_1.message_id, ... escape_html(subject) AS escaped_topic_name ...). These assertions lock in one specific implementation: any equally correct fix \u2014 e.g., escaping the topic in Python before computing highlight offsets, or using a different column label than 'escaped_topic_name' \u2014 would satisfy the behavioral checks but fail the SQL snapshots. That is grading incidental format/implementation internals rather than the observable behavior the fix changes, which falls under the brittle exact-long-string rejection rule.",
+  "summary": "narrow: Fix topic highlighting issue with apostrophes in search results.",
+  "lang": "py",
+  "issue": 25633,
+  "fix_commit": "520c58bf6bd3d010937cb632524c75700ac000e9",
+  "base_commit": "e9a2ee56c3961cb99c92944ac9cb09909a453b3d",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/520c58bf6bd3d010937cb632524c75700ac000e9",
+    "issue_url": "https://github.com/zulip/zulip/issues/25633"
+  }
+}

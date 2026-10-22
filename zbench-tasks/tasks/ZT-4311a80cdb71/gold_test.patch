@@ -1,0 +1,28 @@
+diff --git a/zerver/tests/fixtures/markdown_test_cases.json b/zerver/tests/fixtures/markdown_test_cases.json
+index 34bb4e2f49..f675a26a77 100644
+--- a/zerver/tests/fixtures/markdown_test_cases.json
++++ b/zerver/tests/fixtures/markdown_test_cases.json
+@@ -1090,6 +1090,11 @@
+       "name": "RFC2392 mid links with part ID (markdown syntax)",
+       "input": "[message](mid:960830.1639@XIson.com/partA.960830.1639@XIson.com)",
+       "expected_output": "<p><a href=\"mid:960830.1639@XIson.com/partA.960830.1639@XIson.com\">message</a></p>"
++    },
++    {
++      "name": "explicit_link_asana_desktop",
++      "input": "[Asana Task](asanadesktop://task/123456789)",
++      "expected_output": "<p><a href=\"asanadesktop://task/123456789\">Asana Task</a></p>"
+     }
+   ],
+   "linkify_tests": [
+@@ -1482,6 +1487,11 @@
+       "hansoft://Project/Task/12345",
+       "<p>%s</p>",
+       "hansoft://Project/Task/12345"
++    ],
++    [
++      "asanadesktop://task/123456789",
++      "<p>%s</p>",
++      "asanadesktop://task/123456789"
+     ]
+   ]
+ }

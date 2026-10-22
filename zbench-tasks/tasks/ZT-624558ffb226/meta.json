@@ -1,0 +1,81 @@
+{
+  "task_id": "ZT-624558ffb226",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "import: Fix missing avatar thumbnails.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 37601,
+  "fix_commit": "624558ffb226c101fbbfbad5b7cf6b346452d2c2",
+  "base_commit": "9f8e613d93e6def5ce312d42433f32d98d85fda6",
+  "env_fingerprint": "0f8828f88a37",
+  "fail_to_pass": [
+    "zerver.tests.test_import_export.RealmImportExportTest.test_import_files_from_s3"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 1,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 523,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Mateusz Mandera",
+    "email": "mateusz.mandera@zulip.com",
+    "date": "2026-01-28"
+  },
+  "contamination": {
+    "fix_public_at": "2026-01-28",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2026-01-21T07:49:26Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/624558ffb226c101fbbfbad5b7cf6b346452d2c2",
+    "issue_url": "https://github.com/zulip/zulip/issues/37601"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-624558ffb226",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_import_files_from_s3"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 118.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

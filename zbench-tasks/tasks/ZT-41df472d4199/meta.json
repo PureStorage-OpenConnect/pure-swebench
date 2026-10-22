@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-41df472d4199",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden test cannot fail-before/pass-after. The test diff adds no new assertion about the new behavior \u2014 it only deletes the old /try-zulip/ page check and loosens the redirect loop. The redirect test iterates LANDING_PAGE_REDIRECTS, the very data structure the fix edits: on the pre-fix codebase /try-zulip/ simply isn't in the list, so the loop skips it and the test passes; a candidate that merely deletes the URL route (leaving a 404, no redirect) also passes. There is no deterministic outcome assertion that distinguishes fixed from unfixed code, so the task is ungradeable as-is.",
+  "summary": "corporate: Replace `/try-zulip` with `/?show_try_zulip_modal`.",
+  "lang": "py",
+  "issue": 34181,
+  "fix_commit": "41df472d4199d7a275027062dbe17697c1ceee7e",
+  "base_commit": "f64d7b6e28dedbc77684b4460538e5ebcd6ea468",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/41df472d4199d7a275027062dbe17697c1ceee7e",
+    "issue_url": "https://github.com/zulip/zulip/issues/34181"
+  }
+}

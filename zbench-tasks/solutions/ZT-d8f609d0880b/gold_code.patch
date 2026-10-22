@@ -1,0 +1,115 @@
+diff --git a/web/src/filter.ts b/web/src/filter.ts
+index 46a7c6f10f..5ce33334a6 100644
+--- a/web/src/filter.ts
++++ b/web/src/filter.ts
+@@ -750,6 +750,20 @@ export class Filter {
+             const operand = term.operand;
+             const canonicalized_operator = Filter.canonicalize_operator(term.operator);
+             if (canonicalized_operator === "is") {
++                // Some operands have their own negative words, like
++                // unresolved, rather than the default "exclude " prefix.
++                const custom_negated_operand_phrases: Record<string, string> = {
++                    resolved: "unresolved",
++                };
++                const negated_phrase = custom_negated_operand_phrases[operand];
++                if (term.negated && negated_phrase !== undefined) {
++                    return {
++                        type: "is_operator",
++                        verb: "",
++                        operand: negated_phrase,
++                    };
++                }
++
+                 const verb = term.negated ? "exclude " : "";
+                 return {
+                     type: "is_operator",
+diff --git a/web/src/search_suggestion.ts b/web/src/search_suggestion.ts
+index c7c3c6812d..6450adde19 100644
+--- a/web/src/search_suggestion.ts
++++ b/web/src/search_suggestion.ts
+@@ -589,12 +589,29 @@ function get_special_filter_suggestions(
+     // Negating suggestions on is_search_operand_negated is required for
+     // suggesting negated terms.
+     if (last.negated === true || is_search_operand_negated) {
+-        suggestions = suggestions.map((suggestion) => ({
+-            search_string: "-" + suggestion.search_string,
+-            description_html: "exclude " + suggestion.description_html,
+-            incompatible_patterns: suggestion.incompatible_patterns,
+-            is_people: false,
+-        }));
++        suggestions = suggestions
++            .map((suggestion) => {
++                // If the search_string is "is:resolved", we want to suggest "Unresolved topics"
++                // instead of "Exclude resolved topics".
++                if (suggestion.search_string === "is:resolved") {
++                    return {
++                        ...suggestion,
++                        search_string: "-" + suggestion.search_string,
++                        description_html: "unresolved topics",
++                    };
++                } else if (suggestion.search_string === "-is:resolved") {
++                    return null;
++                }
++                return {
++                    ...suggestion,
++                    search_string: "-" + suggestion.search_string,
++                    description_html: "exclude " + suggestion.description_html,
++                };
++            })
++            .filter(
++                (suggestion): suggestion is SuggestionAndIncompatiblePatterns =>
++                    suggestion !== null,
++            );
+     }
+ 
+     const last_string = Filter.unparse([last]).toLowerCase();
+@@ -713,6 +730,17 @@ function get_is_filter_suggestions(last: NarrowTerm, terms: NarrowTerm[]): Sugge
+                 {operator: "dm-including"},
+             ],
+         },
++        {
++            search_string: "-is:resolved",
++            description_html: "unresolved topics",
++            is_people: false,
++            incompatible_patterns: [
++                {operator: "is", operand: "resolved"},
++                {operator: "is", operand: "dm"},
++                {operator: "dm"},
++                {operator: "dm-including"},
++            ],
++        },
+     ];
+     const special_filtered_suggestions = get_special_filter_suggestions(last, terms, suggestions);
+     // Suggest "is:dm" to anyone with "is:private" in their muscle memory
+diff --git a/web/templates/search_description.hbs b/web/templates/search_description.hbs
+index 725fc5651f..ab2a09bf9e 100644
+--- a/web/templates/search_description.hbs
++++ b/web/templates/search_description.hbs
+@@ -50,6 +50,10 @@
+             {{~!-- squash whitespace --~}}
+             {{this.verb}}followed topics
+             {{~!-- squash whitespace --~}}
++        {{else if (eq this.operand "unresolved")}}
++            {{~!-- squash whitespace --~}}
++            {{this.verb}}unresolved topics
++            {{~!-- squash whitespace --~}}
+         {{else}}
+             {{~!-- squash whitespace --~}}
+             invalid {{this.operand}} operand for is operator
+diff --git a/web/templates/search_operators.hbs b/web/templates/search_operators.hbs
+index 5008366e02..3cab7e02ff 100644
+--- a/web/templates/search_operators.hbs
++++ b/web/templates/search_operators.hbs
+@@ -133,6 +133,12 @@
+                             {{t 'Narrow to messages in resolved topics.'}}
+                         </td>
+                     </tr>
++                    <tr>
++                        <td class="operator">-is:resolved</td>
++                        <td class="definition">
++                            {{t 'Narrow to messages in unresolved topics.'}}
++                        </td>
++                    </tr>
+                     <tr>
+                         <td class="operator">is:followed</td>
+                         <td class="definition">

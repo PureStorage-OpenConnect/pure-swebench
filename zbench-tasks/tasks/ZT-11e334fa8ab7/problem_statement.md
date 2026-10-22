@@ -1,0 +1,29 @@
+# Fetch presence data on demand when the user card is open
+
+## Background
+
+The Zulip web app tracks user presence (online / idle / last-active times) and displays a human-readable availability status in places like the user card popover and the buddy list. The relevant logic lives in `web/src/buddy_data`, whose exported function `user_last_seen_time_status(user_id)` returns strings such as "Active now", "Idle", "Active <relative time>", or a fallback like "Not active in the last year".
+
+The server does not send presence data for every user: users who have been idle for a very long time may have no `last_active` timestamp in the client's presence store (`presence.presence_info`), either because their presence was never fetched or because it falls outside the window of data the client received. Today, when `user_last_seen_time_status` encounters such a user, it silently falls back to the vague "Not active in the last year" text. There is no mechanism for the UI to notice that data is missing and go fetch it.
+
+## Problem
+
+When a user opens the user card popover for a long-idle user, they see the imprecise "Not active in the last year" text even though the server could provide a precise last-active time. The web app should, in contexts where a fetch is possible (such as the open user card), request the precise presence data from the server and then display an accurate last-seen status.
+
+## Required behavior
+
+1. `user_last_seen_time_status` in `web/src/buddy_data` must support a lazy-fetch path for missing presence data (see Interface requirements below for the exact contract).
+2. The user card popover must use this path: when the card is opened for a user whose precise last-active timestamp is not available locally, the app must request that user's presence data from the server (the server exposes a per-user presence endpoint, `GET /users/{user_id_or_email}/presence`). While the request is in flight, no misleading placeholder such as "Not active in the last year" should be shown for that user; once the data arrives, the card must update to show the precise availability text derived from the fetched `last_active` time.
+3. Contexts that cannot or should not trigger a fetch (existing callers that do not opt in) must keep their current behavior exactly, including the existing fallback text for users with no known last-active time.
+4. The fetched presence data should be stored in the client presence store so a subsequent call for the same user returns the precise status without another round trip.
+5. Review the status strings used for long time periods (e.g. activity more than a year ago) and make sure the displayed wording is accurate for the newly available precise timestamps — e.g. a user last active 14 months ago should get a concrete "Active <date/relative time>"-style string rather than an indefinite one, consistent with the existing formatting used for shorter periods.
+
+## Interface requirements
+
+- The exported function `user_last_seen_time_status(user_id)` in `web/src/buddy_data` gains an optional second parameter: a callback of type `(user_id: number) => void`. Callers that can lazily fetch presence data (e.g. the user card popover) pass this callback so the missing-data case can be handled asynchronously.
+- When the user's presence record has no last-active timestamp (presence data unavailable, or older than the window covered by fetched data) and the callback argument is provided, `user_last_seen_time_status` must invoke the callback exactly once with that user's id and return the empty string `""` instead of the "Not active in the last year" text. When no callback is provided, behavior is unchanged from today.
+
+## Notes
+
+- "No last-active timestamp" includes the case where a presence record exists for the user but its `last_active` field is `undefined`, as well as the case where there is no presence record at all beyond what marks the user as long-idle.
+- The callback is the hook through which the caller (e.g. the user card code) issues the server fetch and re-renders; `user_last_seen_time_status` itself should not perform network requests.

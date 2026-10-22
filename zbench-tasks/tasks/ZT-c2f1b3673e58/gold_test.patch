@@ -1,0 +1,187 @@
+diff --git a/zerver/tests/test_event_system.py b/zerver/tests/test_event_system.py
+index e29b4c7ff0..cbe7e0f03e 100644
+--- a/zerver/tests/test_event_system.py
++++ b/zerver/tests/test_event_system.py
+@@ -30,7 +30,7 @@ from zerver.lib.test_helpers import (
+ from zerver.lib.users import get_users_for_api
+ from zerver.models import CustomProfileField, UserMessage, UserPresence, UserProfile
+ from zerver.models.clients import get_client
+-from zerver.models.realms import get_realm, get_realm_with_settings
++from zerver.models.realms import get_realm
+ from zerver.models.streams import get_stream
+ from zerver.models.users import get_system_bot
+ from zerver.tornado.event_queue import (
+@@ -1212,16 +1212,11 @@ class FetchQueriesTest(ZulipTestCase):
+ 
+         self.login_user(user)
+ 
+-        # Fetch realm like it is done when calling fetch_initial_state_data
+-        # in production to match the query counts with the actual query
+-        # count in production.
+-        realm = get_realm_with_settings(realm_id=user.realm_id)
+-
+         with (
+             self.assert_database_query_count(46),
+             mock.patch("zerver.lib.events.always_want") as want_mock,
+         ):
+-            fetch_initial_state_data(user, realm=realm)
++            fetch_initial_state_data(user, realm=user.realm)
+ 
+         expected_counts = dict(
+             alert_words=1,
+@@ -1234,7 +1229,8 @@ class FetchQueriesTest(ZulipTestCase):
+             muted_users=1,
+             onboarding_steps=1,
+             presence=1,
+-            realm=1,
++            # 2 of the 3 queries here are for fetching 'realm_user_groups' data.
++            realm=3,
+             realm_bot=1,
+             realm_domains=1,
+             realm_embedded_bots=0,
+@@ -1267,11 +1263,6 @@ class FetchQueriesTest(ZulipTestCase):
+ 
+         self.assertEqual(wanted_event_types, set(expected_counts))
+ 
+-        # Fetch realm again here so that the cached foreign key fields
+-        # while testing the above case does not reduce the query count
+-        # and we test the actual query count for each event type.
+-        realm = get_realm_with_settings(realm_id=user.realm_id)
+-
+         for event_type in sorted(wanted_event_types):
+             count = expected_counts[event_type]
+             with self.assert_database_query_count(count):
+@@ -1280,7 +1271,7 @@ class FetchQueriesTest(ZulipTestCase):
+                 else:
+                     event_types = [event_type]
+ 
+-                fetch_initial_state_data(user, realm=realm, event_types=event_types)
++                fetch_initial_state_data(user, realm=user.realm, event_types=event_types)
+ 
+ 
+ class TestEventsRegisterAllPublicStreamsDefaults(ZulipTestCase):
+diff --git a/zerver/tests/test_home.py b/zerver/tests/test_home.py
+index 1f4f44840b..2c31455cd9 100644
+--- a/zerver/tests/test_home.py
++++ b/zerver/tests/test_home.py
+@@ -281,7 +281,7 @@ class HomeTest(ZulipTestCase):
+ 
+         # Verify succeeds once logged-in
+         with (
+-            self.assert_database_query_count(55),
++            self.assert_database_query_count(54),
+             patch("zerver.lib.cache.cache_set") as cache_mock,
+         ):
+             result = self._get_home_page(stream="Denmark")
+@@ -586,7 +586,7 @@ class HomeTest(ZulipTestCase):
+         # Verify number of queries for Realm admin isn't much higher than for normal users.
+         self.login("iago")
+         with (
+-            self.assert_database_query_count(53),
++            self.assert_database_query_count(52),
+             patch("zerver.lib.cache.cache_set") as cache_mock,
+         ):
+             result = self._get_home_page()
+@@ -618,7 +618,7 @@ class HomeTest(ZulipTestCase):
+         self._get_home_page()
+ 
+         # Then for the second page load, measure the number of queries.
+-        with self.assert_database_query_count(50):
++        with self.assert_database_query_count(49):
+             result = self._get_home_page()
+ 
+         # Do a sanity check that our new streams were in the payload.
+diff --git a/zerver/tests/test_user_groups.py b/zerver/tests/test_user_groups.py
+index bb1fe46f9a..3afde56905 100644
+--- a/zerver/tests/test_user_groups.py
++++ b/zerver/tests/test_user_groups.py
+@@ -104,7 +104,9 @@ class UserGroupTestCase(ZulipTestCase):
+         empty_user_group = check_add_user_group(realm, "newgroup", [], acting_user=user)
+         do_deactivate_user(self.example_user("hamlet"), acting_user=None)
+ 
+-        user_groups = user_groups_in_realm_serialized(realm, include_deactivated_groups=False)
++        user_groups = user_groups_in_realm_serialized(
++            realm, include_deactivated_groups=False
++        ).api_groups
+         self.assert_length(user_groups, 10)
+         self.assertEqual(user_groups[0]["id"], user_group.id)
+         self.assertEqual(user_groups[0]["creator_id"], user_group.creator_id)
+@@ -183,7 +185,9 @@ class UserGroupTestCase(ZulipTestCase):
+             },
+             acting_user=self.example_user("desdemona"),
+         )
+-        user_groups = user_groups_in_realm_serialized(realm, include_deactivated_groups=False)
++        user_groups = user_groups_in_realm_serialized(
++            realm, include_deactivated_groups=False
++        ).api_groups
+         self.assertEqual(user_groups[10]["id"], new_user_group.id)
+         self.assertEqual(user_groups[10]["creator_id"], new_user_group.creator_id)
+         self.assertEqual(
+@@ -215,7 +219,9 @@ class UserGroupTestCase(ZulipTestCase):
+             new_user_group, [another_new_group, owners_system_group], acting_user=None
+         )
+         do_deactivate_user_group(another_new_group, acting_user=None)
+-        user_groups = user_groups_in_realm_serialized(realm, include_deactivated_groups=True)
++        user_groups = user_groups_in_realm_serialized(
++            realm, include_deactivated_groups=True
++        ).api_groups
+         self.assert_length(user_groups, 12)
+         self.assertEqual(user_groups[10]["id"], new_user_group.id)
+         self.assertEqual(user_groups[10]["name"], "newgroup2")
+@@ -227,13 +233,50 @@ class UserGroupTestCase(ZulipTestCase):
+         self.assertEqual(user_groups[11]["name"], "newgroup3")
+         self.assertTrue(user_groups[11]["deactivated"])
+ 
+-        user_groups = user_groups_in_realm_serialized(realm, include_deactivated_groups=False)
+-        self.assert_length(user_groups, 11)
+-        self.assertEqual(user_groups[10]["id"], new_user_group.id)
+-        self.assertEqual(user_groups[10]["name"], "newgroup2")
+-        self.assertFalse(user_groups[10]["deactivated"])
++        do_change_realm_permission_group_setting(
++            realm, "create_multiuse_invite_group", hamletcharacters_group, acting_user=None
++        )
++        cordelia = self.example_user("cordelia")
++        setting_group = self.create_or_update_anonymous_group_for_setting(
++            [cordelia], [owners_system_group]
++        )
++        do_change_realm_permission_group_setting(
++            realm, "can_create_public_channel_group", setting_group, acting_user=None
++        )
++        realm_setting_group_ids = {
++            realm.create_multiuse_invite_group_id,
++            realm.can_create_public_channel_group_id,
++        }
++
++        realm_user_groups = user_groups_in_realm_serialized(
++            realm, include_deactivated_groups=False, realm_setting_group_ids=realm_setting_group_ids
++        )
++        named_user_groups = realm_user_groups.api_groups
++        self.assert_length(named_user_groups, 11)
++        self.assertEqual(named_user_groups[10]["id"], new_user_group.id)
++        self.assertEqual(named_user_groups[10]["name"], "newgroup2")
++        self.assertFalse(named_user_groups[10]["deactivated"])
+         self.assertCountEqual(
+-            user_groups[10]["direct_subgroup_ids"], [another_new_group.id, owners_system_group.id]
++            named_user_groups[10]["direct_subgroup_ids"],
++            [another_new_group.id, owners_system_group.id],
++        )
++
++        system_groups_dict = realm_user_groups.system_groups_name_dict
++        self.assertEqual(system_groups_dict[user_group.id], SystemGroups.NOBODY)
++        self.assertEqual(system_groups_dict[owners_system_group.id], SystemGroups.OWNERS)
++        self.assertEqual(system_groups_dict[admins_system_group.id], SystemGroups.ADMINISTRATORS)
++        self.assertEqual(system_groups_dict[everyone_group.id], SystemGroups.EVERYONE)
++
++        realm_setting_anonymous_group_membership = (
++            realm_user_groups.realm_setting_anonymous_group_membership
++        )
++        self.assertEqual(
++            realm_setting_anonymous_group_membership,
++            {
++                realm.can_create_public_channel_group_id: UserGroupMembersDict(
++                    direct_members=[cordelia.id], direct_subgroups=[owners_system_group.id]
++                )
++            },
+         )
+ 
+     def test_get_direct_user_groups(self) -> None:

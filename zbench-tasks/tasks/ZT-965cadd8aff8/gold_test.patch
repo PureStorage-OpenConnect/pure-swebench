@@ -1,0 +1,138 @@
+diff --git a/web/tests/composebox_typeahead.test.cjs b/web/tests/composebox_typeahead.test.cjs
+index 7f2d61a366..4678719f0a 100644
+--- a/web/tests/composebox_typeahead.test.cjs
++++ b/web/tests/composebox_typeahead.test.cjs
+@@ -305,6 +305,12 @@ emoji.emojis_by_name.clear();
+ for (const [key, val] of emojis_by_name.entries()) {
+     emoji.emojis_by_name.set(key, val);
+ }
++typeahead.set_frequently_used_emojis(
++    [emoji_thumbs_up.emoji_code, emoji_heart.emoji_code].map((emoji_code) => ({
++        emoji_type: "unicode_emoji",
++        emoji_code,
++    })),
++);
+ emoji_picker.rebuild_catalog();
+ const emoji_list = composebox_typeahead.emoji_collection.map((emoji) => ({
+     ...emoji,
+diff --git a/web/tests/dispatch.test.cjs b/web/tests/dispatch.test.cjs
+index 32c00e0b81..07ff9e1088 100644
+--- a/web/tests/dispatch.test.cjs
++++ b/web/tests/dispatch.test.cjs
+@@ -29,6 +29,7 @@ const {electron_bridge} = mock_esm("../src/electron_bridge", {
+     electron_bridge: {},
+ });
+ const theme = mock_esm("../src/theme");
++const emoji_frequency = mock_esm("../src/emoji_frequency");
+ const emoji_picker = mock_esm("../src/emoji_picker");
+ const gear_menu = mock_esm("../src/gear_menu");
+ mock_esm("../src/inbox_ui", {
+@@ -479,6 +480,7 @@ run_test("reaction", ({override}) => {
+     {
+         const stub = make_stub();
+         override(reactions, "add_reaction", stub.f);
++        override(emoji_frequency, "update_emoji_frequency_on_add_reaction_event", noop);
+         dispatch(event);
+         assert.equal(stub.num_calls, 1);
+         const args = stub.get_args("event");
+@@ -490,6 +492,7 @@ run_test("reaction", ({override}) => {
+     {
+         const stub = make_stub();
+         override(reactions, "remove_reaction", stub.f);
++        override(emoji_frequency, "update_emoji_frequency_on_remove_reaction_event", noop);
+         dispatch(event);
+         assert.equal(stub.num_calls, 1);
+         const args = stub.get_args("event");
+@@ -1551,6 +1554,8 @@ run_test("delete_message", ({override}) => {
+     const stream_topic_history_stub = make_stub();
+     override(stream_topic_history, "remove_messages", stream_topic_history_stub.f);
+ 
++    override(emoji_frequency, "update_emoji_frequency_on_messages_deletion", noop);
++
+     dispatch(event);
+ 
+     let args;
+diff --git a/web/tests/emoji_picker.test.cjs b/web/tests/emoji_picker.test.cjs
+index a9d91f7531..35ec17052a 100644
+--- a/web/tests/emoji_picker.test.cjs
++++ b/web/tests/emoji_picker.test.cjs
+@@ -8,7 +8,9 @@ const {zrequire, set_global} = require("./lib/namespace.cjs");
+ const {run_test} = require("./lib/test.cjs");
+ 
+ const emoji = zrequire("emoji");
++const emoji_frequency = zrequire("emoji_frequency");
+ const emoji_picker = zrequire("emoji_picker");
++const typeahead = zrequire("typeahead");
+ 
+ const emoji_codes = zrequire("../../static/generated/emoji/emoji_codes.json");
+ 
+@@ -19,6 +21,7 @@ run_test("initialize", () => {
+         realm_emoji: {},
+         emoji_codes,
+     });
++    typeahead.set_frequently_used_emojis(typeahead.get_popular_emojis());
+     emoji_picker.initialize();
+ 
+     const complete_emoji_catalog = _.sortBy(emoji_picker.complete_emoji_catalog, "name");
+@@ -47,9 +50,9 @@ run_test("initialize", () => {
+     assert_emoji_category(complete_emoji_catalog.pop(), "fa-car", 195);
+     assert_emoji_category(complete_emoji_catalog.pop(), "fa-hashtag", 224);
+     assert_emoji_category(complete_emoji_catalog.pop(), "fa-smile-o", 169);
+-    assert_emoji_category(complete_emoji_catalog.pop(), "fa-star-o", popular_emoji_count);
+     assert_emoji_category(complete_emoji_catalog.pop(), "fa-thumbs-o-up", 386);
+     assert_emoji_category(complete_emoji_catalog.pop(), "fa-lightbulb-o", 264);
++    assert_emoji_category(complete_emoji_catalog.pop(), "fa-star-o", popular_emoji_count);
+     assert_emoji_category(complete_emoji_catalog.pop(), "fa-cutlery", 131);
+     assert_emoji_category(complete_emoji_catalog.pop(), "fa-flag", 270);
+     assert_emoji_category(complete_emoji_catalog.pop(), "fa-cog", 1);
+@@ -61,6 +64,38 @@ run_test("initialize", () => {
+         emoji.emojis_by_name.size,
+         total_emoji_in_categories - popular_emoji_count + zulip_emoji_count,
+     );
++
++    const make_emoji = (emoji_code, score) => ({
++        emoji_code,
++        emoji_type: "unicode_emoji",
++        score,
++    });
++
++    const popular_emojis = typeahead.popular_emojis.map((emoji_code) => make_emoji(emoji_code, 10));
++    const non_popular_emoji_codes = [
++        "1f3df", // stadium
++        "1f4b0", // money bag
++        "1f3e3", // japanese post office
++        "1f43c", // panda face
++        "1f648", // see no evil
++        "1f600", // grinning face
++        "1f680", // rocket
++    ];
++    const non_popular_emojis_usage = [];
++    for (const [i, non_popular_emoji_code] of non_popular_emoji_codes.entries()) {
++        non_popular_emojis_usage.push(make_emoji(non_popular_emoji_code, i));
++    }
++    for (const emoji of [...popular_emojis, ...non_popular_emojis_usage]) {
++        emoji_frequency.reaction_data.set(emoji.emoji_code, emoji);
++    }
++    emoji_frequency.update_frequently_used_emojis_list();
++    non_popular_emoji_codes.reverse();
++
++    assert.equal(typeahead.frequently_used_emojis.length, 12);
++    assert.deepEqual(
++        typeahead.frequently_used_emojis.map((emoji) => emoji.emoji_code),
++        [...typeahead.popular_emojis, ...non_popular_emoji_codes.slice(0, 6)],
++    );
+ });
+ 
+ run_test("is_emoji_present_in_text", () => {
+diff --git a/web/tests/typeahead.test.cjs b/web/tests/typeahead.test.cjs
+index b15e87c6b2..4c7f28e7f8 100644
+--- a/web/tests/typeahead.test.cjs
++++ b/web/tests/typeahead.test.cjs
+@@ -181,6 +181,7 @@ run_test("sort_emojis: th", () => {
+         {emoji_name: "thumbs_down", is_realm_emoji: true},
+         {emoji_name: "thumbs_up", is_realm_emoji: false, emoji_code: "1f44d"},
+     ];
++    typeahead.set_frequently_used_emojis(typeahead.get_popular_emojis());
+     assert.deepEqual(sort_emojis(emoji_list, "th"), [
+         "thumbs_up",
+         "thermometer",

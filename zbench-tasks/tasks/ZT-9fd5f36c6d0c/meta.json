@@ -1,0 +1,96 @@
+{
+  "task_id": "ZT-9fd5f36c6d0c",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "webhooks: Add option to ignore events from private GitLab Projects.",
+  "type": "feature",
+  "lang": "py",
+  "issue": 31766,
+  "fix_commit": "9fd5f36c6d0ce06ab4fcd8464f9936ce498124a5",
+  "base_commit": "b3a6f8304dc1922d9cc9b1eb519133a6f31399a4",
+  "env_fingerprint": "204433317f0b",
+  "fail_to_pass": [
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_merge_request_merged_event_message_ignored",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_push_event_private_project_ignored",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_push_local_branch_without_commits",
+    "zerver.webhooks.gitlab.tests.GitlabHookTests.test_wiki_page_opened_event_message"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_integrations"
+  ],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 19,
+    "files": 3,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "the GitLab webhook URL gains a boolean query parameter `ignore_private_projects` (e.g. ?ignore_private_projects=true): when set to true, events from private GitLab projects (payload project visibility_level == 0, i.e. private) are silently ignored \u2014 the endpoint returns success but sends no message",
+    "the ignore behavior applies to all event types carrying project visibility info, including push events and merge-request events (the shipped fixtures `push_hook` and `merge_request_hook__merge_request_merged` describe private projects and must produce no message when the option is enabled)"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 644,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "harsh_0303",
+    "email": "harshsantwani.cse21@aii.ac.in",
+    "date": "2026-02-04"
+  },
+  "contamination": {
+    "fix_public_at": "2026-02-04",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-09-26T19:47:35Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/9fd5f36c6d0ce06ab4fcd8464f9936ce498124a5",
+    "issue_url": "https://github.com/zulip/zulip/issues/31766"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-9fd5f36c6d0c",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_merge_request_merged_event_message_ignored",
+        "test_push_event_private_project_ignored"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 121.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

@@ -1,0 +1,155 @@
+AGENT PATCH:
+diff --git a/zerver/lib/transfer.py b/zerver/lib/transfer.py
+index 8d88673..829372e 100644
+--- a/zerver/lib/transfer.py
++++ b/zerver/lib/transfer.py
+@@ -67,6 +67,35 @@ def transfer_avatars_to_s3(processes: int) -> None:
+                 future.result()
+ 
+ 
++def _transfer_thumbnails_to_s3(attachment: Attachment) -> None:
++    """Transfer any locally-generated thumbnails for the attachment to S3."""
++    assert settings.LOCAL_FILES_DIR is not None
++    thumbnail_dir = os.path.join(
++        settings.LOCAL_FILES_DIR, "thumbnail", attachment.path_id
++    )
++    if not os.path.isdir(thumbnail_dir):
++        return
++    for thumbnail_name in os.listdir(thumbnail_dir):
++        thumbnail_path = os.path.join(thumbnail_dir, thumbnail_name)
++        if not os.path.isfile(thumbnail_path):
++            continue
++        content_type = guess_type(thumbnail_name)[0]
++        with open(thumbnail_path, "rb") as f:
++            upload_content_to_s3(
++                s3backend.uploads_bucket,
++                f"thumbnail/{attachment.path_id}/{thumbnail_name}",
++                content_type,
++                None,  # No user-defined metadata for thumbnails
++                f.read(),
++                storage_class=settings.S3_UPLOADS_STORAGE_CLASS,
++            )
++            logging.info(
++                "Uploaded thumbnail for message file %s: %s",
++                attachment.path_id,
++                thumbnail_name,
++            )
++
++
+ def _transfer_message_files_to_s3(attachment: Attachment) -> None:
+     assert settings.LOCAL_UPLOADS_DIR is not None
+     assert settings.LOCAL_FILES_DIR is not None
+@@ -85,6 +114,7 @@ def _transfer_message_files_to_s3(attachment: Attachment) -> None:
+             logging.info("Uploaded message file in path %s", file_path)
+     except FileNotFoundError:  # nocoverage
+         pass
++    _transfer_thumbnails_to_s3(attachment)
+ 
+ 
+ def transfer_message_files_to_s3(processes: int) -> None:
+diff --git a/zerver/tests/test_transfer.py b/zerver/tests/test_transfer.py
+index aa9a238..483ee5e 100644
+--- a/zerver/tests/test_transfer.py
++++ b/zerver/tests/test_transfer.py
+@@ -21,6 +21,7 @@ from zerver.lib.transfer import (
+     transfer_uploads_to_s3,
+ )
+ from zerver.lib.upload import upload_message_attachment
++from zerver.lib.host.example import write_local_file
+ from zerver.models import Attachment, RealmEmoji
+ 
+ 
+@@ -156,3 +157,73 @@ class TransferUploadsToS3Test(ZulipTestCase):
+         self.assertEqual(image_data, original_key.get()["Body"].read())
+         self.assertEqual(resized_image_data, resized_key.get()["Body"].read())
+         self.assertEqual(still_image_data, still_key.get()["Body"].read())
++
++    @mock_aws
++    def test_transfer_message_files_with_thumbnails(self) -> None:
++        bucket = create_s3_buckets(settings.S3_AUTH_UPLOADS_BUCKET)[0]
++        hamlet = self.example_user("hamlet")
++        othello = self.example_user("othello")
++        iago = self.example_user("iago")
++
++        # Create two text attachments (no thumbnails)
++        upload_message_attachment("dummy1.txt", "text/plain", b"zulip1!", hamlet)
++        upload_message_attachment("dummy2.txt", "text/plain", b"zulip2!", othello)
++
++        # Create an image attachment
++        path, _ = upload_message_attachment(
++            "img.png", "image/png", read_test_image_file("img.png"), iago
++        )
++        # Extract the path_id from the upload path
++        image_path_id = path.removeprefix("/user_uploads/")
++
++        # Simulate a generated thumbnail on local disk
++        assert settings.LOCAL_FILES_DIR is not None
++        thumbnail_bytes = b"fake thumbnail data"
++        thumbnail_format_name = "100x75.webp"
++        write_local_file(
++            "files",
++            f"thumbnail/{image_path_id}/{thumbnail_format_name}",
++            thumbnail_bytes,
++        )
++
++        with self.assertLogs(level="INFO"):
++            transfer_message_files_to_s3(1)
++
++        attachments = Attachment.objects.all().order_by("id")
++
++        # 3 originals + 1 thumbnail = 4 objects
++        self.assert_length(list(bucket.objects.all()), 4)
++
++        # Verify text attachments have correct metadata
++        s3_dummy1 = bucket.Object(attachments[0].path_id).get()
++        self.assertEqual(s3_dummy1["Body"].read(), b"zulip1!")
++        self.assertEqual(
++            s3_dummy1["Metadata"],
++            {"realm_id": str(attachments[0].realm_id), "user_profile_id": str(hamlet.id)},
++        )
++
++        s3_dummy2 = bucket.Object(attachments[1].path_id).get()
++        self.assertEqual(s3_dummy2["Body"].read(), b"zulip2!")
++        self.assertEqual(
++            s3_dummy2["Metadata"],
++            {"realm_id": str(attachments[1].realm_id), "user_profile_id": str(othello.id)},
++        )
++
++        # Verify image original
++        s3_image = bucket.Object(attachments[2].path_id).get()
++        self.assertEqual(s3_image["Body"].read(), read_test_image_file("img.png"))
++        self.assertEqual(
++            s3_image["Metadata"],
++            {
++                "realm_id": str(attachments[2].realm_id),
++                "user_profile_id": str(iago.id),
++            },
++        )
++
++        # Verify thumbnail
++        s3_thumbnail = bucket.Object(
++            f"thumbnail/{image_path_id}/{thumbnail_format_name}"
++        ).get()
++        self.assertEqual(s3_thumbnail["Body"].read(), thumbnail_bytes)
++        self.assertEqual(s3_thumbnail["Metadata"], {})  # No user-defined metadata
++        self.assertEqual(s3_thumbnail["ContentType"], "image/webp")
+
+
+STRIPPED AGENT TEST EDITS:
+reset test/runner files (9 pathspecs) -> base
+
+$ bash "${ZBENCH_SCRIPTS:?export zbench-tasks/scripts dir}"/zbench_verify.sh backend zerver.tests.test_transfer.TransferUploadsToS3Test.test_transfer_message_files
+(rc=0)
+Using /srv/zulip/.venv
+-- Running tests in serial mode.
+Found 1 test(s).
+
+Destroying test database for alias 'default'...
+Using existing clone for alias 'default'...
+Running zerver.tests.test_transfer.TransferUploadsToS3Test.test_transfer_message_files
+
+----------------------------------------------------------------------
+Ran 1 test in 0.626s
+
+OK
+Destroying test database for alias 'default'...

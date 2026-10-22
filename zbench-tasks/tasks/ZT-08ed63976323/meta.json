@@ -1,0 +1,91 @@
+{
+  "task_id": "ZT-08ed63976323",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "filter: Validate and parse sender:me when turning into a pill.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 31315,
+  "fix_commit": "08ed639763232ff8c4a692670f56bf2cbe300db7",
+  "base_commit": "673309f3dc6898d2050d749224f6b45b9af9f266",
+  "env_fingerprint": "cf160acfcfa6",
+  "fail_to_pass": [
+    "web/tests/filter.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/search.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 13,
+    "files": 2,
+    "hunks": 4,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "Filter.parse gains an optional second boolean parameter (defaulting to false) that enables search-pill parsing mode; callers pass it positionally as the second argument, and omitting it preserves the existing parsing behavior exactly",
+    "When that second parameter is true and a term's operator is `sender` with operand `me` (case-insensitive, with or without negation), Filter.parse resolves the operand to the current user's email address, producing e.g. {operator: 'sender', operand: '<current user's email>'} and preserving the `negated` flag",
+    "Search-term validation (the existing is_valid_search_term behavior) must accept the literal operand `me` as valid for person-based operators such as `sender`, even though `me` is not a registered user email"
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 266,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "evykassirer",
+    "email": "evy@zulip.com",
+    "date": "2025-03-13"
+  },
+  "contamination": {
+    "fix_public_at": "2025-03-13",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-08-08T18:56:35Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/08ed639763232ff8c4a692670f56bf2cbe300db7",
+    "issue_url": "https://github.com/zulip/zulip/issues/31315"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-08ed63976323",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 119.5
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

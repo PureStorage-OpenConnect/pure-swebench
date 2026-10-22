@@ -1,0 +1,62 @@
+{
+  "task_id": "ZT-13b4274412b6",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "slack_converter: Further reduce rich_text related conversion loss.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 36781,
+  "fix_commit": "13b4274412b611331e3fd62bec474c7969c5c067",
+  "base_commit": "924654723fcf945b001c7bb1e8f49e2c432493b6",
+  "env_fingerprint": "06080446afe9",
+  "fail_to_pass": [
+    "zerver.tests.test_slack_importer.SlackImporter.test_channel_message_to_zerver_message"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_slack_message_conversion"
+  ],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 34,
+    "files": 2,
+    "hunks": 7,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 733,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "PieterCK",
+    "email": "pieterceka123@gmail.com",
+    "date": "2026-02-16"
+  },
+  "contamination": {
+    "fix_public_at": "2026-02-16",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-11-25T07:24:28Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/13b4274412b611331e3fd62bec474c7969c5c067",
+    "issue_url": "https://github.com/zulip/zulip/issues/36781"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-13b4274412b6",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 24.7
+    }
+  }
+}

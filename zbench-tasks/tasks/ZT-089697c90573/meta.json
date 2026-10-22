@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-089697c90573",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The hidden test is implementation-coupled and partly tautological rather than outcome-grading. It imports get_channel_privacy_icon from zerver.lib.email_notifications \u2014 a helper that exists only in the gold patch \u2014 so any correct behavioral fix that adds the '#' prefix without defining that exact function in that exact module fails at import time. Worse, the assertion builds the expected string by calling the same helper (expected_html = f\"...{get_channel_privacy_icon(stream)}New stream\"), so it never actually verifies that '#' appears; a helper returning any string (even '') would pass. The test therefore grades the presence and reuse of a specific internal function name, not the observable behavior the issue requests.",
+  "summary": "digest: Add '#' before channel name in digest email messege headers.",
+  "lang": "py",
+  "issue": 36686,
+  "fix_commit": "089697c90573ec9c8093776726af84d75c12bbbd",
+  "base_commit": "a0a08e2a231afba684cd62c05fcec039fb39f1ea",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/089697c90573ec9c8093776726af84d75c12bbbd",
+    "issue_url": "https://github.com/zulip/zulip/issues/36686"
+  }
+}

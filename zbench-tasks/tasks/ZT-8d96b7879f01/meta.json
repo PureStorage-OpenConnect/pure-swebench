@@ -1,0 +1,60 @@
+{
+  "task_id": "ZT-8d96b7879f01",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "keyboard_UI: Allow use of `e` hotkey for spectators.",
+  "type": "bug",
+  "lang": "web",
+  "issue": 33838,
+  "fix_commit": "8d96b7879f0196e3c895ef5af6720129d9f05729",
+  "base_commit": "18fdbc15196bbb8501435586ff60aab2c67aa345",
+  "env_fingerprint": "f553de01e5a4",
+  "fail_to_pass": [
+    "web/tests/hotkey.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 6,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 219,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Ines Falcato",
+    "email": "ines.vieira.falcato@tecnico.ulisboa.pt",
+    "date": "2025-04-21"
+  },
+  "contamination": {
+    "fix_public_at": "2025-04-21",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-03-05T19:45:10Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/8d96b7879f0196e3c895ef5af6720129d9f05729",
+    "issue_url": "https://github.com/zulip/zulip/issues/33838"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-8d96b7879f01",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 16.1
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-824179d64bdd",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The tests hard-depend on `stream_data.set_channel_has_locally_available_topic(...)`, a setter the reference fix invents purely as a dependency-injection workaround for a circular import between stream_data and stream_topic_history. Multiple test files call it at module load time, so any solution that wires the check differently (e.g. direct import, restructured modules, moving the logic into stream_topic_history) crashes the tests even if behavior is correct. No reasonable ticket would dictate this internal wiring seam or its name \u2014 it is a private module-layout choice. Additionally, the tests use override_rewire to stub `stream_data.can_create_new_topics_in_stream`, pinning the requirement that the new `can_use_empty_topic` logic routes through that specific module-internal function rather than any equivalent permission check. The behavioral contract (empty topics allowed only if the user can create topics or an empty topic already exists locally) is specifiable, but the mandatory injection-setter binding cannot be cured by a brief, so the task is dropped.",
+  "summary": "stream_data: Fix `can_use_empty_topic`.",
+  "lang": "web",
+  "issue": 37104,
+  "fix_commit": "824179d64bdd5dfbb3af4b40b36425f614322ec3",
+  "base_commit": "a692db7578eabfadefe27d28b4eb84c05bf1f590",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/824179d64bdd5dfbb3af4b40b36425f614322ec3",
+    "issue_url": "https://github.com/zulip/zulip/issues/37104"
+  }
+}

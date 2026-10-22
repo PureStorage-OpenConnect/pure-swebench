@@ -1,0 +1,82 @@
+{
+  "task_id": "ZT-31c533354369",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "webhooks/sentry: Add support for error events.",
+  "type": "other",
+  "lang": "py",
+  "issue": 24146,
+  "fix_commit": "31c533354369695966f028d2cab7df09eefdc9a2",
+  "base_commit": "d1187dd1f00c362a0ebb60306684ef4d2b191a36",
+  "env_fingerprint": "4bee4611a64b",
+  "fail_to_pass": [
+    "zerver.webhooks.sentry.tests.SentryHookTests.test_error_for_exception_javascript",
+    "zerver.webhooks.sentry.tests.SentryHookTests.test_issue_assigned_to_individual"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 5,
+    "files": 1,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 643,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Niloth P",
+    "email": "20315308+Niloth-p@users.noreply.github.com",
+    "date": "2026-03-10"
+  },
+  "contamination": {
+    "fix_public_at": "2026-03-10",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-01-23T09:38:20Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/31c533354369695966f028d2cab7df09eefdc9a2",
+    "issue_url": "https://github.com/zulip/zulip/issues/24146"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-31c533354369",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_error_for_exception_javascript"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 115.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

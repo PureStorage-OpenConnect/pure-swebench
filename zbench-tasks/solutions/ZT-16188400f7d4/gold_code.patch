@@ -1,0 +1,78 @@
+diff --git a/web/src/password_quality.ts b/web/src/password_quality.ts
+index 1ee4db2c3d..c8741e913f 100644
+--- a/web/src/password_quality.ts
++++ b/web/src/password_quality.ts
+@@ -25,10 +25,14 @@ export function password_quality(
+     $password_field: JQuery,
+ ): boolean {
+     const min_length = Number($password_field.attr("data-min-length"));
++    const max_length = Number($password_field.attr("data-max-length"));
+     const min_guesses = Number($password_field.attr("data-min-guesses"));
+ 
+     const result = zxcvbn(password);
+-    const acceptable = password.length >= min_length && result.guesses >= min_guesses;
++    const acceptable =
++        password.length >= min_length &&
++        password.length <= max_length &&
++        result.guesses >= min_guesses;
+ 
+     if ($bar !== undefined) {
+         const t = result.crackTimesSeconds.offlineSlowHashing1e4PerSecond;
+@@ -52,12 +56,20 @@ export function password_quality(
+ 
+ export function password_warning(password: string, $password_field: JQuery): string {
+     const min_length = Number($password_field.attr("data-min-length"));
++    const max_length = Number($password_field.attr("data-max-length"));
+ 
+     if (password.length < min_length) {
+         return $t(
+             {defaultMessage: "Password should be at least {length} characters long"},
+             {length: min_length},
+         );
++    } else if (password.length > max_length) {
++        return $t(
++            {
++                defaultMessage: "Maximum password length: {max} characters.",
++            },
++            {max: max_length},
++        );
+     }
+     return zxcvbn(password).feedback.warning ?? $t({defaultMessage: "Password is too weak"});
+ }
+diff --git a/web/src/settings_account.ts b/web/src/settings_account.ts
+index 188d76c94f..719b80c1aa 100644
+--- a/web/src/settings_account.ts
++++ b/web/src/settings_account.ts
+@@ -478,6 +478,19 @@ export function set_up(): void {
+                 );
+                 return false;
+             }
++
++            const max_length = realm.password_max_length;
++            if (new_password && new_password.toString().length > max_length) {
++                ui_report.error(
++                    $t_html(
++                        {defaultMessage: "Maximum password length: {max_length} characters"},
++                        {max_length},
++                    ),
++                    undefined,
++                    $("#dialog_error"),
++                );
++                return false;
++            }
+             return true;
+         }
+ 
+diff --git a/web/templates/dialog_change_password.hbs b/web/templates/dialog_change_password.hbs
+index 012c70de30..d1e13f89cc 100644
+--- a/web/templates/dialog_change_password.hbs
++++ b/web/templates/dialog_change_password.hbs
+@@ -11,7 +11,7 @@
+         <label for="new_password" class="modal-field-label">{{t "New password" }}</label>
+         <div class="password-input-row">
+             <input type="password" autocomplete="new-password" name="new_password" id="new_password" class="inline-block modal_password_input" value=""
+-              data-min-length="{{password_min_length}}" data-min-guesses="{{password_min_guesses}}" />
++              data-min-length="{{password_min_length}}" data-min-guesses="{{password_min_guesses}}" data-max-length="{{ password_max_length }}" />
+             <i class="fa fa-eye-slash password_visibility_toggle tippy-zulip-tooltip" role="button" tabindex="0"></i>
+         </div>
+         <div class="progress inline-block" id="pw_strength">

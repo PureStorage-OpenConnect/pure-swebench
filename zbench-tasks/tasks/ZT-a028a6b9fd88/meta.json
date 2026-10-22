@@ -1,0 +1,103 @@
+{
+  "task_id": "ZT-a028a6b9fd88",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "custom_emails: Prevent duplicate emails from send_custom_email command.",
+  "type": "other",
+  "lang": "py",
+  "issue": 19529,
+  "fix_commit": "a028a6b9fd880872ac4c89646fc77d3137fdf5b1",
+  "base_commit": "ba637d4e2c48eedac8dcc324e47f1781c184cc74",
+  "env_fingerprint": "806218ad5d12",
+  "fail_to_pass": [
+    "zerver.tests.test_management_commands.TestSendCustomEmail.test_custom_email_duplicate_prevention_by_user",
+    "zerver.tests.test_management_commands.TestSendCustomEmail.test_custom_marketing_email_duplicate_prevention_by_email",
+    "zerver.tests.test_management_commands.TestSendCustomEmail.test_email_sending_failure_does_not_create_audit_log"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_send_email"
+  ],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 60,
+    "files": 3,
+    "hunks": 10,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "A new audit log event type `CUSTOM_EMAIL_SENT` is added to `AuditLogEventType` in `zerver.models.realm_audit_logs`.",
+    "Each successful (non-dry-run) custom email delivery to a user creates one RealmAuditLog row with event_type CUSTOM_EMAIL_SENT, modified_user set to the recipient, realm set to the recipient's realm, and acting_user None.",
+    "The audit log's extra_data contains a string field `email_id`: the email template hash, i.e. the first 32 hex characters of the SHA-256 of the raw markdown template file contents (the same hash custom_email_sender already computes).",
+    "The audit log's extra_data contains a string field `email_subject`: the resolved subject line of the sent email.",
+    "On subsequent sends of the same template (same email_id), targeted sends (-u/-r) must exclude users who already have a CUSTOM_EMAIL_SENT audit log entry for that email_id, matched by user.",
+    "Marketing sends (--marketing / distinct_email) must exclude recipients whose delivery email case-insensitively matches the delivery email of any user already logged for that email_id, in addition to the existing case-insensitive distinct-email dedup among current recipients.",
+    "When one or more users are excluded as already-recipients, the command prints to stdout exactly once: 'Excluded {count} users who already received this email', and prints nothing else for a non-dry-run send.",
+    "Dry-run mode must not create any CUSTOM_EMAIL_SENT audit log entries.",
+    "If email delivery fails (EmailNotDeliveredError from the existing send path), no audit log entry is created for that recipient, so the user is retried on a future send."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1416,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "The Dance",
+    "email": "thedance@amamu.io",
+    "date": "2025-11-02"
+  },
+  "contamination": {
+    "fix_public_at": "2025-11-02",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2021-08-06T00:14:53Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/a028a6b9fd880872ac4c89646fc77d3137fdf5b1",
+    "issue_url": "https://github.com/zulip/zulip/issues/19529"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-a028a6b9fd88",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_custom_email_duplicate_prevention_by_user",
+        "test_custom_marketing_email_duplicate_prevention_by_email",
+        "test_email_sending_failure_does_not_create_audit_log"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 448.1
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

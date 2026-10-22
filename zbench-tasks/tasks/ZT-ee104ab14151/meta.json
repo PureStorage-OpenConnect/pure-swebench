@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-ee104ab14151",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "The test binds to internal implementation choices no spec would dictate: the exact shape of the internal TopicSuggestion object (invented fields `is_channel_link` and `stream_data`, including the sentinel choice of spreading the subscription with `rendered_description: ''`), a new internal helper name `render_stream_topic` in typeahead_helper, and \u2014 via mock_template of the internal typeahead_list_item.hbs template \u2014 the invented template argument names (`is_stream_topic`, `is_stream_only`, `stream_data`). While the changed completion strings ('#**Sweden>' etc.) are legitimate user-visible behavior through pre-existing entry points, the deep-equality assertions on internal candidate objects and the template-arg assertions cannot be satisfied without guessing the reference author's private data model and module decomposition, so the coupling cannot be cured by a brief.",
+  "summary": "compose: Prompt topic typeahead after selecting stream.",
+  "lang": "web",
+  "issue": 32184,
+  "fix_commit": "ee104ab1415130a03697a30ae4a791449a889220",
+  "base_commit": "21500eddcf26adfb9f9c9447a35873231d80bac8",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/ee104ab1415130a03697a30ae4a791449a889220",
+    "issue_url": "https://github.com/zulip/zulip/issues/32184"
+  }
+}

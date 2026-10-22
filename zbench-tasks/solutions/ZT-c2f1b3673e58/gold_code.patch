@@ -1,0 +1,400 @@
+diff --git a/zerver/lib/events.py b/zerver/lib/events.py
+index 4abec539de..fc82244bc4 100644
+--- a/zerver/lib/events.py
++++ b/zerver/lib/events.py
+@@ -61,8 +61,9 @@ from zerver.lib.timestamp import datetime_to_timestamp
+ from zerver.lib.timezone import canonicalize_timezone
+ from zerver.lib.topic import TOPIC_NAME, maybe_rename_general_chat_to_empty_topic
+ from zerver.lib.user_groups import (
+-    get_group_setting_value_for_api,
++    get_group_setting_value_for_register_api,
+     get_recursive_membership_groups,
++    get_role_based_system_groups_dict,
+     get_server_supported_permission_settings,
+     user_groups_in_realm_serialized,
+ )
+@@ -100,7 +101,6 @@ from zerver.models.realms import (
+     MessageEditHistoryVisibilityPolicyEnum,
+     get_corresponding_policy_value_for_group_setting,
+     get_realm_domains,
+-    get_realm_with_settings,
+ )
+ from zerver.models.streams import get_default_stream_groups
+ from zerver.tornado.django_api import get_user_events, request_event_queue
+@@ -269,6 +269,27 @@ def fetch_initial_state_data(
+         # Send server_timestamp, to match the format of `GET /presence` requests.
+         state["server_timestamp"] = time.time()
+ 
++    realm_setting_group_ids = {
++        getattr(realm, setting_name + "_id")
++        for setting_name in Realm.REALM_PERMISSION_GROUP_SETTINGS
++    }
++
++    if want("realm_user_groups") or want("realm"):
++        # Optimizing opportunity: This fetches more data than
++        # we strictly need when "realm_user_groups" is not in
++        # fetch_event_types; we need the membership of the
++        # anonymous groups in realm_setting_group_ids and the
++        # IDs of the NamedUserGroup objects used there, but
++        # don't need the other NamedUserGroup fields.
++        realm_groups_data = user_groups_in_realm_serialized(
++            realm,
++            include_deactivated_groups=include_deactivated_groups,
++            realm_setting_group_ids=realm_setting_group_ids,
++        )
++
++    if want("realm_user_groups"):
++        state["realm_user_groups"] = realm_groups_data.api_groups
++
+     if want("realm"):
+         # The realm bundle includes both realm properties and server
+         # properties, since it's rare that one would want one and not
+@@ -295,17 +316,25 @@ def fetch_initial_state_data(
+             state["realm_" + property_name] = getattr(realm, property_name)
+ 
+         for setting_name in Realm.REALM_PERMISSION_GROUP_SETTINGS:
+-            setting_value = getattr(realm, setting_name)
+-            state["realm_" + setting_name] = get_group_setting_value_for_api(setting_value)
++            setting_group_id = getattr(realm, setting_name + "_id")
++            state["realm_" + setting_name] = get_group_setting_value_for_register_api(
++                setting_group_id, realm_groups_data.realm_setting_anonymous_group_membership
++            )
+ 
+         state["realm_create_public_stream_policy"] = (
+             get_corresponding_policy_value_for_group_setting(
+-                realm, "can_create_public_channel_group", Realm.COMMON_POLICY_TYPES
++                realm,
++                "can_create_public_channel_group",
++                Realm.COMMON_POLICY_TYPES,
++                realm_groups_data.system_groups_name_dict,
+             )
+         )
+         state["realm_create_private_stream_policy"] = (
+             get_corresponding_policy_value_for_group_setting(
+-                realm, "can_create_private_channel_group", Realm.COMMON_POLICY_TYPES
++                realm,
++                "can_create_private_channel_group",
++                Realm.COMMON_POLICY_TYPES,
++                realm_groups_data.system_groups_name_dict,
+             )
+         )
+         state["realm_create_web_public_stream_policy"] = (
+@@ -313,12 +342,14 @@ def fetch_initial_state_data(
+                 realm,
+                 "can_create_web_public_channel_group",
+                 Realm.CREATE_WEB_PUBLIC_STREAM_POLICY_TYPES,
++                realm_groups_data.system_groups_name_dict,
+             )
+         )
+         state["realm_wildcard_mention_policy"] = get_corresponding_policy_value_for_group_setting(
+             realm,
+             "can_mention_many_users_group",
+             Realm.WILDCARD_MENTION_POLICY_TYPES,
++            realm_groups_data.system_groups_name_dict,
+         )
+ 
+         # Most state is handled via the property_types framework;
+@@ -527,11 +558,6 @@ def fetch_initial_state_data(
+     if want("realm_playgrounds"):
+         state["realm_playgrounds"] = get_realm_playgrounds(realm)
+ 
+-    if want("realm_user_groups"):
+-        state["realm_user_groups"] = user_groups_in_realm_serialized(
+-            realm, include_deactivated_groups=include_deactivated_groups
+-        )
+-
+     if user_profile is not None:
+         settings_user = user_profile
+     else:
+@@ -1330,6 +1356,7 @@ def apply_event(
+                 )
+ 
+         elif event["op"] == "update_dict":
++            system_groups_name_dict: dict[int, str] | None = None
+             for key, value in event["data"].items():
+                 if key == "max_file_upload_size_mib":
+                     state["max_file_upload_size_mib"] = value
+@@ -1350,12 +1377,26 @@ def apply_event(
+                     "can_create_private_channel_group",
+                     "can_create_web_public_channel_group",
+                 ]:
++                    if system_groups_name_dict is None:
++                        # Here we do a database query, because
++                        # get_corresponding_policy_value_for_group_setting
++                        # requires the full set of system groups.
++                        # This could be avoided if realm_user_group were in
++                        # fetch_event_types, since the system groups should
++                        # all be there, but the query itself is cheap enough
++                        # that it's likely not worth that complexity.
++                        system_groups = get_role_based_system_groups_dict(user_profile.realm)
++                        system_groups_name_dict = {}
++                        for group in system_groups.values():
++                            system_groups_name_dict[group.id] = group.name
++
+                     if key == "can_create_public_channel_group":
+                         state["realm_create_public_stream_policy"] = (
+                             get_corresponding_policy_value_for_group_setting(
+                                 user_profile.realm,
+                                 "can_create_public_channel_group",
+                                 Realm.COMMON_POLICY_TYPES,
++                                system_groups_name_dict,
+                             )
+                         )
+                         state["can_create_public_streams"] = user_profile.has_permission(key)
+@@ -1365,6 +1406,7 @@ def apply_event(
+                                 user_profile.realm,
+                                 "can_create_private_channel_group",
+                                 Realm.COMMON_POLICY_TYPES,
++                                system_groups_name_dict,
+                             )
+                         )
+                         state["can_create_private_streams"] = user_profile.has_permission(key)
+@@ -1374,6 +1416,7 @@ def apply_event(
+                                 user_profile.realm,
+                                 "can_create_web_public_channel_group",
+                                 Realm.CREATE_WEB_PUBLIC_STREAM_POLICY_TYPES,
++                                system_groups_name_dict,
+                             )
+                         )
+                         state["can_create_web_public_streams"] = user_profile.has_permission(key)
+@@ -1390,11 +1433,25 @@ def apply_event(
+                     )
+ 
+                 if key == "can_mention_many_users_group":
++                    if system_groups_name_dict is None:
++                        # Here we do a database query, because
++                        # get_corresponding_policy_value_for_group_setting
++                        # requires the full set of system groups.
++                        # This could be avoided if realm_user_group were in
++                        # fetch_event_types, since the system groups should
++                        # all be there, but the query itself is cheap enough
++                        # that it's likely not worth that complexity.
++                        system_groups = get_role_based_system_groups_dict(user_profile.realm)
++                        system_groups_name_dict = {}
++                        for group in system_groups.values():
++                            system_groups_name_dict[group.id] = group.name
++
+                     state["realm_wildcard_mention_policy"] = (
+                         get_corresponding_policy_value_for_group_setting(
+                             user_profile.realm,
+                             "can_mention_many_users_group",
+                             Realm.WILDCARD_MENTION_POLICY_TYPES,
++                            system_groups_name_dict,
+                         )
+                     )
+ 
+@@ -1820,14 +1877,6 @@ def do_events_register(
+     else:
+         event_types_set = None
+ 
+-    # Fetch the realm object again to prefetch all the
+-    # settings that will be used in 'fetch_initial_state_data'
+-    # to avoid unnecessary DB queries.
+-    # The settings include:
+-    # * group settings which support anonymous groups
+-    # * announcements streams
+-    realm = get_realm_with_settings(realm_id=realm.id)
+-
+     if user_profile is None:
+         # TODO: Unify the two fetch_initial_state_data code paths.
+         assert client_gravatar is False
+diff --git a/zerver/lib/user_groups.py b/zerver/lib/user_groups.py
+index c697db9347..b492dcfee0 100644
+--- a/zerver/lib/user_groups.py
++++ b/zerver/lib/user_groups.py
+@@ -534,7 +534,20 @@ def get_setting_value_for_user_group_object(
+     return members_dict[setting_group_id]
+ 
+ 
+-def get_members_and_subgroups_of_groups(group_ids: list[int]) -> dict[int, UserGroupMembersDict]:
++def get_group_setting_value_for_register_api(
++    setting_group_id: int,
++    realm_setting_anonymous_group_membership: dict[int, UserGroupMembersDict],
++) -> int | UserGroupMembersDict:
++    if setting_group_id not in realm_setting_anonymous_group_membership:
++        # realm_setting_anonymous_group_membership is defined to contain
++        # the membership of all non-named UserGroup used for realm settings.
++        # Thus, any group ID not present in it must be a named group.
++        return setting_group_id
++
++    return realm_setting_anonymous_group_membership[setting_group_id]
++
++
++def get_members_and_subgroups_of_groups(group_ids: set[int]) -> dict[int, UserGroupMembersDict]:
+     user_members = (
+         UserGroupMembership.objects.filter(user_group_id__in=group_ids)
+         .exclude(user_profile__is_active=False)
+@@ -567,9 +580,19 @@ def get_members_and_subgroups_of_groups(group_ids: list[int]) -> dict[int, UserG
+     return group_members_dict
+ 
+ 
++@dataclass
++class RealmUserGroupsData:
++    api_groups: list[UserGroupDict]
++    system_groups_name_dict: dict[int, str]
++    realm_setting_anonymous_group_membership: dict[int, UserGroupMembersDict]
++
++
+ def user_groups_in_realm_serialized(
+-    realm: Realm, *, include_deactivated_groups: bool
+-) -> list[UserGroupDict]:
++    realm: Realm,
++    *,
++    include_deactivated_groups: bool,
++    realm_setting_group_ids: set[int] | None = None,
++) -> RealmUserGroupsData:
+     """This function is used in do_events_register code path so this code
+     should be performant.  We need to do 2 database queries because
+     Django's ORM doesn't properly support the left join between
+@@ -586,11 +609,15 @@ def user_groups_in_realm_serialized(
+         for setting_name in NamedUserGroup.GROUP_PERMISSION_SETTINGS:
+             group_settings_ids.add(getattr(group, setting_name + "_id"))
+ 
+-    group_ids_to_fetch_members = list(realm_group_ids | group_settings_ids)
++    if realm_setting_group_ids is None:
++        realm_setting_group_ids = set()
++
++    group_ids_to_fetch_members = set(realm_group_ids | group_settings_ids | realm_setting_group_ids)
+ 
+     group_members_dict = get_members_and_subgroups_of_groups(group_ids_to_fetch_members)
+ 
+     group_dicts: dict[int, UserGroupDict] = {}
++    system_groups_name_dict: dict[int, str] = {}
+     for user_group in realm_groups:
+         direct_member_ids = group_members_dict[user_group.id].direct_members
+         direct_subgroup_ids = group_members_dict[user_group.id].direct_subgroups
+@@ -603,14 +630,14 @@ def user_groups_in_realm_serialized(
+             else None
+         )
+ 
+-        group_dicts[user_group.id] = dict(
++        group_dict: UserGroupDict = dict(
+             id=user_group.id,
+             name=user_group.name,
+             creator_id=creator_id,
+             date_created=date_created,
+             description=user_group.description,
+-            members=direct_member_ids,
+-            direct_subgroup_ids=direct_subgroup_ids,
++            members=sorted(direct_member_ids),
++            direct_subgroup_ids=sorted(direct_subgroup_ids),
+             is_system_group=user_group.is_system_group,
+             can_add_members_group=get_setting_value_for_user_group_object(
+                 user_group.can_add_members_group_id, realm_group_ids, group_members_dict
+@@ -633,11 +660,20 @@ def user_groups_in_realm_serialized(
+             deactivated=user_group.deactivated,
+         )
+ 
+-    for group_dict in group_dicts.values():
+-        group_dict["members"] = sorted(group_dict["members"])
+-        group_dict["direct_subgroup_ids"] = sorted(group_dict["direct_subgroup_ids"])
++        group_dicts[user_group.id] = group_dict
++        if user_group.is_system_group:
++            system_groups_name_dict[user_group.id] = user_group.name
++
++    realm_setting_anonymous_group_membership = {}
++    for group_id in realm_setting_group_ids:
++        if group_id not in realm_group_ids:
++            realm_setting_anonymous_group_membership[group_id] = group_members_dict[group_id]
+ 
+-    return sorted(group_dicts.values(), key=lambda group_dict: group_dict["id"])
++    return RealmUserGroupsData(
++        api_groups=sorted(group_dicts.values(), key=lambda group_dict: group_dict["id"]),
++        system_groups_name_dict=system_groups_name_dict,
++        realm_setting_anonymous_group_membership=realm_setting_anonymous_group_membership,
++    )
+ 
+ 
+ def get_direct_user_groups(user_profile: UserProfile) -> list[UserGroup]:
+diff --git a/zerver/models/realms.py b/zerver/models/realms.py
+index b8f48ae55f..1ddd5ca97b 100644
+--- a/zerver/models/realms.py
++++ b/zerver/models/realms.py
+@@ -1212,56 +1212,6 @@ def get_realm_by_id(realm_id: int) -> Realm:
+     return Realm.objects.get(id=realm_id)
+ 
+ 
+-def get_realm_with_settings(realm_id: int) -> Realm:
+-    # Prefetch the following settings:
+-    # This also prefetches can_access_all_users_group setting,
+-    # even when it cannot be set to anonymous groups because
+-    # the setting is used when fetching users in the realm.
+-    # * All the settings that can be set to anonymous groups.
+-    return Realm.objects.select_related(
+-        "create_multiuse_invite_group",
+-        "create_multiuse_invite_group__named_user_group",
+-        "can_access_all_users_group",
+-        "can_access_all_users_group__named_user_group",
+-        "can_add_custom_emoji_group",
+-        "can_add_custom_emoji_group__named_user_group",
+-        "can_add_subscribers_group",
+-        "can_add_subscribers_group__named_user_group",
+-        "can_create_bots_group",
+-        "can_create_bots_group__named_user_group",
+-        "can_create_groups",
+-        "can_create_groups__named_user_group",
+-        "can_create_public_channel_group",
+-        "can_create_public_channel_group__named_user_group",
+-        "can_create_private_channel_group",
+-        "can_create_private_channel_group__named_user_group",
+-        "can_create_web_public_channel_group",
+-        "can_create_web_public_channel_group__named_user_group",
+-        "can_create_write_only_bots_group",
+-        "can_create_write_only_bots_group__named_user_group",
+-        "can_delete_any_message_group",
+-        "can_delete_any_message_group__named_user_group",
+-        "can_delete_own_message_group",
+-        "can_delete_own_message_group__named_user_group",
+-        "can_invite_users_group",
+-        "can_invite_users_group__named_user_group",
+-        "can_manage_all_groups",
+-        "can_manage_all_groups__named_user_group",
+-        "can_mention_many_users_group",
+-        "can_mention_many_users_group__named_user_group",
+-        "can_move_messages_between_channels_group",
+-        "can_move_messages_between_channels_group__named_user_group",
+-        "can_move_messages_between_topics_group",
+-        "can_move_messages_between_topics_group__named_user_group",
+-        "can_summarize_topics_group",
+-        "can_summarize_topics_group__named_user_group",
+-        "direct_message_initiator_group",
+-        "direct_message_initiator_group__named_user_group",
+-        "direct_message_permission_group",
+-        "direct_message_permission_group__named_user_group",
+-    ).get(id=realm_id)
+-
+-
+ def require_unique_names(realm: Realm | None) -> bool:
+     if realm is None:
+         # realm is None when a new realm is being created.
+@@ -1291,13 +1241,11 @@ def get_corresponding_policy_value_for_group_setting(
+     realm: Realm,
+     group_setting_name: str,
+     valid_policy_enums: list[int],
++    system_groups_name_dict: dict[int, str],
+ ) -> int:
+-    setting_group = getattr(realm, group_setting_name)
+-    if (
+-        hasattr(setting_group, "named_user_group")
+-        and setting_group.named_user_group.is_system_group
+-    ):
+-        system_group_name = setting_group.named_user_group.name
++    setting_group_id = getattr(realm, group_setting_name + "_id")
++    if setting_group_id in system_groups_name_dict:
++        system_group_name = system_groups_name_dict[setting_group_id]
+         if group_setting_name == "can_mention_many_users_group":
+             # Wildcard mention policy uses different set of enums than other policy settings.
+             return Realm.SYSTEM_GROUPS_TO_WILDCARD_MENTION_POLICY_MAP.get(
+diff --git a/zerver/views/user_groups.py b/zerver/views/user_groups.py
+index 28d84c9b32..c1395b9ddd 100644
+--- a/zerver/views/user_groups.py
++++ b/zerver/views/user_groups.py
+@@ -119,7 +119,7 @@ def get_user_groups(
+ ) -> HttpResponse:
+     user_groups = user_groups_in_realm_serialized(
+         user_profile.realm, include_deactivated_groups=include_deactivated_groups
+-    )
++    ).api_groups
+     return json_success(request, data={"user_groups": user_groups})
+ 
+ 

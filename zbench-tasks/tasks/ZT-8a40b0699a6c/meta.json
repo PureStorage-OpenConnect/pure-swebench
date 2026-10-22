@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-8a40b0699a6c",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The task itself is a legitimate, verifiable feature (adding a download button to inline audio players), but the hidden grader is a brittle whole-HTML snapshot: it asserts the exact rendered template string character-for-character, including indentation, newlines, attribute ordering, and incidental whitespace (e.g. '{{ audio_src}}' spacing quirks). Any functionally equivalent solution \u2014 same link, same classes, same href/download behavior but different formatting or attribute order \u2014 would fail. This grades format over observable behavior, which the screening criteria say to reject rather than rewrite.",
+  "summary": "audio: Present download button with tooltip.",
+  "lang": "web",
+  "issue": 35636,
+  "fix_commit": "8a40b0699a6ccdabed302d0060cd1121abd6c053",
+  "base_commit": "548c690f83006aba6e2d1a1b219bb1f71db938b1",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/8a40b0699a6ccdabed302d0060cd1121abd6c053",
+    "issue_url": "https://github.com/zulip/zulip/issues/35636"
+  }
+}

@@ -1,0 +1,467 @@
+diff --git a/web/src/click_handlers.ts b/web/src/click_handlers.ts
+index 68667083d5..3c7c8c8f36 100644
+--- a/web/src/click_handlers.ts
++++ b/web/src/click_handlers.ts
+@@ -6,6 +6,7 @@ import * as tippy from "tippy.js";
+ import * as z from "zod/mini";
+ 
+ import render_buddy_list_tooltip_content from "../templates/buddy_list_tooltip_content.hbs";
++import render_scroll_to_time_popover from "../templates/popovers/scroll_to_time_popover.hbs";
+ 
+ import * as activity_ui from "./activity_ui.ts";
+ import * as browser_history from "./browser_history.ts";
+@@ -14,6 +15,7 @@ import * as compose_actions from "./compose_actions.ts";
+ import * as compose_reply from "./compose_reply.ts";
+ import * as compose_state from "./compose_state.ts";
+ import * as emoji_picker from "./emoji_picker.ts";
++import * as flatpickr from "./flatpickr.ts";
+ import * as hash_util from "./hash_util.ts";
+ import * as hashchange from "./hashchange.ts";
+ import * as message_edit from "./message_edit.ts";
+@@ -429,6 +431,120 @@ export function initialize(): void {
+         }
+     });
+ 
++    function open_date_picker(trigger_element: HTMLElement, message_id: number): void {
++        assert(message_lists.current !== undefined);
++        const message = message_lists.current.get(message_id)!;
++
++        // Set maxDate to end of the month.
++        const endOfMonth = new Date();
++        endOfMonth.setMonth(endOfMonth.getMonth() + 1, 0);
++        endOfMonth.setHours(23, 59, 59, 999);
++
++        flatpickr.show_flatpickr(
++            trigger_element,
++            (time) => {
++                message_view.fast_track_current_msg_list_to_anchor(
++                    "date",
++                    new Date(time).toISOString(),
++                );
++            },
++            new Date(message.timestamp * 1000),
++            {
++                enableTime: false,
++                // Set to the end of the month so that we don't see too many
++                // disabled rows in the flatpickr calendar which looks visually
++                // unappealing.
++                maxDate: endOfMonth,
++            },
++            true,
++        );
++    }
++
++    function get_start_of_day(date: Date): Date {
++        const start = new Date(date);
++        start.setHours(0, 0, 0, 0);
++        return start;
++    }
++
++    function open_scroll_to_time_popover(trigger_element: HTMLElement, message_id: number): void {
++        popover_menus.toggle_popover_menu(trigger_element, {
++            theme: "popover-menu",
++            placement: "bottom",
++            popperOptions: {
++                modifiers: [
++                    {
++                        name: "flip",
++                        options: {
++                            fallbackPlacements: ["top"],
++                        },
++                    },
++                ],
++            },
++            onShow(instance) {
++                popover_menus.on_show_prep(instance);
++                instance.setContent(parse_html(render_scroll_to_time_popover()));
++            },
++            onMount(instance) {
++                const $popper = $(instance.popper);
++                popover_menus.popover_instances.scroll_to_time = instance;
++
++                $popper.on("click", "#scroll_to_oldest", () => {
++                    message_view.fast_track_current_msg_list_to_anchor("oldest");
++                    popover_menus.hide_current_popover_if_visible(instance);
++                });
++
++                $popper.on("click", "#scroll_to_last_week", () => {
++                    const week_ago = get_start_of_day(new Date());
++                    week_ago.setDate(week_ago.getDate() - 7);
++                    message_view.fast_track_current_msg_list_to_anchor(
++                        "date",
++                        week_ago.toISOString(),
++                    );
++                    popover_menus.hide_current_popover_if_visible(instance);
++                });
++
++                $popper.on("click", "#scroll_to_yesterday", () => {
++                    const yesterday = get_start_of_day(new Date());
++                    yesterday.setDate(yesterday.getDate() - 1);
++                    message_view.fast_track_current_msg_list_to_anchor(
++                        "date",
++                        yesterday.toISOString(),
++                    );
++                    popover_menus.hide_current_popover_if_visible(instance);
++                });
++
++                $popper.on("click", "#scroll_to_newest", () => {
++                    message_view.fast_track_current_msg_list_to_anchor("newest");
++                    popover_menus.hide_current_popover_if_visible(instance);
++                });
++
++                $popper.on("click", "#scroll_to_custom", () => {
++                    popover_menus.hide_current_popover_if_visible(instance);
++                    open_date_picker(trigger_element, message_id);
++                });
++            },
++            onHidden(instance) {
++                instance.destroy();
++                popover_menus.popover_instances.scroll_to_time = null;
++            },
++        });
++    }
++
++    $("#message_feed_container").on("click", ".scroll-to-time", function (this: HTMLElement, e) {
++        e.preventDefault();
++        e.stopPropagation();
++
++        assert(message_lists.current !== undefined);
++        if ($(this).hasClass("recipient_row_date")) {
++            const $recipient_row = $(this).closest(".recipient_row");
++            const message_id = rows.id_for_recipient_row($recipient_row);
++            open_scroll_to_time_popover(this, message_id);
++            return;
++        }
++        const message_id = rows.id($(this).closest(".message_row"));
++        open_scroll_to_time_popover(this, message_id);
++    });
++
+     // RESOLVED TOPICS
+     $("body").on("click", ".message_header .on_hover_topic_resolve", (e) => {
+         e.stopPropagation();
+diff --git a/web/src/flatpickr.ts b/web/src/flatpickr.ts
+index 3c1d6e1f55..8b6548d0ce 100644
+--- a/web/src/flatpickr.ts
++++ b/web/src/flatpickr.ts
+@@ -170,6 +170,7 @@ export function show_flatpickr(
+ 
+         if (["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"].includes(e.key)) {
+             // use flatpickr's built-in navigation of the date grid.
++            e.stopPropagation();
+             return true;
+         }
+ 
+diff --git a/web/src/message_fetch.ts b/web/src/message_fetch.ts
+index 601e24b982..306600c6ac 100644
+--- a/web/src/message_fetch.ts
++++ b/web/src/message_fetch.ts
+@@ -45,6 +45,7 @@ type MessageFetchResponse = z.infer<typeof response_schema>;
+ 
+ type MessageFetchOptions = {
+     anchor: string | number;
++    anchor_date?: string | undefined;
+     num_before: number;
+     num_after: number;
+     cont: (data: MessageFetchResponse, args: MessageFetchOptions) => void;
+@@ -61,6 +62,7 @@ type MessageFetchAPIParams = {
+     client_gravatar: boolean;
+     narrow?: string;
+     allow_empty_topic_name: boolean;
++    anchor_date?: string;
+ };
+ 
+ let first_messages_fetch = true;
+@@ -107,9 +109,11 @@ export function load_messages_around_anchor(
+     anchor: string,
+     cont: () => void,
+     msg_list_data: MessageListData,
++    anchor_date?: string,
+ ): void {
+     load_messages({
+         anchor,
++        anchor_date,
+         num_before: consts.narrowed_view_backward_batch_size,
+         num_after: consts.narrowed_view_forward_batch_size,
+         msg_list_data,
+@@ -368,6 +372,14 @@ export function get_parameters_for_message_fetch_api(
+         blueslip.error("Message list data is undefined!");
+     }
+ 
++    if (opts.anchor === "date") {
++        if (opts.anchor_date === undefined) {
++            blueslip.error("Missing anchor_date for date anchor fetch");
++        } else {
++            data.anchor_date = opts.anchor_date;
++        }
++    }
++
+     const narrow = get_narrow_for_message_fetch(msg_list_data.filter);
+     if (narrow !== "") {
+         data.narrow = narrow;
+diff --git a/web/src/message_list_data.ts b/web/src/message_list_data.ts
+index 3ab7f2fd56..3e0ad28ca2 100644
+--- a/web/src/message_list_data.ts
++++ b/web/src/message_list_data.ts
+@@ -650,4 +650,34 @@ export class MessageListData {
+         const msg = this._items[msg_index];
+         return msg;
+     }
++
++    find_date_anchor_message_id(anchor_date: string): Message | undefined {
++        const anchor_timestamp = Math.floor(Date.parse(anchor_date) / 1000);
++        if (this.visibly_empty()) {
++            return undefined;
++        }
++
++        const first_message = this.first()!;
++        if (anchor_timestamp < first_message.timestamp && this.fetch_status.has_found_oldest()) {
++            return first_message;
++        }
++        const last_message = this.last()!;
++        if (anchor_timestamp > last_message.timestamp && this.fetch_status.has_found_newest()) {
++            return last_message;
++        }
++        // We need to fetch the message from the server if we have not found the oldest
++        // message in the list and if the there is no message older than the timestamp on
++        // the list.
++        if (!this.fetch_status.has_found_oldest() && anchor_timestamp <= first_message.timestamp) {
++            return undefined;
++        }
++
++        return this.all_messages_after_mute_filtering().find(
++            (message) => message.timestamp >= anchor_timestamp,
++        );
++    }
++
++    date_anchor_exists(anchor_date: string): boolean {
++        return Boolean(this.find_date_anchor_message_id(anchor_date));
++    }
+ }
+diff --git a/web/src/message_view.ts b/web/src/message_view.ts
+index 73dff7f35e..bef31c3559 100644
+--- a/web/src/message_view.ts
++++ b/web/src/message_view.ts
+@@ -937,8 +937,9 @@ function navigate_to_anchor_message(opts: {
+     anchor: string;
+     is_anchor_fetched: (data: MessageListData) => boolean;
+     message_list_data_to_target_message_id: (data: MessageListData) => number;
++    anchor_date?: string | undefined;
+ }): void {
+-    const {anchor, is_anchor_fetched, message_list_data_to_target_message_id} = opts;
++    const {anchor, is_anchor_fetched, message_list_data_to_target_message_id, anchor_date} = opts;
+     // The function navigates user to the anchor in the current
+     // message list. We don't use `message_view.show` here due
+     // to following reasons:
+@@ -983,7 +984,7 @@ function navigate_to_anchor_message(opts: {
+     if (is_anchor_fetched(message_lists.current.data)) {
+         select_msg_id(message_list_data_to_target_message_id(message_lists.current.data));
+         return;
+-    } else if (is_anchor_fetched(all_messages_data)) {
++    } else if (is_anchor_fetched(all_messages_data) && anchor !== "date") {
+         // We can load messages into `msg_list_data` but we don't know
+         // the fetch status until we contact server. If we are contacting the
+         // server, it is better to just fetch the required messages instead
+@@ -992,6 +993,13 @@ function navigate_to_anchor_message(opts: {
+         // So, a cheaper check is to see if we have found the anchor in
+         // `all_messages_data`, and if we have, we can say `msg_list_data`
+         // will also have the anchor (for oldest / newest anchors at least).
++        //
++        // We skip this for date anchor since message_list_data_to_target_message_id
++        // for date anchor heavily relies on has_found_oldest/newest being up-to-date.
++        // When using load_local_messages, we do not copy fetch_status over to
++        // msg_list_data, which causes error in message_list_data_to_target_message_id.
++        // See https://github.com/zulip/zulip/pull/37198#issuecomment-3858015457 for
++        // more details.
+         const msg_list_data = new MessageListData({
+             filter: message_lists.current.data.filter,
+             excludes_muted_topics: message_lists.current.data.excludes_muted_topics,
+@@ -1018,37 +1026,65 @@ function navigate_to_anchor_message(opts: {
+             select_anchor_using_data(msg_list_data);
+         },
+         msg_list_data,
++        anchor_date,
+     );
+ }
+ 
+-export function fast_track_current_msg_list_to_anchor(anchor: string): void {
++export function fast_track_current_msg_list_to_anchor(anchor: string, anchor_date?: string): void {
+     assert(message_lists.current !== undefined);
+     if (message_lists.current.visibly_empty()) {
+         return;
+     }
+ 
+-    if (anchor === "oldest") {
+-        navigate_to_anchor_message({
+-            anchor,
+-            is_anchor_fetched(msg_list_data) {
+-                return msg_list_data.fetch_status.has_found_oldest();
+-            },
+-            message_list_data_to_target_message_id(msg_list_data) {
+-                return msg_list_data.first()!.id;
+-            },
+-        });
+-    } else if (anchor === "newest") {
+-        navigate_to_anchor_message({
+-            anchor,
+-            is_anchor_fetched(msg_list_data) {
+-                return msg_list_data.fetch_status.has_found_newest();
+-            },
+-            message_list_data_to_target_message_id(msg_list_data) {
+-                return msg_list_data.last()!.id;
+-            },
+-        });
+-    } else {
+-        blueslip.error(`Invalid anchor value: ${anchor}`);
++    switch (anchor) {
++        case "oldest": {
++            navigate_to_anchor_message({
++                anchor,
++                is_anchor_fetched(msg_list_data: MessageListData) {
++                    return msg_list_data.fetch_status.has_found_oldest();
++                },
++                message_list_data_to_target_message_id(msg_list_data) {
++                    return msg_list_data.first()!.id;
++                },
++            });
++
++            break;
++        }
++        case "newest": {
++            navigate_to_anchor_message({
++                anchor,
++                is_anchor_fetched(msg_list_data: MessageListData) {
++                    return msg_list_data.fetch_status.has_found_newest();
++                },
++                message_list_data_to_target_message_id(msg_list_data) {
++                    return msg_list_data.last()!.id;
++                },
++            });
++
++            break;
++        }
++        case "date": {
++            if (anchor_date === undefined) {
++                blueslip.error("Missing required argument anchor_date");
++                return;
++            }
++
++            navigate_to_anchor_message({
++                anchor,
++                is_anchor_fetched(msg_list_data: MessageListData) {
++                    return msg_list_data.date_anchor_exists(anchor_date);
++                },
++                message_list_data_to_target_message_id(msg_list_data) {
++                    return msg_list_data.find_date_anchor_message_id(anchor_date)!.id;
++                },
++                anchor_date,
++            });
++
++            break;
++        }
++        default: {
++            blueslip.error(`Invalid anchor value: ${anchor}`);
++        }
+     }
+ }
+ 
+diff --git a/web/src/popover_menus.ts b/web/src/popover_menus.ts
+index 15d577519a..e208a87d5d 100644
+--- a/web/src/popover_menus.ts
++++ b/web/src/popover_menus.ts
+@@ -25,6 +25,7 @@ type PopoverName =
+     | "message_actions"
+     | "stream_card_popover"
+     | "stream_settings"
++    | "scroll_to_time"
+     | "topics_menu"
+     | "send_later"
+     | "change_visibility_policy"
+@@ -49,6 +50,7 @@ export const popover_instances: Record<PopoverName, tippy.Instance | null> = {
+     message_actions: null,
+     stream_card_popover: null,
+     stream_settings: null,
++    scroll_to_time: null,
+     topics_menu: null,
+     send_later: null,
+     change_visibility_policy: null,
+diff --git a/web/src/timerender.ts b/web/src/timerender.ts
+index c32286db99..d554b91a2b 100644
+--- a/web/src/timerender.ts
++++ b/web/src/timerender.ts
+@@ -373,7 +373,7 @@ export function render_date(time: Date, display_year?: boolean): HTMLElement {
+     next_timerender_id += 1;
+     const today = new Date();
+     const rendered_time = render_now(time, today, display_year);
+-    let $node = $("<span>").attr("class", `timerender-content ${className}`);
++    let $node = $("<span>").attr("class", `date_row_text timerender-content ${className}`);
+     $node = render_date_span($node, rendered_time);
+     maybe_add_update_list_entry({
+         needs_update: rendered_time.needs_update,
+diff --git a/web/templates/popovers/scroll_to_time_popover.hbs b/web/templates/popovers/scroll_to_time_popover.hbs
+new file mode 100644
+index 0000000000..8f4b8611e7
+--- /dev/null
++++ b/web/templates/popovers/scroll_to_time_popover.hbs
+@@ -0,0 +1,34 @@
++<div class="popover-menu" id="scroll-to-time-popover" data-simplebar data-simplebar-tab-index="-1">
++    <ul role="menu" class="popover-menu-list">
++        <li role="none" class="text-item popover-menu-list-item">
++            <span class="popover-header-name">{{t "Scroll to" }}</span>
++        </li>
++        <li role="separator" class="popover-menu-separator"></li>
++        <li role="none" class="link-item popover-menu-list-item">
++            <a role="menuitem" class="popover-menu-link" id="scroll_to_oldest" tabindex="0">
++                <span class="popover-menu-label">{{t "Oldest message" }}</span>
++            </a>
++        </li>
++        <li role="none" class="link-item popover-menu-list-item">
++            <a role="menuitem" class="popover-menu-link" id="scroll_to_last_week" tabindex="0">
++                <span class="popover-menu-label">{{t "A week ago" }}</span>
++            </a>
++        </li>
++        <li role="none" class="link-item popover-menu-list-item">
++            <a role="menuitem" class="popover-menu-link" id="scroll_to_yesterday" tabindex="0">
++                <span class="popover-menu-label">{{t "Yesterday" }}</span>
++            </a>
++        </li>
++        <li role="none" class="link-item popover-menu-list-item">
++            <a role="menuitem" class="popover-menu-link" id="scroll_to_newest" tabindex="0">
++                <span class="popover-menu-label">{{t "Newest message" }}</span>
++            </a>
++        </li>
++        <li role="separator" class="popover-menu-separator"></li>
++        <li role="none" class="link-item popover-menu-list-item">
++            <a role="menuitem" class="popover-menu-link" id="scroll_to_custom" tabindex="0">
++                <span class="popover-menu-label">{{t "Custom" }}</span>
++            </a>
++        </li>
++    </ul>
++</div>
+diff --git a/web/templates/recipient_row.hbs b/web/templates/recipient_row.hbs
+index 83fbef75dc..8858359452 100644
+--- a/web/templates/recipient_row.hbs
++++ b/web/templates/recipient_row.hbs
+@@ -92,7 +92,7 @@
+                 {{> components/icon_button icon="more-vertical" intent="neutral" custom_classes="recipient-bar-control-icon" data-tippy-content=(t "Topic actions") aria-label=(t "Topic actions") }}
+             </span>
+         </span>
+-        <span class="recipient_row_date {{#if (and (not always_display_date) date_unchanged )}}recipient_row_date_unchanged{{/if}}">{{{date_html}}}</span>
++        <span class="recipient_row_date scroll-to-time {{#if (and (not always_display_date) date_unchanged )}}recipient_row_date_unchanged{{/if}}" role="button" tabindex="0">{{{date_html}}}</span>
+     </div>
+ </div>
+ {{else}}
+diff --git a/web/templates/single_message.hbs b/web/templates/single_message.hbs
+index 4ccb2606cd..ca23002943 100644
+--- a/web/templates/single_message.hbs
++++ b/web/templates/single_message.hbs
+@@ -20,7 +20,9 @@
+         </span>
+         {{/if}}
+         {{#if want_date_divider}}
+-            {{{date_divider_html}}}
++            <span class="scroll-to-time" role="button" tabindex="0">
++                {{{date_divider_html}}}
++            </span>
+         {{/if}}
+     </div>
+     {{/if}}

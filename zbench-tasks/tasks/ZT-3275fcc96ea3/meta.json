@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-3275fcc96ea3",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "popup_banners: Redesign connection banner to use new banner component.",
+  "type": "other",
+  "lang": "web",
+  "issue": 31282,
+  "fix_commit": "3275fcc96ea39f24fd67be8b76c9db2fd491274c",
+  "base_commit": "cd08c628ba99ad98b7d30b29f52d62abe4dc3709",
+  "env_fingerprint": "ed2e4d630294",
+  "fail_to_pass": [
+    "web/tests/server_events.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 100,
+    "files": 4,
+    "hunks": 12,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "A new web frontend module `web/src/popup_banners` owns the connection-error popup banner UI, replacing the old `#connection-error` element managed via `ui_report`.",
+    "The module exports a function `close_connection_error_popup_banner()` that dismisses the connection-error popup banner; the server-events polling code (`web/src/server_events.js`) must call it (and therefore import the module) to clear the error indication when a get-events poll succeeds.",
+    "The server-events code must no longer route connection-error display through `ui_report.hide_error`/`show_error` on `#connection-error`; the popup-banner module is the sole interface for showing/clearing the connection error."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 963,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Sayam Samal",
+    "email": "sayam@zulip.com",
+    "date": "2025-03-10"
+  },
+  "contamination": {
+    "fix_public_at": "2025-03-10",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-08-06T04:26:20Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/3275fcc96ea39f24fd67be8b76c9db2fd491274c",
+    "issue_url": "https://github.com/zulip/zulip/issues/31282"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-3275fcc96ea3",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 63.9
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

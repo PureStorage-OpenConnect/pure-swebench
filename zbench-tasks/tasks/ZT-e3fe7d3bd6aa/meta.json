@@ -1,0 +1,99 @@
+{
+  "task_id": "ZT-e3fe7d3bd6aa",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "messages: Add jump to date picker.",
+  "type": "other",
+  "lang": "web",
+  "issue": 23995,
+  "fix_commit": "e3fe7d3bd6aa66177e71b9f149a63a5db305dd5a",
+  "base_commit": "2761f96587e32b0c1595a0081b09dec3fd7fd776",
+  "env_fingerprint": "9f27b110d2ef",
+  "fail_to_pass": [
+    "web/tests/message_fetch.test.cjs",
+    "web/tests/message_view.test.cjs",
+    "web/tests/timerender.test.cjs"
+  ],
+  "pass_to_pass": [
+    "web/tests/message_list_data.test.cjs"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 261,
+    "files": 10,
+    "hunks": 19,
+    "f2p_count": 3
+  },
+  "interface_requirements": [
+    "The message-fetch layer supports a new anchor value \"date\": fetch options accept an optional string field `anchor_date` (an ISO 8601 timestamp). When anchor is \"date\", the pre-existing `get_parameters_for_message_fetch_api` must copy `anchor_date` verbatim into the outgoing API request parameters as `anchor_date`.",
+    "When a fetch is requested with anchor \"date\" but no `anchor_date` value, the client must log the error \"Missing anchor_date for date anchor fetch\" and omit `anchor_date` from the request parameters (proceeding otherwise).",
+    "web/src/message_view gains an exported function `fast_track_current_msg_list_to_anchor(anchor, anchor_date?)` where `anchor` is a string such as \"date\" and `anchor_date` is an ISO 8601 timestamp, used to jump the current message list to a point in time.",
+    "For anchor \"date\": if a message at or after the given date is already in the locally loaded current list, select the first such message with scroll-to behavior (select options then_scroll: true, from_scroll: false).",
+    "For anchor \"date\": if the date precedes all loaded messages and the oldest history has already been fully fetched, select the oldest loaded message (same then_scroll/from_scroll options, no server fetch).",
+    "For anchor \"date\": if the date falls outside the loaded range on a side that has not been fully fetched (older side without found_oldest, or newer side without found_newest), the feature must fetch from the server by delegating to the pre-existing `message_fetch.load_messages_around_anchor`, passing the anchor value (\"date\"), a completion callback, and a fresh MessageListData to be populated; once the fetch callback runs, select the message matching the anchor date with select options then_scroll: true, from_scroll: false, force_rerender: true.",
+    "For anchor \"date\": if the date is in the future and the newest message has already been fetched (found_newest), select the newest loaded message without issuing any server fetch (select options then_scroll: true, from_scroll: false).",
+    "Calling `fast_track_current_msg_list_to_anchor(\"date\")` without an anchor date must log the error \"Missing required argument anchor_date\" and perform no selection.",
+    "The date text rendered by timerender's `render_date` gains the CSS class `date_row_text`, prepended to the existing classes (resulting class attribute \"date_row_text timerender-content timerender0\")."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 1405,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Shubham Padia",
+    "email": "shubham@zulip.com",
+    "date": "2026-02-06"
+  },
+  "contamination": {
+    "fix_public_at": "2026-02-06",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2023-01-05T20:38:57Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/e3fe7d3bd6aa66177e71b9f149a63a5db305dd5a",
+    "issue_url": "https://github.com/zulip/zulip/issues/23995"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-e3fe7d3bd6aa",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 101.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

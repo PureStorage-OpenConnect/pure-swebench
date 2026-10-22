@@ -1,0 +1,90 @@
+{
+  "task_id": "ZT-eb7eaba52608",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "peer_data: Fetch subscriptions for a user in get_streams_for_user.",
+  "type": "other",
+  "lang": "web",
+  "issue": 35341,
+  "fix_commit": "eb7eaba526084eb51fcc687e85ba126d59b7070e",
+  "base_commit": "cb355296d0dc4b07c131f2f5c102dc2ee5c8623a",
+  "env_fingerprint": "e5474e2b235a",
+  "fail_to_pass": [
+    "web/tests/peer_data.test.cjs",
+    "web/tests/stream_data.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 140,
+    "files": 5,
+    "hunks": 19,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "peer_data gains a public async function `load_subscriptions_for_user(user_id: number): Promise<void>` that ensures the given user's channel subscriptions are loaded into the client's peer/subscriber data before resolving.",
+    "The subscriptions are fetched via a GET request to `/json/users/<user_id>/channels`; the JSON response contains a field `subscribed_channel_ids`: an array of numeric channel IDs the user is subscribed to.",
+    "On success, each channel ID in `subscribed_channel_ids` is recorded as a subscription of that user, so the pre-existing `stream_data.is_user_loaded_and_subscribed(stream_id, user_id)` returns true for those channels.",
+    "Concurrent calls of `load_subscriptions_for_user` for the same user must share a single in-flight request: while a fetch is pending, subsequent calls return a promise tied to that fetch rather than issuing another request; likewise, once a user's subscriptions are loaded, further calls make no request.",
+    "If full subscriber data is already held for every channel (e.g. every channel's subscribers have been fetched via the pre-existing per-channel fetch path), `load_subscriptions_for_user` resolves without making any request.",
+    "On a server error (non-400, e.g. HTTP 500), the fetch is retried with backoff; each retry logs the warning `Failure fetching user's subscribed channels. Retrying.`. After 5 failed retries, it stops and logs the error `Failure fetching user's subscribed channels. Giving up.`. A retry that eventually succeeds records the subscriptions normally.",
+    "On an HTTP 400 response, no retry is attempted and the error `Bad request to fetch user's subscribed channels.` is logged.",
+    "`stream_data.get_streams_for_user(user_id)` becomes async: it returns a Promise that first ensures the target user's subscriptions are loaded (via the mechanism above) and then resolves to the existing `{subscribed, can_subscribe}` result shape; all call sites must await it.",
+    "The pre-existing state-reset function `peer_data.clear_for_testing()` must also clear the newly introduced per-user subscription-loaded state and any pending subscription requests, so a reset module refetches on the next call."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 376,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Evy Kassirer",
+    "email": "evy@zulip.com",
+    "date": "2025-12-16"
+  },
+  "contamination": {
+    "fix_public_at": "2025-12-16",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-07-19T00:51:28Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/eb7eaba526084eb51fcc687e85ba126d59b7070e",
+    "issue_url": "https://github.com/zulip/zulip/issues/35341"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-eb7eaba52608",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 90.0
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

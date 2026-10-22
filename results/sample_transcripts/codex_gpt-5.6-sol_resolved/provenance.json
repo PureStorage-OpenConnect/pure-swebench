@@ -1,0 +1,52 @@
+{
+ "agent": {
+  "agent_id": "codex-openai-gpt-5.6-sol",
+  "cli": {
+   "name": "codex",
+   "version_probe": {
+    "command": [
+     "codex",
+     "--version"
+    ],
+    "ok": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "codex-cli 0.147.0"
+   }
+  },
+  "command": "python3 -m zbench.agents.codex_agent",
+  "config": {
+   "available": true,
+   "codex_env": {
+    "CODEX_BASE_URL": "https://api.openai.com/v1",
+    "CODEX_MODEL_NAME": "gpt-5.6-sol",
+    "CODEX_REASONING_EFFORT": "high",
+    "CODEX_WIRE_API": "responses",
+    "ZBENCH_AGENT_TIMEOUT": "3000"
+   },
+   "kind": "codex",
+   "note": "CODEX_API_KEY is a secret and is never snapshotted.",
+   "sha256": "d2f38dd422b1786460a279e15a09e6ef35aca0e108fdd37cb554ddc1b39dbce5"
+  },
+  "env_keys": [
+   "CODEX_BASE_URL",
+   "CODEX_MODEL_NAME",
+   "CODEX_REASONING_EFFORT",
+   "CODEX_WIRE_API",
+   "ZBENCH_AGENT_TIMEOUT",
+   "ZBENCH_PROVIDER_POOL"
+  ],
+  "timeout_sec": 3600
+ },
+ "captured_at": "2026-09-06T20:23:11.729678+00:00",
+ "harness": {
+  "git": {
+   "available": false,
+   "start": "/home/user/scripts/zbench/zbench/provenance.py"
+  },
+  "name": "zbench",
+  "platform": "Linux-6.8.0-110-generic-x86_64-with-glibc2.39",
+  "python_version": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]"
+ },
+ "schema_version": 2
+}

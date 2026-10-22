@@ -1,0 +1,107 @@
+{
+  "task_id": "ZT-3fc63110ac63",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_invalid",
+  "reason": "pass_to_pass regressed by gold fix (FAIL)",
+  "summary": "incoming-webhooks: Add OpenProject integration.",
+  "type": "other",
+  "lang": "py",
+  "issue": 29944,
+  "fix_commit": "3fc63110ac6360ad7d62b74464eef91823ac4629",
+  "base_commit": "614fdee5ca85067809eb452bb84290f430667904",
+  "env_fingerprint": "debabeacaf26",
+  "fail_to_pass": [
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_attachment_created",
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_project_updated",
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_project_with_parent_created",
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_project_without_parent_created",
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_time_entry_with_invalid_iso",
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_time_entry_with_iso_hm",
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_time_entry_with_workpackage_created",
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_time_entry_without_workpackage_created",
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_work_package_created",
+    "zerver.webhooks.openproject.tests.OpenProjectHookTests.test_work_package_updated"
+  ],
+  "pass_to_pass": [
+    "zerver.tests.test_integrations"
+  ],
+  "complexity": {
+    "bucket": "high",
+    "added_lines": 125,
+    "files": 2,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "A new incoming-webhook integration named `openproject` (display name \"OpenProject\") is added, following Zulip's standard webhook layout: module `zerver/webhooks/openproject/` reachable at the standard URL `/api/v1/external/openproject`, and registered in WEBHOOK_INTEGRATIONS so the endpoint is routed.",
+    "The integration reads the event from the payload's `action` field (values of the form `<item>:<action>`) and supports exactly these events: `project:created`, `project:updated`, `work_package:created`, `work_package:updated`, `time_entry:created`, `attachment:created`; any other action value must be rejected as an unsupported webhook event type.",
+    "Project events: message is `Project **{name}** was {action}.`; if a created project has a parent project (payload `project._embedded.parent.name`), the message is `Project **{name}** was created as a sub-project of **{parent}**.`; the topic is the project name.",
+    "Work-package events: message is `**{subject}** (work package **{type}**) was {created|updated} by **{author}**.` using the work package's subject, its embedded type name, and embedded author name; the topic is the embedded project's name.",
+    "Attachment created: message is `**{author}** uploaded **{fileName}** in **{container subject}**.` using the attachment's embedded author name, its `fileName`, and the subject of its embedded container work package; the topic is the container's project title (from the container's `project` link).",
+    "Time-entry created: message is `**{user}** logged {duration}{location}.` where {user} is the embedded user's name; {duration} is the entry's ISO 8601 `hours` value rendered in bold as a human-readable list of days/hours/minutes/seconds with singular/plural unit names, comma-separated with `and` before the last unit (e.g. `**1 hour, 30 minutes**`); if the duration cannot be parsed the phrase `a time entry` is used instead; {location} is ` on **{workPackage subject}**` when the entry has an embedded work package, otherwise ` on **{project name}**`; the topic is the embedded project's name.",
+    "The endpoint returns the standard Zulip webhook success response after sending the message."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 425,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "nirved.mishra.eee23@itbhu.ac.in",
+    "email": "nirved431@gmail.com",
+    "date": "2025-05-05"
+  },
+  "contamination": {
+    "fix_public_at": "2025-05-05",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-05-03T20:41:00Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/3fc63110ac6360ad7d62b74464eef91823ac4629",
+    "issue_url": "https://github.com/zulip/zulip/issues/29944"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-3fc63110ac63",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "A_p2p": [
+          "PASS"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "B_p2p": [
+          "FAIL"
+        ]
+      },
+      "fail_signature": [
+        "test_attachment_created",
+        "test_project_updated",
+        "test_project_with_parent_created",
+        "test_project_without_parent_created",
+        "test_time_entry_with_invalid_iso",
+        "test_time_entry_with_iso_hm",
+        "test_time_entry_with_workpackage_created",
+        "test_time_entry_without_workpackage_created",
+        "test_work_package_created",
+        "test_work_package_updated"
+      ],
+      "verdict": "INVALID",
+      "code": 1,
+      "why": "pass_to_pass regressed by gold fix (FAIL)",
+      "elapsed_s": 113.9
+    }
+  }
+}

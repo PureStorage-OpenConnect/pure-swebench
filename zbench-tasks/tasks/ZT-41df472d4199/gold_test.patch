@@ -1,0 +1,28 @@
+diff --git a/zerver/tests/test_docs.py b/zerver/tests/test_docs.py
+index e2b0205238..1a35813c3c 100644
+--- a/zerver/tests/test_docs.py
++++ b/zerver/tests/test_docs.py
+@@ -264,7 +264,6 @@ class DocPageTest(ZulipTestCase):
+         self._test("/security/", ["TLS encryption"])
+         self._test("/use-cases/", ["Use cases and customer stories"])
+         self._test("/why-zulip/", ["Why Zulip?"])
+-        self._test("/try-zulip/", ["check out the Zulip app"])
+         # /for/... pages
+         self._test("/for/open-source/", ["for open source projects"])
+         self._test("/for/events/", ["for conferences and events"])
+diff --git a/zerver/tests/test_urls.py b/zerver/tests/test_urls.py
+index ec26c5a3ae..d1c347fa57 100644
+--- a/zerver/tests/test_urls.py
++++ b/zerver/tests/test_urls.py
+@@ -198,8 +198,9 @@ class RedirectURLTest(ZulipTestCase):
+ 
+     def test_landing_page_redirects(self) -> None:
+         for redirect in LANDING_PAGE_REDIRECTS:
+-            result = self.client_get(redirect.old_url, follow=True)
+-            self.assert_in_success_response(["Download"], result)
++            if redirect.old_url != "/try-zulip/":
++                result = self.client_get(redirect.old_url, follow=True)
++                self.assert_in_success_response(["Download"], result)
+ 
+             result = self.client_get(redirect.old_url)
+             self.assertEqual(result.status_code, 301)

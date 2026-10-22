@@ -1,0 +1,24 @@
+diff --git a/web/templates/input_pill.hbs b/web/templates/input_pill.hbs
+index 88ae25550c..983778c031 100644
+--- a/web/templates/input_pill.hbs
++++ b/web/templates/input_pill.hbs
+@@ -1,6 +1,7 @@
+ <div class='pill {{#if deactivated}} deactivated-pill {{/if}}'{{#if user_id}}data-user-id="{{user_id}}"{{/if}}{{#if group_id}}data-user-group-id="{{group_id}}"{{/if}}{{#if stream_id}}data-stream-id="{{stream_id}}"{{/if}} tabindex=0>
+     {{#if has_image}}
+     <img class="pill-image" src="{{img_src}}" />
++    <div class="pill-image-border"></div>
+     {{#if deactivated}}
+         <span class="fa fa-ban slashed-circle-icon"></span>
+     {{/if}}
+diff --git a/web/templates/search_user_pill.hbs b/web/templates/search_user_pill.hbs
+index 904ea71cf0..482366c45c 100644
+--- a/web/templates/search_user_pill.hbs
++++ b/web/templates/search_user_pill.hbs
+@@ -6,6 +6,7 @@
+     {{#each users}}
+         <div class="pill{{#if deactivated}} deactivated-pill{{/if}}" data-user-id="{{this.user_id}}">
+             <img class="pill-image" src="{{this.img_src}}" />
++            <div class="pill-image-border"></div>
+             {{#if deactivated}}
+             <span class="fa fa-ban slashed-circle-icon"></span>
+             {{/if}}

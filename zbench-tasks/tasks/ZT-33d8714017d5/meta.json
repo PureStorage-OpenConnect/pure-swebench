@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-33d8714017d5",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "symbol_coupling",
+  "reason": "Some of what the test binds to is legitimately specifiable \u2014 the setting name EMAIL_MAX_CONNECTION_LIFETIME_IN_MINUTES (with its 0/None sentinel semantics), the dotted backend path zproject.email_backends.PersistentSMTPEmailBackend (an operator-facing EMAIL_BACKEND value), and the behavioral contract that close() is a no-op. But the test goes further and binds to internal implementation choices no spec would dictate: it wraps and asserts exact call counts on a private helper `_open` (mock.patch.object(backend, '_open') with assertions like _open_call.call_count == 2 vs 1 to distinguish 'checked connection' from 'actually reopened'), requiring the solver to invent a private method with that exact name and a specific internal call structure (open() delegating to _open(), which itself calls super().open()). It also asserts the internal timestamp attribute name `opened_at` and its exact value, and depends on the noop() probe being issued through the specific control flow that yields those call counts. A solver implementing the identical user-visible behavior with a differently named or differently factored internal method (e.g. inlining super().open() or naming the timestamp `_opened_at`) would fail the test. These private-helper mock targets and call-count assertions cannot be cured by a brief, so the task is coupled.",
+  "summary": "send_email: Add setting to control max connection lifetime.",
+  "lang": "py",
+  "issue": 21900,
+  "fix_commit": "33d8714017d518cd22dcbf69b374f29c656d163e",
+  "base_commit": "f138600db3f33136045fc7ff04048be40f784cf8",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/33d8714017d518cd22dcbf69b374f29c656d163e",
+    "issue_url": "https://github.com/zulip/zulip/issues/21900"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-97c69e303803",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "out_of_scope",
+  "reason": "scope: 19 code files > 15",
+  "summary": "inbox: Show inbox channel view based on user setting.",
+  "lang": "web",
+  "issue": 29574,
+  "fix_commit": "97c69e3038030793f4d233232aef36f847a02072",
+  "base_commit": "cc4b4f567089b54b4855f3275efe57c2db43bf5c",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/97c69e3038030793f4d233232aef36f847a02072",
+    "issue_url": "https://github.com/zulip/zulip/issues/29574"
+  }
+}

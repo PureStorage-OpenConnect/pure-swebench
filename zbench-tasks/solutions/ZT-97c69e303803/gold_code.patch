@@ -1,0 +1,877 @@
+diff --git a/web/shared/src/internal_url.ts b/web/shared/src/internal_url.ts
+index da010c0f5f..be6b925c96 100644
+--- a/web/shared/src/internal_url.ts
++++ b/web/shared/src/internal_url.ts
+@@ -57,6 +57,13 @@ export function by_stream_url(
+     return `#narrow/channel/${encode_stream_id(stream_id, maybe_get_stream_name)}`;
+ }
+ 
++export function by_channel_topic_list_url(
++    stream_id: number,
++    maybe_get_stream_name: MaybeGetStreamName,
++): string {
++    return `#topics/channel/${encode_stream_id(stream_id, maybe_get_stream_name)}`;
++}
++
+ // The message_id parameter is used to obtain topic permalinks,
+ // by using it in a `with` operator.
+ export function by_stream_topic_url(
+diff --git a/web/src/hash_parser.ts b/web/src/hash_parser.ts
+index 8d3b5d6a4c..85e03f93eb 100644
+--- a/web/src/hash_parser.ts
++++ b/web/src/hash_parser.ts
+@@ -158,6 +158,7 @@ export function is_spectator_compatible(hash: string): boolean {
+         "all_messages",
+         "feed",
+         "about-zulip",
++        "topics",
+     ];
+ 
+     const main_hash = get_hash_category(hash);
+diff --git a/web/src/hash_util.ts b/web/src/hash_util.ts
+index 21f3a6846b..db9cbbeda1 100644
+--- a/web/src/hash_util.ts
++++ b/web/src/hash_util.ts
+@@ -75,6 +75,10 @@ export function decode_operand(operator: string, operand: string): string {
+     return operand;
+ }
+ 
++export function by_channel_topic_list_url(channel_id: number): string {
++    return internal_url.by_channel_topic_list_url(channel_id, sub_store.maybe_get_stream_name);
++}
++
+ export function by_stream_url(stream_id: number): string {
+     // Wrapper for web use of internal_url.by_stream_url
+     return internal_url.by_stream_url(stream_id, sub_store.maybe_get_stream_name);
+diff --git a/web/src/hashchange.ts b/web/src/hashchange.ts
+index 20e5c4249d..06d7b94c29 100644
+--- a/web/src/hashchange.ts
++++ b/web/src/hashchange.ts
+@@ -5,6 +5,7 @@ import * as admin from "./admin.ts";
+ import * as blueslip from "./blueslip.ts";
+ import * as browser_history from "./browser_history.ts";
+ import * as drafts_overlay_ui from "./drafts_overlay_ui.ts";
++import {Filter} from "./filter.ts";
+ import * as hash_parser from "./hash_parser.ts";
+ import * as hash_util from "./hash_util.ts";
+ import {$t_html} from "./i18n.ts";
+@@ -159,6 +160,7 @@ function do_hashchange_normal(from_reload: boolean, restore_selected_id: boolean
+     const hash = window.location.hash.split("/");
+ 
+     switch (hash[0]) {
++        case "#topics":
+         case "#narrow": {
+             let terms;
+             try {
+@@ -181,6 +183,16 @@ function do_hashchange_normal(from_reload: boolean, restore_selected_id: boolean
+                 show_home_view();
+                 return false;
+             }
++
++            // Show inbox style topics list for #topics narrow.
++            if (hash[0] === "#topics" && terms.length === 1) {
++                const channel_id_string = hash[2];
++                if (channel_id_string) {
++                    inbox_ui.show(new Filter(terms));
++                    return true;
++                }
++            }
++
+             const narrow_opts: message_view.ShowMessageViewOpts = {
+                 change_hash: false, // already set
+                 trigger: "hash change",
+diff --git a/web/src/inbox_ui.ts b/web/src/inbox_ui.ts
+index 591db80d1c..3ad890e7b7 100644
+--- a/web/src/inbox_ui.ts
++++ b/web/src/inbox_ui.ts
+@@ -15,6 +15,7 @@ import * as compose_closed_ui from "./compose_closed_ui.ts";
+ import * as compose_state from "./compose_state.ts";
+ import * as dialog_widget from "./dialog_widget.ts";
+ import * as dropdown_widget from "./dropdown_widget.ts";
++import type {Filter} from "./filter";
+ import * as hash_util from "./hash_util.ts";
+ import {$t_html} from "./i18n.ts";
+ import * as inbox_util from "./inbox_util.ts";
+@@ -25,9 +26,15 @@ import * as message_store from "./message_store.ts";
+ import type {Message} from "./message_store.ts";
+ import * as onboarding_steps from "./onboarding_steps.ts";
+ import * as people from "./people.ts";
++import * as pm_list from "./pm_list.ts";
+ import * as stream_color from "./stream_color.ts";
+ import * as stream_data from "./stream_data.ts";
++import * as stream_list from "./stream_list.ts";
++import * as stream_topic_history_util from "./stream_topic_history_util.ts";
+ import * as sub_store from "./sub_store.ts";
++import type {ListInfoNode} from "./topic_list.ts";
++import {TopicListWidget} from "./topic_list.ts";
++import type {TopicInfo} from "./topic_list_data.ts";
+ import * as unread from "./unread.ts";
+ import * as unread_ops from "./unread_ops.ts";
+ import {user_settings} from "./user_settings.ts";
+@@ -150,6 +157,7 @@ let topics_dict = new Map<string, Map<string, TopicContext>>();
+ let streams_dict = new Map<string, StreamContext>();
+ let update_triggered_by_user = false;
+ let filters_dropdown_widget;
++let channel_view_topic_widget: InboxTopicListWidget | undefined;
+ 
+ const COLUMNS = {
+     COLLAPSE_BUTTON: 0,
+@@ -190,22 +198,63 @@ function save_data_to_ls(): void {
+     ls.set(ls_collapsed_containers_key, [...collapsed_containers]);
+ }
+ 
+-export function show(): void {
++export function show(filter?: Filter): void {
+     assert(hide_other_views_callback !== undefined);
+     hide_other_views_callback();
+     // Avoid setting col_focus to recipient when moving to inbox from other narrows.
+     // We prefer to focus entire row instead of stream name for inbox-header.
+     // Since inbox-row doesn't has a collapse button, focus on COLUMNS.COLLAPSE_BUTTON
+     // is same as focus on COLUMNS.RECIPIENT. See `set_list_focus` for details.
+-    if (col_focus === COLUMNS.RECIPIENT) {
++    if (!inbox_util.is_visible() && col_focus === COLUMNS.RECIPIENT) {
+         col_focus = COLUMNS.COLLAPSE_BUTTON;
+     }
+ 
++    // Check if we are already narrowed to the same channel view.
++    const was_inbox_channel_view = inbox_util.is_channel_view();
++    if (was_inbox_channel_view && filter?.is_channel_view()) {
++        const filter_channel_id_string = filter.operands("channel")[0];
++        assert(filter_channel_id_string !== undefined);
++        const filter_channel_id = Number.parseInt(filter_channel_id_string, 10);
++
++        if (inbox_util.get_channel_id() === filter_channel_id) {
++            // We expect `update` to handle any live updates such that we don't need
++            // do anything here if view for the same channel is visible.
++            return;
++        }
++    }
++
++    // Before we set the filter, we need to check if the inbox view is already visible.
++    const normal_inbox_view_is_visible = inbox_util.is_visible() && !was_inbox_channel_view;
++
++    inbox_util.set_filter(filter);
++    if (inbox_util.is_channel_view()) {
++        views_util.show({
++            highlight_view_in_left_sidebar() {
++                assert(filter !== undefined);
++                left_sidebar_navigation_area.handle_narrow_activated(filter);
++                stream_list.handle_narrow_activated(filter, false, false);
++                pm_list.handle_narrow_activated(filter);
++            },
++            $view: $("#inbox-view"),
++            update_compose: compose_closed_ui.update_buttons_for_non_specific_views,
++            // We already did a check above for that.
++            is_visible: () => false,
++            set_visible: inbox_util.set_visible,
++            complete_rerender,
++            is_recent_view: false,
++        });
++        return;
++    }
++
+     views_util.show({
+-        highlight_view_in_left_sidebar: left_sidebar_navigation_area.highlight_inbox_view,
++        highlight_view_in_left_sidebar() {
++            views_util.handle_message_view_deactivated(
++                left_sidebar_navigation_area.highlight_inbox_view,
++            );
++        },
+         $view: $("#inbox-view"),
+         update_compose: compose_closed_ui.update_buttons_for_non_specific_views,
+-        is_visible: inbox_util.is_visible,
++        is_visible: () => normal_inbox_view_is_visible,
+         set_visible: inbox_util.set_visible,
+         complete_rerender,
+     });
+@@ -242,6 +291,8 @@ export function hide(): void {
+         $view: $("#inbox-view"),
+         set_visible: inbox_util.set_visible,
+     });
++
++    inbox_util.set_filter(undefined);
+ }
+ 
+ function get_topic_key(stream_id: number, topic: string): string {
+@@ -461,8 +512,9 @@ function format_topic(
+     topic: string,
+     topic_unread_count: number,
+     latest_msg_id: number,
++    is_channel_view = false,
+ ): TopicContext {
+-    const context = {
++    const common_context = {
+         is_topic: true,
+         stream_id,
+         stream_archived,
+@@ -472,10 +524,8 @@ function format_topic(
+         unread_count: topic_unread_count,
+         conversation_key: get_topic_key(stream_id, topic),
+         topic_url: hash_util.by_channel_topic_permalink(stream_id, topic),
+-        is_hidden: filter_should_hide_stream_row({stream_id, topic}),
+-        is_collapsed: collapsed_containers.has(STREAM_HEADER_PREFIX + stream_id),
+-        mention_in_unread: unread.topic_has_any_unread_mentions(stream_id, topic),
+         latest_msg_id,
++        mention_in_unread: unread.topic_has_any_unread_mentions(stream_id, topic),
+         // The 'all_visibility_policies' field is not specific to this context,
+         // but this is the easiest way we've figured out for passing the data
+         // to the template rendering.
+@@ -484,7 +534,24 @@ function format_topic(
+         column_indexes: COLUMNS,
+     };
+ 
+-    return context;
++    if (is_channel_view) {
++        return {
++            ...common_context,
++            // We use TopicListWidget to check which topics to show so
++            // that `update` works correctly. So we're not using the
++            // inbox_ui filtering/hiding logic here.
++            is_hidden: false,
++            // Inbox view setting for collapsed containers is not
++            // relevant in the single-channel view.
++            is_collapsed: false,
++        };
++    }
++
++    return {
++        ...common_context,
++        is_hidden: filter_should_hide_stream_row({stream_id, topic}),
++        is_collapsed: collapsed_containers.has(STREAM_HEADER_PREFIX + stream_id),
++    };
+ }
+ 
+ function insert_stream(
+@@ -707,23 +774,151 @@ function filter_click_handler(
+     update();
+ }
+ 
+-export function complete_rerender(): void {
+-    if (!inbox_util.is_visible()) {
+-        return;
++export function update_channel_view(channel_id: number): void {
++    if (
++        inbox_util.is_visible() &&
++        inbox_util.is_channel_view() &&
++        inbox_util.get_channel_id() === channel_id
++    ) {
++        channel_view_topic_widget?.build();
+     }
+-    load_data_from_ls();
+-    const {has_visible_unreads, ...additional_context} = reset_data();
++}
++
++function get_channel_view_formatter(channel_id: number): (conversation: TopicInfo) => ListInfoNode {
++    return (conversation: TopicInfo): ListInfoNode => {
++        const render = (): string => {
++            // Not used when rendering inbox rows.
++            const latest_msg_id = 0;
++            const topic_context = format_topic(
++                channel_id,
++                false,
++                conversation.topic_name,
++                conversation.unread,
++                latest_msg_id,
++                true,
++            );
++            return render_inbox_row(topic_context);
++        };
++
++        const eq = (other: ListInfoNode): boolean =>
++            other.type === "topic" && _.isEqual(conversation, other.conversation);
++
++        const key = "t:" + conversation.topic_name;
++
++        return {
++            key,
++            render,
++            type: "topic",
++            conversation,
++            eq,
++        };
++    };
++}
++
++function show_empty_inbox_channel_view_text(is_empty: boolean): void {
++    if (is_empty) {
++        $("#inbox-list").css("border-width", "0");
++        if (search_keyword) {
++            $("#inbox-empty-channel-view-with-search").show();
++            $("#inbox-empty-channel-view-without-search").hide();
++        } else {
++            $("#inbox-empty-channel-view-with-search").hide();
++            $("#inbox-empty-channel-view-without-search").show();
++        }
++    } else {
++        $("#inbox-empty-channel-view-with-search").hide();
++        $("#inbox-empty-channel-view-without-search").hide();
++        $("#inbox-list").css("border-width", "1px");
++    }
++}
++
++class InboxTopicListWidget extends TopicListWidget {
++    override topic_list_class_name = "inbox-channel-topic-list";
++
++    override build(show_spinner = false): this {
++        const formatter = get_channel_view_formatter(this.get_stream_id());
++        const is_zoomed = true;
++        super.build(show_spinner, formatter, is_zoomed);
++        show_empty_inbox_channel_view_text(this.is_empty());
++        setTimeout(() => {
++            revive_current_focus();
++        }, 0);
++        return this;
++    }
++}
++
++function filter_topics_in_channel(channel_id: number, topics: string[]): string[] {
++    return topics.filter((topic) => !filter_should_hide_stream_row({stream_id: channel_id, topic}));
++}
++
++function render_channel_view(channel_id: number): void {
+     $("#inbox-pane").html(
+         render_inbox_view({
++            normal_view: false,
+             search_val: search_keyword,
+             INBOX_SEARCH_ID,
+-            dms_dict,
+-            topics_dict,
+-            streams_dict,
+-            ...additional_context,
+         }),
+     );
+-    show_empty_inbox_text(has_visible_unreads);
++    show_empty_inbox_text(false);
++    channel_view_topic_widget = new InboxTopicListWidget(
++        $("#inbox-list"),
++        channel_id,
++        (topic_names: string[]) => filter_topics_in_channel(channel_id, topic_names),
++    );
++    const show_spinner = true;
++    channel_view_topic_widget.build(show_spinner);
++    stream_topic_history_util.get_server_history(channel_id, () => {
++        if (channel_view_topic_widget?.get_stream_id() !== channel_id) {
++            return;
++        }
++
++        channel_view_topic_widget.build();
++    });
++}
++
++export function complete_rerender(): void {
++    if (!inbox_util.is_visible()) {
++        return;
++    }
++    load_data_from_ls();
++
++    if (inbox_util.is_channel_view()) {
++        const channel_id = inbox_util.get_channel_id();
++        assert(channel_id !== undefined);
++
++        if (channel_view_topic_widget?.get_stream_id() === channel_id) {
++            channel_view_topic_widget.build();
++        } else {
++            // Show unknown channel message if we don't have data for channel.
++            if (!stream_data.get_sub_by_id(channel_id)) {
++                $("#inbox-pane").html(
++                    render_inbox_view({
++                        unknown_channel: true,
++                    }),
++                );
++                return;
++            }
++
++            render_channel_view(channel_id);
++        }
++    } else {
++        channel_view_topic_widget = undefined;
++        const {has_visible_unreads, ...additional_context} = reset_data();
++        $("#inbox-pane").html(
++            render_inbox_view({
++                normal_view: true,
++                search_val: search_keyword,
++                INBOX_SEARCH_ID,
++                dms_dict,
++                topics_dict,
++                streams_dict,
++                ...additional_context,
++            }),
++        );
++        show_empty_inbox_channel_view_text(false);
++        show_empty_inbox_text(has_visible_unreads);
++    }
++
+     // If the focus is not on the inbox rows, the inbox view scrolls
+     // down when moving from other views to the inbox view. To avoid
+     // this, we scroll to top before restoring focus via revive_current_focus.
+@@ -1290,6 +1485,11 @@ export function update(): void {
+         return;
+     }
+ 
++    if (inbox_util.is_channel_view()) {
++        channel_view_topic_widget?.build();
++        return;
++    }
++
+     const unread_dms = unread.get_unread_pm();
+     const unread_dms_count = unread_dms.total_count;
+     const unread_dms_dict = unread_dms.pm_dict;
+diff --git a/web/src/inbox_util.ts b/web/src/inbox_util.ts
+index fd651b6cce..06fce594b4 100644
+--- a/web/src/inbox_util.ts
++++ b/web/src/inbox_util.ts
+@@ -1,10 +1,37 @@
+ import $ from "jquery";
++import assert from "minimalistic-assert";
+ 
++import type {Filter} from "./filter";
+ import * as stream_color from "./stream_color.ts";
+ import * as stream_data from "./stream_data.ts";
+ 
++export let filter: Filter | undefined;
+ let is_inbox_visible = false;
+ 
++export function set_filter(new_filter: Filter | undefined): void {
++    if (new_filter !== undefined) {
++        assert(new_filter.is_channel_view());
++    }
++    filter = new_filter;
++}
++
++export function is_channel_view(): boolean {
++    // We may support other filters in the future, but for now,
++    // we filtering by a single channel.
++    return filter !== undefined;
++}
++
++export function current_filter(): Filter | undefined {
++    return filter;
++}
++
++export function get_channel_id(): number {
++    assert(filter !== undefined);
++    const narrow_channel_stream_id_string = filter.operands("channel")[0];
++    assert(narrow_channel_stream_id_string !== undefined);
++    return Number.parseInt(narrow_channel_stream_id_string, 10);
++}
++
+ export function set_visible(value: boolean): void {
+     is_inbox_visible = value;
+ }
+diff --git a/web/src/message_view.ts b/web/src/message_view.ts
+index 157f36619b..24e3444aac 100644
+--- a/web/src/message_view.ts
++++ b/web/src/message_view.ts
+@@ -293,6 +293,14 @@ export function try_rendering_locally_for_same_narrow(
+     filter: Filter,
+     opts: ShowMessageViewOpts,
+ ): boolean {
++    if (!narrow_state.is_message_feed_visible()) {
++        // This function only works when the message feed is visible.
++        //
++        // TODO: Ideally, excluding the inbox-style channels view from
++        // this code path should be further up the call chain.
++        return false;
++    }
++
+     const current_filter = narrow_state.filter();
+     let target_scroll_offset;
+     if (!current_filter) {
+diff --git a/web/src/message_view_header.ts b/web/src/message_view_header.ts
+index 3efb10bc69..33d78c190c 100644
+--- a/web/src/message_view_header.ts
++++ b/web/src/message_view_header.ts
+@@ -1,11 +1,12 @@
+ import $ from "jquery";
+ import assert from "minimalistic-assert";
+ 
++import render_inline_decorated_channel_name from "../templates/inline_decorated_channel_name.hbs";
+ import render_message_view_header from "../templates/message_view_header.hbs";
+ 
+ import type {Filter} from "./filter.ts";
+ import * as hash_util from "./hash_util.ts";
+-import {$t} from "./i18n.ts";
++import {$t, $t_html} from "./i18n.ts";
+ import * as inbox_util from "./inbox_util.ts";
+ import * as narrow_state from "./narrow_state.ts";
+ import {page_params} from "./page_params.ts";
+@@ -48,7 +49,7 @@ function get_message_view_header_context(filter: Filter | undefined): MessageVie
+         };
+     }
+ 
+-    if (inbox_util.is_visible()) {
++    if (inbox_util.is_visible() && !inbox_util.is_channel_view()) {
+         return {
+             title: $t({defaultMessage: "Inbox"}),
+             description: $t({
+@@ -93,7 +94,7 @@ function get_message_view_header_context(filter: Filter | undefined): MessageVie
+     const description = filter.get_description()?.description;
+     const link = filter.get_description()?.link;
+     assert(title !== undefined);
+-    const context = filter.add_icon_data({
++    let context = filter.add_icon_data({
+         title,
+         description,
+         link,
+@@ -112,6 +113,27 @@ function get_message_view_header_context(filter: Filter | undefined): MessageVie
+                 }),
+             };
+         }
++
++        if (inbox_util.is_visible() && inbox_util.is_channel_view()) {
++            const stream_name_with_privacy_symbol_html = render_inline_decorated_channel_name({
++                stream: current_stream,
++                show_colored_icon: true,
++            });
++            context = {
++                ...context,
++                title: undefined,
++                html_title: $t_html(
++                    {defaultMessage: "All topics in <z-channel></z-channel>"},
++                    {
++                        "z-channel": () => stream_name_with_privacy_symbol_html,
++                    },
++                ),
++                // We don't want to show an initial icon here.
++                icon: undefined,
++                zulip_icon: undefined,
++            };
++        }
++
+         // We can now be certain that the narrow
+         // involves a stream which exists and
+         // the current user can access.
+diff --git a/web/src/narrow_state.ts b/web/src/narrow_state.ts
+index 1ae8d6b94c..e428a24c83 100644
+--- a/web/src/narrow_state.ts
++++ b/web/src/narrow_state.ts
+@@ -1,6 +1,7 @@
+ import assert from "minimalistic-assert";
+ 
+ import {Filter} from "./filter.ts";
++import * as inbox_util from "./inbox_util.ts";
+ import * as message_lists from "./message_lists.ts";
+ import {page_params} from "./page_params.ts";
+ import * as people from "./people.ts";
+@@ -10,7 +11,17 @@ import type {StreamSubscription} from "./sub_store.ts";
+ import * as unread from "./unread.ts";
+ 
+ export function filter(): Filter | undefined {
+-    // `Recent Conversations` and `Inbox` return undefined;
++    // We use Filter objects for message views as well as the list of
++    // topics channel view.
++    //
++    // TODO: Some renaming/refactoring to put this in a separate
++    // module from the rest of this file, which is all about message
++    // views, would be valuable.
++    if (inbox_util.is_visible()) {
++        return inbox_util.filter;
++    }
++
++    // `Recent Conversations` returns undefined;
+     return message_lists.current?.data.filter;
+ }
+ 
+diff --git a/web/src/recent_view_ui.ts b/web/src/recent_view_ui.ts
+index f0b9f911e3..91d06c4cbc 100644
+--- a/web/src/recent_view_ui.ts
++++ b/web/src/recent_view_ui.ts
+@@ -1427,7 +1427,11 @@ export function show(): void {
+     // is a reliable solution to check if recent view was displayed earlier.
+     const reattach_event_handlers = topics_widget !== undefined;
+     views_util.show({
+-        highlight_view_in_left_sidebar: left_sidebar_navigation_area.highlight_recent_view,
++        highlight_view_in_left_sidebar() {
++            views_util.handle_message_view_deactivated(
++                left_sidebar_navigation_area.highlight_recent_view,
++            );
++        },
+         $view: $("#recent_view"),
+         // We want to show `new stream message` instead of
+         // `new topic`, which we are already doing in this
+diff --git a/web/src/server_events_dispatch.js b/web/src/server_events_dispatch.js
+index d81d7ed1bf..cea483d431 100644
+--- a/web/src/server_events_dispatch.js
++++ b/web/src/server_events_dispatch.js
+@@ -977,6 +977,11 @@ export function dispatch_normal_event(event) {
+             if (event.property === "web_suggest_update_timezone") {
+                 $("#automatically_offer_update_time_zone").prop("checked", event.value);
+             }
++            if (event.property === "web_channel_default_view") {
++                const force_rerender = true;
++                stream_list.create_initial_sidebar_rows(force_rerender);
++                stream_list.update_streams_sidebar(force_rerender);
++            }
+             settings_preferences.update_page(event.property);
+             break;
+         }
+diff --git a/web/src/settings_config.ts b/web/src/settings_config.ts
+index 8255e5cf24..16ddc3b53a 100644
+--- a/web/src/settings_config.ts
++++ b/web/src/settings_config.ts
+@@ -66,6 +66,10 @@ export const web_channel_default_view_values = {
+         code: 1,
+         description: $t({defaultMessage: "Top topic in the channel"}),
+     },
++    list_of_topics: {
++        code: 3,
++        description: $t({defaultMessage: "List of topics"}),
++    },
+     channel_feed: {
+         code: 2,
+         description: $t({defaultMessage: "Channel feed"}),
+diff --git a/web/src/stream_list.ts b/web/src/stream_list.ts
+index 16c32a6b2e..dc8e38d96a 100644
+--- a/web/src/stream_list.ts
++++ b/web/src/stream_list.ts
+@@ -41,6 +41,11 @@ import {user_settings} from "./user_settings.ts";
+ 
+ let pending_stream_list_rerender = false;
+ let zoomed_in = false;
++let update_inbox_channel_view_callback: (channel_id: number) => void;
++
++export function set_update_inbox_channel_view_callback(value: (channel_id: number) => void): void {
++    update_inbox_channel_view_callback = value;
++}
+ 
+ export let stream_cursor: ListCursor<number>;
+ 
+@@ -234,7 +239,7 @@ export function remove_sidebar_row(stream_id: number): void {
+     update_streams_sidebar(force_rerender);
+ }
+ 
+-export function create_initial_sidebar_rows(): void {
++export function create_initial_sidebar_rows(force_rerender = false): void {
+     // This code is slightly opaque, but it ends up building
+     // up list items and attaching them to the "sub" data
+     // structures that are kept in stream_data.js.
+@@ -242,7 +247,7 @@ export function create_initial_sidebar_rows(): void {
+     subs = subs.filter((sub) => !sub.is_archived);
+ 
+     for (const sub of subs) {
+-        create_sidebar_row(sub);
++        create_sidebar_row(sub, force_rerender);
+     }
+ }
+ 
+@@ -458,10 +463,17 @@ function build_stream_sidebar_li(sub: StreamSubscription): JQuery {
+     const name = sub.name;
+     const is_muted = stream_data.is_muted(sub.stream_id);
+     const can_post_messages = stream_data.can_post_messages_in_stream(sub);
++    let url = hash_util.by_stream_url(sub.stream_id);
++    if (
++        web_channel_default_view_values.list_of_topics.code ===
++        user_settings.web_channel_default_view
++    ) {
++        url = hash_util.by_channel_topic_list_url(sub.stream_id);
++    }
+     const args = {
+         name,
+         id: sub.stream_id,
+-        url: hash_util.by_stream_url(sub.stream_id),
++        url,
+         is_muted,
+         invite_only: sub.invite_only,
+         is_web_public: sub.is_web_public,
+@@ -526,8 +538,8 @@ function build_stream_sidebar_row(sub: StreamSubscription): void {
+     stream_sidebar.set_row(sub.stream_id, new StreamSidebarRow(sub));
+ }
+ 
+-export function create_sidebar_row(sub: StreamSubscription): void {
+-    if (stream_sidebar.has_row_for(sub.stream_id)) {
++export function create_sidebar_row(sub: StreamSubscription, force_rerender = false): void {
++    if (!force_rerender && stream_sidebar.has_row_for(sub.stream_id)) {
+         // already exists
+         blueslip.warn("Dup try to build sidebar row for stream", {stream_id: sub.stream_id});
+         return;
+@@ -759,6 +771,9 @@ export function update_stream_sidebar_for_narrow(filter: Filter): JQuery | undef
+         clear_topics();
+     }
+ 
++    // We want to update channel view for inbox for the same reasons
++    // we want to the topics list here.
++    update_inbox_channel_view_callback(stream_id);
+     topic_list.rebuild_left_sidebar($stream_li, stream_id);
+ 
+     return $stream_li;
+@@ -824,9 +839,12 @@ export function initialize_stream_cursor(): void {
+ 
+ export function initialize({
+     on_stream_click,
++    update_inbox_channel_view,
+ }: {
+     on_stream_click: (stream_id: number, trigger: string) => void;
++    update_inbox_channel_view: (channel_id: number) => void;
+ }): void {
++    update_inbox_channel_view_callback = update_inbox_channel_view;
+     create_initial_sidebar_rows();
+ 
+     // We build the stream_list now.  It may get re-built again very shortly
+@@ -901,6 +919,14 @@ export function set_event_handlers({
+         const current_narrow_stream_id = narrow_state.stream_id();
+         const current_topic = narrow_state.topic();
+ 
++        if (
++            user_settings.web_channel_default_view ===
++            web_channel_default_view_values.list_of_topics.code
++        ) {
++            browser_history.go_to_location(hash_util.by_channel_topic_list_url(stream_id));
++            return;
++        }
++
+         if (current_narrow_stream_id === stream_id && current_topic !== undefined) {
+             const channel_feed_url = hash_util.by_stream_url(stream_id);
+             browser_history.go_to_location(channel_feed_url);
+diff --git a/web/src/stream_popover.ts b/web/src/stream_popover.ts
+index 4305737b16..ccd769dfd2 100644
+--- a/web/src/stream_popover.ts
++++ b/web/src/stream_popover.ts
+@@ -25,6 +25,7 @@ import type {Message} from "./message_store.ts";
+ import * as message_util from "./message_util.ts";
+ import * as message_view from "./message_view.ts";
+ import * as narrow_state from "./narrow_state.ts";
++import {page_params} from "./page_params.ts";
+ import * as popover_menus from "./popover_menus.ts";
+ import {left_sidebar_tippy_options} from "./popover_menus.ts";
+ import {web_channel_default_view_values} from "./settings_config.ts";
+@@ -106,6 +107,10 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+     const show_go_to_channel_feed =
+         user_settings.web_channel_default_view !==
+         web_channel_default_view_values.channel_feed.code;
++    const show_go_to_list_of_topics =
++        user_settings.web_channel_default_view !==
++            web_channel_default_view_values.list_of_topics.code &&
++        page_params.development_environment;
+     const stream_unread = unread.unread_count_info_for_stream(stream_id);
+     const stream_unread_count = stream_unread.unmuted_count + stream_unread.muted_count;
+     const has_unread_messages = stream_unread_count > 0;
+@@ -113,9 +118,11 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+         stream: {
+             ...sub_store.get(stream_id),
+             url: browser_history.get_full_url(stream_hash),
++            list_of_topics_view_url: hash_util.by_channel_topic_list_url(stream_id),
+         },
+         has_unread_messages,
+         show_go_to_channel_feed,
++        show_go_to_list_of_topics,
+     });
+ 
+     popover_menus.toggle_popover_menu(elt, {
+@@ -151,6 +158,11 @@ function build_stream_popover(opts: {elt: HTMLElement; stream_id: number}): void
+                 );
+             });
+ 
++            $popper.on("click", ".stream-popover-go-to-list-of-topics", (e) => {
++                e.stopPropagation();
++                hide_stream_popover(instance);
++            });
++
+             // Stream settings
+             $popper.on("click", ".open_stream_settings", (e) => {
+                 const sub = stream_popover_sub(e);
+diff --git a/web/src/topic_list.ts b/web/src/topic_list.ts
+index e67863d0bc..31d649e8db 100644
+--- a/web/src/topic_list.ts
++++ b/web/src/topic_list.ts
+@@ -89,7 +89,7 @@ type ListInfoNodeOptions =
+           type: "spinner";
+       };
+ 
+-type ListInfoNode = vdom.Node<ListInfoNodeOptions>;
++export type ListInfoNode = vdom.Node<ListInfoNodeOptions>;
+ 
+ export function keyed_topic_li(conversation: TopicInfo): ListInfoNode {
+     const render = (): string => render_topic_list_item(conversation);
+diff --git a/web/src/ui_init.js b/web/src/ui_init.js
+index 89f5c0ad1e..de63ff8d3e 100644
+--- a/web/src/ui_init.js
++++ b/web/src/ui_init.js
+@@ -563,6 +563,7 @@ export function initialize_everything(state_data) {
+                 {trigger},
+             );
+         },
++        update_inbox_channel_view: inbox_ui.update_channel_view,
+     });
+     condense.initialize();
+     spoilers.initialize();
+diff --git a/web/src/views_util.ts b/web/src/views_util.ts
+index ab11f74cbd..940da61d54 100644
+--- a/web/src/views_util.ts
++++ b/web/src/views_util.ts
+@@ -66,6 +66,12 @@ export function filters_dropdown_options(
+     ];
+ }
+ 
++export function handle_message_view_deactivated(highlight_current_view: () => void): void {
++    highlight_current_view();
++    stream_list.handle_message_view_deactivated();
++    pm_list.handle_message_view_deactivated();
++}
++
+ export function show(opts: {
+     highlight_view_in_left_sidebar: () => void;
+     $view: JQuery;
+@@ -90,8 +96,6 @@ export function show(opts: {
+ 
+     // Hide selected elements in the left sidebar.
+     opts.highlight_view_in_left_sidebar();
+-    stream_list.handle_message_view_deactivated();
+-    pm_list.handle_message_view_deactivated();
+ 
+     unread_ui.hide_unread_banner();
+     opts.update_compose();
+diff --git a/web/templates/inbox_view/inbox_view.hbs b/web/templates/inbox_view/inbox_view.hbs
+index ae8b46c041..d384af6a50 100644
+--- a/web/templates/inbox_view/inbox_view.hbs
++++ b/web/templates/inbox_view/inbox_view.hbs
+@@ -1,4 +1,9 @@
+ <div id="inbox-main">
++    {{#if unknown_channel}}
++    <div id="inbox-unknown-channel-view" class="empty-list-message">
++        {{t "This channel doesn't exist, or you are not allowed to view it."}}
++    </div>
++    {{else}}
+     <div class="search_group" id="inbox-filters" role="group">
+         {{> ../dropdown_widget widget_name="inbox-filter"}}
+         <i class="zulip-icon zulip-icon-search-inbox"></i>
+@@ -10,8 +15,19 @@
+     <div id="inbox-empty-with-search" class="inbox-empty-text empty-list-message">
+         {{t "No conversations match your filters."}}
+     </div>
+-    {{> inbox_no_unreads}}
++    <div id="inbox-empty-channel-view-with-search" class="inbox-empty-text empty-list-message">
++        {{t "No topics match your filters."}}
++    </div>
++    <div id="inbox-empty-channel-view-without-search" class="inbox-empty-text empty-list-message">
++        {{t "There are no topics in this view."}}
++    </div>
++    {{#if normal_view}}
++        {{> inbox_no_unreads}}
++    {{/if}}
+     <div id="inbox-list">
+-        {{> inbox_list .}}
++        {{#if normal_view}}
++            {{> inbox_list .}}
++        {{/if}}
+     </div>
++    {{/if}}
+ </div>
+diff --git a/web/templates/popovers/left_sidebar/left_sidebar_stream_actions_popover.hbs b/web/templates/popovers/left_sidebar/left_sidebar_stream_actions_popover.hbs
+index 42768f7756..3f36c916cb 100644
+--- a/web/templates/popovers/left_sidebar/left_sidebar_stream_actions_popover.hbs
++++ b/web/templates/popovers/left_sidebar/left_sidebar_stream_actions_popover.hbs
+@@ -32,6 +32,14 @@
+             </a>
+         </li>
+         {{/if}}
++        {{#if show_go_to_list_of_topics}}
++        <li role="none" class="link-item popover-menu-list-item">
++            <a role="button" href="{{stream.list_of_topics_view_url}}" class="stream-popover-go-to-list-of-topics popover-menu-link" tabindex="0">
++                <i class="popover-menu-icon zulip-icon zulip-icon-topic-list" aria-hidden="true"></i>
++                <span class="popover-menu-label">{{t "Go to list of topics" }}</span>
++            </a>
++        </li>
++        {{/if}}
+         <li role="none" class="link-item popover-menu-list-item">
+             <a role="menuitem" class="copy_stream_link popover-menu-link" data-clipboard-text="{{ stream.url }}" tabindex="0">
+                 <i class="popover-menu-icon zulip-icon zulip-icon-link-alt" aria-hidden="true"></i>

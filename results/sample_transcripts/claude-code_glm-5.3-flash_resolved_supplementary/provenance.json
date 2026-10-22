@@ -1,0 +1,48 @@
+{
+ "agent": {
+  "agent_id": "claude-cli-glm-5.3-flash-litellm",
+  "cli": {
+   "name": "claude",
+   "version_probe": {
+    "command": [
+     "claude",
+     "--version"
+    ],
+    "ok": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "2.1.282 (Claude Code)"
+   }
+  },
+  "command": "python3 -m zbench.agents.claude_agent",
+  "config": {
+   "available": true,
+   "claude_env": {
+    "CLAUDE_EFFORT": "high",
+    "CLAUDE_MODEL_NAME": "glm-5.3-flash-claude-compatible",
+    "ZBENCH_AGENT_TIMEOUT": "3000"
+   },
+   "kind": "claude",
+   "note": "CLAUDE_CONFIG_DIR holds OAuth creds; not snapshotted (secret-safe).",
+   "sha256": "22b09dc5703c010431db54bfc029c70e691fa7c9e81299783181c62fe4ce0b21"
+  },
+  "env_keys": [
+   "CLAUDE_EFFORT",
+   "CLAUDE_MODEL_NAME",
+   "ZBENCH_AGENT_TIMEOUT",
+   "ZBENCH_PROVIDER_POOL"
+  ],
+  "timeout_sec": 3600
+ },
+ "captured_at": "2026-09-25T23:38:26.915617+00:00",
+ "harness": {
+  "git": {
+   "available": false,
+   "start": "/home/user/zbench/zbench/provenance.py"
+  },
+  "name": "zbench",
+  "platform": "macOS-26.7-arm64-arm-64bit",
+  "python_version": "3.12.14 (main, Aug 12 2026, 13:57:54) [Clang 21.0.0 (clang-2100.1.1.101)]"
+ },
+ "schema_version": 2
+}

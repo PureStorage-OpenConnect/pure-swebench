@@ -1,0 +1,86 @@
+{
+  "task_id": "ZT-d8f609d0880b",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "unresolved: Add support for searching for unresolved topics.",
+  "type": "other",
+  "lang": "web",
+  "issue": 31725,
+  "fix_commit": "d8f609d0880b2b03b7bfe09a709b10a4d4b7b7a4",
+  "base_commit": "3f88fe5903e2e56ed261b2ebbb6a81f83e3060b2",
+  "env_fingerprint": "64a7eec9c88d",
+  "fail_to_pass": [
+    "web/tests/filter.test.cjs",
+    "web/tests/search_suggestion.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 58,
+    "files": 4,
+    "hunks": 5,
+    "f2p_count": 2
+  },
+  "interface_requirements": [
+    "The search-bar narrow description for `is:resolved` (as returned by the existing Filter.search_description_as_html) must read exactly \"resolved topics\" (changed from \"topics marked as resolved\").",
+    "A negated `is:resolved` term ({operator: \"is\", operand: \"resolved\", negated: true}) must be described as exactly \"unresolved topics\" \u2014 using the natural negative word instead of the default \"exclude \" prefix.",
+    "The search typeahead must offer a suggestion with search string `-is:resolved` whose description reads \"Unresolved topics\" (rendered with sentence-case capitalization in the suggestion line), replacing the generic \"Exclude topics marked as resolved\" wording.",
+    "The suggestion list for an empty search query must include `-is:resolved`, placed immediately after the `is:resolved` suggestion and before the sender/channel suggestions.",
+    "Other negated `is:` suggestions keep the default \"Exclude ...\" phrasing (e.g. `-is:followed` \u2192 \"Exclude followed topics\"); only operands with a natural negative word (currently \"resolved\") get special wording."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 299,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Maneesh Shukla",
+    "email": "shuklamaneesh24@gmail.com",
+    "date": "2025-02-24"
+  },
+  "contamination": {
+    "fix_public_at": "2025-02-24",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-09-24T17:37:06Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/d8f609d0880b2b03b7bfe09a709b10a4d4b7b7a4",
+    "issue_url": "https://github.com/zulip/zulip/issues/31725"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-d8f609d0880b",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 87.8
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

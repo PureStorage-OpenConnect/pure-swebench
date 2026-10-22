@@ -1,0 +1,39 @@
+diff --git a/web/src/stream_data.ts b/web/src/stream_data.ts
+index 96b6621d8d..94e5690199 100644
+--- a/web/src/stream_data.ts
++++ b/web/src/stream_data.ts
+@@ -1062,3 +1062,21 @@ export function get_options_for_dropdown_widget(): (dropdown_widget.Option & {
+         }))
+         .sort((a, b) => util.strcmp(a.name.toLowerCase(), b.name.toLowerCase()));
+ }
++
++export function get_streams_for_move_messages_widget(): (dropdown_widget.Option & {
++    stream: StreamSubscription;
++})[] {
++    return get_unsorted_subs_with_content_access()
++        .filter((stream) => !stream.is_archived)
++        .sort((a, b) => {
++            if (a.subscribed !== b.subscribed) {
++                return a.subscribed ? -1 : 1;
++            }
++            return util.strcmp(a.name.toLowerCase(), b.name.toLowerCase());
++        })
++        .map((stream) => ({
++            name: stream.name,
++            unique_id: stream.stream_id,
++            stream,
++        }));
++}
+diff --git a/web/src/stream_popover.ts b/web/src/stream_popover.ts
+index 6251e20a2f..4305737b16 100644
+--- a/web/src/stream_popover.ts
++++ b/web/src/stream_popover.ts
+@@ -866,7 +866,7 @@ export async function build_move_topic_to_stream_popover(
+ 
+         stream_widget_value = current_stream_id;
+         const streams_list_options = (): dropdown_widget.Option[] =>
+-            stream_data.get_options_for_dropdown_widget().filter(({stream}) => {
++            stream_data.get_streams_for_move_messages_widget().filter(({stream}) => {
+                 if (stream.stream_id === current_stream_id) {
+                     return true;
+                 }

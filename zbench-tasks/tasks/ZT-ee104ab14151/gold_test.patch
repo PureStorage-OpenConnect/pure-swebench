@@ -1,0 +1,130 @@
+diff --git a/web/tests/composebox_typeahead.test.cjs b/web/tests/composebox_typeahead.test.cjs
+index 2767a05b1c..0169b69ae9 100644
+--- a/web/tests/composebox_typeahead.test.cjs
++++ b/web/tests/composebox_typeahead.test.cjs
+@@ -831,19 +831,19 @@ test("content_typeahead_selected", ({override}) => {
+     query = "#swed";
+     ct.get_or_set_token_for_testing("swed");
+     actual_value = ct.content_typeahead_selected(sweden_stream, query, input_element);
+-    expected_value = "#**Sweden** ";
++    expected_value = "#**Sweden>";
+     assert.equal(actual_value, expected_value);
+ 
+     query = "Hello #swed";
+     ct.get_or_set_token_for_testing("swed");
+     actual_value = ct.content_typeahead_selected(sweden_stream, query, input_element);
+-    expected_value = "Hello #**Sweden** ";
++    expected_value = "Hello #**Sweden>";
+     assert.equal(actual_value, expected_value);
+ 
+     query = "#**swed";
+     ct.get_or_set_token_for_testing("swed");
+     actual_value = ct.content_typeahead_selected(sweden_stream, query, input_element);
+-    expected_value = "#**Sweden** ";
++    expected_value = "#**Sweden>";
+     assert.equal(actual_value, expected_value);
+ 
+     // topic_list
+@@ -875,6 +875,32 @@ test("content_typeahead_selected", ({override}) => {
+     expected_value = "Hello #**Sweden>testing** ";
+     assert.equal(actual_value, expected_value);
+ 
++    query = "Hello #**Sweden>";
++    ct.get_or_set_token_for_testing("");
++    actual_value = ct.content_typeahead_selected(
++        {
++            topic: "Sweden",
++            type: "topic_list",
++            is_channel_link: false,
++        },
++        query,
++        input_element,
++    );
++    expected_value = "Hello #**Sweden>Sweden** ";
++    assert.equal(actual_value, expected_value);
++
++    ct.get_or_set_token_for_testing("");
++    actual_value = ct.content_typeahead_selected(
++        {
++            topic: "Sweden",
++            type: "topic_list",
++            is_channel_link: true,
++        },
++        query,
++        input_element,
++    );
++    expected_value = "Hello #**Sweden** ";
++    assert.equal(actual_value, expected_value);
+     // syntax
+     ct.get_or_set_completing_for_tests("syntax");
+ 
+@@ -1898,10 +1924,16 @@ test("begins_typeahead", ({override, override_rewire}) => {
+     // topic_list
+     // includes "more ice"
+     function typed_topics(topics) {
+-        return topics.map((topic) => ({
+-            type: "topic_list",
++        const matches_list = topics.map((topic) => ({
++            is_channel_link: false,
++            stream_data: {
++                ...stream_data.get_sub_by_name("Sweden"),
++                rendered_description: "",
++            },
+             topic,
++            type: "topic_list",
+         }));
++        return matches_list;
+     }
+     assert_typeahead_equals("#**Sweden>more ice", typed_topics(["more ice", "even more ice"]));
+     assert_typeahead_equals("#**Sweden>totally new topic", typed_topics(["totally new topic"]));
+diff --git a/web/tests/typeahead_helper.test.cjs b/web/tests/typeahead_helper.test.cjs
+index 99d399d4d2..ef7a4b9d96 100644
+--- a/web/tests/typeahead_helper.test.cjs
++++ b/web/tests/typeahead_helper.test.cjs
+@@ -956,6 +956,46 @@ test("render_stream", ({mock_template}) => {
+     assert.ok(rendered);
+ });
+ 
++test("render_stream_topic", ({mock_template}) => {
++    let rendered = false;
++    const streamData = {
++        invite_only: true,
++        is_web_public: false,
++        color: "blue",
++        name: "Design",
++        description: "Design related discussions.",
++        rendered_description: "",
++        subscribed: true,
++    };
++
++    const topic_object = {
++        topic: "Test topic title",
++        stream_data: {
++            invite_only: true,
++            is_web_public: false,
++            color: "blue",
++            name: "Design",
++            description: "Design related discussions.",
++            rendered_description: "",
++            subscribed: true,
++        },
++        type: "topic_list",
++        is_stream_only: false,
++    };
++
++    mock_template("typeahead_list_item.hbs", false, (args) => {
++        assert.equal(args.topic, "Test topic title");
++        assert.equal(args.type, "topic_list");
++        assert.equal(args.is_stream_only, false);
++        assert.equal(args.is_stream_topic, true);
++        assert.deepEqual(args.stream_data, streamData);
++        rendered = true;
++        return "typeahead-item-stub";
++    });
++    assert.equal(th.render_stream_topic(topic_object), "typeahead-item-stub");
++    assert.ok(rendered);
++});
++
+ test("render_emoji", ({mock_template}) => {
+     // Test render_emoji with normal emoji.
+     let expected_template_data = {

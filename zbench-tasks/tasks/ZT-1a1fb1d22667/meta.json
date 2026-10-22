@@ -1,0 +1,87 @@
+{
+  "task_id": "ZT-1a1fb1d22667",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "saml: Support full_name sync upon login.",
+  "type": "feature",
+  "lang": "py",
+  "issue": 34071,
+  "fix_commit": "1a1fb1d22667174ca8589e264ff27fd065f2f875",
+  "base_commit": "2fed327dd10fe1e8d027ff91eb12df642f1ab0ac",
+  "env_fingerprint": "b2778e9ff627",
+  "fail_to_pass": [
+    "zerver.tests.test_auth_backends.SAMLAuthBackendTest.test_social_auth_full_name_sync",
+    "zerver.tests.test_auth_backends.SAMLAuthBackendTest.test_social_auth_group_sync"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 44,
+    "files": 3,
+    "hunks": 8,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "The existing SOCIAL_AUTH_SYNC_ATTRS_DICT setting (keyed by realm subdomain, then backend name, e.g. \"saml\") gains a new supported key `full_name` whose value is the boolean True to enable syncing; when set, an existing user's Zulip full name is updated on each social-auth login to the name provided by the IdP via the standard name attributes (no extra_attrs configuration needed).",
+    "When `full_name` sync is not configured (key absent or SOCIAL_AUTH_SYNC_ATTRS_DICT empty), login must succeed as before and the user's full name must NOT be changed, even if the IdP supplies a different name.",
+    "When the IdP-provided name fails Zulip's standard full-name validation (e.g. contains disallowed characters), login must still succeed and the user's name must remain unchanged; the failure is reported only via a backend-logger WARNING with the exact wording: \"Failed to sync full_name for user <user_id>: <validation error message>\" (for invalid characters the validation message is the existing \"Invalid characters in name!\").",
+    "On a successful full-name sync during login, the auth backend must emit a log record at INFO level (or higher) noting the name update."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 232,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Mateusz Mandera",
+    "email": "mateusz.mandera@zulip.com",
+    "date": "2026-04-24"
+  },
+  "contamination": {
+    "fix_public_at": "2026-04-24",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-03-19T09:24:51Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-14",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/1a1fb1d22667174ca8589e264ff27fd065f2f875",
+    "issue_url": "https://github.com/zulip/zulip/issues/34071"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-1a1fb1d22667",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [
+        "test_social_auth_full_name_sync"
+      ],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 112.4
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

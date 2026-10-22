@@ -1,0 +1,84 @@
+{
+  "task_id": "ZT-2e59bb076801",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "empty-feed: Show special banner if muted topics in channel.",
+  "type": "other",
+  "lang": "web",
+  "issue": 31601,
+  "fix_commit": "2e59bb076801da91cead507227271df4c532cf8a",
+  "base_commit": "f2b33fc3eec78b15bb6491e7b10530af15ba8d05",
+  "env_fingerprint": "d681e19c1311",
+  "fail_to_pass": [
+    "web/tests/message_view.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 23,
+    "files": 1,
+    "hunks": 3,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "When the user narrows to a channel they are subscribed to and the message feed renders as empty even though the channel contains messages (i.e. every message is in a muted topic \u2014 determinable via the current message list's pre-existing visibly_empty() and empty() methods), the empty-narrow banner must show a muted-topics notice instead of the 'start the conversation' prompt.",
+    "The muted-topics banner title is the user-facing string: \"You have muted all the topics in this channel.\"",
+    "The muted-topics banner body is the user-facing HTML: \"To view a muted topic, click <b>show all topics</b> in the left sidebar, and select one from the list. Learn more\" \u2014 where 'Learn more' is a link to /help/mute-a-topic opening in a new tab (target=\"_blank\" rel=\"noopener noreferrer\").",
+    "When the channel genuinely has no messages at all (the current message list is truly empty), the existing 'Why not start the conversation?' banner must still be shown, unchanged."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 542,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "aditya.chaudhary1558@gmail.com",
+    "email": "aditya.chaudhary1558@gmail.com",
+    "date": "2025-04-13"
+  },
+  "contamination": {
+    "fix_public_at": "2025-04-13",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-09-13T21:29:59Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/2e59bb076801da91cead507227271df4c532cf8a",
+    "issue_url": "https://github.com/zulip/zulip/issues/31601"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-2e59bb076801",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 71.6
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

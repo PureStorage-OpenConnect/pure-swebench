@@ -1,0 +1,134 @@
+diff --git a/web/src/stream_list.ts b/web/src/stream_list.ts
+index d49c2cc8eb..7113f65937 100644
+--- a/web/src/stream_list.ts
++++ b/web/src/stream_list.ts
+@@ -357,11 +357,35 @@ export function build_stream_list(force_rerender: boolean): void {
+     const counts = unread.get_counts();
+     left_sidebar_navigation_area.update_dom_with_unread_counts(counts, false);
+     update_dom_with_unread_counts(counts);
++    update_stream_section_mention_indicators();
+     sidebar_ui.update_unread_counts_visibility();
+     set_sections_states();
+     $("#streams_list").toggleClass("is_searching", ui_util.get_left_sidebar_search_term() !== "");
+ }
+ 
++export let update_stream_section_mention_indicators = function (): void {
++    const mentions = unread.mention_counts_by_section();
++    for (const section of stream_list_sort.section_ids()) {
++        const $header = $(`#stream-list-${section}-container .stream-list-subsection-header`);
++        const mentions_for_section = mentions.get(section) ?? {
++            has_mentions: false,
++            has_unmuted_mentions: false,
++        };
++        ui_util.update_unread_mention_info_in_dom($header, mentions_for_section.has_mentions);
++
++        $header.toggleClass(
++            "has-only-muted-mentions",
++            mentions_for_section.has_mentions && !mentions_for_section.has_unmuted_mentions,
++        );
++    }
++};
++
++export function rewire_update_stream_section_mention_indicators(
++    value: typeof update_stream_section_mention_indicators,
++): void {
++    update_stream_section_mention_indicators = value;
++}
++
+ /* When viewing a channel in a collapsed folder, we show that active
+    highlighted channel in the left sidebar even though the folder is
+    collapsed. If there's an active highlighted topic within the
+@@ -689,6 +713,7 @@ export let update_dom_with_unread_counts = function (counts: FullUnreadCountsDat
+             stream_has_only_muted_unread_mentions,
+         );
+     }
++    update_stream_section_mention_indicators();
+ 
+     // (2) Unread counts in stream headers and collapse/uncollapse
+     // toggles for muted and inactive channels.
+diff --git a/web/src/stream_list_sort.ts b/web/src/stream_list_sort.ts
+index 6c1d47cc54..16b3cf49ee 100644
+--- a/web/src/stream_list_sort.ts
++++ b/web/src/stream_list_sort.ts
+@@ -35,6 +35,10 @@ export function get_stream_ids(): number[] {
+     return all_rows.flatMap((row) => (row.type === "stream" ? row.stream_id : []));
+ }
+ 
++export function section_ids(): string[] {
++    return current_sections.map((section) => section.id);
++}
++
+ function current_section_ids_for_streams(): Map<number, StreamListSection> {
+     const map = new Map<number, StreamListSection>();
+     for (const section of current_sections) {
+diff --git a/web/src/unread.ts b/web/src/unread.ts
+index 47604323b2..535e3343ec 100644
+--- a/web/src/unread.ts
++++ b/web/src/unread.ts
+@@ -14,6 +14,7 @@ import type {
+     unread_direct_message_info_schema,
+ } from "./state_data.ts";
+ import * as stream_data from "./stream_data.ts";
++import * as stream_list_sort from "./stream_list_sort.ts";
+ import type {TopicHistoryEntry} from "./stream_topic_history.ts";
+ import * as sub_store from "./sub_store.ts";
+ import {user_settings} from "./user_settings.ts";
+@@ -1026,6 +1027,46 @@ export function stream_has_any_unmuted_mentions(stream_id: number): boolean {
+     return streams_with_mentions.has(stream_id);
+ }
+ 
++export function mention_counts_by_section(): Map<
++    string,
++    {
++        has_mentions: boolean;
++        has_unmuted_mentions: boolean;
++    }
++> {
++    const mentions_map = new Map<
++        string,
++        {
++            has_mentions: boolean;
++            has_unmuted_mentions: boolean;
++        }
++    >();
++    const streams_with_mentions = unread_topic_counter.get_streams_with_unread_mentions();
++    const streams_with_unmuted_mentions = unread_topic_counter.get_streams_with_unmuted_mentions();
++    for (const stream_id of streams_with_mentions) {
++        const section_id = stream_list_sort.current_section_id_for_stream(stream_id);
++        if (section_id === undefined) {
++            continue;
++        }
++        if (!mentions_map.has(section_id)) {
++            mentions_map.set(section_id, {
++                has_mentions: false,
++                has_unmuted_mentions: false,
++            });
++        }
++        mentions_map.get(section_id)!.has_mentions = true;
++    }
++    for (const stream_id of streams_with_unmuted_mentions) {
++        const section_id = stream_list_sort.current_section_id_for_stream(stream_id);
++        if (section_id === undefined) {
++            continue;
++        }
++        mentions_map.get(section_id)!.has_unmuted_mentions = true;
++    }
++
++    return mentions_map;
++}
++
+ export function topic_has_any_unread_mentions(stream_id: number, topic: string): boolean {
+     // Because this function is called in a loop for every displayed
+     // Recent Conversations row, it's important for it to run in O(1) time.
+diff --git a/web/templates/stream_list_section_container.hbs b/web/templates/stream_list_section_container.hbs
+index 782411f94e..62326b176d 100644
+--- a/web/templates/stream_list_section_container.hbs
++++ b/web/templates/stream_list_section_container.hbs
+@@ -10,6 +10,7 @@
+         </a>
+         {{/if}}
+         <div class="markers-and-unreads">
++            <span class="unread_mention_info"></span>
+             <span class="unread_count normal-count"></span>
+             <span class="masked_unread_count">
+                 <i class="zulip-icon zulip-icon-masked-unread"></i>

@@ -1,0 +1,90 @@
+diff --git a/web/src/channel_folders.ts b/web/src/channel_folders.ts
+index 0e620d323c..1f536cad65 100644
+--- a/web/src/channel_folders.ts
++++ b/web/src/channel_folders.ts
+@@ -57,8 +57,6 @@ export function get_active_folder_ids(): Set<number> {
+     return active_channel_folder_ids;
+ }
+ 
+-/* TODO/channel-folders: Remove when tests are restored */
+-/* istanbul ignore next */
+ export function get_all_folder_ids(): Set<number> {
+     return new Set(channel_folder_by_id_dict.keys());
+ }
+diff --git a/web/src/left_sidebar_navigation_area.ts b/web/src/left_sidebar_navigation_area.ts
+index f71c3d92ee..6ff2dc2ab3 100644
+--- a/web/src/left_sidebar_navigation_area.ts
++++ b/web/src/left_sidebar_navigation_area.ts
+@@ -65,7 +65,7 @@ export function update_reminders_row(): void {
+     ui_util.update_unread_count_in_dom($reminders_li, count);
+ }
+ 
+-export function update_dom_with_unread_counts(
++export let update_dom_with_unread_counts = function (
+     counts: unread.FullUnreadCountsData,
+     skip_animations: boolean,
+ ): void {
+@@ -85,6 +85,12 @@ export function update_dom_with_unread_counts(
+     if (!skip_animations) {
+         animate_mention_changes($mentioned_li, counts.mentioned_message_count);
+     }
++};
++
++export function rewire_update_dom_with_unread_counts(
++    value: typeof update_dom_with_unread_counts,
++): void {
++    update_dom_with_unread_counts = value;
+ }
+ 
+ export let select_top_left_corner_item = function (narrow_to_activate: string): void {
+diff --git a/web/src/list_cursor.ts b/web/src/list_cursor.ts
+index 27d56d0f14..ea37089a6a 100644
+--- a/web/src/list_cursor.ts
++++ b/web/src/list_cursor.ts
+@@ -93,12 +93,8 @@ export class ListCursor<Key> {
+         const row = this.get_row(this.curr_key);
+ 
+         if (row === undefined) {
+-            /* TODO/channel-folders: Remove when tests are restored */
+-            /* istanbul ignore next */
+             return;
+         }
+-        /* TODO/channel-folders: Remove when tests are restored */
+-        /* istanbul ignore next */
+         row.highlight();
+     }
+ 
+diff --git a/web/src/settings_data.ts b/web/src/settings_data.ts
+index 831377bd13..2d6afa1877 100644
+--- a/web/src/settings_data.ts
++++ b/web/src/settings_data.ts
+@@ -278,8 +278,6 @@ export function user_can_delete_own_message(): boolean {
+     );
+ }
+ 
+-/* TODO/channel-folders: Remove when tests are restored */
+-/* istanbul ignore next */
+ export function should_mask_unread_count(
+     sub_muted: boolean,
+     unmuted_unread_count: number,
+diff --git a/web/src/stream_list.ts b/web/src/stream_list.ts
+index 728445f8d7..2c4ba3ef25 100644
+--- a/web/src/stream_list.ts
++++ b/web/src/stream_list.ts
+@@ -445,11 +445,15 @@ export function rewire_update_stream_section_mention_indicators(
+    channel, we show it too. If there's no highlighted topic within the
+    channel, then we should treat this like an empty topic list and remove
+    the left bracket. */
+-export function maybe_hide_topic_bracket(section_id: string): void {
++export let maybe_hide_topic_bracket = function (section_id: string): void {
+     const $container = $(`#stream-list-${section_id}-container`);
+     const is_collapsed = collapsed_sections.has(section_id);
+     const $highlighted_topic = $container.find(".topic-list-item.active-sub-filter");
+     $container.toggleClass("hide-topic-bracket", is_collapsed && $highlighted_topic.length === 0);
++};
++
++export function rewire_maybe_hide_topic_bracket(value: typeof maybe_hide_topic_bracket): void {
++    maybe_hide_topic_bracket = value;
+ }
+ 
+ function toggle_section_collapse($container: JQuery): void {

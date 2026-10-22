@@ -1,0 +1,79 @@
+{
+  "task_id": "ZT-7630a41857d5",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "left_sidebar: Switch topic filtering to any-order word prefix matching.",
+  "type": "other",
+  "lang": "web",
+  "issue": 35160,
+  "fix_commit": "7630a41857d5650c183d94b6b6b1c6efa641b059",
+  "base_commit": "a80c52d6965bce1ca74982e7751917c212dbb23d",
+  "env_fingerprint": "c14b100e50da",
+  "fail_to_pass": [
+    "web/tests/topic_list_data.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 10,
+    "files": 1,
+    "hunks": 2,
+    "f2p_count": 1
+  },
+  "interface_requirements": [],
+  "statement_inputs": {
+    "issue_prose_chars": 901,
+    "coupling_verdict": "clean"
+  },
+  "author": {
+    "name": "Pritesh Shetty",
+    "email": "priteshshetty89@gmail.com",
+    "date": "2026-01-21"
+  },
+  "contamination": {
+    "fix_public_at": "2026-01-21",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2025-07-07T23:09:01Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/7630a41857d5650c183d94b6b6b1c6efa641b059",
+    "issue_url": "https://github.com/zulip/zulip/issues/35160"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-7630a41857d5",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 70.7
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

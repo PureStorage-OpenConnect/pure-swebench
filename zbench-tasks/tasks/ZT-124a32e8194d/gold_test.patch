@@ -1,0 +1,68 @@
+diff --git a/web/tests/compose.test.cjs b/web/tests/compose.test.cjs
+index ab668ff1b2..9d789a5518 100644
+--- a/web/tests/compose.test.cjs
++++ b/web/tests/compose.test.cjs
+@@ -156,6 +156,7 @@ function initialize_handlers({override}) {
+     override(realm, "realm_available_video_chat_providers", {disabled: {id: 0}});
+     override(realm, "realm_video_chat_provider", 0);
+     override(resize, "watch_manual_resize", noop);
++    disable_window_triggers(override);
+     compose_setup.initialize();
+ }
+ 
+@@ -163,6 +164,10 @@ function disable_document_triggers(override) {
+     override(document, "to_$", () => $("document-stub"));
+ }
+ 
++function disable_window_triggers(override) {
++    override(window, "to_$", () => $("window-stub"));
++}
++
+ function on_compose_finished_trigger_do(f) {
+     $(document).on("compose_finished.zulip", f);
+ }
+@@ -543,6 +548,8 @@ test_ui("finish", ({override, override_rewire}) => {
+ });
+ 
+ test_ui("initialize", ({override}) => {
++    disable_window_triggers(override);
++
+     let compose_actions_expected_opts;
+     let compose_actions_start_checked;
+ 
+diff --git a/web/tests/compose_video.test.cjs b/web/tests/compose_video.test.cjs
+index 089ea91409..2a15bfcf3c 100644
+--- a/web/tests/compose_video.test.cjs
++++ b/web/tests/compose_video.test.cjs
+@@ -78,6 +78,7 @@ function test(label, f) {
+ 
+ test("videos", ({override}) => {
+     override(realm, "realm_video_chat_provider", realm_available_video_chat_providers.disabled.id);
++    override(window, "to_$", () => $("window-stub"));
+ 
+     stub_out_video_calls();
+ 
+@@ -280,6 +281,7 @@ test("videos", ({override}) => {
+ 
+ test("test_video_chat_button_toggle disabled", ({override}) => {
+     override(realm, "realm_video_chat_provider", realm_available_video_chat_providers.disabled.id);
++    override(window, "to_$", () => $("window-stub"));
+     compose_setup.initialize();
+     assert.equal($(".compose-control-buttons-container .video_link").visible(), false);
+ });
+@@ -290,6 +292,7 @@ test("test_video_chat_button_toggle no url", ({override}) => {
+         "realm_video_chat_provider",
+         realm_available_video_chat_providers.jitsi_meet.id,
+     );
++    override(window, "to_$", () => $("window-stub"));
+     page_params.jitsi_server_url = null;
+     compose_setup.initialize();
+     assert.equal($(".compose-control-buttons-container .video_link").visible(), false);
+@@ -302,6 +305,7 @@ test("test_video_chat_button_toggle enabled", ({override}) => {
+         realm_available_video_chat_providers.jitsi_meet.id,
+     );
+     override(realm, "realm_jitsi_server_url", "https://meet.jit.si");
++    override(window, "to_$", () => $("window-stub"));
+     compose_setup.initialize();
+     assert.equal($(".compose-control-buttons-container .video_link").visible(), true);
+ });

@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-5bbb39a06cbd",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "unsuitable",
+  "reason": "The change removes select_related joins with no user-observable behavior change, and the hidden grader consists entirely of assert_database_query_count bumps (18\u219219, 59\u219263, etc.) that pin the exact query counts of this one implementation. That is lockstep bookkeeping, not an outcome: the counts actually increase in every touched test, so nothing observable is asserted to improve, and any reasonable alternative solution (e.g. caching differently or restructuring the permission checks) would produce different counts and fail despite being correct. This grades incidental implementation detail over behavior \u2014 brittle by the stated criteria.",
+  "summary": "streams: Do not prefetch group settings using select_related.",
+  "lang": "py",
+  "issue": 36875,
+  "fix_commit": "5bbb39a06cbdc919fe678cc69461c5e5ee7e7899",
+  "base_commit": "9318ad47d75296b11ca80b28edd6d55aa6d04fe7",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/5bbb39a06cbdc919fe678cc69461c5e5ee7e7899",
+    "issue_url": "https://github.com/zulip/zulip/issues/36875"
+  }
+}

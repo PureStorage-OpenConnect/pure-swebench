@@ -1,0 +1,83 @@
+{
+  "task_id": "ZT-356028729f40",
+  "curation_status": "validated",
+  "curation_stage": "oracle_validated",
+  "verdict": "validated",
+  "reason_code": "oracle_validated",
+  "reason": "flip + P2P green (flake-gated)",
+  "summary": "thumbnails: Handle dinky thumbnail images.",
+  "type": "other",
+  "lang": "web",
+  "issue": 31502,
+  "fix_commit": "356028729f4009f33a6d5d3abd2e7c3952173d4a",
+  "base_commit": "d9f0fe882dc038498892afb7f752dd3c3a473c0f",
+  "env_fingerprint": "d681e19c1311",
+  "fail_to_pass": [
+    "web/tests/postprocess_content.test.cjs"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "low",
+    "added_lines": 11,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "Images in message content whose original dimensions (taken from the existing `data-original-dimensions` attribute, in pixels) are both less than or equal to the 10em thumbnail box at the user's configured font size (10 \u00d7 the existing `web_font_size_px` user setting; comparison is inclusive) are considered 'dinky' thumbnails.",
+    "The rendered `<img>` element for a dinky thumbnail gains the CSS class `dinky-thumbnail`, in addition to the existing orientation class (`portrait-thumbnail`/`landscape-thumbnail`) and other pre-existing attributes (width/height from original dimensions, lazy loading).",
+    "Dinky thumbnails must be served at the smallest thumbnail resolution: the image `src` uses the `300x200.webp` thumbnail variant of the upload instead of the default `840x560.webp` variant."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 573,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Karl Stolley",
+    "email": "karl@zulip.com",
+    "date": "2025-04-10"
+  },
+  "contamination": {
+    "fix_public_at": "2025-04-10",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-08-30T23:39:53Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/356028729f4009f33a6d5d3abd2e7c3952173d4a",
+    "issue_url": "https://github.com/zulip/zulip/issues/31502"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-356028729f40",
+      "arms": {
+        "A_f2p": [
+          "FAIL",
+          "FAIL"
+        ],
+        "B_f2p": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ]
+      },
+      "fail_signature": [],
+      "verdict": "VALID",
+      "flake_check": {
+        "fail_runs": 2,
+        "pass_runs": 3,
+        "signature_stable": true
+      },
+      "elapsed_s": 83.2
+    }
+  },
+  "flake_check": {
+    "fail_runs": 2,
+    "pass_runs": 3,
+    "signature_stable": true
+  }
+}

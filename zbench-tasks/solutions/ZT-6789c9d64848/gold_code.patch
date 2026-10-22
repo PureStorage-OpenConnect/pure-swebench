@@ -1,0 +1,234 @@
+diff --git a/web/src/list_widget.ts b/web/src/list_widget.ts
+index cc3e7d1e0b..288bc04028 100644
+--- a/web/src/list_widget.ts
++++ b/web/src/list_widget.ts
+@@ -467,6 +467,14 @@ export function create<Key, Item = Key>(
+                 widget.set_filter_value(value);
+                 widget.hard_redraw();
+             });
++
++            opts.filter?.$element?.siblings(".clear-filter").on("click", () => {
++                assert(opts.filter?.$element !== undefined);
++                const $filter = opts.filter?.$element;
++                $filter.val("");
++                widget.set_filter_value("");
++                widget.clean_redraw();
++            });
+         },
+ 
+         clear_event_handlers() {
+@@ -474,6 +482,7 @@ export function create<Key, Item = Key>(
+ 
+             if (opts.$parent_container) {
+                 opts.$parent_container.off("click.list_widget_sort", "[data-sort]");
++                opts.filter?.$element?.siblings(".clear-filter").off("click");
+             }
+ 
+             opts.filter?.$element?.off("input.list_widget_filter");
+diff --git a/web/src/settings_users.ts b/web/src/settings_users.ts
+index 3f80d5d96f..f0e6af8d0a 100644
+--- a/web/src/settings_users.ts
++++ b/web/src/settings_users.ts
+@@ -480,6 +480,17 @@ function active_create_table(active_users: number[]): void {
+     $("#admin_users_table").show();
+ }
+ 
++function handle_clear_button_for_users($tbody: JQuery): void {
++    const $container = $tbody.closest(".user-settings-section");
++    $container.on("click", ".clear-filter", (e) => {
++        e.stopPropagation();
++        e.preventDefault();
++        const $filter = $container.find(".search");
++        set_text_search_value($tbody, "");
++        $filter.trigger("input");
++    });
++}
++
+ function deactivated_create_table(deactivated_users: number[]): void {
+     const $deactivated_users_table = $("#admin_deactivated_users_table");
+     deactivated_section.list_widget = ListWidget.create(
+@@ -712,6 +723,7 @@ function active_handle_events(): void {
+     handle_deactivation($tbody);
+     handle_reactivation($tbody);
+     handle_edit_form($tbody);
++    handle_clear_button_for_users($tbody);
+ }
+ 
+ function deactivated_handle_events(): void {
+@@ -721,6 +733,7 @@ function deactivated_handle_events(): void {
+     handle_deactivation($tbody);
+     handle_reactivation($tbody);
+     handle_edit_form($tbody);
++    handle_clear_button_for_users($tbody);
+ }
+ 
+ function bots_handle_events(): void {
+diff --git a/web/templates/settings/active_user_list_admin.hbs b/web/templates/settings/active_user_list_admin.hbs
+index d144512cae..cf6d46998a 100644
+--- a/web/templates/settings/active_user_list_admin.hbs
++++ b/web/templates/settings/active_user_list_admin.hbs
+@@ -5,7 +5,7 @@
+         <div class="alert-notification" id="user-field-status"></div>
+         <div class="user_filters">
+             {{> ../dropdown_widget widget_name=active_user_list_dropdown_widget_name}}
+-            <input type="text" class="search filter_text_input" placeholder="{{t 'Filter users' }}" aria-label="{{t 'Filter users' }}"/>
++            {{> filter_text_input placeholder=(t 'Filter users') aria_label=(t 'Filter users')}}
+         </div>
+     </div>
+ 
+diff --git a/web/templates/settings/attachments_settings.hbs b/web/templates/settings/attachments_settings.hbs
+index 72b425615f..71d590800d 100644
+--- a/web/templates/settings/attachments_settings.hbs
++++ b/web/templates/settings/attachments_settings.hbs
+@@ -2,7 +2,7 @@
+     <div id="attachment-stats-holder"></div>
+     <div class="settings_panel_list_header">
+         <h3>{{t "Your uploads"}}</h3>
+-        <input id="upload_file_search" class="search filter_text_input" type="text" placeholder="{{t 'Filter uploaded files' }}" aria-label="{{t 'Filter uploads' }}"/>
++        {{> filter_text_input id="upload_file_search" placeholder=(t 'Filter uploaded files') aria_label=(t 'Filter uploads')}}
+     </div>
+     <div class="clear-float"></div>
+     <div class="alert" id="delete-upload-status"></div>
+diff --git a/web/templates/settings/bot_list_admin.hbs b/web/templates/settings/bot_list_admin.hbs
+index 83251c6506..6976436af5 100644
+--- a/web/templates/settings/bot_list_admin.hbs
++++ b/web/templates/settings/bot_list_admin.hbs
+@@ -21,7 +21,7 @@
+     <div class="settings_panel_list_header">
+         <h3>{{t "Bots"}}</h3>
+         <div class="alert-notification" id="bot-field-status"></div>
+-        <input type="text" class="search filter_text_input" placeholder="{{t 'Filter bots' }}" aria-label="{{t 'Filter bots' }}"/>
++        {{> filter_text_input placeholder=(t 'Filter bots') aria_label=(t 'Filter bots')}}
+     </div>
+ 
+     <div class="progressive-table-wrapper" data-simplebar data-simplebar-tab-index="-1">
+diff --git a/web/templates/settings/data_exports_admin.hbs b/web/templates/settings/data_exports_admin.hbs
+index 1101dfd4fe..6f4cd3f220 100644
+--- a/web/templates/settings/data_exports_admin.hbs
++++ b/web/templates/settings/data_exports_admin.hbs
+@@ -55,7 +55,7 @@
+             <h3>{{t "Export permissions"}}</h3>
+             <div class="user_filters">
+                 {{> ../dropdown_widget widget_name="filter_by_consent"}}
+-                <input type="text" class="search filter_text_input" placeholder="{{t 'Filter users' }}" aria-label="{{t 'Filter users' }}"/>
++                {{> filter_text_input placeholder=(t 'Filter users') aria_label=(t 'Filter users')}}
+             </div>
+         </div>
+ 
+diff --git a/web/templates/settings/deactivated_users_admin.hbs b/web/templates/settings/deactivated_users_admin.hbs
+index ad67778326..54a1a7dfc3 100644
+--- a/web/templates/settings/deactivated_users_admin.hbs
++++ b/web/templates/settings/deactivated_users_admin.hbs
+@@ -8,7 +8,7 @@
+         <div class="alert-notification" id="deactivated-user-field-status"></div>
+         <div class="user_filters">
+             {{> ../dropdown_widget widget_name=deactivated_user_list_dropdown_widget_name}}
+-            <input type="text" class="search filter_text_input" placeholder="{{t 'Filter deactivated users' }}" aria-label="{{t 'Filter deactivated users' }}"/>
++            {{> filter_text_input placeholder=(t 'Filter deactivated users') aria_label=(t 'Filter deactivated users')}}
+         </div>
+     </div>
+ 
+diff --git a/web/templates/settings/default_streams_list_admin.hbs b/web/templates/settings/default_streams_list_admin.hbs
+index ff6b6613c1..bbbd08c3dc 100644
+--- a/web/templates/settings/default_streams_list_admin.hbs
++++ b/web/templates/settings/default_streams_list_admin.hbs
+@@ -7,7 +7,7 @@
+             {{#if is_admin}}
+                 <button type="submit" id="show-add-default-streams-modal" class="button rounded sea-green">{{t "Add channel" }}</button>
+             {{/if}}
+-            <input type="text" class="search filter_text_input" placeholder="{{t 'Filter default channels' }}" aria-label="{{t 'Filter channels' }}"/>
++            {{> filter_text_input placeholder=(t 'Filter default channels') aria_label=(t 'Filter default channels')}}
+         </div>
+     </div>
+ 
+diff --git a/web/templates/settings/emoji_settings_admin.hbs b/web/templates/settings/emoji_settings_admin.hbs
+index c184972190..74eebac5cb 100644
+--- a/web/templates/settings/emoji_settings_admin.hbs
++++ b/web/templates/settings/emoji_settings_admin.hbs
+@@ -11,8 +11,7 @@
+ 
+     <div class="settings_panel_list_header">
+         <h3>{{t "Custom emoji"}}</h3>
+-        <input type="text" class="search filter_text_input" placeholder="{{t 'Filter emoji' }}"
+-          aria-label="{{t 'Filter emoji' }}"/>
++        {{> filter_text_input placeholder=(t 'Filter emoji') aria_label=(t 'Filter emoji')}}
+     </div>
+     <div class="progressive-table-wrapper" data-simplebar data-simplebar-tab-index="-1">
+         <table class="table table-striped wrapped-table admin_emoji_table">
+diff --git a/web/templates/settings/filter_text_input.hbs b/web/templates/settings/filter_text_input.hbs
+new file mode 100644
+index 0000000000..73997990de
+--- /dev/null
++++ b/web/templates/settings/filter_text_input.hbs
+@@ -0,0 +1,6 @@
++<div class="search-container">
++    <input type="text" {{#if id}}id="{{id}}"{{/if}} class="search filter_text_input" placeholder="{{placeholder}}" aria-label="{{aria_label}}"/>
++    <button type="button" class="clear-filter">
++        <i class="zulip-icon zulip-icon-close"></i>
++    </button>
++</div>
+diff --git a/web/templates/settings/invites_list_admin.hbs b/web/templates/settings/invites_list_admin.hbs
+index 139ea27639..0ce31ed83e 100644
+--- a/web/templates/settings/invites_list_admin.hbs
++++ b/web/templates/settings/invites_list_admin.hbs
+@@ -8,7 +8,7 @@
+     <div class="settings_panel_list_header">
+         <h3>{{t "Invitations "}}</h3>
+         <div class="alert-notification" id="invites-field-status"></div>
+-        <input type="text" class="search filter_text_input" placeholder="{{t 'Filter invitations' }}" aria-label="{{t 'Filter invitations' }}"/>
++        {{> filter_text_input placeholder=(t 'Filter invitations') aria_label=(t 'Filter invitations')}}
+     </div>
+ 
+     <div class="progressive-table-wrapper" data-simplebar data-simplebar-tab-index="-1">
+diff --git a/web/templates/settings/linkifier_settings_admin.hbs b/web/templates/settings/linkifier_settings_admin.hbs
+index f9a5ff4937..214206df22 100644
+--- a/web/templates/settings/linkifier_settings_admin.hbs
++++ b/web/templates/settings/linkifier_settings_admin.hbs
+@@ -57,7 +57,7 @@
+     <div class="settings_panel_list_header">
+         <h3>{{t "Linkifiers"}}</h3>
+         <div class="alert-notification edit-linkifier-status" id="linkifier-field-status"></div>
+-        <input type="text" class="search filter_text_input" placeholder="{{t 'Filter linkifiers' }}" aria-label="{{t 'Filter linkifiers' }}"/>
++        {{> filter_text_input placeholder=(t 'Filter linkifiers') aria_label=(t 'Filter linkifiers')}}
+     </div>
+ 
+     <div class="progressive-table-wrapper" data-simplebar data-simplebar-tab-index="-1">
+diff --git a/web/templates/settings/muted_users_settings.hbs b/web/templates/settings/muted_users_settings.hbs
+index 901cb2eaab..6d4de03eff 100644
+--- a/web/templates/settings/muted_users_settings.hbs
++++ b/web/templates/settings/muted_users_settings.hbs
+@@ -1,7 +1,7 @@
+ <div id="muted-user-settings" class="settings-section" data-name="muted-users">
+     <div class="settings_panel_list_header">
+         <h3>{{t "Muted users"}}</h3>
+-        <input id="muted_users_search" class="search filter_text_input" type="text" placeholder="{{t 'Filter muted users' }}" aria-label="{{t 'Filter muted users' }}"/>
++        {{> filter_text_input id="muted_users_search" placeholder=(t 'Filter muted users') aria_label=(t 'Filter muted users')}}
+     </div>
+     <div class="progressive-table-wrapper" data-simplebar data-simplebar-tab-index="-1">
+         <table class="table table-striped wrapped-table">
+diff --git a/web/templates/settings/playground_settings_admin.hbs b/web/templates/settings/playground_settings_admin.hbs
+index 1967bfa7d8..a23f9acea7 100644
+--- a/web/templates/settings/playground_settings_admin.hbs
++++ b/web/templates/settings/playground_settings_admin.hbs
+@@ -64,7 +64,7 @@
+ 
+         <div class="settings_panel_list_header">
+             <h3>{{t "Code playgrounds"}}</h3>
+-            <input type="text" class="search filter_text_input" placeholder="{{t 'Filter code playgrounds' }}" aria-label="{{t 'Filter code playgrounds' }}"/>
++            {{> filter_text_input placeholder=(t 'Filter code playgrounds') aria_label=(t 'Filter code playgrounds')}}
+         </div>
+ 
+         <div class="progressive-table-wrapper" data-simplebar data-simplebar-tab-index="-1">
+diff --git a/web/templates/settings/user_topics_settings.hbs b/web/templates/settings/user_topics_settings.hbs
+index 45c15da718..0cb117f528 100644
+--- a/web/templates/settings/user_topics_settings.hbs
++++ b/web/templates/settings/user_topics_settings.hbs
+@@ -12,7 +12,7 @@
+             {{> ../help_link_widget link="/help/topic-notifications" }}
+         </h3>
+         {{> settings_save_discard_widget section_name="user-topics-settings" show_only_indicator=true }}
+-        <input id="user_topics_search" class="search filter_text_input" type="text" placeholder="{{t 'Filter topics' }}" aria-label="{{t 'Filter topics' }}"/>
++        {{> filter_text_input id="user_topics_search" placeholder=(t 'Filter topics') aria_label=(t 'Filter invitations')}}
+     </div>
+     <div class="progressive-table-wrapper" data-simplebar data-simplebar-tab-index="-1">
+         <table class="table table-striped wrapped-table">

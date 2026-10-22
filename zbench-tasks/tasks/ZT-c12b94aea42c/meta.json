@@ -1,0 +1,17 @@
+{
+  "task_id": "ZT-c12b94aea42c",
+  "curation_status": "dropped",
+  "curation_stage": "auto_prepared",
+  "verdict": "dropped",
+  "reason_code": "out_of_scope",
+  "reason": "scope: 26 code files > 15",
+  "summary": "models: Refactor corporate/models.py into models package.",
+  "lang": "py",
+  "issue": 34318,
+  "fix_commit": "c12b94aea42c0afcee43a1b93d4943a606a666d3",
+  "base_commit": "a8c513a95eb706bb26ff79d5044a908fbd415a47",
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/c12b94aea42c0afcee43a1b93d4943a606a666d3",
+    "issue_url": "https://github.com/zulip/zulip/issues/34318"
+  }
+}

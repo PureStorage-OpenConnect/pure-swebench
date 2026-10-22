@@ -1,0 +1,118 @@
+diff --git a/zproject/backends.py b/zproject/backends.py
+index 181c32e57a..d2e4344dae 100644
+--- a/zproject/backends.py
++++ b/zproject/backends.py
+@@ -2304,8 +2304,7 @@ def process_social_auth_group_sync_info(
+         case str():  # nocoverage
+             raise AssertionError(f'unsupported groups config string: {groups_config}; expected "*"')
+ 
+-    # Group sync is only supported for SAML for the foreseeable time.
+-    assert backend.name == "saml"
++    assert backend.name in USER_ATTRIBUTE_SYNC_SUPPORTED_BACKENDS
+ 
+     syncable_group_names = set(external_group_name_to_zulip_group_name.values())
+ 
+@@ -2367,12 +2366,10 @@ def social_auth_sync_user_attributes(
+        so they'll only be synced during the user's next login, not during
+        signup.
+     """
+-    # This is only supported for SAML right now, though the design
+-    # is meant to be easy to extend this to other backends if desired.
+     # Unlike LDAP or SCIM, this hook can only do syncing during the authentication
+     # flow, as that's when the data is provided and we don't have a way to query
+     # for it otherwise.
+-    if backend.name != "saml":
++    if backend.name not in USER_ATTRIBUTE_SYNC_SUPPORTED_BACKENDS:
+         assert not extra_attrs
+         return None
+ 
+@@ -4128,6 +4125,38 @@ class GenericOpenIdConnectBackend(SocialAuthMixin, OpenIdConnectAuth):
+         # There's no common default logo for OIDC authentication
+         return None
+ 
++    @override
++    def get_user_details(self, response: dict[str, Any]) -> dict[str, Any]:
++        def get_value(key: str) -> Any | None:
++            if key in response:
++                return response.get(key)
++            assert self.id_token is not None
++            return self.id_token.get(key)  # type: ignore[unreachable]  # self.id_token is declared as None in the base class. mypy doesn't re-evaluate its type when request_access_token reassigns it.
++
++        user_details = super().get_user_details(response)
++
++        # Additional claims may arrive in the UserInfo response or the
++        # ID token - get_value checks both.
++        extra_attrs: dict[str, Any] = {}
++
++        if groups_list := get_value("zulip_groups"):
++            assert isinstance(groups_list, list)
++            extra_attrs["zulip_groups"] = groups_list
++
++        # This happens after auth_complete, so no need to check
++        # if the IdP is valid in this subdomain or not.
++        for extra_attr_name in self.settings_dict.get("extra_attrs", []):
++            assert isinstance(extra_attr_name, str)
++            value = get_value(extra_attr_name)
++            # Empty fields are skipped. Careful not to skip other falsy values
++            # like 0 or False.
++            if value is not None and (isinstance(value, str) and value.strip() != ""):
++                extra_attrs[extra_attr_name] = value
++
++        result = {**user_details, "extra_attrs": extra_attrs}
++        self.logger.debug("get_user_details for <%s>: %s", self.name, result)
++        return result
++
+     @override
+     def get_key_and_secret(self) -> tuple[str, str]:
+         client_id = self.settings_dict.get("client_id", "")
+@@ -4449,6 +4478,9 @@ def get_external_method_dicts(realm: Realm | None = None) -> list[ExternalAuthMe
+     return result
+ 
+ 
++USER_ATTRIBUTE_SYNC_SUPPORTED_BACKENDS = [GenericOpenIdConnectBackend.name, SAMLAuthBackend.name]
++
++
+ AUTH_BACKEND_NAME_MAP: dict[str, Any] = {
+     "Dev": DevAuthBackend,
+     "Email": EmailAuthBackend,
+diff --git a/zproject/prod_settings_template.py b/zproject/prod_settings_template.py
+index 053545d633..ebe0ca6fd3 100644
+--- a/zproject/prod_settings_template.py
++++ b/zproject/prod_settings_template.py
+@@ -444,6 +444,11 @@ SOCIAL_AUTH_OIDC_ENABLED_IDPS: dict[str, Any] = {
+         ## default, Zulip asks the user whether they want to create an
+         ## account or try to log in again using another method.
+         # "auto_signup": False,
++        ## List of additional claims to fetch from the id_token or response
++        ## from the UserInfo endpoint.
++        ## These attributes will be available for synchronizing user
++        ## profile fields in SOCIAL_AUTH_SYNC_ATTRS_DICT.
++        # "extra_attrs": ["title", "mobilePhone", "zulip_role"],
+     },
+     ## Example: Microsoft Entra ID (AzureAD) OIDC configuration.
+     ## This is the recommended approach for Entra ID SSO on self-hosted servers.
+@@ -573,9 +578,9 @@ SOCIAL_AUTH_SAML_SUPPORT_CONTACT = {
+     "emailAddress": ZULIP_ADMINISTRATOR,
+ }
+ 
+-## Note: Any additional SAML attributes that'll be used here must be
+-## listed in the "extra_attrs" field in the SOCIAL_AUTH_SAML_ENABLED_IDPS
+-## configuration for your IdP.
++## Note: Any additional attributes used here must be listed in the "extra_attrs"
++## field in SOCIAL_AUTH_SAML_ENABLED_IDPS (SAML) or SOCIAL_AUTH_OIDC_ENABLED_IDPS (OIDC).
++## Sync for other backends is not currently supported.
+ # SOCIAL_AUTH_SYNC_ATTRS_DICT = {
+ #     "example_org": {
+ #         "saml": {
+diff --git a/zproject/settings_types.py b/zproject/settings_types.py
+index 07747d861f..e1b8dda28a 100644
+--- a/zproject/settings_types.py
++++ b/zproject/settings_types.py
+@@ -36,6 +36,7 @@ class OIDCIdPConfigDict(TypedDict, total=False):
+     secret: str | None
+     auto_signup: bool
+     limit_to_subdomains: list[str]
++    extra_attrs: list[str]
+ 
+ 
+ class SCIMConfigDict(TypedDict, total=False):

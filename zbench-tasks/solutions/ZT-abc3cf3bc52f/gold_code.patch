@@ -1,0 +1,52 @@
+diff --git a/web/src/lightbox.ts b/web/src/lightbox.ts
+index d2fcf892e3..a6d57a8950 100644
+--- a/web/src/lightbox.ts
++++ b/web/src/lightbox.ts
+@@ -557,6 +557,14 @@ export function parse_media_data(media: HTMLMediaElement | HTMLImageElement): Me
+     } else if (is_youtube_video) {
+         type = "youtube-video";
+         source = "https://www.youtube.com/embed/" + $parent.attr("data-id");
++        // YouTube URLs support a `start` parameter that can be either
++        // an integer or a string-encoded time offset like
++        // "1h20m12s". The embed API only supports the integer format,
++        // so we may need to convert the format.
++        const start_time = util.parse_youtube_start_time(url);
++        if (start_time !== undefined) {
++            source += "?start=" + start_time;
++        }
+     } else if (is_vimeo_video) {
+         type = "vimeo-video";
+         source = "https://player.vimeo.com/video/" + $parent.attr("data-id");
+diff --git a/web/src/util.ts b/web/src/util.ts
+index a1285eab98..4132b65cb1 100644
+--- a/web/src/util.ts
++++ b/web/src/util.ts
+@@ -607,3 +607,28 @@ export function unique_array_insert<T>(array: T[], new_item: T): void {
+     }
+     array.push(new_item);
+ }
++
++export function parse_youtube_start_time(url: string): number | undefined {
++    const url_obj = new URL(url, window.location.href);
++    const params = new URLSearchParams(url_obj.search);
++    const t = params.get("t") ?? params.get("start");
++
++    if (t === null) {
++        return undefined;
++    }
++
++    // t can be in seconds (e.g. 120) or in #h#m#s format (e.g. 1h2m30s)
++    if (/^\d+$/.test(t)) {
++        return Number.parseInt(t, 10);
++    }
++
++    const match = /^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/.exec(t);
++    if (match) {
++        const h = Number.parseInt(match[1] ?? "0", 10);
++        const m = Number.parseInt(match[2] ?? "0", 10);
++        const s = Number.parseInt(match[3] ?? "0", 10);
++        return h * 3600 + m * 60 + s;
++    }
++
++    return undefined;
++}

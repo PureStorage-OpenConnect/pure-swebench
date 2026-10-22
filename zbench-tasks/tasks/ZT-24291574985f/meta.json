@@ -1,0 +1,64 @@
+{
+  "task_id": "ZT-24291574985f",
+  "curation_status": "invalid",
+  "curation_stage": "auto_prepared",
+  "verdict": "invalid",
+  "reason_code": "oracle_base_passed",
+  "reason": "gold_test PASSES at base (arm A run 0) -- no flip",
+  "summary": "streams: Don't glue translated strings in new channel notification.",
+  "type": "bug",
+  "lang": "py",
+  "issue": 30212,
+  "fix_commit": "24291574985fd35791587773f593539ed8f707a1",
+  "base_commit": "187a008f13a4eb97cffc9b8aae3b419c45b6db18",
+  "env_fingerprint": "ae24c7a03e3d",
+  "fail_to_pass": [
+    "zerver.tests.test_subs.TestCreateStreams.test_channel_create_message_exists_for_all_policy_types"
+  ],
+  "pass_to_pass": [],
+  "complexity": {
+    "bucket": "medium",
+    "added_lines": 23,
+    "files": 1,
+    "hunks": 1,
+    "f2p_count": 1
+  },
+  "interface_requirements": [
+    "When a channel is created, the notification message posted to the channel's \"channel events\" topic must state the channel's permission type in bold at the start of the message, using these exact labels per policy: \"**Web-public**\" for web_public channels, \"**Public**\" for public channels, \"**Private, shared history**\" for private channels with shared history, and \"**Private, protected history**\" for private channels with protected history (e.g. \"**Public** channel created by {user}. **Description:** ...\").",
+    "Exactly one channel-creation notification message is posted to the \"channel events\" topic for each newly created channel of the above four policy types.",
+    "Channels created with the Zephyr-realm-only \"public_protected_history\" permission policy must not receive any channel-creation notification message (zero messages in the \"channel events\" topic)."
+  ],
+  "statement_inputs": {
+    "issue_prose_chars": 369,
+    "coupling_verdict": "specifiable"
+  },
+  "author": {
+    "name": "Ritwik",
+    "email": "ritwikpatnaik@gmail.com",
+    "date": "2025-04-15"
+  },
+  "contamination": {
+    "fix_public_at": "2025-04-15",
+    "fix_visibility_basis": "committer_date",
+    "issue_created_at": "2024-05-26T08:01:44Z",
+    "cohort_cutoff_used": "2026-08-13",
+    "cutoff_buffer_days": 30,
+    "tier_computed_at": "2026-08-15",
+    "tier": "B",
+    "issue_pre_cutoff": true
+  },
+  "source": {
+    "commit_url": "https://github.com/zulip/zulip/commit/24291574985fd35791587773f593539ed8f707a1",
+    "issue_url": "https://github.com/zulip/zulip/issues/30212"
+  },
+  "review": {
+    "oracle": {
+      "task_id": "ZT-24291574985f",
+      "arms": {},
+      "verdict": "INVALID",
+      "code": 2,
+      "why": "gold_test PASSES at base (arm A run 0) -- no flip",
+      "elapsed_s": 19.3
+    }
+  }
+}
