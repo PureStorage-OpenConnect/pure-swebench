@@ -14,6 +14,8 @@ pi-vllm-qwen3.6-27b | v2_nolimit                           n=30 cost 0.77 (21v/9
 pi-anthropic-haiku-5-5 | v2_nolimit                        n=30 cost 0.78 (21v/9^ p=0.04)     tok 0.68 (23v/7^ p=0.00)     turns 0.72 (26v/4^ p=0.00)     min 0.74 (20v/10^ p=0.01)    res 24.3->25.3 $/res 0.16->0.12
 pi-anthropic-haiku-5-5 | cost_aware                        n=30 cost 0.33 (29v/1^ p=0.00)     tok 0.34 (29v/1^ p=0.00)     turns 0.55 (28v/1^ p=0.00)     min 0.32 (30v/0^ p=0.00)     res 24.3->23.0 $/res 0.16->0.04
 pi-vllm-gpt-oss-120b | v2_nolimit                          n=30 cost 0.80 (22v/8^ p=0.04)     tok 0.79 (22v/8^ p=0.04)     turns 1.01 (14v/15^ p=0.91)    min 0.93 (19v/11^ p=0.51)    res 12.0->13.7 $/res 1.39->0.90
+pi-openai-gpt-5.6-sol | v2_nolimit                         n=30 cost 0.86 (22v/8^ p=0.00)     tok 0.72 (27v/3^ p=0.00)     turns 0.74 (29v/1^ p=0.00)     min 0.71 (24v/6^ p=0.00)     res 23.7->22.0 $/res 2.49->2.35
+pi-openai-gpt-5.6-sol | cost_aware                         n=30 cost 0.58 (30v/0^ p=0.00)     tok 0.44 (30v/0^ p=0.00)     turns 0.60 (30v/0^ p=0.00)     min 0.55 (26v/4^ p=0.00)     res 23.7->22.3 $/res 2.49->1.53
 
 == VALIDATION, every candidate vs seed
 pi-openai-gpt-5.6-luna | v1 | cand1 (594w)                 n=20 cost 0.97 (12v/8^ p=0.73)     tok 0.89 (14v/6^ p=0.28)     turns 0.93 (13v/6^ p=0.33)     min 0.99 (12v/8^ p=0.90)     res 14.0->16.0 $/res 0.09->0.08

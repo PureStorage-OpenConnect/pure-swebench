@@ -1,10 +1,10 @@
 # We Asked an AI to Rewrite Its Own Instructions. It Mostly Learned to Be Cheaper.
 
-*Draft, 2026-10-28. GPT-5.6 Sol results are preliminary (validation only); the held-out test resumes on 2026-11-01 when the OpenAI usage limit resets. Qwen3.6 v2 results updated 2026-10-29.*
+*Draft, 2026-10-29. All runs are complete, including GPT-5.6 Sol and Qwen3.6 v2.*
 
 Every coding agent ships with a system prompt, and almost nobody tunes it for their own codebase. The model vendors tune the model. The harness authors tune the generic prompt. The part that knows about *your* repository (which test runner works, where the logic lives, what a good fix looks like here) is usually empty.
 
-GEPA is a method for filling in that empty part automatically. We ran it on eight models against our Zulip coding benchmark to answer one question: does an automatically written, repository-specific prompt make a coding agent better? The short answer is that it did not make any model solve significantly more tasks, but it made several models much cheaper. When we told GEPA to care about cost, GPT-5.6 Luna got 42% cheaper per task with no loss in accuracy we could detect, and Haiku 5.5 got 70% cheaper with a small accuracy loss we could not rule out.
+GEPA is a method for filling in that empty part automatically. We ran it on eight models against our Zulip coding benchmark to answer one question: does an automatically written, repository-specific prompt make a coding agent better? The short answer is that it did not make any model solve significantly more tasks, but it made several models much cheaper. When we told GEPA to care about cost, GPT-5.6 Luna got 42% cheaper per task with no loss in accuracy we could detect. GPT-5.6 Sol also got 42% cheaper and Haiku 5.5 got 70% cheaper, both with a small accuracy loss we could not rule out.
 
 The rest of this post explains what GEPA does, shows the actual prompts it wrote, and walks through why the cheaper prompts are cheaper.
 
@@ -49,11 +49,11 @@ We also had a hypothesis going in, that smaller models would gain more from a go
 
 ## Finding two: the notes made several models cheaper, and asking for it doubled the saving
 
-Cost is a different story. Even when GEPA optimized only for accuracy, the v2 notes cut the held-out cost of Haiku 5.5 to 0.78x (p = 0.04), gpt-oss-120b to 0.80x (p = 0.04) and Qwen3.6 27B to 0.77x (p < 0.01). The cost-aware notes went much further. Luna dropped to 0.58x with every one of the 30 tasks cheaper but one, and Haiku 5.5 dropped to 0.30x with all 30 tasks cheaper.
+Cost is a different story. Even when GEPA optimized only for accuracy, the v2 notes cut the held-out cost of Haiku 5.5 to 0.78x (p = 0.04), gpt-oss-120b to 0.80x (p = 0.04) and Qwen3.6 27B to 0.77x (p < 0.01). The cost-aware notes went much further. Luna dropped to 0.58x with every one of the 30 tasks cheaper but one, Sol dropped to 0.58x with all 30 tasks cheaper, and Haiku 5.5 dropped to 0.30x with all 30 tasks cheaper.
 
-For Luna, we ran both setups, so we can separate the two effects. The accuracy-only note saved 14% (0.86x), and the cost-aware note saved 42% (0.58x). Most of the saving comes from telling GEPA that cost matters, not from GEPA alone.
+For Luna and Sol, we ran both setups, so we can separate the two effects. For both models the accuracy-only note saved 14% (0.86x), and the cost-aware note saved 42% (0.58x). Most of the saving comes from telling GEPA that cost matters, not from GEPA alone.
 
-The accuracy side of the cost-aware notes splits the two models. For Luna, the resolve rate went *up* slightly (0.678 to 0.711), and the confidence interval shows any loss is smaller than 2.2 percentage points. That clears the bar we set beforehand, which was proving that any loss is smaller than 10 points. For Haiku 5.5, the resolve rate went down from 0.823 to 0.767 over 6 samples per task. The drop is not significant (p = 0.26), but the interval reaches down to a 15-point loss, so we cannot claim the note is as accurate as the seed.
+The accuracy side of the cost-aware notes differs between models. For Luna, the resolve rate went *up* slightly (0.678 to 0.711), and the confidence interval shows any loss is smaller than 2.2 percentage points. That clears the bar we set beforehand, which was proving that any loss is smaller than 10 points. For Haiku 5.5, the resolve rate went down from 0.823 to 0.767 over 6 samples per task. The drop is not significant (p = 0.26), but the interval reaches down to a 15-point loss, so we cannot claim the note is as accurate as the seed. Sol is in the same position, with 0.789 down to 0.744 (p = 0.59) and an interval that reaches a 16-point loss.
 
 ## What actually changed in the notes
 
@@ -151,17 +151,19 @@ Each table compares the seed (no note) with the best note from each setup on the
 
 Cost per solved task went from $0.16 (seed) to $0.12 (v2) to $0.04 (cost-aware).
 
-### GPT-5.6 Sol (preliminary: validation tasks only, not finished)
+### GPT-5.6 Sol
 
-The Sol runs hit our OpenAI project's spending limit on the evening of 2026-10-28, after GEPA had finished but before the held-out test could run. The numbers below come from the 20 *validation* tasks that GEPA tuned on, so they are optimistic, and there is no held-out resolve rate yet. We will finish the held-out test on 2026-11-01.
+The Sol runs hit our OpenAI project's spending limit on the evening of 2026-10-28, after GEPA had finished but before the held-out test could run. We finished them on 2026-10-29 after the budget was raised. The runs that failed at the limit used no tokens, so we discarded and re-ran them.
 
-| Note (validation, 20 tasks × 3) | Resolve (of 20) | Cost ratio range over candidate notes | Turns ratio range |
-|---|---|---|---|
-| Seed | 15.7 | 1.00 ($1.52 per run) | 1.00 |
-| v2 (accuracy), 5 candidates | 15.3 to 16.3 | 0.73 to 0.80 | 0.61 to 0.65 |
-| Cost-aware, 6 candidates | 14.7 to 16.7 | 0.53 to 0.63 | 0.53 to 0.69 |
+| Note | Resolve rate | Change vs seed [95% CI] | Cost per run | Cost ratio | Turns ratio |
+|---|---|---|---|---|---|
+| Seed | 0.789 | | $1.96 | 1.00 | 1.00 |
+| v2 (accuracy) | 0.733 | −0.056 [−0.133, +0.022] | $1.72 | 0.86 [0.79, 0.92] | 0.74 |
+| **Cost-aware** | **0.744** | **−0.044 [−0.156, +0.067]** | **$1.14** | **0.58 [0.55, 0.62]** | **0.60** |
 
-Every candidate note in both runs is significantly cheaper than the seed on validation, and the best cost-aware note halves the cost per solved task ($1.93 to $1.00). For Luna and Haiku 5.5, validation cost ratios carried over to the held-out tasks almost unchanged, so we expect Sol to land around 0.55 to 0.65x for the cost-aware note. Sol is by far the most expensive model we tested at about $1.50 per run, which makes it the model where these savings would matter most in dollars.
+Sol repeats the Luna pattern for cost. The accuracy-only note saved 14%, and the cost-aware note saved 42% with every one of the 30 tasks cheaper. Cost per solved task went from $2.49 to $1.53. Sol is by far the most expensive model we tested at about $2 per run on the held-out tasks, so this is the largest saving in dollars of any model, about $0.82 per run.
+
+The accuracy side looks more like Haiku 5.5 than Luna. Both notes solved slightly fewer tasks than the seed (0.733 and 0.744 against 0.789). Neither drop is significant (p = 0.31 and 0.59), but both intervals reach below a 10-point loss, so we cannot claim either note is as accurate as the seed. Sol's seed is also the strongest of any model, at 79% on these hard tasks, which leaves the least room for a note to help.
 
 ### The other models (accuracy-only notes)
 
@@ -181,8 +183,8 @@ Two patterns stand out. The accuracy-only notes did not change cost for Haiku 4.
 
 GEPA is a practical way to write a repository-specific system prompt, and the prompts it writes are readable. You can open them, see exactly what changed, and delete a rule you disagree with. That alone makes it more useful than tuning methods that produce opaque weights.
 
-On our benchmark, the place GEPA paid off was cost, not accuracy, and it paid off most when we told it to care about cost. The cost-aware notes did not find a clever trick. They found the boring habits a good senior engineer would put in an onboarding note: don't fight the environment, read the function rather than the file, batch your searches, don't write scaffolding nobody will grade, and stop when you are done. Those habits cut Luna's cost by 42% with no detectable accuracy loss and Haiku 5.5's by 70%.
+On our benchmark, the place GEPA paid off was cost, not accuracy, and it paid off most when we told it to care about cost. The cost-aware notes did not find a clever trick. They found the boring habits a good senior engineer would put in an onboarding note: don't fight the environment, read the function rather than the file, batch your searches, don't write scaffolding nobody will grade, and stop when you are done. Those habits cut Luna's cost by 42% with no detectable accuracy loss, Sol's by 42% and Haiku 5.5's by 70%.
 
-The scope caution is the Haiku 5.5 result. A cost objective removes any advice whose value does not show up on the validation tasks, and with 20 validation tasks, protective advice like "update every caller" can look like dead weight. We would keep the cost weight small (we are considering 0.05 instead of 0.1), check the held-out accuracy with enough samples to bound the loss, and read the final note for missing safety rules before using it.
+The scope caution is the Haiku 5.5 result, and to a smaller degree Sol. A cost objective removes any advice whose value does not show up on the validation tasks, and with 20 validation tasks, protective advice like "update every caller" can look like dead weight. We would keep the cost weight small (we are considering 0.05 instead of 0.1), check the held-out accuracy with enough samples to bound the loss, and read the final note for missing safety rules before using it.
 
-If you are paying per token for an agent that works in one codebase every day, the time to run this is before your next monthly bill, not after it. The Luna cost-aware run (300 agent runs plus the reflector, about $30) pays for itself after roughly 1,000 tasks at $0.032 saved per task. For Sol, at roughly $0.70 saved per task, the same arithmetic gives a few hundred tasks.
+If you are paying per token for an agent that works in one codebase every day, the time to run this is before your next monthly bill, not after it. The Luna cost-aware run (300 agent runs plus the reflector, about $30) pays for itself after roughly 1,000 tasks at $0.032 saved per task. For Sol, at $0.82 saved per task and roughly $400 for the run, the same arithmetic gives about 500 tasks.

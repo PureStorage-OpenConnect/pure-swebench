@@ -1,0 +1,34 @@
+[rollout pi-openai-gpt-5.6-sol--seed] 5/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd-s2] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s2] 6/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s3] 5/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd-s3] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s2] launching 20 cell(s) fanout=6 (busy elsewhere: 4)
+[rollout pi-openai-gpt-5.6-sol--seed] launching 19 cell(s) fanout=6 (busy elsewhere: 6)
+[rollout pi-openai-gpt-5.6-sol--seed-s3] launching 20 cell(s) fanout=6 (busy elsewhere: 5)
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--seed-s3] driver gepa-gepa2-test-pi-openai-gpt-5.6-sol-c4815b rc=0
+[rollout pi-openai-gpt-5.6-sol--seed] driver gepa-gepa2-test-pi-openai-gpt-5.6-sol-993697 rc=0
+[rollout pi-openai-gpt-5.6-sol--seed-s2] driver gepa-gepa2-test-pi-openai-gpt-5.6-sol-27aaa7 rc=0
+[rollout pi-openai-gpt-5.6-sol--seed-s2] done in 21.5 min: resolved 22/30
+[rollout pi-openai-gpt-5.6-sol--seed] done in 24.0 min: resolved 23/30
+[rollout pi-openai-gpt-5.6-sol--seed-s3] done in 27.6 min: resolved 26/30
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd-s3] driver gepa-gepa2-test-pi-openai-gpt-5.6-sol-deb8d9 rc=0
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd-s3] done in 29.5 min: resolved 23/30
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd] driver gepa-gepa2-test-pi-openai-gpt-5.6-sol-3e01c6 rc=0
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd] done in 31.8 min: resolved 22/30
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd-s2] driver gepa-gepa2-test-pi-openai-gpt-5.6-sol-23a33b rc=0
+[rollout pi-openai-gpt-5.6-sol--gff6a4ebd-s2] done in 32.3 min: resolved 22/30
+{"seed": {"resolved": "71/90", "mean_rate": 0.7889, "cost_usd": 176.55}, "v2_best": {"resolved": "67/90", "mean_rate": 0.7444, "cost_usd": 102.73}}
+{
+ "v2_best - seed": {
+  "mean_diff": -0.0444,
+  "n_tasks": 30,
+  "tasks_up": 3,
+  "tasks_down": 5,
+  "p_sign_flip": 0.5869
+ }
+}

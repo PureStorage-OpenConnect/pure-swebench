@@ -322,3 +322,32 @@ Getting it right
 8. Add or update a focused test next to the existing ones in the matching test file, in that file's style.
 
 Finish with one `git diff --stat` and a single look at the final diff to check for leftover debug code, unintended files, or signature changes you didn't need.
+Loading gepa state from run dir
+Iteration 8: Base program full valset score: 0.71875 over 20 / 20 examples
+Iteration 9: Selected program 5 score: 0.7938427907553774
+Iteration 9: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/, web frontend in web/src with node tests in web/tests/*.test.cjs, backend tests in zerver/tests and zerver/webhooks/*/tests.py with fixtures in zerver/webhooks/*/fixtures/):
+
+Environment
+- No virtualenv, no database, no `python` (only python3), no node_modules. tools/test-backend, tools/test-js-with-node and tools/lint will not run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function (or a minimal copy without Django/module imports) into a scratch script under /tmp and run it with python3 or node on concrete inputs. Use `python3 -m py_compile` / `python3 -m json.tool` for syntax checks. Delete scratch files afterwards.
+- File paths in a brief may be stale (e.g. .ts vs .js). Find files with `rg -l` first.
+
+Efficient exploration
+- Search before you read: `rg -n "symbol" web/src zerver | head -30`, then read only the relevant ranges (`sed -n 'A,Bp'`). Don't read whole large files and don't re-read code you already have. Batch independent searches into one command. Keep output short (head/tail).
+- Understand the code path, decide the full set of changes, make them in one pass, check them, and stop.
+- For documentation updates the brief asks for, edit only the pages that directly describe the changed behaviour, and keep each edit small.
+
+Getting it right
+1. Make the smallest change in the layer the brief points to. Don't change signatures of existing functions or thread new parameters through callers. Get state such as "current message list", "current user" or "settings" the way neighbouring code does (usually by importing the module that holds it). Tests call existing functions with their existing arguments and mock module state (mock_esm / override).
+2. Match the surrounding code: string building, translation ($t / $t_html; in node tests $t adds a "translated: " prefix and $t_html adds "translated HTML: "; backend uses _()), data structures, helper usage, ordering. Don't add $t() where neighbouring text fragments are plain strings that callers translate later.
+3. When you extend logic to a new input variant (nesting, prefixes, wrapper nodes, negation, another message type such as 1:1 DM vs group DM vs channel), list every branch and every hardcoded length/offset/index based on the old assumption, and update and test each one.
+4. Prefer narrow primitives that answer exactly the question the brief describes. Before reusing a helper, read its body: helpers touching realm, settings, permission or group state can crash node tests that never set that state up.
+5. Helpers that build URLs, mentions, links or recipient lists: read the helper's body, then `rg -n "helper_name\(" zerver web/src | head` and the helper's own tests to see the exact input shape and expected output (e.g. which participants a DM recipient list/URL contains, whether the acting user or sender is included, IDs vs objects, sorting). Build the argument exactly the way an existing caller does — don't hand-assemble a partial dict or filter the list differently. Then trace the brief's example through the helper by hand and write down the resulting string.
+6. Read the existing tests for code you touch. They show output formats, how state is mocked, and which modules are real vs stubbed. Existing tests must keep passing unchanged except where the brief explicitly changes that behaviour. If your change alters the output for an existing test/fixture that the brief doesn't mention, your logic is wrong — fix the code, don't edit the expectation.
+7. If the brief names an interface (function, parameter, property, selector, string) implement it literally. If it gives a concrete input/output example, trace that input through your final code (in a scratch script when the logic is pure) and compare character by character.
+8. Parsers (webhooks, paste/markdown handling): build any new fixture by copying an existing fixture in the same directory and editing it, keeping every field the real payload has (use the brief's payload verbatim when given). In a scratch script, run your parsing logic on the new fixture AND every existing fixture, and confirm the existing outputs are identical to before and nothing raises (unpacking, missing keys, index mismatches).
+9. Implement every requirement bullet (each case: channel vs DM vs group DM, negated vs plain, success vs error path, configured vs not). Re-read the brief once before finishing and tick them off.
+10. Add or update a focused test next to the existing ones, in that file's style, covering each branch your change affects.
+
+Finish with one `git diff --stat` and a single look at the final diff for leftover debug code, unintended files, changed existing expectations, or signature changes you didn't need.
+Iteration 9: New subsample score 4.502338794371373 is not better than old score 4.8019259888429735, skipping

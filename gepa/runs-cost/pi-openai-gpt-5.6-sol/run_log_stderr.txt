@@ -244,3 +244,27 @@
 [rollout pi-openai-gpt-5.6-sol--g9972e5e6-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
 [rollout pi-openai-gpt-5.6-sol--g9972e5e6-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
 [rollout pi-openai-gpt-5.6-sol--g9972e5e6] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--seed-s3] 20/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed] 20/20 cell(s) cached[rollout pi-openai-gpt-5.6-sol--seed-s2] 20/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--seed-s3] done in 0.1 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol--seed] done in 0.1 min: resolved 14/20
+[rollout pi-openai-gpt-5.6-sol--seed-s2] done in 0.1 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--gc8f73151-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc8f73151-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc8f73151] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc8f73151-s3] done in 0.5 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--gc8f73151] done in 0.5 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--gc8f73151-s2] done in 0.5 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce] driver gepa-gepa-cost-pi-openai-gpt-5.6-sol-cb75e1 rc=0
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce] done in 5.6 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce-s3] driver gepa-gepa-cost-pi-openai-gpt-5.6-sol-99c3fd rc=0
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce-s3] done in 7.6 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce-s2] driver gepa-gepa-cost-pi-openai-gpt-5.6-sol-48420b rc=0
+[rollout pi-openai-gpt-5.6-sol--ge49a30ce-s2] done in 7.8 min: resolved 4/6

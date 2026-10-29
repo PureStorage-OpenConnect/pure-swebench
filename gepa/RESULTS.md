@@ -1,6 +1,6 @@
 # GEPA proof of concept: results
 
-Status as of 2026-10-29 05:30 PDT. Owner: Robert. Branch `gepa` (uncommitted).
+Status as of 2026-10-29 12:00 PDT. Owner: Robert. Branch `gepa` (uncommitted).
 
 ## Setup
 
@@ -52,14 +52,12 @@ Status as of 2026-10-29 05:30 PDT. Owner: Robert. Branch `gepa` (uncommitted).
    (+0.033, 95% CI [-0.022, +0.100]): non-inferiority at a 10-point margin IS shown.
    This is the first run where the cost fell and the resolve rate is shown to hold.
    Luna's accuracy-only v1 prompt did not change cost (1.04x).
-3c. **GPT-5.6 Sol: PRELIMINARY, validation only** (held-out test NOT run yet; resume on
-   2026-11-01, see Open items). On the 20 validation tasks every candidate of both runs
-   is significantly cheaper than the seed: v2 accuracy-only 0.73-0.80x, cost-aware
-   0.53-0.63x (5/5 and 6/6 candidates p<0.01). Resolve stays at the seed level (15.7/20
-   -> 14.7-16.7). Cost per resolve $1.93 -> $1.00 for the best cost-aware candidate.
-   Luna's validation cost ratios carried over to held-out almost unchanged, so expect
-   Sol held-out about 0.55-0.65x (cost-aware) and 0.75-0.80x (v2). Resolve on held-out is
-   unknown.
+3c. **GPT-5.6 Sol** (held-out done 2026-10-29 11:50). Cost-aware cut held-out cost to
+   0.58x seed (95% CI [0.55, 0.62], 30/30 tasks cheaper, $1.96 -> $1.14 per run, turns
+   0.60x). v2 accuracy-only: 0.86x [0.79, 0.92], turns 0.74x. Resolve 0.789 -> 0.744
+   (cost-aware, -0.044, CI [-0.156, +0.067], p=0.59) and -> 0.733 (v2, -0.056,
+   CI [-0.133, +0.022], p=0.31). No significant loss, but non-inferiority at a 10-point
+   margin is NOT shown for either prompt. $ per resolve 2.49 -> 1.53 (cost-aware).
 4. **Thesis check.** Robert's thesis was that smaller models gain more from prompt
    optimization. The data do not support it for resolve rate. Cost is the axis where
    GEPA moved a model on the Pareto frontier.
@@ -75,7 +73,7 @@ on the same 30 tasks.
 | GPT-5.6 Luna | 16/30 | 19/30; 3 samples 61/90 (0.678) | 19/30; 3 samples 55/90 (0.611) | 57/88 (0.644, mean of task rates) | 64/90 (0.711) | v1 1.0 (3s: 0.34); v2 0.53; cost 0.53 |
 | Haiku 4.5 | 8/30 | 41/90 (0.456) | 39/90 (0.433) | limit600: 35/90 (0.389); no limit: 39/90 (0.433) | - | v1 0.85; v2-limit 0.34; v2 0.88 |
 | Haiku 5.5 | - | 73/90 (0.811); 6 samples 148/179 (0.823) | - | 76/90 (0.844) | 69/90 (0.767); 6 samples 138/180 (0.767) | v2 0.50; cost 0.49; cost 6s 0.26 |
-| GPT-5.6 Sol | - | pending 11/1 | - | pending 11/1 | pending 11/1 | - |
+| GPT-5.6 Sol | - | 71/90 (0.789) | - | 66/90 (0.733) | 67/90 (0.744) | v2 0.31; cost 0.59 |
 | Muse Glimmer 30B | 21/30 | 48/90 (0.533) | 53/90 (0.589) | 51/90 (0.567) | - | v1 0.47; v2 0.73 |
 | Gemma 4 31B | 9/30 | 41/90 (0.456) | 33/90 (0.367) | 38/90 (0.422) | - | v1 0.14; v2 0.64 |
 | Qwen3.6 27B | 7/30 | 15/30; 3 samples 43/90 (0.478) | 10/30; 3 samples 39/90 (0.433) | 44/90 (0.489) | - | v1 0.18 (3s: 0.53); v2 1.0 |
@@ -96,6 +94,12 @@ turns 0.59x. v1 best on 3 samples: -0.067 [-0.178, +0.022], cost 0.99x.
 Luna v2 accuracy-only: -0.033 [-0.144, +0.067], cost 0.89x [0.79, 0.99], turns 0.86x
 (2 cells lost to the OpenAI spend limit at 18:34). So most of Luna's cost saving comes
 from the cost objective, not from the v2 setup.
+
+GPT-5.6 Sol (2026-10-29, 3 samples, 0 infra failures; seed cells shared by both arms):
+v2 -0.056 [-0.133, +0.022], p=0.31, tasks up/down 2/7, cost 0.86x [0.79, 0.92], turns
+0.74x. Cost-aware -0.044 [-0.156, +0.067], p=0.59, tasks up/down 3/5, cost 0.58x
+[0.55, 0.62], 30/30 tasks cheaper, turns 0.60x. Held-out seed cost $1.96 per run (validation
+$1.52). Same pattern as Luna: the cost objective gives most of the saving.
 
 Haiku 5.5 resolve difference vs seed, bootstrap 95% CI over tasks:
 v2 accuracy-only +0.033 [-0.022, +0.089]; cost-aware -0.044 [-0.133, +0.044].
@@ -121,7 +125,7 @@ cost-aware includes the cost term, so it is not comparable to v2).
 | GPT-5.6 Luna | v2 | 0.781 | 0.872 | 2 / 6 | 662 | 240 |
 | GPT-5.6 Luna | cost-aware | 0.681 | 0.791 | 4 / 6 | 658 | 240 |
 | GPT-5.6 Sol | v2 | 0.819 | 0.877 | 3 / 6 | 1179 | 240 |
-| GPT-5.6 Sol | cost-aware (stopped at 230/240) | 0.719 | 0.815 | 6 / 7 | 918 | 230 |
+| GPT-5.6 Sol | cost-aware | 0.719 | 0.815 | 6 / 7 | 918 | 242 |
 | Muse Glimmer 30B | v1 | 0.600 | 0.800 | 4 / 6 | 689 | 201 |
 | Muse Glimmer 30B | v2 | 0.731 | 0.831 | 1 / 6 | 752 | 264 |
 | Gemma 4 31B | v1 | 0.400 | 0.600 | 4 / 7 | 654 | 209 |
@@ -140,7 +144,8 @@ v/^ = number of tasks cheaper / more expensive. Turns = model round-trips.
 | GPT-5.6 Luna | v1 | $0.082 -> $0.089 | 1.04 | 0.58 | 13/16 | 0.98 | 0.73 |
 | GPT-5.6 Luna | v2 | $0.083 -> $0.078 | 0.86 | 0.05 | 17/13 | 0.84 | 0.02 |
 | GPT-5.6 Luna | cost-aware | $0.083 -> $0.051 | **0.58** | <0.001 | 29/1 | 0.60 | <0.001 |
-| GPT-5.6 Sol | v2, cost-aware | pending 11/1 | | | | | |
+| GPT-5.6 Sol | v2 | $1.962 -> $1.724 | 0.86 | <0.01 | 22/8 | 0.74 | <0.01 |
+| GPT-5.6 Sol | cost-aware | $1.962 -> $1.141 | **0.58** | <0.01 | 30/0 | 0.60 | <0.01 |
 | Haiku 4.5 | v1 | $0.560 -> $0.577 | 1.03 | 0.47 | 11/19 | 1.01 | 0.80 |
 | Haiku 4.5 | v2 limit600 | $0.581 -> $0.618 | 1.06 | 0.02 | 11/19 | 1.04 | 0.15 |
 | Haiku 4.5 | v2 no limit | $0.581 -> $0.598 | 1.03 | 0.29 | 12/18 | 0.99 | 0.55 |
@@ -192,7 +197,8 @@ Carry-over to held-out: Muse v2 0.75-0.83 on validation -> 0.95 held-out (mostly
 Gemma v2 0.73-0.96 -> 1.08 (lost; Gemma used 27% MORE turns on held-out);
 Haiku 5.5 v2 0.77 -> 0.78 (kept); Haiku 5.5 cost-aware 0.37-0.52 -> 0.33 (kept);
 Luna v2 0.80-0.99 -> 0.89 (kept); Luna cost-aware 0.47-0.58 -> 0.57 (kept);
-gpt-oss v2 0.53-0.67 -> 0.80 (partly kept); Qwen v2 0.71-0.87 -> 0.77 (kept).
+gpt-oss v2 0.53-0.67 -> 0.80 (partly kept); Qwen v2 0.71-0.87 -> 0.77 (kept);
+Sol v2 0.73-0.80 -> 0.86 (partly kept); Sol cost-aware 0.53-0.63 -> 0.58 (kept).
 Sol validation detail (cost / turns / wall-clock vs seed): v2 cand1-5 0.74-0.80 /
 0.61-0.65 / 0.51-0.60; cost-aware cand1-6 0.53-0.63 / 0.53-0.69 / 0.47-0.54.
 
@@ -229,17 +235,9 @@ Sol validation detail (cost / turns / wall-clock vs seed): v2 cand1-5 0.74-0.80 
 - Optional: cost-aware rerun with cost weight 0.05.
 - Cost-aware GEPA on other models (the largest $ saving would be Qwen at $1.03 per run).
 - Qwen v2 GEPA + held-out: DONE 2026-10-29 05:03. gpt-oss-120b done 2026-10-28 02:20.
-- **TO DO 2026-11-01 (OpenAI usage resets): finish the Sol runs.** The OpenAI project
-  hit its enforced spend limit on 2026-10-28 18:34 PDT (Sol $863 + Luna $62 at list
-  price that day); every call after that failed with 0 tokens. Both Sol runs were
-  stopped. Remaining: about 280 Sol cells, about $300. Commands (from pure-swebench/):
-  1. Sol v2 held-out (GEPA complete; 0/180 held-out cells valid):
-     `env ZBENCH_SLOT_CAP_provider__openai-direct=36 ZBENCH_SLOT_CAP_global=60 GEPA_FANOUT=6 gepa/.venv/bin/python gepa/eval_test_v2.py --agent pi-openai-gpt-5.6-sol > gepa/runs-v2/pi-openai-gpt-5.6-sol/test_eval.log 2>&1`
-  2. Sol cost-aware: finish GEPA (resumes from gepa_state.bin at 230/240 calls), then
-     held-out (seed cells are shared with step 1):
-     `env ...same env... gepa/.venv/bin/python gepa/gepa_run_cost.py --agent pi-openai-gpt-5.6-sol --budget 240 >> gepa/runs-cost/pi-openai-gpt-5.6-sol/stdout.log 2>&1 && env ...same env... gepa/.venv/bin/python gepa/eval_test_v2.py --agent pi-openai-gpt-5.6-sol --run-dir gepa/runs-cost/pi-openai-gpt-5.6-sol > gepa/runs-cost/pi-openai-gpt-5.6-sol/test_eval.log 2>&1`
-  Before starting: make sure the limit has reset (one smoke cell), and watch the first
-  cells for 0-token failures. Then fill the Sol rows above (marked "pending 11/1").
+- Sol runs: DONE 2026-10-29 11:50 after the OpenAI budget was raised (resumed 11:02;
+  cost-aware GEPA finished at 242 calls, best unchanged). Spend-limit failures from
+  2026-10-28 (142 cells, 0 tokens) were re-run; old log `runs-v2/.../test_eval.spendlimit-2026-10-28.log`.
 - Candidates not tried: Nemotron. No larger Claude models
   (Robert, 2026-10-26).
 
