@@ -1,0 +1,56 @@
+[rollout pi-openai-gpt-5.6-luna--g3de969d3-s3] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3de969d3-s2] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s2] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gf23503aa-s2] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gf23503aa] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gf23503aa-s3] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s3] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] 30/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3de969d3] 30/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] done in 0.0 min: resolved 19/30
+[rollout pi-openai-gpt-5.6-luna--g3de969d3] done in 0.0 min: resolved 19/30
+[rollout pi-openai-gpt-5.6-luna--g3de969d3-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g3de969d3-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--seed-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gf23503aa] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gf23503aa-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--seed-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gf23503aa-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--seed-s2] driver gepa-gepa2-test-pi-openai-gpt-5.6-luna-1588c6 rc=0
+[rollout pi-openai-gpt-5.6-luna--seed-s3] driver gepa-gepa2-test-pi-openai-gpt-5.6-luna-fb631d rc=0
+[rollout pi-openai-gpt-5.6-luna--seed-s2] done in 37.7 min: resolved 22/30
+[rollout pi-openai-gpt-5.6-luna--g3de969d3-s2] driver gepa-gepa2-test-pi-openai-gpt-5.6-luna-37cce0 rc=0
+[rollout pi-openai-gpt-5.6-luna--g3de969d3-s2] done in 38.0 min: resolved 20/30
+[rollout pi-openai-gpt-5.6-luna--seed-s3] done in 39.8 min: resolved 20/30
+[rollout pi-openai-gpt-5.6-luna--g3de969d3-s3] driver gepa-gepa2-test-pi-openai-gpt-5.6-luna-e709c9 rc=0
+[rollout pi-openai-gpt-5.6-luna--g3de969d3-s3] done in 42.2 min: resolved 16/30
+[rollout pi-openai-gpt-5.6-luna--gf23503aa-s2] driver gepa-gepa2-test-pi-openai-gpt-5.6-luna-13f53d rc=0
+[rollout pi-openai-gpt-5.6-luna--gf23503aa-s2] done in 42.4 min: resolved 23/30
+[rollout pi-openai-gpt-5.6-luna--gf23503aa-s3] driver gepa-gepa2-test-pi-openai-gpt-5.6-luna-cfdd7c rc=0
+[rollout pi-openai-gpt-5.6-luna--gf23503aa-s3] done in 43.9 min: resolved 20/30
+[rollout pi-openai-gpt-5.6-luna--gf23503aa] driver gepa-gepa2-test-pi-openai-gpt-5.6-luna-664e4c rc=0
+[rollout pi-openai-gpt-5.6-luna--gf23503aa] done in 45.9 min: resolved 21/30
+{"seed": {"resolved": "61/90", "mean_rate": 0.6778, "cost_usd": 7.44}, "v1_best": {"resolved": "55/90", "mean_rate": 0.6111, "cost_usd": 7.79}, "v2_best": {"resolved": "64/90", "mean_rate": 0.7111, "cost_usd": 4.59}}
+{
+ "v2_best - seed": {
+  "mean_diff": 0.0333,
+  "n_tasks": 30,
+  "tasks_up": 4,
+  "tasks_down": 2,
+  "p_sign_flip": 0.532
+ },
+ "v1_best - seed": {
+  "mean_diff": -0.0667,
+  "n_tasks": 30,
+  "tasks_up": 3,
+  "tasks_down": 5,
+  "p_sign_flip": 0.3443
+ },
+ "v2_best - v1_best": {
+  "mean_diff": 0.1,
+  "n_tasks": 30,
+  "tasks_up": 8,
+  "tasks_down": 3,
+  "p_sign_flip": 0.1716
+ }
+}

@@ -1,0 +1,4 @@
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] 0/30 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] 0/30 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--seed] launching 30 cell(s) fanout=12 (busy elsewhere: 0)

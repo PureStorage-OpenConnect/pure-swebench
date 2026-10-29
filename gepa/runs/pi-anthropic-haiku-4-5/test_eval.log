@@ -1,0 +1,9 @@
+[rollout pi-anthropic-haiku-4-5--g77818b1b] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--seed] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g77818b1b] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-4-5--seed] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-4-5--seed] driver gepa-gepa-test-pi-anthropic-haiku-4-5-f7e266 rc=0
+[rollout pi-anthropic-haiku-4-5--seed] done in 45.0 min: resolved 12/30
+[rollout pi-anthropic-haiku-4-5--g77818b1b] driver gepa-gepa-test-pi-anthropic-haiku-4-5-e1bd8d rc=0
+[rollout pi-anthropic-haiku-4-5--g77818b1b] done in 49.4 min: resolved 12/30
+{"seed_resolved": "12/30", "gepa_best_resolved": "12/30", "board_baseline_resolved": "8/30"}

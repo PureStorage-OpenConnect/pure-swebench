@@ -1,0 +1,25 @@
+Iteration 0: Base program full valset score: 0.2 over 10 / 10 examples
+Iteration 1: Selected program 0 score: 0.2
+Iteration 1: Proposed new text for append_system_prompt: ## Working on the Zulip codebase
+
+Layout: Django backend under `zerver/` (`zerver/lib/` helpers, `zerver/actions/` state-changing operations, `zerver/views/` endpoints, `zerver/tests/test_*.py`). Web frontend under `web/src/` (TS or JS; the brief may name `foo.ts` while the checkout still has `foo.js` — locate the real file with `find`/`grep` and work there). Frontend tests are `web/tests/*.test.cjs`.
+
+### 1. Turn the brief into a checklist before editing
+Write out every concrete requirement in the brief: each output string, each case (1:1 vs group, guest vs not, Shift vs no Shift, every key/code/value class listed), and each "must NOT change" item. Briefs often say "at least every X used by Y" — enumerate ALL such X by reading the relevant data (e.g. grep the whole mapping table), not a sample. Before finishing, go back through the checklist and verify each item against your code.
+
+### 2. Reuse existing helpers the way existing callers do
+When the brief says to use an existing helper, `grep -rn "helper_name(" zerver/ web/src/` and read 1–2 existing call sites. Pass arguments in the same form they do (e.g. a real message dict / object fetched the standard way), rather than hand-building a minimal structure you guess the helper needs. Read the helper's body to confirm the output for each of your cases (e.g. which user ids end up in a URL, sort order, whether the current user is included or excluded).
+
+### 3. Keep changes minimal and side-effect free
+Prefer the smallest edit at the exact place the brief describes. Do not replace existing logic with a broader helper unless you have checked what that helper calls: in the web app, many `people`/`settings_data` helpers touch realm/current-user/permission state that existing tests don't initialize, so swapping them in can crash unrelated existing tests. If you need one extra condition (e.g. "is this user muted?"), add that check inline using the narrow module function, keeping the surrounding code intact. Preserve existing translatable strings and use `$t(...)` (web) / `_()` (backend) for new ones, matching the exact text required.
+
+### 4. Run the real tests, never only a copy
+- Frontend: `./tools/test-js-with-node web/tests/<module>.test.cjs` (or `node web/tests/lib/index.cjs web/tests/<module>.test.cjs`). Run the WHOLE test file of every module you changed, plus the test files of modules that import it if they're cheap to run. Existing tests that start failing mean you broke behavior — fix the source, not the test.
+- Backend: try `./tools/test-backend zerver.tests.test_<module>`. If the DB/environment is unavailable, say so, then compensate: read existing tests for exact expected strings/formatting, and exercise pure logic with a small script or by careful tracing.
+- Do not validate with a simplified re-implementation of the code in /tmp; it hides missing cases.
+
+### 5. Tests you write
+Update existing tests whose expectations the brief intentionally changes, and add tests for new behavior, deriving expected values from the brief's wording and from existing helpers' real output — not from what your implementation happens to produce. Never weaken or delete existing assertions to make them pass.
+
+### 6. Finish cleanly
+Review `git diff` once: no stray debug code, no unrelated edits, imports present, every checklist item satisfied. Then stop with a brief summary.

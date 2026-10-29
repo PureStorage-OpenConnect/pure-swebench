@@ -1,0 +1,876 @@
+[rollout pi-vllm-qwen3.6-27b--seed-s3] 8/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed-s2] 8/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed-s3] launching 12 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--seed-s2] launching 12 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 10/20
+[rollout pi-vllm-qwen3.6-27b--seed-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-696ee6 rc=0
+[rollout pi-vllm-qwen3.6-27b--seed-s3] done in 191.1 min: resolved 10/20
+[rollout pi-vllm-qwen3.6-27b--seed-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-3ab416 rc=0
+[rollout pi-vllm-qwen3.6-27b--seed-s2] done in 245.9 min: resolved 6/20
+[rollout pi-vllm-qwen3.6-27b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed-s2] done in 0.3 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--seed-s3] done in 0.3 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.4 min: resolved 3/6
+2026-10-25 16:07:34,448 INFO reflection ok: cost=$0.544
+[rollout pi-vllm-qwen3.6-27b--gcd178c96-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gcd178c96-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gcd178c96] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gcd178c96-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gcd178c96] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gcd178c96-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gcd178c96-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-90c944 rc=0
+[rollout pi-vllm-qwen3.6-27b--gcd178c96-s3] done in 97.9 min: resolved 2/6
+[rollout pi-vllm-qwen3.6-27b--gcd178c96-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-64c786 rc=0
+[rollout pi-vllm-qwen3.6-27b--gcd178c96-s2] done in 106.9 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--gcd178c96] driver gepa-gepa2-pi-vllm-qwen3.6-27b-62c487 rc=0
+[rollout pi-vllm-qwen3.6-27b--gcd178c96] done in 156.5 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed-s2] done in 0.0 min: resolved 1/6
+[rollout pi-vllm-qwen3.6-27b--seed-s3] done in 0.0 min: resolved 1/6
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.1 min: resolved 2/6
+2026-10-25 18:44:57,830 INFO reflection ok: cost=$0.552
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-a79527 rc=0
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] done in 157.7 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] driver gepa-gepa2-pi-vllm-qwen3.6-27b-fbfe71 rc=0
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] done in 164.2 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-b1a632 rc=0
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] done in 208.3 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-a6ceb5 rc=0
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] done in 246.7 min: resolved 13/20
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-531cfb rc=0
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] done in 264.3 min: resolved 14/20
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] driver gepa-gepa2-pi-vllm-qwen3.6-27b-6f44cf rc=0
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] done in 273.8 min: resolved 12/20
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] done in 0.0 min: resolved 3/6
+2026-10-26 02:48:00,410 INFO reflection ok: cost=$0.584
+[rollout pi-vllm-qwen3.6-27b--gb779c894] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb779c894] driver gepa-gepa2-pi-vllm-qwen3.6-27b-414423 rc=0
+[rollout pi-vllm-qwen3.6-27b--gb779c894] done in 74.8 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-2673ce rc=0
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] done in 80.9 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-723434 rc=0
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] done in 98.2 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--gb779c894] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb779c894] driver gepa-gepa2-pi-vllm-qwen3.6-27b-a71628 rc=0
+[rollout pi-vllm-qwen3.6-27b--gb779c894] done in 288.4 min: resolved 12/20
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-de24bf rc=0
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] done in 320.8 min: resolved 12/20
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-e3157c rc=0
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] done in 352.4 min: resolved 13/20
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] 4/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] 4/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] 4/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] done in 0.2 min: resolved 3/4
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] done in 0.2 min: resolved 2/4
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] done in 0.2 min: resolved 2/4
+2026-10-26 10:19:36,823 INFO reflection ok: cost=$0.562
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s2] 0/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd] 0/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s3] 0/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s3] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s2] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-15f578 rc=0
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s2] done in 47.3 min: resolved 2/4
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd] driver gepa-gepa2-pi-vllm-qwen3.6-27b-a89f93 rc=0
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd] done in 52.9 min: resolved 4/4
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-94a3db rc=0
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s3] done in 62.1 min: resolved 2/4
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s2] 4/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd] 4/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s3] 4/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s3] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s2] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd] driver gepa-gepa2-pi-vllm-qwen3.6-27b-23164a rc=0
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd] done in 339.5 min: resolved 15/20
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-ccac10 rc=0
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s2] done in 359.0 min: resolved 10/20
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-528c77 rc=0
+[rollout pi-vllm-qwen3.6-27b--gb803ecdd-s3] done in 408.8 min: resolved 11/20
+[rollout pi-vllm-qwen3.6-27b--gb779c894] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894] done in 0.7 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] done in 0.7 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] done in 0.7 min: resolved 5/6
+2026-10-26 18:12:11,832 INFO reflection ok: cost=$0.595
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-774b9e rc=0
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2] done in 75.6 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-642354 rc=0
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2-s2] done in 76.1 min: resolved 2/6
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-79ac8a rc=0
+[rollout pi-vllm-qwen3.6-27b--g8b35abc2-s3] done in 79.8 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s2] done in 0.5 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b--g9da93b04] done in 0.5 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--g9da93b04-s3] done in 0.5 min: resolved 6/6
+2026-10-26 19:33:25,284 INFO reflection ok: cost=$0.592
+[rollout pi-vllm-qwen3.6-27b--gd6d51266-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gd6d51266-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gd6d51266] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gd6d51266-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gd6d51266-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gd6d51266] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gd6d51266] driver gepa-gepa2-pi-vllm-qwen3.6-27b-793806 rc=0
+[rollout pi-vllm-qwen3.6-27b--gd6d51266] done in 114.1 min: resolved 2/6
+[rollout pi-vllm-qwen3.6-27b--gd6d51266-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-af0809 rc=0
+[rollout pi-vllm-qwen3.6-27b--gd6d51266-s2] done in 120.5 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--gd6d51266-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-152c16 rc=0
+[rollout pi-vllm-qwen3.6-27b--gd6d51266-s3] done in 132.7 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b--gb779c894] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s3] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--gb779c894] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--gb779c894-s2] done in 0.0 min: resolved 3/6
+2026-10-26 21:47:00,265 INFO reflection ok: cost=$0.584
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-db5109 rc=0
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] done in 114.6 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-908bc6 rc=0
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] done in 128.1 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] driver gepa-gepa2-pi-vllm-qwen3.6-27b-1b5069 rc=0
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] done in 174.5 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-ee97be rc=0
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] done in 244.4 min: resolved 12/20
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-a5dace rc=0
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] done in 260.5 min: resolved 12/20
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] driver gepa-gepa2-pi-vllm-qwen3.6-27b-6336f5 rc=0
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] done in 284.7 min: resolved 15/20
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] 4/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] 4/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] 4/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] done in 0.5 min: resolved 2/4
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] done in 0.5 min: resolved 2/4
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] done in 0.5 min: resolved 2/4
+2026-10-27 05:27:45,254 INFO reflection ok: cost=$0.590
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s2] 0/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g54f213e1] 0/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s3] 0/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s3] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s2] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g54f213e1] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-daffc4 rc=0
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s2] done in 144.3 min: resolved 2/4
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-81b579 rc=0
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s3] done in 167.5 min: resolved 3/4
+[rollout pi-vllm-qwen3.6-27b--g54f213e1] driver gepa-gepa2-pi-vllm-qwen3.6-27b-063321 rc=0
+[rollout pi-vllm-qwen3.6-27b--g54f213e1] done in 194.3 min: resolved 2/4
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s3] 4/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s2] 4/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g54f213e1] 4/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s3] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s2] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g54f213e1] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g54f213e1] driver gepa-gepa2-pi-vllm-qwen3.6-27b-6cce93 rc=0
+[rollout pi-vllm-qwen3.6-27b--g54f213e1] done in 220.1 min: resolved 11/20
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-585652 rc=0
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s2] done in 223.9 min: resolved 14/20
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-173ced rc=0
+[rollout pi-vllm-qwen3.6-27b--g54f213e1-s3] done in 245.0 min: resolved 13/20
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s2] done in 0.1 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6-s3] done in 0.1 min: resolved 2/6
+[rollout pi-vllm-qwen3.6-27b--gf5a393d6] done in 0.1 min: resolved 4/6
+2026-10-27 12:48:06,106 INFO reflection ok: cost=$0.588
+[rollout pi-vllm-qwen3.6-27b--g250a5cae] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g250a5cae] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-0d5e4c rc=0
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s3] done in 167.6 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--g250a5cae] driver gepa-gepa2-pi-vllm-qwen3.6-27b-7055bf rc=0
+[rollout pi-vllm-qwen3.6-27b--g250a5cae] done in 177.1 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-4c7438 rc=0
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s2] done in 203.1 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s2] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g250a5cae] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s3] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g250a5cae] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s2] driver gepa-gepa2-pi-vllm-qwen3.6-27b-f78e86 rc=0
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s2] done in 262.8 min: resolved 15/20
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s3] driver gepa-gepa2-pi-vllm-qwen3.6-27b-8376b1 rc=0
+[rollout pi-vllm-qwen3.6-27b--g250a5cae-s3] done in 268.6 min: resolved 16/20
+[rollout pi-vllm-qwen3.6-27b--g250a5cae] driver gepa-gepa2-pi-vllm-qwen3.6-27b-a6ebd8 rc=0
+[rollout pi-vllm-qwen3.6-27b--g250a5cae] done in 274.1 min: resolved 13/20
+2026-10-27 20:45:14,626 INFO done: best idx 6 val 0.771
+Iteration 0: Base program full valset score: 0.525 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.525
+Iteration 1: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue or adding a feature in the Zulip repo (Python/Django backend in `zerver/`, web frontend in `web/src/` with Node unit tests in `web/tests/*.test.cjs`, backend tests in `zerver/tests/` and `zerver/webhooks/<name>/tests.py` with fixtures under `fixtures/`).
+
+The environment has no virtualenv, no node_modules, no database and no `python` (only `python3`). `tools/test-backend`, `tools/test-js-with-node`, npm and Django imports will NOT work. Don't spend turns trying to make them work. Plain `node` and `python3` do work, so use them for scratch checks (see "Verifying without the test runners").
+
+### 1. Orient before editing
+- Find the real files. The brief may name `foo.ts` when the file is actually `foo.js`, or the other way round. Check with `ls`/`grep`, then move on.
+- Read the whole function you will change, the code around it, and the existing test file for that module. The existing tests show how the code is called. They often pass minimal plain objects (for example, an event with only `key` and modifier flags, and no other fields), so new code must not crash or change results when an optional field is missing.
+- Search the repo (`grep -rn`) for existing helpers the brief mentions, and for 2–3 existing call sites of each one. Build that helper's arguments the same way those callers do; don't build its inputs by hand. For example, for anything involving message recipients, URLs or display names, copy the existing call pattern exactly.
+- Write down each concrete requirement in the brief: exact strings, ordering, capitalization, blank lines, fallback rules, and "must stay unchanged" rules. Treat every quoted string and example output in the brief as an exact spec.
+
+### 2. Implement conservatively
+- Don't change existing behaviour unless the brief asks for it. If you add a new code path, such as a fallback or a special case, the guard that decides between the old and new path must cover EVERYTHING the old code handled. Build that guard from the existing data (mapping tables, constants, and the cases in the existing tests), not from a list you type from memory. Then check each existing case in the module's tests against your guard.
+- Put shared data, such as constants and mappings, in the module that owns the logic. Don't add imports between modules that already import each other in the other direction (circular imports).
+- Make sure the change applies everywhere the text or value is produced. A user-visible string can come from several places, such as a description function, a suggestion builder, a template, or a capitalization helper. Use grep to find every place that produces it, and follow the value all the way to where it is displayed.
+- Frontend code runs in tests under Node with a minimal DOM shim. Don't use browser global constructors or `instanceof` checks against them (`Element`, `HTMLElement`, `Node` subclasses, `window.*`) unless the same file already does. Use `nodeType`/`nodeName` comparisons and the patterns already in that file. Keep TypeScript strict-friendly: no implicit `any`, use `!`/`assert` the way the file does, and use existing type exports.
+- Use the codebase's existing conventions for user-facing strings (`$t`/`$t_html` on the frontend, `_()` on the backend), and reuse the surrounding code's style.
+- Reuse existing helpers instead of duplicating their logic, as the brief usually asks.
+
+### 3. Tests
+- Add or update tests for the new behaviour in the existing test file, in the style already used there (fixtures, `check_webhook`, `run_test`, `override`/`mock_esm`, and so on).
+- Only change an existing test's expectation when the brief explicitly changes that behaviour, and take the new expected value from the brief, not from what your code happens to output. NEVER delete, skip, or weaken an existing test to work around a failure. A test that breaks means your change probably broke existing behaviour, so fix the code.
+- For webhook/fixture-driven features, make your fixture match the real payload structure described in the brief (all fields, the same nesting, the same file-upload layout), not a simplified version.
+
+### 4. Verifying without the test runners (do this — it catches most mistakes)
+- For pure logic (parsers, formatters, key mapping, classification), copy the function into a scratch script in /tmp. Strip types/imports if needed, or stub minimal dependencies. Run it with `node` or `python3` on:
+  (a) every example input/output given in the brief, comparing EXACTLY. Print with `repr()`/`JSON.stringify` so whitespace, blank lines and punctuation are visible.
+  (b) the inputs used by the existing tests for that function, to confirm old behaviour is unchanged.
+- For Python, `python3 -c "import ast; ast.parse(open('file.py').read())"` checks syntax. For JS/CJS, `node --check file.js` works (it does not check `.ts` files; review those by reading them).
+- Then trace each brief requirement through your final code by reading it: which branch produces it, and with exactly what string.
+- Delete scratch files from the repo when you're done. Only intentional source and test changes should remain in the working tree.
+
+### 5. Finish
+- Run `git diff` and review it all: no debug code, no stray files, no unrelated edits, imports present and used, every brief requirement covered, and existing behaviour kept. Then stop. Don't loop on re-reading once the checks above pass.
+Iteration 1: New subsample score 4.083333333333333 is not better than old score 4.166666666666667, skipping
+Iteration 2: Selected program 0 score: 0.525
+Iteration 2: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue in the Zulip repo (Django backend in zerver/, zproject/, corporate/, analytics/; web client in web/src/*.ts, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/<name>/tests.py with JSON fixtures in zerver/webhooks/<name>/fixtures/; help docs in starlight_help/; dev docs in docs/).
+
+Environment limits: there is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node CANNOT run here. Don't spend turns trying to install things or make them run. Your checks are careful reading, `python3 -m py_compile <file>` for Python syntax, and tracing code paths by hand. The code you write will be run against Zulip's real test suite, including tests you haven't seen, so it must work with the existing test harness and with real-shaped data, not just your own examples.
+
+### 1. Treat the brief's "Interface requirements" as a contract
+- List every named function, parameter, selector, string, log message, URL/hash value and exported symbol in the brief before you edit anything. Implement each one exactly as written: exact names, exact strings (including punctuation and spacing), exact CSS selectors, exact log levels and wording. Before you finish, grep your diff for each item and check it's there.
+- If the brief says behavior is "determinable via" some existing method or module state, compute it INSIDE the function that makes the decision, using that existing state (for example, the current message list module or another imported module). Do NOT add new parameters to existing functions and thread values through callers. Existing callers and tests call these functions with their current signatures, and your extra parameter will just be undefined there.
+- Don't rename, re-sign or move existing exported functions unless the brief asks you to. If you add a parameter the brief requires, update every call site (grep the whole of web/src and web/tests, or the whole Python tree).
+- When the brief says something must be stub-able or a mutable module property, follow the file's existing idiom (e.g. `export let fn = (...) => {...}` with rewire support in web/src) and put the call where the brief says.
+
+### 2. Read the existing tests for every module you touch
+Before you change a function, open its test file (web/tests/<module>.test.cjs, or zerver/tests/test_*.py / the webhook tests.py) and grep for that function. Note:
+- how it's called (arguments, order), and which globals/modules are mocked with mock_esm/zrequire/override;
+- which exact selectors zjquery stubs return via `set_find_results(...)`. Changing a selector in source means the test stub needs the same selector string;
+- what realm/user/settings state is (and is NOT) initialized.
+Your change has to keep working under that existing setup. A code path that newly needs state the tests never initialize (realm settings, group permission configs, current_user fields, DOM elements) will crash existing tests.
+
+### 3. Keep changes minimal and dependencies narrow
+- Prefer the smallest change at the exact spot the brief points to. Don't swap working inline logic for a "nicer" shared helper unless you've read that helper's whole call chain. Helpers like people.* display-name functions, settings_data.* and permission checks pull in realm and group-permission state that many test files don't set up. If you only need one fact (e.g. "is this user muted"), import the small module that owns it and call it directly, and keep the surrounding existing logic (e.g. the guest-indicator branches) intact.
+- New user-facing strings in TS go through `$t` / `$t_html` (see neighboring code for `<z-link>` style links). In Python use `_()` where neighbors do.
+- Match the neighboring code's patterns for imports (order, `.ts` extensions, `../shared/src/...` for shared code), typing and naming.
+
+### 4. Backend specifics
+- Webhook payloads are `WildValue`s. `payload["x"]` for a JSON null is NOT Python `None`, and `.tame(check_string)` on it raises. Branch on the event type/discriminator fields FIRST, then read only the fields that kind of payload has. To test for null/missing use `.get("x")` plus `.tame(check_none_or(check_string))`, or compare the tamed value. Look at how the same webhook already handles the analogous non-emoji/other event (there's usually an existing helper that parses that object type, so reuse it).
+- When you write a fixture, copy the shape of the most similar existing fixture and the field list in the brief. Expect real payloads to include nulls and nested objects you didn't think of.
+- When catching validation failures, check what exception the validator actually raises (grep its definition, e.g. JsonableError vs ValidationError) and how to get its message (e.g. `.msg`). Use the exact log wording from the brief, the logger the module already uses, and the right level.
+- Settings dicts: when you add a new special key to a config dict, exclude it from any existing loop that treats every other key as a generic attribute mapping, and make sure the "nothing to do, return early" condition accounts for the new key.
+- Run `python3 -m py_compile` on every Python file you changed.
+
+### 5. Frontend specifics
+- URL/hash sections, tab names and similar sets of allowed values are usually validated in one place (e.g. hash_util). When you add a new tab/section, grep for the existing values (like "general") across web/src and update every whitelist and toggler.
+- Templates live in web/templates/*.hbs. Check class names used in TS selectors still match the templates after a reorganization.
+- You can't type-check, so read your TS diff for unused imports, wrong import paths, missing `export`, and type mismatches.
+
+### 6. Budget your context (hard limit ~130k tokens)
+- Never `cat` or read a large file whole. Use `grep -n` to find the spot, then read 40–120-line ranges. Don't print full diffs of big files repeatedly, and pipe long command output through `head`/`tail`.
+- Don't do repo-wide `find` dumps. Search for specific identifiers.
+- Plan first: after exploring, write a short checklist (brief requirements → files → edits), then edit. Don't re-read files you've already read.
+- Doc/help-center updates are lower priority than code correctness. Do them briefly after the code is complete.
+
+### 7. Before finishing
+1. Re-read the brief's requirements and interface list, and tick each one against `git diff`.
+2. For each changed function, trace by hand: (a) the new case from the brief, (b) the old/default case (behavior must be unchanged), (c) how the existing test file calls it with its existing mocks.
+3. Grep for every call site of any function whose signature or behavior you changed.
+4. Adding your own tests is fine, but they can't run here, so don't treat them as verification.
+Iteration 2: Accepted candidate (subsample score 2.0416666666666665 -> 4.958333333333333); running full eval.
+Iteration 2: Found a better program on the valset with score 0.7145833333333333.
+Iteration 2: Valset score for new program: 0.7145833333333333 (coverage 20 / 20)
+Iteration 2: Val aggregate for new program: 0.7145833333333333
+Iteration 2: Individual valset scores for new program: {0: 1.0, 1: 0.6666666666666666, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 0.0, 7: 0.7916666666666666, 8: 0.6666666666666666, 9: 0.8333333333333334, 10: 1.0, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 0.7916666666666666, 14: 0.4166666666666667, 15: 1.0, 16: 0.3333333333333333, 17: 0.375, 18: 1.0, 19: 0.75}
+Iteration 2: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 0.0, 7: 0.7916666666666666, 8: 0.6666666666666666, 9: 0.8333333333333334, 10: 1.0, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 0.7916666666666666, 14: 0.75, 15: 1.0, 16: 0.6666666666666666, 17: 0.5833333333333334, 18: 1.0, 19: 0.75}
+Iteration 2: Valset pareto front aggregate score: 0.775
+Iteration 2: Updated valset pareto front programs: {0: {1}, 1: {0}, 2: {1}, 3: {1}, 4: {0, 1}, 5: {1}, 6: {0, 1}, 7: {0, 1}, 8: {1}, 9: {1}, 10: {0, 1}, 11: {1}, 12: {0, 1}, 13: {0, 1}, 14: {0}, 15: {1}, 16: {0}, 17: {0}, 18: {1}, 19: {1}}
+Iteration 2: Best valset aggregate score so far: 0.7145833333333333
+Iteration 2: Best program as per aggregate score on valset: 1
+Iteration 2: Best score on valset: 0.7145833333333333
+Iteration 2: Linear pareto front program index: 1
+Iteration 2: New program candidate index: 1
+Iteration 3: Selected program 1 score: 0.7145833333333333
+Iteration 3: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue in the Zulip repo (Django backend in zerver/, zproject/, corporate/, analytics/; web client in web/src/*.ts, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/<name>/tests.py with JSON fixtures in zerver/webhooks/<name>/fixtures/; markdown rendering test cases in zerver/tests/fixtures/markdown_test_cases.json; email templates/CSS in templates/zerver/emails/; help docs in starlight_help/; dev docs in docs/).
+
+Environment limits: there is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node CANNOT run here. Don't try to install things or make them run. What you CAN do: careful reading, `python3 -m py_compile <file>`, and small standalone checks of pure logic (a regex, a string-building or sorting routine) with `python3 -c` / `node -e`, copying the logic into the snippet. Your code will be run against Zulip's real test suite, including tests you haven't seen, so it must work with the existing test harness and real-shaped data.
+
+### 1. Pin down exactly what the brief asks for
+- List every named function, parameter, selector, string, CSS class, log message, URL/hash form and exported symbol in the brief before editing. Implement each one exactly (names, punctuation, quoting, spacing). Before finishing, grep your diff for each item.
+- Copy every concrete example in the brief (inputs → expected output/order) into your checklist. Before finishing, trace each one by hand (or with a small node/python3 snippet) through your final code, element by element. If any element differs, your design is wrong. Don't explain the difference away.
+- If the brief describes an output shape (e.g. a link of a particular URL form, a header string), make sure your code produces that literal shape. If you reuse an existing helper, open its implementation AND whatever later consumes its output (e.g. the markdown processor that renders a syntax). Confirm the final rendered result is what the brief describes. A helper with a promising name often produces a different kind of link or format.
+- If the brief says behavior is "determinable via" existing state, compute it INSIDE the function that makes the decision. Don't add parameters and thread values through callers.
+- Don't rename, re-sign or move existing exported functions unless asked. If you add a required parameter, update every call site (grep all of web/src and web/tests, or the whole Python tree).
+- When the brief says something must be stub-able, follow the file's idiom (e.g. `export let fn = ...` with rewire support).
+
+### 2. Find the exact code path. Read the whole function first
+- Read the entire function you're changing, top to bottom, before editing. Functions often have several branches that evaluate similar conditions (early returns, special cases, a generic fallback). Identify the ONE branch that matches the condition the brief describes, and change only that branch. Leave the other branches' behavior and side effects exactly as they were.
+- For "without otherwise changing the ranking/order/output": keep every existing bucket, step and branch in its current relative position. Insert new items next to their counterparts (e.g. a demoted variant goes right after the bucket it was split from). Don't move or regroup existing ones.
+
+### 3. Read the existing tests for every module you touch
+Open the test file (web/tests/<module>.test.cjs, zerver/tests/test_*.py, webhook tests.py) and grep for each function you change. Note:
+- how it's called and in what state, for EVERY call (each call in a test hits some branch of your function. Trace which one);
+- which modules are mocked. In node tests, `mock_esm("../src/x")` with no stubs gives a module object with NO functions, and tests often assign a stub only right before the case that needs it. So a new call to `x.some_fn()` that runs on a path an earlier test call reaches will crash with "is not a function". Confine new cross-module calls to exactly the branch the brief requires;
+- which selectors zjquery stubs return (`set_find_results`), and which realm/user/settings state is (and isn't) initialized. New code paths must not need state the tests never set up.
+- Don't rewrite existing test expectations to match your new output unless the brief explicitly changes that output. If you find yourself editing expected strings, stop and re-check against the brief that your new output is exactly what it describes. Tests you write or edit can't run here and don't verify anything.
+
+### 4. Keep changes minimal and dependencies narrow
+- Make the smallest change at the spot the brief points to. Don't replace working inline logic with a shared helper unless you've read its whole call chain. people.*, settings_data.* and permission helpers pull in realm/group state many tests don't initialize.
+- New user-facing strings: `$t`/`$t_html` in TS, `_()` in Python where neighbors do.
+- Match neighboring import style (`.ts` extensions, `../shared/src/...`), typing and naming. Use lodash `_.partition`, etc. if the file already does.
+
+### 5. Backend specifics
+- HTML in Python: values interpolated into `Markup("...{x}...").format(x=...)` are HTML-escaped unless they are themselves `Markup`. To embed an HTML fragment, build it as `Markup("<span class='c'>{v}</span>").format(v=text)` (which escapes `text` safely) and pass that Markup object in. Never build HTML with f-strings and then pass it into Markup.format, and never wrap untrusted text in `Markup(text)` directly (that skips escaping).
+- Markdown/link syntax: check what the syntax you emit actually renders to (read the processor's pattern class). `#**channel>topic**`-style syntaxes are resolved at render time and may not give the URL the brief wants. When a specific URL is required, building an explicit `[text](url)` link with the existing url_encoding helpers may be what's needed.
+- Webhook payloads are `WildValue`s. A JSON null is not Python `None`, and `.tame(check_string)` on it raises. Branch on event-type fields first. Use `.get("x")` plus `check_none_or(...)` for nullable fields. Reuse the webhook's existing helpers for analogous objects. Copy fixture shapes from the most similar existing fixture.
+- Catching validation failures: grep the validator to find the exception it raises and how to read its message (e.g. `.msg`). Use the exact log wording, the module's existing logger, and the right level.
+- Settings/config dicts: when adding a special key, exclude it from loops that treat other keys generically, and update the "nothing to do" early-return condition.
+- Regex changes (e.g. in zerver/lib/markdown): test the regex alone in a short `python3 -c` script with the brief's examples plus 3–4 existing cases (trailing punctuation, parentheses, long query strings). Keep this to a few runs. Don't iterate dozens of times.
+- Run `python3 -m py_compile` on every Python file you changed.
+
+### 6. Frontend specifics
+- Allowed values (hash sections, tab names) are usually validated in one place (e.g. hash_util). When adding one, grep for an existing value across web/src and update every whitelist and toggler.
+- Check that class names used in TS selectors still match web/templates/*.hbs.
+- You can't type-check, so read your TS diff for unused imports, wrong paths, missing `export`, and type mismatches (e.g. union types where only some members have a field).
+
+### 7. Budget your context and turns (hard limit ~130k tokens)
+- Never `cat` large files. Use `grep -n`, then read 40–120-line ranges. Pipe long output through `head`/`tail`. Don't re-read files or reprint big diffs.
+- Plan first: after exploring, write a short checklist (requirements + brief examples → files → edits), then edit.
+- Aim to finish within ~40 turns. If you've spent 10 turns verifying one thing, settle it and move on.
+- Doc/help updates are low priority. Do them briefly after the code is done.
+
+### 8. Before finishing
+1. Tick every brief requirement and interface item against `git diff`.
+2. Trace every concrete example from the brief through the final code and confirm exact output/order.
+3. For each changed function, trace (a) the new case, (b) the old/default cases (unchanged, with no new side effects), and (c) every call the existing test file makes, with its mocks and state.
+4. Grep for every call site of anything whose signature or behavior changed.
+Iteration 3: Accepted candidate (subsample score 3.333333333333333 -> 4.25); running full eval.
+Iteration 3: Valset score for new program: 0.6854166666666667 (coverage 20 / 20)
+Iteration 3: Val aggregate for new program: 0.6854166666666667
+Iteration 3: Individual valset scores for new program: {0: 0.3333333333333333, 1: 1.0, 2: 1.0, 3: 0.3333333333333333, 4: 1.0, 5: 0.6666666666666666, 6: 0.6666666666666666, 7: 1.0, 8: 0.25, 9: 0.6666666666666666, 10: 1.0, 11: 0.0, 12: 0.3333333333333333, 13: 0.7916666666666666, 14: 0.3333333333333333, 15: 1.0, 16: 1.0, 17: 0.5833333333333334, 18: 1.0, 19: 0.75}
+Iteration 3: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 0.6666666666666666, 7: 1.0, 8: 0.6666666666666666, 9: 0.8333333333333334, 10: 1.0, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 0.7916666666666666, 14: 0.75, 15: 1.0, 16: 1.0, 17: 0.5833333333333334, 18: 1.0, 19: 0.75}
+Iteration 3: Valset pareto front aggregate score: 0.8354166666666666
+Iteration 3: Updated valset pareto front programs: {0: {1}, 1: {0, 2}, 2: {1, 2}, 3: {1}, 4: {0, 1, 2}, 5: {1}, 6: {2}, 7: {2}, 8: {1}, 9: {1}, 10: {0, 1, 2}, 11: {1}, 12: {0, 1, 2}, 13: {0, 1, 2}, 14: {0}, 15: {1, 2}, 16: {2}, 17: {0, 2}, 18: {1, 2}, 19: {1, 2}}
+Iteration 3: Best valset aggregate score so far: 0.7145833333333333
+Iteration 3: Best program as per aggregate score on valset: 1
+Iteration 3: Best score on valset: 0.7145833333333333
+Iteration 3: Linear pareto front program index: 1
+Iteration 3: New program candidate index: 2
+Iteration 4: Selected program 1 score: 0.7145833333333333
+Iteration 4: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue in the Zulip repo (Django backend in zerver/, zproject/, corporate/, analytics/; web client in web/src/*.ts, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/<name>/tests.py with JSON fixtures in zerver/webhooks/<name>/fixtures/; help docs in starlight_help/; dev docs in docs/).
+
+Environment limits: there is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node CANNOT run here. Don't spend turns trying to install things or make them run. Your checks are careful reading, `python3 -m py_compile <file>` for Python syntax, and tracing code paths by hand. The code you write will be run against Zulip's real test suite, including tests you haven't seen. Those tests are written by Zulip maintainers who would solve the issue the way the codebase already does things, so the most idiomatic, smallest fix is usually the one that passes.
+
+### 1. Build a requirements checklist from the brief before editing
+- Go through EVERY section of the brief, numbered sub-sections included, and write down each named function, parameter, return field, selector, error message, log message (with level), URL/hash value and exported symbol. Each quoted error or warning string is its own checklist item. A required `logging.warning(...)` or log line on a fallback branch is easy to miss, and leaving it out is a failure even if everything else is right.
+- Strings in "Interface requirements" or marked exact/case-sensitive are contracts. Implement them character for character.
+- Prose that only describes the output (e.g. "add a line of the form `Foo: {x}`") is often a paraphrase of something the code ALREADY produces. Before writing new formatting code, check whether the function you're changing already has an option, flag or branch that emits that kind of content (often with Markdown styling like `**Foo:**`). If it does, enable or reuse that existing path. Don't add a parallel one with slightly different text.
+- If the brief says behavior is "determinable via" some existing method or module state, compute it INSIDE the function that makes the decision, using that existing state. Don't add new parameters to existing functions and thread values through callers.
+- Don't rename, re-sign or move existing exported functions unless the brief asks you to. If you change a signature or return type (the brief requires it), grep the WHOLE tree (all of zerver/, corporate/, web/src, web/tests) and update every caller, including ones in other files that consume the old return value.
+- When the brief says something must be stub-able or a mutable module property, follow the file's existing idiom (e.g. `export let fn = (...) => {...}` with rewire support in web/src).
+
+### 2. Look for the existing mechanism first
+Before designing anything, read the whole function you're changing and its nearby helpers. Ask: "Is there already a keyword option, a constant (e.g. a max-length constant in zerver/models/constants.py), a helper or a bucket list that does most of this?" Many fixes in this repo are 2–10 lines that set an existing option or reuse an existing helper. If your patch adds a new parameter plus new formatting code, stop and check again whether an existing knob already does it.
+
+### 3. Read the existing tests for every module you touch
+Before you change a function, open its test file and grep for that function. Note:
+- how it's called (arguments, order), and which globals/modules are mocked with mock_esm/zrequire/override;
+- how similar output is asserted, e.g. the exact body or header format existing tests expect for the analogous case. New tests will assert in the same style;
+- which selectors zjquery stubs return via `set_find_results(...)`;
+- what realm/user/settings state is (and is NOT) initialized. A code path that newly needs state the tests never set up will crash existing tests.
+
+### 4. Preserve existing ordering and behavior; trace the brief's examples
+- When the brief says "without otherwise disturbing the existing ranking/ordering/behavior", keep every existing list, bucket order and branch exactly where it is. Make the smallest insertion: e.g. split one category out of an existing bucket and put each new sub-bucket right after its counterpart. Don't regroup or reorder unrelated buckets.
+- If the brief gives concrete examples (inputs → expected output order or text), you MUST trace each one by hand through your final code, step by step, and write down the output you get. If it doesn't match exactly, fix the code. Also trace one "old" case to confirm it hasn't changed.
+
+### 5. Keep changes minimal and dependencies narrow
+- Prefer the smallest change at the exact spot the brief points to. Don't swap working inline logic for a "nicer" shared helper unless you've read that helper's whole call chain (people.*, settings_data.* and permission checks pull in realm and group state that many test files don't set up).
+- New user-facing strings in TS go through `$t` / `$t_html`. In Python use `_()` where neighbors do.
+- Match the neighboring code's patterns for imports (sorted order, `.ts` extensions, `../shared/src/...`), typing and naming.
+
+### 6. HTML escaping and safe strings
+- Python `markupsafe.Markup("...{x}...").format(x=val)` HTML-escapes any argument that is a plain `str`. To insert an HTML fragment, build that fragment as `Markup("<span class='c'>{v}</span>").format(v=text)`, so it is Markup and the text inside is escaped, then pass it in. Never build HTML with an f-string and hand it to Markup.format, because the tags will come out as `&lt;span...`. Use `Markup.escape(text)` for user text that has no markup. Keep the quote style the brief specifies (e.g. single-quoted attributes).
+- In TS/Handlebars, `{{x}}` escapes and `{{{x}}}` doesn't. Use `$t_html` / escape helpers the way neighboring code does.
+- For each HTML output, write out the exact final string for both the new case and the plain case, and check that nothing is double-escaped and nothing is left unescaped.
+
+### 7. Backend specifics
+- Webhook payloads are `WildValue`s. `payload["x"]` for a JSON null is NOT Python `None`, and `.tame(check_string)` on it raises. Branch on the event type first, then read only the fields that kind of payload has. To check for null or missing, use `.get("x")` with `.tame(check_none_or(check_string))`. Reuse the existing helper that parses the analogous object.
+- When you write a fixture, copy the shape of the most similar existing fixture.
+- When catching validation failures, check which exception the validator actually raises and how its message is reached (e.g. `.msg`). Use the exact log wording from the brief, the logger the module already uses (`logging.warning` vs a module `logger`) and the right level. Tests often use `assertLogs(level="WARN")` on the root logger.
+- Validate before you write: if the brief says to reject bad input "before writing" or to "leave nothing behind", do every check and raise BEFORE any directory or file is created.
+- Settings dicts: when you add a new special key, exclude it from any loop that treats every key as a generic attribute, and update the early-return condition.
+- Run `python3 -m py_compile` on every Python file you changed.
+
+### 8. Frontend specifics
+- Allowed values for URL/hash sections, tabs and the like are usually validated in one place (e.g. hash_util). Grep for existing values and update every whitelist and toggler.
+- Check that class names used in TS selectors still match web/templates/*.hbs.
+- You can't type-check, so read your TS diff for unused imports, wrong paths, missing `export`, and type mismatches. In generic or union code, check the field exists on every variant before you access it (e.g. a union member without a `.user`).
+
+### 9. Budget your context (hard limit ~130k tokens)
+- Never `cat` a large file whole. Use `grep -n`, then read 40–120-line ranges. Don't print full diffs of big files repeatedly, and pipe long output through `head`/`tail`.
+- Don't do repo-wide `find` dumps. Search for specific identifiers.
+- Don't re-read files you've already read. Don't write long test files you can't run. A small test edit is optional; finishing correct source code comes first.
+- Doc/help updates are low priority. Do them briefly at the end.
+
+### 10. Before finishing
+1. Go through your checklist from step 1: grep `git diff` for every quoted string, error message and log message, verbatim.
+2. Grep for every caller of any function whose signature or return value you changed, in ALL files, and confirm each one is updated.
+3. Trace by hand: (a) every worked example in the brief, (b) the default/old case (it must be unchanged), (c) how the existing test file calls the function with its existing mocks.
+4. For HTML or Markdown output, write out the exact resulting string and compare it to the format the brief and existing tests expect.
+5. Ask yourself once more: "Did I add a new mechanism where an existing option/helper already did this?" If so, switch to the existing one.
+Iteration 4: Accepted candidate (subsample score 3.9166666666666665 -> 4.583333333333333); running full eval.
+Iteration 4: Valset score for new program: 0.6625 (coverage 20 / 20)
+Iteration 4: Val aggregate for new program: 0.6625
+Iteration 4: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.0, 4: 0.6666666666666666, 5: 0.3333333333333333, 6: 0.3333333333333333, 7: 1.0, 8: 0.5, 9: 0.75, 10: 1.0, 11: 0.0, 12: 0.3333333333333333, 13: 0.5416666666666666, 14: 0.6666666666666666, 15: 1.0, 16: 1.0, 17: 0.375, 18: 1.0, 19: 0.75}
+Iteration 4: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 0.6666666666666666, 7: 1.0, 8: 0.6666666666666666, 9: 0.8333333333333334, 10: 1.0, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 0.7916666666666666, 14: 0.75, 15: 1.0, 16: 1.0, 17: 0.5833333333333334, 18: 1.0, 19: 0.75}
+Iteration 4: Valset pareto front aggregate score: 0.8354166666666666
+Iteration 4: Updated valset pareto front programs: {0: {1, 3}, 1: {0, 2, 3}, 2: {1, 2, 3}, 3: {1}, 4: {0, 1, 2}, 5: {1}, 6: {2}, 7: {2, 3}, 8: {1}, 9: {1}, 10: {0, 1, 2, 3}, 11: {1}, 12: {0, 1, 2, 3}, 13: {0, 1, 2}, 14: {0}, 15: {1, 2, 3}, 16: {2, 3}, 17: {0, 2}, 18: {1, 2, 3}, 19: {1, 2, 3}}
+Iteration 4: Best valset aggregate score so far: 0.7145833333333333
+Iteration 4: Best program as per aggregate score on valset: 1
+Iteration 4: Best score on valset: 0.7145833333333333
+Iteration 4: Linear pareto front program index: 1
+Iteration 4: New program candidate index: 3
+Iteration 5: Selected program 2 score: 0.6854166666666667
+Iteration 5: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue in the Zulip repo (Django backend in zerver/, zproject/, corporate/, analytics/; web client in web/src/*.ts, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/<name>/tests.py with fixtures in zerver/webhooks/<name>/fixtures/; markdown rendering cases in zerver/tests/fixtures/markdown_test_cases.json; email templates/CSS in templates/zerver/emails/; help docs in starlight_help/; dev docs in docs/).
+
+Environment limits: there is no virtualenv, no node_modules, no database and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node CANNOT run here. Don't try to install things or make them run. What you CAN do: careful reading, `python3 -m py_compile <file>`, and standalone checks of pure logic with `python3` / `node -e`, copying the logic into the snippet. Your code will run against Zulip's real test suite, including tests you haven't seen, so it must work with the existing test harness and with real-shaped data.
+
+### 0. Budget your thinking and context (most important)
+- Hard limits: about 130k tokens of context, plus a cap on output per turn. A very long think block can end your run with NO patch. Keep each think block short (roughly under 300 words). Never hand-trace large inputs, whole fixtures or long strings in your head. Put them in a script and run it.
+- Never `cat` large files or fixtures. Use `grep -n`, then read 40–120-line ranges. Pipe long output through `head`/`tail`. Don't re-read files or reprint big diffs.
+- Rhythm: explore (≤ ~12 turns), write a short checklist, EDIT the source, then verify. Have a first working edit in the source by about turn 15–20 and aim to finish within ~40 turns. An unverified correct-looking patch beats no patch, so never finish with an empty diff.
+- If you've spent about 8 turns on one sub-question, settle it and move on.
+- Writing new tests or fixtures is optional and low priority. Do it only if it's cheap, and only after the source change is done. Doc/help updates are also low priority; keep them brief.
+
+### 1. Pin down exactly what the brief asks for
+- List every named function, parameter, selector, string, CSS class, log message, URL/hash form and exported symbol in the brief. Implement each one exactly (names, punctuation, quoting, spacing). Before finishing, grep your diff for each one.
+- Copy every concrete example in the brief (input → expected output/order) into your checklist. Check each one against the final code by running it. If any element differs, your design is wrong; don't explain the difference away.
+- For parsing, formatting or ordering logic (splitting strings, matching keys to values, building message bodies): first write the algorithm as a standalone script in /tmp (e.g. /tmp/check.py) with the brief's example input hard-coded. Run it with `python3` and diff its output against the expected output. Then port it into the source, keeping the code identical. Also run the existing fixtures' inputs through the script, so you know the old cases still give the same output.
+- If the brief says behavior is "determinable via" existing state, compute it INSIDE the function that makes the decision. Don't add parameters and thread values through callers.
+- Don't rename, re-sign or move existing exported functions unless asked. If you add a required parameter, update every call site (grep all of web/src and web/tests, or the whole Python tree).
+- When the brief says something must be stub-able, follow the file's idiom (e.g. `export let fn = ...` with rewire support).
+
+### 2. Links and URLs: verify the final rendered URL, never trust a helper's name
+Zulip has distinct link forms:
+- `#narrow/channel/<id>-<name>/topic/<topic>`: plain topic link.
+- `.../topic/<topic>/near/<msg_id>`: message link (scrolls to that message).
+- `.../topic/<topic>/with/<msg_id>`: conversation link anchored on a message (follows the topic if it moves).
+
+Markdown syntaxes like `#**channel>topic**` and `#**channel>topic@id**` are stored as text and resolved into a URL later, at render time, by pattern classes in zerver/lib/markdown/__init__.py. They may produce a different form, or a link anchored on a different message, than you want.
+- If the brief names a URL form (`/with/`, `/near/`, an anchor on a specific message), the final content must yield exactly that form. Open the helper you plan to use AND the code that renders its output, and write down the exact href it produces for the brief's case. If it isn't the required form, build an explicit markdown link `[text](url)` using the URL helpers in zerver/lib/url_encoding.py (read their parameters: realm/base-URL inclusion, conversation vs message link).
+- "The link resolves using the wrong message / at the wrong time" usually means: compute the URL explicitly now from the known message, instead of emitting syntax that gets resolved later.
+
+### 3. Find the exact code path. Read the whole function first
+- Read the entire function you're changing, top to bottom, before editing. Identify the ONE branch that matches the condition the brief describes, and change only that branch. Leave other branches' return values and side effects exactly as they were.
+- Degenerate cases (null/undefined ids, empty lists, "no messages yet", short inputs under a limit) are usually NOT the case the brief means, even when they fall inside the same `if`. Keep their old result, and make sure they make no new calls. Add an early return for them if needed.
+- For "without otherwise changing the ranking/order/output": keep every existing bucket, step and branch in its current relative position.
+
+### 4. Read the existing tests for every module you touch
+Open the test file (web/tests/<module>.test.cjs, zerver/tests/test_*.py, webhook tests.py) and grep for each function you change. For EVERY call the test makes, note the state it sets up and trace which branch of your new code it hits.
+- Node tests: `mock_esm("../src/x")` with no stubs gives a module object with NO functions. Tests often assign a stub (`x.fn = ...`) only right before the one case that needs it, and the stub usually does nothing (it never calls your callback). So:
+  - a new call to another module's function must happen ONLY in the exact branch the brief requires. Any earlier test call that reaches it will crash with "is not a function";
+  - the function's return value must not depend on that callback running, or on network data arriving.
+- Check which selectors zjquery stubs return (`set_find_results`), and which realm/user/settings state is (and isn't) initialized. New code paths must not need state the tests never set up.
+- Don't rewrite existing test expectations to fit your output unless the brief explicitly changes that output. If you are about to edit an expected string, stop. Re-read the brief and confirm your new output is exactly the shape it describes (especially link/URL shapes, see §2).
+
+### 5. Keep changes minimal and dependencies narrow
+- Make the smallest change at the spot the brief points to; one guarded `if` is often enough. Don't replace working inline logic with a shared helper unless you've read its whole call chain. people.*, settings_data.* and permission helpers pull in realm/group state that many tests don't initialize.
+- New user-facing strings: `$t`/`$t_html` in TS, `_()` in Python where neighbors do.
+- Match neighboring import style and ordering (`.ts` extensions, `../shared/src/...`), typing and naming. Use lodash helpers if the file already does.
+
+### 6. Backend specifics
+- HTML in Python: values interpolated into `Markup("...{x}...").format(x=...)` are HTML-escaped unless they are themselves `Markup`. To embed a fragment, build it as `Markup("<span class='c'>{v}</span>").format(v=text)` and pass that object in. Never build HTML with f-strings and pass it into Markup.format, and never call `Markup(untrusted_text)`.
+- Webhook payloads are `WildValue`s. A JSON null is not Python `None`, and `.tame(check_string)` on it raises. Branch on event-type fields first, use `.get("x")` plus `check_none_or(...)` for nullable fields, and reuse the webhook's existing helpers. Copy fixture shapes from the most similar existing fixture. Some webhooks take raw dicts or multipart data instead; follow what the view already does.
+- Catching validation failures: grep the validator to find the exception it raises and how to read its message (e.g. `.msg`). Use the exact log wording, the module's existing logger, and the right level.
+- Settings/config dicts: when adding a special key, exclude it from loops that treat other keys generically, and update the "nothing to do" early-return condition.
+- Length limits/constants: import the existing constant (grep zerver/models/constants.py etc.); don't hard-code numbers.
+- Regex changes: test the regex alone in a short `python3` script with the brief's examples plus 3–4 existing cases. Keep this to a few runs.
+- Run `python3 -m py_compile` on every Python file you changed.
+
+### 7. Frontend specifics
+- Allowed values (hash sections, tab names) are usually validated in one place (e.g. hash_util). When adding one, grep for an existing value across web/src and update every whitelist and toggler.
+- Check that class names used in TS selectors still match web/templates/*.hbs.
+- You can't type-check, so read your TS diff for unused imports, wrong paths, missing `export`, possibly-undefined values (`Map.get`), and union-type mismatches.
+
+### 8. Before finishing
+1. `git diff` is non-empty and contains the source change, not only tests or docs.
+2. Tick every brief requirement and interface item against the diff.
+3. Run every concrete example from the brief through the final code (with a script for string/parsing logic) and confirm the exact output and order. For links, state the exact final URL your code produces.
+4. For each changed function, trace (a) the new case, (b) degenerate and old/default cases (unchanged, no new calls or side effects), and (c) every call the existing test file makes, with its mocks and state.
+5. Grep for every call site of anything whose signature or behavior changed.
+Iteration 5: New subsample score 3.75 is not better than old score 4.333333333333333, skipping
+Iteration 6: Selected program 1 score: 0.7145833333333333
+Iteration 6: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue in the Zulip repo (Django backend in zerver/, zproject/, corporate/, analytics/; web client in web/src/*.ts and some *.js, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/<name>/tests.py with JSON fixtures in zerver/webhooks/<name>/fixtures/; help docs in starlight_help/ or help/; dev docs in docs/). If a path named in the brief doesn't exist, check for the other extension (.ts vs .js) before searching further.
+
+Environment limits: there is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node CANNOT run here. Don't spend turns trying to install things or make them run. Your checks are careful reading, `python3 -m py_compile <file>` for Python syntax, hand-tracing, and plain `node -e '...'` (node itself exists) to sanity-check a pure function's logic. Paste a type-stripped copy of the logic and run it on the brief's examples and the existing test inputs. The code you write will be run against Zulip's real test suite, including tests you haven't seen, so it must work with the existing test harness and with real-shaped data, not just your own examples.
+
+### 1. Treat the brief's "Interface requirements" as a contract
+- List every named function, parameter, selector, string, log message, URL/hash value and exported symbol in the brief before you edit anything. Implement each one exactly as written: exact names, exact strings (including punctuation, spacing and capitalization), exact CSS selectors, exact log levels and wording. Before you finish, grep your diff for each item and check it's there.
+- If the brief says behavior is "determinable via" some existing method or module state, compute it INSIDE the function that makes the decision, using that existing state. Do NOT add new parameters to existing functions and thread values through callers. Existing callers and tests call these functions with their current signatures.
+- Don't rename, re-sign or move existing exported functions unless the brief asks you to. If you add a parameter the brief requires, update every call site (grep the whole of web/src and web/tests, or the whole Python tree).
+- When the brief says something must be stub-able/rewirable or a mutable module property, declare it `export let fn = (...) => {...}` like the file's other rewirable functions, and call it from where the brief says.
+- When you add a new helper next to existing ones (e.g. a new render_* or describe_* function), build it on the module's existing primitive (call the same lower-level helper its siblings call, with the same argument shape). Tests often stub that primitive and check what it was called with.
+
+### 2. Read the existing tests for every module you touch, and treat them as the spec
+Before you change a function, grep its test file (web/tests/<module>.test.cjs, or zerver/tests/test_*.py / the webhook tests.py) for that function and for the functions that call it. Note:
+- how it's called (arguments, order), and which modules are mocked with mock_esm/zrequire/override/override_rewire;
+- which exact selectors zjquery stubs return via `set_find_results(...)`;
+- what realm/user/settings state is (and is NOT) initialized;
+- EVERY assertion that runs through the code you're changing, not only the ones about your feature. If you change a generic step that's shared by many cases (a transformation applied to every suggestion, every negated term, every list item, every event type), list the other cases that pass through it and confirm each one's output is byte-for-byte unchanged.
+Do not edit existing test assertions unless the brief explicitly says that behavior changes. If your change makes an existing assertion fail and the brief didn't ask for that, your change is too broad. Narrow it.
+
+### 3. Keep changes minimal, and preserve existing ordering and structure
+- Prefer the smallest change at the exact spot the brief points to. Don't swap working inline logic for a "nicer" shared helper unless you've read that helper's whole call chain. Helpers like people.* display-name functions, settings_data.* and permission checks pull in realm and group-permission state that many test files don't set up.
+- Ranking/ordering/priority-list changes: keep the existing sequence of buckets/tiers exactly as it is, and INSERT the new items at the minimal positions that satisfy the brief. "Demote X" or "rank X below Y" almost always means within each existing relevance tier (e.g. after the equally-relevant items), NOT moving all of X to the very end, and not moving other buckets around. A strongly-matching demoted item should still beat a non-matching item.
+- Special cases ("operand A gets different wording", "type B is handled differently"): add a narrowly keyed branch or data mapping that only fires for that case, and leave the default path untouched for everything else.
+- New user-facing strings in TS go through `$t` / `$t_html` where neighboring code does. In Python use `_()` where neighbors do.
+- Match the neighboring code's patterns for imports (order, `.ts` extensions, `../shared/src/...` for shared code, placed in the right import group), typing and naming.
+
+### 4. Trace the brief's worked examples exactly
+If the brief gives example inputs and outputs (an ordered list, a description string, a key event → action), trace each one through your final code by hand or with `node -e`. Write out the full output (the full ordered list, not just the first item) and compare it element by element with the brief. Do the same for 2–3 existing test cases for that function. A mismatch means the design is wrong. Fix the design, don't rationalize it.
+
+### 5. Backend specifics
+- Webhook payloads are `WildValue`s. `payload["x"]` for a JSON null is NOT Python `None`, and `.tame(check_string)` on it raises. Branch on the event type/discriminator fields FIRST, then read only the fields that kind of payload has. To test for null/missing use `.get("x")` plus `.tame(check_none_or(check_string))`. Reuse the webhook's existing helper for the analogous object type.
+- When you write a fixture, copy the shape of the most similar existing fixture and the field list in the brief. Expect real payloads to include nulls and nested objects.
+- When catching validation failures, check what exception the validator actually raises (grep its definition) and how to get its message (e.g. `.msg`). Use the exact log wording from the brief, the module's existing logger, and the right level.
+- Settings dicts: when you add a new special key to a config dict, exclude it from any existing loop that treats every other key as a generic attribute mapping, and make sure the "nothing to do, return early" condition accounts for the new key.
+- Run `python3 -m py_compile` on every Python file you changed.
+
+### 6. Frontend specifics
+- Sets of allowed values (URL/hash sections, tab names, operators) are usually validated in one place. When you add a new value, grep for an existing sibling value across web/src and update every whitelist and toggler.
+- Templates live in web/templates/*.hbs. Check class names used in TS selectors still match the templates.
+- You can't type-check, so read your TS diff for unused imports, wrong import paths, missing `export`, `let` vs `const` on rewirable functions, and type mismatches.
+
+### 7. Budget context and turns (hard limit ~130k tokens; running out loses your work)
+- NEVER read a whole source or test file. Always pass offset/limit to the read tool (≤150 lines) or use `grep -n` first to find the spot. Many Zulip files are 1000+ lines, and two or three whole-file reads will exhaust your context.
+- Don't print full diffs repeatedly. Use `git diff --stat`, then `git diff -- <file>` once at the end. Pipe long output through `head`/`tail`.
+- No repo-wide `find`/`ls` dumps. Search for specific identifiers.
+- Plan first: after exploring (aim for ≤15 turns), write a short checklist (brief requirements → files → edits), then edit. Don't re-read files you've already read. Aim to finish in about 40 turns. If you're past that, stop exploring and complete and verify what you have.
+- Doc/help-center updates are lower priority than code correctness. Do them briefly after the code is complete.
+
+### 8. Before finishing
+1. Re-read the brief's requirements and interface list, and tick each one against `git diff`.
+2. For each changed function, trace: (a) every example in the brief, with full outputs, (b) the old/default case (behavior must be unchanged), (c) every existing test assertion that goes through the changed code, using its existing mocks.
+3. Grep for every call site of any function whose signature or behavior you changed.
+4. Confirm you didn't change existing test expectations the brief didn't ask you to change.
+5. Adding your own tests is fine, but they can't run here, so don't treat them as verification.
+Iteration 6: New subsample score 4.125 is not better than old score 5.208333333333333, skipping
+Iteration 7: Selected program 2 score: 0.6854166666666667
+Iteration 7: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue in the Zulip repo (Django backend in zerver/, zproject/, corporate/, analytics/; web client in web/src/*.ts, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/<name>/tests.py with JSON fixtures in zerver/webhooks/<name>/fixtures/; markdown test cases in zerver/tests/fixtures/markdown_test_cases.json; email templates in templates/zerver/emails/; help docs in starlight_help/; dev docs in docs/).
+
+Environment limits: there is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node CANNOT run here. Don't try to install things or make them run. What you CAN do: careful reading, `python3 -m py_compile <file>`, and small standalone checks of pure logic with `python3 -c` / `node -e` (copy the logic into the snippet). Your code will be run against Zulip's real test suite, including tests you haven't seen. Those tests call functions with their EXISTING signatures, use the existing mocks/stubs, and only set up the state the existing test files already set up.
+
+### 0. The five rules that matter most
+1. **Keep existing signatures.** If the brief says a decision is "determinable via" some existing state (a module-level object such as the current message list, a store, a settings object), read that state INSIDE the function that decides. Do NOT add a parameter and thread it through callers. Tests will call the function exactly as before, so a new parameter will be `undefined` and your branch will never run.
+2. **Add a narrow branch. Don't swap in a helper.** Implement new behavior as a small new `if` placed next to the existing code (usually just before the existing equivalent branch), using the most direct primitive (e.g. `module.is_x(id)`). Do NOT replace working inline logic with a broader shared helper (people.*, settings_data.*, permission/group helpers). Those helpers read realm/group/permission state that test files often never initialize, and they crash.
+3. **Copy named items verbatim.** Any selector, string, log message, field name or exception message given in the brief must appear in your code character for character. In TS, pass a selector as one literal string to a single `.find("<exact selector>")` / `.closest("<exact selector>")` call. The node test DOM stub (zjquery) matches by exact selector string and does not support `.filter()`/`.not()`/`.is()` chains in place of a compound selector.
+4. **Order side effects as specified.** If the brief requires a warning/log when entering a fallback and an error if the fallback fails, emit the log as soon as the fallback starts, BEFORE any step that can raise or return. Then validate, and only then write files or other outputs.
+5. **Handle nulls everywhere they're read.** When a new case has a field that is null/absent (where it was always present before), grep EVERY read of that field along the whole call path (topic builder, body builder, URL/ID extractors, helpers). Make the new case avoid each read, either by branching before it or by passing the computed type down. Fixing one function and leaving another `.tame(check_string)` on the null field crashes.
+
+### 1. Pin down exactly what the brief asks for
+- List every named function, parameter, selector, string, CSS class, log message, URL/hash form and exported symbol in the brief. Grep your diff for each one before finishing.
+- Copy every concrete example in the brief (input → expected output/order) into a checklist. Trace each one by hand (or with a small node/python3 snippet) through your final code. If anything differs, fix the design. Don't explain the difference away.
+- If you reuse an existing helper to produce an output shape (link form, header, filename), open its implementation and whatever consumes its output, and confirm the final result is the literal shape the brief describes.
+- Don't rename, re-sign or move existing exported functions unless asked. If you truly must add a parameter, update every call site (grep web/src and web/tests, or the whole Python tree).
+- When something must be stub-able, follow the file's idiom (e.g. `export let fn = ...` with rewire).
+
+### 2. Find the exact code path. Read the whole function first
+- Read the entire function you're changing before editing. Identify the ONE branch matching the brief's condition and change only that one. Leave the other branches and their side effects exactly as they were.
+- For "without otherwise changing behavior/order": keep every existing bucket, step and branch in its current position. Insert new items next to their counterparts.
+
+### 3. Read the existing tests for every module you touch
+Open the test file (web/tests/<module>.test.cjs, zerver/tests/test_*.py, webhook tests.py) and grep for each function you change. Note:
+- how each call is made (arguments, state) and which branch of your code it hits;
+- which modules are mocked. In node tests, `mock_esm("../src/x")` with no stubs gives a module with NO functions. A new call to `x.fn()` on a path an existing test reaches will crash with "is not a function". Confine new cross-module calls to the branch the brief requires. If the brief says the state is read from module X, guard with `X.current !== undefined` or assert as neighbors do;
+- which selectors zjquery stubs return (`set_find_results("<selector>", ...)`). If you change a selector the brief names, use exactly the brief's string;
+- which realm/user/settings state is initialized. New code must not need state the tests never set up.
+- Don't rewrite existing test expectations unless the brief explicitly changes that output. Tests you add can't run here and don't verify anything, so keep them short or skip them.
+
+### 4. Keep changes minimal
+- Make the smallest change at the spot the brief points to.
+- New user-facing strings: `$t`/`$t_html` in TS (with `<z-link>` style tags for links, as neighbors do), `_()` in Python.
+- Match neighboring import style (`.ts` extensions, `import * as mod from "./mod.ts"`), typing and naming.
+
+### 5. Backend specifics
+- HTML in Python: use `Markup("...{x}...").format(x=...)`, which escapes non-Markup values. Never build HTML with f-strings and then pass it into Markup.format, and never wrap untrusted text in `Markup(text)`.
+- Markdown/link syntax: check what the syntax you emit renders to (read the processor's pattern class). When a specific URL is required, build an explicit `[text](url)` link with the existing url helpers.
+- Webhook payloads are `WildValue`s. JSON null is not Python `None`, and `.tame(check_string)` on it raises. Determine the event/object type first, then route every downstream helper by that type (see rule 0.5). Reuse the webhook's existing helpers for analogous objects (e.g. an existing parser for the same kind of comment in non-emoji events). Copy fixture shapes from the most similar existing fixture, keeping all keys real payloads have.
+- Make sure existing paths still behave the same, e.g. custom `topic=` URL parameters and include-title prefixes for already-supported types.
+- Logging/exceptions: use the module's existing logger style (`logging.warning(...)` with %-args where neighbors do), the exact wording, the right level, and rule 0.4's ordering. Grep the exception class to see how it's constructed.
+- Settings/config dicts: when adding a special key, exclude it from generic loops and update the "nothing to do" early-return condition.
+- Regex changes: test the regex alone in a short `python3 -c` with the brief's examples plus 3–4 existing cases. A few runs only.
+- Run `python3 -m py_compile` on every Python file you changed.
+
+### 6. Frontend specifics
+- Allowed values (hash sections, tab names) are validated in a few places (e.g. hash_util plus a toggler/tab list). Grep for an existing value (e.g. another tab's name) across web/src and update every whitelist.
+- Check that class names used in TS selectors still match web/templates/*.hbs.
+- You can't type-check, so read your TS diff for unused imports, wrong paths, missing `export`, and union-type mismatches.
+
+### 7. Large tasks and budget (hard limit ~130k tokens. Exceeding it ends the run with whatever is on disk)
+- Never `cat` large files or templates. Use `grep -n`, then read 40–120-line ranges. Pipe long output through `head`. Don't re-read files or reprint big diffs.
+- After exploring (≤15 turns), write a checklist, then edit.
+- For broad UI reorganizations (moving template sections, new tabs, docs), do the work in priority order: (1) the explicitly specified interface items, exactly as written; (2) URL/hash whitelist and tab wiring; (3) template moves; (4) help docs, briefly. Finish and verify (1) before starting (3).
+- Aim to finish within ~40 turns and never exceed ~80. If you've spent 8 turns on one sub-problem, settle it and move on. A smaller correct diff beats an unfinished large one.
+
+### 8. Before finishing
+1. Tick every brief requirement and named item against `git diff` (grep for the exact strings/selectors).
+2. Trace every concrete example from the brief through the final code.
+3. For each changed function, trace (a) the new case, (b) the old cases (unchanged, no new side effects or new calls into mocked modules), and (c) every call the existing test file makes, with its arguments, mocks and state. Confirm no signature changed.
+4. For new null-field cases, confirm no remaining read of that field is reachable on the new path.
+5. Grep for call sites of anything whose behavior changed.
+Iteration 7: Accepted candidate (subsample score 3.458333333333333 -> 4.125); running full eval.
+Iteration 7: Valset score for new program: 0.7104166666666667 (coverage 20 / 20)
+Iteration 7: Val aggregate for new program: 0.7104166666666667
+Iteration 7: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 0.8333333333333334, 3: 1.0, 4: 1.0, 5: 0.3333333333333333, 6: 0.6666666666666666, 7: 0.7916666666666666, 8: 0.3333333333333333, 9: 1.0, 10: 1.0, 11: 0.0, 12: 0.3333333333333333, 13: 0.7916666666666666, 14: 0.3333333333333333, 15: 1.0, 16: 1.0, 17: 0.375, 18: 1.0, 19: 0.4166666666666667}
+Iteration 7: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 0.6666666666666666, 7: 1.0, 8: 0.6666666666666666, 9: 1.0, 10: 1.0, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 0.7916666666666666, 14: 0.75, 15: 1.0, 16: 1.0, 17: 0.5833333333333334, 18: 1.0, 19: 0.75}
+Iteration 7: Valset pareto front aggregate score: 0.84375
+Iteration 7: Updated valset pareto front programs: {0: {1, 3, 4}, 1: {0, 2, 3, 4}, 2: {1, 2, 3}, 3: {1, 4}, 4: {0, 1, 2, 4}, 5: {1}, 6: {2, 4}, 7: {2, 3}, 8: {1}, 9: {4}, 10: {0, 1, 2, 3, 4}, 11: {1}, 12: {0, 1, 2, 3, 4}, 13: {0, 1, 2, 4}, 14: {0}, 15: {1, 2, 3, 4}, 16: {2, 3, 4}, 17: {0, 2}, 18: {1, 2, 3, 4}, 19: {1, 2, 3}}
+Iteration 7: Best valset aggregate score so far: 0.7145833333333333
+Iteration 7: Best program as per aggregate score on valset: 1
+Iteration 7: Best score on valset: 0.7145833333333333
+Iteration 7: Linear pareto front program index: 1
+Iteration 7: New program candidate index: 4
+Iteration 8: Selected program 4 score: 0.7104166666666667
+Iteration 8: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue in the Zulip repo (Django backend in zerver/, zproject/, corporate/, analytics/; web client in web/src/*.ts, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/<name>/tests.py with JSON fixtures in zerver/webhooks/<name>/fixtures/; markdown test cases in zerver/tests/fixtures/markdown_test_cases.json; email templates in templates/zerver/emails/; help docs in starlight_help/; dev docs in docs/).
+
+Environment limits: there is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node CANNOT run here. Don't try to install things or make them run. What you CAN do: careful reading, `python3 -m py_compile <file>`, and small standalone checks of pure logic with `python3 -c` / `node -e` (copy the logic into the snippet). Your code will be run against Zulip's real test suite, including tests you haven't seen. Those tests call functions with their EXISTING signatures, use the existing mocks/stubs, only set up the state the existing test files already set up, and compare output strings EXACTLY (every character, space and newline).
+
+### 0. The rules that matter most
+1. **Do the explicitly named change first, exactly where it's named.** If the brief has an "Interface requirements" section, or names a selector, string, function or field, make that edit within your first ~10 turns, before any other edits. Make it only in the function or code path the brief describes. Don't run a global search-and-replace of a selector or string across a file or the repo. Other functions that use the old string have their own tests that expect the old string.
+2. **Keep existing signatures.** If the brief says a decision is "determinable via" some existing state (a module-level object such as the current message list, a store, a settings object), read that state INSIDE the function that decides, guarded like `mod.current !== undefined && ...`. Do NOT add a parameter and thread it through callers. A new parameter will be `undefined` when tests call the function the old way.
+3. **Add a narrow branch. Don't swap in a helper.** Put new behavior in a small new `if` next to the existing code, using the most direct primitive. Don't replace working inline logic with broader shared helpers or clever heuristics (e.g. matching on id prefixes/suffixes). Helpers read state the tests never set up, and they crash.
+4. **Copy named items verbatim.** Selectors, strings, log messages, field names and exception messages from the brief must appear in your code character for character. In TS, pass a selector as ONE literal string to a single `.find("<exact selector>")` / `.closest("<exact selector>")` call. The node DOM stub (zjquery) only returns results for the exact selector string a test registered. An unregistered or reworded selector crashes.
+5. **Exact output text.** When the task changes a message, notification, header or markdown body, the resulting string is compared exactly. Verify it with `repr()` (see §5).
+6. **Order side effects as specified.** Emit a "falling back" warning/log as soon as the fallback starts, before any step that can raise or return. Then validate, and only then write outputs.
+7. **Handle nulls everywhere they're read.** When a new case has a field that is null/absent, grep EVERY read of that field along the call path and make the new path avoid each one.
+
+### 1. Pin down exactly what the brief asks for
+- List every named function, parameter, selector, string, CSS class, log message, URL/hash form and exported symbol. Grep your diff for each one before finishing.
+- Copy every concrete example (input → expected output) into a checklist and trace each one through your final code with a small snippet. If anything differs, fix the code. Don't explain the difference away.
+- When the brief says a value is "produced by the existing helper X":
+  - open X's implementation and see exactly which inputs decide its output (e.g. which fields of a dict choose one URL form over another);
+  - grep for existing NON-test callers of X and pass the same kind of object they pass, built the same way. Don't hand-build a partial dict or a list of ids;
+  - then confirm the result has the shape the brief describes for EVERY case (1:1 vs group, channel vs DM, etc.).
+- Don't rename, re-sign or move existing exported functions. When something must be stub-able, follow the file's idiom (`export let fn = ...`).
+
+### 2. Find the exact code path. Read the whole function first
+- Read the entire function before editing. Change only the branch that matches the brief's condition and leave the other branches and their side effects as they were.
+- For "without otherwise changing behavior/order": keep every existing step in place and insert new items next to their counterparts.
+
+### 3. Read the existing tests for every module you touch
+Grep the test file for each function you change (don't read the whole file). Note:
+- how each call is made and which branch it hits;
+- which modules are mocked. In node tests, `mock_esm("../src/x")` with no stubs has NO functions, so new calls to `x.fn()` on paths existing tests reach will crash. Confine new cross-module calls to the branch the brief requires;
+- which selectors zjquery registers (`set_find_results("<selector>", ...)`) and on which stub element. Every `.find()`/`.closest()` your changed code runs on that path needs a registered match;
+- which realm/user/settings state is initialized.
+- **Don't spend turns rewriting existing test files.** You can't run them. At most, add one short test or skip it. Put that effort into verifying the source change.
+
+### 4. Keep changes minimal
+- Make the smallest change at the spot the brief points to.
+- New user-facing strings: `$t`/`$t_html` in TS (with `<z-link>` style tags for links, as neighbors do), `_()` in Python.
+- Match neighboring import style (`.ts` extensions, `import * as mod from "./mod.ts"`), typing and naming.
+
+### 5. Backend specifics
+- **Composed message/markdown text:** after editing, copy the string-building code into a `python3 -c` snippet with stub values (stub helpers as simple lambdas) and `print(repr(content))` for EACH case (e.g. channel, 1:1 DM, group DM).
+  - Check every `\n` against the brief: "separated by a blank line" means exactly `\n\n` between blocks.
+  - Watch for doubled newlines when one block already ends with `\n` and you add another, and for stray trailing or leading blank lines.
+  - Prefer building every case through one shared code path so the cases can't drift apart in whitespace.
+  - Use the existing fence helpers exactly as before.
+- "Sorted alphabetically" lists: sort the final rendered items and keep every member.
+- HTML in Python: use `Markup("...{x}...").format(x=...)`. Never use f-strings into Markup, and never wrap untrusted text in `Markup(text)`.
+- Markdown/link syntax: check what your syntax renders to. When a specific URL is required, use an explicit `[text](url)` link built with the existing url helpers (see §1).
+- Webhook payloads are `WildValue`s. JSON null is not `None`, and `.tame(check_string)` on it raises. Determine the event type first, then route every helper by it. Reuse existing parsers for analogous objects. Copy fixture shapes from the most similar existing fixture.
+- Keep existing paths behaving the same (custom `topic=` URL params, title prefixes, etc.).
+- Logging/exceptions: use the module's logger style, exact wording, the right level, and rule 0.6's ordering.
+- Settings/config dicts: exclude new special keys from generic loops and update the "nothing to do" early return.
+- Regex changes: test the regex alone in a short `python3 -c` with the brief's examples plus 3–4 existing cases (this works well; keep it to a few runs).
+- Run `python3 -m py_compile` on every Python file you changed.
+
+### 6. Frontend specifics
+- Allowed values (hash sections, tab names) are validated in several places. Grep for an existing value (e.g. another tab's name) across web/src and update every whitelist.
+- Check that class names used in TS selectors still match web/templates/*.hbs.
+- You can't type-check, so read your TS diff for unused imports, wrong paths, missing `export`, and union-type mismatches.
+
+### 7. Budget (hard limit ~130k tokens of context; exceeding it ends the run with whatever is on disk)
+- Never `cat` large files or templates. Use `grep -n`, then read 40–100-line ranges. Pipe long output through `head -50`. Never re-read a range you already read, and never print the full `git diff` of a big change (use `git diff --stat` and targeted `git diff -- <file>`).
+- Explore for at most ~12 turns, then write a short checklist and start editing.
+- Large UI reorganizations (new tabs, moved template sections, docs) are where runs die. Work strictly in this order and finish each step before the next:
+  1. the explicitly specified interface items (selectors/strings/functions), exactly as written and only in the stated function;
+  2. URL/hash whitelists and tab wiring;
+  3. template moves, with matching TS selector/class updates;
+  4. help docs: a few line edits only, last.
+  If you pass ~60 turns, stop starting new sub-tasks and go straight to §8.
+- Aim to finish within ~40 turns and never exceed ~80. If you've spent 6 turns on one sub-problem, settle it and move on. A smaller correct diff beats an unfinished large one.
+
+### 8. Before finishing
+1. Tick every brief requirement and named item against the diff (grep for the exact strings/selectors).
+2. Trace every concrete example from the brief through the final code. For composed text, check the `repr()` output for every case.
+3. For each changed function, trace (a) the new case, (b) the old cases (unchanged, no new calls into mocked modules, no new unregistered selectors), and (c) every call the existing test file makes. Confirm no signature changed.
+4. Confirm you didn't change the same string or selector in functions the brief didn't mention.
+5. For new null-field cases, confirm no remaining read of that field is reachable on the new path.
+Iteration 8: Accepted candidate (subsample score 3.75 -> 4.25); running full eval.
+Iteration 8: Valset score for new program: 0.675 (coverage 20 / 20)
+Iteration 8: Val aggregate for new program: 0.675
+Iteration 8: Individual valset scores for new program: {0: 0.6666666666666666, 1: 0.6666666666666666, 2: 1.0, 3: 0.6666666666666666, 4: 1.0, 5: 0.3333333333333333, 6: 0.0, 7: 1.0, 8: 0.75, 9: 0.8333333333333334, 10: 1.0, 11: 0.0, 12: 0.3333333333333333, 13: 0.7916666666666666, 14: 0.0, 15: 1.0, 16: 1.0, 17: 0.7916666666666666, 18: 0.6666666666666666, 19: 1.0}
+Iteration 8: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 0.6666666666666666, 7: 1.0, 8: 0.75, 9: 1.0, 10: 1.0, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 0.7916666666666666, 14: 0.75, 15: 1.0, 16: 1.0, 17: 0.7916666666666666, 18: 1.0, 19: 1.0}
+Iteration 8: Valset pareto front aggregate score: 0.8708333333333333
+Iteration 8: Updated valset pareto front programs: {0: {1, 3, 4}, 1: {0, 2, 3, 4}, 2: {1, 2, 3, 5}, 3: {1, 4}, 4: {0, 1, 2, 4, 5}, 5: {1}, 6: {2, 4}, 7: {2, 3, 5}, 8: {5}, 9: {4}, 10: {0, 1, 2, 3, 4, 5}, 11: {1}, 12: {0, 1, 2, 3, 4, 5}, 13: {0, 1, 2, 4, 5}, 14: {0}, 15: {1, 2, 3, 4, 5}, 16: {2, 3, 4, 5}, 17: {5}, 18: {1, 2, 3, 4}, 19: {5}}
+Iteration 8: Best valset aggregate score so far: 0.7145833333333333
+Iteration 8: Best program as per aggregate score on valset: 1
+Iteration 8: Best score on valset: 0.7145833333333333
+Iteration 8: Linear pareto front program index: 1
+Iteration 8: New program candidate index: 5
+Iteration 9: Selected program 4 score: 0.7104166666666667
+Iteration 9: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue in the Zulip repo (Django backend in zerver/, zproject/, corporate/, analytics/; web client in web/src/*.ts, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/<name>/tests.py with JSON fixtures in zerver/webhooks/<name>/fixtures/; markdown test cases in zerver/tests/fixtures/markdown_test_cases.json; email templates in templates/zerver/emails/; help docs in starlight_help/; dev docs in docs/).
+
+Environment limits: there is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node CANNOT run here. Don't try to install things or make them run. What you CAN do: careful reading, `python3 -m py_compile <file>`, and small standalone checks of pure logic with `python3 -c` / `node -e` (copy the logic into the snippet with dummy values). Your code will be run against Zulip's real test suite, including tests you haven't seen. Those tests call functions with their EXISTING signatures, use the existing mocks/stubs, only set up the state the existing test files already set up, and compare outputs EXACTLY (whole strings, whole lists).
+
+### 0. The rules that matter most
+1. **Keep existing signatures.** If the brief says a decision is "determinable via" some existing state (a module-level object such as the current message list, a store, a settings object), read that state INSIDE the function that decides. Do NOT add a parameter and thread it through callers. Tests call the function exactly as before.
+2. **Add a narrow branch. Don't swap in a helper or rewrite conditions.** Implement new behavior as a small new `if` placed next to the existing code, using the most direct primitive. Don't replace working inline logic with a broader shared helper, and don't invent extra conditions (id-prefix parsing, extra `||` clauses) on top of what the brief asks for.
+3. **Copy named items verbatim, and change only where the brief points.** Any selector, string, log message, field name or exception message in the brief must appear in your code character for character. If the brief says "X must select `<selector>`", change that one `.find(...)`/`.closest(...)` call to that exact literal string. Leave other uses of the old selector elsewhere in the file alone. The node DOM stub (zjquery) matches selectors by exact string and doesn't support `.filter()`/`.not()`/`.is()` chains.
+4. **Order side effects as specified.** When a fallback path must log a warning and may then fail, the log call is the FIRST statement inside the fallback branch, before any check that can raise or return. Trace the failure path and confirm the warning is emitted there too. Validate before you write any file.
+5. **Handle nulls everywhere they're read.** When a new case has a null/absent field, grep EVERY read of that field along the call path and make the new case avoid each one.
+6. **Never mutate values returned by helpers.** Getters like `get_display_recipient`, cached lookups, settings dicts and store objects often return shared/cached objects. Calling `.pop()`, `.sort()`, `.append()` or `del` on them corrupts later calls in the same request (e.g. a URL built afterwards from the same data loses an entry). Build a new list instead (`sorted(...)`, list comprehensions, `[...arr]`). When you rewrite code that already mutates such a value, fix it to copy.
+
+### 1. Pin down exactly what the brief asks for
+- List every named function, parameter, selector, string, CSS class, log message, URL/hash form and exported symbol in the brief. Grep your diff for each one before finishing.
+- **Exact output layout:** when the brief describes text output (message content, headers, markdown blocks, descriptions), write out the full expected final string for EACH case (each branch/type) including every newline and blank line ("separated by a blank line" means an empty line in the output). Then reproduce your code's string building in a `python3 -c`/`node -e` snippet with dummy values, print `repr()` of the result, and compare character by character with your expected string.
+- Copy every concrete example in the brief (input → expected output/order) into a checklist and trace each one through your final code. If anything differs, fix the code. Don't explain the difference away.
+- **Reusing an existing helper** (URL builder, link syntax, filename generator): open its implementation, then grep 1–2 existing callers and pass arguments the same way they do (same object shapes, same recipient data). Confirm the literal output shape (e.g. a group DM URL vs a 1:1 DM URL differ).
+- Don't rename, re-sign or move existing exported functions unless asked.
+
+### 2. Find the exact code path. Read the whole function first
+- Read the entire function you're changing before editing. Change only the branch that matches the brief's condition and leave the other branches and their side effects as they were.
+- For "without otherwise changing behavior/order": keep every existing bucket, step and branch in place and insert new items next to their counterparts.
+
+### 3. Read the existing tests for every module you touch
+Open the test file and grep for each function you change. Note:
+- how each call is made and which branch of your code it hits;
+- which modules are mocked. `mock_esm("../src/x")` without stubs has NO functions, so a new call to `x.fn()` on a path an existing test reaches will crash. Confine new cross-module calls to the branch the brief requires and guard module state (`X.current !== undefined`) or assert as neighbors do;
+- which selectors zjquery stubs return (`set_find_results("<selector>", ...)`);
+- **tests that assert whole lists/outputs for OTHER inputs** (e.g. suggestions for some unrelated query, empty-query lists, other message types). When you add a new item to a generated list (suggestions, options, tabs), find its closest sibling and copy its gating exactly (incompatible patterns, conditions, dedup/filter logic). Then check each existing whole-list assertion: the new item must appear ONLY where the brief says, in the stated position, and not leak into other lists. If a transform (like a negation map) could also produce the new item, make sure it isn't duplicated;
+- which realm/user/settings state is initialized. New code must not need state the tests never set up.
+- Don't edit existing test files. Tests you write can't run here and use up budget.
+
+### 4. Keep changes minimal
+- Make the smallest change at the spot the brief points to.
+- New user-facing strings: `$t`/`$t_html` in TS (with `<z-link>` tags for links, as neighbors do), `_()` in Python.
+- Match neighboring import style (`.ts` extensions, `import * as mod from "./mod.ts"`), typing and naming. Put new imports in alphabetical position.
+
+### 5. Backend specifics
+- HTML in Python: use `Markup("...{x}...").format(x=...)`. Never build HTML with f-strings and pass it into Markup.format, and never wrap untrusted text in `Markup(text)`.
+- Markdown content built from pieces: verify fences, quote blocks and blank lines with a python3 snippet (see §1). Use the existing fence helper for content that may contain backticks.
+- Webhook payloads are `WildValue`s. JSON null is not Python `None`, and `.tame(check_string)` on it raises. Work out the event type first and route every helper by it (rule 0.5). Copy fixture shapes from the most similar existing fixture.
+- Make sure existing paths still behave the same.
+- Logging/exceptions: use the module's logger style (`logging.warning(...)` with %-args), exact wording, the right level, and rule 0.4's ordering. Grep how the exception class is constructed.
+- Settings/config dicts: exclude new special keys from generic loops and update "nothing to do" early returns.
+- Regex changes: test the regex alone in `python3 -c` with the brief's examples plus 3–4 existing cases.
+- Run `python3 -m py_compile` on every Python file you changed.
+
+### 6. Frontend specifics
+- Allowed values (hash sections, tab names) are validated in several places (hash_util plus a toggler/tab list). Grep for an existing value (another tab's name) across web/src and update every whitelist.
+- Check that class names used in TS selectors still match web/templates/*.hbs.
+- You can't type-check, so read your TS diff for unused imports, wrong paths, missing `export`, and union-type mismatches.
+
+### 7. Budget (hard limit ~130k tokens; exceeding it ends the run with whatever is on disk)
+- Never `cat` large files or templates. Use `grep -n`, then read 40–120-line ranges, and pipe long output through `head`. Don't re-read files or reprint big diffs.
+- **By turn ~12, make the edits for the brief's explicitly named interface items** (exact selectors/strings/signatures/whitelist values). Those are the parts most likely to be checked precisely, so get them on disk before any broad work.
+- For broad UI reorganizations (moving template sections, new tabs, docs), work in this order: (1) the named interface items, exactly as written; (2) URL/hash whitelists and tab wiring; (3) template moves; (4) help docs, briefly. Do (3) and (4) with minimal edits. Don't refactor JS handlers or save-button logic beyond what the brief names.
+- Checkpoints: at turn 40, stop exploring and finish what's open. At turn 60, do only the §8 checks and stop. If you've spent 8 turns on one sub-problem, settle it and move on. A smaller correct diff beats an unfinished large one.
+
+### 8. Before finishing
+1. Tick every brief requirement and named item against `git diff` (grep for the exact strings/selectors).
+2. Trace every concrete example and, for text output, compare the simulated `repr()` of each case with the expected string (§1).
+3. For each changed function, trace (a) the new case, (b) the old cases (unchanged, no new side effects, no new calls into mocked modules), and (c) every call the existing test file makes, including whole-list/whole-string assertions for other inputs. Confirm no signature changed.
+4. Confirm you don't mutate any helper return value (rule 0.6), and that each fallback log fires before any possible raise (rule 0.4).
+5. For new null-field cases, confirm no remaining read of that field is reachable on the new path.
+6. Grep for call sites of anything whose behavior changed.
+Iteration 9: Accepted candidate (subsample score 3.5833333333333335 -> 4.583333333333333); running full eval.
+Iteration 9: Found a better program on the valset with score 0.7708333333333333.
+Iteration 9: Valset score for new program: 0.7708333333333333 (coverage 20 / 20)
+Iteration 9: Val aggregate for new program: 0.7708333333333333
+Iteration 9: Individual valset scores for new program: {0: 1.0, 1: 0.6666666666666666, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.6666666666666666, 6: 0.3333333333333333, 7: 1.0, 8: 0.16666666666666666, 9: 1.0, 10: 1.0, 11: 0.0, 12: 0.3333333333333333, 13: 1.0, 14: 0.6666666666666666, 15: 1.0, 16: 1.0, 17: 0.5833333333333334, 18: 1.0, 19: 1.0}
+Iteration 9: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 0.6666666666666666, 7: 1.0, 8: 0.75, 9: 1.0, 10: 1.0, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 1.0, 14: 0.75, 15: 1.0, 16: 1.0, 17: 0.7916666666666666, 18: 1.0, 19: 1.0}
+Iteration 9: Valset pareto front aggregate score: 0.88125
+Iteration 9: Updated valset pareto front programs: {0: {1, 3, 4, 6}, 1: {0, 2, 3, 4}, 2: {1, 2, 3, 5, 6}, 3: {1, 4, 6}, 4: {0, 1, 2, 4, 5, 6}, 5: {1}, 6: {2, 4}, 7: {2, 3, 5, 6}, 8: {5}, 9: {4, 6}, 10: {0, 1, 2, 3, 4, 5, 6}, 11: {1}, 12: {0, 1, 2, 3, 4, 5, 6}, 13: {6}, 14: {0}, 15: {1, 2, 3, 4, 5, 6}, 16: {2, 3, 4, 5, 6}, 17: {5}, 18: {1, 2, 3, 4, 6}, 19: {5, 6}}
+Iteration 9: Best valset aggregate score so far: 0.7708333333333333
+Iteration 9: Best program as per aggregate score on valset: 6
+Iteration 9: Best score on valset: 0.7708333333333333
+Iteration 9: Linear pareto front program index: 6
+Iteration 9: New program candidate index: 6

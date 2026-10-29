@@ -1,0 +1,640 @@
+[rollout pi-vllm-gemma-4-31b--seed-s2] 20/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] 15/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] launching 5 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--seed-s2] done in 0.0 min: resolved 10/20
+[rollout pi-vllm-gemma-4-31b--seed] done in 0.0 min: resolved 8/20
+[rollout pi-vllm-gemma-4-31b--seed-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-6d4c1c rc=0
+[rollout pi-vllm-gemma-4-31b--seed-s3] done in 80.6 min: resolved 8/20
+[rollout pi-vllm-gemma-4-31b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s2] done in 0.2 min: resolved 2/6
+[rollout pi-vllm-gemma-4-31b--seed-s3] done in 0.2 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--seed] done in 0.2 min: resolved 2/6
+2026-10-25 13:22:05,120 INFO reflection ok: cost=$0.548
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-f612fc rc=0
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] done in 91.8 min: resolved 1/6
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-3d1d42 rc=0
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] done in 104.2 min: resolved 2/6
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] driver gepa-gepa2-pi-vllm-gemma-4-31b-c0e439 rc=0
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] done in 108.8 min: resolved 4/6
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] driver gepa-gepa2-pi-vllm-gemma-4-31b-1ca395 rc=0
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] done in 134.2 min: resolved 11/20
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-b44a0e rc=0
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] done in 140.3 min: resolved 6/20
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-6760f3 rc=0
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] done in 181.7 min: resolved 6/20
+[rollout pi-vllm-gemma-4-31b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] done in 0.0 min: resolved 1/6
+[rollout pi-vllm-gemma-4-31b--seed-s2] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--seed] done in 0.0 min: resolved 1/6
+2026-10-25 18:13:14,758 INFO reflection ok: cost=$0.528
+[rollout pi-vllm-gemma-4-31b--g710d1131] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g710d1131] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-46da11 rc=0
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] done in 57.7 min: resolved 4/6
+[rollout pi-vllm-gemma-4-31b--g710d1131] driver gepa-gepa2-pi-vllm-gemma-4-31b-f1201c rc=0
+[rollout pi-vllm-gemma-4-31b--g710d1131] done in 60.8 min: resolved 4/6
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-5d635e rc=0
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] done in 61.9 min: resolved 2/6
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g710d1131] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g710d1131] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-c3fe08 rc=0
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] done in 165.5 min: resolved 9/20
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-d8372d rc=0
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] done in 181.6 min: resolved 12/20
+[rollout pi-vllm-gemma-4-31b--g710d1131] driver gepa-gepa2-pi-vllm-gemma-4-31b-16edc4 rc=0
+[rollout pi-vllm-gemma-4-31b--g710d1131] done in 192.0 min: resolved 10/20
+[rollout pi-vllm-gemma-4-31b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--seed-s2] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--seed] done in 0.0 min: resolved 4/6
+2026-10-25 22:27:54,897 INFO reflection ok: cost=$0.524
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g4026ec47] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g4026ec47] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-fb3465 rc=0
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s2] done in 48.2 min: resolved 4/6
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-080c9a rc=0
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s3] done in 51.9 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--g4026ec47] driver gepa-gepa2-pi-vllm-gemma-4-31b-df3a13 rc=0
+[rollout pi-vllm-gemma-4-31b--g4026ec47] done in 57.0 min: resolved 4/6
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s3] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s2] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g4026ec47] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g4026ec47] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g4026ec47] driver gepa-gepa2-pi-vllm-gemma-4-31b-3ff10d rc=0
+[rollout pi-vllm-gemma-4-31b--g4026ec47] done in 127.4 min: resolved 9/20
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-7cf21e rc=0
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s2] done in 158.5 min: resolved 13/20
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-eaf4a6 rc=0
+[rollout pi-vllm-gemma-4-31b--g4026ec47-s3] done in 172.8 min: resolved 11/20
+[rollout pi-vllm-gemma-4-31b--seed-s3] 4/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s2] 4/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed] 4/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] done in 0.6 min: resolved 3/4
+[rollout pi-vllm-gemma-4-31b--seed-s2] done in 0.6 min: resolved 4/4
+[rollout pi-vllm-gemma-4-31b--seed] done in 0.6 min: resolved 3/4
+2026-10-26 02:18:44,996 INFO reflection ok: cost=$0.494
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] 0/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] 0/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] 0/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] driver gepa-gepa2-pi-vllm-gemma-4-31b-3b8188 rc=0
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] launching 1 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-d975fd rc=0
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] done in 30.3 min: resolved 4/4
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] driver gepa-gepa2-pi-vllm-gemma-4-31b-46e43a rc=0
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] done in 33.2 min: resolved 3/4
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-9f0e90 rc=0
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] done in 34.8 min: resolved 4/4
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] 4/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] 4/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] 4/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-d1c81e rc=0
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] done in 173.6 min: resolved 10/20
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] driver gepa-gepa2-pi-vllm-gemma-4-31b-5ce7fe rc=0
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] done in 188.6 min: resolved 7/20
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-269af3 rc=0
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] done in 196.3 min: resolved 15/20
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s3] done in 0.5 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--g01ae35fd-s2] done in 0.5 min: resolved 2/6
+[rollout pi-vllm-gemma-4-31b--g01ae35fd] done in 0.5 min: resolved 3/6
+2026-10-26 06:11:14,734 INFO reflection ok: cost=$0.551
+[rollout pi-vllm-gemma-4-31b--g25c77d0a-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g25c77d0a-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g25c77d0a] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g25c77d0a-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g25c77d0a] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g25c77d0a-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g25c77d0a] driver gepa-gepa2-pi-vllm-gemma-4-31b-0315c7 rc=0
+[rollout pi-vllm-gemma-4-31b--g25c77d0a] done in 50.4 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--g25c77d0a-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-556691 rc=0
+[rollout pi-vllm-gemma-4-31b--g25c77d0a-s3] done in 52.3 min: resolved 2/6
+[rollout pi-vllm-gemma-4-31b--g25c77d0a-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-43d0c0 rc=0
+[rollout pi-vllm-gemma-4-31b--g25c77d0a-s2] done in 109.1 min: resolved 2/6
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s2] done in 0.5 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--g9ae8908c] done in 0.5 min: resolved 4/6
+[rollout pi-vllm-gemma-4-31b--g9ae8908c-s3] done in 0.5 min: resolved 3/6
+2026-10-26 08:01:56,642 INFO reflection ok: cost=$0.602
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--ga0f986e3] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--ga0f986e3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--ga0f986e3] driver gepa-gepa2-pi-vllm-gemma-4-31b-6e1bf7 rc=0
+[rollout pi-vllm-gemma-4-31b--ga0f986e3] done in 56.4 min: resolved 5/6
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-f993a3 rc=0
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s3] done in 58.8 min: resolved 5/6
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-563143 rc=0
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s2] done in 69.8 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--ga0f986e3] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s3] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s2] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--ga0f986e3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-5c58ed rc=0
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s2] done in 107.8 min: resolved 7/20
+[rollout pi-vllm-gemma-4-31b--ga0f986e3] driver gepa-gepa2-pi-vllm-gemma-4-31b-deeecd rc=0
+[rollout pi-vllm-gemma-4-31b--ga0f986e3] done in 109.3 min: resolved 10/20
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-9dedf2 rc=0
+[rollout pi-vllm-gemma-4-31b--ga0f986e3-s3] done in 113.8 min: resolved 10/20
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g710d1131] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g710d1131] done in 0.5 min: resolved 2/6
+[rollout pi-vllm-gemma-4-31b--g710d1131-s3] done in 0.5 min: resolved 1/6
+[rollout pi-vllm-gemma-4-31b--g710d1131-s2] done in 0.5 min: resolved 5/6
+2026-10-26 11:06:52,755 INFO reflection ok: cost=$0.568
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g16b14e42] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g16b14e42] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-d23858 rc=0
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s2] done in 54.0 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-b98c2c rc=0
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s3] done in 57.1 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--g16b14e42] driver gepa-gepa2-pi-vllm-gemma-4-31b-25f1db rc=0
+[rollout pi-vllm-gemma-4-31b--g16b14e42] done in 60.9 min: resolved 3/6
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s3] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s2] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g16b14e42] 6/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g16b14e42] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-d6578d rc=0
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s2] done in 120.8 min: resolved 13/20
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-3fbebc rc=0
+[rollout pi-vllm-gemma-4-31b--g16b14e42-s3] done in 133.8 min: resolved 10/20
+[rollout pi-vllm-gemma-4-31b--g16b14e42] driver gepa-gepa2-pi-vllm-gemma-4-31b-3f9c1b rc=0
+[rollout pi-vllm-gemma-4-31b--g16b14e42] done in 156.4 min: resolved 8/20
+[rollout pi-vllm-gemma-4-31b--seed-s3] 4/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s2] 4/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed] 4/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] done in 0.0 min: resolved 1/4
+[rollout pi-vllm-gemma-4-31b--seed-s2] done in 0.0 min: resolved 1/4
+[rollout pi-vllm-gemma-4-31b--seed] done in 0.0 min: resolved 2/4
+2026-10-26 14:44:43,655 INFO reflection ok: cost=$0.527
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s2] 0/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s3] 0/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g68f50bf5] 0/4 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s3] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s2] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g68f50bf5] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g68f50bf5] driver gepa-gepa2-pi-vllm-gemma-4-31b-d12c44 rc=0
+[rollout pi-vllm-gemma-4-31b--g68f50bf5] done in 38.1 min: resolved 0/4
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-05d93d rc=0
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s2] done in 46.1 min: resolved 3/4
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-1630e5 rc=0
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s3] done in 51.2 min: resolved 2/4
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s3] 4/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s2] 4/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g68f50bf5] 4/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--g68f50bf5] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s2] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s3] launching 16 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s3] driver gepa-gepa2-pi-vllm-gemma-4-31b-d7d12b rc=0
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s3] done in 145.5 min: resolved 9/20
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-5a9394 rc=0
+[rollout pi-vllm-gemma-4-31b--g68f50bf5-s2] done in 156.4 min: resolved 11/20
+[rollout pi-vllm-gemma-4-31b--g68f50bf5] driver gepa-gepa2-pi-vllm-gemma-4-31b-ef95a1 rc=0
+[rollout pi-vllm-gemma-4-31b--g68f50bf5] done in 159.9 min: resolved 6/20
+2026-10-26 18:15:48,972 INFO done: best idx 3 val 0.633
+Iteration 0: Base program full valset score: 0.5083333333333333 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.5083333333333333
+Iteration 1: Proposed new text for append_system_prompt: You are working in a checkout of the Zulip repository (Django/Python backend in `zerver/`, `corporate/`, `analytics/`; web frontend in `web/src/` (TypeScript and some JavaScript), Handlebars templates in `web/templates/`, frontend unit tests in `web/tests/*.test.cjs`, backend tests in `zerver/tests/` and `zerver/webhooks/<name>/tests.py`).
+
+## Environment limits (important)
+- There is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). `tools/test-backend`, `tools/test-js-with-node`, linters and type checkers CANNOT run here. Don't spend turns trying to install dependencies or make them work.
+- So you must check your work by careful reading and small standalone checks:
+  - Python: run `python3 -m py_compile <file>` on every Python file you edit.
+  - For pure logic (string formatting, parsing, key mapping), copy the function into a scratch script under /tmp and run it with `python3` (or plain `node` on a .js copy with types stripped) against the exact examples in the task description. Do this especially when the task gives an exact expected output.
+  - TS/JS: after every edit, re-read the edited region plus ~15 lines on each side. Check that braces and parentheses balance, that no neighbouring function signature or line got deleted or merged, and that imports exist. A single syntax error makes the whole module fail.
+- Never leave scratch or repro files in the repo. Put them in /tmp, or delete them before you finish.
+
+## Working strategy
+1. Read the task description twice. List each concrete requirement, especially: which module or data source to use ("message store", "existing helper X"), exact output strings, ordering, blank lines, and edge cases. File names in the description may be slightly off (e.g. `.ts` vs `.js`); locate the real file with `find`/`grep`.
+2. Before editing, read the function you will change, the helpers it calls, AND the existing test file for that module (`web/tests/<module>.test.cjs` or the relevant `zerver/tests/test_*.py`). Tests show how functions are called (often with minimal plain objects such as `{key, code, shiftKey}`), which modules get mocked, and which real modules (e.g. stores) are used. Write code that works under that test style.
+3. Check the real types of data before you use them. Grep the helper's definition and its return type. Example pitfall: many backend helpers return dicts/TypedDicts, not model objects, so use `x["field"]`, not `x.field`. In the frontend, prefer the canonical store module for looking up objects by ID (e.g. a `*_store.get(id)`) over UI-list objects that might not be populated.
+4. Make the smallest change that meets every requirement. Follow the structure already in the code (e.g. return the same object `type`/shape that nearby branches return, rather than inventing a new one).
+   - Do NOT change the behaviour of existing shared helpers unless the task explicitly requires it. If the task says "reuse X", call X as it is.
+   - Do NOT delete or rewrite existing tests, test helpers or overrides. Adding tests is fine.
+5. When you introduce a normalised or derived value (e.g. a translated key, a cleaned string), replace EVERY use of the raw value in that function, including early-return guards and checks that come before your new code. Trace the whole function from top to bottom with one concrete input from the task description and confirm the expected result.
+6. When the task gives exact expected output, reproduce it character for character: punctuation, capitalisation, separators like ", and ", blank lines between sections, trailing newlines. Diff your simulated output against the expected text in a scratch script rather than eyeballing it.
+
+## Codebase conventions
+- Frontend translations: `$t({defaultMessage: "literal string"})` / `$t_html(...)`. `defaultMessage` MUST be a string literal. A variable, map lookup or template expression breaks the build-time i18n extraction and makes the whole file fail to compile. If text comes from a data map, either store the already-translated strings in the map, or keep plain strings and pass them through the existing template/description machinery the way neighbouring code does.
+- Backend translations: `_("literal {placeholder}").format(...)` with a literal string.
+- Prefer data-driven mappings (a dict/Record) over one-off conditionals when the task asks for extensibility.
+- Use existing helpers (URL builders, mention syntax, fence helpers, paste converters) rather than reimplementing them. Grep for them first.
+
+## Efficiency
+- You have a limited context window. Don't `cat` large files repeatedly; use `grep -n` and read targeted line ranges. Don't re-read a file you already have unless you've edited it.
+- Don't loop on "Wait, I already did that". Re-read the file once to confirm, then move on.
+- Use edits that match a unique, small anchor. After each edit, verify the region (see above).
+
+## Before finishing
+- Re-read your full diff (`git diff`). Check: syntax intact, no unrelated deletions, no scratch files, every requirement from step 1 covered, Python files pass `py_compile`.
+Iteration 1: Accepted candidate (subsample score 2.75 -> 2.833333333333333); running full eval.
+Iteration 1: Valset score for new program: 0.4729166666666667 (coverage 20 / 20)
+Iteration 1: Val aggregate for new program: 0.4729166666666667
+Iteration 1: Individual valset scores for new program: {0: 0.6666666666666666, 1: 0.3333333333333333, 2: 0.75, 3: 0.3333333333333333, 4: 0.6666666666666666, 5: 0.0, 6: 0.0, 7: 0.3333333333333333, 8: 1.0, 9: 0.8333333333333334, 10: 0.0, 11: 0.0, 12: 0.3333333333333333, 13: 0.5416666666666666, 14: 0.5, 15: 0.6666666666666666, 16: 0.8333333333333334, 17: 0.6666666666666666, 18: 0.0, 19: 1.0}
+Iteration 1: New valset pareto front scores: {0: 1.0, 1: 0.3333333333333333, 2: 0.75, 3: 0.3333333333333333, 4: 1.0, 5: 0.6666666666666666, 6: 0.0, 7: 0.5, 8: 1.0, 9: 0.8333333333333334, 10: 0.0, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 1.0, 14: 0.5, 15: 0.6666666666666666, 16: 1.0, 17: 0.8333333333333334, 18: 0.0, 19: 1.0}
+Iteration 1: Valset pareto front aggregate score: 0.6041666666666667
+Iteration 1: Updated valset pareto front programs: {0: {0}, 1: {0, 1}, 2: {1}, 3: {1}, 4: {0}, 5: {0}, 6: {0, 1}, 7: {0}, 8: {0, 1}, 9: {1}, 10: {0, 1}, 11: {0}, 12: {0, 1}, 13: {0}, 14: {1}, 15: {1}, 16: {0}, 17: {0}, 18: {0, 1}, 19: {1}}
+Iteration 1: Best valset aggregate score so far: 0.5083333333333333
+Iteration 1: Best program as per aggregate score on valset: 0
+Iteration 1: Best score on valset: 0.5083333333333333
+Iteration 1: Linear pareto front program index: 0
+Iteration 1: New program candidate index: 1
+Iteration 2: Selected program 0 score: 0.5083333333333333
+Iteration 2: Proposed new text for append_system_prompt: You are working in a checkout of the Zulip repository (Python/Django backend in zerver/, zproject/, corporate/; TypeScript/JavaScript web client in web/src/, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/ and zerver/webhooks/*/tests.py). There is no virtualenv, no node_modules, no database and no `python` command (only `python3`). Zulip's test runners cannot run here, so don't try to install dependencies or run them. Your correctness has to come from careful reading and self-review.
+
+## Working strategy
+
+1. **Turn the brief into a checklist before editing.** Every bullet under "Interface requirements", and every exact string, selector, function name, parameter, log message or URL format in the brief, is a hard contract. Copy each one into a short checklist in your notes. Implement each one literally, with the exact spelling, punctuation and spacing. Before finishing, go through the checklist and point to the line in your diff that satisfies each item. A large, plausible-looking patch that skips one stated requirement is a failed fix.
+
+2. **Find the right layer with targeted searches.**
+   - Use `git grep -n "<string>" -- web/src zerver zproject` (or similar). Leave out `locale/` and `static/`, because translation files flood the output.
+   - Never `cat` or read a large file whole. Files like zproject/backends.py and web/src/filter.ts are thousands of lines long. Grep for line numbers, then read about 80–150 lines around them with offset/limit. Your context window is limited, and running out ends the task.
+
+3. **Read the existing tests for the code you touch** (web/tests/<module>.test.cjs, zerver/tests/test_*.py, zerver/webhooks/<name>/tests.py). They show how functions are called, what gets mocked (for example `mock_esm`, `zrequire`, `override_rewire`, `set_find_results` on stubbed jQuery objects) and which module-level state they set. Your change has to keep working when called exactly the way those tests call it.
+
+4. **Prefer the smallest change that matches codebase conventions.**
+   - Do NOT change the signature of an existing exported function, or update all its callers, unless the brief explicitly asks for it. If you need extra state (for example the "current" message list, the current user or realm settings), import the module that already holds it, as other code in the same file does.
+   - Insert new logic at the point the brief describes, and keep the existing order of operations: sorting, formatting, early returns. Don't restructure surrounding code. Refactors change output ordering and break existing behavior.
+   - Don't apply a requested change to other unrelated call sites "for consistency". Change only what the brief needs.
+   - Copy the idioms already used in the same file: how `$t`/`$t_html` are used for translatable strings, how validated payloads (`WildValue`) are accessed (`payload["key"]`, `.get("key")` followed by `.tame(check_string)` and so on; check how nearby code tests for a key or a null value), how loggers are used and how settings dicts are read.
+
+5. **Trace the data flow end to end for backend features.** Follow the value from where it enters (request, auth pipeline, webhook payload) through every function it passes to, all the way to the place it takes effect (for example a `do_change_*` action). Check every early `return`, guard condition, backend-name check and "nothing to do" shortcut on that path. Make sure your new case gets past each one. Confirm the call site actually passes the new value, and that it has the value it should at that point.
+
+6. **Edit safely.**
+   - Make each edit's anchor text unique and small. Never use a replace that swallows a neighboring function or test.
+   - When adding tests or fixtures, append new ones. Never delete or rename existing tests or functions.
+   - After each edit, re-read the edited region to confirm the result is syntactically valid. For TypeScript, check that braces, parentheses, `return` placement and imports are balanced and correct (import paths in web/src use the `.ts` extension, for example `import * as foo from "./foo.ts";`). For Python, run `python3 -m py_compile <file>` on every Python file you changed.
+   - Keep imports sorted the way the file already sorts them.
+   - If you are unsure whether an earlier edit was applied, don't guess. Run `git diff` (or `git diff <file>`) and look.
+
+7. **Review before finishing.** Run `git diff` and read the whole patch. Check:
+   - every checklist item from step 1 is satisfied
+   - no existing behavior or test was removed or changed unintentionally
+   - there are no leftover debugging edits, duplicate definitions or half-applied changes
+   - Python files compile
+   - for web changes, templates and TS agree on class names and element IDs
+
+   Update documentation the brief mentions, but make the code requirements correct first.
+
+Work efficiently. Once the change is implemented and you have reviewed the diff, stop. Don't keep exploring or rewriting working code.
+Iteration 2: Accepted candidate (subsample score 2.4166666666666665 -> 3.6666666666666665); running full eval.
+Iteration 2: Found a better program on the valset with score 0.5895833333333333.
+Iteration 2: Valset score for new program: 0.5895833333333333 (coverage 20 / 20)
+Iteration 2: Val aggregate for new program: 0.5895833333333333
+Iteration 2: Individual valset scores for new program: {0: 0.6666666666666666, 1: 0.3333333333333333, 2: 0.75, 3: 0.6666666666666666, 4: 1.0, 5: 0.0, 6: 0.0, 7: 1.0, 8: 1.0, 9: 0.5833333333333334, 10: 0.3333333333333333, 11: 0.6666666666666666, 12: 0.3333333333333333, 13: 0.75, 14: 0.25, 15: 1.0, 16: 1.0, 17: 0.4583333333333333, 18: 0.3333333333333333, 19: 0.6666666666666666}
+Iteration 2: New valset pareto front scores: {0: 1.0, 1: 0.3333333333333333, 2: 0.75, 3: 0.6666666666666666, 4: 1.0, 5: 0.6666666666666666, 6: 0.0, 7: 1.0, 8: 1.0, 9: 0.8333333333333334, 10: 0.3333333333333333, 11: 0.6666666666666666, 12: 0.3333333333333333, 13: 1.0, 14: 0.5, 15: 1.0, 16: 1.0, 17: 0.8333333333333334, 18: 0.3333333333333333, 19: 1.0}
+Iteration 2: Valset pareto front aggregate score: 0.7125
+Iteration 2: Updated valset pareto front programs: {0: {0}, 1: {0, 1, 2}, 2: {1, 2}, 3: {2}, 4: {0, 2}, 5: {0}, 6: {0, 1, 2}, 7: {2}, 8: {0, 1, 2}, 9: {1}, 10: {2}, 11: {2}, 12: {0, 1, 2}, 13: {0}, 14: {1}, 15: {2}, 16: {0, 2}, 17: {0}, 18: {2}, 19: {1}}
+Iteration 2: Best valset aggregate score so far: 0.5895833333333333
+Iteration 2: Best program as per aggregate score on valset: 2
+Iteration 2: Best score on valset: 0.5895833333333333
+Iteration 2: Linear pareto front program index: 2
+Iteration 2: New program candidate index: 2
+Iteration 3: Selected program 0 score: 0.5083333333333333
+Iteration 3: Proposed new text for append_system_prompt: ## Working on this Zulip checkout
+
+You are fixing an issue in the Zulip repository: a Django/Python backend (`zerver/`, `zproject/`, `templates/`) and a TypeScript web frontend (`web/src/`, with node unit tests in `web/tests/*.test.cjs`). Backend tests live in `zerver/tests/test_*.py`. Markdown rendering test cases also live in JSON fixture files under `zerver/tests/fixtures/`.
+
+This checkout has no virtualenv, no node_modules, no database and no `python` command (only `python3`). The Zulip test runners (tools/test-backend, tools/test-js-with-node) cannot run here, so don't try to install dependencies or start them (no pip/uv/npm installs). You have to check correctness by careful reading and small standalone checks.
+
+### Workflow
+1. Find the code. Use `git grep -n "<symbol>"`, never `grep -r .`, which also searches `.git` and floods your context. Read files with offset/limit around the relevant lines instead of reading whole large files. Your context window is limited, so keep tool output small (pipe through `head`).
+2. Before editing, read the existing tests for the module you will change: `web/tests/<module>.test.cjs` or `zerver/tests/test_<area>.py`. Note:
+   - which branches and conditions of the function the tests already exercise, and what they assert;
+   - how the node tests mock other modules (`mock_esm(...)`, `override(...)`). A mocked module only has the functions the test defines. If your change makes an existing code path call a new function from another module, existing tests that reach that path can crash.
+3. Trace the full behaviour before choosing a design. Follow the value you produce all the way to what the user sees (e.g. markdown syntax → how the markdown processor renders it → final HTML/link). Look at how sibling code in the same file or feature builds similar output (links, URLs, display names, HTML escaping with `Markup`) and copy that approach. Don't grab an existing helper just because its name sounds right. Check what it actually outputs and whether that output satisfies every sentence of the issue.
+4. Make the smallest change that does exactly what the brief says.
+   - If the brief describes a specific condition ("when X and Y, do Z"), add Z only under that condition. Keep every existing early return, branch and side effect in place unless the brief explicitly says to change it.
+   - Don't rewrite whole functions or delete existing logic and comments you don't need to touch.
+   - Follow explicit instructions in the brief exactly: which existing function to reuse, which module the logic belongs in, exact strings, class names, argument order, and what must happen synchronously.
+5. Protect existing behaviour. For shared logic (regexes, sorting, parsing, rendering), list the existing cases the current code handles and that existing tests and fixtures cover, and confirm each one still works after your change, not only the new cases.
+6. Check your logic with standalone scripts where you can. Pure Python logic (e.g. a regex) can be copied into a small `python3` script in `/tmp` and run against both the new examples and the existing fixture/test cases. You can check pure JS/TS logic the same way with `node` on a hand-translated copy, if `node` is available. Put scratch files in `/tmp`, never in the repo.
+7. Tests: you may add new test cases next to the existing ones in the matching existing test file, following that file's style. Never change existing assertions to match your new output. If an existing assertion conflicts with your change, either the brief explicitly calls for that new behaviour (update it to the behaviour the brief describes) or your design is wrong (rethink it).
+8. Finish by running `git status` and `git diff`. Confirm that only the intended source (and test) files changed, that there are no stray scratch files, debug prints or unrelated edits, and that your code type-checks by inspection (imports present, correct types and signatures, TS narrowing on union types).
+
+### Tool usage
+- The `edit` tool needs a top-level `path` argument plus a list of edits, each with exact `oldText`/`newText`. If an edit fails with a validation error, fix the argument structure. Don't resend the same call.
+- If an edit fails with "Could not find the exact text", re-read the exact lines (with offset/limit) and copy the text exactly, including indentation.
+- After every successful edit, check the result with `git diff <file>` instead of guessing whether it was applied. Don't apply the same edit twice.
+- There is no user in the loop to answer questions. Work it out from the code and keep going until the change is complete and checked.
+Iteration 3: Accepted candidate (subsample score 3.6666666666666665 -> 4.0); running full eval.
+Iteration 3: Found a better program on the valset with score 0.6333333333333333.
+Iteration 3: Valset score for new program: 0.6333333333333333 (coverage 20 / 20)
+Iteration 3: Val aggregate for new program: 0.6333333333333333
+Iteration 3: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.3333333333333333, 4: 0.6666666666666666, 5: 0.3333333333333333, 6: 0.0, 7: 0.8333333333333334, 8: 1.0, 9: 0.6666666666666666, 10: 0.0, 11: 0.6666666666666666, 12: 0.3333333333333333, 13: 0.25, 14: 0.3333333333333333, 15: 1.0, 16: 1.0, 17: 0.8333333333333334, 18: 0.6666666666666666, 19: 0.75}
+Iteration 3: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.6666666666666666, 4: 1.0, 5: 0.6666666666666666, 6: 0.0, 7: 1.0, 8: 1.0, 9: 0.8333333333333334, 10: 0.3333333333333333, 11: 0.6666666666666666, 12: 0.3333333333333333, 13: 1.0, 14: 0.5, 15: 1.0, 16: 1.0, 17: 0.8333333333333334, 18: 0.6666666666666666, 19: 1.0}
+Iteration 3: Valset pareto front aggregate score: 0.775
+Iteration 3: Updated valset pareto front programs: {0: {0, 3}, 1: {3}, 2: {3}, 3: {2}, 4: {0, 2}, 5: {0}, 6: {0, 1, 2, 3}, 7: {2}, 8: {0, 1, 2, 3}, 9: {1}, 10: {2}, 11: {2, 3}, 12: {0, 1, 2, 3}, 13: {0}, 14: {1}, 15: {2, 3}, 16: {0, 2, 3}, 17: {0, 3}, 18: {3}, 19: {1}}
+Iteration 3: Best valset aggregate score so far: 0.6333333333333333
+Iteration 3: Best program as per aggregate score on valset: 3
+Iteration 3: Best score on valset: 0.6333333333333333
+Iteration 3: Linear pareto front program index: 3
+Iteration 3: New program candidate index: 3
+Iteration 4: Selected program 0 score: 0.5083333333333333
+Iteration 4: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+### The environment: don't try to run tests or the app
+This checkout has no Python virtualenv, no node_modules, no database, and no `python` command (only `python3`). `tools/test-backend`, `tools/test-js-with-node`, `manage.py`, linters and type checkers will NOT work here. A `.venv` doesn't exist and can't be activated or created. Don't try any of these, and don't search for a venv. Every turn spent on this is wasted. Check your work by reading code carefully instead (see "Checking your work" below). `python3 -c "import ast,sys; ast.parse(open(sys.argv[1]).read())" <file>` is a fine way to check syntax.
+
+### Repository layout (orientation)
+- `zerver/lib/`: backend business logic (most bug fixes go here). `zerver/actions/`: state-changing operations. `zerver/views/`: HTTP endpoints. `zerver/models/`: models and shared constants (e.g. `zerver/models/constants.py`). `zerver/data_import/`: importers (Slack, Mattermost, etc.). `zerver/tests/test_<module>.py`: backend tests, named after the module they test.
+- `web/src/*.ts`: frontend logic. `web/tests/*.test.cjs`: node tests for it. `web/templates/`: Handlebars. `templates/`: Django/Jinja2 templates, including emails.
+- Use targeted searches: `grep -rn "name" zerver/ --include=*.py` or `grep -rn "name" web/src`. Never grep the whole repo without excluding `.git`, and never grep for bare numbers. Both flood the output.
+
+### Most important rule: extend existing behavior, don't redefine it
+Zulip usually already has the mechanism a task needs: an option flag, a helper, a formatting function, a constant. The right fix is usually small. Turn on or reuse that mechanism at the right point.
+- Before writing new logic, read the whole function you're changing and the helpers it calls. Look for an existing option or code path that already does what the brief asks, even partly. If one exists, trigger it. Don't build a parallel one.
+- **Never change the output format of an existing feature to match the brief's wording.** Briefs describe the content in plain words, e.g. "a line of the form `Label: value`". If the code already produces that line in its house style (e.g. Markdown bold `**Label:** value`, a particular escaping, a particular wrapper), keep the existing format exactly. Changing a shared format string breaks every other caller and every existing expectation. Only change formatting when the brief explicitly says the current formatting itself is the bug.
+- Exact strings the brief says must match exactly (error messages, log messages, CSS class names, HTML snippets) should be copied character for character. Text described only as "of the form …" is a description of content.
+- Use the codebase's own helpers and constants rather than raw stdlib or hard-coded values: Zulip's MIME/type helpers instead of `mimetypes`, named length constants or the existing truncation helper instead of a literal `60`, `Markup`/`Markup.escape` for HTML in Python, the existing display-name helpers.
+- Keep backward compatibility: inputs that the brief says should be unaffected must produce exactly the output they produced before.
+
+### Workflow
+1. Read the brief and list every concrete requirement: the behavior, edge cases, exact strings, and where each change belongs.
+2. Find the code path. Read the relevant function end to end, its helpers, and the existing tests for that module (`zerver/tests/test_<module>.py` or `web/tests/<module>.test.cjs`). Existing tests show the exact current output format, which you must preserve.
+3. Make the smallest correct change at the layer the brief names. Update every caller when you change a signature or return type (`grep -rn "func_name(" zerver/ web/src`).
+4. Check your work statically (below), then stop.
+
+### Checking your work (no test runner available)
+- Walk through the existing tests for that function in your head against your new code. Every existing assertion about unaffected inputs must still hold. If an existing test asserts a format string you changed, you broke something. Revert that part.
+- Walk through each example in the brief through your code and confirm the exact output.
+- Check that imports exist and are in alphabetical order with the surrounding imports, that names are spelled correctly, and that types line up. In TypeScript, check narrowing on union types (e.g. check a `type` discriminant before accessing members specific to one variant).
+- For HTML built in Python, make sure literal markup stays unescaped and user-provided values are still escaped.
+- You may add or update tests if it's natural, but don't spend many turns on it. The source change matters most.
+
+### Avoid loops
+- Don't re-read a file you've already read unless you've edited it since. Once you've made an edit, review the changed region once, then move on.
+- If you notice yourself saying "I already did/read X", don't repeat X. Go to the next step.
+- When the requirements are met and checked, finish. Give a short summary of what you changed and why.
+Iteration 4: Accepted candidate (subsample score 4.666666666666667 -> 5.5); running full eval.
+Iteration 4: Valset score for new program: 0.5979166666666667 (coverage 20 / 20)
+Iteration 4: Val aggregate for new program: 0.5979166666666667
+Iteration 4: Individual valset scores for new program: {0: 0.6666666666666666, 1: 1.0, 2: 0.8333333333333334, 3: 0.0, 4: 0.6666666666666666, 5: 0.0, 6: 0.0, 7: 0.7916666666666666, 8: 1.0, 9: 1.0, 10: 0.6666666666666666, 11: 0.6666666666666666, 12: 0.3333333333333333, 13: 0.75, 14: 0.25, 15: 0.3333333333333333, 16: 1.0, 17: 0.5833333333333334, 18: 0.6666666666666666, 19: 0.75}
+Iteration 4: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.6666666666666666, 4: 1.0, 5: 0.6666666666666666, 6: 0.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 0.6666666666666666, 11: 0.6666666666666666, 12: 0.3333333333333333, 13: 1.0, 14: 0.5, 15: 1.0, 16: 1.0, 17: 0.8333333333333334, 18: 0.6666666666666666, 19: 1.0}
+Iteration 4: Valset pareto front aggregate score: 0.8
+Iteration 4: Updated valset pareto front programs: {0: {0, 3}, 1: {3, 4}, 2: {3}, 3: {2}, 4: {0, 2}, 5: {0}, 6: {0, 1, 2, 3, 4}, 7: {2}, 8: {0, 1, 2, 3, 4}, 9: {4}, 10: {4}, 11: {2, 3, 4}, 12: {0, 1, 2, 3, 4}, 13: {0}, 14: {1}, 15: {2, 3}, 16: {0, 2, 3, 4}, 17: {0, 3}, 18: {3, 4}, 19: {1}}
+Iteration 4: Best valset aggregate score so far: 0.6333333333333333
+Iteration 4: Best program as per aggregate score on valset: 3
+Iteration 4: Best score on valset: 0.6333333333333333
+Iteration 4: Linear pareto front program index: 3
+Iteration 4: New program candidate index: 4
+Iteration 5: Selected program 4 score: 0.5979166666666667
+Iteration 5: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+### The environment: don't try to run tests or the app
+This checkout has no Python virtualenv, no node_modules, no database, and no `python` command (only `python3`). `tools/test-backend`, `tools/test-js-with-node`, `manage.py`, linters and type checkers will NOT work here. No `.venv` exists, and you can't create or activate one. Don't try any of these and don't search for a venv. Every turn spent on that is wasted. Check your work by reading code carefully instead (see "Checking your work" below). To check Python syntax, run `python3 -c "import ast,sys; ast.parse(open(sys.argv[1]).read())" <file>`.
+
+### Repository layout (orientation)
+- `zerver/lib/`: backend business logic (most bug fixes go here). `zerver/actions/`: state-changing operations. `zerver/views/`: HTTP endpoints. `zerver/webhooks/<name>/`: integrations (`view.py`, `tests.py`, `fixtures/`). `zerver/models/`: models and shared constants. `zproject/backends.py`: authentication backends. `zerver/tests/test_<module>.py`: backend tests, named after the module they test.
+- `web/src/*.ts`: frontend logic. `web/tests/*.test.cjs`: node tests for it. These tests replace whole modules with `mock_esm(...)`, so a mocked module only has the functions a given test defines. `web/templates/`: Handlebars. `templates/`: Django/Jinja2 templates, including emails.
+- Use targeted searches: `grep -rn "name" zerver/ --include=*.py` or `grep -rn "name" web/src`. Never grep the whole repo without excluding `.git`, and never grep for bare numbers. Both flood the output.
+
+### Rule 1: change only the case the brief describes
+- Before editing, write down the exact condition the brief describes, e.g. "when X is true AND Y has not happened yet". Read every branch and early return of the function. Find the one branch where that condition holds, and put the new behavior there and nowhere else.
+- Every other branch must return exactly what it returned before and make exactly the same calls. Don't replace a whole `if` block, and don't change a `return` that serves other cases. Don't delete existing calls or side effects (e.g. marking state, logging) unless the brief says they are the bug.
+- If you add a call into another module (especially in TypeScript), make it only inside that narrow branch. Existing tests run the other branches with that module mocked, and an unexpected call there crashes them.
+- Some features are limited to one backend, one message type or one setting. Keep those guards unless the brief says to lift them.
+
+### Rule 2: edit, don't rewrite
+- Change the existing code in place. Don't rewrite a file or a whole function from scratch, and don't delete existing helper functions. Rewrites silently drop behavior: special cases, file and attachment handling, blank lines between sections, the order of output.
+- If you need a new parsing or lookup step, add it as a new helper. Feed its result into the existing formatting and output code, which should stay unchanged.
+
+### Rule 3: reuse existing mechanisms, but check what they produce
+Zulip usually already has the mechanism a task needs: an option flag, a helper, a formatting function, a constant, a URL builder. Turn it on or reuse it at the right point instead of building a parallel one.
+- **Before using a helper, read its body and write down the exact string or value it returns for your inputs.** Compare that with the brief's own key terms. If the brief names a URL shape (for example a `/with/` link versus a `/near/` link), a markup form or an attribute, the final output must actually contain it. A helper with a similar name that produces a different syntax is the wrong helper. In that case, look for the lower-level builders (URL-encoding helpers with options, format-string constants) and compose the output yourself.
+- **Never change the output format of an existing feature to match the brief's wording.** If the brief says "a line of the form `Label: value`" and the code already produces it in its house style (e.g. `**Label:** value`), keep the existing format exactly. Change a format only when the brief says that format is the bug.
+- Copy exact strings from the brief character for character: error and log messages, CSS classes, HTML snippets, expected message bodies.
+- Use the codebase's helpers and constants rather than raw stdlib or hard-coded values: named length constants instead of a literal `60`, `Markup`/`Markup.escape` for HTML in Python, the existing display-name and URL helpers.
+
+### Workflow
+1. Read the brief. List every concrete requirement: the behavior, the exact condition it applies to, edge cases, exact strings, and where each change belongs.
+2. Find the code path. Read the relevant function end to end, the helpers it calls, and its existing tests (`zerver/tests/test_<module>.py`, `zerver/webhooks/<name>/tests.py`, `web/tests/<module>.test.cjs`). Existing tests show the current output format you must preserve and which modules are mocked.
+3. Make the smallest correct change in the branch and layer the brief names. When you change a signature or return type, update every caller (`grep -rn "func_name(" zerver/ zproject/ web/src`). Prefer adding new parameters at the end with a default.
+4. Run the final checks below, then stop.
+
+### Checking your work (no test runner available)
+Run `git diff` once and go through this list against the diff:
+- **Names and imports:** list every function, class and constant your diff newly uses. Each one must be imported in that file or defined in it (`grep -n "^from\|^import\|name" <file>`). A missing import crashes at runtime, and this is the most common way an otherwise correct fix fails. Keep import blocks sorted.
+- **Brief examples:** if the brief gives an example input and expected output, trace the input through your code and write out the output you get. Compare it with the expected output line by line, including the last lines, blank lines, separators, ordering and duplicates. If any line is missing or different, fix it.
+- **Unaffected cases:** for each existing test of the function, check that your code still produces the asserted output. Every branch you didn't mean to change must behave exactly as before. If an existing assertion would now fail, revert that part.
+- **Types:** in TypeScript, narrow union types before accessing members specific to one variant. In Python HTML, literal markup stays unescaped and user-provided values stay escaped.
+- You may add or update tests if it's natural, but don't spend many turns on it.
+
+### Avoid loops
+- An edit that reports "Successfully replaced" has been applied. Don't re-apply it, and don't re-read the whole file to "confirm" it. Check it once with `git diff`.
+- Don't re-read a file you've already read unless you've edited it since.
+- If you notice yourself saying "I already did/read X", don't repeat X. Go to the next unchecked item on the list.
+- When the requirements are met and checked, finish with a short summary of what you changed and why.
+Iteration 5: New subsample score 3.1666666666666665 is not better than old score 3.4166666666666665, skipping
+Iteration 6: Selected program 1 score: 0.4729166666666667
+Iteration 6: Proposed new text for append_system_prompt: You are working in a checkout of the Zulip repository (Django/Python backend in `zerver/`, `corporate/`, `analytics/`; web frontend in `web/src/` (TypeScript and some JavaScript), Handlebars templates in `web/templates/`, frontend unit tests in `web/tests/*.test.cjs`, backend tests in `zerver/tests/` and `zerver/webhooks/<name>/tests.py`).
+
+## Environment limits (important)
+- There is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). `tools/test-backend`, `tools/test-js-with-node`, linters and type checkers CANNOT run here. Don't spend turns trying to install dependencies or make them work.
+- Check your work by careful reading and small standalone checks:
+  - Python: run `python3 -m py_compile <file>` on every Python file you edit.
+  - Plain JS / .cjs files you edit: run `node --check <file>`.
+  - For pure logic (string handling, parsing, key mapping, caret/offset maths, ordering), copy the function into a scratch script under /tmp (strip TS types so it runs in plain `node`, or port it to `python3`). Run it against EVERY example in the task description and print expected vs actual. Do this whenever the task gives concrete inputs/outputs.
+  - TS: after every edit, re-read the edited region plus ~15 lines on each side. Check that braces and parentheses balance, that no neighbouring function or line got deleted or merged, and that imports exist. A single syntax error makes the whole module fail.
+- Never leave scratch or repro files in the repo. Put them in /tmp.
+
+## Budget: you have a limited context window (it has run out before)
+- Aim to finish in about 25 tool calls. Never `read` a whole large file: `grep -n` first, then read with offset/limit (≤ 120 lines).
+- Never re-read a file region you already have unless you edited it since. After one verification read, move on. If you notice yourself writing "Wait, I already did that", stop and go to the next step of your plan.
+- Keep thinking short. Plan once, then act.
+- Tool usage: the `edit` tool needs the file `path` plus an exact, unique old-text anchor. If an edit fails twice, re-read the exact lines once, then retry with a smaller anchor, or do the replacement with a short `python3` script. Don't keep re-sending the same failing call.
+
+## Working strategy
+1. Read the task description carefully and write a short checklist of every concrete requirement: exact names and signatures of functions to add or export, WHERE each must be called from (the named function/flow, not a nearby one), exact output strings, ordering, and edge cases. For multi-part features, tick the checklist off at the end. File names in the description may be slightly off (e.g. `.ts` vs `.js`); locate the real file with `find`/`grep`.
+2. Before editing, read the function you will change, the helpers it calls, AND the relevant parts of the existing test file (`web/tests/<module>.test.cjs` or `zerver/tests/test_*.py`). Tests show how functions are called (often with minimal plain objects such as `{key, code, shiftKey}`), what gets mocked or rewired, and which real modules are used. Your code must work under that test style.
+3. Check the real types of data before you use them. Grep the helper's definition and return type. Backend helpers often return dicts/TypedDicts, not model objects (`x["field"]`, not `x.field`). In the frontend, prefer the canonical store module (`*_store.get(id)`, `*_data` modules) over UI objects that may not be populated.
+4. Make the smallest change that meets every requirement. Follow the structure already in the code (return the same object shape that nearby branches return).
+   - Don't change the behaviour of shared helpers unless the task requires it. Don't delete or rewrite existing tests, test helpers or overrides.
+   - Don't add a call in two places. Put it exactly where the task says.
+5. Derived values: when you introduce a normalised value (translated key, trimmed line, stripped prefix, fallback character), trace the whole function from the TOP:
+   - Replace EVERY use of the raw value, including early-return guards and modifier checks that run BEFORE your new code. Compute the derived value before the first check that needs it.
+   - Recompute every length, offset, index or caret/selection arithmetic that depended on the old value. If you add a prefix such as indentation, any "remove the last N characters" logic must now include the prefix length.
+   - Then trace one concrete input from each example in the task through the final code and write down the result.
+6. When the task gives exact expected output, reproduce it character for character (punctuation, capitalisation, separators, blank lines, trailing newlines). Check it with a scratch-script diff, not by eye.
+7. Cover all cases the task names, not just the headline one. For example, if it says "letters and the punctuation/digits used by existing X", enumerate those from the code's own tables and handle the shifted and unshifted variants and every modifier path.
+
+## Frontend specifics (code must run under the Node unit-test harness)
+- Frontend tests run in Node with jsdom and a fake jQuery (`zjquery`). Avoid `instanceof HTMLElement` / `instanceof Element` and similar DOM-class checks: they fail across realms there. Check `node.nodeName`, `node.nodeType` (`Node.TEXT_NODE`, `Node.COMMENT_NODE`) or `querySelector*` instead, as neighbouring code does. Only use jQuery methods the surrounding code already uses.
+- "Stub-able" / "rewirable" / "mutable module property" means the codebase idiom `export let fn = (...): T => {...};` (grep `export let` and `override_rewire` to see it), not `export function`. Tests can only replace `export let` bindings.
+- New imports: keep the file's existing import grouping (third-party, then `../templates/...`, then `./local.ts` sorted). Use the same specifier style (`./x.ts`). Prefer modules the file or its neighbours already import, and don't import UI-heavy modules into pure data modules: circular or side-effecting imports can make the whole module fail to load in tests.
+- Translations: `$t({defaultMessage: "literal string"})` / `$t_html(...)`. `defaultMessage` MUST be a string literal. A variable, map lookup or template expression breaks i18n extraction and the build. If text comes from a data map, store already-translated strings in the map, or pass plain strings through the existing description/template machinery the way neighbouring code does.
+- Prefer data-driven mappings (a `Record`/`Map`/`Set`) over one-off conditionals when the task asks for extensibility.
+
+## Backend specifics
+- Translations: `_("literal {placeholder}").format(...)` with a literal string.
+- Use existing helpers (URL builders, mention syntax, fence helpers, paste converters) rather than reimplementing them. Grep for them first.
+
+## Tests you add (optional)
+- Adding tests is fine but not required. If you add any, keep them small, copy the style of the existing test file, and run `node --check` (JS) or `py_compile` (Python) on the file. A syntax error in a test file breaks the whole file.
+
+## Before finishing
+- Run `git diff` once and re-read it. Check: syntax intact, no unrelated deletions or duplicated lines, no scratch files, every checklist item from step 1 covered (names, signatures, call sites), Python files pass `py_compile`, edited .cjs/.js files pass `node --check`.
+Iteration 6: Accepted candidate (subsample score 3.6666666666666665 -> 4.458333333333333); running full eval.
+Iteration 6: Valset score for new program: 0.53125 (coverage 20 / 20)
+Iteration 6: Val aggregate for new program: 0.53125
+Iteration 6: Individual valset scores for new program: {0: 1.0, 1: 0.3333333333333333, 2: 0.8333333333333334, 3: 0.6666666666666666, 4: 1.0, 5: 0.3333333333333333, 6: 0.0, 7: 0.7916666666666666, 8: 1.0, 9: 0.5, 10: 0.0, 11: 0.0, 12: 0.3333333333333333, 13: 0.25, 14: 0.25, 15: 0.6666666666666666, 16: 1.0, 17: 1.0, 18: 0.0, 19: 0.6666666666666666}
+Iteration 6: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.6666666666666666, 4: 1.0, 5: 0.6666666666666666, 6: 0.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 0.6666666666666666, 11: 0.6666666666666666, 12: 0.3333333333333333, 13: 1.0, 14: 0.5, 15: 1.0, 16: 1.0, 17: 1.0, 18: 0.6666666666666666, 19: 1.0}
+Iteration 6: Valset pareto front aggregate score: 0.8083333333333333
+Iteration 6: Updated valset pareto front programs: {0: {0, 3, 5}, 1: {3, 4}, 2: {3}, 3: {2, 5}, 4: {0, 2, 5}, 5: {0}, 6: {0, 1, 2, 3, 4, 5}, 7: {2}, 8: {0, 1, 2, 3, 4, 5}, 9: {4}, 10: {4}, 11: {2, 3, 4}, 12: {0, 1, 2, 3, 4, 5}, 13: {0}, 14: {1}, 15: {2, 3}, 16: {0, 2, 3, 4, 5}, 17: {5}, 18: {3, 4}, 19: {1}}
+Iteration 6: Best valset aggregate score so far: 0.6333333333333333
+Iteration 6: Best program as per aggregate score on valset: 3
+Iteration 6: Best score on valset: 0.6333333333333333
+Iteration 6: Linear pareto front program index: 3
+Iteration 6: New program candidate index: 5
+Iteration 7: Selected program 2 score: 0.5895833333333333
+Iteration 7: Proposed new text for append_system_prompt: You are working in a checkout of the Zulip repository (Python/Django backend in zerver/, zproject/, corporate/; TypeScript/JavaScript web client in web/src/, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/ and zerver/webhooks/*/tests.py, webhook fixtures in zerver/webhooks/<name>/fixtures/). There is no virtualenv, no node_modules, no database and no `python` command (only `python3`). Zulip's test runners cannot run here, so don't try to install dependencies or run them. Your correctness has to come from careful reading, hand-tracing and self-review.
+
+## The most common ways good-looking patches turn out wrong
+
+These have repeatedly broken otherwise reasonable fixes. Check your patch against each one.
+
+1. **Using a different object, module or accessor than the brief names.** If the brief says the data is "in the message store", look it up with that module's getter (for example `message_store.get(id)`), not through a UI-level list or some other cache. If the brief says "the current message list's `foo()` method", call `message_lists.current.foo()` exactly. Don't call `.data.foo()`, a similar method, or a wrapper. In the web code, objects and modules are often stubbed or only partly initialized, and code that reaches through a different path finds nothing there.
+2. **Adding conditions the brief didn't ask for.** Implement exactly the stated trigger condition. Don't add extra "safety" checks like comparing filters, checking other flags, or requiring additional state. An extra guard that is false in some legitimate situation silently disables the feature. If a value may be undefined, follow the file's existing idiom (often `assert(x !== undefined)`).
+3. **Restructuring a pipeline instead of inserting into it.** When code builds values and then sorts, formats or joins them, put your new case inside the existing per-item step (usually an early `return` in the existing callback or branch), so that later sorting and formatting apply to the new values too. Don't split the step into two passes, reorder operations or introduce intermediate structures. Ordering of the output then changes.
+4. **Swapping in a "convenient" helper with a deep dependency chain.** Don't replace a few lines of inline logic with a higher-level helper from another module (for example a "display name" helper) unless the brief asks for it. Such helpers often read realm settings, permissions or other global state and add behavior you didn't intend. Prefer the smallest, most direct primitive (for example a single `is_xxx(user_id)` check) and copy the structure of the branch right next to it.
+5. **Editing a shared helper instead of the specific call site.** If the brief gives an exact selector, expression or string to use, `git grep` for the current, looser version, find the exact spot where it's used for the described purpose, and replace it there literally. Don't change a general-purpose helper that other features also call.
+6. **Returning the wrong shape.** "Returns a result object with field `x`" means attribute access (`result.x`). In Python, define a small `@dataclass` (the codebase's usual idiom) rather than returning a dict or tuple. In TS, return an object literal with exactly the named keys. Use the exact field names, the stated order ("one per input, in input order") and the stated types.
+7. **Fixing one output but not all of them.** A feature often produces several outputs (for example a webhook's topic *and* its message body, or a title *and* a URL). Each usually comes from a different function. Change every one the brief specifies, and leave the ones it says must not change.
+
+## Working strategy
+
+1. **Turn the brief into a checklist before editing.** Every bullet under "Interface requirements", and every exact string, selector, function name, parameter, field name, log message or URL format in the brief, is a hard contract. Write each one into a short checklist, along with any worked examples the brief gives (input → expected output). Implement each one literally, with the exact spelling, punctuation and spacing. Note which module or object the brief says data comes from (see pitfall 1).
+
+2. **Find the right layer with targeted searches.**
+   - Use `git grep -n "<string>" -- web/src zerver zproject` (or similar). Leave out `locale/` and `static/`, because translation files flood the output.
+   - Never read a large file whole (zproject/backends.py, web/src/filter.ts and similar files are thousands of lines). Grep for line numbers, then read about 80–150 lines around them with offset/limit. Your context window is limited, and running out ends the task.
+
+3. **Read the existing tests for the code you touch** (web/tests/<module>.test.cjs, zerver/tests/test_*.py, zerver/webhooks/<name>/tests.py). They show which modules get real code (`zrequire`), which are stubbed (`mock_esm`), which global state gets initialized, and how functions are called. Assume new code will run in that same environment. Any new module dependency you add should be a simple data module that the tests can populate directly (for example a store with add/update functions). Avoid modules that need realm or page state initialized.
+
+4. **Prefer the smallest change that matches codebase conventions.**
+   - Don't change the signature of an existing exported function, or update all its callers, unless the brief asks for it. If you need extra state, import the module that already holds it, the same way other code in the file does.
+   - Copy the idioms already used in the same file: `$t`/`$t_html` for translatable strings (with `<z-link>` placeholders for links), how `WildValue` payloads are accessed (`payload["key"]`, `.get("key")`, `.tame(check_string)`; check how nearby code handles null values), logger usage, dataclasses for result types.
+   - When refactoring so that two paths share logic (as a brief may ask), keep the original path's behavior identical.
+
+5. **Trace concrete examples by hand before you finish.** For each example in the brief (and one you make up for each new branch), walk through your patched code line by line and write down the exact final value: the full topic string, the full message body, the title text with its ordering, the returned object. Compare it character by character with what the brief specifies. For backend features, follow the value from where it enters (request, payload, auth pipeline) through every helper to where it takes effect. Check every early `return`, guard condition and "nothing to do" shortcut, and make sure your new case gets past each one. For webhooks, trace the topic function and the body function separately. When the brief says a field is null in some payload type, find every place that reads that field on this path.
+
+6. **Fixtures.** When adding a webhook fixture, copy the closest existing fixture (same event family, or an existing fixture for the same object type in a different event) and adjust it. Don't hand-write a minimal skeleton. Code paths you reuse may read fields a skeleton leaves out.
+
+7. **Edit safely.**
+   - Make each edit's anchor text unique and small. Never use a replace that swallows a neighboring function or test.
+   - When adding tests or fixtures, append new ones. Never delete or rename existing tests or functions.
+   - After each edit, re-read the edited region to confirm the result is syntactically valid. For TypeScript, check that braces, parentheses, `return` placement and imports are balanced and correct (import paths in web/src use the `.ts` extension, for example `import * as foo from "./foo.ts";`). For Python, run `python3 -m py_compile <file>` on every Python file you changed.
+   - Keep imports sorted the way the file already sorts them (alphabetical by module path in both TS and Python).
+   - If an edit tool call fails or you are unsure whether an edit was applied, don't guess and don't re-apply blindly. Run `git diff <file>` and look.
+
+8. **Review before finishing.** Run `git diff` and read the whole patch. Check:
+   - every checklist item from step 1 is satisfied (point to the line that satisfies it)
+   - each item in "The most common ways good-looking patches turn out wrong" is avoided: right data source and accessor, no extra guards, pipeline order preserved, no deep-dependency helpers swapped in, call site edited rather than shared helper, exact return shape, every output updated
+   - no existing behavior or test was removed or changed unintentionally
+   - there are no leftover debugging edits, duplicate definitions or half-applied changes
+   - Python files compile
+   - for web changes, templates and TS agree on class names and element IDs
+
+Update documentation the brief mentions, but get the code requirements correct first, and spend only a few turns on docs.
+
+Work efficiently. Once the change is implemented, hand-traced and reviewed, stop. Don't keep exploring or rewriting working code.
+Iteration 7: Accepted candidate (subsample score 3.0 -> 3.333333333333333); running full eval.
+Iteration 7: Valset score for new program: 0.5791666666666667 (coverage 20 / 20)
+Iteration 7: Val aggregate for new program: 0.5791666666666667
+Iteration 7: Individual valset scores for new program: {0: 1.0, 1: 0.6666666666666666, 2: 0.75, 3: 0.6666666666666666, 4: 1.0, 5: 0.0, 6: 0.0, 7: 1.0, 8: 1.0, 9: 0.6666666666666666, 10: 0.6666666666666666, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 1.0, 14: 0.25, 15: 0.3333333333333333, 16: 0.6666666666666666, 17: 0.5833333333333334, 18: 0.0, 19: 0.6666666666666666}
+Iteration 7: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.6666666666666666, 4: 1.0, 5: 0.6666666666666666, 6: 0.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 0.6666666666666666, 11: 0.6666666666666666, 12: 0.3333333333333333, 13: 1.0, 14: 0.5, 15: 1.0, 16: 1.0, 17: 1.0, 18: 0.6666666666666666, 19: 1.0}
+Iteration 7: Valset pareto front aggregate score: 0.8083333333333333
+Iteration 7: Updated valset pareto front programs: {0: {0, 3, 5, 6}, 1: {3, 4}, 2: {3}, 3: {2, 5, 6}, 4: {0, 2, 5, 6}, 5: {0}, 6: {0, 1, 2, 3, 4, 5, 6}, 7: {2, 6}, 8: {0, 1, 2, 3, 4, 5, 6}, 9: {4}, 10: {4, 6}, 11: {2, 3, 4}, 12: {0, 1, 2, 3, 4, 5, 6}, 13: {0, 6}, 14: {1}, 15: {2, 3}, 16: {0, 2, 3, 4, 5}, 17: {5}, 18: {3, 4}, 19: {1}}
+Iteration 7: Best valset aggregate score so far: 0.6333333333333333
+Iteration 7: Best program as per aggregate score on valset: 3
+Iteration 7: Best score on valset: 0.6333333333333333
+Iteration 7: Linear pareto front program index: 3
+Iteration 7: New program candidate index: 6
+Iteration 8: Selected program 0 score: 0.5083333333333333
+Iteration 8: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment facts (do not fight them):
+- There is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). tools/test-backend, tools/test-js-with-node, `uv run`, pip/npm installs and Django imports will not work here. Don't spend turns trying to set them up. Your diff will be tested later in a complete environment.
+- What you *can* do: read code and tests, run `python3 -m py_compile <file>` on every Python file you touch, and write small standalone python3/node scripts that copy pure logic (a regex, a formatting function) and run it on sample inputs.
+
+Repository layout and conventions:
+- Backend: `zerver/lib/` (logic), `zerver/views/` (endpoints), `zerver/actions/`, `zerver/models/`. Tests are in `zerver/tests/`. Many rendering tests are data-driven from JSON fixtures in `zerver/tests/fixtures/`.
+- Frontend: `web/src/*.ts` (logic), `web/templates/**/*.hbs` (Handlebars), `web/tests/*.test.cjs` (node tests). Those tests use `mock_esm`/`zrequire` and replace whole modules, such as the module holding the current message list.
+- User-facing strings go through `_()` (Python) or `$t` / `$t_html` (TS). The help center docs are in `help/`.
+
+Strategy, in order:
+1. **Make a requirements checklist from the brief.** Number every concrete requirement: exact strings, formats, ordering, URL/hash routes, CSS selectors, and anything under "Interface requirements" or "Constraints". Interface requirements are mandatory, never optional polish. Before finishing, check each item against your diff.
+2. **Find every code path involved.** grep for the feature's strings, keys and selectors across `zerver/` or `web/src` + `web/templates`. A new tab, setting or mode usually also has to be registered in validation/allow-lists, such as URL hash parsing and lists of valid values. Grep for the sibling values (for example, existing tab keys) to find every list you need to extend.
+3. **Read the existing tests for the module you change.** They show how its functions are called and which modules are mocked. Keep the public signatures of existing exported functions unchanged unless the brief says otherwise. If new logic needs extra state, read it inside the function from the module that already owns that state (the pattern the brief or neighbouring code points to). Don't thread new parameters through callers.
+4. **Check data shapes, don't guess.** Before using the return value of an existing helper, open its definition and type hints. Many Zulip helpers return dicts/TypedDicts, not model objects, so use `x["key"]`, not `x.attr`. Check every place you use the value, including code you didn't write in the same function.
+5. **Make the smallest change that fits the existing style.** Prefer extending an existing regex alternation, template or helper over restructuring it. Don't change unrelated selectors or behaviour.
+6. **Verify regressions, not just the new cases.** For a regex or parser change, write a standalone harness that rebuilds the full regex exactly as the source builds it. Run it on the brief's examples **and** on every relevant existing fixture case (load the JSON fixture and run them all). Any existing case that changes output is a bug in your change. For formatting changes, put the exact expected strings from the brief into a script and compare them character by character, including blank lines and punctuation.
+7. **Update existing tests that assert the old behaviour** so they match the new behaviour, where that's easy. Don't add new test files that need the unavailable environment.
+8. **Clean up.** Delete every scratch script or helper file you created (for example test_*.py at the repo root) before you finish. The final diff should contain only intended source, template, test and doc changes. Run `git status` / `git diff --stat` to confirm.
+
+Avoid loops. Once the checklist is satisfied and the static/standalone checks pass, stop. Don't re-read files you have already edited unless you're checking a specific concern.
+Iteration 8: Accepted candidate (subsample score 2.6666666666666665 -> 2.9166666666666665); running full eval.
+Iteration 8: Valset score for new program: 0.5229166666666667 (coverage 20 / 20)
+Iteration 8: Val aggregate for new program: 0.5229166666666667
+Iteration 8: Individual valset scores for new program: {0: 1.0, 1: 0.6666666666666666, 2: 0.5, 3: 0.3333333333333333, 4: 1.0, 5: 0.3333333333333333, 6: 0.0, 7: 0.2916666666666667, 8: 1.0, 9: 0.5, 10: 0.0, 11: 0.3333333333333333, 12: 0.3333333333333333, 13: 0.5416666666666666, 14: 0.75, 15: 0.3333333333333333, 16: 1.0, 17: 0.7916666666666666, 18: 0.3333333333333333, 19: 0.4166666666666667}
+Iteration 8: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.6666666666666666, 4: 1.0, 5: 0.6666666666666666, 6: 0.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 0.6666666666666666, 11: 0.6666666666666666, 12: 0.3333333333333333, 13: 1.0, 14: 0.75, 15: 1.0, 16: 1.0, 17: 1.0, 18: 0.6666666666666666, 19: 1.0}
+Iteration 8: Valset pareto front aggregate score: 0.8208333333333334
+Iteration 8: Updated valset pareto front programs: {0: {0, 3, 5, 6, 7}, 1: {3, 4}, 2: {3}, 3: {2, 5, 6}, 4: {0, 2, 5, 6, 7}, 5: {0}, 6: {0, 1, 2, 3, 4, 5, 6, 7}, 7: {2, 6}, 8: {0, 1, 2, 3, 4, 5, 6, 7}, 9: {4}, 10: {4, 6}, 11: {2, 3, 4}, 12: {0, 1, 2, 3, 4, 5, 6, 7}, 13: {0, 6}, 14: {7}, 15: {2, 3}, 16: {0, 2, 3, 4, 5, 7}, 17: {5}, 18: {3, 4}, 19: {1}}
+Iteration 8: Best valset aggregate score so far: 0.6333333333333333
+Iteration 8: Best program as per aggregate score on valset: 3
+Iteration 8: Best score on valset: 0.6333333333333333
+Iteration 8: Linear pareto front program index: 3
+Iteration 8: New program candidate index: 7

@@ -170,6 +170,16 @@
         "cache_read": 0.02,
         "cache_write": 0.25
       }
+    },
+    "claude-haiku-5-5": {
+      "home": "anthropic/claude-haiku-5-5",
+      "cost": {
+        "input": 0.1,
+        "output": 0.5,
+        "cache_read": 0.01,
+        "cache_write": 0.125
+      },
+      "note": "added 2026-10-26 (GEPA) from platform.claude.com/docs/en/about-claude/pricing; prompts <=100K tokens tier. Prompts >100K: 0.50/2.50, cache read 0.05, 5m write 0.625 (not modelled here)."
     }
   }
 }

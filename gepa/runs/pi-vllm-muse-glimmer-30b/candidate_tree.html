@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEPA Candidate Tree</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; width: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; display: flex; flex-direction: column; }
+  #header { background: #fff; border-bottom: 1px solid #dee2e6; padding: 12px 20px; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  #header h1 { font-size: 18px; font-weight: 600; color: #212529; }
+  .legend { display: flex; gap: 14px; font-size: 13px; color: #495057; }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #adb5bd; }
+  #graph-container { flex: 1 1 auto; width: 100%; overflow: auto; padding: 20px; text-align: center; }
+  #graph-container svg { width: 100%; height: 100%; }
+  #tooltip {
+    display: none; position: fixed; background: #fff; border: 1px solid #dee2e6;
+    border-radius: 8px; padding: 14px 16px; max-width: 560px; max-height: 70vh; overflow-y: auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 1000; font-size: 13px; line-height: 1.5;
+  }
+  #tooltip .tt-header { font-weight: 700; font-size: 15px; margin-bottom: 6px; color: #212529; }
+  #tooltip .tt-meta { color: #6c757d; margin-bottom: 4px; }
+  #tooltip .tt-hint { color: #adb5bd; font-size: 11px; font-style: italic; margin-bottom: 10px; }
+  #tooltip .tt-comp-name { font-weight: 600; color: #495057; margin-top: 10px; border-bottom: 1px solid #e9ecef; padding-bottom: 2px; }
+  #tooltip .tt-comp-text {
+    white-space: pre-wrap; word-break: break-word; background: #f8f9fa;
+    border: 1px solid #e9ecef; border-radius: 4px; padding: 8px 10px; margin-top: 4px;
+    font-family: "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px;
+    max-height: 200px; overflow-y: auto;
+  }
+  .role-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+  .role-best { background: #00e5ff33; color: #006064; }
+  .role-pareto { background: #ff980033; color: #e65100; }
+  .role-seed { background: #e0e0e0; color: #424242; }
+</style>
+</head>
+<body>
+<div id="header">
+  <h1>GEPA Candidate Tree</h1>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:cyan"></div> Best</div>
+    <div class="legend-item"><div class="legend-dot" style="background:orange"></div> Pareto Front</div>
+    <div class="legend-item"><div class="legend-dot" style="background:lightgray"></div> Other</div>
+  </div>
+</div>
+<div id="graph-container"><p>Loading graph&hellip;</p></div>
+<div id="tooltip"></div>
+
+<script type="module">
+const NODES = [{"idx": 0, "score": 0.6, "parents": "seed", "role": "Seed", "components": {"append_system_prompt": ""}},
+{"idx": 1, "score": 0.75, "parents": "0", "role": "", "components": {"append_system_prompt": "## Working in the Zulip repository\n\nLayout: Django backend in `zerver/` (views in `zerver/views/`, shared logic in `zerver/lib/`, models in `zerver/models/`, backend tests in `zerver/tests/`). Each webhook integration lives in `zerver/webhooks/<name>/` with `view.py`, `tests.py` and `fixtures/`. The web frontend is in `web/src/` (TypeScript and some legacy `.js`), and its tests are in `web/tests/*.test.cjs`. File names in a task brief may be slightly off (for example `.ts` versus `.js`). Find the real file with `grep -rn`/`find` before assuming anything.\n\n### Workflow\n1. Read the brief closely. Copy its exact expected inputs and outputs: message bodies, blank lines, punctuation, ordering, duplicates. Treat them as the specification.\n2. Read the whole function or module you'll change, plus the existing tests and fixtures for it. They show the conventions and the expected output format.\n3. Make the smallest change that meets the brief. Keep existing function names, signatures, call sites, imports and helper functions unless the brief says otherwise. Don't rewrite working code you don't need to touch.\n4. Verify (see below), then re-read your full diff with `git diff`.\n\n### Python pitfalls specific to Zulip (critical)\n- `_` is the gettext translation function, imported at module level and used as `_(\"message\")`. NEVER use `_` as a throwaway variable (`for _, x in ...`, `a, _ = ...`, `_ = f()`) in any function that also calls `_(...)`. Python treats `_` as local for the whole function, so even an existing `raise JsonableError(_(\"...\"))` crashes with UnboundLocalError. Use names like `unused`, `ignored` or `_unused` instead.\n- Don't shadow other module-level names you rely on either (`json`, `type`, `id`, imported helpers).\n- Keep type annotations consistent; the code base is fully type-annotated.\n- In TypeScript/JS, follow the surrounding style: double quotes, snake_case identifiers in Zulip code, and no new dependencies.\n\n### Verifying your change\n- Try the real test runner once: `./tools/test-backend zerver.webhooks.<name>.tests` (or another test module), or `./tools/test-js-with-node web/tests/<file>.test.cjs`. If it fails because of a missing environment (no `.venv`, missing `node_modules`, database errors), stop after one or two attempts. Don't try to install dependencies or hunt for virtualenvs; that wastes many turns.\n- Without the runner, test the *actual edited code*, not a copy of the logic. Copies hide bugs like the `_` shadowing above. For Python, run `python -m py_compile <file>`, then import the real function (stub Django pieces if you must) and run it on the existing fixtures plus the brief's examples. For frontend code, run `node --check` on plain `.js` files, or check behavior by reading the code carefully.\n- Cover both the new case from the brief and the existing fixtures and tests. Existing behavior must not regress.\n- If the change alters behavior that existing tests or fixtures cover, update or extend those tests and fixtures to match the brief.\n\n### Final check (always do this before finishing)\nRead the full `git diff` line by line and check for:\n- variables that shadow `_` or other imported names;\n- undefined, misspelled or now-unused names and imports;\n- every early-return and error path still working (exercise the error branches mentally);\n- output formatting that exactly matches the brief, including whitespace and newlines;\n- leftover debug prints or scratch files inside the repo (keep scratch scripts in `/tmp`).\n\nStay efficient. Don't loop on environment problems. Once the change is implemented and checked, stop and give a short summary of what changed and why."}},
+{"idx": 2, "score": 0.55, "parents": "0", "role": "", "components": {"append_system_prompt": "You are fixing a bug or adding a feature in the Zulip repo: a Django/Python backend in `zerver/` and `zproject/`, and a TypeScript web client in `web/src/` with Handlebars templates in `web/templates/` and node tests in `web/tests/*.test.cjs`. Docs live in `docs/` and the help center in `starlight_help/`. Your final working-tree diff is the deliverable.\n\n## Treat the brief as a spec\n- Before you edit anything, pull out every exact name from the brief: function and method names, CSS selectors, setting keys, URL fragments, log messages, user-facing strings. Copy them character for character.\n- When the brief says to use an existing method, call that exact method on the object it names. For example, \"the list's `empty()` method\" means `list.empty()`, not `list.data.empty()` or something you think is equivalent. Before relying on a method, open its definition and confirm it exists on that object.\n- Put new logic in the function that already makes the decision you are changing. If one function already picks between case A and case B, add case C there, next to the existing branch. Don't add it in a caller or wrapper. Tests usually call the decision function directly and fake its dependencies.\n- Keep behavior the brief says must stay the same. Change only what it asks for.\n\n## Read the tests before writing code\n- Find the existing tests for the module you are changing: `grep -rl \"<module_name>\" web/tests zerver/tests`. Read how they set up state: `mock_esm`, `override`, fake objects such as `message_lists.current = {...}`, and fixtures. Shape your code so the same kind of setup drives it. For example, read state from the module-level objects the tests already fake, and call the methods those fakes provide.\n- Frontend strings go through `$t` / `$t_html` (tests render them with a \"translated:\" prefix). Backend strings go through `gettext` / `_()`. Match the exact HTML and attribute order the brief gives.\n\n## Run checks; don't skip them\n- Backend: `./tools/test-backend zerver.tests.test_x.TestClass.test_name`\n- Frontend: `./tools/test-js-with-node web/tests/x.test.cjs`, or `node web/tests/lib/index.cjs web/tests/x.test.cjs`.\n- Types and lint, if available: `./tools/run-mypy`, `npx tsc --noEmit -p web`, `./tools/lint <files>`.\n- If a runner fails because of the environment (missing database or node_modules), say so once and move on. Then compensate: write a quick scratch check where you can, and trace your code by hand against how the existing tests call it. Never write \"might be complex, we can trust it\" and stop.\n- When it makes sense, add or extend a test next to the existing ones for the new behavior.\n\n## Manage your context; it is limited\n- Never read a large file whole. Use `grep -n` to find the spot, then read about 40\u201380 lines around it with offset/limit.\n- Run searches from the repo root with relative paths. If a `find` or `grep` returns nothing, change the pattern; don't repeat it.\n- Don't re-read files you have already seen. Make a short plan early (files to change, where each change goes) and work through it.\n- Aim to have the core code change done in the first third of your effort. Doc and help-center updates come after the code works. Keep them targeted: grep for the affected pages and update only those.\n\n## Zulip conventions\n- Imports in TS files are sorted alphabetically: `import * as x from \"./x.ts\";`. Keep that order.\n- Settings: defaults and types go in `zproject/default_settings.py`, documentation in `zproject/prod_settings_template.py`, and validation in `zerver/checks.py`.\n- User changes go through the `do_*` functions in `zerver/actions/`. Validate with the existing helpers instead of writing new validation.\n- Log or warning text named in the brief must match exactly, including punctuation and IDs.\n\n## Before you finish\n- Run `git diff` and check each brief requirement against the diff, one by one: exact names, exact strings, the right function or layer, existing behavior kept.\n- Remove debugging leftovers and scratch files.\n- Summarize what you changed and what you verified. Say plainly what you could not run."}},
+{"idx": 3, "score": 0.6, "parents": "1", "role": "Pareto Front", "components": {"append_system_prompt": "## Working in the Zulip repository\n\nLayout: Django backend in `zerver/` (views in `zerver/views/`, shared logic in `zerver/lib/`, models in `zerver/models/`, backend tests in `zerver/tests/`). Webhook integrations live in `zerver/webhooks/<name>/` (`view.py`, `tests.py`, `fixtures/`). The web frontend is in `web/src/` (TypeScript plus some `.js`), with tests in `web/tests/*.test.cjs`. File names in a brief may be slightly off (`.ts` vs `.js`), so find the real file with `grep -rn`/`find`.\n\n### Workflow\n1. Read the brief closely. Its exact inputs and outputs are the specification: message bodies, link/URL shapes, blank lines, punctuation, ordering.\n2. Pin down *what kind of thing* the brief asks for and keep it. If it says \"topic link whose `/with/` URL uses the message id\", the result must still be a topic link containing `/with/<id>`. A different construct (a message link, a `near/` URL) is wrong even if it \"includes the id\". Before switching to a different helper, read what that helper actually outputs. Usually the right fix is to pass new data into the existing helper or add an optional parameter to it.\n3. Read the whole function you'll change, the helpers it calls, and the existing tests and fixtures. They show the conventions and the output format.\n4. Make the smallest change that meets the brief. Keep existing names, signatures, call sites and helpers unless the brief says otherwise.\n5. Verify (below), then re-read your full `git diff`.\n\n### Python pitfalls (critical)\n- `_` is the gettext function (`_(\"message\")`). NEVER use `_` as a throwaway variable in a function that also calls `_(...)`. That makes `_` local for the whole function and raises UnboundLocalError. Use `unused`/`ignored` instead.\n- Don't shadow module-level names (`json`, `type`, `id`, imported helpers). Keep type annotations consistent.\n\n### JS/TS pitfalls (critical)\n- `+` is left-associative: `prefix + n + 1` with a string `prefix` gives `\"21\"`, not `3`. Do the arithmetic first in its own variable or in parentheses (`prefix + (n + 1)`), and make sure numbers parsed from text really are numbers.\n- When you generalize a code path (for example, adding indentation or a prefix), re-check *every* branch it touches: bulleted and numbered, empty and non-empty, removal paths. Also check how character offsets and slice lengths change when the prefix gets longer.\n- Follow the local style: double quotes, snake_case, no new dependencies.\n\n### Verifying your change\n- Try the real runner once: `./tools/test-backend <module>` or `./tools/test-js-with-node web/tests/<file>.test.cjs`. If it says to activate a dev environment and `.venv` exists, try `source .venv/bin/activate &&` plus the same command once. If it still fails because of the environment, stop. Don't install dependencies or hunt for environments.\n- Without the runner, check the *actual edited code*, not a copy of it. Copies hide bugs. For Python, run `python -m py_compile`, then import the real function (stub Django if needed) on fixtures and the brief's examples. For TS, trace concrete inputs through the real edited lines and write down the exact string each branch produces, including types (string vs number). Use `node --check` for plain `.js` files.\n- Cover the new case and all existing test cases. Existing behavior must not regress.\n- Only change expected values in existing tests if the new value is exactly what the brief describes. If you are rewriting test expectations to fit your output, first check that your output matches the brief's wording.\n- Add or extend tests for the new behavior next to similar existing ones.\n\n### Final check (always)\nRead the full `git diff` line by line for:\n- shadowed `_` or imports; undefined, misspelled or unused names;\n- string/number mixing and off-by-one slicing;\n- every early-return and error path;\n- output matching the brief exactly (construct type, URL shape, whitespace, newlines);\n- leftover debug prints or scratch files in the repo (keep scratch work in `/tmp`).\n\nStay efficient and don't loop on environment problems. When the change is done and checked, stop and summarize what changed and why."}},
+{"idx": 4, "score": 0.8, "parents": "3", "role": "Best", "components": {"append_system_prompt": "## Working in the Zulip repository\n\nLayout: Django backend in `zerver/` (views `zerver/views/`, shared logic `zerver/lib/`, models `zerver/models/`, tests `zerver/tests/`). Webhooks in `zerver/webhooks/<name>/` (`view.py`, `tests.py`, `fixtures/`). Web frontend in `web/src/` (TypeScript plus some `.js`), tests in `web/tests/*.test.cjs`. File names in a brief may be slightly off (`.ts` vs `.js`). Find the real file with `grep -rn`/`find`.\n\n### 1. Turn the brief into a checklist first\nBefore editing, write a numbered list of every requirement in the brief:\n- each behavior rule (orderings, \"X below Y\", edge cases, \"unchanged\" cases);\n- each interface fact: module, exported name, parameter order and types, required vs optional, return shape, exact strings (spaces, punctuation, markers), and which caller must invoke what;\n- each worked example, with its exact expected output.\nStick to the kind of thing the brief asks for. If it asks for a topic link with `/with/<id>`, the result must be that, not a message link or a `near/` URL. Read what a helper outputs before switching helpers. At the end, go through the checklist item by item against your diff and state how each one is met.\n\n### 2. Follow the interface exactly\n- If the brief says a function must be \"stub-able\", \"mutable\", or \"rewireable\", declare it as `export let name = (...) => {...};`. Zulip tests replace such functions with `override_rewire` and modules with `mock_esm`. Plain `export function` cannot be rewired.\n- Use the exact names, parameter positions and literal strings the brief gives. Add a parameter as required if the brief lists it as required, then update every call site (`grep -rn name web/src`).\n- If the brief says caller A must call B, add that call in exactly that flow.\n\n### 3. Find everything that exercises your code\n- `grep -rn <function> web/src web/tests` (or `zerver/`). Callers' tests (e.g. a composebox test that uses a sorting helper) check your change too. Read the assertions there that involve your change and work out what they will produce now.\n- If the brief changes an ordering or output, update the expected values in *every* affected existing test, and only to what the brief describes. Add tests for new behavior next to similar ones.\n\n### 4. Make the smallest correct change\nRead the whole function, its helpers and its tests first. Keep existing names, signatures and helpers unless the brief says otherwise. Match the local style: double quotes, snake_case, no new dependencies.\n\n### Python pitfalls\n- `_` is gettext. Never use `_` as a throwaway in a function that calls `_(...)` (UnboundLocalError). Use `unused`.\n- Don't shadow module names (`json`, `type`, `id`, imports).\n\n### JS/TS pitfalls\n- `\"a\" + n + 1` gives `\"a\" + \"n1\"`-style string concatenation. Do arithmetic in parentheses or its own variable.\n- When you generalize a code path, re-check every branch: empty and non-empty, each item type, removal paths, slice offsets.\n- For ordering changes, write out the full resulting list for each brief example and each existing test fixture, bucket by bucket. Check where each new category lands relative to *every* other category (users, groups, bots, broadcast mentions).\n\n### Verifying\n- Try the runner once: `./tools/test-js-with-node web/tests/<file>.test.cjs` or `./tools/test-backend <module>`. If it asks for a dev env, try `source .venv/bin/activate && <same command>` once. If that fails, stop trying to run things. Don't look for or install environments. `python` may be missing, so use `python3`.\n- Without a runner: run `node --check` on `.js` files and `python3 -m py_compile` on `.py` files. Then trace concrete inputs through the *actual edited lines* (not a copy), for the brief's examples and the existing test cases in every affected test file. Write down the exact output and its type.\n- Don't spend many turns on manual tracing of unrelated paths. Focus on the checklist.\n\n### Final check\nRead the full `git diff`, looking for:\n- checklist items not met;\n- missing `export let` where stubbing is required;\n- unused, misspelled or shadowed names;\n- string/number mixing and off-by-one errors;\n- early returns;\n- exact output format;\n- leftover debug code or scratch files (keep scratch work in `/tmp`).\n\nThen stop and summarize the changes against the checklist."}},
+{"idx": 5, "score": 0.55, "parents": "4", "role": "", "components": {"append_system_prompt": "## Working in the Zulip repository\n\nLayout: Django backend in `zerver/` (views `zerver/views/`, shared logic `zerver/lib/`, models `zerver/models/`, tests `zerver/tests/`, markdown fixtures `zerver/tests/fixtures/`). Webhooks in `zerver/webhooks/<name>/`. Web frontend in `web/src/` (TypeScript and some `.js`), tests in `web/tests/*.test.cjs`. File names in a brief may be slightly off (`.ts` vs `.js`), so find the real file with `grep -rn` or `find`.\n\n### 1. Turn the brief into a checklist first\nBefore you edit anything, write a numbered list of every requirement in the brief:\n- each behavior rule (orderings, edge cases, fallbacks, \"unchanged\" cases);\n- each interface fact: module, exported name, parameter order and types, return shape, exact strings, and which caller must call what;\n- each worked example, with its exact expected output;\n- each \"reuse/refactor X\" instruction.\nAt the end, check every item against your diff.\n\n### 2. Follow the interface exactly\n- If the brief says a function must be \"stub-able\", \"mutable\" or \"rewireable\", or tests are likely to replace it, declare it as `export let name = (...) => {...};`. Zulip tests use `override_rewire` and `mock_esm`.\n- Use the exact names, parameter positions and literal strings from the brief. Update every call site (`grep -rn name web/src`).\n- If the brief says caller A must call B, add that call in exactly that flow.\n\n### 3. Reuse what the module already has\nBefore writing new logic, read the whole file and look for existing helpers doing similar work (fetching, converting, formatting). Call or refactor them instead of copying them. When you add code to a file, copy how that file already gets at other modules (`import * as foo from \"./foo.ts\"`, then `foo.bar()`).\n\n### 4. Every new name must resolve (most common silent failure)\nUsually nothing here can type-check or run your code, so an undefined name only fails at runtime. For **every** identifier your diff uses that is not defined in your new lines (modules like `foo.get(...)`, types, helpers, constants):\n- run `grep -n \"^import\\|^from\\|^const .* = require\" <file>` and confirm it is imported in **that** file;\n- if it is missing, add the import in the file's existing style and order;\n- confirm the function you call really exists and has that signature (`grep -n \"export.*name\" web/src/<module>.ts`).\nDo the same in Python: every name used must be imported or defined in that module.\n\n### 5. Find everything that exercises your code\n`grep -rn <function> web/src web/tests` (or `zerver/`). Read the assertions in callers' tests and work out what they produce now. If the brief changes an ordering or output, update the expected values in every affected test (and fixture JSON) to exactly what the brief describes. Add tests for new behavior next to similar ones.\n\n### 6. Make the smallest correct change\nKeep existing names, signatures and helpers unless the brief says otherwise. Match the local style: double quotes, snake_case, no new dependencies. Put the change in the layer the brief names (shared backend vs frontend).\n\n### Pitfalls\n- Python: `_` is gettext. Never use `_` as a throwaway in a function that calls `_(...)`. Don't shadow `json`, `type`, `id` or imported names.\n- JS/TS: `\"a\" + n + 1` concatenates strings, so do arithmetic in parentheses. When you generalize a code path, recheck every branch: empty and non-empty, each item type, error/fallback paths, slice offsets. For ordering changes, write out the full resulting list for each example and each existing test fixture.\n- Regexes: test them standalone with `python3 -c` / `node -e` against the brief's examples and existing fixture cases.\n\n### Verifying\n- Try the runner once: `./tools/test-js-with-node web/tests/<file>.test.cjs` or `./tools/test-backend <module>`. If it asks for a dev env, try `source .venv/bin/activate && <same command>` once. If that fails, **stop**: don't stub modules, fake settings or install anything. Use `python3`, not `python`.\n- `node --check` only works on `.js`. For `.py`, use `python3 -m py_compile`.\n- Then trace the brief's examples and the affected existing tests through the actual edited lines, writing down the exact output.\n\n### Final check\nRead the full `git diff` and confirm:\n- each checklist item is met;\n- the import audit (section 4) is done for every new identifier;\n- `export let` is used where stubbing is needed;\n- there are no misspelled or shadowed names, string/number mixing, off-by-one errors or stray early returns;\n- the output format is exact;\n- no debug code or scratch files are left (keep scratch work in `/tmp`).\nThen stop and summarize the changes against the checklist."}}];
+const DOT = `digraph G {
+    rankdir=TB;
+    node [style=filled, shape=circle, fontsize=14, width=0.6, height=0.6];
+    0 [label="0\\n(0.60)", fillcolor=lightgray, tooltip=" "];
+    1 [label="1\\n(0.75)", fillcolor=lightgray, tooltip=" "];
+    2 [label="2\\n(0.55)", fillcolor=lightgray, tooltip=" "];
+    3 [label="3\\n(0.60)", fillcolor=orange, tooltip=" "];
+    4 [label="4\\n(0.80)", fillcolor=cyan, tooltip=" "];
+    5 [label="5\\n(0.55)", fillcolor=lightgray, tooltip=" "];
+    0 -> 1;
+    0 -> 2;
+    1 -> 3;
+    3 -> 4;
+    4 -> 5;
+}`;
+
+const nodeMap = {};
+NODES.forEach(n => { nodeMap[n.idx] = n; });
+
+let pinnedIdx = null;   // non-null when tooltip is click-pinned (scrollable)
+let hoverIdx = null;    // non-null when hovering over a node
+
+function renderTooltip(idx) {
+  const n = nodeMap[idx];
+  if (!n) return "";
+  let roleBadge = "";
+  if (n.role === "Best") roleBadge = '<span class="role-badge role-best">BEST</span>';
+  else if (n.role === "Pareto Front") roleBadge = '<span class="role-badge role-pareto">PARETO</span>';
+  else if (n.role === "Seed") roleBadge = '<span class="role-badge role-seed">SEED</span>';
+
+  let comps = "";
+  for (const [name, text] of Object.entries(n.components)) {
+    const escaped = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    comps += '<div class="tt-comp-name">' + name + '</div><div class="tt-comp-text">' + escaped + '</div>';
+  }
+
+  return '<div class="tt-header">Candidate ' + n.idx + roleBadge + '</div>' +
+    '<div class="tt-meta">Score: <strong>' + n.score + '</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Parent(s): ' + n.parents +
+    '</div><div class="tt-hint">' + (pinnedIdx === idx ? 'Click node again to dismiss' : 'Click to pin &amp; scroll') + '</div>' +
+    comps;
+}
+
+function positionTooltip(x, y) {
+  const tt = document.getElementById("tooltip");
+  let tx = x + 16, ty = y + 16;
+  const r = tt.getBoundingClientRect();
+  if (tx + r.width > window.innerWidth - 8) tx = x - r.width - 16;
+  if (ty + r.height > window.innerHeight - 8) ty = y - r.height - 16;
+  if (tx < 8) tx = 8;
+  if (ty < 8) ty = 8;
+  tt.style.left = tx + "px";
+  tt.style.top = ty + "px";
+}
+
+function showTooltip(idx, x, y) {
+  const tt = document.getElementById("tooltip");
+  tt.innerHTML = renderTooltip(idx);
+  tt.style.display = "block";
+  positionTooltip(x, y);
+}
+
+function hideTooltip() {
+  pinnedIdx = null;
+  hoverIdx = null;
+  document.getElementById("tooltip").style.display = "none";
+}
+
+// Click outside tooltip and outside nodes dismisses pinned tooltip
+document.addEventListener("mousedown", function(e) {
+  const tt = document.getElementById("tooltip");
+  if (pinnedIdx !== null && tt.style.display === "block"
+      && !tt.contains(e.target) && !e.target.closest(".node")) {
+    hideTooltip();
+  }
+});
+
+async function render() {
+  const { instance } = await import("https://cdn.jsdelivr.net/npm/@viz-js/viz@3.11.0/lib/viz-standalone.mjs");
+  const viz = await instance();
+  const svg = viz.renderSVGElement(DOT);
+  const container = document.getElementById("graph-container");
+  container.innerHTML = "";
+  container.appendChild(svg);
+
+  // Attach hover listeners and strip native <title> tooltips to avoid double tooltips
+  svg.querySelectorAll(".node").forEach(node => {
+    const title = node.querySelector("title");
+    if (!title) return;
+    const idx = parseInt(title.textContent, 10);
+    if (isNaN(idx)) return;
+    title.remove();  // remove native SVG tooltip
+    node.style.cursor = "pointer";
+    // Hover: show tooltip following the mouse (non-interactive)
+    node.addEventListener("mouseenter", e => {
+      if (pinnedIdx !== null) return;  // don't override a pinned tooltip
+      hoverIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+    node.addEventListener("mousemove", e => {
+      if (pinnedIdx !== null || hoverIdx !== idx) return;
+      positionTooltip(e.clientX, e.clientY);
+    });
+    node.addEventListener("mouseleave", () => {
+      if (pinnedIdx !== null) return;
+      hoverIdx = null;
+      document.getElementById("tooltip").style.display = "none";
+    });
+    // Click: pin the tooltip so user can scroll it
+    node.addEventListener("click", e => {
+      e.stopPropagation();
+      if (pinnedIdx === idx) { hideTooltip(); return; }
+      pinnedIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+  });
+  // Also strip <title> from edges and the graph itself
+  svg.querySelectorAll(".edge title").forEach(t => t.remove());
+  const graphTitle = svg.querySelector(":scope > title");
+  if (graphTitle) graphTitle.remove();
+}
+
+render().catch(err => {
+  document.getElementById("graph-container").innerHTML =
+    "<p style='color:red'>Failed to render graph: " + err.message + "</p>" +
+    "<pre>" + DOT.replace(/</g,"&lt;") + "</pre>";
+});
+</script>
+</body>
+</html>

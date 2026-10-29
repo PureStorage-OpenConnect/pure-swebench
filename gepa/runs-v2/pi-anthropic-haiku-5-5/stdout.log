@@ -1,0 +1,1154 @@
+[rollout pi-anthropic-haiku-5-5--seed-s3] 0/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] 0/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 1/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] launching 19 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--seed-s3] launching 20 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--seed-s2] launching 20 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--seed-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-d720cb rc=0
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 43.9 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--seed-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-e248d0 rc=0
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 44.1 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5--seed] driver gepa-gepa2-pi-anthropic-haiku-5-5-2b220d rc=0
+[rollout pi-anthropic-haiku-5-5--seed] done in 48.1 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.2 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.2 min: resolved 5/6
+2026-10-26 14:12:56,708 INFO reflection ok: cost=$0.519
+[rollout pi-anthropic-haiku-5-5--g35313d77] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g35313d77-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g35313d77-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g35313d77] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g35313d77-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g35313d77-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g35313d77-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-18fa3a rc=0
+[rollout pi-anthropic-haiku-5-5--g35313d77-s2] done in 15.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g35313d77-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-e61a3e rc=0
+[rollout pi-anthropic-haiku-5-5--g35313d77-s3] done in 15.3 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g35313d77] driver gepa-gepa2-pi-anthropic-haiku-5-5-06a140 rc=0
+[rollout pi-anthropic-haiku-5-5--g35313d77] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g35313d77] driver gepa-gepa2-pi-anthropic-haiku-5-5-58871d rc=0
+[rollout pi-anthropic-haiku-5-5--g35313d77] done in 27.9 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.6 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.6 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.6 min: resolved 5/6
+2026-10-26 14:41:51,634 INFO reflection ok: cost=$0.494
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gfec3e0df] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gfec3e0df] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-bf8578 rc=0
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s3] done in 9.3 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-02621e rc=0
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s2] done in 9.4 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gfec3e0df] driver gepa-gepa2-pi-anthropic-haiku-5-5-8f3566 rc=0
+[rollout pi-anthropic-haiku-5-5--gfec3e0df] done in 9.5 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.0 min: resolved 5/6
+2026-10-26 14:52:01,954 INFO reflection ok: cost=$0.510
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g360f0c24] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g360f0c24] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g360f0c24] driver gepa-gepa2-pi-anthropic-haiku-5-5-516f58 rc=0
+[rollout pi-anthropic-haiku-5-5--g360f0c24] done in 19.3 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-104056 rc=0
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s3] done in 19.5 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-91161a rc=0
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s2] done in 20.6 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.0 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.0 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.0 min: resolved 4/4
+2026-10-26 15:13:08,698 INFO reflection ok: cost=$0.497
+[rollout pi-anthropic-haiku-5-5--g22b24e67] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-dd8a76 rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] done in 5.4 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g22b24e67] driver gepa-gepa2-pi-anthropic-haiku-5-5-270dd4 rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67] done in 6.4 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-fc9e24 rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] done in 20.6 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] launching 16 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67] launching 16 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] launching 16 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-3b19f1 rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] done in 15.5 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-c435cf rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] done in 15.9 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--g22b24e67] driver gepa-gepa2-pi-anthropic-haiku-5-5-8e302f rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67] driver gepa-gepa2-pi-anthropic-haiku-5-5-7a469d rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67] driver gepa-gepa2-pi-anthropic-haiku-5-5-a8b93e rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67] done in 37.3 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] done in 0.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] done in 0.0 min: resolved 5/6
+2026-10-26 16:11:45,027 INFO reflection ok: cost=$0.547
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] driver gepa-gepa2-pi-anthropic-haiku-5-5-8ef531 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-1f058d rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-da02f1 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 6.9 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] driver gepa-gepa2-pi-anthropic-haiku-5-5-d71ce2 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-4d9839 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 9.8 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] driver gepa-gepa2-pi-anthropic-haiku-5-5-84604d rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 12.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-7c09f6 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 27.1 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] driver gepa-gepa2-pi-anthropic-haiku-5-5-8918e3 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 31.8 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-51c72a rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 35.3 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.1 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.1 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.1 min: resolved 5/6
+2026-10-26 17:00:19,544 INFO reflection ok: cost=$0.560
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-839552 rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 11.4 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-1cfe2d rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 17.4 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] driver gepa-gepa2-pi-anthropic-haiku-5-5-c8d45e rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 17.4 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-d4cf3a rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 21.7 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] driver gepa-gepa2-pi-anthropic-haiku-5-5-77a3dc rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] driver gepa-gepa2-pi-anthropic-haiku-5-5-7326d4 rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-e4a77a rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 25.9 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] driver gepa-gepa2-pi-anthropic-haiku-5-5-4d3ec8 rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 31.0 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.0 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.0 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.0 min: resolved 3/4
+2026-10-26 17:49:30,657 INFO reflection ok: cost=$0.566
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s3] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s2] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s2] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s3] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-09faa1 rc=0
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s3] done in 18.5 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-dc78b2 rc=0
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s2] done in 22.2 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f] driver gepa-gepa2-pi-anthropic-haiku-5-5-81b5b1 rc=0
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f] done in 35.8 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.3 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.3 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.3 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.0 min: resolved 5/6
+2026-10-26 18:26:25,543 INFO reflection ok: cost=$0.563
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-326a15 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] done in 11.7 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] driver gepa-gepa2-pi-anthropic-haiku-5-5-9848cb rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] done in 12.4 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-419a24 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] done in 13.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-37997d rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-3c4e5c rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-e8a3a8 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] done in 21.6 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] driver gepa-gepa2-pi-anthropic-haiku-5-5-8f60d3 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-4eb110 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] done in 30.2 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] driver gepa-gepa2-pi-anthropic-haiku-5-5-af2d84 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] done in 34.7 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.0 min: resolved 4/6
+2026-10-26 19:15:12,354 INFO reflection ok: cost=$0.609
+[rollout pi-anthropic-haiku-5-5--g6383e52e] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-b470dc rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] done in 7.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-0f65f9 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] done in 20.5 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g6383e52e] driver gepa-gepa2-pi-anthropic-haiku-5-5-d8dd97 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e] done in 21.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e] driver gepa-gepa2-pi-anthropic-haiku-5-5-bfd809 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e] done in 23.3 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-0ae4ec rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-0b9373 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-b7c89f rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] done in 32.4 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-b43c85 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] done in 33.3 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.1 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.1 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.1 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.0 min: resolved 5/6
+2026-10-26 20:11:04,200 INFO reflection ok: cost=$0.555
+[rollout pi-anthropic-haiku-5-5--g1db28552-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g1db28552-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g1db28552] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g1db28552-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g1db28552] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g1db28552-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g1db28552-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-bd5d36 rc=0
+[rollout pi-anthropic-haiku-5-5--g1db28552-s3] done in 5.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g1db28552] driver gepa-gepa2-pi-anthropic-haiku-5-5-7f2b89 rc=0
+[rollout pi-anthropic-haiku-5-5--g1db28552] done in 6.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g1db28552-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-b28a9d rc=0
+[rollout pi-anthropic-haiku-5-5--g1db28552-s2] done in 15.9 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.4 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.4 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.4 min: resolved 5/6
+2026-10-26 20:27:59,672 INFO reflection ok: cost=$0.592
+[rollout pi-anthropic-haiku-5-5--g172d5405] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405] driver gepa-gepa2-pi-anthropic-haiku-5-5-7fe2ad rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405] done in 11.6 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-f716e1 rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] done in 13.2 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-947ecb rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] done in 14.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-4067a2 rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] done in 16.5 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g172d5405] driver gepa-gepa2-pi-anthropic-haiku-5-5-499b25 rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405] done in 24.0 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-085840 rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] done in 28.4 min: resolved 17/20
+2026-10-26 21:10:23,865 INFO done: best idx 2 val 0.917
+Iteration 0: Base program full valset score: 0.8395833333333333 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.8395833333333333
+Iteration 1: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+The repo is Zulip: a Django backend (`zerver/`: `lib/`, `actions/`, `views/`, `models/`, `webhooks/<name>/` with `view.py`, `tests.py`, `fixtures/`; tests in `zerver/tests/`) and a web frontend (`web/src/*.ts|*.js`, node tests in `web/tests/*.test.cjs`, Handlebars templates in `web/templates/`).
+
+The environment is limited: there is no virtualenv, no node_modules, no database, and only `python3` (no `python`). `tools/test-backend`, `tools/test-js-with-node`, Django imports and a full `tsc` run will not work here. Do not try to install packages, build node_modules or set up Django. Those attempts have burned 20–30 minutes before and changed nothing. Spend at most 2–3 turns on environment issues, then move on. TypeScript errors about missing generated files have nothing to do with your change.
+
+### Workflow
+1. Read the brief closely. List every concrete requirement: exact strings, ordering, edge cases, what must stay unchanged, and which existing helpers must be used. File names in the brief can be slightly off (for example `.ts` vs `.js`). Use `ls` or `grep` to find the real file.
+2. Read the target code, its existing tests, and 1–2 other places that call the helpers you will use.
+3. **Make your first real edit early, within about 5–8 turns.** Don't spend long turns reasoning before you write code. Write a reasonable implementation, then refine it. A finished, mostly right patch is far better than no patch. Never end a run with an empty diff.
+4. Update or extend the existing tests (and fixtures) to match the new behavior. Existing tests that assert the old behavior must be changed to the new behavior.
+5. Check your work in ways that run here (see below), then reread your final diff against the requirement list.
+
+### Use existing helpers the way the codebase does
+- When the brief says to use an existing helper (for URLs, mentions, display recipients, fetching, conversion), find how existing callers build its arguments with `grep -rn "helper_name(" zerver web/src`, and do the same. Don't build a helper's input by hand from model internals. For example, `Recipient.type_id` and related fields mean different things for different recipient types. Hand-built inputs often give subtly different output, such as the wrong participant set in a URL.
+- If the brief says to "reuse" or "refactor so both paths share" some logic, pull the shared piece into one function and call it from both the old and the new code paths. Don't copy it.
+- Follow local conventions:
+  - Python user-facing strings go through `_()` (gettext) with `.format()` placeholders.
+  - Frontend strings go through `$t` / `$t_html`.
+  - When the brief asks for a design that can grow, use a data mapping (a `Map`, object or dict) rather than a one-off `if`.
+  - Match nearby comment style and naming (snake_case in both TS and Python here).
+
+### Exact output matters
+When the brief gives an exact message, description, or body format, work out by hand the exact string your code will produce for each example in the brief: spaces, punctuation, blank lines, sort order, separators like ", and ", capitalization. Compare it with the brief character for character. Check each variant separately (for example channel vs 1:1 DM vs group DM, single vs multiple items, success vs error path). Bugs tend to sit in the branch you checked least.
+
+### Checking work without the test runners
+- **Python:** `python3 -m py_compile file.py`. To test pure logic, copy the relevant functions into a standalone `/tmp` script with stub inputs taken from the fixtures, and run it with `python3 -I`. Don't import `zerver.*`, because it needs Django.
+- **Frontend:** if `esbuild` or another transpiler already exists on the machine (`find / -name esbuild -type f 2>/dev/null | head`), you can transpile one function. Otherwise, copy the function into a plain `.cjs` file with the types removed and run it with `node`. Keep this quick. If it doesn't work within a couple of tries, trace the logic by hand against the tests instead.
+- Prettier/ESLint may or may not be runnable. If they are, run them on the changed files only. When you pipe output, record the tool's own exit code, not the exit code of `tail`.
+- In the end, read through your diff once more, line by line.
+
+### Final answer
+Leave all changes in the working tree. Briefly summarize what you changed and how you checked it, and note anything you could not check.
+Iteration 1: New subsample score 4.583333333333333 is not better than old score 5.458333333333333, skipping
+Iteration 2: Selected program 0 score: 0.8395833333333333
+Iteration 2: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue or adding a feature in the Zulip repo: a Django/Python backend (`zerver/`, `zproject/`, `corporate/`) and a TypeScript/JS web client (`web/src/*.ts`, Handlebars templates in `web/templates/`, CSS in `web/styles/`, node unit tests in `web/tests/*.test.cjs`). Help-center docs are in `starlight_help/` and developer/production docs are in `docs/`.
+
+### Environment limits
+- There is no virtualenv, no node_modules, no database and no `python` command (use `python3`). `tools/test-backend`, `tools/test-js-with-node`, the full `tsc` and ESLint cannot run properly here. Don't spend turns trying to make them work, and don't treat errors from missing generated files or modules as problems in your change.
+- To check your work, read the code carefully, trace the logic by hand against the brief's examples, and use small standalone `python3` or `node` snippets to check pure logic (string formatting, regexes, sorting, URL parsing). Re-read your final diff before you finish.
+
+### Make the minimal, conventional change
+- Implement exactly what the brief asks, at the point where the value or behavior is produced. Don't add extra behavior the brief doesn't ask for, such as preserving an old ordering, adding fallbacks, renaming things or restructuring helpers. If you think "it would be nicer if X also stayed the same", don't build X unless the brief explicitly requires it.
+- When existing code computes values and then post-processes them (sorting, joining, deduplicating, formatting as a list), change the values and let the existing post-processing run on the new values unchanged. Keep the existing order of steps. Read "only the displayed text changes" as "don't touch URLs, IDs or other data". It does not mean "keep the old sort order".
+- Use the exact strings, keys, selectors, log messages and function signatures given in the brief, character for character. If the brief names a function, parameter or module, create or change exactly that.
+- Follow nearby patterns: user-facing strings go through `$t` / `$t_html` (with `<z-link>` handlers for links) on the frontend and `_()` / gettext on the backend. In TS, module-level constant banner or message objects are common. For functions the brief says must be stub-able or rewirable, use a plain `export function` like their neighbors. For backend settings, update `zproject/default_settings.py` / `prod_settings_template.py` and the docs when you add a setting key.
+- Prefer reusing existing helpers (people, muted_users, resolved_topic, stream_data, the actions in `zerver/actions/*`, validators like `check_full_name`) over writing new logic.
+
+### Process
+1. Read the brief fully and list every concrete requirement: exact strings, the edge cases (guest/muted/not-subscribed/empty/invalid input), and what must NOT change.
+2. Use grep to find the code path and its existing tests. Read the surrounding function completely before editing.
+3. Make the change. Then grep `web/tests/` and `zerver/tests/` for any selector, string, function signature or call you changed. Update existing tests and stubs that depend on it, for example zjquery `set_find_results` selectors and mocked function names. Add a test for the new behavior in the file's existing style.
+4. Walk through each example in the brief against your code and write down the exact output it produces. That includes the order of items in lists, punctuation and the "and" joining. Check that each matches what a straightforward implementation would give.
+5. Run any available formatter on changed files (`ruff format` on Python files, `prettier` if present), but don't let tooling failures block you.
+6. Keep the diff focused. Don't edit unrelated files.
+Iteration 2: New subsample score 4.791666666666667 is not better than old score 5.0, skipping
+Iteration 3: Selected program 0 score: 0.8395833333333333
+Iteration 3: Proposed new text for append_system_prompt: You are fixing a bug or implementing a feature in the Zulip repository (Python/Django backend in zerver/, TypeScript web frontend in web/src/, frontend tests in web/tests/*.test.cjs, backend tests in zerver/tests/). Your final working-tree diff is what counts.
+
+## Environment facts (don't waste turns on these)
+- There is no virtualenv, no node_modules, no database, and no `python` command (use `python3`). tools/test-backend, tools/test-js-with-node, Django imports, and pytest-on-Zulip will NOT work here. Don't try to set them up. Check this once at most, then move on.
+- What you CAN do: run plain `python3` and `node` on small standalone scripts. Copy the exact logic you changed (string handling, regexes, branching) into a scratch script in /tmp and run it on concrete inputs, including the brief's examples and the existing test cases near your change. Compute string lengths, caret offsets and indices with code, never by hand counting.
+- `python3 -m py_compile <file>` catches syntax errors in Python you edited. Check that JSON fixtures parse with `python3 -c "import json,sys; json.load(open(sys.argv[1]))" <file>`.
+
+## Working method
+1. Read the brief twice. List every concrete requirement: exact output strings, URL forms (e.g. which narrow operator a link must use), function signatures, which argument a call must receive, when something must or must not happen (synchronously, only in case X). Treat these terms literally. If the brief says the result must be a certain kind of link or string, your change must produce exactly that kind, not a similar-looking alternative an existing helper happens to produce.
+2. Find the code path and read the surrounding module and its existing tests before editing. Look at how existing tests mock dependencies and which branches they exercise.
+3. Before reusing an existing helper, read its implementation and write out the exact string or value it will produce for a typical input. Compare that with the brief's expected behavior. If they differ, build the output the brief describes, using lower-level helpers such as URL builders and escaping functions, rather than forcing the nearest helper to fit.
+4. Keep the change minimal and scoped. Change behavior ONLY in the exact situation the brief describes. Every other branch (edge cases like "no messages", null or undefined values, other message types, already-fetched states) should keep its previous return value and side effects. Do not add new side effects (network calls, new dependency calls) to branches the brief doesn't mention.
+5. Verify with a scratch script: the brief's examples, the existing test expectations around your change (they must still hold), and the edge branches you didn't intend to change.
+6. Review your final `git diff`. Re-check it line by line against your requirement list from step 1.
+
+## Tests you write or edit
+- Add or extend tests in the existing test file next to similar cases, following its style.
+- Do NOT rewrite existing test expectations just to match your new output, unless the brief explicitly requires that new output. If an existing assertion conflicts with your change, first suspect your change.
+- Frontend tests use `mock_esm("../src/module")`, `zrequire`, and `override`. If your source change makes a module call into another module it didn't call before, tests that load it will need that dependency mocked. Also consider whether an existing test reaches that call through a branch you didn't mean to change. That usually means your change is too broad.
+- Backend markdown rendering cases live in zerver/tests/fixtures/markdown_test_cases.json. Keep it valid JSON.
+
+## Repo conventions
+- Match surrounding code: snake_case, existing comment density, prettier-style formatting (wrap long calls the same way neighboring code does), TypeScript types on new functions.
+- Put small reusable string helpers in the existing util module for that feature, if one exists.
+- Backend HTML built with `Markup(...).format(...)` escapes plain `str` arguments and leaves `Markup` arguments unescaped. Use that to emit intended markup while still escaping user content.
+- User-facing backend strings go through `_()` for translation, and localized helpers usually take the user's language.
+
+## Finish
+End with a short summary: what you changed, why it satisfies each requirement in the brief, and what you verified and how (scratch scripts, compile checks). Say plainly that the project test suites could not be run here.
+Iteration 3: New subsample score 4.666666666666667 is not better than old score 5.0, skipping
+Iteration 4: Selected program 0 score: 0.8395833333333333
+Iteration 4: Proposed new text for append_system_prompt: ## Working on Zulip in this environment
+
+You are fixing an issue in the Zulip repository: a Django backend in `zerver/` (`zerver/lib/` holds the logic, `zerver/actions/` holds state-changing operations, `zerver/models/` holds the models and constants, `zerver/tests/` holds the tests), plus a TypeScript web frontend (`web/src/`, with node tests in `web/tests/*.test.cjs`).
+
+This checkout has no virtualenv, no node_modules, no database and no `python` command (only `python3`). `tools/test-backend` and `tools/test-js-with-node` cannot run here, so don't spend turns trying to set them up. Check your work with:
+- `python3 -m py_compile <files>` for syntax;
+- careful reading of the code paths you changed and every caller you touched;
+- small standalone `python3` snippets that exercise pure logic (string formatting, parsing) without importing Django;
+- `git diff` review before you finish.
+
+## Before you write any code: find the existing mechanism
+
+Most Zulip issues are solved by wiring up something that already exists, not by adding a parallel code path. Before you add a new parameter, flag, helper or output format:
+
+1. Read the whole function you will change, plus its keyword options and the helpers it calls. Grep for related flags, options, constants and helpers (for example, an existing option that already prints the same kind of line, or a constant for a length limit).
+2. If the codebase already produces output similar to what the issue describes, in the same position (a preamble line, a header, a label), reuse that mechanism and its exact formatting, including markdown such as bold, separators and blank lines. A new parallel path that renders the "same" thing slightly differently is a bug.
+3. Treat strings in the issue as follows:
+   - If the issue says a string is exact or case-sensitive, reproduce it character for character.
+   - If it describes output as "a line of the form …", treat that as a description of the content. Match how neighbouring output in the same function is formatted. If sibling lines are bolded (`**From:** …`), a new line next to them should follow the same convention, especially when an existing option already emits it.
+4. Prefer the smallest change that achieves the behaviour. When a three-line change that turns on an existing option would work, don't add a new parameter.
+
+## Reading the issue
+
+- Extract every concrete requirement: conditions, ordering, placement, exact strings, return types and field names, error types and messages, what must stay unchanged. Check each one off against your diff at the end.
+- Mind boundary conditions: decide whether a check should apply to the raw input or a transformed value, use `>` or `>=` deliberately against the repo's constant, and handle empty values and fallback/default branches.
+- When the issue names an existing helper (for display names, file names, escaping, MIME types and so on), use that helper rather than reimplementing it.
+- If the issue specifies a function signature, parameter names, a return object or field names, implement exactly those, because other code may call them.
+
+## Conventions
+
+- Backend: import constants from where they are defined (for example `zerver.models.constants`) rather than hard-coding numbers. Use `Markup`/`Markup.format` for HTML so that user content stays escaped and intended markup is emitted literally. Translated user-facing strings go through `_()`. Raise the exception types the surrounding code already uses.
+- Frontend: keep TypeScript types sound. Reorder results by splitting the candidates into groups that each keep the existing relevance order, then concatenate the groups in priority order. Don't rewrite comparators in ways that change unrelated orderings.
+- Update every caller of any function whose signature or return type you change (grep the whole repo, including `zerver/data_import/`, management commands and tests). Update existing tests whose expectations your intended change legitimately alters.
+- Add or extend a focused test next to the existing tests for the feature, in the existing test class and style. Assert on the exact output your code produces, and check that the assertion matches how the surrounding tests format similar output.
+
+## Before finishing
+
+- Re-read your diff against the requirement checklist and against the existing mechanism you found. Ask yourself: "Is there already code that does this, and did I produce output identical in format to it?"
+- Byte-compile the changed Python files and check that every import resolves to a real name (grep its definition).
+- Leave no debug files or stray edits in the working tree.
+Iteration 4: Accepted candidate (subsample score 4.666666666666667 -> 6.0); running full eval.
+Iteration 4: Found a better program on the valset with score 0.8666666666666666.
+Iteration 4: Valset score for new program: 0.8666666666666666 (coverage 20 / 20)
+Iteration 4: Val aggregate for new program: 0.8666666666666666
+Iteration 4: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.0, 6: 0.6666666666666666, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.3333333333333333, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 0.3333333333333333}
+Iteration 4: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.0, 6: 0.6666666666666666, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.3333333333333333, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 1.0}
+Iteration 4: Valset pareto front aggregate score: 0.9
+Iteration 4: Updated valset pareto front programs: {0: {0, 1}, 1: {1}, 2: {0, 1}, 3: {0, 1}, 4: {0, 1}, 5: {0, 1}, 6: {0, 1}, 7: {0, 1}, 8: {0, 1}, 9: {0, 1}, 10: {0, 1}, 11: {0, 1}, 12: {0, 1}, 13: {0, 1}, 14: {1}, 15: {0, 1}, 16: {0, 1}, 17: {1}, 18: {0, 1}, 19: {0}}
+Iteration 4: Best valset aggregate score so far: 0.8666666666666666
+Iteration 4: Best program as per aggregate score on valset: 1
+Iteration 4: Best score on valset: 0.8666666666666666
+Iteration 4: Linear pareto front program index: 1
+Iteration 4: New program candidate index: 1
+Iteration 5: Selected program 1 score: 0.8666666666666666
+Iteration 5: Proposed new text for append_system_prompt: ## Working on Zulip in this environment
+
+You are fixing an issue in the Zulip repository: a Django backend in `zerver/` (`zerver/lib/` holds the logic, `zerver/actions/` holds state-changing operations, `zerver/models/` holds the models and constants, `zerver/tests/` holds the tests, `zerver/webhooks/<name>/` holds the integrations with their fixtures and tests), plus a TypeScript web frontend (`web/src/`, with node tests in `web/tests/*.test.cjs`).
+
+This checkout has no virtualenv, no node_modules, no database and no `python` command (only `python3`). `tools/test-backend` and `tools/test-js-with-node` cannot run here, so don't spend turns trying to set them up. Check your work with:
+- `python3 -m py_compile <files>` for syntax. Afterwards, delete only the `__pycache__` directories that this created and that git doesn't track.
+- `node --check <file>` for syntax in `.cjs`/`.js` test files (`node` is installed even though node_modules isn't).
+- careful reading of the code paths you changed and every caller you touched;
+- small standalone `python3` snippets that exercise pure logic (string formatting, parsing) without importing Django;
+- `git diff` review before you finish.
+
+## Before you write any code: find the existing mechanism
+
+Most Zulip issues are solved by wiring up something that already exists, not by adding a parallel code path. Before you add a new parameter, flag, helper or output format:
+
+1. Read the whole function you will change, plus its keyword options and the helpers it calls. Grep for related flags, options, constants and helpers (for example, an existing option that already prints the same kind of line, or a constant for a length limit).
+2. If the codebase already produces output similar to what the issue describes, in the same position (a preamble line, a header, a label), reuse that mechanism and its exact formatting, including markdown such as bold, separators and blank lines. A new parallel path that renders the "same" thing slightly differently is a bug.
+3. Treat strings in the issue as follows:
+   - If the issue says a string is exact or case-sensitive, reproduce it character for character.
+   - If it describes output as "a line of the form …", treat that as a description of the content. Match how neighbouring output in the same function is formatted, especially when an existing option already emits that line.
+4. Prefer the smallest change that achieves the behaviour. When a three-line change that turns on an existing option would work, don't add a new parameter.
+
+## Check what the output finally becomes
+
+A helper whose name looks right isn't automatically correct. When the issue is about what a link, mention or reference finally points to or displays (for example, which message a narrow URL anchors on), follow your output all the way to its final rendered form:
+- If you emit a markup shorthand that a later step rewrites into a link (for example, the markdown processor at send time), read that step. Check whether it produces exactly the URL and text the issue wants, or whether it resolves things later on its own terms (latest message, current name).
+- If the shorthand can't guarantee the required target, build the explicit link yourself with the existing URL helpers (`zerver/lib/url_encoding.py`) and the existing escaping helpers. The usual form is a markdown link `[visible text](url)` whose visible text matches how the product already displays that reference.
+- Then update the existing test expectations to the new final string.
+
+## Change only the case the issue describes
+
+- Map the function's existing branches before editing: early returns, "no data / empty" cases, already-known/cached cases. Leave every branch the issue doesn't mention behaving exactly as before.
+- Put new behaviour (a server fetch, a new side effect, a new return value) only in the branch that has the bug. Don't fold several branches into one unconditional path.
+- Don't delete or rename existing exported functions, constants or parameters as "cleanup", even if your change leaves them unused here. Other modules and tests may use them.
+- Frontend tests load modules with `zrequire` and replace dependencies with `mock_esm(...)`. Those mocks usually define only the functions the test expects to be called. If you add a call to another module, or run an existing call in more cases, tests that mock that module can crash with "x is not a function". Confine new calls to the exact case the issue describes, and grep `web/tests/` for tests of the function you changed.
+
+## Reading the issue
+
+- Extract every concrete requirement: conditions, ordering, placement, exact strings, return types and field names, error types and messages, what must stay unchanged. Check each one off against your diff at the end.
+- Mind boundary conditions: decide whether a check should apply to the raw input or a transformed value, use `>` or `>=` deliberately against the repo's constant, and handle empty values and fallback/default branches.
+- When the issue names an existing helper (for display names, file names, escaping, MIME types, fetching and so on), call that helper rather than reimplementing it, with the arguments the issue states.
+- If the issue specifies a function signature, parameter names, a return object or field names, implement exactly those, because other code may call them.
+
+## Conventions
+
+- Backend: import constants from where they are defined (for example `zerver.models.constants`) rather than hard-coding numbers. Use `Markup`/`Markup.format` for HTML so that user content stays escaped and intended markup is emitted literally. Translated user-facing strings go through `_()`. Raise the exception types the surrounding code already uses, and log through the logger the surrounding code uses.
+- Frontend: keep TypeScript types sound. Reorder results by splitting the candidates into groups that each keep the existing relevance order, then concatenate the groups in priority order. Don't rewrite comparators in ways that change unrelated orderings.
+- Update every caller of any function whose signature or return type you change (grep the whole repo, including `zerver/data_import/`, management commands and tests). Update existing tests whose expectations your intended change legitimately alters.
+- Add or extend a focused test next to the existing tests for the feature, in the existing test class and style. Assert on the exact output your code produces, and check that the assertion matches how the surrounding tests format similar output. Webhook tests use fixture files in the integration's `fixtures/` directory.
+
+## Before finishing
+
+- Re-read your diff against the requirement checklist and against the existing mechanism you found. Ask yourself:
+  - "Is there already code that does this, and did I produce output identical in format to it?"
+  - "Does every branch I didn't mean to change still behave as before?"
+  - "Did I remove anything another module could use?"
+- Byte-compile the changed Python files, `node --check` the changed test files, and check that every import resolves to a real name (grep its definition).
+- Leave no debug files, probe scripts, `__pycache__` directories or stray edits in the working tree.
+Iteration 5: Accepted candidate (subsample score 5.0 -> 5.333333333333333); running full eval.
+Iteration 5: Found a better program on the valset with score 0.9166666666666666.
+Iteration 5: Valset score for new program: 0.9166666666666666 (coverage 20 / 20)
+Iteration 5: Val aggregate for new program: 0.9166666666666666
+Iteration 5: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.3333333333333333, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 1.0}
+Iteration 5: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.3333333333333333, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 1.0}
+Iteration 5: Valset pareto front aggregate score: 0.9166666666666666
+Iteration 5: Updated valset pareto front programs: {0: {0, 1, 2}, 1: {1, 2}, 2: {0, 1, 2}, 3: {0, 1, 2}, 4: {0, 1, 2}, 5: {0, 1, 2}, 6: {2}, 7: {0, 1, 2}, 8: {0, 1, 2}, 9: {0, 1, 2}, 10: {0, 1, 2}, 11: {0, 1, 2}, 12: {0, 1, 2}, 13: {0, 1, 2}, 14: {1, 2}, 15: {0, 1, 2}, 16: {0, 1, 2}, 17: {1, 2}, 18: {0, 1, 2}, 19: {0, 2}}
+Iteration 5: Best valset aggregate score so far: 0.9166666666666666
+Iteration 5: Best program as per aggregate score on valset: 2
+Iteration 5: Best score on valset: 0.9166666666666666
+Iteration 5: Linear pareto front program index: 2
+Iteration 5: New program candidate index: 2
+Iteration 6: Selected program 2 score: 0.9166666666666666
+Iteration 6: All subsample scores perfect for parent 2. Skipping.
+Iteration 6: Reflective mutation did not propose a new candidate
+Iteration 7: Selected program 2 score: 0.9166666666666666
+Iteration 7: Proposed new text for append_system_prompt: ## Working on Zulip in this environment
+
+You are fixing an issue in the Zulip repository: a Django backend in `zerver/` (`zerver/lib/` holds the logic, `zerver/actions/` holds state-changing operations, `zerver/models/` holds the models and constants, `zerver/tests/` holds the tests, `zerver/webhooks/<name>/` holds the integrations with their fixtures and tests), plus a TypeScript web frontend (`web/src/`, with node tests in `web/tests/*.test.cjs`).
+
+This checkout has no virtualenv, no node_modules, no database and no `python` command (only `python3`). `tools/test-backend` and `tools/test-js-with-node` cannot run here, so don't spend turns trying to set them up. Because you cannot run the tests, you must "run" them in your head: see "Simulate the existing tests" below. Check your work with:
+- `python3 -m py_compile <files>` for syntax. Afterwards, delete only the `__pycache__` directories that this created and that git doesn't track.
+- `node --check <file>` for syntax in `.cjs`/`.js` test files (`node` is installed even though node_modules isn't).
+- careful reading of the code paths you changed, every caller you touched, and every function your new code calls (including what those call);
+- small standalone `python3` snippets that exercise pure logic (string formatting, parsing) without importing Django;
+- `git diff` review before you finish.
+
+## Before you write any code: find the existing mechanism
+
+Most Zulip issues are solved by wiring up something that already exists, not by adding a parallel code path. Before you add a new parameter, flag, helper or output format:
+
+1. Read the whole function you will change, plus its keyword options and the helpers it calls. Grep for related flags, options, constants and helpers (for example, an existing option that already prints the same kind of line, a predicate like "is this user muted", or a constant for a length limit).
+2. If the codebase already produces output similar to what the issue describes, in the same position (a preamble line, a header, a label), reuse that mechanism and its exact formatting, including markdown such as bold, separators and blank lines. A new parallel path that renders the "same" thing slightly differently is a bug.
+3. Treat strings in the issue as follows:
+   - If the issue says a string is exact or case-sensitive, reproduce it character for character.
+   - If it describes output as "a line of the form …", treat that as a description of the content. Match how neighbouring output in the same function is formatted, especially when an existing option already emits that line.
+4. Prefer the smallest change that achieves the behaviour. When a three-line change that turns on an existing option would work, don't add a new parameter.
+
+## Reuse narrowly: add a branch, don't swap in a bigger helper
+
+"Reuse existing code" means reusing the smallest piece that answers exactly the new question, such as a predicate (`is_x(...)`), a constant or a formatter. It does NOT mean replacing working code with a broader helper that "also handles" your case.
+- When the issue adds a special case (muted, deactivated, guest, empty, archived, …), the preferred shape is a new `if (<narrow predicate>) { return <new value>; }` placed before the existing code. Leave the existing lines below it byte-for-byte unchanged.
+- Don't delete an existing inline branch and route everything through a different general-purpose helper, even if that helper seems to produce the same output. Broader helpers often do extra work, such as permission checks, realm or settings lookups, "assert valid user" lookups, or fetches. In production that can change behaviour for the unchanged cases. In tests it crashes, because the test only set up the state the old code needed.
+- Before calling any helper you haven't used yet, open its definition and read what it calls, one or two levels deep. If it touches global state (realm settings, current user, settings_data or permission groups, page_params, message_lists.current, the DOM), you need a reason it is safe on every path that reaches your code. Otherwise use a narrower function.
+
+## Simulate the existing tests (you cannot run them)
+
+For every function you changed:
+1. Grep `web/tests/` (or `zerver/tests/`) for the function and its callers. Open the test file's top-level setup: which modules are loaded with `zrequire` (real code) and which are replaced with `mock_esm` (fakes that define only some functions), what `set_realm`/`set_current_user`/`initialize_*` set up, and which globals are set.
+2. Walk at least one existing test case through your new code by hand. For each new call, ask: is that module real or mocked here? If it is mocked, is that function defined? If it is real, does it read state this test never initialized?
+3. If any answer is "no" or "not sure", change your implementation so that unchanged cases make exactly the same calls as before. Don't edit the test setup to make room for a broader helper.
+4. A module imported for a new predicate must also be safe to load with `zrequire` in those tests (it usually is if the test file already imports it or it has no side effects on load).
+
+## Check what the output finally becomes
+
+A helper whose name looks right isn't automatically correct. When the issue is about what a link, mention or reference finally points to or displays (for example, which message a narrow URL anchors on), follow your output all the way to its final rendered form:
+- If you emit a markup shorthand that a later step rewrites into a link (for example, the markdown processor at send time), read that step. Check whether it produces exactly the URL and text the issue wants, or whether it resolves things later on its own terms (latest message, current name).
+- If the shorthand can't guarantee the required target, build the explicit link yourself with the existing URL helpers (`zerver/lib/url_encoding.py`) and the existing escaping helpers. The usual form is a markdown link `[visible text](url)` whose visible text matches how the product already displays that reference.
+- Then update the existing test expectations to the new final string.
+
+## Change only the case the issue describes
+
+- Map the function's existing branches before editing: early returns, "no data / empty" cases, already-known/cached cases. Leave every branch the issue doesn't mention behaving exactly as before, including which functions it calls.
+- Put new behaviour (a server fetch, a new side effect, a new return value, a new lookup) only in the branch that has the bug. Don't fold several branches into one unconditional path.
+- When the issue has a "What must NOT change" section, treat each item as a requirement and check it against your diff.
+- Don't delete or rename existing exported functions, constants or parameters as "cleanup", even if your change leaves them unused here. Other modules and tests may use them.
+- Frontend tests load modules with `zrequire` and replace dependencies with `mock_esm(...)`. Those mocks usually define only the functions the test expects to be called. If you add a call to another module, or run an existing call in more cases, tests that mock that module can crash with "x is not a function", and real modules can crash on uninitialized state. Confine new calls to the exact case the issue describes.
+
+## Reading the issue
+
+- Extract every concrete requirement: conditions, ordering, placement, exact strings, return types and field names, error types and messages, what must stay unchanged. Check each one off against your diff at the end.
+- Mind boundary conditions: decide whether a check should apply to the raw input or a transformed value, use `>` or `>=` deliberately against the repo's constant, and handle empty values and fallback/default branches.
+- When the issue names an existing helper (for display names, file names, escaping, MIME types, fetching and so on), call that helper with the arguments the issue states rather than reimplementing it. When the issue names only a behaviour, use the narrowest existing predicate that implements it.
+- If the issue specifies a function signature, parameter names, a return object or field names, implement exactly those, because other code may call them.
+
+## Conventions
+
+- Backend: import constants from where they are defined (for example `zerver.models.constants`) rather than hard-coding numbers. Use `Markup`/`Markup.format` for HTML so that user content stays escaped and intended markup is emitted literally. Translated user-facing strings go through `_()`. Raise the exception types the surrounding code already uses, and log through the logger the surrounding code uses.
+- Frontend: user-facing strings go through `$t` / `$t_html`, as a complete literal `defaultMessage` (a separate string per variant, e.g. a plain one and a "(guest)" one, rather than concatenating translated pieces). Keep TypeScript types sound. Reorder results by splitting the candidates into groups that each keep the existing relevance order, then concatenate the groups in priority order. Don't rewrite comparators in ways that change unrelated orderings.
+- Update every caller of any function whose signature or return type you change (grep the whole repo, including `zerver/data_import/`, management commands and tests). Update existing tests whose expectations your intended change legitimately alters.
+- Add or extend a focused test next to the existing tests for the feature, in the existing test class and style. Assert on the exact output your code produces, and check that the assertion matches how the surrounding tests format similar output. Webhook tests use fixture files in the integration's `fixtures/` directory. If your test mutates shared module state (e.g. marking users as muted), make sure it can't change the results of other test cases in the same file.
+
+## Before finishing
+
+- Re-read your diff against the requirement checklist and against the existing mechanism you found. Ask yourself:
+  - "Is there already code that does this, and did I produce output identical in format to it?"
+  - "Does every branch I didn't mean to change still behave as before, and make the same calls as before?"
+  - "For every new function call I added: did I read its body, and is it safe in the existing tests' setup?"
+  - "Did I remove anything another module could use?"
+- Byte-compile the changed Python files, `node --check` the changed test files, and check that every import resolves to a real name (grep its definition).
+- Leave no debug files, probe scripts, `__pycache__` directories or stray edits in the working tree.
+Iteration 7: Accepted candidate (subsample score 5.0 -> 5.666666666666667); running full eval.
+Iteration 7: Valset score for new program: 0.90625 (coverage 20 / 20)
+Iteration 7: Val aggregate for new program: 0.90625
+Iteration 7: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.6666666666666666, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.3333333333333333, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 0.7916666666666666, 18: 1.0, 19: 0.3333333333333333}
+Iteration 7: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.6666666666666666, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.3333333333333333, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 1.0}
+Iteration 7: Valset pareto front aggregate score: 0.95
+Iteration 7: Updated valset pareto front programs: {0: {0, 1, 2, 3}, 1: {1, 2, 3}, 2: {0, 1, 2, 3}, 3: {0, 1, 2, 3}, 4: {0, 1, 2, 3}, 5: {3}, 6: {2, 3}, 7: {0, 1, 2, 3}, 8: {0, 1, 2, 3}, 9: {0, 1, 2, 3}, 10: {0, 1, 2, 3}, 11: {0, 1, 2, 3}, 12: {0, 1, 2, 3}, 13: {0, 1, 2, 3}, 14: {1, 2, 3}, 15: {0, 1, 2, 3}, 16: {0, 1, 2, 3}, 17: {1, 2}, 18: {0, 1, 2, 3}, 19: {0, 2}}
+Iteration 7: Best valset aggregate score so far: 0.9166666666666666
+Iteration 7: Best program as per aggregate score on valset: 2
+Iteration 7: Best score on valset: 0.9166666666666666
+Iteration 7: Linear pareto front program index: 2
+Iteration 7: New program candidate index: 3
+Iteration 8: Selected program 3 score: 0.90625
+Iteration 8: Proposed new text for append_system_prompt: ## Working on Zulip in this environment
+
+You are fixing an issue in the Zulip repository: a Django backend in `zerver/` (`zerver/lib/` holds the logic, `zerver/actions/` holds state-changing operations, `zerver/models/` holds the models and constants, `zerver/tests/` holds the tests, `zerver/webhooks/<name>/` holds the integrations with their fixtures and tests), plus a TypeScript web frontend (`web/src/`, with node tests in `web/tests/*.test.cjs`).
+
+This checkout has no virtualenv, no node_modules, no database and no `python` command (only `python3`). `tools/test-backend` and `tools/test-js-with-node` cannot run here, so don't spend turns trying to set them up. Because you cannot run the tests, you must "run" them in your head (see "Simulate the existing tests" below). Check your work with:
+- `python3 -m py_compile <files>` for syntax. Afterwards, delete only the `__pycache__` directories that this created and that git doesn't track.
+- `node --check <file>` for syntax in `.cjs`/`.js` test files (`node` is installed even though node_modules isn't).
+- careful reading of the code paths you changed, every caller you touched, and every function your new code calls (including what those call);
+- small standalone `python3` snippets that exercise pure logic (string formatting, regexes, parsing) without importing Django. For regex changes, test the new pattern against the issue's examples AND against existing fixture cases that must keep working;
+- `git diff` review before you finish.
+
+## Before you write any code: find the existing mechanism
+
+Most Zulip issues are solved by wiring up something that already exists, not by adding a parallel code path. Before you add a new parameter, flag, helper or output format:
+
+1. Read the whole function you will change, plus its keyword options and the helpers it calls. Grep for related flags, options, constants and helpers (for example, an existing option that already prints the same kind of line, a predicate like "is this user muted", or a constant for a length limit).
+2. If the codebase already produces output similar to what the issue describes, in the same position, reuse that mechanism and its exact formatting, including markdown such as bold, separators and blank lines.
+3. Treat strings in the issue as follows:
+   - If the issue gives an exact string or template, reproduce it character for character (watch for periods, `, and `, blank lines between blocks).
+   - If it describes output as "a line of the form …", treat that as a description of the content and match how neighbouring output in the same function is formatted.
+4. Prefer the smallest change that achieves the behaviour.
+
+## Edit in place, even when the issue changes a lot of output
+
+Even when the issue reformats an entire message or view, keep the existing structure of the function: the same branches in the same order, the same variables, the same data lookups. Change strings and add the new pieces inside the branch they belong to. Don't merge, reorder or rebuild branches (for example, 1:1 DM vs group DM vs channel message) into a new structure. Rewriting from scratch is how working details, such as the exact data each branch already fetched, get lost.
+
+## Calling an existing helper: copy how other callers build its arguments
+
+When the issue tells you to use an existing helper (a URL builder, formatter, mention or escaping helper), getting its name right is only half the job. The arguments decide the output.
+1. Open the helper's definition and see exactly which fields of each argument it reads.
+2. Grep for 2–3 existing callers (in `zerver/lib/`, `zerver/actions/`, and especially `zerver/tests/`) and copy how they build those arguments: which dict keys, which source each value comes from, what is included.
+3. Be careful with data whose shape depends on where it came from. In Zulip, a direct message's recipient data differs by source. A 1:1 DM's `Recipient` row points only at the other user, so the "display recipient" fetched from the recipient row does not include the sender. Message dicts sent to clients list every participant, sender included. Group DMs list all members. Narrow URLs and permalinks for DMs identify the whole conversation, so they normally need all participants. When a helper expects a message dict, build it the way existing callers do. Don't pass a lookup that just happens to have a similar field name.
+4. Work out the helper's actual output by hand for a concrete case. Use two real test users (e.g. ids 10 and 12) in a 1:1 DM, a group DM and a channel message. Compare that output to what the product's own link for that conversation looks like. If they differ, your arguments are wrong.
+
+## Reuse narrowly: add a branch, don't swap in a bigger helper
+
+"Reuse existing code" means reusing the smallest piece that answers exactly the new question, such as a predicate (`is_x(...)`), a constant or a formatter. It does NOT mean replacing working code with a broader helper that "also handles" your case.
+- When the issue adds a special case (muted, deactivated, guest, empty, archived, …), the preferred shape is a new `if (<narrow predicate>) { return <new value>; }` placed before the existing fallthrough. Leave the existing lines byte-for-byte unchanged.
+- Broader helpers often do extra work (permission checks, realm or settings lookups, fetches). That can change production behaviour for the unchanged cases, and it crashes tests that only set up the state the old code needed.
+- Before calling any helper you haven't used yet, read what it calls, one or two levels deep. If it touches global state (realm settings, current user, permission groups, page_params, message_lists.current, the DOM), you need a reason it is safe on every path that reaches your code. In frontend code, guard possibly-undefined globals (e.g. `x?.method()`) unless the surrounding code already asserts them.
+
+## Simulate the existing tests (you cannot run them)
+
+For every function you changed:
+1. Grep `web/tests/` (or `zerver/tests/`) for the function and its callers. Open the test file's top-level setup: which modules are loaded with `zrequire` (real code), which are replaced with `mock_esm` (fakes that define only some functions), and what `set_realm`/`set_current_user`/`initialize_*` set up.
+2. Walk at least one existing test case through your new code by hand. For each new call: is that module real or mocked here? If mocked, is that function defined? If real, does it read state this test never initialized?
+3. If any answer is "no" or "not sure", change your implementation so that unchanged cases make exactly the same calls as before. Don't edit the test setup to make room for a broader helper.
+4. For backend message-format changes, find the existing tests that assert on the full output string and update them to the new exact output, including every branch (channel, 1:1 DM, group DM, any special cases).
+
+## Check what the output finally becomes
+
+When the issue is about what a link, mention or reference finally points to or displays, follow your output all the way to its final rendered form:
+- If you emit a markup shorthand that a later step rewrites (e.g. the markdown processor at send time), read that step and check that it produces exactly the URL and text the issue wants.
+- If you build a URL, write out the literal URL your code produces for a concrete test case and check that every identifier the target needs is present (all conversation participants, the right message id, the channel id and topic).
+
+## Change only the case the issue describes
+
+- Map the function's existing branches before editing: early returns, "no data / empty" cases, already-known/cached cases. Leave every branch the issue doesn't mention behaving exactly as before.
+- Put new behaviour only in the branch that has the bug. Don't fold several branches into one unconditional path.
+- When the issue has a "What must NOT change" or "non-regression" section, treat each item as a requirement and check it against your diff.
+- Don't delete or rename existing exported functions, constants or parameters as "cleanup". Other modules and tests may use them.
+
+## Reading the issue
+
+- Extract every concrete requirement: conditions, ordering (e.g. "sorted alphabetically"), placement, exact strings, return types and field names, what must stay unchanged. Check each one off against your diff at the end.
+- Mind boundary conditions: raw vs transformed input, `>` vs `>=` against the repo's constant, empty values, trailing punctuation, fallback branches.
+- When the issue names an existing helper, call that helper (with arguments built as its existing callers build them) rather than reimplementing it.
+- If the issue specifies a function signature, parameter names, a selector, a return object or field names, implement exactly those.
+
+## Conventions
+
+- Backend: import constants from where they are defined rather than hard-coding numbers. Use `Markup`/`Markup.format` for HTML. Translated user-facing strings go through `_()`, as one complete template per variant. Raise the exception types and use the logger the surrounding code uses.
+- Frontend: user-facing strings go through `$t` / `$t_html`, as a complete literal `defaultMessage`. Define fixed banners/messages as module-level constants next to similar existing ones when that is the local pattern. Keep TypeScript types sound.
+- Update every caller of any function whose signature or return type you change (grep the whole repo, including `zerver/data_import/`, management commands and tests).
+- Add or extend a focused test next to the existing tests for the feature, in the existing class and style. Markdown rendering cases go in the JSON fixture file of test cases.
+
+## Write test expectations independently of your implementation
+
+Don't build the expected string in a test by copying what your code produces, or by calling your new code the same way your implementation does. Work out the expected value from the issue and from how the product already shows the same thing. For example, write out the permalink of that conversation as a user would see it, or compute it by calling the helper with arguments built the way existing tests build them. Then compare that to what your implementation produces. If they differ, the implementation is probably wrong, so don't just adjust the test to match.
+
+## Before finishing
+
+- Re-read your diff against the requirement checklist and the existing mechanism you found. Ask yourself:
+  - "Did I keep the function's existing branch structure, and only change what the issue asks?"
+  - "For every helper I call: did I build its arguments the way existing callers do, and did I write out its real output for a concrete 1:1 / group / channel case?"
+  - "Does every branch I didn't mean to change still behave as before and make the same calls as before?"
+  - "Is every new call safe in the existing tests' setup?"
+  - "Did I remove anything another module could use?"
+- Byte-compile the changed Python files, `node --check` the changed test files, and check that every import resolves to a real name (grep its definition).
+- Leave no debug files, probe scripts, `__pycache__` directories or stray edits in the working tree.
+Iteration 8: New subsample score 4.75 is not better than old score 5.583333333333333, skipping
+Iteration 9: Selected program 3 score: 0.90625
+Iteration 9: All subsample scores perfect for parent 3. Skipping.
+Iteration 9: Reflective mutation did not propose a new candidate
+Iteration 10: Selected program 2 score: 0.9166666666666666
+Iteration 10: Proposed new text for append_system_prompt: ## Working on Zulip in this environment
+
+You are fixing an issue in the Zulip repository: a Django backend in `zerver/` (`zerver/lib/` holds the logic, `zerver/actions/` holds state-changing operations, `zerver/models/` holds the models and constants, `zerver/tests/` holds the tests, `zerver/webhooks/<name>/` holds the integrations with their fixtures and tests), plus a TypeScript web frontend (`web/src/`, with node tests in `web/tests/*.test.cjs`).
+
+This checkout has no virtualenv, no node_modules, no database and no `python` command (only `python3`). `tools/test-backend`, `tools/test-js-with-node`, `tsc` and `npx` cannot run here, so don't spend turns trying to set them up or get around that. Check your work with:
+- `python3 -m py_compile <files>` for syntax. Afterwards, delete only the `__pycache__` directories that this created and that git doesn't track.
+- `node --check <file>` for syntax in `.cjs`/`.js` test files (`node` is installed even though node_modules isn't). `.ts` files can't be checked this way, so review them by reading.
+- careful reading of the code paths you changed, every function you newly call (all the way down), and every caller you touched;
+- small standalone `python3` / `node -e` snippets that exercise pure logic (string formatting, parsing, regexes, offsets) without importing Django or repo modules;
+- `git diff` review before you finish.
+
+## Before you write any code: find the existing mechanism
+
+Most Zulip issues are solved by wiring up something that already exists, not by adding a parallel code path. Before you add a new parameter, flag, helper or output format:
+
+1. Read the whole function you will change, plus its keyword options and the helpers it calls. Grep for related flags, options, constants and helpers (for example, an existing option that already prints the same kind of line, or a constant for a length limit).
+2. If the codebase already produces output similar to what the issue describes, in the same position (a preamble line, a header, a label), reuse that mechanism and its exact formatting, including markdown such as bold, separators and blank lines. A new parallel path that renders the "same" thing slightly differently is a bug.
+3. Treat strings in the issue as follows:
+   - If the issue says a string is exact or case-sensitive, or gives it as a literal translatable string, reproduce it character for character.
+   - If it describes output as "a line of the form …", treat that as a description of the content. Match how neighbouring output in the same function is formatted, especially when an existing option already emits that line.
+4. Prefer the smallest change that achieves the behaviour. When a three-line change that turns on an existing option would work, don't add a new parameter.
+
+## Reusing a helper vs. adding a narrow branch
+
+Reusing a mechanism is right when it already produces exactly the required output. Swapping existing inline code for a "higher-level" helper from another module is risky, even if its name looks right. Before you replace working code with a call to such a helper:
+- Read the helper's full body and the functions it calls. Check that it returns exactly the required string or value for **every** case the issue lists, including combinations (for example "muted and guest", "empty and indented") and the cases that must stay unchanged.
+- Check what the helper depends on: other modules, global or realm/user/settings state, permission checks, lookups that assert or throw. A helper that looks pure can reach deep into state that the module you're editing never touched before. The existing tests of your module only set up the state your module used to need, so the new call can crash them.
+- If either check fails or is unclear, don't swap. Keep the existing code and add a small branch in front of it. Use the most direct predicate (for example an `is_…`/`has_…` check from the relevant data module), plus the same translation/formatting pattern the neighbouring lines already use (e.g. `$t({defaultMessage: "..."})`, `_()`, `Markup.format`).
+- Don't delete or rewrite the existing lines next to your new case (for example the guest-indicator or fallback lines) unless the issue asks you to. New behaviour goes in an added branch; old behaviour stays byte-for-byte.
+
+## Check what the output finally becomes
+
+A helper whose name looks right isn't automatically correct. When the issue is about what a link, mention or reference finally points to or displays (for example, which message a narrow URL anchors on), follow your output all the way to its final rendered form:
+- If you emit a markup shorthand that a later step rewrites into a link (for example, the markdown processor at send time), read that step. Check whether it produces exactly the URL and text the issue wants, or whether it resolves things later on its own terms (latest message, current name).
+- If the shorthand can't guarantee the required target, build the explicit link yourself with the existing URL helpers (`zerver/lib/url_encoding.py`) and the existing escaping helpers. The usual form is a markdown link `[visible text](url)` whose visible text matches how the product already displays that reference.
+- Then update the existing test expectations to the new final string.
+
+## Change only the case the issue describes
+
+- Map the function's existing branches before editing: early returns, "no data / empty" cases, already-known/cached cases. Leave every branch the issue doesn't mention behaving exactly as before.
+- Put new behaviour (a server fetch, a new side effect, a new return value, a new module call) only in the branch that has the bug. Don't fold several branches into one unconditional path.
+- Don't delete or rename existing exported functions, constants or parameters as "cleanup", even if your change leaves them unused here. Other modules and tests may use them.
+- Frontend tests load modules with `zrequire` (real module) or `mock_esm(...)` (fake module). Mocks usually define only the functions the test expects to be called, and real modules only work with the state the test file sets up (`set_realm({})`, `set_current_user`, `people.add_active_user`, etc.). Before you add a call to another module, open the test file(s) for the function you changed (grep `web/tests/`) and check:
+  - Is that module mocked? Then your call may hit "x is not a function".
+  - Is it real? Then does everything it reads (realm settings, current user, permission groups) exist in that test's setup? If not, your call will crash existing tests. Choose a lower-level call that only reads state the tests already provide.
+- Text-offset logic (caret positions, slicing, indentation): check top-level and nested/indented inputs, plus empty-content inputs, with a quick `node -e` snippet, and confirm the old top-level results are unchanged.
+
+## Reading the issue
+
+- Extract every concrete requirement: conditions, ordering, placement, exact strings, return types and field names, error types and messages, what must stay unchanged. Check each one off against your diff at the end.
+- Mind boundary conditions: decide whether a check should apply to the raw input or a transformed value, use `>` or `>=` deliberately against the repo's constant, and handle empty values and fallback/default branches.
+- When the issue names an existing helper (for display names, file names, escaping, MIME types, fetching and so on), call that helper rather than reimplementing it, with the arguments the issue states. When the issue doesn't name one, apply the checks in "Reusing a helper vs. adding a narrow branch" before reaching for one.
+- If the issue specifies a function signature, parameter names, a return object or field names, implement exactly those, because other code may call them.
+
+## Conventions
+
+- Backend: import constants from where they are defined (for example `zerver.models.constants`) rather than hard-coding numbers. Use `Markup`/`Markup.format` for HTML so that user content stays escaped and intended markup is emitted literally. Translated user-facing strings go through `_()`. Raise the exception types the surrounding code already uses, and log through the logger the surrounding code uses.
+- Webhooks: reuse the integration's existing parsing helpers for the same kind of payload (e.g. how an existing event type derives a URL/topic from the same sub-object) rather than writing new parsing. Keep topic and message formats identical to the sibling events.
+- Frontend: keep TypeScript types sound. Reorder results by splitting the candidates into groups that each keep the existing relevance order, then concatenate the groups in priority order. Don't rewrite comparators in ways that change unrelated orderings. User-facing strings go through `$t`.
+- Update every caller of any function whose signature or return type you change (grep the whole repo, including `zerver/data_import/`, management commands and tests). Update existing tests whose expectations your intended change legitimately alters.
+- Add or extend a focused test next to the existing tests for the feature, in the existing test class and style. Assert on the exact output your code produces, and check that the assertion matches how the surrounding tests format similar output. Webhook tests use fixture files in the integration's `fixtures/` directory. In node tests, undo any shared state you change (muting, settings, overridden methods) or use `override`, so later cases aren't affected.
+
+## Before finishing
+
+- Re-read your diff against the requirement checklist and against the existing mechanism you found. Ask yourself:
+  - "Is there already code that does this, and did I produce output identical in format to it?"
+  - "Does every branch I didn't mean to change still behave as before, with the existing lines still there?"
+  - "Does every function I newly call only depend on state the existing tests for this module already set up?"
+  - "Did I remove anything another module could use?"
+- Byte-compile the changed Python files, `node --check` the changed test files, and check that every import resolves to a real name (grep its definition).
+- Leave no debug files, probe scripts, `__pycache__` directories or stray edits in the working tree.
+Iteration 10: Exception during optimization: infra failure on [('pi-anthropic-haiku-5-5--g18f2fba9-s2', 'ZT-93913dd6e797')]
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 851, in run
+    proposal_accepted = self._run_reflective_batch(proposals, state)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 517, in _run_reflective_batch
+    valset_evals = self._evaluate_programs_on_valset([p.candidate for p in selected], state)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 210, in _evaluate_programs_on_valset
+    fresh = self._batch_evaluate(items) if items else []
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 256, in _batch_evaluate
+    return default_batch_evaluate(self.adapter, items)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/adapter.py", line 227, in default_batch_evaluate
+    return [adapter.evaluate(batch, candidate, capture_traces=True) for candidate, batch in items]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run_v2.py", line 132, in evaluate
+    raise RuntimeError(f"infra failure on {bad}")
+RuntimeError: infra failure on [('pi-anthropic-haiku-5-5--g18f2fba9-s2', 'ZT-93913dd6e797')]
+
+Iteration 11: Selected program 3 score: 0.90625
+Iteration 11: Proposed new text for append_system_prompt: ## Working on Zulip in this environment
+
+You are fixing an issue in the Zulip repository: a Django backend in `zerver/` (`zerver/lib/` holds the logic, `zerver/actions/` holds state-changing operations, `zerver/models/` holds the models and constants, `zerver/tests/` holds the tests, `zerver/webhooks/<name>/` holds the integrations with their fixtures and tests), plus a TypeScript web frontend (`web/src/`, with node tests in `web/tests/*.test.cjs`).
+
+This checkout has no virtualenv, no node_modules, no database and no `python` command (only `python3`). `tools/test-backend` and `tools/test-js-with-node` cannot run here, so don't spend turns trying to set them up. Because you cannot run the tests, you must "run" them in your head: see "Simulate the existing tests" below. Check your work with:
+- `python3 -m py_compile <files>` for syntax. Afterwards, delete only the `__pycache__` directories that this created and that git doesn't track.
+- `node --check <file>` for syntax in `.cjs`/`.js` test files (`node` is installed even though node_modules isn't).
+- careful reading of the code paths you changed, every caller you touched, and every function your new code calls (including what those call);
+- small standalone `python3` snippets that exercise pure logic (string formatting, parsing) without importing Django;
+- `git diff` review before you finish.
+
+## Before you write any code: find the existing mechanism
+
+Most Zulip issues are solved by wiring up something that already exists, not by adding a parallel code path. Before you add a new parameter, flag, helper or output format:
+
+1. Read the whole function you will change, plus its keyword options and the helpers it calls. Grep for related flags, options, constants and helpers (for example, an existing option that already prints the same kind of line, a predicate like "is this user muted", or a constant for a length limit).
+2. If the codebase already produces output similar to what the issue describes, in the same position (a preamble line, a header, a label), reuse that mechanism and its exact formatting, including markdown such as bold, separators and blank lines. A new parallel path that renders the "same" thing slightly differently is a bug.
+3. Treat strings in the issue as follows:
+   - If the issue says a string is exact or case-sensitive, reproduce it character for character.
+   - If it describes output as "a line of the form …", treat that as a description of the content. Match how neighbouring output in the same function is formatted, especially when an existing option already emits that line.
+4. Prefer the smallest change that achieves the behaviour. When a three-line change that turns on an existing option would work, don't add a new parameter.
+
+## Reuse narrowly: add a branch, don't swap in a bigger helper
+
+"Reuse existing code" means reusing the smallest piece that answers exactly the new question, such as a predicate (`is_x(...)`), a constant or a formatter. It does NOT mean replacing working code with a broader helper that "also handles" your case.
+- When the issue adds a special case (muted, deactivated, guest, empty, archived, …), the preferred shape is a new `if (<narrow predicate>) { return <new value>; }` placed before the existing code. Leave the existing lines below it byte-for-byte unchanged.
+- When the issue only changes wording or layout of output that already has per-case branches (1:1 vs group vs channel, etc.), keep the existing branch structure and edit the strings inside each branch. Don't merge, reorder or rewrite the branches into a new structure: that is where recipient lists, ordering and edge cases silently change.
+- Don't delete an existing inline branch and route everything through a different general-purpose helper, even if that helper seems to produce the same output. Broader helpers often do extra work, such as permission checks, realm or settings lookups, "assert valid user" lookups, or fetches. In production that can change behaviour for the unchanged cases. In tests it crashes, because the test only set up the state the old code needed.
+- Before calling any helper you haven't used yet, open its definition and read what it calls, one or two levels deep. If it touches global state (realm settings, current user, settings_data or permission groups, page_params, message_lists.current, the DOM), you need a reason it is safe on every path that reaches your code. Otherwise use a narrower function.
+
+## Calling an existing helper: copy how existing callers call it
+
+When the issue tells you to use an existing helper (a URL builder, a formatter, a fetcher):
+1. Grep for its other call sites and copy how they build the arguments, especially dict/object arguments (which keys, and where each value comes from). For example, if callers pass a message's full recipient list as returned by an existing lookup, pass exactly that. Don't hand-build a filtered or reduced version (e.g. dropping the sender or the current user).
+2. Read the helper's body and work out, for a concrete example, the exact string it returns. For anything involving participants, do this for both a 1:1 case (sender + one recipient) and a group case, and check that every participant the URL/text should contain is there, in the order the helper produces.
+3. Write that concrete final string into your test expectation. If you can't predict it exactly from reading the code, you haven't read enough yet.
+
+## Check what the output finally becomes
+
+A helper whose name looks right isn't automatically correct. When the issue is about what a link, mention or reference finally points to or displays (for example, which message a narrow URL anchors on, or a `/with/` vs `/near/` link), follow your output all the way to its final rendered form:
+- If the issue names a URL form or path element (`/with/`, `/near/`, `/dm/`, a relative vs absolute link), grep the URL helpers (`zerver/lib/url_encoding.py`, `web/src/hash_util.ts` etc.) for code that produces exactly that form, and confirm your final output contains it.
+- If you emit a markup shorthand (e.g. `#**channel>topic**`-style syntax) that a later step rewrites into a link, such as the markdown processor at send time, open that processor and read the code that builds the output element and its href. Don't stop at checking that the pattern is registered. Check whether it produces exactly the URL and text the issue wants, or whether it resolves things on its own terms (latest message, current name, a different URL form).
+- If the issue complains that the current output resolves to the wrong target, switching to a different shorthand that the same processor also resolves is usually not a fix. Build the explicit link yourself with the existing URL helpers and the existing escaping helpers. The usual form is a markdown link `[visible text](url)` whose visible text matches exactly how the product already renders that reference (read the renderer for the display format, e.g. separators and spacing).
+- Then update the existing test expectations to the new final string.
+
+## Simulate the existing tests (you cannot run them)
+
+For every function you changed:
+1. Grep `web/tests/` (or `zerver/tests/`) for the function and its callers. Open the test file's top-level setup: which modules are loaded with `zrequire` (real code) and which are replaced with `mock_esm` (fakes that define only some functions), what `set_realm`/`set_current_user`/`initialize_*` set up, and which globals are set.
+2. Walk at least one existing test case through your new code by hand. For each new call, ask: is that module real or mocked here? If it is mocked, is that function defined? If it is real, does it read state this test never initialized?
+3. If any answer is "no" or "not sure", change your implementation so that unchanged cases make exactly the same calls as before. Don't edit the test setup to make room for a broader helper.
+4. A module imported for a new predicate must also be safe to load with `zrequire` in those tests (it usually is if the test file already imports it or it has no side effects on load).
+
+## Change only the case the issue describes
+
+- Map the function's existing branches before editing: early returns, "no data / empty" cases, already-known/cached cases. Leave every branch the issue doesn't mention behaving exactly as before, including which functions it calls.
+- Put new behaviour (a server fetch, a new side effect, a new return value, a new lookup) only in the branch that has the bug. Don't fold several branches into one unconditional path.
+- When the issue has a "What must NOT change" section, treat each item as a requirement and check it against your diff.
+- Don't delete or rename existing exported functions, constants or parameters as "cleanup", even if your change leaves them unused here. Other modules and tests may use them.
+- Frontend tests load modules with `zrequire` and replace dependencies with `mock_esm(...)`. Those mocks usually define only the functions the test expects to be called. If you add a call to another module, or run an existing call in more cases, tests that mock that module can crash with "x is not a function", and real modules can crash on uninitialized state. Confine new calls to the exact case the issue describes.
+
+## Reading the issue
+
+- Extract every concrete requirement: conditions, ordering, placement, exact strings, return types and field names, error types and messages, what must stay unchanged. Check each one off against your diff at the end.
+- Mind boundary conditions: decide whether a check should apply to the raw input or a transformed value, use `>` or `>=` deliberately against the repo's constant, and handle empty values and fallback/default branches.
+- When the issue names an existing helper (for display names, file names, escaping, MIME types, URLs, fetching and so on), call that helper with the arguments the issue states, built the way existing callers build them, rather than reimplementing it. When the issue names only a behaviour, use the narrowest existing predicate that implements it.
+- If the issue specifies a function signature, parameter names, a return object or field names, implement exactly those, because other code may call them.
+
+## Translation: match the neighbouring strings, not a blanket rule
+
+"Use the usual translation conventions" means doing what the surrounding code does for strings of the same kind, in the same function or data structure:
+- Look at the sibling values your new string sits next to (other descriptions in the same mapping, other branches of the same function). If they are wrapped in `$t`/`$t_html` (frontend) or `_()` (backend), wrap yours the same way. If they are plain literals (some descriptions are built from untranslated English pieces and capitalized or translated later), keep yours a plain literal too. Wrapping only the new one makes it render differently from its siblings.
+- Check the existing tests for those siblings: in node tests `$t` is mocked to prefix `translated: ` (and `$t_html` with `translated HTML: `). If the existing expectations for neighbouring values have no such prefix, that code path does not translate, and yours must not either.
+- When you do translate on the frontend, use a complete literal `defaultMessage` (a separate string per variant, e.g. a plain one and a "(guest)" one, rather than concatenating translated pieces).
+
+## Conventions
+
+- Backend: import constants from where they are defined (for example `zerver.models.constants`) rather than hard-coding numbers. Use `Markup`/`Markup.format` for HTML so that user content stays escaped and intended markup is emitted literally. Raise the exception types the surrounding code already uses, and log through the logger the surrounding code uses.
+- Frontend: keep TypeScript types sound. Reorder results by splitting the candidates into groups that each keep the existing relevance order, then concatenate the groups in priority order. Don't rewrite comparators in ways that change unrelated orderings.
+- When the issue asks for something "as data" (a mapping), a small module-level map/record next to the code that uses it, holding the same kind of values as its neighbours, is the expected shape.
+- Update every caller of any function whose signature or return type you change (grep the whole repo, including `zerver/data_import/`, management commands and tests). Update existing tests whose expectations your intended change legitimately alters.
+- Add or extend a focused test next to the existing tests for the feature, in the existing test class and style. Assert on the exact output your code produces (computed by hand as described above), and check that the assertion matches how the surrounding tests format similar output. Webhook tests use fixture files in the integration's `fixtures/` directory. If your test mutates shared module state (e.g. marking users as muted), make sure it can't change the results of other test cases in the same file.
+
+## Before finishing
+
+- Re-read your diff against the requirement checklist and against the existing mechanism you found. Ask yourself:
+  - "Is there already code that does this, and did I produce output identical in format to it?"
+  - "For each output string, did I write out the exact final rendered text/URL for a concrete 1:1, group and channel case as relevant, and does it contain every element the issue names (URL form, ids, participants, separators)?"
+  - "Does every branch I didn't mean to change still behave as before, and make the same calls as before?"
+  - "For every new function call I added: did I read its body, pass arguments shaped like existing callers do, and is it safe in the existing tests' setup?"
+  - "Is each new user-facing string translated or not translated exactly like its siblings?"
+  - "Did I remove anything another module could use?"
+- Byte-compile the changed Python files, `node --check` the changed test files, and check that every import resolves to a real name (grep its definition).
+- Leave no debug files, probe scripts, `__pycache__` directories or stray edits in the working tree.
+Iteration 11: Exception during optimization: infra failure on [('pi-anthropic-haiku-5-5--g6383e52e-s3', 'ZT-93913dd6e797')]
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 851, in run
+    proposal_accepted = self._run_reflective_batch(proposals, state)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 517, in _run_reflective_batch
+    valset_evals = self._evaluate_programs_on_valset([p.candidate for p in selected], state)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 210, in _evaluate_programs_on_valset
+    fresh = self._batch_evaluate(items) if items else []
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 256, in _batch_evaluate
+    return default_batch_evaluate(self.adapter, items)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/adapter.py", line 227, in default_batch_evaluate
+    return [adapter.evaluate(batch, candidate, capture_traces=True) for candidate, batch in items]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run_v2.py", line 132, in evaluate
+    raise RuntimeError(f"infra failure on {bad}")
+RuntimeError: infra failure on [('pi-anthropic-haiku-5-5--g6383e52e-s3', 'ZT-93913dd6e797')]
+
+Iteration 12: Selected program 3 score: 0.90625
+Iteration 12: All subsample scores perfect for parent 3. Skipping.
+Iteration 12: Reflective mutation did not propose a new candidate
+Iteration 13: Selected program 3 score: 0.90625
+Iteration 13: All subsample scores perfect for parent 3. Skipping.
+Iteration 13: Reflective mutation did not propose a new candidate
+Iteration 14: Selected program 2 score: 0.9166666666666666
+Iteration 14: Proposed new text for append_system_prompt: ## Working on Zulip in this environment
+
+You are fixing an issue in the Zulip repository. It has a Django backend in `zerver/`:
+- `zerver/lib/` holds the logic.
+- `zerver/actions/` holds state-changing operations.
+- `zerver/models/` holds the models and constants.
+- `zerver/tests/` holds the tests.
+- `zerver/webhooks/<name>/` holds the integrations, with their fixtures and tests.
+
+It also has a TypeScript web frontend in `web/src/`, with node tests in `web/tests/*.test.cjs`.
+
+This checkout has no virtualenv, no node_modules, no database and no `python` command (only `python3`). `tools/test-backend` and `tools/test-js-with-node` cannot run here, so don't spend turns trying to set them up. Check your work with:
+- `python3 -m py_compile <files>` for syntax. Afterwards, delete only the `__pycache__` directories that this created and that git doesn't track.
+- `node --check <file>` for syntax in `.cjs`/`.js` test files. `node` is installed even though node_modules isn't.
+- small standalone `python3` or `node -e` snippets that exercise pure logic (string formatting, parsing, regexes, offsets) without importing Django or the app;
+- careful reading of the code paths you changed, every caller you touched, and every existing test that exercises the function you changed (see "Simulate the existing tests" below);
+- `git diff` review before you finish.
+
+Because you cannot run the test suite, any crash your change causes in an existing test will go unnoticed unless you find it by reading. Treat that reading as a required step, not an optional one.
+
+## Before you write any code: find the existing mechanism
+
+Most Zulip issues are solved by wiring up something that already exists, not by adding a parallel code path. Before you add a new parameter, flag, helper or output format:
+
+1. Read the whole function you will change, plus its keyword options and the helpers it calls. Grep for related flags, options, constants and helpers. For example, look for an existing option that already prints the same kind of line, or a constant for a length limit.
+2. If the codebase already produces output similar to what the issue describes, in the same position (a preamble line, a header, a label, a banner), reuse that mechanism and its exact formatting. That includes markdown such as bold, separators and blank lines. A new parallel path that renders the "same" thing slightly differently is a bug.
+3. Treat strings in the issue as follows:
+   - If the issue says a string is exact or case-sensitive, reproduce it character for character.
+   - If it describes output as "a line of the form …", treat that as a description of the content. Match how neighbouring output in the same function is formatted, especially when an existing option already emits that line.
+4. Prefer the smallest change that achieves the behaviour. When a three-line change that turns on an existing option, or a guarded early return, would work, don't add a new parameter or restructure the function.
+
+## Reusing a helper vs. adding a branch
+
+Reusing an existing mechanism means matching its output and conventions. It does not mean swapping working inline code for a broader helper.
+- If the issue names a helper, call it with the arguments the issue states.
+- If you only found a helper that "looks like it does the same thing", don't use it to replace the existing lines. First read its body and every function it calls, recursively, until you reach plain data access. Helpers that look like simple lookups often also validate or assert things, check permissions or settings, or read global state (current user, realm, settings, group permissions, other stores) that the original code never touched.
+- In the frontend especially, if the replacement helper reaches any module or state that the original code did not, don't swap it in. The existing tests of that function were written for the original dependencies and will crash, for example with `Cannot read properties of undefined` or `x is not a function`.
+- The safe default is an additive branch: keep every existing line, and insert one guarded check for the new case (usually an early `return`) using the narrowest predicate that identifies it, such as a single `is_…()` check from the module that owns that state. Put any new translated strings in that branch with `$t`/`_()`, following the existing strings next to it.
+
+## Check what the output finally becomes
+
+A helper whose name looks right isn't automatically correct. When the issue is about what a link, mention or reference finally points to or displays, follow your output all the way to its final rendered form:
+- If you emit a markup shorthand that a later step rewrites (for example, the markdown processor at send time), read that step. Check whether it produces exactly the URL and text the issue wants, or whether it resolves things later on its own terms (latest message, current name).
+- If the shorthand can't guarantee the required target, build the explicit link yourself with the existing URL helpers (`zerver/lib/url_encoding.py`) and the existing escaping helpers. The usual form is a markdown link `[visible text](url)` whose visible text matches how the product already displays that reference.
+- For HTML, keep user content escaped and intended markup literal. Use `Markup`/`Markup.format` in the backend, and the existing template or `$t_html` patterns in the frontend.
+- Then update the existing test expectations to the new final string.
+
+## Change only the case the issue describes
+
+- Before editing, map the function's existing branches: early returns, "no data / empty" cases, already-known/cached cases, guest or other special-case branches. Leave every branch the issue doesn't mention behaving exactly as before, with the same code and the same dependencies.
+- Put new behaviour (a server fetch, a new side effect, a new return value, a new module call) only in the branch that has the bug. Don't fold several branches into one unconditional path, and don't replace an unchanged branch with a helper call "because it also handles the new case".
+- Don't delete or rename existing exported functions, constants or parameters as "cleanup", even if your change leaves them unused here. Other modules and tests may use them.
+
+## Simulate the existing tests (frontend especially)
+
+Frontend tests load modules with `zrequire` and replace dependencies with `mock_esm(...)`. Those mocks usually define only the functions the test expects to be called. The test files also set up only minimal global state, for example `set_current_user({})`, `set_realm({})`, or a few `people.add_active_user` calls.
+
+After your edit:
+1. Grep `web/tests/` for every test that calls the function you changed, directly or through a caller.
+2. Open the test file and note its setup at the top: which modules are mocked, which are real, and which globals are set and how fully.
+3. For each existing test case that reaches your changed code, walk your new code path by hand. For every call it makes, ask:
+   - Is this module mocked here?
+   - If it is, does the mock define this function?
+   - If it is real, does it read state this file never initialised?
+
+   If any answer means a crash, narrow your change until the existing cases follow exactly the code they followed before.
+4. When you add a test, extend the existing test and setup in the same style. Use real modules via `zrequire` only when their state is self-contained, and set state through the module's own functions. Make sure any state your test adds doesn't change the expectations of later cases in the same test.
+
+The backend works the same way. If you add a call to a new module, check which test fixtures or mocks the existing tests rely on.
+
+## Reading the issue
+
+- Extract every concrete requirement: conditions, ordering, placement, exact strings, return types and field names, error types and messages, what must stay unchanged. Check each one off against your diff at the end.
+- Mind boundary conditions:
+  - Decide whether a check should apply to the raw input or to a transformed value.
+  - Use `>` or `>=` deliberately against the repo's constant.
+  - Handle empty values and fallback/default branches.
+- If the issue specifies a function signature, parameter names, a return object or field names, implement exactly those, because other code may call them.
+- "What must NOT change" lists are requirements too. Verify each one against the code paths, not just against your intent.
+
+## Conventions
+
+- **Backend:**
+  - Import constants from where they are defined (for example `zerver.models.constants`) rather than hard-coding numbers.
+  - Use `Markup`/`Markup.format` for HTML.
+  - Translated user-facing strings go through `_()`.
+  - Raise the exception types the surrounding code already uses, and log through the logger the surrounding code uses.
+- **Frontend:**
+  - Keep TypeScript types sound. `node --check` can't parse `.ts`, so review it by hand.
+  - User-facing strings go through `$t`/`$t_html`, in the same style as neighbouring strings.
+  - To reorder results, split the candidates into groups that each keep the existing relevance order, then concatenate the groups in priority order. Don't rewrite comparators in ways that change unrelated orderings.
+- Update every caller of any function whose signature or return type you change. Grep the whole repo, including `zerver/data_import/`, management commands and tests. Update existing tests whose expectations your intended change legitimately alters.
+- Add or extend a focused test next to the existing tests for the feature, in the existing test class and style. Assert on the exact output your code produces, and check that the assertion matches how the surrounding tests format similar output. Markdown rendering cases go in the existing fixture JSON. Webhook tests use fixture files in the integration's `fixtures/` directory.
+
+## Before finishing
+
+- Re-read your diff against the requirement checklist and against the existing mechanism you found. Ask yourself:
+  - "Is there already code that does this, and did I produce output identical in format to it?"
+  - "Does every branch I didn't mean to change still run exactly the same code as before?"
+  - "Does my new code path call any function or read any state that the old path didn't? If so, have I checked every existing test that reaches it?"
+  - "Did I remove anything another module could use?"
+- Byte-compile the changed Python files, `node --check` the changed test files, and check that every import resolves to a real name (grep its definition).
+- Leave no debug files, probe scripts, `__pycache__` directories or stray edits in the working tree.
+Iteration 14: New subsample score 5.0 is not better than old score 5.0, skipping
+Iteration 15: Selected program 2 score: 0.9166666666666666
+Iteration 15: Proposed new text for append_system_prompt: ## Working on Zulip in this environment
+
+You are fixing an issue in the Zulip repository: a Django backend in `zerver/` (`zerver/lib/` holds the logic, `zerver/actions/` holds state-changing operations, `zerver/models/` holds the models and constants, `zerver/tests/` holds the tests, `zerver/webhooks/<name>/` holds the integrations with their fixtures and tests), plus a web frontend (`web/src/`, a mix of `.ts` and `.js`; node tests in `web/tests/*.test.cjs`). If a file named in the issue doesn't exist with that extension, look for the other one (`.ts` vs `.js`).
+
+This checkout has no virtualenv, no node_modules, no database and no `python` command (only `python3`). `tools/test-backend` and `tools/test-js-with-node` cannot run here, so don't spend turns trying to set them up. Check your work with:
+- `python3 -m py_compile <files>` for syntax. Afterwards, delete only the `__pycache__` directories that this created and that git doesn't track.
+- `node --check <file>` for syntax in `.cjs`/`.js` files (`node` is installed even though node_modules isn't).
+- careful reading of the code paths you changed and every caller you touched;
+- small standalone `python3`/`node` snippets that exercise pure logic (string formatting, parsing, mappings) without importing Django or node_modules;
+- `git diff` review before you finish.
+
+## Short briefs need more investigation, not less
+
+When the issue is only a few sentences long, it doesn't tell you the exact output format, so you have to find it in the code. Don't finish after a handful of edits. Before you edit, identify:
+- which existing mechanism produces the output today,
+- what that output finally looks like when stored or rendered,
+- how the existing tests spell out that output.
+
+Your change should then differ from the current output only in the aspect the issue complains about.
+
+## Before you write any code: find the existing mechanism
+
+Most Zulip issues are solved by wiring up something that already exists, not by adding a parallel code path. Before you add a new parameter, flag, helper or output format:
+
+1. Read the whole function you will change, plus its keyword options and the helpers it calls. Grep for related flags, options, constants and helpers (for example, an existing option that already prints the same kind of line, a helper option such as whether to include the base URL, or a constant for a length limit).
+2. If the codebase already produces output similar to what the issue describes, in the same position (a preamble line, a header, a label, a link), reuse that mechanism and its exact formatting, including markdown such as bold, separators and blank lines. A new parallel path that renders the "same" thing slightly differently is a bug.
+3. Treat strings in the issue as follows:
+   - If the issue says a string is exact or case-sensitive, reproduce it character for character.
+   - If it describes output as "a line of the form …", treat that as a description of the content. Match how neighbouring output in the same function is formatted, especially when an existing option already emits that line.
+4. Prefer the smallest change that achieves the behaviour. When a three-line change that turns on an existing option would work, don't add a new parameter.
+
+## Links, mentions and references: match the final rendered form exactly
+
+When the issue is about what a link, mention or channel/topic reference points to or displays, the text your code stores (for example, message content that tests compare) is what matters.
+- If the current code emits a markup shorthand (for example `#**channel>topic**`) that the markdown processor later rewrites into a link, read the processor code for that shorthand, and its tests in `zerver/tests/test_markdown.py` and the markdown fixtures. Find the exact HTML it produces:
+  - the visible text, for example `#channel > topic` with spaces around `>`;
+  - the href.
+- Zulip's in-app narrow links that the markdown processor renders are relative (`#narrow/channel/...`), not absolute URLs with the realm host.
+- Don't switch to a different shorthand variant and hope that it resolves correctly. If the target must be fixed at creation time, replace the shorthand with an explicit markdown link `[visible text](href)`. Its visible text and href format must be exactly what the processor would have rendered, with only the part the issue is about changed (for example, anchoring on a specific message ID).
+- Build the href with the existing URL helpers (`zerver/lib/url_encoding.py`). Read their signatures: they have options that control the base URL and conversation-style links. Use the options that give the same relative or absolute form as the rendered shorthand.
+- Escape names with the existing escaping helpers in the same modules.
+- Other links in the same message may use a different form (for example, an absolute "said" link). Don't copy their form. Copy the form of the thing you are replacing.
+- Update the existing test expectations to the new final string. Check them character by character against what your code produces, using a standalone snippet if needed.
+
+## Change only the case the issue describes
+
+- Map the function's existing branches before editing: early returns, "no data / empty" cases, already-known/cached cases. Leave every branch the issue doesn't mention behaving exactly as before.
+- Put new behaviour (a server fetch, a new side effect, a new return value) only in the branch that has the bug. Don't fold several branches into one unconditional path.
+- Don't delete or rename existing exported functions, constants or parameters as "cleanup", even if your change leaves them unused here. Other modules and tests may use them.
+- Frontend tests load modules with `zrequire` and replace dependencies with `mock_esm(...)`. Those mocks usually define only the functions the test expects to be called. If you add a call to another module, or run an existing call in more cases, tests that mock that module can crash with "x is not a function". Confine new calls to the exact case the issue describes, and grep `web/tests/` for tests of the function you changed.
+
+## Reading the issue
+
+- Extract every concrete requirement: conditions, ordering, placement, exact strings, return types and field names, error types and messages, log levels and wording, what must stay unchanged. Check each one off against your diff at the end.
+- Mind boundary conditions: decide whether a check should apply to the raw input or a transformed value, use `>` or `>=` deliberately against the repo's constant, and handle empty values and fallback/default branches.
+- When the issue names an existing helper (for display names, file names, escaping, MIME types, fetching, validation and so on), call that helper rather than reimplementing it, with the arguments the issue states.
+- If the issue specifies a function signature, parameter names, a return object or field names, implement exactly those, because other code may call them.
+- If the issue asks for data-driven handling (for example "a mapping from X to Y"), implement it as a table that the code looks up.
+
+## Conventions
+
+- Backend: import constants from where they are defined (for example `zerver.models.constants`) rather than hard-coding numbers. Use `Markup`/`Markup.format` for HTML so that user content stays escaped and intended markup is emitted literally. Translated user-facing strings go through `_()`. Raise the exception types the surrounding code already uses, and log through the logger the surrounding code uses.
+- Frontend: keep TypeScript types sound. User-facing strings go through `$t`/`$t_html` as neighbouring code does. Reorder results by splitting the candidates into groups that each keep the existing relevance order, then concatenate the groups in priority order. Don't rewrite comparators in ways that change unrelated orderings.
+- Update every caller of any function whose signature or return type you change (grep the whole repo, including `zerver/data_import/`, management commands and tests). Update existing tests whose expectations your intended change legitimately alters. Also grep `web/tests/` and `zerver/tests/` for the old user-facing string you changed.
+- Add or extend a focused test next to the existing tests for the feature, in the existing test class and style. Assert on the exact output your code produces, and check that the assertion matches how the surrounding tests format similar output. Webhook tests use fixture files in the integration's `fixtures/` directory; model new fixtures on existing ones.
+
+## Before finishing
+
+- Re-read your diff against the requirement checklist and against the existing mechanism you found. Ask yourself:
+  - "Is there already code that does this, and did I produce output identical in format to it, including relative vs absolute URLs, spacing and punctuation?"
+  - "Does every branch I didn't mean to change still behave as before?"
+  - "Did I remove anything another module could use?"
+- Byte-compile the changed Python files, `node --check` the changed JS/test files, and check that every import resolves to a real name (grep its definition).
+- Leave no debug files, probe scripts, `__pycache__` directories or stray edits in the working tree.
+Iteration 15: Accepted candidate (subsample score 5.333333333333333 -> 5.555555555555555); running full eval.
+Iteration 15: Valset score for new program: 0.867361111111111 (coverage 20 / 20)
+Iteration 15: Val aggregate for new program: 0.867361111111111
+Iteration 15: Individual valset scores for new program: {0: 0.6666666666666666, 1: 1.0, 2: 1.0, 3: 1.0, 4: 0.3333333333333333, 5: 0.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.5555555555555555, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 0.7916666666666666, 18: 1.0, 19: 1.0}
+Iteration 15: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.6666666666666666, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.5555555555555555, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 1.0}
+Iteration 15: Valset pareto front aggregate score: 0.961111111111111
+Iteration 15: Updated valset pareto front programs: {0: {0, 1, 2, 3}, 1: {1, 2, 3, 4}, 2: {0, 1, 2, 3, 4}, 3: {0, 1, 2, 3, 4}, 4: {0, 1, 2, 3}, 5: {3}, 6: {2, 3, 4}, 7: {0, 1, 2, 3, 4}, 8: {0, 1, 2, 3, 4}, 9: {0, 1, 2, 3, 4}, 10: {0, 1, 2, 3, 4}, 11: {0, 1, 2, 3, 4}, 12: {4}, 13: {0, 1, 2, 3, 4}, 14: {1, 2, 3, 4}, 15: {0, 1, 2, 3, 4}, 16: {0, 1, 2, 3, 4}, 17: {1, 2}, 18: {0, 1, 2, 3, 4}, 19: {0, 2, 4}}
+Iteration 15: Best valset aggregate score so far: 0.9166666666666666
+Iteration 15: Best program as per aggregate score on valset: 2
+Iteration 15: Best score on valset: 0.9166666666666666
+Iteration 15: Linear pareto front program index: 2
+Iteration 15: New program candidate index: 4

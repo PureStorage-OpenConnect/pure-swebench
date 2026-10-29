@@ -1,0 +1,8 @@
+[rollout pi-vllm-gemma-4-31b--seed-s2] 0/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] 0/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s2] launching 20 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--seed-s3] launching 20 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--seed] done in 0.0 min: resolved 8/20
+[rollout pi-vllm-gemma-4-31b--seed-s2] driver gepa-gepa2-pi-vllm-gemma-4-31b-15d414 rc=0
+[rollout pi-vllm-gemma-4-31b--seed-s2] done in 146.8 min: resolved 10/20

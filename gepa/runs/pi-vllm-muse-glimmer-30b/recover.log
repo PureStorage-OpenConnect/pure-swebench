@@ -1,0 +1,5 @@
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] 13/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] launching 7 cell(s) fanout=7 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] driver gepa-gepa-pi-vllm-muse-glimmer-30b-recover-c6d6b0 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] done in 47.7 min: resolved 16/20
+candidate 5 corrected validation score 16/20; recorded best 16/20 (idx 4)

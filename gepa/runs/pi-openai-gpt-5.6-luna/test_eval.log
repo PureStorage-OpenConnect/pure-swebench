@@ -1,0 +1,9 @@
+[rollout pi-openai-gpt-5.6-luna--g3de969d3] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] 20/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] launching 10 cell(s) fanout=10 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g3de969d3] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--seed] driver gepa-gepa-test-pi-openai-gpt-5.6-luna-4c1c1f rc=0
+[rollout pi-openai-gpt-5.6-luna--seed] done in 29.3 min: resolved 19/30
+[rollout pi-openai-gpt-5.6-luna--g3de969d3] driver gepa-gepa-test-pi-openai-gpt-5.6-luna-916942 rc=0
+[rollout pi-openai-gpt-5.6-luna--g3de969d3] done in 34.0 min: resolved 19/30
+{"seed_resolved": "19/30", "gepa_best_resolved": "19/30", "board_baseline_resolved": "16/30"}

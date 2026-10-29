@@ -1,0 +1,248 @@
+[rollout pi-openai-gpt-5.6-luna--seed-s3] 0/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s2] 19/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] 20/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s3] launching 20 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--seed] done in 0.0 min: resolved 14/20
+[rollout pi-openai-gpt-5.6-luna--seed-s2] done in 2.4 min: resolved 14/20
+[rollout pi-openai-gpt-5.6-luna--seed-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-00000b rc=0
+[rollout pi-openai-gpt-5.6-luna--seed-s3] done in 20.2 min: resolved 15/20
+[rollout pi-openai-gpt-5.6-luna--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s2] done in 0.0 min: resolved 3/6
+[rollout pi-openai-gpt-5.6-luna--seed-s3] done in 0.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--seed] done in 0.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-luna--gc81c8c0e-s3] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-luna--gc81c8c0e-s2] 0/6 cell(s) cached
+
+
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-f71381 rc=0
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e-s3] done in 5.9 min: resolved 3/6
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-ce89fa rc=0
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e] driver gepa-gepa2-pi-openai-gpt-5.6-luna-e8853d rc=0
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e] done in 6.4 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--gc81c8c0e-s2] done in 6.4 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s2] done in 0.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--seed-s3] done in 0.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--seed] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] driver gepa-gepa2-pi-openai-gpt-5.6-luna-09588d rc=0
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] done in 7.3 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-3f10bd rc=0
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] done in 7.8 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-9b317f rc=0
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] done in 8.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-c01b27 rc=0
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] done in 12.3 min: resolved 13/20
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] driver gepa-gepa2-pi-openai-gpt-5.6-luna-997684 rc=0
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] done in 12.6 min: resolved 15/20
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-5c278d rc=0
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] done in 16.1 min: resolved 15/20
+[rollout pi-openai-gpt-5.6-luna--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--seed-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--seed] done in 0.0 min: resolved 3/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-9ce230 rc=0
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] done in 5.3 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-484ee5 rc=0
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] done in 6.8 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] driver gepa-gepa2-pi-openai-gpt-5.6-luna-b5ae48 rc=0
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] done in 11.4 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] 6/20 cell(s) cached[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] 6/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-6fae38 rc=0
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] done in 12.5 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] driver gepa-gepa2-pi-openai-gpt-5.6-luna-cf4e8f rc=0
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] done in 13.3 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-1e0c25 rc=0
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] done in 13.7 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] done in 0.0 min: resolved 4/4[rollout pi-openai-gpt-5.6-luna--g3e0dea83] done in 0.0 min: resolved 4/4
+
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] done in 0.0 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s3] 0/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s2] 0/4 cell(s) cached[rollout pi-openai-gpt-5.6-luna--g8fe624fb] 0/4 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-5ea64d rc=0
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s3] done in 5.9 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-44a919 rc=0
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s2] done in 6.0 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb] driver gepa-gepa2-pi-openai-gpt-5.6-luna-5271f0 rc=0
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb] done in 6.7 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb] 4/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s3] 4/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s2] 4/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s2] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s3] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-784feb rc=0
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s2] done in 12.3 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb] driver gepa-gepa2-pi-openai-gpt-5.6-luna-76ed03 rc=0
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb] done in 12.5 min: resolved 15/20
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-5a219f rc=0
+[rollout pi-openai-gpt-5.6-luna--g8fe624fb-s3] done in 12.8 min: resolved 14/20
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] done in 0.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] done in 0.1 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] done in 0.1 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--g306e71a4] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-luna--g306e71a4-s3] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--g306e71a4-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g306e71a4-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g306e71a4] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g306e71a4-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g306e71a4-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-5602ca rc=0
+[rollout pi-openai-gpt-5.6-luna--g306e71a4-s3] done in 4.8 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--g306e71a4] driver gepa-gepa2-pi-openai-gpt-5.6-luna-cec47d rc=0
+[rollout pi-openai-gpt-5.6-luna--g306e71a4] done in 5.1 min: resolved 3/6
+[rollout pi-openai-gpt-5.6-luna--g306e71a4-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-fcfebd rc=0
+[rollout pi-openai-gpt-5.6-luna--g306e71a4-s2] done in 5.4 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] done in 0.0 min: resolved 3/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s2] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s3] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-222334 rc=0
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s2] done in 6.8 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-6ccbc8 rc=0
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s3] done in 8.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8] driver gepa-gepa2-pi-openai-gpt-5.6-luna-7c7bd2 rc=0
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8] done in 8.7 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s2] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-d1aa8e rc=0
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s2] done in 11.3 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8] driver gepa-gepa2-pi-openai-gpt-5.6-luna-986bfc rc=0
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8] done in 11.7 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-9403ff rc=0
+[rollout pi-openai-gpt-5.6-luna--gf2f405b8-s3] done in 11.9 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] 6/6 cell(s) cached[rollout pi-openai-gpt-5.6-luna--gd0ee7562] 6/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--g77caed35-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g77caed35-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g77caed35] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g77caed35-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g77caed35] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g77caed35-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g77caed35-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-d4bbae rc=0
+[rollout pi-openai-gpt-5.6-luna--g77caed35-s3] done in 7.2 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--g77caed35] driver gepa-gepa2-pi-openai-gpt-5.6-luna-67c61b rc=0
+[rollout pi-openai-gpt-5.6-luna--g77caed35] done in 8.5 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--g77caed35-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-54ef1a rc=0
+[rollout pi-openai-gpt-5.6-luna--g77caed35-s2] done in 8.8 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] 4/4 cell(s) cached[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] 4/4 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] done in 0.0 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] done in 0.0 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] done in 0.0 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-luna--g3149da4d] 0/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3149da4d-s3] 0/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3149da4d-s2] 0/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3149da4d-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g3149da4d] launching 4 cell(s) fanout=6 (busy elsewhere: 0)[rollout pi-openai-gpt-5.6-luna--g3149da4d-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+
+[rollout pi-openai-gpt-5.6-luna--g3149da4d-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-8c229f rc=0
+[rollout pi-openai-gpt-5.6-luna--g3149da4d-s2] done in 5.8 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-luna--g3149da4d] driver gepa-gepa2-pi-openai-gpt-5.6-luna-bc91b6 rc=0
+[rollout pi-openai-gpt-5.6-luna--g3149da4d] done in 6.4 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-luna--g3149da4d-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-e97e9e rc=0
+[rollout pi-openai-gpt-5.6-luna--g3149da4d-s3] done in 7.4 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--gd0ee7562-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--g1f819348] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-luna--g1f819348-s2] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--g1f819348-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g1f819348-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g1f819348] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g1f819348-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--g1f819348-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-9f6b8f rc=0
+[rollout pi-openai-gpt-5.6-luna--g1f819348-s2] done in 6.5 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--g1f819348] driver gepa-gepa2-pi-openai-gpt-5.6-luna-a57f86 rc=0
+[rollout pi-openai-gpt-5.6-luna--g1f819348] done in 6.9 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--g1f819348-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-4f3076 rc=0
+[rollout pi-openai-gpt-5.6-luna--g1f819348-s3] done in 7.5 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] 6/6 cell(s) cached[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] 6/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s3] done in 0.4 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83] done in 0.4 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--g3e0dea83-s2] done in 0.4 min: resolved 3/6
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s2] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-luna--ge12e31a7] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-7b4cad rc=0
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s3] done in 6.9 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7] driver gepa-gepa2-pi-openai-gpt-5.6-luna-29b444 rc=0
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7] done in 7.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-ad175d rc=0
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s2] done in 7.6 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s3] 6/20 cell(s) cached[rollout pi-openai-gpt-5.6-luna--ge12e31a7] 6/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s2] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7] driver gepa-gepa2-pi-openai-gpt-5.6-luna-ecae25 rc=0
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7] done in 18.8 min: resolved 14/20
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s2] driver gepa-gepa2-pi-openai-gpt-5.6-luna-3500fb rc=0
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s2] done in 19.2 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s3] driver gepa-gepa2-pi-openai-gpt-5.6-luna-a1f7a9 rc=0
+[rollout pi-openai-gpt-5.6-luna--ge12e31a7-s3] done in 21.0 min: resolved 14/20

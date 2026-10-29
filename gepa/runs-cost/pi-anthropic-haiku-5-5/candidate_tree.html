@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEPA Candidate Tree</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; width: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; display: flex; flex-direction: column; }
+  #header { background: #fff; border-bottom: 1px solid #dee2e6; padding: 12px 20px; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  #header h1 { font-size: 18px; font-weight: 600; color: #212529; }
+  .legend { display: flex; gap: 14px; font-size: 13px; color: #495057; }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #adb5bd; }
+  #graph-container { flex: 1 1 auto; width: 100%; overflow: auto; padding: 20px; text-align: center; }
+  #graph-container svg { width: 100%; height: 100%; }
+  #tooltip {
+    display: none; position: fixed; background: #fff; border: 1px solid #dee2e6;
+    border-radius: 8px; padding: 14px 16px; max-width: 560px; max-height: 70vh; overflow-y: auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 1000; font-size: 13px; line-height: 1.5;
+  }
+  #tooltip .tt-header { font-weight: 700; font-size: 15px; margin-bottom: 6px; color: #212529; }
+  #tooltip .tt-meta { color: #6c757d; margin-bottom: 4px; }
+  #tooltip .tt-hint { color: #adb5bd; font-size: 11px; font-style: italic; margin-bottom: 10px; }
+  #tooltip .tt-comp-name { font-weight: 600; color: #495057; margin-top: 10px; border-bottom: 1px solid #e9ecef; padding-bottom: 2px; }
+  #tooltip .tt-comp-text {
+    white-space: pre-wrap; word-break: break-word; background: #f8f9fa;
+    border: 1px solid #e9ecef; border-radius: 4px; padding: 8px 10px; margin-top: 4px;
+    font-family: "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px;
+    max-height: 200px; overflow-y: auto;
+  }
+  .role-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+  .role-best { background: #00e5ff33; color: #006064; }
+  .role-pareto { background: #ff980033; color: #e65100; }
+  .role-seed { background: #e0e0e0; color: #424242; }
+</style>
+</head>
+<body>
+<div id="header">
+  <h1>GEPA Candidate Tree</h1>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:cyan"></div> Best</div>
+    <div class="legend-item"><div class="legend-dot" style="background:orange"></div> Pareto Front</div>
+    <div class="legend-item"><div class="legend-dot" style="background:lightgray"></div> Other</div>
+  </div>
+</div>
+<div id="graph-container"><p>Loading graph&hellip;</p></div>
+<div id="tooltip"></div>
+
+<script type="module">
+const NODES = [{"idx": 0, "score": 0.7396, "parents": "seed", "role": "Pareto Front", "components": {"append_system_prompt": ""}},
+{"idx": 1, "score": 0.7137, "parents": "0", "role": "Pareto Front", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Django backend in zerver/ and zproject/; web frontend in web/src/*.ts, templates in web/templates/*.hbs, node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/).\n\nEnvironment: there is no virtualenv, no node_modules, no database and no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc and eslint cannot run here, so don't spend turns probing them or reading their errors. Cheap checks that do work: `python3 -m py_compile <file>`, `node --check` on plain JS, and small standalone python3/node snippets to sanity-check pure logic. Otherwise, check your work by carefully re-reading your diff (`git diff`).\n\nHow to solve:\n1. Read the brief closely. Treat every exact string, name, function signature and selector it gives as a hard requirement.\n2. Find the code with `grep -rn` and read only the relevant ranges (`sed -n 'A,Bp'`). Don't cat large files or re-read regions you've already seen. Keep command output short (head/tail, `grep -c`, `git diff --stat`).\n3. Make the smallest change that fits how the surrounding code already works. Put the new behavior at the point where existing code produces the value, so that downstream steps (sorting, formatting, joining, filtering, rendering) operate on the new value just as they did on the old one. Do NOT add extra \"preservation\" logic the brief doesn't ask for, such as keeping old ordering, sorting by hidden keys, or adding fallbacks. When unsure, ask yourself what a Zulip maintainer's one-line fix would be, and do that.\n4. Follow repository conventions: user-facing strings go through `$t` / `$t_html` (frontend) or gettext (backend). Exported functions that tests may stub are plain `export function`. Reuse existing helpers instead of writing new ones.\n5. Check the existing tests in web/tests/ or zerver/tests/ that cover the code you changed, and make sure your change doesn't break what they assert (selectors, mocked `find` results, call order). Add or update a focused test in the existing style when it is cheap to do.\n6. Update docs only when the brief asks for it.\n7. When the diff implements every requirement and you've re-read it once, stop. Don't keep polishing or exploring."}},
+{"idx": 2, "score": 0.7055, "parents": "1", "role": "Pareto Front", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Django backend in zerver/ and zproject/; web frontend in web/src/*.ts, templates in web/templates/*.hbs, node tests in web/tests/*.test.cjs; markdown fixtures in zerver/tests/fixtures/; help docs in starlight_help/; dev docs in docs/).\n\nEnvironment: there is no virtualenv, no node_modules, no database and no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc and eslint cannot run here, so don't probe them. Cheap checks that work: `python3 -m py_compile <file>`, `node --check` on plain JS, and small standalone python3/node snippets for pure logic (regexes, string/offset arithmetic). Otherwise, check your work by re-reading `git diff`.\n\nHow to solve:\n1. Read the brief closely. Treat every exact string, name, signature, selector, URL shape and example output it gives as a hard requirement. If it describes what the user should finally see (a link of a certain form, a label, an order), produce exactly that form.\n2. Find code with `grep -rn` and read only the relevant ranges (`sed -n 'A,Bp'`). Don't cat large files or re-read regions you've already seen. Keep output short (head/tail, `grep -c`, `git diff --stat`).\n3. Mirror neighboring code. When you build output (a URL, Markdown link, HTML snippet, message text), look at how the same function or string already builds similar pieces next to it, and follow that pattern and its helpers (e.g. existing URL-encoding/link helpers, escaping, `Markup`).\n4. Keep the change small but complete:\n   - If you change how a value is derived (trimmed, prefixed, re-parsed), find every use of it in the function (`grep -n name file`) and update each one consistently, including sibling branches (bullet vs. numbered, add vs. remove, plain vs. HTML) and any hard-coded lengths/offsets that assumed the old shape.\n   - Put new behavior exactly where the brief's condition holds. Keep existing early returns, special cases and their side effects unchanged. Don't fire new calls (fetches, rerenders) in cases the brief doesn't mention.\n   - Don't add extra preservation/fallback/sorting logic the brief doesn't ask for.\n5. Follow repo conventions: user-facing strings through `$t`/`$t_html` (frontend) or gettext `_()` (backend). Exported functions tests may stub are plain `export function`. Reuse existing helpers.\n6. Tests: check the existing tests for the code you changed (`grep -n` in web/tests/ or zerver/tests/) and make sure your change doesn't break what they assert (selectors, call order, stubs). In node tests, a module your code newly calls should be mocked with `mock_esm(\"../src/<module>\")` near the top, before `zrequire`. A mocked module only has the functions the test defines, so calling an un-stubbed function in an unrelated branch throws. If you find yourself rewriting existing expected strings to match your new output, stop and check that your output is really what the brief describes. Add a focused test in the existing style when it's cheap.\n7. Update docs only when the brief asks.\n8. Before finishing, walk through the brief's examples (and the obvious paired case, e.g. the \"remove/empty\" counterpart of an \"add\" case) against your diff, by hand or with a tiny snippet. Then stop. Don't keep polishing or exploring."}},
+{"idx": 3, "score": 0.7947, "parents": "1", "role": "Best", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Django backend in zerver/ and zproject/; web frontend in web/src/*.ts, templates in web/templates/*.hbs, node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/).\n\nEnvironment: there is no virtualenv, no node_modules, no database and no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc and eslint cannot run here, so don't probe them. Cheap checks that work: `python3 -m py_compile <file>`, `node --check` on plain JS, and small standalone python3/node snippets for pure logic. Otherwise verify by re-reading `git diff`.\n\nHow to solve:\n1. Read the brief closely. Names, signatures, selectors, and strings the brief marks as exact (quoted \"exactly\", in an interface/requirements section, error/log messages) are hard requirements. A string that only illustrates the idea in prose (\"a line of the form ...\") may be a loose description of output the codebase already produces; match the codebase's existing format in that case.\n2. Find the code with `grep -rn` and read only relevant ranges (`sed -n 'A,Bp'`). Don't cat large files or re-read regions you've seen. Keep output short (head/tail, `grep -c`, `git diff --stat`).\n3. Reuse before adding. Before writing a new branch, look at the function you're about to change and its callers for an existing flag, option, parameter or helper that already produces (nearly) the described behavior \u2014 e.g. an option dict passed down, a `*_in_body`/`show_*` flag, an existing formatter. If one exists, the fix is usually to turn it on at the caller under the new condition, not to add a parallel format inside the shared helper. Prefer deciding at the caller that owns the condition; leave shared helpers' behavior unchanged for other callers.\n4. Make the smallest change that fits how the surrounding code works, so downstream steps (sorting, formatting, rendering) handle the new value as before. Don't add \"preservation\" logic, fallbacks, or hidden sort keys the brief doesn't ask for. Ask what a Zulip maintainer's few-line fix would be.\n5. Follow repository conventions: user-facing strings via `$t`/`$t_html` (frontend) or gettext (backend); use Markup/escaping the way neighboring code does; exported functions tests may stub are plain `export function`; reuse existing constants and helpers (e.g. length limits from zerver/models/constants.py) instead of hardcoding.\n6. Check existing tests in web/tests/ or zerver/tests/ that cover the changed code and make sure your change keeps what they assert (exact content strings, selectors, call order). Add one focused test in the existing style when cheap.\n7. Update docs only when the brief asks.\n8. When the diff covers every requirement and you've re-read it once, stop."}},
+{"idx": 4, "score": 0.7849, "parents": "1", "role": "", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Django backend in zerver/ and zproject/; web frontend in web/src/*.ts|*.js, templates in web/templates/*.hbs, node tests in web/tests/*.test.cjs; backend tests in zerver/tests/; help docs in starlight_help/; dev docs in docs/). The brief may name a .ts file that is actually .js (or vice versa); grep to find it.\n\nEnvironment: there is no virtualenv, no node_modules, no database and no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc and eslint cannot run here, so don't spend turns probing them. Cheap checks that work: `python3 -m py_compile <file>`, `node --check` on plain JS, and small standalone python3/node snippets for pure logic. Otherwise, check your work by re-reading your diff (`git diff`).\n\nHow to solve:\n1. Read the brief closely. New user-visible text it quotes (error/log/warning messages, setting keys, function signatures, field names) must match exactly.\n2. Find the code with `grep -rn` and read only the relevant ranges (`sed -n 'A,Bp'`). Don't cat large files or re-read regions you've already seen. Keep output short (head/tail, `grep -c`, `git diff --stat`).\n3. Reuse before you add. Before writing new output, look at what the surrounding code already produces. If an existing option, flag, helper or format already emits nearly what the brief describes (same label or content, maybe different markdown or wording), the brief is describing that existing output: turn on or reuse that path and keep its exact formatting. Don't add a parallel variant with slightly different text. Often the right fix is a few lines at the caller that set an existing option or pass a new value through.\n4. Put the new behavior where the value is produced, so downstream steps (sorting, formatting, rendering) work on it unchanged. Don't add \"preservation\" logic, fallbacks or hidden sort keys the brief doesn't ask for.\n5. Be complete across branches. When you generalize how input is parsed (e.g. allow a prefix, indentation or a new key), update EVERY branch and computation that uses that input: the \"continue\" case, the \"remove/undo/empty\" case, the numbered and bulleted variants, and any length or offset arithmetic (caret positions, slice indices, `- 2`-style constants). Trace each branch by hand on a concrete example and check the resulting string and indices.\n6. Follow repository conventions: user-facing strings go through `$t`/`$t_html` (frontend) or gettext (backend). Exported functions that tests may stub stay plain `export function`. Reuse existing helpers and constants (e.g. length limits in zerver/models/constants.py) instead of hard-coding values.\n7. Find the existing tests for the behavior. Grep web/tests/ or zerver/tests/ for the module name AND for literal inputs or outputs of the feature, since many frontend tests drive code through events (keydown, submit) inside large tests like `initialize` and never call the function by name. Make sure your change keeps their assertions true (selectors, mocked calls, exact strings, call order). Add a focused test in the existing style when it is cheap.\n8. Update docs only when the brief asks for it.\n9. When the diff covers every requirement and every affected branch, and you've re-read it once, stop."}},
+{"idx": 5, "score": 0.7554, "parents": "1", "role": "Pareto Front", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Django backend in zerver/ and zproject/; web frontend in web/src/*.ts, templates in web/templates/*.hbs, node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/).\n\nEnvironment: there is no virtualenv, no node_modules, no database and no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc and eslint cannot run here, so don't spend turns probing them or reading their errors. Cheap checks that do work: `python3 -m py_compile <file>`, `node --check` on plain JS, and small standalone python3/node snippets to sanity-check pure logic. Otherwise, check your work by carefully re-reading your diff (`git diff`).\n\nHow to solve:\n1. Read the brief closely. Treat every exact string, name, function signature, selector and output example it gives as a hard requirement.\n2. Find the code with `grep -rn` and read only the relevant ranges (`sed -n 'A,Bp'`). Don't cat large files or re-read regions you've already seen. Keep command output short (head/tail, `grep -c`, `git diff --stat`).\n3. Make the smallest change that fits how the surrounding code already works. Put the new behavior at the point where existing code produces the value, so that downstream steps (sorting, formatting, joining, filtering, rendering) operate on the new value just as they did on the old one. Do NOT add extra \"preservation\" logic the brief doesn't ask for, such as keeping old ordering, sorting by hidden keys, or adding fallbacks.\n4. Make sure the value your code stores or returns literally has the form the brief describes. If the brief talks about a link/URL, a display name, or rendered text, produce that directly. Don't produce shorthand syntax (e.g. Zulip mention/stream-link markup) that some later renderer expands, unless the brief or nearby code clearly expects that syntax. When an existing helper looks like a fit, check what its exact output string is before reusing it. If the brief gives no exact format, copy the format used by nearby code that produces the same kind of output (e.g. the other link in the same message).\n5. Follow the conventions of the specific code you are editing, not general rules. For strings: look at how the neighbouring strings in the same function or table are written. If they are plain English literals (translated or capitalized later, elsewhere), add yours as a plain literal too. Use `$t`/`$t_html` (frontend) or gettext (backend) only where the surrounding code does. In node tests `$t` is mocked to output \"translated: ...\", so wrapping a string that its neighbours don't wrap changes the visible result. Exported functions that tests may stub are plain `export function`. Reuse existing helpers instead of writing new ones.\n6. Check the existing tests in web/tests/ or zerver/tests/ that cover the code you changed, and make sure your change doesn't break what they assert (exact strings, selectors, mocked `find` results, call order). Update expectations that your change intentionally alters. Add a focused test in the existing style when it is cheap.\n7. Update docs only when the brief asks for it.\n8. When the diff implements every requirement and you've re-read it once, stop. Don't keep polishing or exploring."}},
+{"idx": 6, "score": 0.7773, "parents": "5", "role": "Pareto Front", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Django backend in zerver/ and zproject/; web frontend in web/src/*.ts, templates in web/templates/*.hbs, node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/).\n\nEnvironment: there is no virtualenv, no node_modules, no database and no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc and eslint cannot run here, so don't probe them. Cheap checks that work: `python3 -m py_compile <file>`, `node --check` on plain JS, and small standalone python3/node snippets for pure logic. Otherwise verify by re-reading `git diff`.\n\nHow to solve:\n1. Read the brief closely. Every exact string, name, signature, selector, URL format and output example in it is a hard requirement.\n2. Find code with `grep -rn` and read only relevant ranges (`sed -n 'A,Bp'`). Don't cat large files or re-read regions you've seen. Keep outputs short (head/tail, `grep -c`, `git diff --stat`).\n3. Change behavior ONLY for the exact case the brief describes. Every other branch (early returns, empty/null cases, \"already known\" shortcuts) must keep returning the same values and making the same calls as before. Before finishing, walk each existing test assertion for the function through your new code and confirm it still holds.\n4. Put the new behavior where the value is produced, and let downstream steps (sort, filter, join, format, render) run on the new value unchanged. Example: if names are mapped and then sorted and then joined, return the replacement display string from the map step, so the sort orders it as the replacement string. Do NOT carry hidden original values along to keep the old order, and don't add fallbacks or preservation logic the brief doesn't ask for.\n5. Keep new dependencies narrow. In node tests, modules are only partly set up (realm, current user and settings are often empty), and modules are often replaced by mocks that define only the functions the code already used. So:\n   - Before reusing a helper, read its body. If it pulls in permission, realm or settings lookups beyond what you need, call the narrow function directly instead (e.g. the specific module's `is_...`/`get_...` for the one fact you need).\n   - Call any new cross-module function only in the branch that needs it, never on paths that previously made no such call.\n   - Import modules the way the file already does (`import * as x from \"./x.ts\"`).\n6. Produce values literally in the form the brief describes (links/URLs, display names, rendered text). Don't emit shorthand markup that a later renderer expands unless nearby code clearly does that. If no format is given, copy the format nearby code uses for the same kind of output. When the brief names an existing helper, use it and check its exact output.\n7. Follow local conventions. Wrap strings in `$t`/`$t_html` (frontend) or gettext (backend) where neighbouring strings are wrapped, and only there. In node tests `$t` renders as \"translated: ...\". Exported functions are plain `export function`.\n8. Update existing tests in web/tests/ or zerver/tests/ whose expectations your change intentionally alters. Add a focused test in the existing style when it's cheap: use the file's existing mocking style (`mock_esm`/`override`) and set up only what the test needs. Add fixtures only when needed. Update docs only when the brief asks for it.\n9. When the diff implements every requirement and you've re-read it once (checking steps 3\u20135), stop."}},
+{"idx": 7, "score": 0.7847, "parents": "2", "role": "", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Django backend in zerver/ and zproject/; web frontend in web/src/*.ts, templates in web/templates/*.hbs, node tests in web/tests/*.test.cjs; markdown fixtures in zerver/tests/fixtures/; help docs in starlight_help/; dev docs in docs/).\n\nEnvironment: there is no virtualenv, no node_modules, no database and no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc and eslint cannot run here, so don't probe them. Cheap checks that work: `python3 -m py_compile <file>`, `node --check` on plain JS, and small standalone python3/node snippets for pure logic. Otherwise, check your work by re-reading `git diff`.\n\nHow to solve:\n1. Read the brief closely. Every exact string, name, signature, selector, URL shape and example output in it is a hard requirement. If it describes what the user finally sees, produce exactly that.\n2. Find code with `grep -rn` and read only the relevant ranges (`sed -n 'A,Bp'`). Don't cat large files or re-read regions you've already seen. Keep output short (head/tail, `grep -c`, `git diff --stat`). For multi-file changes (templates + TS + docs), list all the files to touch once, then edit them in batches instead of exploring again between edits.\n3. Mirror neighboring code. When you build output (a URL, link, HTML, message text), follow how the same function already builds similar pieces, and use its helpers (escaping, `Markup`, `$t`).\n4. Prefer additive changes. Add a new branch or condition in front of the existing logic and leave the existing code paths as they are. Don't replace working code with a different \"higher-level\" helper. Such helpers often call deeper modules (settings, permissions, realm state) that existing node tests never initialize, so unrelated existing tests crash. Before calling any function your code didn't call before, check what it calls internally.\n5. If you change how a value is derived (trimmed, indented, prefixed, re-parsed):\n   - `grep -n` that function for every use of the old value, and for every numeric literal and length/offset calculation (`- 2`, `.length`, `slice(0, N)`, selection/caret ranges). Each one that assumed the old shape must be updated, in every sibling branch (bullet vs. numbered, add vs. remove/empty, plain vs. HTML).\n   - Write down the list of such places, and confirm each one in the diff before finishing.\n6. Put new behavior exactly where the brief's condition holds. Keep existing early returns, special cases and their side effects. Don't fire new calls (fetches, rerenders) in cases the brief doesn't mention. Don't add preservation, fallback or sorting logic the brief doesn't ask for.\n7. Follow repo conventions: user-facing strings through `$t`/`$t_html` (frontend) or `_()` (backend). Exported functions that tests may stub are plain `export function`.\n8. Tests: grep the existing tests for the code you changed and make sure they still hold (selectors, call order, stubs). In node tests, a module your code newly calls should be mocked with `mock_esm(\"../src/<module>\")` before `zrequire`, and a mocked module only has the functions the test defines. If you find yourself rewriting existing expected strings, check that your output is really what the brief describes. Add one focused test in the existing style when it's cheap.\n9. Update docs only when the brief asks.\n10. Verify with a tiny node/python3 snippet that copies your changed logic. Cover the brief's example and the paired case (e.g. \"remove the empty item\" for an \"add an item\" fix, or the nested/indented variant of a top-level case). Print every output value, including the exact numbers for cursor/selection ranges and offsets, and check them by hand against the text: for a removal, the removed range must start exactly where the whole prefix (indent + marker) begins. Then stop. Don't keep polishing or exploring."}}];
+const DOT = `digraph G {
+    rankdir=TB;
+    node [style=filled, shape=circle, fontsize=14, width=0.6, height=0.6];
+    0 [label="0\\n(0.74)", fillcolor=orange, tooltip=" "];
+    1 [label="1\\n(0.71)", fillcolor=orange, tooltip=" "];
+    2 [label="2\\n(0.71)", fillcolor=orange, tooltip=" "];
+    3 [label="3\\n(0.79)", fillcolor=cyan, tooltip=" "];
+    4 [label="4\\n(0.78)", fillcolor=lightgray, tooltip=" "];
+    5 [label="5\\n(0.76)", fillcolor=orange, tooltip=" "];
+    6 [label="6\\n(0.78)", fillcolor=orange, tooltip=" "];
+    7 [label="7\\n(0.78)", fillcolor=lightgray, tooltip=" "];
+    0 -> 1;
+    1 -> 2;
+    1 -> 3;
+    1 -> 4;
+    1 -> 5;
+    5 -> 6;
+    2 -> 7;
+}`;
+
+const nodeMap = {};
+NODES.forEach(n => { nodeMap[n.idx] = n; });
+
+let pinnedIdx = null;   // non-null when tooltip is click-pinned (scrollable)
+let hoverIdx = null;    // non-null when hovering over a node
+
+function renderTooltip(idx) {
+  const n = nodeMap[idx];
+  if (!n) return "";
+  let roleBadge = "";
+  if (n.role === "Best") roleBadge = '<span class="role-badge role-best">BEST</span>';
+  else if (n.role === "Pareto Front") roleBadge = '<span class="role-badge role-pareto">PARETO</span>';
+  else if (n.role === "Seed") roleBadge = '<span class="role-badge role-seed">SEED</span>';
+
+  let comps = "";
+  for (const [name, text] of Object.entries(n.components)) {
+    const escaped = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    comps += '<div class="tt-comp-name">' + name + '</div><div class="tt-comp-text">' + escaped + '</div>';
+  }
+
+  return '<div class="tt-header">Candidate ' + n.idx + roleBadge + '</div>' +
+    '<div class="tt-meta">Score: <strong>' + n.score + '</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Parent(s): ' + n.parents +
+    '</div><div class="tt-hint">' + (pinnedIdx === idx ? 'Click node again to dismiss' : 'Click to pin &amp; scroll') + '</div>' +
+    comps;
+}
+
+function positionTooltip(x, y) {
+  const tt = document.getElementById("tooltip");
+  let tx = x + 16, ty = y + 16;
+  const r = tt.getBoundingClientRect();
+  if (tx + r.width > window.innerWidth - 8) tx = x - r.width - 16;
+  if (ty + r.height > window.innerHeight - 8) ty = y - r.height - 16;
+  if (tx < 8) tx = 8;
+  if (ty < 8) ty = 8;
+  tt.style.left = tx + "px";
+  tt.style.top = ty + "px";
+}
+
+function showTooltip(idx, x, y) {
+  const tt = document.getElementById("tooltip");
+  tt.innerHTML = renderTooltip(idx);
+  tt.style.display = "block";
+  positionTooltip(x, y);
+}
+
+function hideTooltip() {
+  pinnedIdx = null;
+  hoverIdx = null;
+  document.getElementById("tooltip").style.display = "none";
+}
+
+// Click outside tooltip and outside nodes dismisses pinned tooltip
+document.addEventListener("mousedown", function(e) {
+  const tt = document.getElementById("tooltip");
+  if (pinnedIdx !== null && tt.style.display === "block"
+      && !tt.contains(e.target) && !e.target.closest(".node")) {
+    hideTooltip();
+  }
+});
+
+async function render() {
+  const { instance } = await import("https://cdn.jsdelivr.net/npm/@viz-js/viz@3.11.0/lib/viz-standalone.mjs");
+  const viz = await instance();
+  const svg = viz.renderSVGElement(DOT);
+  const container = document.getElementById("graph-container");
+  container.innerHTML = "";
+  container.appendChild(svg);
+
+  // Attach hover listeners and strip native <title> tooltips to avoid double tooltips
+  svg.querySelectorAll(".node").forEach(node => {
+    const title = node.querySelector("title");
+    if (!title) return;
+    const idx = parseInt(title.textContent, 10);
+    if (isNaN(idx)) return;
+    title.remove();  // remove native SVG tooltip
+    node.style.cursor = "pointer";
+    // Hover: show tooltip following the mouse (non-interactive)
+    node.addEventListener("mouseenter", e => {
+      if (pinnedIdx !== null) return;  // don't override a pinned tooltip
+      hoverIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+    node.addEventListener("mousemove", e => {
+      if (pinnedIdx !== null || hoverIdx !== idx) return;
+      positionTooltip(e.clientX, e.clientY);
+    });
+    node.addEventListener("mouseleave", () => {
+      if (pinnedIdx !== null) return;
+      hoverIdx = null;
+      document.getElementById("tooltip").style.display = "none";
+    });
+    // Click: pin the tooltip so user can scroll it
+    node.addEventListener("click", e => {
+      e.stopPropagation();
+      if (pinnedIdx === idx) { hideTooltip(); return; }
+      pinnedIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+  });
+  // Also strip <title> from edges and the graph itself
+  svg.querySelectorAll(".edge title").forEach(t => t.remove());
+  const graphTitle = svg.querySelector(":scope > title");
+  if (graphTitle) graphTitle.remove();
+}
+
+render().catch(err => {
+  document.getElementById("graph-container").innerHTML =
+    "<p style='color:red'>Failed to render graph: " + err.message + "</p>" +
+    "<pre>" + DOT.replace(/</g,"&lt;") + "</pre>";
+});
+</script>
+</body>
+</html>

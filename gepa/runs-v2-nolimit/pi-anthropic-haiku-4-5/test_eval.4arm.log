@@ -1,0 +1,62 @@
+[rollout pi-anthropic-haiku-4-5--g77818b1b] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g77818b1b-s3] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g77818b1b-s2] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--seed] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g68be462f-s2] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--seed-s3] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g1eb4a125-s3] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g68be462f] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--seed-s2] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g68be462f-s3] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g1eb4a125] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g1eb4a125-s2] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g77818b1b-s3] done in 0.0 min: resolved 14/30
+[rollout pi-anthropic-haiku-4-5--g77818b1b-s2] done in 0.0 min: resolved 13/30
+[rollout pi-anthropic-haiku-4-5--g77818b1b] done in 0.0 min: resolved 12/30
+[rollout pi-anthropic-haiku-4-5--seed] done in 0.0 min: resolved 12/30
+[rollout pi-anthropic-haiku-4-5--g1eb4a125-s3] done in 0.0 min: resolved 11/30
+[rollout pi-anthropic-haiku-4-5--seed-s2] done in 0.0 min: resolved 13/30
+[rollout pi-anthropic-haiku-4-5--g68be462f] done in 0.0 min: resolved 16/30
+[rollout pi-anthropic-haiku-4-5--g68be462f-s2] done in 0.0 min: resolved 12/30
+[rollout pi-anthropic-haiku-4-5--g68be462f-s3] done in 0.0 min: resolved 11/30
+[rollout pi-anthropic-haiku-4-5--seed-s3] done in 0.0 min: resolved 16/30
+[rollout pi-anthropic-haiku-4-5--g1eb4a125-s2] done in 0.0 min: resolved 13/30
+[rollout pi-anthropic-haiku-4-5--g1eb4a125] done in 0.0 min: resolved 11/30
+{"seed": {"resolved": "41/90", "mean_rate": 0.4556, "cost_usd": 52.27}, "v1_best": {"resolved": "39/90", "mean_rate": 0.4333, "cost_usd": 52.29}, "v2_best": {"resolved": "39/90", "mean_rate": 0.4333, "cost_usd": 53.8}, "v2_limit600": {"resolved": "35/90", "mean_rate": 0.3889, "cost_usd": 55.66}}
+{
+ "v2_best - seed": {
+  "mean_diff": -0.0222,
+  "n_tasks": 30,
+  "tasks_up": 6,
+  "tasks_down": 6,
+  "p_sign_flip": 0.8794
+ },
+ "v1_best - seed": {
+  "mean_diff": -0.0222,
+  "n_tasks": 30,
+  "tasks_up": 6,
+  "tasks_down": 8,
+  "p_sign_flip": 0.849
+ },
+ "v2_best - v1_best": {
+  "mean_diff": 0.0,
+  "n_tasks": 30,
+  "tasks_up": 7,
+  "tasks_down": 6,
+  "p_sign_flip": 1.0
+ },
+ "v2_limit600 - seed": {
+  "mean_diff": -0.0667,
+  "n_tasks": 30,
+  "tasks_up": 6,
+  "tasks_down": 9,
+  "p_sign_flip": 0.3402
+ },
+ "v2_best - v2_limit600": {
+  "mean_diff": 0.0444,
+  "n_tasks": 30,
+  "tasks_up": 6,
+  "tasks_down": 6,
+  "p_sign_flip": 0.5472
+ }
+}

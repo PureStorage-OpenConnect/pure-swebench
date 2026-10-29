@@ -1,0 +1,48 @@
+[rollout pi-anthropic-haiku-4-5--g68be462f] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g68be462f-s2] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g68be462f-s3] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g77818b1b-s3] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g77818b1b-s2] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g77818b1b] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--seed-s2] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--seed-s3] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--seed] 30/30 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--g77818b1b-s2] done in 0.0 min: resolved 13/30
+[rollout pi-anthropic-haiku-4-5--g77818b1b-s3] done in 0.0 min: resolved 14/30
+[rollout pi-anthropic-haiku-4-5--g77818b1b] done in 0.0 min: resolved 12/30
+[rollout pi-anthropic-haiku-4-5--seed-s2] done in 0.0 min: resolved 13/30
+[rollout pi-anthropic-haiku-4-5--seed] done in 0.0 min: resolved 12/30
+[rollout pi-anthropic-haiku-4-5--seed-s3] done in 0.0 min: resolved 16/30
+[rollout pi-anthropic-haiku-4-5--g68be462f] launching 30 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-4-5--g68be462f-s2] launching 30 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-4-5--g68be462f-s3] launching 30 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-4-5--g68be462f-s2] driver gepa-gepa2-test-pi-anthropic-haiku-4-5-6114be rc=0
+[rollout pi-anthropic-haiku-4-5--g68be462f-s2] done in 62.0 min: resolved 12/30
+[rollout pi-anthropic-haiku-4-5--g68be462f] driver gepa-gepa2-test-pi-anthropic-haiku-4-5-2491b8 rc=0
+[rollout pi-anthropic-haiku-4-5--g68be462f] done in 63.4 min: resolved 16/30
+[rollout pi-anthropic-haiku-4-5--g68be462f-s3] driver gepa-gepa2-test-pi-anthropic-haiku-4-5-24d537 rc=0
+[rollout pi-anthropic-haiku-4-5--g68be462f-s3] done in 65.6 min: resolved 11/30
+{"seed": {"resolved": "41/90", "mean_rate": 0.4556, "cost_usd": 52.27}, "v1_best": {"resolved": "39/90", "mean_rate": 0.4333, "cost_usd": 52.29}, "v2_best": {"resolved": "39/90", "mean_rate": 0.4333, "cost_usd": 53.8}}
+{
+ "v2_best - seed": {
+  "mean_diff": -0.0222,
+  "n_tasks": 30,
+  "tasks_up": 6,
+  "tasks_down": 6,
+  "p_sign_flip": 0.8794
+ },
+ "v1_best - seed": {
+  "mean_diff": -0.0222,
+  "n_tasks": 30,
+  "tasks_up": 6,
+  "tasks_down": 8,
+  "p_sign_flip": 0.849
+ },
+ "v2_best - v1_best": {
+  "mean_diff": 0.0,
+  "n_tasks": 30,
+  "tasks_up": 7,
+  "tasks_down": 6,
+  "p_sign_flip": 1.0
+ }
+}

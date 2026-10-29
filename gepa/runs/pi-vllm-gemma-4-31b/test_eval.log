@@ -1,0 +1,9 @@
+[rollout pi-vllm-gemma-4-31b--gd7e4bd37] 0/30 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed] 0/30 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--gd7e4bd37] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--seed] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--gd7e4bd37] driver gepa-gepa-test-pi-vllm-gemma-4-31b-36cfd3 rc=0
+[rollout pi-vllm-gemma-4-31b--gd7e4bd37] done in 175.5 min: resolved 13/30
+[rollout pi-vllm-gemma-4-31b--seed] driver gepa-gepa-test-pi-vllm-gemma-4-31b-ca3cb4 rc=0
+[rollout pi-vllm-gemma-4-31b--seed] done in 201.0 min: resolved 14/30
+{"seed_resolved": "14/30", "gepa_best_resolved": "13/30", "board_baseline_resolved": "9/30"}

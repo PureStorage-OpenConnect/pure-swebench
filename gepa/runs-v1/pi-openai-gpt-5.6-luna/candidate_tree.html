@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEPA Candidate Tree</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; width: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; display: flex; flex-direction: column; }
+  #header { background: #fff; border-bottom: 1px solid #dee2e6; padding: 12px 20px; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  #header h1 { font-size: 18px; font-weight: 600; color: #212529; }
+  .legend { display: flex; gap: 14px; font-size: 13px; color: #495057; }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #adb5bd; }
+  #graph-container { flex: 1 1 auto; width: 100%; overflow: auto; padding: 20px; text-align: center; }
+  #graph-container svg { width: 100%; height: 100%; }
+  #tooltip {
+    display: none; position: fixed; background: #fff; border: 1px solid #dee2e6;
+    border-radius: 8px; padding: 14px 16px; max-width: 560px; max-height: 70vh; overflow-y: auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 1000; font-size: 13px; line-height: 1.5;
+  }
+  #tooltip .tt-header { font-weight: 700; font-size: 15px; margin-bottom: 6px; color: #212529; }
+  #tooltip .tt-meta { color: #6c757d; margin-bottom: 4px; }
+  #tooltip .tt-hint { color: #adb5bd; font-size: 11px; font-style: italic; margin-bottom: 10px; }
+  #tooltip .tt-comp-name { font-weight: 600; color: #495057; margin-top: 10px; border-bottom: 1px solid #e9ecef; padding-bottom: 2px; }
+  #tooltip .tt-comp-text {
+    white-space: pre-wrap; word-break: break-word; background: #f8f9fa;
+    border: 1px solid #e9ecef; border-radius: 4px; padding: 8px 10px; margin-top: 4px;
+    font-family: "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px;
+    max-height: 200px; overflow-y: auto;
+  }
+  .role-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+  .role-best { background: #00e5ff33; color: #006064; }
+  .role-pareto { background: #ff980033; color: #e65100; }
+  .role-seed { background: #e0e0e0; color: #424242; }
+</style>
+</head>
+<body>
+<div id="header">
+  <h1>GEPA Candidate Tree</h1>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:cyan"></div> Best</div>
+    <div class="legend-item"><div class="legend-dot" style="background:orange"></div> Pareto Front</div>
+    <div class="legend-item"><div class="legend-dot" style="background:lightgray"></div> Other</div>
+  </div>
+</div>
+<div id="graph-container"><p>Loading graph&hellip;</p></div>
+<div id="tooltip"></div>
+
+<script type="module">
+const NODES = [{"idx": 0, "score": 0.5, "parents": "seed", "role": "Seed", "components": {"append_system_prompt": ""}},
+{"idx": 1, "score": 0.6, "parents": "0", "role": "", "components": {"append_system_prompt": "You are fixing a bug or adding a feature in the Zulip repository (Python/Django backend in `zerver/`, `zproject/`; web frontend in `web/src/` (TypeScript), `web/templates/` (Handlebars), `web/styles/`, node tests in `web/tests/*.test.cjs`; help docs in `starlight_help/`). Only your final working-tree diff counts.\n\n## Working strategy\n1. Read the brief closely. Note every concrete requirement: exact strings, HTML output, URL/hash names, CSS selectors, edge cases, and non-regression constraints. Exact output strings and selectors usually have to match character for character.\n2. Find the code layer the brief points to (for example, the shared backend processor rather than a frontend tweak). Read the whole relevant function and its callers before you edit. Copy the patterns, helpers, and i18n conventions (`$t`/`$t_html` in the frontend, `_()`/`gettext` in the backend) that nearby code already uses.\n3. Keep changes small and targeted. Don't refactor unrelated code. Update the existing tests or fixtures that cover the behavior (for example, the markdown JSON fixtures in `zerver/tests/fixtures/`, or `web/tests/*.test.cjs`). Add cases for each example in the brief.\n\n## Verify by actually executing the code (mandatory)\nA syntax check is not verification. `python3 -m py_compile` and `git diff --check` will not catch a broken regex, a bad import, or wrong output. Before you finish, run the code you changed:\n- **Regexes:** count the parentheses in every group you touch, especially in `re.VERBOSE` patterns. In verbose patterns, `#` starts a comment and whitespace is ignored. Then compile and test the regex in a standalone `python3` script: copy the pattern text into it (or build it the same way the module does) and run `re.compile` plus `search`/`findall` on every example from the brief and on existing tricky cases. Confirm the exact matched span, including trailing punctuation that should be excluded.\n- **Other Python logic:** if the full Django test stack isn't usable, pull the pure logic into a small script and assert the expected inputs and outputs. Also try to import the module you changed, if its dependencies allow.\n- **Frontend:** try `./tools/test-js-with-node web/tests/<file>.test.cjs` or `node` on the test file. If tooling is missing, at least run `node` on a small snippet of the logic, and re-read your diff for typos in imports, selectors, and template names.\n- If a check fails because of the environment, find another way to execute the changed logic. Don't just stop verifying.\n\n## Environment notes\n- Use `python3`; plain `python` may not exist. `pytest` and the Django dependencies are often not installed, and `uv sync` usually fails because packages can't be built or downloaded. Don't spend turns on it.\n- Node 20 is available. `tsc`, `eslint`, and `prettier` may not be on PATH; check `node_modules/.bin/` first.\n- Before finishing, delete any scratch scripts, virtualenvs, or `__pycache__` directories you created, so that `git status` shows only intended changes.\n\n## Final check\nRe-read the full `git diff`. Confirm that:\n- every requirement in the brief is implemented\n- existing behavior is preserved\n- every bracket, paren, and quote is balanced\n- the changed code actually ran successfully at least once\n\nThen give a brief summary of the changes and how you verified them."}},
+{"idx": 2, "score": 0.7, "parents": "1", "role": "Best", "components": {"append_system_prompt": "You are fixing a bug or adding a feature in the Zulip repository (Python/Django backend in `zerver/`, `zproject/`; web frontend in `web/src/` (TypeScript), `web/templates/` (Handlebars), `web/styles/`, node tests in `web/tests/*.test.cjs`; help docs in `starlight_help/`). Only your final working-tree diff counts.\n\n## Working strategy\n1. Read the brief closely. Note every concrete requirement: exact strings, HTML/Markdown output, URL formats, CSS selectors, edge cases, and what must NOT change. Output strings usually must match character for character.\n2. Find the layer the brief points to. Read the whole function, its callers, and the existing tests for it. The existing tests show the exact output format and the fixture state available (which globals/realm/user state they initialize). Your code has to work under that same setup.\n3. Make the smallest change that does the job. Use the primitives the function already uses (for example, a direct `is_muted(...)` check plus `$t(...)`) rather than switching to a different higher-level helper. Before you call any helper you haven't used before, read its body and follow it one or two levels down. If it touches realm settings, current-user state, permissions, the DB, or other modules the current code doesn't already depend on, it may crash in tests that don't set that state up. Avoid it, or inline the small piece you need.\n4. Don't invent behavior. If the brief doesn't ask you to preserve some detail (like the order of items after you change their labels), do the straightforward thing: compute the new values, then apply the existing logic (sorting, formatting) to them unchanged.\n5. When you extend a shared utility, add a natural, minimal parameter (such as an optional id the helper uses to build its URL) instead of mode flags that change its return shape. Keep its existing outputs identical for existing callers.\n6. Update the existing tests that cover the behavior, and add cases for each example in the brief. Follow the i18n conventions: `$t`/`$t_html` in the frontend (node tests render these as `\"translated: ...\"`), `_()` in the backend.\n\n## Verify by executing the real code (mandatory)\nSyntax checks (`py_compile`, `node --check`, `git diff --check`) are not verification.\n- **Never write an expected test value by hand when you can compute it.** Run the real function you changed on the test's inputs, and paste the actual output into the assertion. Then make sure it matches what the brief asks for. If your new expectation differs in format from neighboring existing assertions (bold syntax, absolute vs. relative URLs, spacing), your code is probably taking the wrong branch. Find out why.\n- **Don't verify against stand-ins.** A scratch script that re-implements or stubs out the helpers you call proves nothing about the real dependency chain. Import the actual modules where you can. If you can't, trace by reading every function your new code calls, through the full call path, and confirm that each one is safe under the existing test setup.\n- **Regexes:** count the parentheses in every group you touch (in `re.VERBOSE`, `#` starts a comment and whitespace is ignored). Then `re.compile` the pattern in a standalone `python3` script and test it on every example from the brief and on existing tricky cases, checking the exact matched span.\n- **Frontend:** try `./tools/test-js-with-node web/tests/<file>.test.cjs`. If `node_modules` is missing, the node tests can't run. In that case be more conservative: prefer the change that adds no new imports or helper calls.\n- **Backend:** if Django tests can't run, extract the pure logic into a script, import the real module if its dependencies allow, and assert exact outputs.\n- If a check fails because of the environment, find another way to execute the changed logic. Don't stop verifying, and don't treat a passing mock as proof.\n\n## Environment notes\n- Use `python3`. `pytest`, the Django dependencies, and `node_modules` are often missing. `uv sync`/`npm install` usually fail, so don't spend turns on them.\n- Node 20 is available. Check `node_modules/.bin/` for `tsc`/`eslint`/`prettier`.\n- Before finishing, delete scratch scripts, virtualenvs, and any `__pycache__` you created, so that `git status` shows only intended changes.\n\n## Final check\nRe-read the full `git diff` and confirm that:\n- every requirement in the brief is implemented, and nothing extra was added\n- existing callers and existing test expectations still behave identically\n- every new helper call is safe under the existing test setup\n- every updated test expectation came from actually running the code\n- all brackets, parens, and quotes are balanced\n\nThen briefly summarize the changes and exactly how you verified them, including anything you could not run."}}];
+const DOT = `digraph G {
+    rankdir=TB;
+    node [style=filled, shape=circle, fontsize=14, width=0.6, height=0.6];
+    0 [label="0\\n(0.50)", fillcolor=lightgray, tooltip=" "];
+    1 [label="1\\n(0.60)", fillcolor=lightgray, tooltip=" "];
+    2 [label="2\\n(0.70)", fillcolor=cyan, tooltip=" "];
+    0 -> 1;
+    1 -> 2;
+}`;
+
+const nodeMap = {};
+NODES.forEach(n => { nodeMap[n.idx] = n; });
+
+let pinnedIdx = null;   // non-null when tooltip is click-pinned (scrollable)
+let hoverIdx = null;    // non-null when hovering over a node
+
+function renderTooltip(idx) {
+  const n = nodeMap[idx];
+  if (!n) return "";
+  let roleBadge = "";
+  if (n.role === "Best") roleBadge = '<span class="role-badge role-best">BEST</span>';
+  else if (n.role === "Pareto Front") roleBadge = '<span class="role-badge role-pareto">PARETO</span>';
+  else if (n.role === "Seed") roleBadge = '<span class="role-badge role-seed">SEED</span>';
+
+  let comps = "";
+  for (const [name, text] of Object.entries(n.components)) {
+    const escaped = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    comps += '<div class="tt-comp-name">' + name + '</div><div class="tt-comp-text">' + escaped + '</div>';
+  }
+
+  return '<div class="tt-header">Candidate ' + n.idx + roleBadge + '</div>' +
+    '<div class="tt-meta">Score: <strong>' + n.score + '</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Parent(s): ' + n.parents +
+    '</div><div class="tt-hint">' + (pinnedIdx === idx ? 'Click node again to dismiss' : 'Click to pin &amp; scroll') + '</div>' +
+    comps;
+}
+
+function positionTooltip(x, y) {
+  const tt = document.getElementById("tooltip");
+  let tx = x + 16, ty = y + 16;
+  const r = tt.getBoundingClientRect();
+  if (tx + r.width > window.innerWidth - 8) tx = x - r.width - 16;
+  if (ty + r.height > window.innerHeight - 8) ty = y - r.height - 16;
+  if (tx < 8) tx = 8;
+  if (ty < 8) ty = 8;
+  tt.style.left = tx + "px";
+  tt.style.top = ty + "px";
+}
+
+function showTooltip(idx, x, y) {
+  const tt = document.getElementById("tooltip");
+  tt.innerHTML = renderTooltip(idx);
+  tt.style.display = "block";
+  positionTooltip(x, y);
+}
+
+function hideTooltip() {
+  pinnedIdx = null;
+  hoverIdx = null;
+  document.getElementById("tooltip").style.display = "none";
+}
+
+// Click outside tooltip and outside nodes dismisses pinned tooltip
+document.addEventListener("mousedown", function(e) {
+  const tt = document.getElementById("tooltip");
+  if (pinnedIdx !== null && tt.style.display === "block"
+      && !tt.contains(e.target) && !e.target.closest(".node")) {
+    hideTooltip();
+  }
+});
+
+async function render() {
+  const { instance } = await import("https://cdn.jsdelivr.net/npm/@viz-js/viz@3.11.0/lib/viz-standalone.mjs");
+  const viz = await instance();
+  const svg = viz.renderSVGElement(DOT);
+  const container = document.getElementById("graph-container");
+  container.innerHTML = "";
+  container.appendChild(svg);
+
+  // Attach hover listeners and strip native <title> tooltips to avoid double tooltips
+  svg.querySelectorAll(".node").forEach(node => {
+    const title = node.querySelector("title");
+    if (!title) return;
+    const idx = parseInt(title.textContent, 10);
+    if (isNaN(idx)) return;
+    title.remove();  // remove native SVG tooltip
+    node.style.cursor = "pointer";
+    // Hover: show tooltip following the mouse (non-interactive)
+    node.addEventListener("mouseenter", e => {
+      if (pinnedIdx !== null) return;  // don't override a pinned tooltip
+      hoverIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+    node.addEventListener("mousemove", e => {
+      if (pinnedIdx !== null || hoverIdx !== idx) return;
+      positionTooltip(e.clientX, e.clientY);
+    });
+    node.addEventListener("mouseleave", () => {
+      if (pinnedIdx !== null) return;
+      hoverIdx = null;
+      document.getElementById("tooltip").style.display = "none";
+    });
+    // Click: pin the tooltip so user can scroll it
+    node.addEventListener("click", e => {
+      e.stopPropagation();
+      if (pinnedIdx === idx) { hideTooltip(); return; }
+      pinnedIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+  });
+  // Also strip <title> from edges and the graph itself
+  svg.querySelectorAll(".edge title").forEach(t => t.remove());
+  const graphTitle = svg.querySelector(":scope > title");
+  if (graphTitle) graphTitle.remove();
+}
+
+render().catch(err => {
+  document.getElementById("graph-container").innerHTML =
+    "<p style='color:red'>Failed to render graph: " + err.message + "</p>" +
+    "<pre>" + DOT.replace(/</g,"&lt;") + "</pre>";
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+[rollout pi-anthropic-haiku-5-5--seed] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.0 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--seed-s2] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.0 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--seed-s3] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.0 min: resolved 17/20
+2026-10-26 20:42:56,429 INFO seed cost per task: mean $0.130 over 20 tasks
+[rollout pi-anthropic-haiku-5-5--seed-s2] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.4 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.4 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.4 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.1 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.2 min: resolved 5/6
+2026-10-26 20:43:56,917 INFO reflection ok: cost=$0.511
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82-s2] driver gepa-gepa-cost-pi-anthropic-haiku-5-5-cf4981 rc=0
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82-s2] done in 4.7 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82-s3] driver gepa-gepa-cost-pi-anthropic-haiku-5-5-1dbee0 rc=0
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82-s3] done in 5.5 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82] driver gepa-gepa-cost-pi-anthropic-haiku-5-5-2aa5e8 rc=0
+[rollout pi-anthropic-haiku-5-5--gf5cf9f82] done in 5.6 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.0 min: resolved 5/6
+2026-10-26 20:50:00,474 INFO reflection ok: cost=$0.502
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--ga60c442b] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--ga60c442b] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s3] driver gepa-gepa-cost-pi-anthropic-haiku-5-5-5f4f53 rc=0
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s3] done in 6.3 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s2] driver gepa-gepa-cost-pi-anthropic-haiku-5-5-fa6e5d rc=0
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s2] done in 7.7 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--ga60c442b] driver gepa-gepa-cost-pi-anthropic-haiku-5-5-0cc668 rc=0
+[rollout pi-anthropic-haiku-5-5--ga60c442b] done in 7.9 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--ga60c442b] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--ga60c442b] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--ga60c442b] driver gepa-gepa-cost-pi-anthropic-haiku-5-5-958b90 rc=0
+[rollout pi-anthropic-haiku-5-5--ga60c442b] done in 13.0 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s2] driver gepa-gepa-cost-pi-anthropic-haiku-5-5-5a38d2 rc=0
+[rollout pi-anthropic-haiku-5-5--ga60c442b-s2] done in 14.2 min: resolved 16/20

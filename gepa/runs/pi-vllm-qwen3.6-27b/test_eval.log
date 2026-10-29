@@ -1,0 +1,13 @@
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] 0/30 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] 0/30 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--seed] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] driver gepa-gepa-test-pi-vllm-qwen3.6-27b-a1ccd0 rc=0
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] launching 1 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--seed] driver gepa-gepa-test-pi-vllm-qwen3.6-27b-e87f2d rc=0
+[rollout pi-vllm-qwen3.6-27b--seed] launching 1 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] driver gepa-gepa-test-pi-vllm-qwen3.6-27b-521e1d rc=0
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] done in 556.2 min: resolved 10/30
+[rollout pi-vllm-qwen3.6-27b--seed] driver gepa-gepa-test-pi-vllm-qwen3.6-27b-9df890 rc=0
+[rollout pi-vllm-qwen3.6-27b--seed] done in 572.7 min: resolved 15/30
+{"seed_resolved": "15/30", "gepa_best_resolved": "10/30", "board_baseline_resolved": "7/30"}

@@ -1,0 +1,9 @@
+[rollout pi-anthropic-haiku-4-5--seed-s2] 0/1 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--seed] 1/1 cell(s) cached
+[rollout pi-anthropic-haiku-4-5--seed-s2] launching 1 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-4-5--seed] done in 0.0 min: resolved 1/1
+[rollout pi-anthropic-haiku-4-5--seed-s2] driver gepa-gepa2-smoke-1728a3 rc=0
+[rollout pi-anthropic-haiku-4-5--seed-s2] done in 14.7 min: resolved 0/1
+OUTPUTS [{'task_id': 'ZT-0374e386eced', 'resolved': [1, 0], 'scores': [1.0, 0.0]}] [0.5]
+ITEM sizes {'Task': 15, 'Result': 51, 'Reference solution': 3315, 'Traces': 13915}
+1/2 runs resolved; partial-credit scores [1.0, 0.0]

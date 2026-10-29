@@ -1,0 +1,332 @@
+[rollout pi-anthropic-haiku-5-5--seed-s3] 0/20 cell(s) cached[rollout pi-anthropic-haiku-5-5--seed-s2] 0/20 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--seed] 1/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] launching 19 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--seed-s3] launching 20 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--seed-s2] launching 20 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--seed-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-d720cb rc=0
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 43.9 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--seed-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-e248d0 rc=0
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 44.1 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5--seed] driver gepa-gepa2-pi-anthropic-haiku-5-5-2b220d rc=0
+[rollout pi-anthropic-haiku-5-5--seed] done in 48.1 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--seed-s2] 6/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--seed-s3] 6/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.2 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g35313d77] 0/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--g35313d77-s2] 0/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--g35313d77-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g35313d77] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g35313d77-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g35313d77-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g35313d77-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-18fa3a rc=0
+[rollout pi-anthropic-haiku-5-5--g35313d77-s2] done in 15.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g35313d77-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-e61a3e rc=0
+[rollout pi-anthropic-haiku-5-5--g35313d77-s3] done in 15.3 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g35313d77] driver gepa-gepa2-pi-anthropic-haiku-5-5-06a140 rc=0
+[rollout pi-anthropic-haiku-5-5--g35313d77] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g35313d77] driver gepa-gepa2-pi-anthropic-haiku-5-5-58871d rc=0
+[rollout pi-anthropic-haiku-5-5--g35313d77] done in 27.9 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.6 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.6 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.6 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s3] 0/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--gfec3e0df] 0/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--gfec3e0df] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-bf8578 rc=0
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s3] done in 9.3 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-02621e rc=0
+[rollout pi-anthropic-haiku-5-5--gfec3e0df-s2] done in 9.4 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gfec3e0df] driver gepa-gepa2-pi-anthropic-haiku-5-5-8f3566 rc=0
+[rollout pi-anthropic-haiku-5-5--gfec3e0df] done in 9.5 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g360f0c24] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g360f0c24] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g360f0c24] driver gepa-gepa2-pi-anthropic-haiku-5-5-516f58 rc=0
+[rollout pi-anthropic-haiku-5-5--g360f0c24] done in 19.3 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-104056 rc=0
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s3] done in 19.5 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-91161a rc=0
+[rollout pi-anthropic-haiku-5-5--g360f0c24-s2] done in 20.6 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--seed-s3] 4/4 cell(s) cached[rollout pi-anthropic-haiku-5-5--seed-s2] 4/4 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--seed] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] done in 0.0 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--seed-s2] done in 0.0 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--seed-s3] done in 0.0 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g22b24e67] 0/4 cell(s) cached[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] 0/4 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-dd8a76 rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] done in 5.4 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g22b24e67] driver gepa-gepa2-pi-anthropic-haiku-5-5-270dd4 rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67] done in 6.4 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-fc9e24 rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] done in 20.6 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] 4/20 cell(s) cached[rollout pi-anthropic-haiku-5-5--g22b24e67] 4/20 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] launching 16 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67] launching 16 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] launching 16 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-3b19f1 rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] done in 15.5 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-c435cf rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] done in 15.9 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--g22b24e67] driver gepa-gepa2-pi-anthropic-haiku-5-5-8e302f rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67] driver gepa-gepa2-pi-anthropic-haiku-5-5-7a469d rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g22b24e67] driver gepa-gepa2-pi-anthropic-haiku-5-5-a8b93e rc=0
+[rollout pi-anthropic-haiku-5-5--g22b24e67] done in 37.3 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] 6/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] 6/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--g22b24e67] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g22b24e67] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s2] done in 0.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g22b24e67-s3] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 0/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 0/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] driver gepa-gepa2-pi-anthropic-haiku-5-5-8ef531 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-1f058d rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-da02f1 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 6.9 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] driver gepa-gepa2-pi-anthropic-haiku-5-5-d71ce2 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-4d9839 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 9.8 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] driver gepa-gepa2-pi-anthropic-haiku-5-5-84604d rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 12.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/20 cell(s) cached[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/20 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-7c09f6 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 27.1 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] driver gepa-gepa2-pi-anthropic-haiku-5-5-8918e3 rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 31.8 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-51c72a rc=0
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 35.3 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.1 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.1 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.1 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 0/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 0/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-839552 rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 11.4 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-1cfe2d rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 17.4 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] driver gepa-gepa2-pi-anthropic-haiku-5-5-c8d45e rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 17.4 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-d4cf3a rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 21.7 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] driver gepa-gepa2-pi-anthropic-haiku-5-5-77a3dc rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] driver gepa-gepa2-pi-anthropic-haiku-5-5-7326d4 rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-e4a77a rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 25.9 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] driver gepa-gepa2-pi-anthropic-haiku-5-5-4d3ec8 rc=0
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 31.0 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.0 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.0 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.0 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f] 0/4 cell(s) cached[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s3] 0/4 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s2] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s2] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s3] launching 4 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-09faa1 rc=0
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s3] done in 18.5 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-dc78b2 rc=0
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f-s2] done in 22.2 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f] driver gepa-gepa2-pi-anthropic-haiku-5-5-81b5b1 rc=0
+[rollout pi-anthropic-haiku-5-5--gf29f4d2f] done in 35.8 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.3 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.3 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.3 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] 0/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] 0/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-326a15 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] done in 11.7 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] driver gepa-gepa2-pi-anthropic-haiku-5-5-9848cb rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] done in 12.4 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-419a24 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] done in 13.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] 6/20 cell(s) cached[rollout pi-anthropic-haiku-5-5--g18f2fba9] 6/20 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-37997d rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-3c4e5c rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-e8a3a8 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s2] done in 21.6 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] driver gepa-gepa2-pi-anthropic-haiku-5-5-8f60d3 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-4eb110 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9-s3] done in 30.2 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] driver gepa-gepa2-pi-anthropic-haiku-5-5-af2d84 rc=0
+[rollout pi-anthropic-haiku-5-5--g18f2fba9] done in 34.7 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g6383e52e] 0/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] 0/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-b470dc rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] done in 7.0 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-0f65f9 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] done in 20.5 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g6383e52e] driver gepa-gepa2-pi-anthropic-haiku-5-5-d8dd97 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e] done in 21.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e] driver gepa-gepa2-pi-anthropic-haiku-5-5-bfd809 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e] done in 23.3 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-0ae4ec rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-0b9373 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] launching 1 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-b7c89f rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s2] done in 32.4 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-b43c85 rc=0
+[rollout pi-anthropic-haiku-5-5--g6383e52e-s3] done in 33.3 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.1 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.1 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.1 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s3] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g184f6c5f-s2] done in 0.5 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g1db28552-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g1db28552-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g1db28552] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g1db28552-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g1db28552] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g1db28552-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g1db28552-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-bd5d36 rc=0
+[rollout pi-anthropic-haiku-5-5--g1db28552-s3] done in 5.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g1db28552] driver gepa-gepa2-pi-anthropic-haiku-5-5-7f2b89 rc=0
+[rollout pi-anthropic-haiku-5-5--g1db28552] done in 6.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g1db28552-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-b28a9d rc=0
+[rollout pi-anthropic-haiku-5-5--g1db28552-s2] done in 15.9 min: resolved 4/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 6/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 6/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] done in 0.4 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] done in 0.4 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] done in 0.4 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g172d5405] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] 0/6 cell(s) cached[rollout pi-anthropic-haiku-5-5--g172d5405-s3] 0/6 cell(s) cached
+
+[rollout pi-anthropic-haiku-5-5--g172d5405] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] launching 6 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405] driver gepa-gepa2-pi-anthropic-haiku-5-5-7fe2ad rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405] done in 11.6 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-f716e1 rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] done in 13.2 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-947ecb rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] done in 14.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] launching 14 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] driver gepa-gepa2-pi-anthropic-haiku-5-5-4067a2 rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405-s2] done in 16.5 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5--g172d5405] driver gepa-gepa2-pi-anthropic-haiku-5-5-499b25 rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405] done in 24.0 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] driver gepa-gepa2-pi-anthropic-haiku-5-5-085840 rc=0
+[rollout pi-anthropic-haiku-5-5--g172d5405-s3] done in 28.4 min: resolved 17/20

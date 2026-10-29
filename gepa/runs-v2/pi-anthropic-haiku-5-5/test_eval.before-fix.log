@@ -1,0 +1,12 @@
+[rollout pi-anthropic-haiku-5-5--seed-s2] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--seed-s3] 0/30 cell(s) cached
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s3] launching 30 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--seed-s2] launching 30 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4-s2] launching 30 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--gf3d675d4] launching 30 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--seed] launching 30 cell(s) fanout=4 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5--seed-s3] launching 30 cell(s) fanout=4 (busy elsewhere: 0)

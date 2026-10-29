@@ -1,0 +1,50 @@
+[rollout pi-vllm-qwen3.6-27b--seed] 0/10 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] launching 10 cell(s) fanout=10 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--seed] driver gepa-gepa-pi-vllm-qwen3.6-27b-746918 rc=0
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 182, in <module>
+    main()
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 153, in main
+    result = gepa.optimize(
+             ^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/api.py", line 464, in optimize
+    state = engine.run()
+            ^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 630, in run
+    seed_valset_evaluation = valset_evaluator(self.seed_candidate, seed_val_ids)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 597, in valset_evaluator
+    outputs, scores, objective_scores = self.evaluator(valset.fetch(val_ids), program)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 128, in evaluator
+    eval_result = adapter.evaluate(batch, program, capture_traces=False)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 109, in evaluate
+    res = run_rollouts(self.base_agent, candidate[COMPONENT], list(batch), self.run_label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/rollout_runner.py", line 556, in run_rollouts
+    res["trace"] = build_trace(r, _load_instance(t), trace_chars)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/rollout_runner.py", line 437, in build_trace
+    transcript = condense_transcript(sess, tr_budget)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/rollout_runner.py", line 360, in condense_transcript
+    txt = build(scale, keep, tail_n, head_n)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/rollout_runner.py", line 349, in build
+    lines.append(_render_step(i, steps[i], sc(MID)))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/rollout_runner.py", line 314, in _render_step
+    out.append(f"{head} > " + _fmt_call(c["name"], c["args"], lv["arg"]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/rollout_runner.py", line 253, in _fmt_call
+    parts.append("-" + _clip(_one_line(e.get("oldText", "")), n // 3) +
+                                       ^^^^^
+AttributeError: 'str' object has no attribute 'get'
+[rollout pi-vllm-qwen3.6-27b--seed] 10/10 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 2/10
+[rollout pi-vllm-qwen3.6-27b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 0/3
+2026-10-23 12:52:45,594 INFO reflection ok: cost=$0.242
+[rollout pi-vllm-qwen3.6-27b--g4374f0c2] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g4374f0c2] launching 3 cell(s) fanout=3 (busy elsewhere: 0)

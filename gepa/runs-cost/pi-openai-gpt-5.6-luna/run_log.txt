@@ -1,0 +1,262 @@
+Iteration 0: Base program full valset score: 0.68125 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.68125
+Iteration 1: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there's no virtualenv, no node_modules, no database, and no `python` (use `python3`). tools/test-backend, tools/test-js-with-node, mypy, tsc and eslint can't run here, so don't try to install them. You have to check your own work by careful reading and small standalone runs.
+
+Layout: the backend is in `zerver/` (lib/, actions/, views/, models/, webhooks/<name>/ with view.py, tests.py, fixtures/). The frontend is in `web/src/` (*.ts or *.js; check which one exists before opening it) and its tests are in `web/tests/*.test.cjs`. Templates are in `web/templates/*.hbs`. User-facing strings use `_()` in Python and `$t`/`$t_html` in the frontend.
+
+Efficient habits:
+- Start with `rg -n` for the symbols and strings in the brief. Read only the relevant ranges (`sed -n 'A,Bp'` or a read with offset/limit), not whole large files. Pipe long outputs through `head`.
+- Read the existing tests for the code you change. They show the expected call shapes, the mocks used, and the exact output formats.
+- Don't re-read files you've already seen. Once the change is made and checked, stop.
+
+Correctness rules (these are where past fixes went wrong):
+1. Brief examples are the spec. If the brief gives a concrete input and the exact expected output, trace your code on that example step by step. For pure logic (parsers, formatters, string building), run it. Copy the function(s) into a scratch script under /tmp, stub the Django or other imports, feed in the brief's example (and existing fixtures under `fixtures/`), and compare the output with the expected text exactly. Do this before finishing.
+2. When you reuse an existing helper, read its source and at least one existing call site. Build its arguments the same way the other callers do, and work out what it actually returns for your case, including edge cases like 1:1 vs group conversations, self/sender included, and ordering. Don't assume.
+3. Don't make handling stricter than before. Avoid new code paths that raise errors or reject input that the old code (or the brief's example) accepts. Prefer graceful fallbacks, and keep existing fixtures and behavior working.
+4. Keep the change minimal and in the layer the brief names. Keep existing function names, signatures and call sites unless the brief asks for a change. Match the surrounding style.
+5. Before finishing, run `git diff` and re-read every hunk:
+   - Is every identifier defined and in scope where it's used, with no variables taken from another function and every new import added?
+   - Do the types and optional fields make sense?
+   - Is the syntax balanced?
+   - Are the exact strings, spacing and newlines what the brief specifies?
+   - Update existing tests or fixtures that assert the old behavior, so they match the new behavior.
+   - Run `python3 -m py_compile` on any edited Python file. If `node` is available, run `node --check` on edited .js/.cjs files.
+Iteration 1: New subsample score 3.6921446442281485 is not better than old score 4.025, skipping
+Iteration 2: Selected program 0 score: 0.68125
+Iteration 2: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/, web client in web/src/*.ts with node unit tests in web/tests/*.test.cjs, help docs in starlight_help/, dev docs in docs/).
+
+The test runners (tools/test-backend, tools/test-js-with-node) cannot run here: there is no virtualenv, no node_modules, no database and only `python3`. Don't try to install or run them. Check your work by reading the code. `python3 -m py_compile <file>` is fine for Python syntax.
+
+How to work:
+1. Read the brief closely. Treat every named function, parameter, string, selector, CSS class, URL and log message as an exact contract. Copy them exactly.
+2. Find the code with targeted `rg -n` (limit output with `| head`). Read only the line ranges you need with `sed -n 'A,Bp'`. Don't read whole large files, and don't re-read files you've already seen.
+3. Make the smallest change, in the module the brief points to, that does what the brief asks:
+   - Don't change existing function signatures or add parameters unless the brief asks for it. If the brief refers to app state such as "the current message list", "the current user" or "the realm setting", read it the way nearby code already does (module-level state such as `message_lists.current`, `current_user` or `realm`). Don't thread it in through new arguments.
+   - Prefer the narrow, direct check (e.g. a single `is_x(id)` predicate from the relevant module) over a broader "convenience" helper that does more. Broad helpers often depend on extra global state (realm settings, permissions, DOM) and behave slightly differently from the spec, such as different wording or variants.
+   - Follow the conventions of nearby code: `$t`/`$t_html` for user-facing web strings, existing constants and patterns for banners, settings and webhooks, and existing logger usage in backends.
+4. Before editing a function that other code shares, open its existing test file (web/tests/<module>.test.cjs or zerver/tests/...). Check how the function is exercised there. Web tests use zjquery stubs and `mock_esm`/`zrequire`, which only answer the selectors, `.find()` calls and imports the code already makes. A new selector, DOM call or import in a tested path can break existing tests. Keep tested code paths and selectors unchanged except where the brief explicitly asks.
+5. For backend features, also update the setting's documentation where nearby settings are documented (zproject/default_settings.py, prod_settings_template.py, docs/). Keep these edits short.
+6. Updating or adding tests is optional. If you do, make them small and follow the existing patterns in that test file.
+7. Finish with one `git diff` review. Check the exact strings, that no code path dereferences possibly-undefined values, that you didn't change unrelated behavior and that imports are correct. Then stop. Don't do extra polishing or broad refactors.
+Iteration 2: Accepted candidate (subsample score 3.7333333333333334 -> 4.4068744528093315); running full eval.
+Iteration 2: Found a better program on the valset with score 0.7776518429637488.
+Iteration 2: Valset score for new program: 0.7776518429637488 (coverage 20 / 20)
+Iteration 2: Val aggregate for new program: 0.7776518429637488
+Iteration 2: Individual valset scores for new program: {0: 0.949893941402625, 1: 0.9500469225663211, 2: 0.9340388914666554, 3: 0.9517856030401196, 4: 0.9615720150530277, 5: -0.05736005916882778, 6: 0.942124143490528, 7: 0.6883563234821141, 8: 0.9351453618810986, 9: 0.9575847542916295, 10: 0.9069840045543863, 11: 0.9324689396976411, 12: 0.2781320727435827, 13: 0.9321991561682321, 14: 0.4287945499823011, 15: 0.9583930897309905, 16: 0.9515093248026136, 17: 0.3063261554108236, 18: 0.958651974508706, 19: 0.6863896941704068}
+Iteration 2: New valset pareto front scores: {0: 0.949893941402625, 1: 0.9500469225663211, 2: 0.9340388914666554, 3: 0.9517856030401196, 4: 0.9615720150530277, 5: -0.05736005916882778, 6: 0.942124143490528, 7: 0.9, 8: 0.9351453618810986, 9: 0.9575847542916295, 10: 0.9069840045543863, 11: 0.9324689396976411, 12: 0.2781320727435827, 13: 0.9321991561682321, 14: 0.4287945499823011, 15: 0.9583930897309905, 16: 0.9515093248026136, 17: 0.3063261554108236, 18: 0.958651974508706, 19: 0.6863896941704068}
+Iteration 2: Valset pareto front aggregate score: 0.788234026789643
+Iteration 2: Updated valset pareto front programs: {0: {1}, 1: {1}, 2: {1}, 3: {1}, 4: {1}, 5: {1}, 6: {1}, 7: {0}, 8: {1}, 9: {1}, 10: {1}, 11: {1}, 12: {1}, 13: {1}, 14: {1}, 15: {1}, 16: {1}, 17: {1}, 18: {1}, 19: {1}}
+Iteration 2: Best valset aggregate score so far: 0.7776518429637488
+Iteration 2: Best program as per aggregate score on valset: 1
+Iteration 2: Best score on valset: 0.7776518429637488
+Iteration 2: Linear pareto front program index: 1
+Iteration 2: New program candidate index: 1
+Iteration 3: Selected program 1 score: 0.7776518429637488
+Iteration 3: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/, web client in web/src/*.ts with node unit tests in web/tests/*.test.cjs, help docs in starlight_help/, dev docs in docs/).
+
+The test runners (tools/test-backend, tools/test-js-with-node) cannot run here: there is no virtualenv, no node_modules, no database and only `python3`. Don't try to install or run them. Check your work by reading the code. `python3 -m py_compile <file>` is fine for Python syntax.
+
+How to work:
+1. Read the brief closely. Treat every named function, parameter, string, selector, CSS class, URL shape and log message as an exact contract. Copy them exactly.
+2. Find the code with targeted `rg -n` (limit output with `| head`). Read only the line ranges you need with `sed -n 'A,Bp'`. Don't read whole large files, and don't re-read files you've already seen. Once you understand the code path, decide on the approach and edit. Don't keep weighing alternatives.
+3. Make the smallest change, in the module the brief points to, that does what the brief asks:
+   - Don't change existing function signatures or add parameters unless the brief asks for it. If the brief refers to app state such as "the current message list", "the current user" or "the realm setting", read it the way nearby code already does (module-level state such as `message_lists.current`, `current_user` or `realm`). Don't thread it in through new arguments.
+   - Prefer the narrow, direct check (e.g. a single `is_x(id)` predicate) over a broader "convenience" helper that does more. Broad helpers often depend on extra global state and behave slightly differently from the spec.
+   - Before reusing an existing helper, read what it actually returns and compare that output with the brief. Don't go by its name. If the brief describes the final result (e.g. "a link to .../with/<id>", "rendered as X"), the value your code produces must literally have that shape. An indirect syntax that only becomes the result after a later rendering step (Markdown mention syntax, template placeholders) is not the same thing. If the helper's output differs, build the value directly from lower-level URL/encoding/escaping utilities that are already in the codebase.
+   - Follow the conventions of nearby code: `$t`/`$t_html` for user-facing web strings, `Markup`/escaping for backend HTML, existing constants and patterns for banners, settings and webhooks, and existing logger usage.
+4. Before editing a function that other code shares, open its existing test file (web/tests/<module>.test.cjs or zerver/tests/...) and see how the function is exercised there. Web tests use zjquery stubs and `mock_esm`/`zrequire`, which only answer the selectors, `.find()` calls and imports the code already makes. A new selector, DOM call or import in a tested path can break existing tests. Keep tested code paths and selectors unchanged except where the brief explicitly asks. Existing backend test expectations show the exact output format. If you change one, make sure the new expected value matches what the brief describes, not just what your code happens to produce.
+5. For backend features, also update the setting's documentation where nearby settings are documented (zproject/default_settings.py, prod_settings_template.py, docs/). Keep these edits short.
+6. Updating or adding tests is optional. If you do, make them small and follow the existing patterns in that test file.
+7. Finish with one `git diff` review. Check the exact strings and output shapes against the brief, check that no code path dereferences possibly-undefined values, that you didn't change unrelated behavior and that imports are correct. Then stop. Don't do extra polishing or broad refactors.
+Iteration 3: New subsample score 4.037391080033825 is not better than old score 5.0268760077018415, skipping
+Iteration 4: Selected program 1 score: 0.7776518429637488
+Iteration 4: Proposed new text for append_system_prompt: Zulip checkout: Django backend in zerver/ and zproject/; web client in web/src/*.ts with node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/.
+
+There is no virtualenv, no node_modules, no database and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to install or run them. Check your work by reading the code. `python3 -m py_compile <file>` is fine for Python syntax.
+
+How to work:
+1. Read the brief closely. Every function name, parameter, return field, string, error or log message, selector, CSS class and URL in it is an exact contract. Copy them character for character. If the brief specifies a signature or return object, implement exactly that, then update every caller (`rg -n "name\("`).
+2. Locate the code fast. Put independent `rg -n ... | head -20` searches in a single turn. Read only the relevant function with `sed -n 'A,Bp'` (about 80–120 lines at most per read). Never read whole large files, and never re-read a range you already have. Skip git history, branches, lint/tool config and unrelated modules.
+3. Make the smallest change, in the module the brief points to:
+   - Reuse existing helpers and constants (truncation helpers, display-name helpers, length constants, `Markup` for HTML, `$t`/`$t_html` for web strings, existing logger usage).
+   - Don't change signatures or add parameters unless the brief asks. Read app state the way nearby code does (e.g. `message_lists.current`, `current_user`, `realm`) instead of threading new arguments through.
+   - Prefer a narrow, direct check over a broad convenience helper that depends on extra global state or behaves slightly differently.
+   - For HTML output, escape user text and emit any required markup literally.
+4. Before changing a shared web function, `rg -n` its name in web/tests/<module>.test.cjs and read only the matching lines. zjquery stubs and `mock_esm`/`zrequire` only answer the selectors, DOM calls and imports the code already makes. Don't add new ones to tested paths unless the brief requires it.
+5. For a new backend setting, add a short doc entry where nearby settings are documented (zproject/default_settings.py, prod_settings_template.py, docs/).
+6. Don't write or edit tests unless the brief asks for them.
+7. Finish with a single command: `python3 -m py_compile <changed .py files>; git diff`. Check the exact strings, imports, possibly-undefined values and that no unrelated behavior changed. Fix anything wrong, then stop. Once the code does what the brief says, don't keep weighing alternatives, polishing or refactoring.
+Iteration 4: Accepted candidate (subsample score 5.6511468441528185 -> 5.709272620200747); running full eval.
+Iteration 4: Valset score for new program: 0.7218761623413297 (coverage 20 / 20)
+Iteration 4: Val aggregate for new program: 0.7218761623413297
+Iteration 4: Individual valset scores for new program: {0: 0.9613310353970569, 1: 0.951334432008057, 2: 0.9475939595899945, 3: 0.9565801769249938, 4: -0.037435853575094075, 5: -0.045243556495932154, 6: 0.6325463522773075, 7: 0.91499172116404, 8: 0.962100430627457, 9: 0.9607441699974121, 10: 0.9400684994398839, 11: 0.9381142240837064, 12: 0.2893879706924686, 13: 0.9408961631869736, 14: 0.4332776490899042, 15: 0.598655343906885, 16: 0.962710999183229, 17: 0.5481253300475268, 18: 0.9586313094952403, 19: 0.6231128897854826}
+Iteration 4: New valset pareto front scores: {0: 0.9613310353970569, 1: 0.951334432008057, 2: 0.9475939595899945, 3: 0.9565801769249938, 4: 0.9615720150530277, 5: -0.045243556495932154, 6: 0.942124143490528, 7: 0.91499172116404, 8: 0.962100430627457, 9: 0.9607441699974121, 10: 0.9400684994398839, 11: 0.9381142240837064, 12: 0.2893879706924686, 13: 0.9408961631869736, 14: 0.4332776490899042, 15: 0.9583930897309905, 16: 0.962710999183229, 17: 0.5481253300475268, 18: 0.958651974508706, 19: 0.6863896941704068}
+Iteration 4: Valset pareto front aggregate score: 0.8084572060945214
+Iteration 4: Updated valset pareto front programs: {0: {2}, 1: {2}, 2: {2}, 3: {2}, 4: {1}, 5: {2}, 6: {1}, 7: {2}, 8: {2}, 9: {2}, 10: {2}, 11: {2}, 12: {2}, 13: {2}, 14: {2}, 15: {1}, 16: {2}, 17: {2}, 18: {1}, 19: {1}}
+Iteration 4: Best valset aggregate score so far: 0.7776518429637488
+Iteration 4: Best program as per aggregate score on valset: 1
+Iteration 4: Best score on valset: 0.7776518429637488
+Iteration 4: Linear pareto front program index: 1
+Iteration 4: New program candidate index: 2
+Iteration 5: Selected program 2 score: 0.7218761623413297
+Iteration 5: Proposed new text for append_system_prompt: Zulip checkout: Django backend in zerver/ and zproject/; web client in web/src/*.ts with node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/.
+
+There is no virtualenv, no node_modules, no database and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to install or run them. `python3 -m py_compile <file>` is fine for Python syntax.
+
+How to work:
+1. Read the brief closely. Every function name, parameter, return field, string, error or log message, selector, CSS class and URL in it is an exact contract. Copy them character for character. If the brief specifies a signature or return object, implement exactly that, then update every caller (`rg -n "name\("`).
+2. Locate the code fast. Put independent `rg -n ... | head -20` searches in a single turn. Read only the relevant function with `sed -n 'A,Bp'` (about 80–120 lines at most per read). Never read whole large files, and never re-read a range you already have. Skip git history, branches, lint/tool config and unrelated modules.
+3. Make the smallest change, in the module the brief points to:
+   - Scope the new behavior to exactly the condition the brief describes ("in that case…"). Leave every other branch as it was, including its return value, early returns and side effects.
+   - Reuse existing helpers and constants (truncation helpers, display-name helpers, length constants, `Markup` for HTML, `$t`/`$t_html` for web strings, existing logger usage). Before reusing a helper, check that its actual output (format, syntax, how it renders) matches what the brief describes. A near-miss helper is worse than a few direct lines.
+   - Don't change signatures or add parameters unless the brief asks. Read app state the way nearby code does (e.g. `message_lists.current`, `current_user`, `realm`) instead of threading new arguments through.
+   - For HTML output, escape user text and emit any required markup literally.
+   - Python: never bind `_` as a variable (e.g. `for _, x in ...`, `a, _ = ...`) in a module that uses `_()` from gettext. It makes `_` local to the whole function and breaks translated error messages. Use descriptive names.
+4. Before changing a shared web function, `rg -n` its name in web/tests/<module>.test.cjs and read only the matching lines. Existing tests call it in several branches with only the mocks they already set up. zjquery stubs and `mock_esm`/`zrequire` only answer the selectors, DOM calls and imports the code already makes. Don't add new calls to branches the brief didn't ask you to change.
+5. If the brief gives a worked example (input → exact output), check your code against it. For self-contained string/parsing/formatting logic, copy the function(s) into a scratch script in /tmp (no Django imports), run it with `python3` on the example and compare the output exactly. If the example would hit an error/raise path, the logic is wrong.
+6. For a new backend setting, add a short doc entry where nearby settings are documented (zproject/default_settings.py, prod_settings_template.py, docs/).
+7. Don't write or edit tests unless the brief asks for them.
+8. Finish with a single command: `python3 -m py_compile <changed .py files>; git diff`. Check the exact strings, imports, possibly-undefined or shadowed names, and that no unrelated behavior changed. Fix anything wrong, then stop. Once the code does what the brief says, don't keep weighing alternatives, polishing or refactoring.
+Iteration 5: Accepted candidate (subsample score 4.216851362840961 -> 4.411484549359419); running full eval.
+Iteration 5: Valset score for new program: 0.7259772581141207 (coverage 20 / 20)
+Iteration 5: Val aggregate for new program: 0.7259772581141207
+Iteration 5: Individual valset scores for new program: {0: 0.9572994829643378, 1: 0.6223420082858385, 2: 0.9373666005821065, 3: 0.9557508410166957, 4: 0.29571305878663473, 5: -0.037504798105099574, 6: 0.959143490528013, 7: 0.6834857472989553, 8: 0.965666334041, 9: 0.9539393852258676, 10: 0.9324307200705195, 11: 0.9325652195062222, 12: 0.5121528484744758, 13: 0.9359533666711183, 14: 0.4163792407484459, 15: 0.6343709395037985, 16: 0.9641003607405391, 17: 0.32988568131588725, 18: 0.9481848118817161, 19: 0.6203198227453427}
+Iteration 5: New valset pareto front scores: {0: 0.9613310353970569, 1: 0.951334432008057, 2: 0.9475939595899945, 3: 0.9565801769249938, 4: 0.9615720150530277, 5: -0.037504798105099574, 6: 0.959143490528013, 7: 0.91499172116404, 8: 0.965666334041, 9: 0.9607441699974121, 10: 0.9400684994398839, 11: 0.9381142240837064, 12: 0.5121528484744758, 13: 0.9408961631869736, 14: 0.4332776490899042, 15: 0.9583930897309905, 16: 0.9641003607405391, 17: 0.5481253300475268, 18: 0.958651974508706, 19: 0.6863896941704068}
+Iteration 5: Valset pareto front aggregate score: 0.8210811185035805
+Iteration 5: Updated valset pareto front programs: {0: {2}, 1: {2}, 2: {2}, 3: {2}, 4: {1}, 5: {3}, 6: {3}, 7: {2}, 8: {3}, 9: {2}, 10: {2}, 11: {2}, 12: {3}, 13: {2}, 14: {2}, 15: {1}, 16: {3}, 17: {2}, 18: {1}, 19: {1}}
+Iteration 5: Best valset aggregate score so far: 0.7776518429637488
+Iteration 5: Best program as per aggregate score on valset: 1
+Iteration 5: Best score on valset: 0.7776518429637488
+Iteration 5: Linear pareto front program index: 1
+Iteration 5: New program candidate index: 3
+Iteration 6: Selected program 2 score: 0.7218761623413297
+Iteration 6: Proposed new text for append_system_prompt: Zulip checkout: Django backend in zerver/ and zproject/; web client in web/src/ (.ts, some still .js) with node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/.
+
+There is no virtualenv, no node_modules, no database and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to install or run them. Check your work by reading the code. `python3 -m py_compile <file>` is fine for Python syntax.
+
+How to work:
+1. Read the brief closely. Every function name, parameter, return field, string, error or log message, selector, CSS class and URL in it is an exact contract. Copy them character for character. If the brief specifies a signature or return object, implement exactly that, then update every caller (`rg -n "name\("`). File paths in a brief can be slightly off (e.g. .ts vs .js), so find code by `rg -n` on the identifier, not by guessing the path.
+2. Locate the code fast. Put independent `rg -n ... | head -20` searches in a single turn. Read only the relevant function with `sed -n 'A,Bp'` (about 80–120 lines at most per read). Never read whole large files, and never re-read a range you already have. Skip git history, branches, lint/tool config and unrelated modules.
+3. Make the smallest change, in the module the brief points to:
+   - Reuse existing helpers and constants (truncation helpers, display-name helpers, length constants, `Markup` for HTML, existing logger usage).
+   - Strings: produce new user-facing text exactly the way the neighbouring strings in the same code path are produced. If neighbours are plain literals that a template or caller translates or capitalises later, use a plain literal too; wrapping it in `$t` would translate it twice. Use `$t`/`$t_html` only where sibling strings at that spot already use them, and never at module top level.
+   - Don't change signatures or add parameters unless the brief asks. Read app state the way nearby code does (e.g. `message_lists.current`, `current_user`, `realm`) instead of threading new arguments through.
+   - Don't change the semantics of a shared helper that other code calls (`rg -n` its callers first). Prefer handling the new case at the call site, e.g. strip a prefix, reuse the existing logic unchanged, then add the prefix back.
+   - Prefer a narrow, direct check over a broad convenience helper that depends on extra global state or behaves slightly differently.
+   - For HTML output, escape user text and emit any required markup literally.
+4. When you extend a function to handle a new kind of input (indentation, negation, a new type, a new layout), go through EVERY branch of that function, not just the one the brief describes: early returns, "empty/cancel/remove" paths, and caret/selection/offset arithmetic. Each branch must handle the new case consistently. Any lengths or offsets must include the extra prefix or characters the new case introduces.
+5. Before changing a shared web function, `rg -n` its name in web/tests/<module>.test.cjs and read only the matching lines. zjquery stubs and `mock_esm`/`zrequire` only answer the selectors, DOM calls and imports the code already makes. Don't add new ones to tested paths unless the brief requires it. If the brief says a function must be stub-able or rewirable, export it the way similar rewirable functions in that module are exported.
+6. For a new backend setting, add a short doc entry where nearby settings are documented (zproject/default_settings.py, prod_settings_template.py, docs/).
+7. Don't write or edit tests unless the brief asks for them.
+8. Edit tool: to delete text, replace it with the surrounding lines rather than an empty string.
+9. Finish with a single command: `python3 -m py_compile <changed .py files>; git diff`. Then trace each example from the brief, plus the old top-level case, through your code by hand: work out the exact output strings, ordering and numeric offsets/indices. Check imports, possibly-undefined values and that no unrelated behaviour changed. Fix anything wrong, then stop. Once the code does what the brief says, don't keep weighing alternatives, polishing or refactoring.
+Iteration 6: Accepted candidate (subsample score 4.382731532894183 -> 5.703923773555467); running full eval.
+Iteration 6: Found a better program on the valset with score 0.791189929964413.
+Iteration 6: Valset score for new program: 0.791189929964413 (coverage 20 / 20)
+Iteration 6: Val aggregate for new program: 0.791189929964413
+Iteration 6: Individual valset scores for new program: {0: 0.95071191833488, 1: 0.6157934491519604, 2: 0.9425414434555195, 3: 0.9432321517567904, 4: 0.9610508253506671, 5: -0.03550036044301724, 6: 0.9605068520757759, 7: 0.9178860975115843, 8: 0.9589423843232854, 9: 0.9524398309227363, 10: 0.9319706903200926, 11: 0.9255416577906971, 12: 0.2973268533354579, 13: 0.9321462311980333, 14: 0.4185558943531209, 15: 0.9442904231458276, 16: 0.9553268785733733, 17: 0.33570283009642277, 18: 0.9615770738340933, 19: 0.9537554742009572}
+Iteration 6: New valset pareto front scores: {0: 0.9613310353970569, 1: 0.951334432008057, 2: 0.9475939595899945, 3: 0.9565801769249938, 4: 0.9615720150530277, 5: -0.03550036044301724, 6: 0.9605068520757759, 7: 0.9178860975115843, 8: 0.965666334041, 9: 0.9607441699974121, 10: 0.9400684994398839, 11: 0.9381142240837064, 12: 0.5121528484744758, 13: 0.9408961631869736, 14: 0.4332776490899042, 15: 0.9583930897309905, 16: 0.9641003607405391, 17: 0.5481253300475268, 18: 0.9615770738340933, 19: 0.9537554742009572}
+Iteration 6: Valset pareto front aggregate score: 0.8349087712492468
+Iteration 6: Updated valset pareto front programs: {0: {2}, 1: {2}, 2: {2}, 3: {2}, 4: {1}, 5: {4}, 6: {4}, 7: {4}, 8: {3}, 9: {2}, 10: {2}, 11: {2}, 12: {3}, 13: {2}, 14: {2}, 15: {1}, 16: {3}, 17: {2}, 18: {4}, 19: {4}}
+Iteration 6: Best valset aggregate score so far: 0.791189929964413
+Iteration 6: Best program as per aggregate score on valset: 4
+Iteration 6: Best score on valset: 0.791189929964413
+Iteration 6: Linear pareto front program index: 4
+Iteration 6: New program candidate index: 4
+Iteration 7: Selected program 3 score: 0.7259772581141207
+Iteration 7: Proposed new text for append_system_prompt: Zulip checkout: Django backend in zerver/ and zproject/; web client in web/src/*.ts with node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/.
+
+There is no virtualenv, no node_modules, no database and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to install or run them. `python3 -m py_compile <file>` is fine for Python syntax.
+
+How to work:
+1. Read the brief closely. Every function name, parameter, return field, string, error or log message, selector, CSS class and URL in it is an exact contract. Copy them character for character. If the brief specifies a signature or return object, implement exactly that, then update every caller (`rg -n "name\("`).
+2. Locate the code fast. Put independent `rg -n ... | head -20` searches in a single turn. Read only the relevant function with `sed -n 'A,Bp'` (about 80–120 lines per read at most). Never read whole large files, and never re-read a range you already have. Skip git history, branches, lint/tool config and unrelated modules.
+3. Make the smallest change, in the module the brief points to:
+   - Add the new behavior as a new branch for exactly the condition the brief describes (e.g. a new `if (...) { return ...; }` placed before the existing logic). Keep the existing lines for every other case as they are, including return values, early returns and side effects. Don't rewrite or "simplify" working code while you're there.
+   - If the brief names an existing module or state (e.g. "the muted-users module", "the current message list"), import that module and call its simple query function directly, the way nearby code does. Read app state the way nearby code does (e.g. `message_lists.current`, `current_user`, `realm`) instead of threading new arguments through.
+   - Reuse a helper from another module only after reading its body and what it calls. If it does more than the brief needs (permission or access checks, realm or settings lookups, asserts, other modules' state), don't use it. It can crash in code paths and tests that never set up that state. A few direct lines with `$t`/`$t_html` are safer than a near-miss helper.
+   - Reuse local constants and idioms (`Markup` for HTML, `$t`/`$t_html` for web strings, `<z-link>` for links in translated HTML, existing logger usage).
+   - Don't change signatures or add parameters unless the brief asks.
+   - For HTML output, escape user text and emit any required markup literally.
+   - Python: never bind `_` as a variable (`for _, x in ...`, `a, _ = ...`) in a module that uses `_()` from gettext. Use descriptive names.
+4. Before changing a shared web function, `rg -n` its name in web/tests/<module>.test.cjs and read only the matching lines. Existing tests call it in several branches with only the mocks they already set up. zjquery stubs and `mock_esm`/`zrequire` only answer the selectors, DOM calls and imports the code already makes. New calls in old branches (including calls into helpers that touch other modules) will break those tests.
+5. If the brief gives a worked example (input → exact output), check your code against it. For self-contained string/parsing/formatting logic, copy the function(s) into a scratch script in /tmp (no Django imports), run it with `python3` and compare the output exactly.
+6. For a new backend setting, add a short doc entry where nearby settings are documented (zproject/default_settings.py, prod_settings_template.py, docs/).
+7. Don't write or edit tests unless the brief asks for them.
+8. Finish with a single command: `python3 -m py_compile <changed .py files>; git diff`. Check the exact strings, imports, possibly-undefined or shadowed names, and that every pre-existing branch still behaves exactly as before. Fix anything wrong, then stop. Once the code does what the brief says, don't keep weighing alternatives, polishing or refactoring.
+Iteration 7: New subsample score 4.332625078505262 is not better than old score 4.673134734385323, skipping
+Iteration 8: Selected program 4 score: 0.791189929964413
+Iteration 8: Proposed new text for append_system_prompt: Zulip checkout: Django backend in zerver/ (lib/, actions/, views/, models/) and zproject/; backend tests in zerver/tests/; web client in web/src/ (.ts, some .js) with node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/.
+
+There is no virtualenv, no node_modules, no database and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to install or run them. Check your work by reading code. `python3 -m py_compile <file>` is fine for syntax; a small standalone `python3 - <<'PY'` snippet is fine for checking a regex or pure string logic.
+
+How to work:
+1. Read the brief closely. Every function name, parameter, return field, string, error/log message, selector, CSS class and URL in it is an exact contract: copy it character for character. If it specifies a signature or return object, implement exactly that and update every caller (`rg -n "name\("`). Brief paths can be slightly off (.ts vs .js), so find code by `rg -n` on identifiers.
+2. Locate code fast: put independent `rg -n ... | head -20` searches in one turn, scoped to a directory (e.g. `zerver/lib`, `web/src`). Read only the relevant function with `sed -n 'A,Bp'` (≤120 lines per read). Never read whole large files or re-read a range you already have. Skip git history, lint config and unrelated modules. Also `rg -n` the function/module name in its existing test file (zerver/tests/test_<module>.py or web/tests/<module>.test.cjs) and read only the matching lines: they show how expected output is built (often with the same helpers) and which stubs exist.
+3. Make the smallest change, in the module the brief points to:
+   a. When the brief says a value is "produced by the existing helper X", call X exactly the way its existing callers do (`rg -n "X\(" | head`), passing the same kind of data they pass (e.g. the model's existing display/recipient data unchanged). Do NOT add, remove, dedupe or "correct" entries in its input, and do not post-process its output, even if you think the result is incomplete. The helper's normal output IS the required output.
+   b. Reuse existing helpers and constants (truncation, display-name, mention syntax, link syntax, fences, length constants, `Markup` for HTML, existing logger).
+   c. Strings: produce new user-facing text the same way neighbouring strings in that code path are produced (`_()` in backend; `$t`/`$t_html` in web only where siblings use them, never at module top level unless siblings are module-level constants built that way). If neighbours are plain literals translated later, use a plain literal.
+   d. Don't change signatures or add parameters unless asked. Read app state the way nearby code does (`message_lists.current`, `current_user`, `realm`).
+   e. Don't change semantics of a shared helper other code calls; handle the new case at the call site.
+   f. Prefer a narrow, direct check over a broad helper that depends on extra global state.
+   g. For HTML output, escape user text and emit required markup literally.
+   h. Change only what the brief describes; keep ordering, sorting and data choices of untouched parts as they were unless the brief says to change them.
+4. When extending a function to a new kind of input, go through EVERY branch (early returns, empty/cancel/remove paths, caret/offset arithmetic) and keep each consistent; lengths/offsets must include any new prefix.
+5. In web code, zjquery stubs and `mock_esm`/`zrequire` only answer selectors, DOM calls and imports the code already makes; don't add new ones to tested paths unless required. If something must be stub-able/rewirable, export it like similar functions in that module.
+6. For a new backend setting, add a short doc entry where nearby settings are documented (zproject/default_settings.py, prod_settings_template.py, docs/). For UI moves, update the help pages that describe the old location.
+7. Don't write or edit tests unless the brief asks.
+8. Edit tool: to delete text, replace it with the surrounding lines rather than an empty string.
+9. Finish with one command: `python3 -m py_compile <changed .py files>; git diff`. Then trace each example in the brief (and the old unchanged case) through your code by hand, writing out the exact final string/URL/HTML, ordering and offsets. For each piece, ask: "did I add any data or transformation the brief did not ask for?" If yes, remove it. Check imports and possibly-undefined values. Fix anything wrong, then stop; don't keep polishing or weighing alternatives once the code matches the brief.
+Iteration 8: New subsample score 3.893902898919575 is not better than old score 4.428760316031989, skipping
+Iteration 9: Selected program 1 score: 0.7776518429637488
+Iteration 9: Proposed new text for append_system_prompt: Working notes for this Zulip checkout: Django backend in zerver/ and zproject/; web client in web/src/ (mostly .ts, some .js, so if a named file is missing, try the other extension) with node unit tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/.
+
+The test runners (tools/test-backend, tools/test-js-with-node) cannot run here: there is no virtualenv, no node_modules, no database, and only `python3`. Don't try to install or run them. Check your work by reading the code. `python3 -m py_compile <file>` checks Python syntax only.
+
+How to work:
+1. Read the brief closely. Treat every named function, parameter, string, selector, CSS class, URL and log/error message as an exact contract, and copy it exactly. If the brief gives an example input and output, that example is the spec.
+2. Find code with targeted `rg -n ... | head`. Read only the line ranges you need (`sed -n 'A,Bp'`). Don't read whole large files, and don't re-read what you've already seen.
+3. Make the smallest change, in the module the brief points to:
+   - Keep existing function signatures unless the brief asks for a change. Read app state (current message list, current user, realm settings) the way nearby code already does, not through new parameters.
+   - Prefer a narrow, direct check over a broad "convenience" helper that pulls in extra global state or behaves slightly differently.
+   - Follow nearby conventions: `$t`/`$t_html` for user-facing web strings, and the existing constants, logger usage and patterns for banners, settings and webhooks.
+4. Python pitfall: in Django code `_` is usually gettext (`from django.utils.translation import gettext as _`). Never use `_` as a throwaway variable (`for _, x in ...`, `a, _ = ...`) in a module or function that calls `_(...)`. Python then treats `_` as a local for the whole function, and the error path crashes with UnboundLocalError. Use names like `unused` or `_ignored` instead. In general, watch for names you introduce shadowing imports or builtins.
+5. For parsing or formatting logic that doesn't need Django (string splitting, matching, building output), copy the helper into a scratch file under /tmp and run it with `python3` (or `node` for plain JS) on the brief's example input. Compare the output to the expected text character by character, then delete the scratch file. Don't import Zulip modules there.
+6. Before editing a shared function, look at how its existing test (web/tests/<module>.test.cjs or zerver/tests/...) exercises it. Web tests use zjquery stubs and `mock_esm`/`zrequire`, which answer only the selectors, `.find()` calls and imports the code already makes. Keep tested selectors and code paths unchanged except where the brief explicitly asks.
+7. For backend settings or features, update nearby docs (zproject/default_settings.py, prod_settings_template.py, docs/) briefly. For UI reorganizations, update the affected starlight_help pages. Adding tests is optional; keep any you add small and in the file's existing style.
+8. Finish with one `git diff` review: exact strings, no dereference of possibly-undefined values, no shadowed names, correct imports, no unrelated changes. Then stop. No extra polishing or refactors.
+Iteration 9: New subsample score 5.140419091976399 is not better than old score 5.153517886562119, skipping
+Iteration 10: Selected program 2 score: 0.7218761623413297
+Iteration 10: Proposed new text for append_system_prompt: Zulip checkout: Django backend in zerver/ and zproject/; web client in web/src/*.ts with node tests in web/tests/*.test.cjs; help docs in starlight_help/; dev docs in docs/.
+
+There is no virtualenv, no node_modules, no database and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to install or run them. `python3 -m py_compile <file>` checks Python syntax. For a self-contained piece of logic (a regex, a parser, a string transform), copy it into a short `python3 - <<'PY'` script and run it on the brief's example inputs.
+
+How to work:
+1. Read the brief closely. Every function name, parameter, return field, string, error or log message, selector, CSS class and URL in it is an exact contract. Copy them character for character. List every variant the brief names (e.g. a plain case and a "(guest)" case, add and remove, top-level and nested) and make sure each one has its own explicit code path. If the brief specifies a signature or return object, implement exactly that, then update every caller (`rg -n "name\("`).
+2. Locate the code fast. Put independent `rg -n ... | head -20` searches in a single turn. Read only the relevant function with `sed -n 'A,Bp'` (about 80–120 lines at most per read). Never read whole large files, and never re-read a range you already have. Skip git history, lint/tool config and unrelated modules.
+3. Make the smallest change, in the module the brief points to:
+   - Reuse existing helpers and constants (truncation helpers, length constants, `Markup` for HTML, `$t`/`$t_html` for web strings, existing logger usage).
+   - Don't change signatures, or the behavior of shared helpers that other modules call (`rg` their callers). If you need new behavior, add a small new helper or handle it at the call site.
+   - Before calling a helper from another module, read its body. If it reaches into realm, settings or permission state, or returns something slightly different from what the brief asks for, don't use it. Call the primitive check directly (e.g. a module's `is_*` predicate) and build the strings yourself with `$t`.
+   - Don't restructure surrounding logic (sorting, data shapes) unless the brief requires it.
+   - For HTML output, escape user text and emit any required markup literally.
+4. Trace every dependent value. When your fix changes the shape of the input (extra indentation, a prefix, an optional segment), find every place in the function that uses its length, offset, slice or index, including early-return and "remove/undo" branches, and update all of them. Then work through each example in the brief with concrete values (actual strings, caret/selection positions, resulting output) and confirm the exact result.
+5. Before changing a web function, `rg -n` its name in web/tests/<module>.test.cjs and read only the matching lines. That shows how the code is exercised and what state is set up. zjquery stubs and `mock_esm`/`zrequire` only answer the selectors, DOM calls and imports the code already makes. Don't add new module dependencies or DOM calls to tested paths unless the brief requires it.
+6. For a new backend setting, add a short doc entry where nearby settings are documented (zproject/default_settings.py, prod_settings_template.py, docs/).
+7. Don't edit existing tests unless the brief asks. A new fixture the brief clearly implies is fine.
+8. Finish with a single command: `python3 -m py_compile <changed .py files>; git diff`. If you changed a regex, also compile it and run the brief's examples through it. Check the exact strings, imports, balanced brackets and parentheses, possibly-undefined values, and that no unrelated behavior changed. Fix anything wrong, then stop. Once the code does what the brief says, don't keep weighing alternatives, polishing or refactoring.
+Iteration 10: Accepted candidate (subsample score 3.390154966468785 -> 4.370492045016585); running full eval.
+Iteration 10: Valset score for new program: 0.7710597992577514 (coverage 20 / 20)
+Iteration 10: Val aggregate for new program: 0.7710597992577514
+Iteration 10: Individual valset scores for new program: {0: 0.9473114145565424, 1: 0.947922818100666, 2: 0.937245117475851, 3: 0.602132652213639, 4: 0.6243615648876725, 5: -0.03684663851778342, 6: 0.9610600564288593, 7: 0.9028569726857973, 8: 0.9507828981294829, 9: 0.9524369554590678, 10: 0.9295502543477862, 11: 0.9250396273602391, 12: 0.28783967611813893, 13: 0.9386342389933374, 14: 0.4296763896737814, 15: 0.9318344469574785, 16: 0.9505147359106997, 17: 0.3296856969625848, 18: 0.9556302162493667, 19: 0.9535268911618187}
+Iteration 10: New valset pareto front scores: {0: 0.9613310353970569, 1: 0.951334432008057, 2: 0.9475939595899945, 3: 0.9565801769249938, 4: 0.9615720150530277, 5: -0.03550036044301724, 6: 0.9610600564288593, 7: 0.9178860975115843, 8: 0.965666334041, 9: 0.9607441699974121, 10: 0.9400684994398839, 11: 0.9381142240837064, 12: 0.5121528484744758, 13: 0.9408961631869736, 14: 0.4332776490899042, 15: 0.9583930897309905, 16: 0.9641003607405391, 17: 0.5481253300475268, 18: 0.9615770738340933, 19: 0.9537554742009572}
+Iteration 10: Valset pareto front aggregate score: 0.8349364314669009
+Iteration 10: Updated valset pareto front programs: {0: {2}, 1: {2}, 2: {2}, 3: {2}, 4: {1}, 5: {4}, 6: {5}, 7: {4}, 8: {3}, 9: {2}, 10: {2}, 11: {2}, 12: {3}, 13: {2}, 14: {2}, 15: {1}, 16: {3}, 17: {2}, 18: {4}, 19: {4}}
+Iteration 10: Best valset aggregate score so far: 0.791189929964413
+Iteration 10: Best program as per aggregate score on valset: 4
+Iteration 10: Best score on valset: 0.791189929964413
+Iteration 10: Linear pareto front program index: 4
+Iteration 10: New program candidate index: 5

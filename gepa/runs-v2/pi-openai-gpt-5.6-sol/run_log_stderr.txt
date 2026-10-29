@@ -1,0 +1,270 @@
+[rollout pi-openai-gpt-5.6-sol--seed-s2] 0/20 cell(s) cached[rollout pi-openai-gpt-5.6-sol--seed-s3] 0/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--seed] 9/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed] launching 5 cell(s) fanout=6 (busy elsewhere: 6)
+[rollout pi-openai-gpt-5.6-sol--seed-s3] launching 20 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--seed-s2] launching 20 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--seed] driver gepa-gepa2-pi-openai-gpt-5.6-sol-c13f3d rc=0
+[rollout pi-openai-gpt-5.6-sol--seed] done in 11.4 min: resolved 14/20
+[rollout pi-openai-gpt-5.6-sol--seed-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-825eb4 rc=0
+[rollout pi-openai-gpt-5.6-sol--seed-s2] done in 32.9 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--seed-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-e5481c rc=0
+[rollout pi-openai-gpt-5.6-sol--seed-s3] done in 39.5 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s2] done in 0.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--seed] done in 0.0 min: resolved 3/6
+[rollout pi-openai-gpt-5.6-sol--seed-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--g643abfba] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g643abfba] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-11c781 rc=0
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] done in 8.2 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g643abfba] driver gepa-gepa2-pi-openai-gpt-5.6-sol-faf746 rc=0
+[rollout pi-openai-gpt-5.6-sol--g643abfba] done in 8.5 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-012c39 rc=0
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] done in 8.9 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--g643abfba] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g643abfba] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g643abfba] driver gepa-gepa2-pi-openai-gpt-5.6-sol-a915c8 rc=0
+[rollout pi-openai-gpt-5.6-sol--g643abfba] done in 11.5 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-8f902a rc=0
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] done in 13.2 min: resolved 14/20
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-b7d3c5 rc=0
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] done in 15.0 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol--g643abfba] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g643abfba] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-5cf29f rc=0
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8-s3] done in 9.9 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8] driver gepa-gepa2-pi-openai-gpt-5.6-sol-edda3d rc=0
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8] done in 11.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-7afb14 rc=0
+[rollout pi-openai-gpt-5.6-sol--g6e5f50d8-s2] done in 12.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed] done in 0.1 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--seed-s2] done in 0.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--seed-s3] done in 0.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g6178349e] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol--g6178349e-s3] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--g6178349e-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g6178349e-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g6178349e] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g6178349e-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g6178349e-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-3941b1 rc=0
+[rollout pi-openai-gpt-5.6-sol--g6178349e-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-e76cc6 rc=0
+[rollout pi-openai-gpt-5.6-sol--g6178349e-s3] done in 7.3 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--g6178349e-s2] done in 7.3 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g6178349e] driver gepa-gepa2-pi-openai-gpt-5.6-sol-a92ce7 rc=0
+[rollout pi-openai-gpt-5.6-sol--g6178349e] done in 7.3 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--seed] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s3] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s2] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed] done in 0.1 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-sol--seed-s3] done in 0.2 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-sol--seed-s2] done in 0.2 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-sol--g643abfba] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g643abfba] done in 0.0 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s2] done in 0.0 min: resolved 3/6
+[rollout pi-openai-gpt-5.6-sol--g643abfba-s3] done in 0.0 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6-s3] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol--g73bd68f6] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-4b104f rc=0
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6-s2] done in 5.7 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6] driver gepa-gepa2-pi-openai-gpt-5.6-sol-242a9f rc=0
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6] done in 6.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-d229da rc=0
+[rollout pi-openai-gpt-5.6-sol--g73bd68f6-s3] done in 7.4 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s3] 6/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol--seed-s2] 6/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--seed] done in 0.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--seed-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--seed-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-772039 rc=0
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] done in 6.3 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] driver gepa-gepa2-pi-openai-gpt-5.6-sol-cbf473 rc=0
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] done in 7.8 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-98b189 rc=0
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] done in 7.8 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-9c38b6 rc=0
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] done in 13.2 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-345bee rc=0
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] done in 13.7 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] driver gepa-gepa2-pi-openai-gpt-5.6-sol-ee4da7 rc=0
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] done in 14.2 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] 6/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] 6/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] done in 0.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-5422eb rc=0
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] done in 7.6 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-0c5197 rc=0
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] done in 9.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] driver gepa-gepa2-pi-openai-gpt-5.6-sol-4028b3 rc=0
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] done in 9.7 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-31c823 rc=0
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] done in 14.0 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] driver gepa-gepa2-pi-openai-gpt-5.6-sol-ec3b68 rc=0
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] done in 15.6 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-17c37b rc=0
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] done in 16.0 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s3] done in 0.0 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9] done in 0.0 min: resolved 2/4
+[rollout pi-openai-gpt-5.6-sol--gc6a2f1d9-s2] done in 0.0 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s3] 0/4 cell(s) cached[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s2] 0/4 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e] 0/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e] driver gepa-gepa2-pi-openai-gpt-5.6-sol-c54515 rc=0
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e] done in 6.7 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-044af7 rc=0
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s3] done in 7.4 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-f8c348 rc=0
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s2] done in 7.9 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s2] 4/20 cell(s) cached[rollout pi-openai-gpt-5.6-sol--ga2a76e0e] 4/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s3] 4/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s2] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s3] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-4cf40a rc=0
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s2] done in 16.3 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e] driver gepa-gepa2-pi-openai-gpt-5.6-sol-96ac58 rc=0
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e] done in 18.5 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-b99935 rc=0
+[rollout pi-openai-gpt-5.6-sol--ga2a76e0e-s3] done in 18.6 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed] done in 0.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--seed-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--seed-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g91f16016] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g91f16016] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g91f16016] driver gepa-gepa2-pi-openai-gpt-5.6-sol-7104dd rc=0
+[rollout pi-openai-gpt-5.6-sol--g91f16016] done in 11.9 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-7d047c rc=0
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s3] done in 12.3 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-d794cb rc=0
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s2] done in 12.8 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s2] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g91f16016] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g91f16016] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g91f16016] driver gepa-gepa2-pi-openai-gpt-5.6-sol-a16a7a rc=0
+[rollout pi-openai-gpt-5.6-sol--g91f16016] done in 19.5 min: resolved 15/20
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-ae2c61 rc=0
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s3] done in 21.3 min: resolved 16/20
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-7f65b1 rc=0
+[rollout pi-openai-gpt-5.6-sol--g91f16016-s2] done in 22.0 min: resolved 15/20
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] done in 0.0 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] done in 0.0 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4-s2] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol--gbcca9ec4] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-1c3735 rc=0
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4-s2] done in 6.5 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4] driver gepa-gepa2-pi-openai-gpt-5.6-sol-747ec3 rc=0
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4] done in 7.0 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-7da532 rc=0
+[rollout pi-openai-gpt-5.6-sol--gbcca9ec4-s3] done in 7.3 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed] done in 0.0 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol--seed-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol--seed-s3] done in 0.0 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g97df2b48] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g97df2b48] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-2164fa rc=0
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-57f4d1 rc=0
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g97df2b48] driver gepa-gepa2-pi-openai-gpt-5.6-sol-773f9c rc=0
+[rollout pi-openai-gpt-5.6-sol--g97df2b48] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-3c938a rc=0
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-492746 rc=0
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g97df2b48] driver gepa-gepa2-pi-openai-gpt-5.6-sol-7e1d8b rc=0
+[rollout pi-openai-gpt-5.6-sol--g97df2b48] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s3] driver gepa-gepa2-pi-openai-gpt-5.6-sol-4c0bc6 rc=0
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s3] done in 5.2 min: resolved 0/6
+[rollout pi-openai-gpt-5.6-sol--g97df2b48] driver gepa-gepa2-pi-openai-gpt-5.6-sol-837449 rc=0
+[rollout pi-openai-gpt-5.6-sol--g97df2b48] done in 6.5 min: resolved 0/6
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s2] driver gepa-gepa2-pi-openai-gpt-5.6-sol-4ec0b6 rc=0
+[rollout pi-openai-gpt-5.6-sol--g97df2b48-s2] done in 6.6 min: resolved 0/6

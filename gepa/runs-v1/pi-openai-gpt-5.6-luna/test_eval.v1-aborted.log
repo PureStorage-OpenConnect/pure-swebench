@@ -1,0 +1,4 @@
+[rollout pi-openai-gpt-5.6-luna--gd9abcdbe] 0/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] 0/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-luna--seed] launching 20 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-luna--gd9abcdbe] launching 20 cell(s) fanout=12 (busy elsewhere: 0)

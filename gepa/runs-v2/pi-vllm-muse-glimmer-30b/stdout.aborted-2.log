@@ -1,0 +1,6 @@
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] 0/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] 0/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] launching 20 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] launching 20 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 12/20

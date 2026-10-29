@@ -1,0 +1,6 @@
+[rollout pi-vllm-gemma-4-31b--seed-s2] 0/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] 0/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-gemma-4-31b--seed-s3] launching 20 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--seed-s2] launching 20 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-gemma-4-31b--seed] done in 0.0 min: resolved 8/20

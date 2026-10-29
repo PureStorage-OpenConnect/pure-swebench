@@ -1,0 +1,12 @@
+[rollout pi-openai-gpt-5.6-sol--seed] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s2] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed-s3] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol--seed] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--seed-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--g2c9a5144-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol--seed-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)

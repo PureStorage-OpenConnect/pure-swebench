@@ -1,0 +1,110 @@
+[rollout pi-vllm-muse-glimmer-30b--seed] 10/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] launching 10 cell(s) fanout=10 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--seed] driver gepa-gepa-pi-vllm-muse-glimmer-30b-342917 rc=0
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 94.7 min: resolved 12/20
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--g032a305d] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g032a305d] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g032a305d] driver gepa-gepa-pi-vllm-muse-glimmer-30b-cb5681 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g032a305d] done in 30.4 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] driver gepa-gepa-pi-vllm-muse-glimmer-30b-2d2e2e rc=0
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] done in 28.2 min: resolved 3/3
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] 3/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] driver gepa-gepa-pi-vllm-muse-glimmer-30b-713773 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] done in 93.6 min: resolved 15/20
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--gfe184640] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gfe184640] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gfe184640] driver gepa-gepa-pi-vllm-muse-glimmer-30b-c8fa4c rc=0
+[rollout pi-vllm-muse-glimmer-30b--gfe184640] done in 54.5 min: resolved 3/3
+[rollout pi-vllm-muse-glimmer-30b--gfe184640] 3/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gfe184640] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gfe184640] driver gepa-gepa-pi-vllm-muse-glimmer-30b-221c8f rc=0
+[rollout pi-vllm-muse-glimmer-30b--gfe184640] done in 93.6 min: resolved 11/20
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 1/3
+[rollout pi-vllm-muse-glimmer-30b--ga38d98ae] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--ga38d98ae] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--ga38d98ae] driver gepa-gepa-pi-vllm-muse-glimmer-30b-b34df0 rc=0
+[rollout pi-vllm-muse-glimmer-30b--ga38d98ae] done in 40.7 min: resolved 1/3
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] done in 0.0 min: resolved 1/3
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] driver gepa-gepa-pi-vllm-muse-glimmer-30b-4c7ceb rc=0
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] done in 21.3 min: resolved 3/3
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] 3/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] driver gepa-gepa-pi-vllm-muse-glimmer-30b-7a2d61 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] done in 110.3 min: resolved 12/20
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] done in 0.0 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--gd6c9bd89] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gd6c9bd89] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gd6c9bd89] driver gepa-gepa-pi-vllm-muse-glimmer-30b-81cf0f rc=0
+[rollout pi-vllm-muse-glimmer-30b--gd6c9bd89] done in 37.5 min: resolved 0/3
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] 2/2 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] done in 0.0 min: resolved 1/2
+[rollout pi-vllm-muse-glimmer-30b--g75df7f9b] 0/2 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g75df7f9b] launching 2 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g75df7f9b] driver gepa-gepa-pi-vllm-muse-glimmer-30b-5b3265 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g75df7f9b] done in 15.6 min: resolved 0/2
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--g2ecca313] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g2ecca313] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g2ecca313] driver gepa-gepa-pi-vllm-muse-glimmer-30b-41fd1b rc=0
+[rollout pi-vllm-muse-glimmer-30b--g2ecca313] done in 29.7 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g0d73c20f] done in 0.0 min: resolved 3/3
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 1/3
+[rollout pi-vllm-muse-glimmer-30b--gc4d715f8] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gc4d715f8] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gc4d715f8] driver gepa-gepa-pi-vllm-muse-glimmer-30b-5b1b12 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gc4d715f8] done in 18.8 min: resolved 1/3
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--g623470a3] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g623470a3] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g623470a3] driver gepa-gepa-pi-vllm-muse-glimmer-30b-3c4ca9 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g623470a3] done in 14.6 min: resolved 1/3
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] done in 0.0 min: resolved 1/3
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] driver gepa-gepa-pi-vllm-muse-glimmer-30b-e6eed9 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] done in 30.3 min: resolved 3/3
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] 3/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] driver gepa-gepa-pi-vllm-muse-glimmer-30b-9afbcf rc=0
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] done in 109.1 min: resolved 16/20
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] done in 0.0 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] driver gepa-gepa-pi-vllm-muse-glimmer-30b-b2c842 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] done in 40.0 min: resolved 3/3
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] 3/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] driver gepa-gepa-pi-vllm-muse-glimmer-30b-88ff34 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g2a4f4ab1] done in 78.3 min: resolved 11/20
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] 2/2 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] done in 0.0 min: resolved 2/2
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gab4b52cb] done in 0.0 min: resolved 1/3
+[rollout pi-vllm-muse-glimmer-30b--g0621238f] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g0621238f] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g0621238f] driver gepa-gepa-pi-vllm-muse-glimmer-30b-bafadb rc=0
+[rollout pi-vllm-muse-glimmer-30b--g0621238f] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g0621238f] driver gepa-gepa-pi-vllm-muse-glimmer-30b-a92518 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g0621238f] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g0621238f] driver gepa-gepa-pi-vllm-muse-glimmer-30b-6cc58f rc=0
+[rollout pi-vllm-muse-glimmer-30b--g0621238f] done in 3.0 min: resolved 0/3

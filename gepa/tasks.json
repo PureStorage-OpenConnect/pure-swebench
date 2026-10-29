@@ -1,0 +1,259 @@
+{
+ "selection_rule": "common-set task; baseline resolved by 0-3 of the 5 target pi agents; resolve rate over all 21 ranked agents >= 0.25 (solvable); contested over-specific-test tasks ZT-2cbf9e130e35, ZT-7630a41857d5 excluded; 2 easiest level-3 tasks dropped to reach 30. Split stratified by level, seed 20261023. | v2 (2026-10-23, Robert): validation 20 / test 30. Added the 11 remaining level-3 tasks and the 9 level-4 tasks with the lowest all-21 rate; split stratified by level (seed 20261024): 6 L3 + 4 L4 to validation, 5 L3 + 5 L4 to test. \"train\" = validation/Pareto set (also feeds reflection minibatches).",
+ "train": [
+  "ZT-0374e386eced",
+  "ZT-130cc7b9ad90",
+  "ZT-1a1fb1d22667",
+  "ZT-2e59bb076801",
+  "ZT-3c1e6ef9951e",
+  "ZT-411fd9c4fe91",
+  "ZT-4515c29d44f1",
+  "ZT-52b83f7b5883",
+  "ZT-5c7a7740265e",
+  "ZT-68136fa2af74",
+  "ZT-78c9c590f2fb",
+  "ZT-79566a8c514c",
+  "ZT-856dcb1e6053",
+  "ZT-89c0925d8c09",
+  "ZT-93913dd6e797",
+  "ZT-98e14a644f3e",
+  "ZT-a7675d656cd3",
+  "ZT-ac182038d7c7",
+  "ZT-b837c47ac387",
+  "ZT-d8f609d0880b"
+ ],
+ "test": [
+  "ZT-0b2cb835f545",
+  "ZT-0d91dad76f73",
+  "ZT-0dfb70915262",
+  "ZT-1338aa97fd5d",
+  "ZT-14173b757f93",
+  "ZT-2320a8917e00",
+  "ZT-31a06f2ed0ce",
+  "ZT-356028729f40",
+  "ZT-35ed45ce4415",
+  "ZT-4d5abdae1c10",
+  "ZT-61500abec1a1",
+  "ZT-6789c9d64848",
+  "ZT-6833ad8a2128",
+  "ZT-8da9cbf764a3",
+  "ZT-8f1d64748aea",
+  "ZT-9083c059e8a8",
+  "ZT-a028a6b9fd88",
+  "ZT-a98135649fd7",
+  "ZT-afb960c04137",
+  "ZT-b4bb708c1453",
+  "ZT-b7ce31135d20",
+  "ZT-ba8822dc01f7",
+  "ZT-c44c153b9af8",
+  "ZT-c5b9285a89d9",
+  "ZT-c752820dc09f",
+  "ZT-c8983c0d3183",
+  "ZT-dde9ec247568",
+  "ZT-ee41f4afc996",
+  "ZT-f86654ba5fa4",
+  "ZT-facbdf08fc2f"
+ ],
+ "task_info": {
+  "ZT-ac182038d7c7": {
+   "baseline_resolvers_of_5": 0,
+   "all21_rate": 0.29
+  },
+  "ZT-4d5abdae1c10": {
+   "baseline_resolvers_of_5": 0,
+   "all21_rate": 0.33
+  },
+  "ZT-356028729f40": {
+   "baseline_resolvers_of_5": 0,
+   "all21_rate": 0.38
+  },
+  "ZT-411fd9c4fe91": {
+   "baseline_resolvers_of_5": 0,
+   "all21_rate": 0.38
+  },
+  "ZT-2320a8917e00": {
+   "baseline_resolvers_of_5": 0,
+   "all21_rate": 0.43
+  },
+  "ZT-6789c9d64848": {
+   "baseline_resolvers_of_5": 0,
+   "all21_rate": 0.48
+  },
+  "ZT-b4bb708c1453": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.29
+  },
+  "ZT-1338aa97fd5d": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.33
+  },
+  "ZT-856dcb1e6053": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.33
+  },
+  "ZT-c5b9285a89d9": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.43
+  },
+  "ZT-2e59bb076801": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.52
+  },
+  "ZT-9083c059e8a8": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.62
+  },
+  "ZT-a98135649fd7": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.62
+  },
+  "ZT-61500abec1a1": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.67
+  },
+  "ZT-68136fa2af74": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.67
+  },
+  "ZT-c8983c0d3183": {
+   "baseline_resolvers_of_5": 1,
+   "all21_rate": 0.67
+  },
+  "ZT-ee41f4afc996": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.38
+  },
+  "ZT-4515c29d44f1": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.43
+  },
+  "ZT-93913dd6e797": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.43
+  },
+  "ZT-afb960c04137": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.48
+  },
+  "ZT-c752820dc09f": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.52
+  },
+  "ZT-dde9ec247568": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.57
+  },
+  "ZT-b837c47ac387": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.67
+  },
+  "ZT-0dfb70915262": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.71
+  },
+  "ZT-98e14a644f3e": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.76
+  },
+  "ZT-a028a6b9fd88": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.76
+  },
+  "ZT-8f1d64748aea": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.81
+  },
+  "ZT-f86654ba5fa4": {
+   "baseline_resolvers_of_5": 2,
+   "all21_rate": 0.81
+  },
+  "ZT-b7ce31135d20": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.48
+  },
+  "ZT-79566a8c514c": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.71
+  },
+  "ZT-3c1e6ef9951e": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.76
+  },
+  "ZT-ba8822dc01f7": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.81
+  },
+  "ZT-0d91dad76f73": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.86
+  },
+  "ZT-1a1fb1d22667": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.86
+  },
+  "ZT-31a06f2ed0ce": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.86
+  },
+  "ZT-35ed45ce4415": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.86
+  },
+  "ZT-52b83f7b5883": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.86
+  },
+  "ZT-5c7a7740265e": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.86
+  },
+  "ZT-78c9c590f2fb": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.86
+  },
+  "ZT-c44c153b9af8": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.86
+  },
+  "ZT-a7675d656cd3": {
+   "baseline_resolvers_of_5": 3,
+   "all21_rate": 0.9
+  },
+  "ZT-d8f609d0880b": {
+   "baseline_resolvers_of_5": 4,
+   "all21_rate": 0.71
+  },
+  "ZT-facbdf08fc2f": {
+   "baseline_resolvers_of_5": 4,
+   "all21_rate": 0.71
+  },
+  "ZT-89c0925d8c09": {
+   "baseline_resolvers_of_5": 4,
+   "all21_rate": 0.76
+  },
+  "ZT-0b2cb835f545": {
+   "baseline_resolvers_of_5": 4,
+   "all21_rate": 0.81
+  },
+  "ZT-14173b757f93": {
+   "baseline_resolvers_of_5": 4,
+   "all21_rate": 0.81
+  },
+  "ZT-8da9cbf764a3": {
+   "baseline_resolvers_of_5": 4,
+   "all21_rate": 0.81
+  },
+  "ZT-0374e386eced": {
+   "baseline_resolvers_of_5": 4,
+   "all21_rate": 0.86
+  },
+  "ZT-130cc7b9ad90": {
+   "baseline_resolvers_of_5": 4,
+   "all21_rate": 0.86
+  },
+  "ZT-6833ad8a2128": {
+   "baseline_resolvers_of_5": 4,
+   "all21_rate": 0.86
+  }
+ }
+}

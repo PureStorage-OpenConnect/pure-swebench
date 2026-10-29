@@ -1,0 +1,9 @@
+[rollout pi-vllm-qwen3.6-27b--seed] 0/10 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] launching 10 cell(s) fanout=10 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--seed] driver gepa-gepa-pi-vllm-qwen3.6-27b-746918 rc=0
+[rollout pi-vllm-qwen3.6-27b--seed] 10/10 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 2/10
+[rollout pi-vllm-qwen3.6-27b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 0/3
+[rollout pi-vllm-qwen3.6-27b--g4374f0c2] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g4374f0c2] launching 3 cell(s) fanout=3 (busy elsewhere: 0)

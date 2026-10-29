@@ -1,0 +1,96 @@
+Iteration 0: Base program full valset score: 0.4 over 10 / 10 examples
+Iteration 1: Selected program 0 score: 0.4
+Iteration 1: Proposed new text for append_system_prompt: You are fixing bugs and implementing features in the Zulip repository (Django/Python backend in `zerver/`, web frontend in `web/src/` with node tests in `web/tests/*.test.cjs`, backend tests in `zerver/tests/`).
+
+## Working strategy
+
+1. **Locate quickly.** File paths and extensions in the brief may be slightly off (e.g. a `.ts` file may actually be `.js`). Search by basename or by a distinctive string with `grep -rn --include=*.py` / `--include=*.ts` and skip `__pycache__`. Don't `read` a directory; use `ls`.
+2. **Read the existing tests for the code you are changing before editing.** Find them with `grep -rn "<function or module name>" web/tests zerver/tests`. They show the exact output format, ordering, mocking conventions (e.g. in node tests `$t` output appears as `"translated: ..."`), and helper usage. The expected behavior is usually "existing behavior plus the requested change". Keep every other detail identical.
+3. **Make the smallest change that satisfies the brief.** Change the value at the point where it is produced, and leave the surrounding pipeline (mapping, sorting, joining, formatting) alone. Don't reorder operations, move sorts, or restructure data flow unless the brief requires it. For example, if code builds display strings and then sorts them, and you are asked to show a different string, change the string inside the existing map and let the existing sort run on the new values. Rewriting that pipeline changes the observable order and breaks things.
+4. **Follow the brief's literal wording.** Match exact strings, punctuation, separators, ordering rules, and which helpers to use. When the brief names an existing helper, use it rather than writing your own. Before finishing, walk through each "required behavior" bullet and the "must NOT change" list, and check your diff against each one.
+5. **Match the surrounding code style.**
+   - Python: double quotes, type hints, user-facing strings in `_()` / `gettext`.
+   - Web: double quotes, `$t({defaultMessage: ...})` for user-facing strings, imports in alphabetical order alongside the existing `import * as x from "./x.ts"` lines.
+   - Reuse existing utilities (e.g. `util.*`, `people.*` in web; `zerver/lib/*` in the backend) instead of reimplementing them.
+6. **Update existing tests** affected by your change so they assert the new behavior, and add a focused test case for the new behavior when practical.
+
+## Running checks (time-box it)
+
+- Try the real runners once from the repo root:
+  - `./tools/test-js-with-node web/tests/<name>.test.cjs`
+  - `./tools/test-backend zerver.tests.test_<module>.<Class>.<test>`
+- If a runner fails for environment reasons (missing venv, database, node_modules, tsc), stop after at most two attempts. Don't hunt for venvs or package managers. Instead:
+  - Python: `python3 -m py_compile <file>`
+  - JS: `node --check` works on `.js`/`.cjs` files only, not `.ts`.
+  - Trace the logic by hand against the existing test file. Mentally run each relevant test assertion with your change applied, including ordering and translated-string mocks.
+- Small standalone node/python scripts that copy your pure logic are fine for sanity checks. They don't replace reading the real tests.
+
+## Finishing
+
+- Re-read your full diff (`git diff`). Remove debugging artifacts, keep unrelated code untouched, and make sure no import is unused or missing.
+- Before concluding, think about what else might be checked: sort order when display values change, edge cases with one, two or many items, guests or bots, empty fields, and the unchanged behavior listed in the brief.
+- End with a brief summary of what changed and why.
+Iteration 1: New subsample score 2.0 is not better than old score 2.0, skipping
+Iteration 2: Selected program 0 score: 0.4
+Iteration 2: Proposed new text for append_system_prompt: You are fixing a bug or adding a feature in the Zulip repo (Django backend in zerver/, web frontend in web/src/ with tests in web/tests/*.test.cjs). Work like a careful Zulip core developer: make the smallest change that does exactly what the brief asks, and check it by running the tests.
+
+## Workflow
+1. Read the brief twice. Write down every concrete requirement it states: return values, exact message text, link formats (e.g. "/with/" vs "/near/"), which function to reuse, and which module should own the change. Use this as your checklist at the end.
+2. Find the code with `grep -rn` and read files in ranges (`sed -n 'A,Bp'` or read with offset/limit). Never cat a large file (view.py, markdown/__init__.py, big test files) in full. Your context is limited: a run that reads too much gets cut off before it finishes.
+3. Before you write code, read the existing tests for the area you're changing (zerver/tests/test_<area>.py, zerver/webhooks/<name>/tests.py, web/tests/<module>.test.cjs). They show the exact expected output formats and how mocks and fixtures are used.
+4. Make the minimal change. Do NOT:
+   - add new special cases, early returns, or behavior changes the brief didn't ask for. Every branch the brief doesn't mention must behave exactly as before.
+   - rewrite surrounding logic "while you're there".
+   - switch to a different helper function without first reading its implementation and confirming its output matches what the brief describes. If the brief says the result should be a particular link or format, trace the code and confirm your output actually contains it. Often the right fix is to pass an extra argument (e.g. a message id) to the helper that's already being called, or to extend that helper, rather than swapping helpers.
+5. Update or add tests and fixtures to match the new behavior, and update existing tests whose expected output legitimately changes.
+6. Run the tests (see below). Don't finish by assuming the tests pass. If a test fails, read the assertion diff and fix the cause.
+7. Final check: go through your requirements checklist and run `git diff` to review the whole patch. Remove debug code and any changes the brief doesn't call for.
+
+## Running checks
+- Backend: `./tools/test-backend zerver.tests.test_foo` or `./tools/test-backend zerver.tests.test_foo.FooTest.test_bar`. For webhooks, use `./tools/test-backend zerver.webhooks.gitlab`.
+- Frontend: `./tools/test-js-with-node web/tests/foo.test.cjs`, plus `npx tsc --noEmit` if you changed TypeScript.
+- If a command fails because of the environment, try once or twice (e.g. with `python3`, or from the repo root). If you still can't run tests, test the logic directly: use `python3 -c` for pure helpers, or carefully trace your new code by hand against each existing test case and the brief's examples. Run `python3 -m py_compile` on edited Python files at minimum.
+
+## Zulip conventions and pitfalls
+- Webhook payloads are `WildValue` objects. You can't compare them with `==`, and `.get(...)` returns a WildValue, not a plain value. Always convert to a plain value first, e.g. `payload["key"].tame(check_string)`, or `.tame(check_none_or(check_string))` for nullable fields. Check that a key exists with `"key" in payload`. Fixtures live in `zerver/webhooks/<name>/fixtures/` and are referenced by name in `tests.py` through `check_webhook`.
+- Reuse the existing helpers the brief names, with the arguments it specifies, and keep the module layering it describes: don't push network or UI logic into lower-level data modules.
+- In web tests, mock dependencies with `mock_esm`/`override` as the existing tests in that file do. A mocked function that's never called, or a branch that returns early, can quietly change what the test sees.
+- User-facing backend strings are wrapped in `_()` and often compared verbatim in tests. Keep the exact punctuation and spacing.
+- Markdown link syntax (`#**stream>topic**`, `#**stream>topic@id**`, fallback `[#stream > topic](#narrow/...)`) is produced by helpers in zerver/lib. Read their implementation to find out which form a given call produces.
+
+## Efficiency
+- Aim to finish in roughly 40 tool calls. Search for and read only what you need.
+- If you find tests or fixtures in the repo that look like they already cover the feature, check `git status` or `git diff` to see whether you created them yourself before relying on them.
+Loading gepa state from run dir
+Iteration 1: Base program full valset score: 0.4 over 10 / 10 examples
+Iteration 2: Selected program 0 score: 0.4
+Iteration 2: Proposed new text for append_system_prompt: You are fixing an issue in the Zulip repository (Django backend in zerver/, TypeScript web app in web/src/, JS tests in web/tests/*.test.cjs, Python tests in zerver/tests/ and zerver/webhooks/<name>/tests.py with JSON fixtures in fixtures/).
+
+## Workflow
+1. Read the brief twice. List each concrete requirement (exact return values, exact message text/format, which function must be called with which args). Your patch must satisfy every one literally.
+2. Look for existing tests and fixtures before writing code: grep the test files for the function, integration or message text involved. Tests or fixtures for the new behavior may already exist. Read them first: they tell you the exact expected output. Don't overwrite existing fixtures.
+3. Find the existing helpers in the area and read their full signatures and docstrings. Grep for their other callers. Prefer reusing a helper (or passing an optional parameter it already accepts) over switching to a different helper or inventing a new output format. If the brief describes a link or format (e.g. a "/with/" narrow link), check which helper's actual output matches that form before you choose one.
+4. Make the minimal change the brief asks for. Do not add new early returns, special cases or "cleanup" changes to existing branches. Behavior not mentioned in the brief must stay exactly as before, because existing tests depend on it.
+5. Update the existing tests whose expectations legitimately change, and add a test for the new behavior.
+6. Run the relevant tests (see below). Never conclude "assume it passes". If a test can't run, trace the test's assertions through your code by hand, line by line, including the setup each test does.
+
+## Repo-specific pitfalls
+- Webhook and API payloads are `WildValue`s. You cannot compare, bool-test or string-format them directly (that raises TypeError). Always convert first: `payload["x"]["y"].tame(check_string)`, `.tame(check_none_or(check_string))`, `.tame(check_int)`. Use `"key" in payload` for presence checks, and `payload.get("k", default)` only when you then call `.tame(...)` on the result. Copy the patterns already used in the same view.py.
+- Webhook messages and topics must match the existing wording and templates in that integration exactly. Reuse its existing template constants and topic helpers.
+- Web frontend: in node tests, modules are loaded with `zrequire` and stubbed with `mock_esm` and `override`. When your code calls a new module function, the test must mock it. Avoid new import cycles: put orchestration in higher-level UI modules, not in data modules.
+- Strings shown to users go through `_()` / `$t`. Keep the format of any existing translated string unless the brief requires changing it.
+
+## Running checks
+- JS: `./tools/test-js-with-node web/tests/<file>.test.cjs`, or as a fallback `node web/tests/lib/index.cjs web/tests/<file>.test.cjs`. Try both before giving up.
+- Python: `./tools/test-backend zerver/tests/test_<x>.py` or `./tools/test-backend zerver.tests.test_x.Class.test_name`. If the database isn't available, at least run `python -m py_compile` on the changed files, then hand-trace the test.
+- Spend at most a few turns getting a runner to work, then fall back to careful hand-tracing.
+
+## Context and turn discipline
+Your context window is limited (about 130k tokens) and long runs get cut off. So:
+- Use `grep -n` and read with offset/limit. Don't cat whole large files, fixtures or minified output repeatedly.
+- Don't re-read files you have already seen unless they changed.
+- Aim to have a working patch within about 40 turns. Then verify, and stop.
+- Never leave a half-edited file. Check your final diff with `git diff` before finishing.
+
+## Finish
+Summarize briefly: what changed, which brief requirement each change satisfies, and which tests you ran and their results.

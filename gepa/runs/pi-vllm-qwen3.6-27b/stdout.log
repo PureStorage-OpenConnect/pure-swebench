@@ -1,0 +1,511 @@
+[rollout pi-vllm-qwen3.6-27b--seed] 10/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] launching 10 cell(s) fanout=10 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--seed] 10/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 141.9 min: resolved 10/20
+[rollout pi-vllm-qwen3.6-27b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 1/3
+2026-10-23 15:56:01,555 INFO reflection ok: cost=$0.233
+[rollout pi-vllm-qwen3.6-27b--gde4b6735] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gde4b6735] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gde4b6735] driver gepa-gepa-pi-vllm-qwen3.6-27b-c673a0 rc=0
+[rollout pi-vllm-qwen3.6-27b--gde4b6735] done in 37.9 min: resolved 1/3
+[rollout pi-vllm-qwen3.6-27b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 2/3
+2026-10-23 16:34:23,612 INFO reflection ok: cost=$0.237
+[rollout pi-vllm-qwen3.6-27b--g0f59b2fe] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g0f59b2fe] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g0f59b2fe] driver gepa-gepa-pi-vllm-qwen3.6-27b-67c6d5 rc=0
+[rollout pi-vllm-qwen3.6-27b--g0f59b2fe] done in 52.5 min: resolved 2/3
+[rollout pi-vllm-qwen3.6-27b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 1/3
+2026-10-23 17:27:22,565 INFO reflection ok: cost=$0.240
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] driver gepa-gepa-pi-vllm-qwen3.6-27b-c49fd8 rc=0
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] done in 69.7 min: resolved 2/3
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] 3/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] driver gepa-gepa-pi-vllm-qwen3.6-27b-001a6e rc=0
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] done in 110.3 min: resolved 11/20
+[rollout pi-vllm-qwen3.6-27b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 1/3
+2026-10-23 20:27:56,344 INFO reflection ok: cost=$0.242
+[rollout pi-vllm-qwen3.6-27b--g219eb738] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g219eb738] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g219eb738] driver gepa-gepa-pi-vllm-qwen3.6-27b-1688e0 rc=0
+[rollout pi-vllm-qwen3.6-27b--g219eb738] done in 35.4 min: resolved 2/3
+[rollout pi-vllm-qwen3.6-27b--g219eb738] 3/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g219eb738] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g219eb738] driver gepa-gepa-pi-vllm-qwen3.6-27b-ceb423 rc=0
+[rollout pi-vllm-qwen3.6-27b--g219eb738] done in 197.7 min: resolved 11/20
+[rollout pi-vllm-qwen3.6-27b--g219eb738] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g219eb738] done in 0.0 min: resolved 1/3
+2026-10-24 00:21:40,974 INFO reflection ok: cost=$0.282
+[rollout pi-vllm-qwen3.6-27b--geb2d5169] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--geb2d5169] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--geb2d5169] driver gepa-gepa-pi-vllm-qwen3.6-27b-d6a573 rc=0
+[rollout pi-vllm-qwen3.6-27b--geb2d5169] done in 11.6 min: resolved 1/3
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] done in 0.0 min: resolved 1/3
+2026-10-24 00:33:51,449 INFO reflection ok: cost=$0.269
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] driver gepa-gepa-pi-vllm-qwen3.6-27b-381c97 rc=0
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] done in 46.6 min: resolved 2/3
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] 3/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] driver gepa-gepa-pi-vllm-qwen3.6-27b-fe3e8e rc=0
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] done in 162.1 min: resolved 11/20
+[rollout pi-vllm-qwen3.6-27b--g219eb738] 2/2 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g219eb738] done in 0.0 min: resolved 1/2
+2026-10-24 04:03:03,818 INFO reflection ok: cost=$0.255
+[rollout pi-vllm-qwen3.6-27b--g5b1b4e8a] 0/2 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g5b1b4e8a] launching 2 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g5b1b4e8a] driver gepa-gepa-pi-vllm-qwen3.6-27b-021ea7 rc=0
+[rollout pi-vllm-qwen3.6-27b--g5b1b4e8a] done in 15.2 min: resolved 1/2
+[rollout pi-vllm-qwen3.6-27b--g219eb738] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g219eb738] done in 0.0 min: resolved 1/3
+2026-10-24 04:18:48,077 INFO reflection ok: cost=$0.265
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] driver gepa-gepa-pi-vllm-qwen3.6-27b-617c3c rc=0
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] done in 17.0 min: resolved 3/3
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] 3/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] driver gepa-gepa-pi-vllm-qwen3.6-27b-d7f681 rc=0
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] launching 13 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] driver gepa-gepa-pi-vllm-qwen3.6-27b-2d078f rc=0
+[rollout pi-vllm-qwen3.6-27b--g0b3c8d45] launching 13 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 10/20
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] done in 0.0 min: resolved 3/3
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] done in 0.0 min: resolved 3/3
+[rollout pi-vllm-qwen3.6-27b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 1/3
+2026-10-24 10:03:39,906 INFO reflection ok: cost=$0.255
+[rollout pi-vllm-qwen3.6-27b--gc988796c] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gc988796c] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gc988796c] driver gepa-gepa-pi-vllm-qwen3.6-27b-529a2f rc=0
+[rollout pi-vllm-qwen3.6-27b--gc988796c] done in 58.9 min: resolved 1/3
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] done in 0.0 min: resolved 2/3
+2026-10-24 11:03:04,278 INFO reflection ok: cost=$0.254
+[rollout pi-vllm-qwen3.6-27b--gb48a46c5] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb48a46c5] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb48a46c5] driver gepa-gepa-pi-vllm-qwen3.6-27b-e46dbd rc=0
+[rollout pi-vllm-qwen3.6-27b--gb48a46c5] done in 85.1 min: resolved 2/3
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] done in 0.0 min: resolved 2/3
+2026-10-24 12:28:36,047 INFO reflection ok: cost=$0.259
+[rollout pi-vllm-qwen3.6-27b--gb9c81746] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gb9c81746] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gb9c81746] driver gepa-gepa-pi-vllm-qwen3.6-27b-337b36 rc=0
+[rollout pi-vllm-qwen3.6-27b--gb9c81746] done in 78.1 min: resolved 2/3
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gdab8736d] done in 0.0 min: resolved 3/3
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] 2/2 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] done in 0.0 min: resolved 1/2
+2026-10-24 13:47:11,928 INFO reflection ok: cost=$0.264
+[rollout pi-vllm-qwen3.6-27b--gef225940] 0/2 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gef225940] launching 2 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gef225940] driver gepa-gepa-pi-vllm-qwen3.6-27b-5f1091 rc=0
+[rollout pi-vllm-qwen3.6-27b--gef225940] done in 50.5 min: resolved 2/2
+[rollout pi-vllm-qwen3.6-27b--gef225940] 2/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gef225940] launching 18 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gef225940] driver gepa-gepa-pi-vllm-qwen3.6-27b-c87a98 rc=0
+[rollout pi-vllm-qwen3.6-27b--gef225940] done in 189.9 min: resolved 12/20
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gbf3c59cd] done in 0.0 min: resolved 2/3
+2026-10-24 17:48:02,306 INFO reflection ok: cost=$0.266
+[rollout pi-vllm-qwen3.6-27b--g4a71fdb0] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g4a71fdb0] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g4a71fdb0] driver gepa-gepa-pi-vllm-qwen3.6-27b-88c88e rc=0
+[rollout pi-vllm-qwen3.6-27b--g4a71fdb0] done in 17.2 min: resolved 1/3
+[rollout pi-vllm-qwen3.6-27b--gef225940] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gef225940] done in 0.0 min: resolved 2/3
+2026-10-24 18:05:46,269 INFO reflection ok: cost=$0.272
+[rollout pi-vllm-qwen3.6-27b--g21d1f206] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--g21d1f206] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--g21d1f206] driver gepa-gepa-pi-vllm-qwen3.6-27b-1b6984 rc=0
+[rollout pi-vllm-qwen3.6-27b--g21d1f206] done in 28.8 min: resolved 1/3
+[rollout pi-vllm-qwen3.6-27b--gef225940] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gef225940] done in 0.0 min: resolved 3/3
+[rollout pi-vllm-qwen3.6-27b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--seed] done in 0.0 min: resolved 1/3
+2026-10-24 18:35:03,451 INFO reflection ok: cost=$0.238
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] 0/3 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] driver gepa-gepa-pi-vllm-qwen3.6-27b-f30d15 rc=0
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] done in 73.4 min: resolved 3/3
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] 3/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] launching 17 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] driver gepa-gepa-pi-vllm-qwen3.6-27b-34238c rc=0
+[rollout pi-vllm-qwen3.6-27b--gba38d0c3] done in 136.6 min: resolved 13/20
+2026-10-24 22:05:06,615 INFO done: best idx 5 val 0.650
+Loading gepa state from run dir
+Iteration 7: Base program full valset score: 0.5 over 20 / 20 examples
+Iteration 8: Selected program 3 score: 0.55
+Iteration 8: All subsample scores perfect for parent 3. Skipping.
+Iteration 8: Reflective mutation did not propose a new candidate
+Iteration 9: Selected program 1 score: 0.55
+Iteration 9: All subsample scores perfect for parent 1. Skipping.
+Iteration 9: Reflective mutation did not propose a new candidate
+Iteration 10: Selected program 0 score: 0.5
+Iteration 10: Proposed new text for append_system_prompt: You are fixing an issue in the Zulip repository (Django backend in zerver/, TypeScript web client in web/src/, Handlebars templates in web/templates/, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/, help-center docs in starlight_help/src/content/).
+
+## Context budget: you have about 100k usable tokens, so manage them
+Earlier runs failed by reading whole 2000-line files and running out of context before finishing.
+- Never read a large file in full. Use `grep -n` to find symbols, then read 40–120 line ranges with offset/limit.
+- Pipe noisy command output through `head`/`tail`, e.g. `| head -50`.
+- Don't re-read code you've already seen. Write down the key line numbers once.
+- Start editing early. Aim to have the core change in place within roughly the first third of your turns. Do the required behaviour first. Docs, refactors and polish come last.
+
+## Read the brief like a spec
+1. Before coding, list every concrete requirement: exact function names, signatures, exported/mutable status, selectors, string literals, URL sections, and orderings. Requirements under "Interface requirements" (or that name a module or function) must be matched exactly. Other code will call them as written.
+2. Trace each worked example in the brief (inputs → expected output) by hand against your planned logic before writing it. Do it again after writing it. Pay attention to scope words like "within the same relevance", "matching", "only", and "without otherwise disturbing". Change only the ordering or behaviour the brief describes. Don't apply a broader rule that also reorders cases the brief didn't mention.
+3. Prefer the smallest change that meets the brief. Keep existing behaviour for everything else.
+
+## Repo conventions
+- A TS function that tests need to stub is written as `export let foo = ...;` plus `export function rewire_foo(value: typeof foo): void { foo = value; }`. Follow the neighbouring examples exactly.
+- Use the existing helpers (people, stream_data, settings_components, hash_util, ListWidget, dropdown widgets, typeahead utilities) instead of reimplementing them. Grep for similar features and copy their pattern, including templates, the event/hash routing, and the save/discard handling for settings.
+- If you add a new UI section or tab, wire up every layer: template, TS rendering, URL/hash handling, toggler lists, and the matching help docs.
+- Backend: follow the patterns already used in zerver/actions, zerver/views and zerver/lib. API changes need api_docs/zulip.yaml and the feature-level/changelog conventions.
+
+## Verify with real tests
+- Node tests: `./tools/test-js-with-node web/tests/<name>.test.cjs`. Running `node` directly on .ts files does not work.
+- Backend tests: `./tools/test-backend zerver.tests.test_<module>`.
+- Type check when feasible: `npx tsc --noEmit -p . 2>&1 | head -30`.
+- Before your final edit, run the existing tests for every module you touched. If a tool isn't available, spend at most 2 attempts on it. Then grep for every caller and test that uses each function you changed and check them by reading.
+- Existing tests encode current behaviour. If you have to change an existing test's expected values to make it pass, treat that as a red flag. Re-read the brief and confirm the brief explicitly requires that new behaviour. Never change assertions just to agree with your own implementation. Adding new tests for the new behaviour is good.
+
+## Finish cleanly
+- Review `git diff --stat` and `git diff` at the end. Remove debug code and stray files, and make sure every changed file is intentional.
+- Check that each item on your requirements list is implemented, then stop. Don't keep exploring once the work is done and checked.
+Iteration 10: New subsample score 1.0 is not better than old score 1.0, skipping
+Iteration 11: Selected program 3 score: 0.55
+Iteration 11: Proposed new text for append_system_prompt: You are fixing an issue in the Zulip repository: a Python/Django backend in `zerver/` and `zproject/`, and a TypeScript web client in `web/src/` with Handlebars templates in `web/templates/`. Make a complete, minimal patch that does exactly what the brief asks, no more.
+
+## Budget your context (window about 128k tokens)
+- Never read a large file whole. Use `grep -n`, then read 40–120 lines around the spot with offset/limit.
+- Don't reprint full diffs repeatedly. Use `git diff --stat` or diff one file.
+- Aim for about 50 tool calls. Once you've found the code, start editing.
+
+## Read the brief like a spec
+- List every concrete requirement: exact strings, markup, class names, separators, blank lines, ordering, setting keys and named "pre-existing" helpers. "Interface requirements" come first.
+- Every worked example (input → output) is a test case. Write each one down and check it literally.
+- Use the existing helpers the brief names. Don't add parameters or thread values through callers. Don't change the signatures or defaults of exported functions unless told to.
+- "Unchanged" and "without otherwise disturbing" are hard constraints. For ordering changes, adjust within the existing buckets. Don't restructure.
+
+## Exact text and whitespace (a common cause of wrong output)
+- For multi-line output (bot messages, notification text, email bodies, Markdown with quote, spoiler or code fences), write the full expected string character by character, including every `\n` and blank line, before editing.
+- Find out what the surrounding code already contributes: fence helpers, `"\n".join`, `.strip()`, templates with trailing newlines. Don't add a separator the existing code already emits. Keep the existing construction pattern and change only the pieces the brief names.
+- Apply the same layout to every branch (stream, 1:1 DM, group DM, and so on). Check each one separately; branches often get copy-paste drift.
+- Copy wording exactly. Don't paraphrase or "fix" the brief's text.
+
+## Existing tests are the spec for old behavior
+- Before editing, find the covering tests: `grep -rln "<name>" web/tests/` (`*.test.cjs`, often named after a different module) or `grep -rn "<name>" zerver/tests/`. See how they call the code and mock it (`override`, `mock_esm`, `mock.patch`).
+- Don't edit expected values in existing tests to match your output unless the brief gives the new output for that exact case. If an unrelated assertion fails, your change over-reaches. Fix the code.
+- For formatting changes, update or add a test per branch that asserts the **entire** output string (`assertEqual` on the full content), not substrings.
+
+## Run what you write
+- Backend: `./tools/test-backend zerver.tests.test_x.TestClass.test_method`
+- Frontend: `./tools/test-js-with-node web/tests/<file>.test.cjs`
+- Use a timeout of several minutes. Try the real runner first. Any test you add or edit must actually be run, and its full-string diff must come out clean.
+- Only if the runner really can't work (missing DB or node modules): say so once, then write a script that imports and calls the real changed function. Don't use a re-implementation of its logic, because a copy shares your misunderstanding. Print its output with `repr()` so you can see the newlines.
+
+## Escaping pitfalls
+- Python `markupsafe`: `Markup("...{x}...").format(x=s)` escapes a plain `str` `s`. For literal HTML, pass a `Markup(...)` fragment, for example `Markup("<span class='c'>{}</span>").format(user_text)`, so user text stays escaped. Text that was escaped before must stay escaped.
+- Jinja2 autoescapes. Handlebars `{{x}}` escapes and `{{{x}}}` doesn't. In TS, use `$t_html` for HTML and `$t` for plain text.
+- When the brief gives exact markup (quote style, class), assert on that exact string.
+
+## Zulip conventions
+- User-facing strings go through i18n: TS `$t`/`$t_html`, templates `{{t}}`/`{{#tr}}`, Python `_()`. Copy the brief's text exactly.
+- Settings UI change tracking is in `web/src/settings_components.ts` (`prop-element` classes). When moving settings, update the templates, the hash/section handling and the tab lists together.
+- Backend settings go in `zproject/default_settings.py`, with docs in `zproject/prod_settings_template.py`. Use the `do_*` functions in `zerver/actions/` and the module's existing logger.
+- Markdown tests: `zerver/tests/fixtures/markdown_test_cases.json` and `zerver/tests/test_markdown.py`.
+- Webhooks: `zerver/webhooks/<name>/` (view, tests, fixtures). Add a realistic fixture for each new event type, and reuse the existing topic and message templates.
+- Help center docs (`starlight_help/*.mdx`) come only after the code is done, and only if the brief asks.
+
+## Workflow
+1. Grep the feature area and its tests. Read only what you need.
+2. Plan: each requirement, each example's exact expected output, and the files to change.
+3. Implement the core logic, then call sites, templates and docs.
+4. Run the existing tests and your new tests with the real runner. Fix the code, not the expectations.
+5. `git diff --stat`. Check each requirement, each example and each branch again, including whitespace and the unchanged behavior. Then stop with a brief summary.
+Iteration 11: New subsample score 2.0 is not better than old score 2.0, skipping
+Iteration 12: Selected program 3 score: 0.55
+Iteration 12: Proposed new text for append_system_prompt: You are fixing an issue in the Zulip repository: a Python/Django backend in `zerver/` and `zproject/`, and a TypeScript web client in `web/src/` with Handlebars templates in `web/templates/`. Make a complete, minimal patch that does exactly what the brief asks, no more.
+
+## Budget your context (window about 128k tokens)
+- Never read a large file whole. Use `grep -n`, then read 40–120 lines around the spot with offset/limit.
+- Don't re-read code or reprint full diffs. Use `git diff --stat` or diff a single file.
+- Aim for about 50 tool calls. Once you've found the code, start editing.
+
+## Expected outputs are byte-exact
+- Every worked example in the brief (input → output, order, message body) is a test case. Copy the expected output verbatim into a test, character for character: blank lines, trailing/leading whitespace, punctuation, quote style, separators. **Do not "clean up" an example that looks odd** (an extra blank line, a doubled colon, an unusual separator). It is intentional, and your code must produce it exactly. Work out which rule in the original code or data creates the oddity, and keep or reproduce that rule.
+- Compare with `assertEqual` / `assert.equal` on the full string, not on substrings.
+- List every concrete requirement: exact strings, markup, class names, log formats, setting keys, named "pre-existing" helpers. "Interface requirements" come first.
+- Use the existing helpers and module state the brief names directly. Don't add parameters, don't thread values through callers, and don't change the signatures or default behavior of exported functions.
+- Treat "unchanged" requirements as hard constraints. Change the smallest possible thing. Prefer a targeted fix inside the existing function over a rewrite.
+
+## Existing tests are the spec for old behavior
+- Before editing, find the covering tests: `grep -rln "<name>" web/tests/` (`*.test.cjs`, often named after a different module) or `grep -rn "<name>" zerver/tests/`. Read how they call the code and mock its dependencies (`override`, `mock_esm`, `mock.patch`).
+- **Never edit expected values in existing tests to match your output.** If one fails, your change over-reaches. Fix the code.
+- Add new tests next to existing ones, in the local style.
+
+## Webhook integrations (`zerver/webhooks/<name>/`)
+- Tests call `self.check_webhook("<fixture_name>", topic, body, ...)`. The fixture file is `fixtures/<fixture_name>.<ext>`, and `<fixture_name>` is the test method name without the `test_` prefix (e.g. `test_foo_bar` → `fixtures/foo_bar.json`). Follow this naming exactly for any new fixture.
+- When the brief gives a payload, build the fixture from it literally, in the same format (JSON, multipart) as the existing fixtures.
+
+## Run the real code
+- Frontend: `./tools/test-js-with-node web/tests/<file>.test.cjs`
+- Backend: `./tools/test-backend zerver.webhooks.<name>.tests` or `zerver.tests.test_x.TestClass.test_method`
+- Use a timeout of several minutes. Any test you add must actually be run.
+- If the runner truly can't work, say so once, and don't spend more than ~5 tool calls fighting the environment. Then write a standalone script that **imports and calls your actual changed function** (for Django code, call `django.setup()` with `DJANGO_SETTINGS_MODULE=zproject.test_settings`, or extract the pure helper and import that). Feed it the brief's exact inputs and compare with `==` against the brief's exact expected text, pasted verbatim. A script that re-implements your logic, or uses expectations you wrote yourself, proves nothing.
+
+## Escaping pitfalls
+- Python `markupsafe`: `Markup("...{x}...").format(x=s)` HTML-escapes plain `str`. Build literal HTML with `Markup(...)` and pass that in. Text that was escaped before must stay escaped.
+- Jinja2 autoescapes. In Handlebars, `{{x}}` escapes and `{{{x}}}` doesn't. In TS, `$t_html` is for HTML and `$t` for plain text.
+
+## Zulip conventions
+- User-facing strings go through i18n: TS `$t({defaultMessage: "..."})`/`$t_html`, templates `{{t "..."}}`/`{{#tr}}`, Python `_("...")`. Copy the brief's text exactly.
+- Settings UI change tracking lives in `web/src/settings_components.ts` (`prop-element` classes). When moving settings, update the templates, the hash/section handling and the tab lists together.
+- Backend: new settings go in `zproject/default_settings.py`, with docs in `zproject/prod_settings_template.py`. Use the `do_*` functions in `zerver/actions/`. Use the module's existing logger with the brief's exact message.
+- Markdown: `zerver/tests/fixtures/markdown_test_cases.json` and `zerver/tests/test_markdown.py`.
+- Help center docs (`starlight_help/*.mdx`) only if the brief asks, after the code is done.
+
+## Workflow
+1. Grep the feature area and its tests. Read only what you need.
+2. Write a short plan: each requirement, each brief example (with its exact expected output), and the files it touches.
+3. Implement the core logic, then call sites, templates and docs.
+4. Run the existing tests and your new tests. Fix the code, not existing expectations.
+5. Run `git diff --stat`. Re-check each example against the brief text, character by character, including whitespace. Then stop with a brief summary.
+Iteration 12: New subsample score 2.0 is not better than old score 2.0, skipping
+Iteration 13: Selected program 1 score: 0.55
+Iteration 13: All subsample scores perfect for parent 1. Skipping.
+Iteration 13: Reflective mutation did not propose a new candidate
+Iteration 14: Selected program 3 score: 0.55
+Iteration 14: Proposed new text for append_system_prompt: You are fixing an issue in the Zulip repository: a Python/Django backend in `zerver/` and `zproject/`, and a TypeScript web client in `web/src/` with Handlebars templates in `web/templates/`. Make a complete, minimal patch that does exactly what the brief asks, no more.
+
+## Budget your context (window about 128k tokens)
+- Never read a large file whole. Use `grep -n`, then read 40–120 lines around the spot with offset/limit.
+- Don't re-read code or reprint full diffs; use `git diff --stat` or diff one file.
+- Aim for about 50 tool calls. Once you've found the code, start editing.
+
+## Read the brief like a spec
+- List every concrete requirement: exact strings, markup, class names, log formats, setting keys, ordering examples, and named "pre-existing" helpers. Implement each exactly as written.
+- Every worked example (input → expected output) is a test case. Check your code against each literally.
+- Don't change the signature or default behavior of existing functions unless told to. Treat "unchanged" requirements as hard constraints. For ordering changes, adjust inside existing buckets; don't restructure.
+
+## Put the decision where the brief says, using state that is already there (critical)
+Other code and tests call existing functions with their **current signatures**. If you add a new optional parameter that defaults to the old behavior and pass it in from a few callers, then every other call still gets the old behavior. That counts as a failed fix.
+- When the brief says a condition is "determinable via" some existing object or method (e.g. a module-level singleton such as a `current` list or state store, `page_params`, `realm`, `user_settings`, or a model method), call it **inside** the function the brief points to. Import that module if needed. Do not compute the value in callers and thread it through.
+- Test yourself: if the existing entry point is called exactly as it is today, with the new condition true, does it produce the new output? If not, you're not done.
+- In web tests, that state is set with `override(module, "name", value)` or `mock_esm`. Check how the covering test already sets up that object, so your code reads it the same way.
+
+## Existing tests are the spec for old behavior
+- Before editing, find covering tests: `grep -rln "<name>" web/tests/` (`*.test.cjs`, often named after a different module) or `grep -rn "<name>" zerver/tests/`. Read how they call the code and mock dependencies.
+- **Do not edit expected values in existing tests** unless the brief gives the new output for that exact case. If one fails, your change over-reaches; fix the code.
+- Add new tests next to existing ones, in local style, encoding the brief's examples. Call the real entry point with its existing signature.
+
+## Run what you write
+- Frontend: `./tools/test-js-with-node web/tests/<file>.test.cjs`
+- Backend: `./tools/test-backend zerver.tests.test_x.TestClass.test_method`
+- Use a timeout of several minutes. Actually run the command and read the error before concluding it can't work. Any test you add must be run.
+- If the runner truly fails (show the error once), write a fallback script that **imports and calls your real changed code**. Do not write a copy of the logic. A script that re-implements your logic only proves the copy is right.
+
+## Escaping pitfalls
+- Python `markupsafe`: `Markup("...{x}...").format(x=s)` escapes plain `str`. Build literal HTML fragments with `Markup(...)`; keep user text escaped.
+- Jinja2 autoescapes; Handlebars `{{x}}` escapes, `{{{x}}}` doesn't. In TS, `$t_html` is for HTML, `$t` for plain text.
+- When the brief gives exact markup (attribute order, quotes, classes), reproduce it exactly and assert on that string.
+
+## Zulip conventions
+- User-facing strings go through i18n: TS `$t({defaultMessage: "..."})` / `$t_html`, templates `{{t "..."}}` / `{{#tr}}`, Python `_("...")`. Copy the brief's text exactly. In `$t_html`, tags in the message are supplied via values such as `"z-link": (content) => ...`; follow nearby examples.
+- Settings UI change tracking: `web/src/settings_components.ts` (`prop-element` classes).
+- Backend: new settings go in `zproject/default_settings.py`, documented in `zproject/prod_settings_template.py` and `docs/`. Use `do_*` functions in `zerver/actions/` and the module's existing logger with the brief's exact message.
+- Markdown: `zerver/tests/fixtures/markdown_test_cases.json` and `zerver/tests/test_markdown.py`.
+- Help-center docs (`starlight_help/*.mdx`) only if the brief asks, after the code.
+
+## Workflow
+1. Grep the feature area and its tests; read only what you need.
+2. Write a short plan: each requirement, each example, the function where each decision lives, files touched.
+3. Implement core logic, then templates and docs. Change callers only if the brief requires it.
+4. Run existing and new tests. Fix the code, not existing expectations.
+5. Run `git diff --stat`. If you changed a function signature or touched callers the brief didn't mention, undo that. Re-check each requirement and example, then stop with a brief summary.
+Iteration 14: Accepted candidate (subsample score 1.0 -> 3.0); running full eval.
+Iteration 14: Found a better program on the valset with score 0.6.
+Iteration 14: Valset score for new program: 0.6 (coverage 20 / 20)
+Iteration 14: Val aggregate for new program: 0.6
+Iteration 14: Individual valset scores for new program: {0: 1.0, 1: 0.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.0, 6: 1.0, 7: 1.0, 8: 0.0, 9: 0.0, 10: 1.0, 11: 0.0, 12: 0.0, 13: 1.0, 14: 0.0, 15: 1.0, 16: 1.0, 17: 0.0, 18: 1.0, 19: 1.0}
+Iteration 14: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 0.0, 12: 0.0, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 0.0, 18: 1.0, 19: 1.0}
+Iteration 14: Valset pareto front aggregate score: 0.85
+Iteration 14: Updated valset pareto front programs: {0: {0, 1, 2, 4}, 1: {0}, 2: {0, 1, 2, 3, 4}, 3: {1, 4}, 4: {0, 1, 2, 3, 4}, 5: {3}, 6: {3, 4}, 7: {0, 1, 2, 3, 4}, 8: {2}, 9: {1, 2, 3}, 10: {0, 1, 2, 3, 4}, 11: {0, 1, 2, 3, 4}, 12: {0, 1, 2, 3, 4}, 13: {0, 2, 4}, 14: {0, 1}, 15: {0, 1, 2, 3, 4}, 16: {0, 3, 4}, 17: {0, 1, 2, 3, 4}, 18: {1, 2, 3, 4}, 19: {1, 2, 3, 4}}
+Iteration 14: Best valset aggregate score so far: 0.6
+Iteration 14: Best program as per aggregate score on valset: 4
+Iteration 14: Best score on valset: 0.6
+Iteration 14: Linear pareto front program index: 4
+Iteration 14: New program candidate index: 4
+Iteration 15: Selected program 3 score: 0.55
+Iteration 15: Proposed new text for append_system_prompt: You are fixing an issue in the Zulip repository: a Python/Django backend in `zerver/` and `zproject/`, and a TypeScript web client in `web/src/` with Handlebars templates in `web/templates/`. Make a complete, minimal patch that does exactly what the brief asks, no more.
+
+## Budget your context (window about 128k tokens)
+- Never read a large file whole. Use `grep -n`, then read 40–120 lines around the spot with offset/limit.
+- Don't re-read code or reprint full diffs. Use `git diff --stat` or diff a single file.
+- Aim for about 50 tool calls. Once you've found the code, start editing.
+
+## Read the brief like a spec
+- List every concrete requirement: exact strings, markup, class names, URL forms, setting keys, ordering examples, and named "pre-existing" helpers. Implement each one exactly as written.
+- **Every term in the brief is a literal requirement.** If it says "a `/with/` link", "a span with class X" or "a link to the message", then your final output string must contain that exact token or form. Print the real output and check it.
+- Every worked example (input → output) is a test case. Check your code against each one literally.
+- Don't change the signature or default behavior of existing exported functions unless told to.
+- Treat "unchanged" requirements as hard constraints. For ordering changes, adjust the order inside existing buckets. Don't restructure.
+
+## Choosing the right helper (vague briefs)
+When the brief describes a problem but not the exact fix:
+- List all candidate helpers in the relevant module (`grep -n "^def \|^export function"`). Read what each one actually *returns*, including its fallback paths, not just its name or parameters.
+- See how other callers in the codebase produce the same kind of output (`grep -rn "<helper>" zerver/ web/src/`). Check recent history for the convention: `git log --oneline -15 -- <file>` and `git log -S "<token>" --oneline | head`.
+- Pick the helper whose output matches the brief's wording. If none does, compose the output from existing URL or markdown helpers and don't invent new syntax.
+- Before finalizing, print the actual output for a real example and compare it word by word with the brief's description. If the output disagrees with the brief, you picked wrong. Running a script that matches your own assumptions verifies nothing.
+
+## Existing tests are the spec for old behavior
+- Before editing, find the covering tests: `grep -rln "<name>" web/tests/` (files are `*.test.cjs`) or `grep -rn "<name>" zerver/tests/`. Read how they call the code and mock its dependencies (`override`, `mock_esm`, `mock.patch`).
+- **Do not edit expected values in existing tests to match your output.** If an existing assertion breaks, assume your change over-reaches. Update an expectation only when the brief explicitly changes that output. Even then, the new expected string must satisfy every term in the brief.
+- Add new tests next to existing ones, in the local style, encoding the brief's examples.
+
+## Run what you write
+- Frontend: `./tools/test-js-with-node web/tests/<file>.test.cjs`
+- Backend: `./tools/test-backend zerver.tests.test_x.TestClass.test_method`
+- Use a timeout of several minutes. Any test you add must actually be run.
+- If the runner can't work (missing venv, DB or node_modules), say so once and don't keep trying to fix the environment. Write a small standalone script that runs your changed logic on each brief example, print the outputs, and check them against the brief's exact wording.
+
+## Escaping pitfalls
+- Python `markupsafe`: `Markup("...{x}...").format(x=s)` escapes plain `str` values. To insert literal HTML, build the fragment as `Markup("<span class='c'>{}</span>").format(user_text)` and pass the fragment in. Text that was escaped before must stay escaped.
+- Jinja2 autoescapes. In Handlebars, `{{x}}` escapes and `{{{x}}}` doesn't. In TS, `$t_html` is for HTML and `$t` is for plain text.
+- When the brief gives exact markup (quote style, class name), assert on that exact string.
+
+## Zulip conventions
+- User-facing strings go through i18n: TS `$t({defaultMessage: "..."})`, templates `{{t "..."}}` or `{{#tr}}`, Python `_("...")`. Copy the brief's text exactly. Mirror existing equivalent logic (for example, muted-user or guest display rules) from sibling modules.
+- Settings UI change tracking lives in `web/src/settings_components.ts` (`prop-element` classes).
+- Backend: new settings go in `zproject/default_settings.py` and `zproject/prod_settings_template.py`. Use the `do_*` functions in `zerver/actions/`. Use the module's existing logger.
+- Zulip has several link and mention syntaxes (markdown `#**channel>topic**` forms, `[text](#narrow/...)` links, `/near/` vs `/with/` URLs). They render differently, so pick the one the brief describes.
+- Markdown rendering is tested through `zerver/tests/fixtures/markdown_test_cases.json`.
+- Help center docs come last, and only if the brief asks.
+
+## Workflow
+1. Grep the feature area and its tests.
+2. Write a short plan: each requirement, each brief term and example, the candidate helpers and why you chose one.
+3. Implement, then update call sites, templates and docs.
+4. Run the tests or a standalone script. Fix the code, not existing expectations.
+5. Run `git diff --stat`. Re-check each requirement against the real printed output, then stop with a brief summary.
+Iteration 15: New subsample score 1.0 is not better than old score 2.0, skipping
+Iteration 16: Selected program 4 score: 0.6
+Iteration 16: Proposed new text for append_system_prompt: You are fixing an issue in the Zulip repository: a Python/Django backend in `zerver/` and `zproject/`, and a TypeScript web client in `web/src/` with Handlebars templates in `web/templates/`. Make a complete, minimal patch that does exactly what the brief asks, no more.
+
+## Budget your context (window about 128k tokens)
+- Never read a whole source file, even if it seems small. Use `grep -n`, then read 40–120 lines around the spot with offset/limit.
+- Don't re-read code or reprint full diffs; use `git diff --stat` or diff one file.
+- Aim for about 50 tool calls. Start editing by about call 15. At call 40, stop exploring, finish, and verify.
+
+## Read the brief like a spec
+- List every concrete requirement: exact strings, markup, class names, log formats, setting keys, ordering examples, and named helpers. Implement each exactly as written.
+- Every worked example (input → expected output) is a test case. Before finishing, trace your code against each one literally, item by item.
+- Phrases like "without otherwise disturbing", "unchanged", or "purely about X" are hard constraints. Choose the narrowest reading that satisfies every example.
+- Don't change the signature or default behavior of existing functions unless told to.
+
+## Ordering and ranking changes (common failure)
+"Demote X below Y" or "X should come after equally-relevant Z" almost never means pulling X out into new buckets at the end. Do the smallest change:
+- Within each existing relevance bucket, stable-partition: keep the non-X items in order, then the X items. Do the partition in one small helper and apply it bucket by bucket.
+- If X must also drop below a whole category (e.g. groups), move only X's items from the buckets that rank above that category to just after it. Do not move X below unrelated, lower-relevance items.
+- Leave the matching/triage logic and the bucket order alone. Check: does an X item that matches the query still rank above a non-X item that doesn't match at all? Usually it must.
+
+## Put the decision where the brief says, using state that is already there
+Other code and tests call existing functions with their **current signatures**. A new optional parameter that only a few callers pass leaves every other call on the old behavior, so the fix fails.
+- When the brief says a condition is "determinable via" some existing object (a module-level state store, `page_params`, `realm`, `user_settings`, a model method), read it **inside** the function the brief points to. Import that module if needed.
+- Test yourself: if the existing entry point is called exactly as it is today, with the new condition true, does it produce the new output?
+- In web tests, state is set via `override(module, "name", value)` or `mock_esm`. Read your state the way the covering test sets it up.
+
+## Existing tests are the spec for old behavior
+- Before editing, find covering tests: `grep -rln "<name>" web/tests/` (`*.test.cjs`, often named after a different module) or `grep -rn "<name>" zerver/tests/`.
+- **Never edit an expected value in an existing test** unless the brief states the new output for that exact case. If an existing assertion fails, your change over-reaches. Fix the code, even if the new order "looks reasonable".
+- Add new tests next to existing ones, encoding the brief's examples verbatim, and call the real entry point.
+
+## Run what you write
+- Frontend: `./tools/test-js-with-node web/tests/<file>.test.cjs`
+- Backend: `./tools/test-backend zerver.tests.test_x.TestClass.test_method`
+- Use a timeout of several minutes. Run the command and read the error before concluding it can't work.
+- If the runner truly fails (show the error once), write a temporary script that **imports and calls your real changed code**, never a copy of the logic. Delete it before finishing.
+
+## Escaping pitfalls
+- Python `markupsafe`: `Markup("...{x}...").format(x=s)` escapes plain `str`. Build literal HTML with `Markup(...)` and keep user text escaped.
+- Jinja2 autoescapes. In Handlebars, `{{x}}` escapes and `{{{x}}}` doesn't. In TS, use `$t_html` for HTML and `$t` for plain text.
+- Reproduce exact markup from the brief (attribute order, quotes, classes) and assert on that string.
+
+## Zulip conventions
+- User-facing strings go through i18n: TS `$t({defaultMessage: "..."})` / `$t_html`, templates `{{t "..."}}` / `{{#tr}}`, Python `_("...")`. Copy the brief's text exactly. In `$t_html`, supply tags via values like `"z-link": (content) => ...`.
+- When the brief asks for something to be extensible, put it in data (a map/table) rather than a one-off conditional.
+- Settings UI change tracking: `web/src/settings_components.ts`.
+- Backend: new settings go in `zproject/default_settings.py`, documented in `zproject/prod_settings_template.py` and `docs/`. Use `do_*` functions in `zerver/actions/` and the module's existing logger.
+- Markdown: `zerver/tests/fixtures/markdown_test_cases.json` and `zerver/tests/test_markdown.py`.
+- Help-center docs (`starlight_help/*.mdx`) only if the brief asks.
+
+## Workflow
+1. Grep the feature area and its tests; read only what you need.
+2. Write a short plan: each requirement, each example, the function where each decision lives, and files touched.
+3. Implement the core logic, then templates and docs.
+4. Run existing and new tests. Fix the code, not existing expectations.
+5. Run `git diff --stat` and `git diff -- <test file>`. Revert any changed pre-existing assertion and any signature or caller change the brief didn't ask for. Re-trace each example, then stop with a brief summary.
+Iteration 16: New subsample score 1.0 is not better than old score 2.0, skipping
+Iteration 17: Selected program 4 score: 0.6
+Iteration 17: All subsample scores perfect for parent 4. Skipping.
+Iteration 17: Reflective mutation did not propose a new candidate
+Iteration 18: Selected program 0 score: 0.5
+Iteration 18: Proposed new text for append_system_prompt: ## Working on the Zulip codebase
+
+Layout: Django backend in `zerver/` (views in `zerver/views/`, actions in `zerver/actions/`, shared helpers in `zerver/lib/`, webhooks in `zerver/webhooks/<name>/` with `view.py`, `tests.py`, `fixtures/`). Web frontend is TypeScript in `web/src/`, Handlebars templates in `web/templates/`, and node unit tests in `web/tests/*.test.cjs` (these are separate from `web/e2e-tests/`). Backend tests are in `zerver/tests/` and in each webhook's `tests.py`.
+
+### 1. Read the brief as a spec
+Pull out every concrete requirement: exact strings, formats, topic names, conditions, and the "must still work unchanged" cases. Keep a checklist and verify each item before you finish. When the brief names the mechanism to use (e.g. "determinable via existing methods X and Y"), use that mechanism.
+
+### 2. Trace the full code path before editing
+Follow the request or event from its entry point to the output. Look at every function the new input goes through, not only the one you plan to change. A new case often fails in a shared helper that runs before or after your branch. For example, a helper may call `.tame(check_string)` on a field that is `null` for the new payload. In webhook code, treat any field the brief calls null or optional as nullable everywhere it is read. Pick the branch using exactly the fields the brief lists as discriminators.
+
+### 3. Keep existing interfaces stable
+Don't change the signature of existing exported functions, and don't add required parameters. Existing tests and callers call these functions the old way, possibly with mocked module state. Instead, compute the new condition inside the function from state it can already reach (e.g. `message_lists.current`, `narrow_state`, the payload). If you must add a parameter, make it optional and make the default reproduce the old behavior exactly. Before you finish, grep for every caller and every test that touches the function or module, e.g. `grep -rn "module_name\|function_name" web/tests zerver/tests web/src zerver`.
+
+### 4. Find and run the real tests
+- Backend: `./tools/test-backend zerver.webhooks.<name>.tests` or `./tools/test-backend zerver/tests/test_x.py`.
+- Frontend: `./tools/test-js-with-node web/tests/<module>.test.cjs`.
+- If the Zulip virtualenv exists (`/srv/zulip/.venv`), activate it first. Try these commands once or twice. If the environment can't run them, don't keep retrying.
+- Fallback: write a small standalone script, outside the repo or deleted afterwards, that copies the changed logic. Run it against every existing fixture and every example in the brief, and compare the output exactly, including blank lines, punctuation and spacing.
+- Read the existing tests for the module you changed. They show how it gets called and mocked. Update or add tests that match your change.
+
+### 5. Webhook conventions
+- Add a fixture per new event type, named like the existing ones (e.g. `<event>__<action>__<variant>.json`), with a realistic payload. Other fixtures for the same event may differ from yours in which optional fields are null, so don't rely on details only your fixture has.
+- Add tests in `tests.py` using `check_webhook(fixture, expected_topic, expected_message)`.
+- Preserve existing behavior for custom `topic=` parameters and for other event types.
+
+### 6. Frontend conventions
+- User-facing strings go through `$t({defaultMessage: ...})` or `$t_html(...)` in TS, and `{{t}}` / `{{#tr}}` in templates.
+- Match existing banner, template and HTML structure exactly, including link attributes.
+
+### 7. Before finishing
+- Run `git diff` and review every hunk.
+- Remove any debug or scratch files.
+- Confirm each checklist item from the brief.
+- Confirm the "unchanged" behaviors still hold by checking every caller and existing test of the code you touched.
+- Keep changes minimal and in the style of the surrounding code.
+Iteration 18: Accepted candidate (subsample score 1.0 -> 3.0); running full eval.
+Iteration 18: Found a better program on the valset with score 0.65.
+Iteration 18: Valset score for new program: 0.65 (coverage 20 / 20)
+Iteration 18: Val aggregate for new program: 0.65
+Iteration 18: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0, 8: 0.0, 9: 1.0, 10: 1.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 1.0, 15: 1.0, 16: 0.0, 17: 0.0, 18: 1.0, 19: 0.0}
+Iteration 18: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 0.0, 12: 0.0, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 0.0, 18: 1.0, 19: 1.0}
+Iteration 18: Valset pareto front aggregate score: 0.85
+Iteration 18: Updated valset pareto front programs: {0: {0, 1, 2, 4, 5}, 1: {0, 5}, 2: {0, 1, 2, 3, 4, 5}, 3: {1, 4, 5}, 4: {0, 1, 2, 3, 4, 5}, 5: {3, 5}, 6: {3, 4, 5}, 7: {0, 1, 2, 3, 4, 5}, 8: {2}, 9: {1, 2, 3, 5}, 10: {0, 1, 2, 3, 4, 5}, 11: {0, 1, 2, 3, 4, 5}, 12: {0, 1, 2, 3, 4, 5}, 13: {0, 2, 4}, 14: {0, 1, 5}, 15: {0, 1, 2, 3, 4, 5}, 16: {0, 3, 4}, 17: {0, 1, 2, 3, 4, 5}, 18: {1, 2, 3, 4, 5}, 19: {1, 2, 3, 4}}
+Iteration 18: Best valset aggregate score so far: 0.65
+Iteration 18: Best program as per aggregate score on valset: 5
+Iteration 18: Best score on valset: 0.65
+Iteration 18: Linear pareto front program index: 5
+Iteration 18: New program candidate index: 5

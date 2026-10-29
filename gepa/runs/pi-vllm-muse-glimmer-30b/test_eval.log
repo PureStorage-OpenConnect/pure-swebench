@@ -1,0 +1,9 @@
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] 0/30 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] 0/30 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] launching 30 cell(s) fanout=12 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] driver gepa-gepa-test-pi-vllm-muse-glimmer-30b-728258 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g10fa70ff] done in 329.2 min: resolved 17/30
+[rollout pi-vllm-muse-glimmer-30b--seed] driver gepa-gepa-test-pi-vllm-muse-glimmer-30b-8c2c09 rc=0
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 335.9 min: resolved 16/30
+{"seed_resolved": "16/30", "gepa_best_resolved": "17/30", "board_baseline_resolved": "21/30"}

@@ -1,0 +1,16 @@
+2026-10-23 15:56:01,555 INFO reflection ok: cost=$0.233
+2026-10-23 16:34:23,612 INFO reflection ok: cost=$0.237
+2026-10-23 17:27:22,565 INFO reflection ok: cost=$0.240
+2026-10-23 20:27:56,344 INFO reflection ok: cost=$0.242
+2026-10-24 00:21:40,974 INFO reflection ok: cost=$0.282
+2026-10-24 00:33:51,449 INFO reflection ok: cost=$0.269
+2026-10-24 04:03:03,818 INFO reflection ok: cost=$0.255
+2026-10-24 04:18:48,077 INFO reflection ok: cost=$0.265
+2026-10-24 10:03:39,906 INFO reflection ok: cost=$0.255
+2026-10-24 11:03:04,278 INFO reflection ok: cost=$0.254
+2026-10-24 12:28:36,047 INFO reflection ok: cost=$0.259
+2026-10-24 13:47:11,928 INFO reflection ok: cost=$0.264
+2026-10-24 17:48:02,306 INFO reflection ok: cost=$0.266
+2026-10-24 18:05:46,269 INFO reflection ok: cost=$0.272
+2026-10-24 18:35:03,451 INFO reflection ok: cost=$0.238
+2026-10-24 22:05:06,615 INFO done: best idx 5 val 0.650

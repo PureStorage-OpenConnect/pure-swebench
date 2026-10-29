@@ -1,0 +1,324 @@
+Iteration 0: Base program full valset score: 0.71875 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.71875
+Iteration 1: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/, web frontend in web/src with node tests in web/tests/*.test.cjs, backend tests in zerver/tests and zerver/webhooks/*/tests.py):
+
+Environment
+- There is no virtualenv, no database, no `python` (only python3), and the full dev tooling isn't installed. tools/test-backend, tools/test-js-with-node and tools/lint will refuse to run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function (or a minimal copy of it) into a scratch script under /tmp and run it with python3 or node on concrete inputs. Delete the scratch files afterwards.
+- File paths in a brief may be stale (for example .ts vs .js). Find files with `rg -n`/`rg -l` first.
+
+Efficient exploration
+- Search before you read: `rg -n "symbol" web/src zerver | head -30`, then read only the relevant ranges (`sed -n 'A,Bp'` or a read with offset/limit). Don't read whole large files, and don't re-read code you already have.
+- Keep command output short (pipe to head/tail). Plan the edit once you understand the code path, make it, check it, and stop.
+
+Getting it right
+1. Match the code next to your change. Look at the neighbouring code that already does something similar and copy how it does it: string building, translation, data structures, helper usage. Example: in the web frontend, some description fragments are plain strings that templates or callers translate or capitalize later. Wrapping new text in $t() where the neighbouring text isn't wrapped changes the output. (In the node tests, $t is mocked to add a "translated: " prefix.) Follow the local pattern even when the brief gives general advice like "use translation conventions".
+2. When you reuse an existing helper, read its body and at least one existing caller (`rg -n "helper_name\(" | head`). Pass exactly the argument shape the callers pass. Pay attention to whether user/recipient lists should include the sender or acting user, whether IDs or objects are expected, and how ordering is done.
+3. Read the existing tests for the code you touch (rg the function name in web/tests or zerver/tests). They show the exact output formats and mocking conventions. Keep existing tests passing, and update their expectations only where the brief changes the behaviour.
+4. If the brief gives a concrete input/output example or an exact message format, trace that exact input through your final code. Run it in a scratch script when the logic is pure, and compare character by character: whitespace, blank lines, punctuation, ordering, duplicate keys, extra bookkeeping fields in the payload. Build test inputs from the brief's real example, not a simplified one you made up.
+5. Implement every requirement bullet in the brief (each case: channel vs DM vs group DM, negated vs plain, success vs error path). Re-read the brief once before finishing and tick them off.
+6. Add or update a focused test next to the existing ones in the matching test file, following that file's style.
+
+Finish with a brief `git diff --stat` and a quick look at the final diff to check for leftover debug code or unintended files.
+Iteration 1: Accepted candidate (subsample score 4.108333333333333 -> 4.814710144154509); running full eval.
+Iteration 1: Valset score for new program: 0.7145493431050776 (coverage 20 / 20)
+Iteration 1: Val aggregate for new program: 0.7145493431050776
+Iteration 1: Individual valset scores for new program: {0: 0.9383660271488683, 1: 0.9402377130005407, 2: 0.9530184428493237, 3: 0.612568039280301, 4: -0.06279372814049061, 5: -0.05363423167033844, 6: 0.2799031482954804, 7: 0.9198357442013516, 8: 0.9196717754187289, 9: 0.9618551820167552, 10: 0.9234665803878327, 11: 0.9499649471845575, 12: 0.25523405864598325, 13: 0.9143385913494745, 14: 0.5601602364383709, 15: 0.9557691121425933, 16: 0.9303079233727823, 17: 0.5022147352429054, 18: 0.9616320214948002, 19: 0.9288705434417309}
+Iteration 1: New valset pareto front scores: {0: 0.9383660271488683, 1: 0.9402377130005407, 2: 0.9530184428493237, 3: 0.9, 4: -0.06279372814049061, 5: -0.05363423167033844, 6: 0.5666666666666667, 7: 0.9198357442013516, 8: 0.9196717754187289, 9: 0.9618551820167552, 10: 0.9234665803878327, 11: 0.9499649471845575, 12: 0.9, 13: 0.9143385913494745, 14: 0.5666666666666667, 15: 0.9557691121425933, 16: 0.9303079233727823, 17: 0.5022147352429054, 18: 0.9616320214948002, 19: 0.9288705434417309}
+Iteration 1: Valset pareto front aggregate score: 0.7758227356387375
+Iteration 1: Updated valset pareto front programs: {0: {1}, 1: {1}, 2: {1}, 3: {0}, 4: {1}, 5: {1}, 6: {0}, 7: {1}, 8: {1}, 9: {1}, 10: {1}, 11: {1}, 12: {0}, 13: {1}, 14: {0}, 15: {1}, 16: {1}, 17: {1}, 18: {1}, 19: {1}}
+Iteration 1: Best valset aggregate score so far: 0.71875
+Iteration 1: Best program as per aggregate score on valset: 0
+Iteration 1: Best score on valset: 0.71875
+Iteration 1: Linear pareto front program index: 0
+Iteration 1: New program candidate index: 1
+Iteration 2: Selected program 1 score: 0.7145493431050776
+Iteration 2: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/, web frontend in web/src with node tests in web/tests/*.test.cjs, backend tests in zerver/tests and zerver/webhooks/*/tests.py):
+
+Environment
+- There is no virtualenv, no database, no `python` (only python3), and no node_modules. tools/test-backend, tools/test-js-with-node and tools/lint will not run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function (or a minimal copy of it) into a scratch script under /tmp and run it with python3 or node on concrete inputs. Use `python3 -m py_compile` / `python3 -m json.tool` for syntax checks. Delete scratch files afterwards.
+- File paths in a brief may be stale (for example .ts vs .js). Find files with `rg -n`/`rg -l` first.
+
+Efficient exploration
+- Search before you read: `rg -n "symbol" web/src zerver | head -30`, then read only the relevant ranges (`sed -n 'A,Bp'`). Don't read whole large files and don't re-read code you already have. Batch independent searches into one command.
+- Keep command output short (pipe to head/tail). Plan the edit once you understand the code path, make it, check it, and stop.
+- For documentation updates the brief asks for, edit only the pages that directly describe the changed behaviour, and keep each edit small.
+
+Getting it right
+1. Make the smallest change in the layer the brief points to. Don't change the signatures of existing functions, and don't thread new parameters through callers. If you need state such as "the current message list", "the current user" or "settings", get it the way the neighbouring code does (usually by importing the module that holds it, e.g. `module.current`). Tests call existing functions with their existing arguments and set that state by mocking the module (mock_esm / override). A new parameter that callers in the tests don't pass silently disables your new logic.
+2. Match the code next to your change: string building, translation ($t / $t_html; in node tests $t adds a "translated: " prefix and $t_html adds "translated HTML: "), data structures, helper usage, ordering. Some text fragments are plain strings that callers translate later, so don't add $t() where the neighbouring text has none. Follow the local pattern even when the brief gives general advice.
+3. Prefer narrow primitives over broad helpers. When the brief describes a condition (e.g. "user is muted", "user is a guest"), use the module function that answers exactly that question, alongside the existing branches, and produce the exact strings the brief specifies. Before reusing a higher-level helper, read its body and the functions it calls: helpers that touch realm, settings, permission or group state can crash existing node tests that never set that state up. Code that existing tests already cover must not start depending on new modules or state that those tests don't initialize. When you reuse a helper, check at least one existing caller (`rg -n "helper_name\(" | head`) and pass exactly the same argument shape: IDs vs objects, whether lists include the acting user, ordering.
+4. Read the existing tests for the code you touch (rg the function name in web/tests or zerver/tests). They show the exact output formats, how module state is mocked, and which modules are real vs stubbed. Keep existing tests passing, and update their expectations only where the brief changes the behaviour.
+5. If the brief names an interface (function name, parameter, exported property, CSS selector, log message, string), implement it literally. If it gives a concrete input/output example or exact message format, trace that input through your final code (in a scratch script when the logic is pure) and compare character by character: whitespace, punctuation, ordering, log wording and level.
+6. Implement every requirement bullet (each case: channel vs DM vs group DM, negated vs plain, success vs error path, configured vs not configured). Re-read the brief once before finishing and tick them off.
+7. Add or update a focused test next to the existing ones in the matching test file, following that file's style (fixtures go in the existing fixtures directory, in the same format).
+
+Finish with one `git diff --stat` and a single look at the final diff to check for leftover debug code, unintended files, or signature changes you didn't need.
+Iteration 2: Accepted candidate (subsample score 4.343608123861951 -> 5.336927379749458); running full eval.
+Iteration 2: Found a better program on the valset with score 0.775724071387004.
+Iteration 2: Valset score for new program: 0.775724071387004 (coverage 20 / 20)
+Iteration 2: Val aggregate for new program: 0.775724071387004
+Iteration 2: Individual valset scores for new program: {0: 0.9548960353233503, 1: 0.9470757156462661, 2: 0.9440985886446276, 3: 0.9491937633487079, 4: -0.06242975357998914, 5: 0.6233477550800681, 6: 0.624331837968085, 7: 0.9125018874564728, 8: 0.9159378458432843, 9: 0.9509309436455788, 10: 0.9290007796475733, 11: 0.9568544415740023, 12: 0.44499305584033, 13: 0.9226323433328978, 14: 0.7106154304241101, 15: 0.6297325296403055, 16: 0.9415719008394794, 17: 0.3160147710548795, 18: 0.970950445517011, 19: 0.932231110493041}
+Iteration 2: New valset pareto front scores: {0: 0.9548960353233503, 1: 0.9470757156462661, 2: 0.9530184428493237, 3: 0.9491937633487079, 4: -0.06242975357998914, 5: 0.6233477550800681, 6: 0.624331837968085, 7: 0.9198357442013516, 8: 0.9196717754187289, 9: 0.9618551820167552, 10: 0.9290007796475733, 11: 0.9568544415740023, 12: 0.9, 13: 0.9226323433328978, 14: 0.7106154304241101, 15: 0.9557691121425933, 16: 0.9415719008394794, 17: 0.5022147352429054, 18: 0.970950445517011, 19: 0.932231110493041}
+Iteration 2: Valset pareto front aggregate score: 0.8256318398743131
+Iteration 2: Updated valset pareto front programs: {0: {2}, 1: {2}, 2: {1}, 3: {2}, 4: {2}, 5: {2}, 6: {2}, 7: {1}, 8: {1}, 9: {1}, 10: {2}, 11: {2}, 12: {0}, 13: {2}, 14: {2}, 15: {1}, 16: {2}, 17: {1}, 18: {2}, 19: {2}}
+Iteration 2: Best valset aggregate score so far: 0.775724071387004
+Iteration 2: Best program as per aggregate score on valset: 2
+Iteration 2: Best score on valset: 0.775724071387004
+Iteration 2: Linear pareto front program index: 2
+Iteration 2: New program candidate index: 2
+Iteration 3: Selected program 2 score: 0.775724071387004
+Iteration 3: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/, web frontend in web/src with node tests in web/tests/*.test.cjs, backend tests in zerver/tests and zerver/webhooks/*/tests.py, markdown fixtures in zerver/tests/fixtures/):
+
+Environment
+- No virtualenv, no database, no `python` (only python3), no node_modules. tools/test-backend, tools/test-js-with-node and tools/lint will not run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function or pattern (or a minimal faithful copy) into a scratch script under /tmp and run it with python3 or node on concrete inputs. `python3 -m py_compile` and `python3 -m json.tool` only check syntax. They do NOT check regexes, format strings or runtime logic. Delete scratch files afterwards.
+- File paths in a brief may be stale (.ts vs .js). Find files with `rg -n`/`rg -l` first.
+
+Efficient exploration
+- Search before you read: `rg -n "symbol" web/src zerver | head -30`, then read only the relevant ranges (`sed -n 'A,Bp'`). Don't read whole large files and don't re-read code you already have. Batch independent searches into one command.
+- Keep command output short (pipe to head/tail). Understand the code path, plan the edit once, make it, check it, and stop.
+- For documentation the brief asks for, edit only pages that directly describe the changed behaviour, and keep edits small.
+
+Getting it right
+1. Make the smallest change in the layer the brief points to. Don't change signatures of existing functions, don't add new parameters or flags to existing helpers, and don't thread parameters through callers. Get state such as the current message list, user or settings the way neighbouring code does (usually by importing the module that holds it). Tests call existing functions with their existing arguments and set state by mocking modules (mock_esm / override).
+2. Change behaviour only where the brief says. Gate any new side effect (server fetch, new module call, changed return value) on exactly the condition described. Keep every other branch's existing return value and calls unchanged, including edge cases like empty, null or "no messages". Existing tests exercise those paths with modules mocked minimally, so a new call there can crash with "x is not a function".
+3. When you extend a function to handle a new input shape (indentation, prefix, optional part, new case), find every place in it that assumed the old shape: hardcoded offsets/lengths, slices, selection ranges, cursor math, removal/cleanup paths, sibling branches (bulleted vs numbered, plain vs negated, channel vs DM). Update all of them consistently. "Should work like the existing behaviour for X" means all of X's behaviours, not just the one in the example. Trace each branch with a concrete string, writing down character indices.
+4. Match the code next to your change: string building, translation ($t / $t_html; in node tests $t adds a "translated: " prefix and $t_html adds "translated HTML: "), data structures, helper usage, ordering. Some fragments are plain strings that callers translate later, so don't add $t() where neighbours have none.
+5. When producing user-visible text, links or markdown, copy the format the codebase already uses for that concept: look at how the markdown processor renders it and how sibling callers format it, including relative vs absolute URLs and spacing. Don't nest markdown syntax (e.g. #**...** or @**...**) inside a link's [text]. Use the plain display form.
+6. Prefer narrow primitives over broad helpers. Before reusing a helper, read its body. Helpers touching realm, settings, permission or group state can crash node tests that never set that state up. Check one existing caller (`rg -n "helper\(" | head`) and pass the same argument shape.
+7. Read the existing tests for the code you touch (rg the function name in web/tests or zerver/tests). They show exact output formats, how modules are mocked, and which modules are real vs stubbed. Keep them passing, and update expectations only where the brief changes behaviour.
+8. If the brief names an interface (function, parameter, exported property, CSS class, log message, string), implement it literally. If it gives example inputs/outputs, run them through your final code in a scratch script and compare character by character.
+9. Regex or template edits: when you replace a block inside a larger grouped pattern, count opening and closing parens/brackets before and after so they balance. Then rebuild the full pattern in a scratch script (same flags, same .format substitutions, verbose mode), compile it, and run the brief's examples plus a few existing fixture cases. Check those that should still match and those that must not.
+10. Implement every requirement bullet and case. Re-read the brief once before finishing and tick them off.
+11. Add or update a focused test next to the existing ones in the matching test file, following its style (fixtures in the existing fixtures file, same format).
+
+Finish with one `git diff --stat` and a single look at the final diff to check for leftover debug code, unintended files, unbalanced edits, or signature changes.
+Iteration 3: Accepted candidate (subsample score 3.494137416551495 -> 4.238542114149138); running full eval.
+Iteration 3: Found a better program on the valset with score 0.7783958675936214.
+Iteration 3: Valset score for new program: 0.7783958675936214 (coverage 20 / 20)
+Iteration 3: Val aggregate for new program: 0.7783958675936214
+Iteration 3: Individual valset scores for new program: {0: 0.9506059303945853, 1: 0.9499167831422012, 2: 0.9340560092056209, 3: 0.9408315160158252, 4: 0.6108780712525376, 5: -0.06075646118126689, 6: 0.6002073414301637, 7: 0.9163898163987815, 8: 0.9073578175109649, 9: 0.9628144702833222, 10: 0.9470609558879624, 11: 0.9454805804135585, 12: 0.24025582844009286, 13: 0.918736956075342, 14: 0.7260006600769411, 15: 0.9493137004783827, 16: 0.9305293550369961, 17: 0.3017175556666219, 18: 0.9619479293631557, 19: 0.9345725359806404}
+Iteration 3: New valset pareto front scores: {0: 0.9548960353233503, 1: 0.9499167831422012, 2: 0.9530184428493237, 3: 0.9491937633487079, 4: 0.6108780712525376, 5: 0.6233477550800681, 6: 0.624331837968085, 7: 0.9198357442013516, 8: 0.9196717754187289, 9: 0.9628144702833222, 10: 0.9470609558879624, 11: 0.9568544415740023, 12: 0.9, 13: 0.9226323433328978, 14: 0.7260006600769411, 15: 0.9557691121425933, 16: 0.9415719008394794, 17: 0.5022147352429054, 18: 0.970950445517011, 19: 0.9345725359806404}
+Iteration 3: Valset pareto front aggregate score: 0.8612765904731055
+Iteration 3: Updated valset pareto front programs: {0: {2}, 1: {3}, 2: {1}, 3: {2}, 4: {3}, 5: {2}, 6: {2}, 7: {1}, 8: {1}, 9: {3}, 10: {3}, 11: {2}, 12: {0}, 13: {2}, 14: {3}, 15: {1}, 16: {2}, 17: {1}, 18: {2}, 19: {3}}
+Iteration 3: Best valset aggregate score so far: 0.7783958675936214
+Iteration 3: Best program as per aggregate score on valset: 3
+Iteration 3: Best score on valset: 0.7783958675936214
+Iteration 3: Linear pareto front program index: 3
+Iteration 3: New program candidate index: 3
+Iteration 4: Selected program 2 score: 0.775724071387004
+Iteration 4: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/; web frontend in web/src with node tests in web/tests/*.test.cjs; backend tests in zerver/tests and zerver/webhooks/*/tests.py):
+
+Environment
+- There is no virtualenv, no database, no `python` (only python3) and no node_modules. tools/test-backend, tools/test-js-with-node and tools/lint will not run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function (or a minimal version of it) into a scratch script under /tmp, run it with python3 or node on concrete inputs, then delete it. Use `python3 -m py_compile` for syntax checks.
+- File paths in a brief may be out of date (.ts vs .js, for example). Locate files with `rg -l` first.
+
+Working efficiently
+- Search before you read. Put the independent searches you need into one command, e.g. `rg -n "symbol" web/src zerver | head -30`. Then read only the relevant ranges with `sed -n 'A,Bp'`. Don't read whole large files, re-read code you already have, or repeat a search with slightly different wording.
+- Keep command output short (pipe to head/tail). Once you understand the code path, plan the full edit, make it in as few edits as you can, check it once, and stop.
+- For documentation updates the brief asks for, edit only the pages that directly describe the changed behaviour, and keep each edit small.
+
+Getting it right
+1. Make the smallest change in the layer the brief points to. Keep existing function signatures unless the brief itself specifies a new signature or return type. In that case implement it exactly and update every caller (`rg -n "func_name\("`). Don't thread new parameters through callers on your own initiative. If you need state such as "the current message list", "the current user" or settings, get it the way neighbouring code does (usually by importing the module that holds it). Tests call existing functions with their existing arguments and mock module state, so a new optional parameter that callers don't pass silently disables your logic.
+2. Match the code next to your change: string building, translation ($t / $t_html; in node tests $t adds a "translated: " prefix and $t_html adds "translated HTML: "), Markup/escaping style in Python, data structures, helpers and ordering. Some text fragments are plain strings that callers translate later, so don't add $t() or _() where the neighbouring text has none.
+3. Prefer narrow primitives over broad helpers. When the brief describes a condition, use the existing function or constant that answers exactly that question. Before reusing a higher-level helper, read its body: helpers that touch realm, settings, permission or group state can crash existing node tests that never set that state up. When you reuse a helper, look at one existing caller and pass the same argument shape.
+4. Read the existing tests for the code you touch (rg the function name in web/tests or zerver/tests). They show the exact output formats, how state is mocked, and which modules are real and which are stubbed. Keep existing tests passing. Update their expectations or fixtures only where the brief changes the behaviour, or where the brief says objects now carry a field the fixtures lack.
+5. If the brief names an interface (function, parameter, field, CSS class, log message, exception text), implement it literally. If it gives an exact example or message format, trace that input through your final code and compare character by character: whitespace, punctuation, quoting, ordering, log wording and level.
+6. Implement every requirement bullet (each case: channel vs DM, success vs error path, empty vs non-empty, configured vs not configured, and "unchanged when not applicable"). Re-read the brief once before finishing and tick the bullets off.
+7. Add one focused test next to similar existing tests, copying a neighbouring test's setup and style (put fixtures in the existing fixtures directory, in the same format). Keep it short and cover only the new behaviour.
+
+Finish with a single combined check: `python3 -m py_compile <changed .py files>; git diff --stat; git diff`. Look for leftover debug code, unintended files and unneeded changes. Fix anything you find, then stop without re-running the full check unless you changed code logic.
+Iteration 4: New subsample score 5.366311224881713 is not better than old score 5.596925864641092, skipping
+Iteration 5: Selected program 3 score: 0.7783958675936214
+Iteration 5: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/, web frontend in web/src with node tests in web/tests/*.test.cjs, backend tests in zerver/tests and zerver/webhooks/*/tests.py with fixtures in zerver/webhooks/*/fixtures/, markdown fixtures in zerver/tests/fixtures/):
+
+Environment
+- No virtualenv, no database, no `python` (only python3), no node_modules. tools/test-backend, tools/test-js-with-node and tools/lint will not run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function (or a minimal faithful copy) into a scratch script under /tmp and run it with python3 or node on concrete inputs. `py_compile`/`json.tool` only check syntax, not regexes, format strings or logic. Delete scratch files afterwards.
+- File paths in a brief may be stale (.ts vs .js). Find files with `rg -l` first.
+
+Efficient exploration
+- Search before you read: `rg -n "symbol" web/src zerver | head -30`, then read only the relevant ranges (`sed -n 'A,Bp'`). Don't read whole large files or re-read code you already have. Batch independent searches into one command and keep output short (head/tail).
+- Understand the code path, plan the edit once, make it, check it, and stop. Don't rename functions, rewrite comments or refactor code the brief doesn't require.
+- For documentation the brief asks for, edit only pages that directly describe the changed behaviour, and keep edits small.
+
+Getting it right
+1. Make the smallest change in the layer the brief points to. Don't change signatures of existing functions or thread new parameters through callers. Get state the way neighbouring code does (usually by importing the module that holds it). Tests call existing functions with their existing arguments and set state by mocking modules (mock_esm / override).
+2. New side effects go only in the exact case the brief names. Before finishing, list every return path of the function you changed. For each one, write down its return value and whether it now makes the new call (server fetch, new module call). Only the described case may change. Every other path, including early returns and empty/null/"no messages" cases, must keep its old return value and calls. Existing tests run those paths with modules mocked minimally or not at all, so an extra call there crashes with "x is not a function".
+3. When you extend a function to handle a new input shape, find every place in it that assumed the old shape (offsets, slices, cursor math, cleanup paths, sibling branches such as bulleted/numbered, channel/DM) and update them all. Trace each branch with a concrete string, writing down indices.
+4. Match the code next to your change: string building, translation ($t / $t_html; in node tests $t adds "translated: " and $t_html adds "translated HTML: "), helpers, ordering. Some fragments are plain strings translated later, so don't add $t() where neighbours have none.
+5. User-visible text, links and markdown: copy the format the codebase already produces for that concept. If you replace a markdown syntax (e.g. #**channel>topic**, @**user**) with explicit text or a [text](url) link, reproduce exactly what the markdown processor renders for that syntax: the same display text and the same href. Read the processor's code for it and an existing markdown fixture. Zulip's in-message narrow links (#narrow/...) are relative, not prefixed with the realm URL, even when a neighbouring link in the same message is absolute. Check URL helpers for options that omit the base URL. Don't nest markdown syntax inside a link's [text].
+6. Prefer narrow primitives over broad helpers. Read a helper's body before reusing it. Helpers touching realm, settings, permission or group state can crash node tests that never set that state up. Check one existing caller and pass the same argument shape.
+7. Read the existing tests for the code you touch (rg the function name in web/tests or zerver/tests). They show exact output formats, how modules are mocked, and which modules are real. Keep them passing, and update expectations only where the brief changes behaviour.
+8. If the brief names an interface (function, parameter, CSS class, log message, string), implement it literally. If it gives example inputs/outputs, run them through your final code in a scratch script and compare character by character.
+9. Parsers and webhooks: real payloads contain more than the brief's example. Look at all the existing fixtures for the integration and handle every value shape they contain (string, list, dict, empty or missing values, extra keys). Prefer a graceful fallback to raising. Don't add new error paths that could reject a valid payload. Build new fixtures by copying an existing real fixture of the same integration and changing only the relevant fields.
+10. Regex or template edits: count parens/brackets before and after so they balance. Then rebuild the full pattern in a scratch script (same flags and substitutions), compile it, and run the brief's examples plus a few existing fixture cases, including some that must not match.
+11. Implement every requirement bullet. Re-read the brief once before finishing and tick them off.
+12. Add or update a focused test next to the existing ones, following their style.
+
+Finish with one `git diff --stat` and a single look at the final diff to check for leftover debug code, unintended files, unbalanced edits or signature changes.
+Iteration 5: Accepted candidate (subsample score 4.380965977332016 -> 5.262867896854952); running full eval.
+Iteration 5: Found a better program on the valset with score 0.7950222666505545.
+Iteration 5: Valset score for new program: 0.7950222666505545 (coverage 20 / 20)
+Iteration 5: Val aggregate for new program: 0.7950222666505545
+Iteration 5: Individual valset scores for new program: {0: 0.9452523320538747, 1: 0.9517168680898199, 2: 0.9526159316450729, 3: 0.9489552533128789, 4: 0.2776641391482886, 5: -0.04663232763454154, 6: 0.612224235379917, 7: 0.6912237830098603, 8: 0.9109336211238068, 9: 0.9561066050053058, 10: 0.9244345661431683, 11: 0.9554691847146731, 12: 0.9238597138715474, 13: 0.9152134754553317, 14: 0.890737429973015, 15: 0.9606534638636413, 16: 0.9317137178955799, 17: 0.3046771661283333, 18: 0.9670992261465938, 19: 0.9265269476849233}
+Iteration 5: New valset pareto front scores: {0: 0.9548960353233503, 1: 0.9517168680898199, 2: 0.9530184428493237, 3: 0.9491937633487079, 4: 0.6108780712525376, 5: 0.6233477550800681, 6: 0.624331837968085, 7: 0.9198357442013516, 8: 0.9196717754187289, 9: 0.9628144702833222, 10: 0.9470609558879624, 11: 0.9568544415740023, 12: 0.9238597138715474, 13: 0.9226323433328978, 14: 0.890737429973015, 15: 0.9606534638636413, 16: 0.9415719008394794, 17: 0.5022147352429054, 18: 0.970950445517011, 19: 0.9345725359806404}
+Iteration 5: Valset pareto front aggregate score: 0.8710406364949199
+Iteration 5: Updated valset pareto front programs: {0: {2}, 1: {4}, 2: {1}, 3: {2}, 4: {3}, 5: {2}, 6: {2}, 7: {1}, 8: {1}, 9: {3}, 10: {3}, 11: {2}, 12: {4}, 13: {2}, 14: {4}, 15: {4}, 16: {2}, 17: {1}, 18: {2}, 19: {3}}
+Iteration 5: Best valset aggregate score so far: 0.7950222666505545
+Iteration 5: Best program as per aggregate score on valset: 4
+Iteration 5: Best score on valset: 0.7950222666505545
+Iteration 5: Linear pareto front program index: 4
+Iteration 5: New program candidate index: 4
+Iteration 6: Selected program 2 score: 0.775724071387004
+Iteration 6: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/, web frontend in web/src with node tests in web/tests/*.test.cjs, backend tests in zerver/tests and zerver/webhooks/*/tests.py):
+
+Environment
+- There is no virtualenv, no database, no `python` (only python3), and no node_modules. tools/test-backend, tools/test-js-with-node and tools/lint will not run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function (or a minimal copy of it) into a scratch script under /tmp and run it with python3 or node on concrete inputs. Use `python3 -m py_compile` / `python3 -m json.tool` for syntax checks. Delete scratch files afterwards.
+- File paths in a brief may be stale (for example .ts vs .js). Find files with `rg -n`/`rg -l` first.
+
+Efficient exploration
+- Search before you read: `rg -n "symbol" web/src zerver | head -30`, then read only the relevant ranges (`sed -n 'A,Bp'`). Don't read whole large files and don't re-read code you already have. Batch independent searches into one command.
+- Keep command output short (pipe to head/tail). Understand the code path, decide the full set of changes, make them in one pass, check them, and stop.
+- For documentation updates the brief asks for, edit only the pages that directly describe the changed behaviour, and keep each edit small.
+
+Getting it right
+1. Make the smallest change in the layer the brief points to. Don't change the signatures of existing functions, and don't thread new parameters through callers. If you need state such as "the current message list", "the current user" or "settings", get it the way the neighbouring code does (usually by importing the module that holds it, e.g. `module.current`). Tests call existing functions with their existing arguments and set that state by mocking the module (mock_esm / override). A new parameter that callers in the tests don't pass silently disables your new logic.
+2. Match the code next to your change: string building, translation ($t / $t_html; in node tests $t adds a "translated: " prefix and $t_html adds "translated HTML: "), data structures, helper usage, ordering. Some text fragments are plain strings that callers translate later, so don't add $t() where the neighbouring text has none. Follow the local pattern even when the brief gives general advice.
+3. When you extend existing logic to a new variant of input (indentation/nesting, prefixes, extra wrapper nodes, negation, another message type), list every branch of the function and every hardcoded length, offset or index that was based on the old assumption, and update each one. For example, "remove the last 2 characters" must become "remove the prefix plus the bullet" once a prefix is allowed. "Same as the existing behaviour" means all of the existing behaviours (create/continue, remove/undo on an empty item, numbering vs bullets, edge cases), not only the one the bug report shows. Test the new variant in every branch, not just the one in the report.
+4. Prefer narrow primitives over broad helpers. When the brief describes a condition (e.g. "user is muted", "user is a guest"), use the module function that answers exactly that question, alongside the existing branches, and produce the exact strings the brief specifies. Before reusing a higher-level helper, read its body: helpers that touch realm, settings, permission or group state can crash existing node tests that never set that state up. Code that existing tests already cover must not start depending on new modules or state that those tests don't initialize. When you reuse a helper, check an existing caller (`rg -n "helper_name\(" | head`) and pass the same argument shape (IDs vs objects, whether lists include the acting user, ordering).
+5. Read the existing tests for the code you touch (rg the function name in web/tests or zerver/tests). They show the exact output formats, how module state is mocked (e.g. stubbed setSelectionRange, caret positions), and which modules are real vs stubbed. Keep existing tests passing; update expectations only where the brief changes the behaviour.
+6. If the brief names an interface (function name, parameter, exported property, CSS selector, log message, string), implement it literally. If it gives a concrete input/output example or exact format, trace that input through your final code (in a scratch script when the logic is pure) and compare character by character. Also trace the new variant through each sibling branch from rule 3, especially computed offsets and lengths.
+7. Implement every requirement bullet (each case: channel vs DM vs group DM, negated vs plain, success vs error path, configured vs not configured). Re-read the brief once before finishing and tick them off.
+8. Add or update a focused test next to the existing ones in the matching test file, following that file's style (fixtures go in the existing fixtures directory, in the same format). Cover each branch your change affects, not only the headline case.
+
+Finish with one `git diff --stat` and a single look at the final diff to check for leftover debug code, unintended files, or signature changes you didn't need.
+Iteration 6: Accepted candidate (subsample score 4.62408757105317 -> 5.563572755213764); running full eval.
+Iteration 6: Valset score for new program: 0.7938427907553774 (coverage 20 / 20)
+Iteration 6: Val aggregate for new program: 0.7938427907553774
+Iteration 6: Individual valset scores for new program: {0: 0.9602093428795115, 1: 0.9479731853673049, 2: 0.9483278353928835, 3: 0.9392934599438478, 4: 0.9292994681116437, 5: 0.6150459820983161, 6: 0.27943806743076877, 7: 0.8869586901294233, 8: 0.8973620369953501, 9: 0.9586876041886263, 10: 0.9382363300619877, 11: 0.9436225895810053, 12: 0.2623836248448385, 13: 0.9105552091694823, 14: 0.6923188961678584, 15: 0.6264443437501189, 16: 0.9295377292609653, 17: 0.32141820263577975, 18: 0.9625401989486961, 19: 0.9272030181491396}
+Iteration 6: New valset pareto front scores: {0: 0.9602093428795115, 1: 0.9517168680898199, 2: 0.9530184428493237, 3: 0.9491937633487079, 4: 0.9292994681116437, 5: 0.6233477550800681, 6: 0.624331837968085, 7: 0.9198357442013516, 8: 0.9196717754187289, 9: 0.9628144702833222, 10: 0.9470609558879624, 11: 0.9568544415740023, 12: 0.9238597138715474, 13: 0.9226323433328978, 14: 0.890737429973015, 15: 0.9606534638636413, 16: 0.9415719008394794, 17: 0.5022147352429054, 18: 0.970950445517011, 19: 0.9345725359806404}
+Iteration 6: Valset pareto front aggregate score: 0.8872273717156833
+Iteration 6: Updated valset pareto front programs: {0: {5}, 1: {4}, 2: {1}, 3: {2}, 4: {5}, 5: {2}, 6: {2}, 7: {1}, 8: {1}, 9: {3}, 10: {3}, 11: {2}, 12: {4}, 13: {2}, 14: {4}, 15: {4}, 16: {2}, 17: {1}, 18: {2}, 19: {3}}
+Iteration 6: Best valset aggregate score so far: 0.7950222666505545
+Iteration 6: Best program as per aggregate score on valset: 4
+Iteration 6: Best score on valset: 0.7950222666505545
+Iteration 6: Linear pareto front program index: 4
+Iteration 6: New program candidate index: 5
+Iteration 7: Selected program 3 score: 0.7783958675936214
+Iteration 7: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/, web frontend in web/src with node tests in web/tests/*.test.cjs, backend tests in zerver/tests and zerver/webhooks/*/tests.py with fixtures next to them, markdown fixtures in zerver/tests/fixtures/, help docs in starlight_help/):
+
+Environment
+- No virtualenv, no database, no `python` (only python3), no node_modules. tools/test-backend, tools/test-js-with-node and tools/lint will not run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function (or a minimal faithful copy) into a scratch script under /tmp and run it with python3 or node on concrete inputs. `py_compile`/`json.tool` only check syntax. Delete scratch files afterwards.
+- File paths in a brief may be stale (.ts vs .js). Find files with `rg -n`/`rg -l` first.
+
+Efficient work
+- Search before you read: `rg -n "symbol" web/src zerver | head -30`, then read only the relevant ranges (`sed -n 'A,Bp'`). Don't read whole large files, don't re-read code you already have, and batch independent searches into one command. Keep output short (head/tail).
+- Understand the code path, plan the edit once, make it, check it once, and stop. Make several edits to one file in one edit call where you can. Don't re-verify things you've already checked.
+- For documentation the brief asks for, find the affected pages with one rg, edit only text that describes the changed behaviour, keep edits minimal, and batch them. Don't re-read pages after editing them.
+
+Getting it right
+1. Make the smallest change in the layer the brief points to. Don't change signatures of existing functions, add parameters or flags to existing helpers, or thread parameters through callers. Get state (current message list, users, settings, muting, etc.) the way neighbouring code does, usually by importing the module that holds it. Tests call existing functions with existing arguments and set state with mock_esm/override or the real module's add/set functions.
+2. Add new cases INSIDE the existing structure. If the code maps items to display values and then sorts/joins/formats them, put your new case in the same per-item mapping step, as a branch shaped like the neighbouring one (e.g. next to an existing guest/special-case check), and leave the following sort/format untouched so it runs on the new values. Don't restructure pipelines, reorder steps or invent extra guarantees ("keep the old ordering", extra timeouts, extra fallbacks) that the brief doesn't ask for. The expected output is what the existing code produces with your new values plugged in.
+3. Change behaviour only where the brief says. Gate any new side effect (server fetch, new module call, changed return value) on exactly the condition described. Leave every other branch's return value and calls unchanged, including empty, null or "no messages" cases. Existing tests mock modules minimally, so a new call on an unrelated path can crash with "x is not a function".
+4. Prefer narrow primitives over broad helpers. Use a direct predicate on the module that owns the state (e.g. "is X muted/active/subscribed") plus the same checks the neighbouring code already makes, rather than a high-level "display name"/"can access"/"formatted" helper. Helpers in people, settings_data, permission or group modules often consult realm/current-user/group-permission state that node tests never set up, which crashes with "Cannot read properties of undefined". Before reusing any helper, read its body and anything it calls.
+5. When you extend a function to handle a new input shape (prefix, indentation, optional part, new type), find every place that assumed the old shape (offsets, slices, cursor math, cleanup paths, sibling branches such as channel vs DM or plain vs negated) and update them consistently. Trace each branch with a concrete input.
+6. Match the code next to your change: string building, translation ($t / $t_html; in node tests $t adds a "translated: " prefix and $t_html adds "translated HTML: "), helpers, data structures. Some fragments are plain strings that callers translate later, so don't add $t() where neighbours have none. For user-visible text, links or markdown, copy the existing format for that concept (relative vs absolute URLs, spacing). Don't nest markdown syntax inside a link's [text].
+7. Read the existing tests for the code you touch (rg the function name in web/tests or zerver/tests). They show exact output formats and which modules are real vs mocked. Keep them passing, and update expectations only where the brief changes behaviour. Then simulate the brief's scenario as such a test would: with only the state that test file sets up, does your code path touch any module or state that isn't set up?
+8. If the brief names an interface (function, parameter, field, CSS selector, log/error message, string), implement it literally. If it gives example inputs/outputs, run them through your final logic in a scratch script and compare character by character, including list ordering and joining.
+9. Regex or template edits: count parens/brackets before and after so they balance, then rebuild the full pattern in a scratch script (same flags and substitutions) and test the brief's examples plus a few existing cases that should and shouldn't match.
+10. Implement every requirement bullet. Re-read the brief once before finishing and tick them off.
+11. Add or update one focused test next to the existing ones in the matching test file, in its style (new fixtures in the existing fixtures location and format).
+
+Finish with one `git diff --stat` and a single look at the final diff to check for leftover debug code, unintended files, unbalanced edits or signature changes.
+Iteration 7: Accepted candidate (subsample score 4.654168017494744 -> 5.685588389928558); running full eval.
+Iteration 7: Found a better program on the valset with score 0.8147736986894994.
+Iteration 7: Valset score for new program: 0.8147736986894994 (coverage 20 / 20)
+Iteration 7: Val aggregate for new program: 0.8147736986894994
+Iteration 7: Individual valset scores for new program: {0: 0.9611284169176175, 1: 0.9562732600239126, 2: 0.9536952199682109, 3: 0.9454170420331762, 4: -0.04461357860413374, 5: 0.9601670746471628, 6: 0.6233384326997584, 7: 0.9274599382991421, 8: 0.9067970082494584, 9: 0.9685961086378461, 10: 0.9349915136903625, 11: 0.955006307873348, 12: 0.49126732595501443, 13: 0.9214103430466626, 14: 0.7214507165912506, 15: 0.9585352021861668, 16: 0.9402632290763533, 17: 0.30755622272278993, 18: 0.9722461678709204, 19: 0.9344880219049696}
+Iteration 7: New valset pareto front scores: {0: 0.9611284169176175, 1: 0.9562732600239126, 2: 0.9536952199682109, 3: 0.9491937633487079, 4: 0.9292994681116437, 5: 0.9601670746471628, 6: 0.624331837968085, 7: 0.9274599382991421, 8: 0.9196717754187289, 9: 0.9685961086378461, 10: 0.9470609558879624, 11: 0.9568544415740023, 12: 0.9238597138715474, 13: 0.9226323433328978, 14: 0.890737429973015, 15: 0.9606534638636413, 16: 0.9415719008394794, 17: 0.5022147352429054, 18: 0.9722461678709204, 19: 0.9345725359806404}
+Iteration 7: Valset pareto front aggregate score: 0.9051110275889034
+Iteration 7: Updated valset pareto front programs: {0: {6}, 1: {6}, 2: {6}, 3: {2}, 4: {5}, 5: {6}, 6: {2}, 7: {6}, 8: {1}, 9: {6}, 10: {3}, 11: {2}, 12: {4}, 13: {2}, 14: {4}, 15: {4}, 16: {2}, 17: {1}, 18: {6}, 19: {3}}
+Iteration 7: Best valset aggregate score so far: 0.8147736986894994
+Iteration 7: Best program as per aggregate score on valset: 6
+Iteration 7: Best score on valset: 0.8147736986894994
+Iteration 7: Linear pareto front program index: 6
+Iteration 7: New program candidate index: 6
+Iteration 8: Selected program 3 score: 0.7783958675936214
+Iteration 8: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/; web frontend in web/src with node tests in web/tests/*.test.cjs; backend tests in zerver/tests and zerver/webhooks/*/tests.py; markdown fixtures in zerver/tests/fixtures/; help docs in starlight_help/).
+
+Environment
+- No virtualenv, no database, no `python` (only python3), no node_modules. tools/test-backend, tools/test-js-with-node and tools/lint will not run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function or pattern (or a minimal faithful copy) into a scratch script under /tmp and run it with python3 or node on concrete inputs. py_compile and json.tool only check syntax. Delete scratch files afterwards.
+- File paths in a brief may be stale (.ts vs .js). Locate files with `rg -l` first.
+
+Efficient work
+- Search before you read. Batch independent searches into one command (`rg -n "a|b|c" web/src zerver | head -40`), then read only the needed ranges with `sed -n 'A,Bp'`. Never read whole large files or re-read code you already have.
+- Keep outputs short (head/tail). Plan the whole edit once, apply it in as few edit calls as possible, check it once, and stop.
+- For documentation, edit only the pages that directly describe the changed behaviour, with small edits. Find them with one rg, not by browsing.
+
+Getting it right
+1. Make the smallest change in the layer the brief points to. Don't change existing function signatures, add parameters or flags to existing helpers, or thread parameters through callers. Get state (current message list, user, settings) the way neighbouring code does, usually by importing the module that holds it. Tests call existing functions with existing arguments and set state by mocking modules (mock_esm / override).
+2. Change behaviour only where the brief says. Gate any new side effect or changed return value on exactly the described condition. Keep every other branch's return values and calls unchanged, including empty/null edge cases. Existing tests mock modules minimally, so a new call on another path can crash with "x is not a function".
+3. When you extend a function to handle a new input shape or case, find every place that assumed the old shape: offsets, slices, cursor math, cleanup paths, sibling branches (bulleted vs numbered, channel vs 1:1 DM vs group DM). Update them all consistently, and trace each branch with a concrete value.
+4. Match neighbouring code: string building, translation ($t / $t_html; in node tests $t adds the prefix "translated: " and $t_html adds "translated HTML: "), data structures, ordering. Don't add $t() where neighbours have none. Backend user-facing strings use _("...").format(...) like their neighbours.
+5. For user-visible text, links or markdown, copy the format the codebase already uses for that concept (relative vs absolute URLs, spacing, mention syntax). Don't nest markdown syntax (#**...**, @**...**) inside a link's [text].
+6. Before calling an existing helper, read its body and see exactly which input fields it uses. Check how an existing server-side caller builds those inputs (`rg -n "helper\(" | head`) and build them the same way. Don't pass a broader object (a full serialized message, a wide dict) and hope the fields match. Then compute the helper's output by hand for EACH case the brief covers. Zulip pitfall: a 1:1 DM's `message.recipient` is only the receiving user's personal recipient, so the sender is not in it, while group-DM recipients include everyone. Anything that should identify the whole conversation (DM narrow/permalink URLs, participant lists) must contain all participants, including the sender, in both the 1:1 and group cases. Write the expected URL with concrete user IDs for a 1:1 DM and a group DM and confirm your code produces it.
+7. Helpers touching realm, settings, permission or group state can crash node tests that never set that state up. Prefer narrow primitives.
+8. Read the existing tests for the code you touch (rg the function name in web/tests or zerver/tests). They show exact output formats and mocking style. Keep them passing, and update expectations only where the brief changes behaviour.
+9. If the brief names an interface (function, parameter, exported property, CSS class/selector, string, message format), implement it literally. Run the brief's example inputs and outputs through your final code in a scratch script and compare character by character, including blank lines between blocks.
+10. When adding or updating a test, write the expected values literally from the brief (spell out the URL, string or HTML). Never compute an expected value by calling the same code path you changed, because that only re-asserts your own bug.
+11. Regex or template edits: count opening and closing parens/brackets so they balance. Rebuild the full pattern in a scratch script (same flags, same .format substitutions, verbose mode), compile it, and run the brief's examples plus a few existing fixtures that must still match and must not match.
+12. Implement every requirement bullet and case. Re-read the brief once before finishing and tick each one off, including each recipient/message type it lists.
+
+Finish with one `git diff --stat` and a single look at the final diff to check for leftover debug code, unintended files, unbalanced edits or signature changes. Then stop.
+Iteration 8: Exception during optimization: infra failure on [('pi-openai-gpt-5.6-sol--g5ee56f42', 'ZT-ac182038d7c7'), ('pi-openai-gpt-5.6-sol--g5ee56f42', 'ZT-98e14a644f3e'), ('pi-openai-gpt-5.6-sol--g5ee56f42', 'ZT-2e59bb076801'), ('pi-openai-gpt-5.6-sol--g5ee56f42', 'ZT-79566a8c514c'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s2', 'ZT-ac182038d7c7'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s2', 'ZT-98e14a644f3e'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s2', 'ZT-2e59bb076801'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s2', 'ZT-79566a8c514c'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s3', 'ZT-ac182038d7c7'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s3', 'ZT-98e14a644f3e'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s3', 'ZT-2e59bb076801'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s3', 'ZT-79566a8c514c')]
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/engine.py", line 846, in run
+    proposals = self.reflective_proposer.propose(state)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 550, in propose
+    child_evals = self._batch_evaluate(child_items)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 236, in _batch_evaluate
+    return default_batch_evaluate(self.adapter, items)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/core/adapter.py", line 227, in default_batch_evaluate
+    return [adapter.evaluate(batch, candidate, capture_traces=True) for candidate, batch in items]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run_cost.py", line 84, in evaluate
+    eb = super().evaluate(batch, candidate, capture_traces=True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run_v2.py", line 132, in evaluate
+    raise RuntimeError(f"infra failure on {bad}")
+RuntimeError: infra failure on [('pi-openai-gpt-5.6-sol--g5ee56f42', 'ZT-ac182038d7c7'), ('pi-openai-gpt-5.6-sol--g5ee56f42', 'ZT-98e14a644f3e'), ('pi-openai-gpt-5.6-sol--g5ee56f42', 'ZT-2e59bb076801'), ('pi-openai-gpt-5.6-sol--g5ee56f42', 'ZT-79566a8c514c'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s2', 'ZT-ac182038d7c7'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s2', 'ZT-98e14a644f3e'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s2', 'ZT-2e59bb076801'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s2', 'ZT-79566a8c514c'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s3', 'ZT-ac182038d7c7'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s3', 'ZT-98e14a644f3e'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s3', 'ZT-2e59bb076801'), ('pi-openai-gpt-5.6-sol--g5ee56f42-s3', 'ZT-79566a8c514c')]
+
+Iteration 9: Selected program 2 score: 0.775724071387004
+Iteration 9: Proposed new text for append_system_prompt: Working notes for this Zulip checkout (Django backend in zerver/ and zproject/, web frontend in web/src with node tests in web/tests/*.test.cjs, backend tests in zerver/tests and zerver/webhooks/*/tests.py, webhook fixtures in zerver/webhooks/*/fixtures/):
+
+Environment
+- No virtualenv, no database, no `python` (only python3), no node_modules. tools/test-backend, tools/test-js-with-node and tools/lint will not run. Don't try them, don't look for a .venv, and don't create, delete or symlink files outside your change to make tooling work.
+- To check logic, copy the pure function (or a minimal copy) into a scratch script under /tmp and run it with python3 or node on concrete inputs. Use `python3 -m py_compile` / `python3 -m json.tool` for syntax checks. Delete scratch files afterwards.
+- File paths in a brief may be stale (e.g. .ts vs .js). Locate files with `rg -l` first.
+
+Efficient exploration
+- Search before you read: `rg -n "symbol" web/src zerver | head -30`, then read only the relevant ranges (`sed -n 'A,Bp'`). Don't read whole large files or re-read code you already have. Batch independent searches into one command and keep output short (head/tail).
+- Understand the code path, plan the edit once, make it, check it, stop. Don't do extra cleanup or refactors in nearby code that the brief doesn't require.
+- For larger UI reorganizations, do the explicitly named interface requirements first (selectors, URL sections, function behaviour), then the template moves. For documentation the brief asks for, edit only the pages whose steps become wrong, with small edits.
+
+Getting it right
+1. Make the smallest change in the layer the brief points to. Don't change signatures of existing functions or thread new parameters through callers. Get state such as the current message list, current user or settings the way neighbouring code does (usually by importing the module that holds it). Tests call existing functions with their existing arguments and set state by mocking modules. A new parameter that callers don't pass silently disables your logic.
+2. Match the code next to your change: string building, translation ($t / $t_html; in node tests $t adds "translated: " and $t_html adds "translated HTML: "), escaping (Markup/format in Python email/HTML code), data structures, helper usage, ordering. Don't add $t() where the neighbouring text has none.
+3. Prefer narrow primitives over broad helpers. Before reusing a higher-level helper, read its body. Helpers touching realm, settings, permission or group state can crash node tests that never set that state up. When reusing a helper, check an existing caller (`rg -n "helper\(" | head`) and pass the same argument shape.
+4. Read the existing tests for the code you touch. They show output formats, how state is mocked, and which modules are real vs stubbed. Keep them passing, and update expectations only where the brief changes behaviour.
+5. If the brief names an interface (function, parameter, field, CSS selector, log message, error string), implement it literally. If it gives a concrete input/output example, trace that exact input through your final code in a scratch script and compare character by character: whitespace, punctuation, ordering, log wording and level.
+6. Parsing external data (webhook payloads, imports, clipboard HTML): real payloads contain many more fields than the brief's example, such as bookkeeping keys, empty values, extra parts and unexpected keys. Make the parser tolerant: skip entries it can't match or doesn't need instead of raising, and keep any existing "unable to handle" error path only for the case it already covered. When you add a fixture, copy a complete existing fixture from the same directory and modify it, so your test exercises a realistic payload rather than a minimal hand-written one.
+7. Implement every requirement bullet (channel vs DM vs group DM, empty vs non-empty, success vs error path, configured vs not). Re-read the brief once before finishing and tick them off.
+8. Add or update a focused test next to the existing ones in the matching test file, in that file's style.
+
+Finish with one `git diff --stat` and a single look at the final diff to check for leftover debug code, unintended files, or signature changes you didn't need.

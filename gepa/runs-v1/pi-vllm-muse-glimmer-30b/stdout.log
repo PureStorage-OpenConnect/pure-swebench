@@ -1,0 +1,23 @@
+[rollout pi-vllm-muse-glimmer-30b--seed] 0/10 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] launching 10 cell(s) fanout=10 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--seed] driver gepa-gepa-pi-vllm-muse-glimmer-30b-ae6e77 rc=0
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 76.1 min: resolved 4/10
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 2/3
+2026-10-23 12:08:32,712 INFO reflection ok: cost=$0.230
+[rollout pi-vllm-muse-glimmer-30b--g6383b99d] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6383b99d] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g6383b99d] driver gepa-gepa-pi-vllm-muse-glimmer-30b-325042 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g6383b99d] done in 17.2 min: resolved 2/3
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 0/3
+2026-10-23 12:26:22,156 INFO reflection ok: cost=$0.273
+[rollout pi-vllm-muse-glimmer-30b--gfa13fb10] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gfa13fb10] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--seed] 10/10 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 4/10
+[rollout pi-vllm-muse-glimmer-30b--seed] 3/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 0/3
+2026-10-23 12:52:45,820 INFO reflection ok: cost=$0.241
+[rollout pi-vllm-muse-glimmer-30b--g7704e8f3] 0/3 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g7704e8f3] launching 3 cell(s) fanout=3 (busy elsewhere: 0)
