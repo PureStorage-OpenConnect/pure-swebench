@@ -363,13 +363,16 @@ def main():
         emit_agent_output(instance_id, "pi", [patch_text], **usage)
     except Exception as e:
         LOGGER.exception("Patch task failed for %s: %s", instance_id, e)
+        # Retry-with-feedback cells (ZBENCH_MAX_ATTEMPTS > 1): a round that ends with no new
+        # change still spent tokens; report them from the session so the cell's cost is complete.
+        retry_usage = (_usage_from_session(session_path) or {}) if int(os.environ.get("ZBENCH_MAX_ATTEMPTS") or 1) > 1 else {}
         perr = _provider_error(session_path, extra=str(e))
         if perr is not None:
             emit_agent_output(instance_id, "pi", [],
                               failure={"kind": "provider_error", "retryable": perr.retryable,
-                                       "message": str(perr)[:500]})
+                                       "message": str(perr)[:500]}, **retry_usage)
             return
-        emit_agent_output(instance_id, "pi", [])
+        emit_agent_output(instance_id, "pi", [], **retry_usage)
 
 
 if __name__ == "__main__":

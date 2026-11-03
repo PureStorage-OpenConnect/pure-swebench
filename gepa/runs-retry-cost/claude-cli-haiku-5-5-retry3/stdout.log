@@ -1,0 +1,614 @@
+[rollout claude-cli-haiku-5-5-retry3--seed] 20/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 18/20
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 20/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 19/20
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 20/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 17/20
+2026-10-30 09:46:21,418 INFO seed cost per task: mean $0.364 over 20 tasks
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 20/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 20/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 20/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 19/20
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 17/20
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 18/20
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+2026-10-30 09:46:56,221 INFO reflection ok: cost=$0.528
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-8c26e3 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] done in 12.6 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-745e93 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] done in 13.3 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-c345a6 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] done in 14.8 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-594d20 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] done in 27.4 min: resolved 18/20
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-ce6fe5 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] done in 31.1 min: resolved 19/20
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-6b9a67 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] done in 31.7 min: resolved 18/20
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] done in 0.5 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] done in 0.5 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] done in 0.5 min: resolved 6/6
+2026-10-30 10:34:31,491 INFO reflection ok: cost=$0.568
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-75da81 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] done in 8.4 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-b88af4 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] done in 10.3 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-fa6d59 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] done in 10.4 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-31b809 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] done in 17.1 min: resolved 18/20
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-2b9aef rc=0
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] done in 19.0 min: resolved 20/20
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-9b37f3 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] done in 19.2 min: resolved 20/20
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] done in 0.0 min: resolved 6/6
+2026-10-30 11:04:43,671 INFO reflection ok: cost=$0.552
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57-s3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57-s2] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-ad59e3 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57] done in 9.5 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-5720ab rc=0
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57-s3] done in 12.9 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-51b88c rc=0
+[rollout claude-cli-haiku-5-5-retry3--g9da33f57-s2] done in 19.4 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] done in 0.0 min: resolved 3/4
+2026-10-30 11:24:35,919 INFO reflection ok: cost=$0.547
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] 0/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] 0/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] 0/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-f2df0c rc=0
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] done in 6.6 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-e02304 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] done in 7.5 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-411080 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] done in 7.7 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] 4/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] 4/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] 4/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-c21522 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] done in 21.0 min: resolved 18/20
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-5ba82e rc=0
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] done in 22.6 min: resolved 19/20
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-ad548b rc=0
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] done in 27.5 min: resolved 19/20
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] done in 0.0 min: resolved 4/6
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] done in 0.0 min: resolved 6/6
+2026-10-30 12:00:24,599 INFO reflection ok: cost=$0.569
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-1e3410 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] done in 11.5 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-31159e rc=0
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] done in 15.9 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-f82f31 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] done in 16.3 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-169ad6 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] done in 27.8 min: resolved 18/20
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-cbdb61 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] done in 31.7 min: resolved 18/20
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-63355d rc=0
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] done in 32.6 min: resolved 19/20
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gcb374dd6-s3] done in 0.0 min: resolved 6/6
+2026-10-30 12:49:55,247 INFO reflection ok: cost=$0.572
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e-s2] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e-s3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-b7b775 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e-s2] done in 8.5 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-6d4312 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e] done in 9.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-b7864a rc=0
+[rollout claude-cli-haiku-5-5-retry3--g2d626c1e-s3] done in 10.7 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] done in 0.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] done in 0.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] done in 0.1 min: resolved 6/6
+2026-10-30 13:01:10,789 INFO reflection ok: cost=$0.525
+[rollout claude-cli-haiku-5-5-retry3--g7849910d-s2] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g7849910d-s3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g7849910d] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g7849910d-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g7849910d] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g7849910d-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g7849910d-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-dba662 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g7849910d-s3] done in 9.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g7849910d-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-750ff4 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g7849910d-s2] done in 10.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g7849910d] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-7441b1 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g7849910d] done in 12.1 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] done in 0.0 min: resolved 4/4
+2026-10-30 13:13:43,321 INFO reflection ok: cost=$0.545
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7-s3] 0/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7-s2] 0/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7] 0/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-b3ef24 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7] done in 7.9 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-0740bf rc=0
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7-s2] done in 10.4 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-ce5c1a rc=0
+[rollout claude-cli-haiku-5-5-retry3--g1ca724d7-s3] done in 11.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s3] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gb8b755f3-s2] done in 0.0 min: resolved 6/6
+2026-10-30 13:25:10,229 INFO reflection ok: cost=$0.561
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4-s2] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4-s3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-96bc72 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4-s2] done in 11.5 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-db5386 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4-s3] done in 16.8 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-7cda24 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g0d0997b4] done in 17.7 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--gee5e332c] done in 0.0 min: resolved 6/6
+2026-10-30 13:43:21,119 INFO reflection ok: cost=$0.528
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s2] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-029785 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s2] done in 7.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-206765 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s3] done in 7.2 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-d6906b rc=0
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f] done in 7.7 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s3] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s2] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-fe603d rc=0
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f] done in 16.9 min: resolved 19/20
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-ad72b3 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s2] done in 17.5 min: resolved 19/20
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-3afb6a rc=0
+[rollout claude-cli-haiku-5-5-retry3--g55c4b61f-s3] done in 17.8 min: resolved 19/20
+2026-10-30 14:08:50,421 INFO done: best idx 2 val 0.923
+Iteration 0: Base program full valset score: 0.829861111111111 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.829861111111111
+Iteration 1: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no Python virtualenv, no database and no `python` (only `python3`), and node_modules may be missing. tools/test-backend and tools/test-js-with-node cannot run here. Don't try to set up an environment: no docker, no pip/npm installs, no scratch venvs. Don't run whole test suites, and don't stash changes to find out which unrelated suites already fail. Check your work like this instead:
+- If node_modules exists, run only the one relevant web test file (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs` or similar) and keep only the last lines of output.
+- For Python, run a small standalone `python3` script on any pure logic you wrote, and otherwise trace the code carefully by reading it.
+- Running a quick `python3 -m py_compile` on the edited files is enough of a syntax check.
+
+Layout: backend code is in `zerver/` (lib/ for helpers, views/ for endpoints, actions/ for state changes, tests/ for tests, webhooks/<name>/ for integrations with view.py, tests.py and fixtures/). Frontend code is in `web/src/` (.ts or .js; the brief may name the wrong extension, so use `ls`/`grep` to find the real file) and its tests are in `web/tests/*.test.cjs`.
+
+Efficient habits:
+- Start with `grep -n` to find the relevant code, then read only those line ranges (`sed -n a,bp`). Avoid printing whole large files or long outputs; use `head`/`tail`.
+- Read each file once and remember what it says rather than reading it again.
+- Once the change is complete and checked against every requirement in the brief, stop. Skip extra lint and type-check passes over the whole repo.
+
+Getting the behavior right:
+- Treat every bullet in the brief as an exact requirement: wording, order, separators, sort order, and which fields are present. Copy strings word for word from the brief. Before finishing, go through the bullets one by one and compare each to your diff.
+- When the brief says to use an existing helper, first grep for its current callers and read its signature and body. Then call it the same way those callers do, giving it the data the model already provides (for example, what the existing display/recipient functions return). Don't add your own logic to compute or "correct" its inputs (adding participants, deduplicating, switching to a different source of data). The helper's output is the intended behavior even if you think it is incomplete.
+- Prefer the smallest change that matches what nearby code does: reuse existing helpers, keep existing function names and call sites, and follow the local style (translation-wrapped `_()` / `$t()` for user-facing strings, typed TS).
+- Update or add tests in the matching test file so they reflect the new behavior, and update existing assertions that the new behavior changes.
+
+If you are told the problem is still not fixed:
+- Your previous approach is wrong somewhere, so don't resubmit it. Re-read the brief word by word.
+- List every place where your code made a choice the brief didn't spell out or added logic of your own (especially computed inputs to existing helpers, custom sorting or filtering, and extra special cases). Replace each one with the most literal reading of the brief and the most direct use of existing code.
+- Make a real change. Finishing a round with no change is never correct.
+Iteration 1: Accepted candidate (subsample score 4.775 -> 5.80970198856759); running full eval.
+Iteration 1: Found a better program on the valset with score 0.874358515607342.
+Iteration 1: Valset score for new program: 0.874358515607342 (coverage 20 / 20)
+Iteration 1: Val aggregate for new program: 0.874358515607342
+Iteration 1: Individual valset scores for new program: {0: 0.9509403195970215, 1: 0.25891405111475274, 2: 0.9813975616168633, 3: 0.9420640611312887, 4: 0.987443344455163, 5: 0.3666666666666666, 6: 0.9589166208996415, 7: 0.957320727489281, 8: 0.9657528334636161, 9: 0.970755043559082, 10: 0.9872092994787595, 11: 0.9379007229003923, 12: 0.523974480289841, 13: 0.9736244294725415, 14: 0.925415143572521, 15: 0.92888793305748, 16: 0.9238498474626421, 17: 0.9976299898035227, 18: 0.9908632223298593, 19: 0.957644013785906}
+Iteration 1: New valset pareto front scores: {0: 0.9509403195970215, 1: 0.5666666666666667, 2: 0.9813975616168633, 3: 0.9420640611312887, 4: 0.987443344455163, 5: 0.9, 6: 0.9589166208996415, 7: 0.957320727489281, 8: 0.9657528334636161, 9: 0.970755043559082, 10: 0.9872092994787595, 11: 0.9379007229003923, 12: 0.523974480289841, 13: 0.9736244294725415, 14: 0.925415143572521, 15: 0.92888793305748, 16: 0.9238498474626421, 17: 0.9976299898035227, 18: 0.9908632223298593, 19: 0.957644013785906}
+Iteration 1: Valset pareto front aggregate score: 0.9164128130516044
+Iteration 1: Updated valset pareto front programs: {0: {1}, 1: {0}, 2: {1}, 3: {1}, 4: {1}, 5: {0}, 6: {1}, 7: {1}, 8: {1}, 9: {1}, 10: {1}, 11: {1}, 12: {1}, 13: {1}, 14: {1}, 15: {1}, 16: {1}, 17: {1}, 18: {1}, 19: {1}}
+Iteration 1: Best valset aggregate score so far: 0.874358515607342
+Iteration 1: Best program as per aggregate score on valset: 1
+Iteration 1: Best score on valset: 0.874358515607342
+Iteration 1: Linear pareto front program index: 1
+Iteration 1: New program candidate index: 1
+Iteration 2: Selected program 1 score: 0.874358515607342
+Iteration 2: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no Python virtualenv, no database and no `python` (only `python3`), and node_modules may be missing. tools/test-backend and tools/test-js-with-node cannot run here. Don't try to set up an environment: no docker, no pip/npm installs, no scratch venvs. Don't run whole test suites, and don't stash changes to find out which suites already fail. Check your work like this instead:
+- If node_modules exists, run only the one relevant web test file (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs` or similar) and keep only the last lines of output.
+- For Python, run a small standalone `python3` script on any pure logic you wrote, and otherwise trace the code by reading it. `python3 -m py_compile` on the edited files is enough of a syntax check.
+
+Layout: backend code is in `zerver/` (lib/ for helpers, views/ for endpoints, actions/ for state changes, tests/ for tests, webhooks/<name>/ for integrations with view.py, tests.py and fixtures/). Frontend code is in `web/src/` (.ts or .js; the brief may name the wrong extension, so use `ls`/`grep` to find the real file). Its tests are in `web/tests/*.test.cjs`. They load modules with `zrequire`, replace dependencies with `mock_esm`, and set up only the state the module currently needs.
+
+Efficient habits:
+- Start with `grep -n` to find the relevant code, then read only those line ranges (`sed -n a,bp`). Never `cat` a whole source file; use `head`/`tail` on long outputs.
+- Read each file once and remember what it says.
+- Once the change is complete and checked against every requirement in the brief, stop. Skip extra lint and type-check passes over the repo.
+
+Getting the behavior right:
+- Treat every bullet in the brief as an exact requirement: wording, order, separators, sort order, and which fields are present. Copy strings word for word from the brief. Before finishing, go through the bullets one by one and compare each to your diff.
+- Make the smallest change at the spot the brief describes. Add the new case as an explicit branch next to the existing code (e.g. a new `if` before the existing return) and keep the existing lines as they are. Don't replace existing inline logic with a call to some broader helper unless the brief tells you to use that helper.
+- When the brief does name an existing helper, grep its current callers and read its signature and body. Call it the same way those callers do, with the data the model already provides. Don't compute or "correct" its inputs yourself (adding participants, deduplicating, switching data sources). Its output is the intended behavior.
+- Before adding an import or a call into another module, check what that code depends on. Code that looks up users, checks permissions, or reads realm/settings state can crash existing unit tests that never set that state up. Grep the matching test file for how it loads the module you edited (`zrequire`/`mock_esm`/state setup) and make sure your new call works with that setup. Prefer the narrowest module that holds the data you need.
+- Follow local style: translation-wrapped `_()` / `$t()` / `$t_html()` for user-facing strings, typed TS, existing function names and call sites.
+- Update or add tests in the matching test file for the new behavior, and update existing assertions that the new behavior changes.
+
+If you are told the problem is still not fixed:
+- Your previous approach is wrong somewhere, so don't resubmit it or only tweak things around it. Re-read the brief word by word.
+- First check whether you replaced existing code with a call to a different or broader helper. If so, restore the original lines and implement the new behavior as an explicit check right beside them. Then check whether any new import or call could break the existing tests for that module.
+- List every other choice the brief didn't spell out (computed inputs, custom sorting/filtering, extra special cases, edits to files the brief didn't mention). Replace each one with the most literal reading of the brief, and undo unrequested side edits.
+- Make a real change. Finishing a round with no change is never correct.
+Iteration 2: Accepted candidate (subsample score 5.156104783363574 -> 5.753929121633399); running full eval.
+Iteration 2: Found a better program on the valset with score 0.9233201872215917.
+Iteration 2: Valset score for new program: 0.9233201872215917 (coverage 20 / 20)
+Iteration 2: Val aggregate for new program: 0.9233201872215917
+Iteration 2: Individual valset scores for new program: {0: 0.9474822011487868, 1: 0.5474900900247597, 2: 0.9647566989084925, 3: 0.9488204621613825, 4: 0.9949491784064282, 5: 0.9468996167409416, 6: 0.9586854850408688, 7: 0.9721791883218918, 8: 0.9742608127658747, 9: 0.9729336914867036, 10: 0.9879956023232964, 11: 0.9483394640139872, 12: 0.755214134734718, 13: 0.9709120993101319, 14: 0.9307949343921289, 15: 0.9273658638005748, 16: 0.9190208658281553, 17: 0.9974861361437554, 18: 0.9913253063243034, 19: 0.8094919125546535}
+Iteration 2: New valset pareto front scores: {0: 0.9509403195970215, 1: 0.5666666666666667, 2: 0.9813975616168633, 3: 0.9488204621613825, 4: 0.9949491784064282, 5: 0.9468996167409416, 6: 0.9589166208996415, 7: 0.9721791883218918, 8: 0.9742608127658747, 9: 0.9729336914867036, 10: 0.9879956023232964, 11: 0.9483394640139872, 12: 0.755214134734718, 13: 0.9736244294725415, 14: 0.9307949343921289, 15: 0.92888793305748, 16: 0.9238498474626421, 17: 0.9976299898035227, 18: 0.9913253063243034, 19: 0.957644013785906}
+Iteration 2: Valset pareto front aggregate score: 0.9331634887016971
+Iteration 2: Updated valset pareto front programs: {0: {1}, 1: {0}, 2: {1}, 3: {2}, 4: {2}, 5: {2}, 6: {1}, 7: {2}, 8: {2}, 9: {2}, 10: {2}, 11: {2}, 12: {2}, 13: {1}, 14: {2}, 15: {1}, 16: {1}, 17: {1}, 18: {2}, 19: {1}}
+Iteration 2: Best valset aggregate score so far: 0.9233201872215917
+Iteration 2: Best program as per aggregate score on valset: 2
+Iteration 2: Best score on valset: 0.9233201872215917
+Iteration 2: Linear pareto front program index: 2
+Iteration 2: New program candidate index: 2
+Iteration 3: Selected program 1 score: 0.874358515607342
+Iteration 3: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no Python virtualenv, no database and no `python` (only `python3`), and node_modules may be missing. tools/test-backend and tools/test-js-with-node cannot run here. Don't try to set up an environment: no docker, no pip/npm installs, no scratch venvs, no web searches. Don't run whole test suites or stash changes. Check your work like this instead:
+- If node_modules exists, run only the one relevant web test file (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs`) and keep only the last lines of output.
+- For Python, run a small standalone `python3` script on any pure logic you wrote (regexes, string building), and otherwise trace the code by reading it. `python3 -m py_compile` on edited files is enough of a syntax check.
+
+Layout: backend code is in `zerver/` (lib/ for helpers, views/ for endpoints, actions/ for state changes, tests/ for tests, tests/fixtures/ for data-driven test cases, webhooks/<name>/ for integrations). Frontend code is in `web/src/` (.ts or .js; the brief may name the wrong extension, so check with `ls`/`grep`). Its tests are in `web/tests/*.test.cjs`.
+
+Efficient habits:
+- Start with `grep -n` to find the relevant code, then read only those line ranges (`sed -n a,bp`). Don't print whole large files or long outputs; use `head`/`tail`.
+- Read each file once and remember it. Don't re-verify the same logic several times.
+- Once the change is complete and checked against every requirement in the brief, stop. Skip whole-repo lint and type-check passes.
+
+Getting the behavior right:
+- Treat every bullet in the brief as an exact requirement: wording, order, separators, sort order, and which fields are present. Copy strings word for word. Before finishing, go through the bullets one by one and compare each to your diff.
+- Fix the whole class of the bug, not just the example. If the code has parallel branches for the same situation (for example, one per list/item/message type, or both a plain and an HTML variant), apply the fix to every one of them.
+- If the brief describes the final output (a URL, a link, rendered HTML, a message's text), make your code produce exactly that form. Don't emit an intermediate syntax that only turns into it after later processing. Look at how nearby code builds the same kind of output and follow it.
+- When the brief says to use an existing helper, grep its current callers and read its signature and body. Then call it the same way those callers do, with the data the model already provides. Don't add logic of your own to compute or "correct" its inputs.
+- Prefer the smallest change that matches nearby code: reuse existing helpers, keep existing function names and call sites, and follow the local style (`_()` / `$t()` for user-facing strings, typed TS).
+- Update or add tests in the matching test file, and update existing assertions that the new behavior changes.
+
+If you are told the problem is still not fixed:
+- Your previous approach is wrong somewhere, so don't resubmit it or make a cosmetic variation. Re-read the brief word by word, especially any description of the final output.
+- List every choice your code made that the brief didn't spell out: indirect output forms, helpers you picked, branches you didn't touch, computed inputs, custom sorting or filtering, extra special cases. Replace each one with the most literal reading of the brief and the most direct use of existing code. Check for sibling code paths you missed.
+- Before finishing the round, run `git diff` and confirm the behavior differs from your previous round. A round with no real change is never correct.
+Iteration 3: New subsample score 5.252761248654408 is not better than old score 5.288825059628383, skipping
+Iteration 4: Selected program 1 score: 0.874358515607342
+Iteration 4: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no Python virtualenv, no database and no `python` (only `python3`), and node_modules may be missing. tools/test-backend and tools/test-js-with-node cannot run here. Don't try to set up an environment (no docker, no pip/npm installs, no scratch venvs), don't run whole test suites, and don't stash changes to probe unrelated failures. To check your work:
+- If node_modules exists, run only the one relevant web test file (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs`) and keep only the last lines of output (`| tail -30`).
+- For Python, run `python3 -m py_compile` on the edited files, and test any pure logic you wrote with a small standalone `python3` script. Otherwise trace the code by reading it.
+
+Layout: backend code is in `zerver/` (lib/ helpers, views/ endpoints, actions/ state changes, tests/ tests, webhooks/<name>/ integrations with view.py, tests.py, fixtures/). Frontend code is in `web/src/` (.ts or .js; the brief may name the wrong extension, so check with `ls`/`grep`). Web tests are in `web/tests/*.test.cjs`.
+
+Efficient habits:
+- Use `grep -n` to find code, then read only the needed line ranges (`sed -n a,bp`). Never print whole large files or long outputs; use `head`/`tail`.
+- Read each range once and remember it. Don't re-read files you have already seen.
+- Once the change is complete and checked against the brief, stop. Skip repo-wide lint or type-check passes, and don't retry a check that can't work in this environment.
+
+Getting the behavior right:
+- Before writing new code, read the whole function you are changing, including its existing parameters, flags and options. Find out whether the code ALREADY has a way to produce what the brief describes (an existing option, flag, branch or helper that renders a similar line, label or element). If it does, turn on or reuse that existing path with its existing formatting. Don't add a parallel parameter or branch that produces nearly the same output. Upstream fixes are usually a few lines that reuse what is already there.
+- How literally to copy strings: when the brief says "exactly" or gives precise markup, class names, error or log messages, copy those word for word. When it only describes output loosely ("a line of the form ...", "show X"), and the code already renders that kind of output, keep the existing rendering (for example, Markdown bold labels) rather than inventing new text.
+- Treat each bullet of the brief as a requirement: order, separators, sort order, which fields are present. Before finishing, go through the bullets one by one and compare each to your diff.
+- When the brief names an existing helper, grep for its callers and read its signature and body. Call it the same way those callers do, with the data the model already provides. Don't compute or "correct" its inputs yourself (adding participants, deduplicating, switching data sources).
+- Make the smallest change that matches nearby code: keep existing function names and call sites, and follow the local style (`_()` / `$t()` for user-facing strings, typed TS).
+- Update or add tests in the matching test file, and update existing assertions that your change affects.
+
+If you are told the problem is still not fixed:
+- Your approach is wrong somewhere, so don't resubmit it or a small variation of it. Re-read the brief word by word.
+- Check first: did you add new logic, a new parameter or a new string where an existing option or code path already does the job? If so, switch to the existing mechanism and its exact output format.
+- Then list every choice the brief didn't spell out (computed inputs, custom sorting or filtering, extra special cases, literal strings you made up) and replace each with the most direct use of existing code.
+- Make a real change in every round. Ending a round with no change is never correct.
+Iteration 4: Accepted candidate (subsample score 4.354679642100846 -> 5.8332971438345265); running full eval.
+Iteration 4: Valset score for new program: 0.8825531199752158 (coverage 20 / 20)
+Iteration 4: Val aggregate for new program: 0.8825531199752158
+Iteration 4: Individual valset scores for new program: {0: 0.9533247764031761, 1: 0.9928082871331663, 2: 0.9686479201704692, 3: 0.9401007178063066, 4: 0.9927996535656396, 5: 0.058348465143875206, 6: 0.9251240099532136, 7: 0.9507762244912178, 8: 0.9730668533296486, 9: 0.9681130161164173, 10: 0.9875349382417881, 11: 0.9416089328957022, 12: 0.5060738679517518, 13: 0.9781002445490489, 14: 0.7584626347486125, 15: 0.9394184919148518, 16: 0.9184132271404479, 17: 0.9969799318649502, 18: 0.9910462260015753, 19: 0.9103139800824549}
+Iteration 4: New valset pareto front scores: {0: 0.9533247764031761, 1: 0.9928082871331663, 2: 0.9813975616168633, 3: 0.9488204621613825, 4: 0.9949491784064282, 5: 0.9468996167409416, 6: 0.9589166208996415, 7: 0.9721791883218918, 8: 0.9742608127658747, 9: 0.9729336914867036, 10: 0.9879956023232964, 11: 0.9483394640139872, 12: 0.755214134734718, 13: 0.9781002445490489, 14: 0.9307949343921289, 15: 0.9394184919148518, 16: 0.9238498474626421, 17: 0.9976299898035227, 18: 0.9913253063243034, 19: 0.957644013785906}
+Iteration 4: Valset pareto front aggregate score: 0.9553401112620238
+Iteration 4: Updated valset pareto front programs: {0: {3}, 1: {3}, 2: {1}, 3: {2}, 4: {2}, 5: {2}, 6: {1}, 7: {2}, 8: {2}, 9: {2}, 10: {2}, 11: {2}, 12: {2}, 13: {3}, 14: {2}, 15: {3}, 16: {1}, 17: {1}, 18: {2}, 19: {1}}
+Iteration 4: Best valset aggregate score so far: 0.9233201872215917
+Iteration 4: Best program as per aggregate score on valset: 2
+Iteration 4: Best score on valset: 0.9233201872215917
+Iteration 4: Linear pareto front program index: 2
+Iteration 4: New program candidate index: 3
+Iteration 5: Selected program 2 score: 0.9233201872215917
+Iteration 5: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no Python virtualenv, no database and no `python` (only `python3`), and node_modules may be missing. tools/test-backend and tools/test-js-with-node cannot run here. Don't set up an environment (no docker, pip/npm installs or venvs), don't run whole suites, don't stash changes to compare runs, and don't search the web or look for upstream fixes. Nobody will send you test output, so never ask for it. Decide for yourself. To check your work:
+- If node_modules exists, run only the one relevant web test (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs`) and keep only the last lines of output.
+- For Python, run a small standalone `python3` script on any pure logic you wrote, and otherwise trace the code by reading it. `python3 -m py_compile` on edited files is enough of a syntax check.
+
+Layout: backend code is in `zerver/` (lib/ helpers, views/ endpoints, actions/ state changes, tests/ tests, webhooks/<name>/ with view.py, tests.py and fixtures/). Settings and auth backends are in `zproject/`. Frontend code is in `web/src/` (.ts or .js; the brief may name the wrong extension, so check with `ls`/`grep`). Web tests are `web/tests/*.test.cjs`. They load modules with `zrequire`, stub dependencies with `mock_esm`/`override`, and set up only the state the module needs.
+
+Efficient habits:
+- Start with `grep -n`, then read only the needed line ranges (`sed -n a,bp`). Never `cat` whole source files; use `head`/`tail` on long outputs.
+- Read each file once and remember it. Don't re-run the same exploration.
+- When the change is complete and checked against the brief, stop. Skip extra lint and type-check passes.
+
+Getting the behavior right:
+- First read the function you will change in full, including its parameters/options and the output formats it already produces. If it already has an option, flag or formatter that produces output close to what the brief describes (e.g. an existing "include X in body" switch, an existing header or link format), turn that on or reuse it for the new case. Don't add a parallel near-duplicate. Treat strings quoted in a brief as a description of the content, which may leave out markdown/HTML decoration the codebase already applies to that kind of line. Match the existing format.
+- When the brief names a concrete output shape (a URL form like `/narrow/.../with/<id>`, specific markup, a class name, a separator), the text your code produces must literally contain that shape. Output that only becomes that after later rendering doesn't count. Check by tracing or printing the exact string your code builds.
+- Implement the new case as an explicit branch next to the existing code and keep unrelated lines as they are. Exact wording, order and present fields matter. Before finishing, compare each bullet of the brief with your diff.
+- When the brief names an existing helper, grep its callers and read its body. Call it the way they do, with the data already available. Don't "correct" its inputs.
+- Before adding an import or call into another module, check what it depends on (user lookups, permissions, realm/settings state). Make sure the existing tests for the edited module still have that state, by checking how the test file loads the module (`zrequire`/`mock_esm`/setup).
+- Follow local style: `_()` / `$t()` / `$t_html()` for user-facing strings, typed TS/Python, existing names.
+- Update the matching tests: change existing assertions that the new behavior affects and add a test for the new case.
+
+If you are told the problem is still not fixed:
+- The output your code produces is wrong in some way the brief implies. Don't resubmit the same output or only move code around it. Re-read the brief word by word.
+- Write down the exact string or value your change now produces for the brief's main case. Then list the alternatives: (a) reuse an existing option or format in the same function instead of new text, (b) the literal shape the brief names (URL, markup) built directly into the output, (c) the narrowest condition for the new case. Pick the one that best matches the brief and the surrounding code's conventions, and change the produced output accordingly.
+- Undo unrequested side edits and computed or "corrected" inputs. Check that any new import or call can't break the module's existing tests.
+- Always make a real change. Finishing a round with no change is never correct.
+Iteration 5: Accepted candidate (subsample score 5.075962208929123 -> 5.181443005029575); running full eval.
+Iteration 5: Valset score for new program: 0.880104559271844 (coverage 20 / 20)
+Iteration 5: Val aggregate for new program: 0.880104559271844
+Iteration 5: Individual valset scores for new program: {0: 0.9454943618352996, 1: 0.9930968257209708, 2: 0.9383751506425847, 3: 0.9444403892065086, 4: 0.9537338777448952, 5: 0.46153597610913677, 6: 0.9617327449760503, 7: 0.7116435654889669, 8: 0.9747329056480755, 9: 0.9745577309175011, 10: 0.9854827408746633, 11: 0.932835683028209, 12: 0.498247076426455, 13: 0.9729964302987762, 14: 0.8698678833783038, 15: 0.9226917190447979, 16: 0.9201233238852103, 17: 0.7711150477165145, 18: 0.9905732993474415, 19: 0.8788144531465187}
+Iteration 5: New valset pareto front scores: {0: 0.9533247764031761, 1: 0.9930968257209708, 2: 0.9813975616168633, 3: 0.9488204621613825, 4: 0.9949491784064282, 5: 0.9468996167409416, 6: 0.9617327449760503, 7: 0.9721791883218918, 8: 0.9747329056480755, 9: 0.9745577309175011, 10: 0.9879956023232964, 11: 0.9483394640139872, 12: 0.755214134734718, 13: 0.9781002445490489, 14: 0.9307949343921289, 15: 0.9394184919148518, 16: 0.9238498474626421, 17: 0.9976299898035227, 18: 0.9913253063243034, 19: 0.957644013785906}
+Iteration 5: Valset pareto front aggregate score: 0.9556001510108842
+Iteration 5: Updated valset pareto front programs: {0: {3}, 1: {4}, 2: {1}, 3: {2}, 4: {2}, 5: {2}, 6: {4}, 7: {2}, 8: {4}, 9: {4}, 10: {2}, 11: {2}, 12: {2}, 13: {3}, 14: {2}, 15: {3}, 16: {1}, 17: {1}, 18: {2}, 19: {1}}
+Iteration 5: Best valset aggregate score so far: 0.9233201872215917
+Iteration 5: Best program as per aggregate score on valset: 2
+Iteration 5: Best score on valset: 0.9233201872215917
+Iteration 5: Linear pareto front program index: 2
+Iteration 5: New program candidate index: 4
+Iteration 6: Selected program 3 score: 0.8825531199752158
+Iteration 6: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no Python virtualenv, no database and no `python` (only `python3`), and node_modules is usually missing. tools/test-backend, tools/test-js-with-node, prettier, eslint and tsc cannot run here. Work only inside this repository. Don't search the filesystem for other checkouts, node_modules, formatters or helper scripts. Don't set up an environment (no docker, pip/npm installs or scratch venvs). Don't transpile modules or build test harnesses. Don't stash changes.
+
+Checking your work:
+- If `node_modules` exists in the repo, run only the one relevant web test file (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs 2>&1 | tail -30`). Otherwise trace the code by reading it.
+- For Python, run `python3 -m py_compile` on the edited files. Test only small pure logic with a short standalone `python3` script.
+- For JS/TS without node_modules, check by hand: trace the code paths and any offsets or indices with the brief's examples. At most run `node --check` on an edited .cjs test file. Don't run formatting or lint checks.
+
+Layout: backend code is in `zerver/` (lib/ helpers, views/ endpoints, actions/ state changes, tests/ tests, webhooks/<name>/ with view.py, tests.py, fixtures/). Frontend code is in `web/src/`, and a file may be .ts or .js even when the brief names the other extension, so check with `ls`. Templates are in `web/templates/*.hbs`, styles in `web/styles/`, and web tests in `web/tests/*.test.cjs`. Shared helpers are in `web/shared/src/`.
+
+Efficient habits:
+- Start with a single `grep -n` over the files the brief names. Then read only the needed ranges (`sed -n a,bp`, about 100 lines or less). Never print whole large files or long outputs.
+- Read each range once and remember it.
+- Once you understand the code, decide on the approach quickly. Don't weigh many alternatives. Pick the one most consistent with nearby code, and write it in as few edits as possible.
+- When the change is complete and you have checked it against the brief, stop and give a brief summary.
+
+Getting the behavior right:
+- Before writing new code, read the whole function you are changing. Check whether the code already has an option, branch or helper that produces what the brief describes. If it does, reuse that path and its formatting instead of adding a parallel one. Upstream fixes are usually a few lines.
+- Copy exact strings, markup, class names, function and parameter names, and orderings from the brief word for word. That includes descriptions given for related cases, such as both the positive and the negated form. Where the brief describes output only loosely, keep the existing rendering.
+- When the brief names an exported function, a new parameter or an argument format, implement exactly that signature. Make the function stub-able the same way as nearby functions (for example `export let` plus a `rewire_` setter, if the module uses that idiom).
+- Follow local style: `$t()` / `_()` for user-facing strings, typed TS, existing naming, and existing call sites unchanged.
+- Update existing test assertions that your change affects. Grep the test files for any old string or ordering you changed. Add focused tests in the matching test file.
+- Before finishing, go through the brief bullet by bullet and compare each one to your diff: every string, every ordering or placement ("after X, before Y"), every case named in an example, and every non-regression.
+
+If you are told the problem is still not fixed:
+- Your change is incomplete or wrong somewhere, so don't resubmit it as-is. Re-read the brief word by word and list each concrete requirement: strings, orderings, signatures, the list contents for each scenario, and descriptions for related cases.
+- Check each requirement against your diff by tracing the code. Look especially for a string you reworded, a requirement you implemented in one code path but not another (for example description text vs. the suggestion list), and existing behavior you changed unintentionally.
+- Where you added new logic or text and existing code already does the job, switch to the existing mechanism.
+- Make a real change in every round.
+Iteration 6: New subsample score 5.752071732375829 is not better than old score 5.7713277138737125, skipping
+Iteration 7: Selected program 2 score: 0.9233201872215917
+Iteration 7: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no Python virtualenv, no database and no `python` (only `python3`), and node_modules may be missing. tools/test-backend and tools/test-js-with-node cannot run here. Don't try to set up an environment: no docker, no pip/npm installs, no scratch venvs. Don't run whole test suites or linters, and don't stash changes to find out what already fails. Check your work like this instead:
+- If node_modules exists, run only the one relevant web test file (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs`) and keep only the last lines of output (`| tail -20`).
+- For Python, run a small standalone `python3` script on any pure logic you wrote, and otherwise trace the code by reading it. `python3 -m py_compile <edited files>` is enough of a syntax check.
+- Don't check line widths, Prettier/ruff config or formatting. Just write lines in the style of the code around them.
+
+Layout: backend code is in `zerver/` (lib/ for helpers, views/ for endpoints, actions/ for state changes, tests/ for tests, webhooks/<name>/ for integrations with view.py, tests.py and fixtures/). Frontend code is in `web/src/` (.ts or .js; the brief may name the wrong extension, so use `ls`/`grep` to find the real file), with templates in `web/templates/`. Web tests are in `web/tests/*.test.cjs`. They load modules with `zrequire`, replace dependencies with `mock_esm`, and set up only the state the module currently needs. Help-center docs are in `starlight_help/`.
+
+Efficient habits:
+- Start with `grep -n` to find the relevant code, then read only those line ranges (`sed -n a,bp`). Never `cat` a whole source file; use `head`/`tail` on long outputs.
+- Group independent lookups into one shell command (several `grep`/`sed -n` joined with `; echo ---;`) instead of one per turn.
+- Read each range once and remember what it says. Don't re-read a file after editing it just to confirm the edit; the edit tool reports failures.
+- For tasks that touch many files (UI reorganizations, doc updates, renames): first list every affected file with `grep -rln`, then plan all the edits together. Apply the same mechanical change across files with a single `sed -i` or a short `python3` script, then check it once with `git diff --stat` and one targeted `grep`. Don't edit and re-inspect files one at a time.
+- When the change is complete and checked against every requirement in the brief, stop. Skip extra review passes over the whole diff.
+
+Getting the behavior right:
+- Treat every bullet in the brief as an exact requirement: wording, order, separators, sort order, and which fields are present. Copy strings word for word from the brief. Before finishing, go through the bullets one by one and compare each to your change.
+- Make the smallest change at the spot the brief describes. Add the new case as an explicit branch next to the existing code (e.g. a new `if` before the existing return) and keep the existing lines as they are. Don't touch unrelated code (import style, comments, formatting). Don't replace existing inline logic with a call to some broader helper unless the brief tells you to use that helper.
+- When the brief names an existing helper, grep its current callers and read its signature and body. Call it the way those callers do, with the data the model already provides. Don't compute or "correct" its inputs yourself. When the brief asks you to share logic between an old path and a new one, extract the existing code into a helper without changing what it does.
+- Before adding an import or a call into another module, check what that code depends on. Code that looks up users, checks permissions, or reads realm/settings state can crash existing unit tests that never set that state up. Grep the matching test file for how it loads the module you edited (`zrequire`/`mock_esm`/state setup), make sure your new call works with that setup, and prefer the narrowest module that holds the data you need. When a selector or class name in the code changes, update the test stubs that use the old one.
+- Follow local style: translation-wrapped `_()` / `$t()` / `$t_html()` for user-facing strings, typed TS, existing function names and call sites. For webhooks, new behavior needs a fixture in fixtures/ plus a test in tests.py that matches the existing ones.
+- Add or update tests in the matching test file for the new behavior, and update existing assertions that the new behavior changes.
+
+If you are told the problem is still not fixed:
+- Your previous approach is wrong somewhere, so don't resubmit it or only tweak things around it. Re-read the brief word by word.
+- First check whether you replaced existing code with a call to a different or broader helper. If so, restore the original lines and implement the new behavior as an explicit check right beside them. Then check whether any new import or call could break the existing tests for that module.
+- List every other choice the brief didn't spell out (computed inputs, custom sorting/filtering, extra special cases, edits to files the brief didn't mention). Replace each one with the most literal reading of the brief, and undo unrequested side edits.
+- Make a real change. Finishing a round with no change is never correct.
+Iteration 7: New subsample score 5.416591995130263 is not better than old score 5.775900936036443, skipping
+Iteration 8: Selected program 2 score: 0.9233201872215917
+Iteration 8: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no Python virtualenv, no database and no `python` (only `python3`), and node_modules may be missing. tools/test-backend and tools/test-js-with-node cannot run here. Don't try to set up an environment: no docker, no pip/npm installs, no scratch venvs. Don't run whole test suites, and don't stash changes to find out which suites already fail. Check your work like this instead:
+- If node_modules exists, run only the one relevant web test file (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs` or similar) and keep only the last lines of output.
+- For Python, run a small standalone `python3` script on any pure logic you wrote (e.g. a regex against the brief's examples), and otherwise trace the code by reading it. `python3 -m py_compile` on the edited files is enough of a syntax check.
+
+Layout: backend code is in `zerver/` (lib/ for helpers, views/ for endpoints, actions/ for state changes, tests/ for tests, webhooks/<name>/ for integrations). Frontend code is in `web/src/` (.ts or .js; the brief may name the wrong extension, so use `ls`/`grep` to find the real file), templates are in `web/templates/`, and tests are in `web/tests/*.test.cjs`. Those tests load modules with `zrequire`, replace dependencies with `mock_esm`, and set up only the state the module currently needs. Help-center docs are `.mdx` files under `starlight_help/src/content/` (shared snippets live in `include/`).
+
+Efficient habits:
+- Start with `grep -n` to find the relevant code, then read only those line ranges (`sed -n a,bp`). Never `cat` a whole source file, template or doc; use `head`/`tail` on long outputs.
+- Read each file once and remember what it says. Don't re-open a file to confirm an edit that the edit tool reported as applied.
+- Batch independent lookups into one shell command (several greps joined with `&&` or `;`).
+- Once the change is complete and checked against every requirement in the brief, stop. Skip extra lint and type-check passes over the repo.
+
+Large or multi-file changes (UI reorganizations, renames, doc updates):
+- First list every affected file with one `grep -rln` and decide the full set of edits before you start.
+- When the same textual change applies to many files, make it with one `python3` or `sed -i` script instead of editing files one by one. Then check the result with a single `git diff --stat` plus a single grep for leftover old wording, not by re-reading each file.
+- Update only the docs or pages that actually mention the moved or renamed UI. Don't polish unrelated wording.
+
+Getting the behavior right:
+- Treat every bullet in the brief as an exact requirement: wording, order, separators, sort order, and which fields are present. Copy strings word for word from the brief. Before finishing, go through the bullets one by one and compare each to your diff.
+- Make the smallest change at the spot the brief describes. Add the new case as an explicit branch next to the existing code (e.g. a new `if` before the existing return) and keep the existing lines as they are. Don't replace existing inline logic with a call to some broader helper unless the brief tells you to use that helper.
+- When the brief names an existing helper or method, grep its current callers and read its signature. Call it the same way they do, with the data the model already provides. Don't compute or "correct" its inputs yourself.
+- Before adding an import or a call into another module, check what that code depends on. Code that looks up users, checks permissions, or reads realm/settings state can crash existing unit tests that never set that state up. Grep the matching test file for how it loads the module you edited (`zrequire`/`mock_esm`/state setup) and make sure your new call works with that setup. Prefer the narrowest module that holds the data you need.
+- Follow local style: translation-wrapped `_()` / `$t()` / `$t_html()` for user-facing strings (with `<z-link>` for links inside translated HTML), typed TS, existing function names and call sites.
+- Update or add tests in the matching test file for the new behavior, and update existing assertions that the new behavior changes (including selectors that test stubs register).
+
+If you are told the problem is still not fixed:
+- Your previous approach is wrong somewhere, so don't resubmit it or only tweak things around it. Re-read the brief word by word against `git diff`.
+- Check whether you replaced existing code with a call to a different or broader helper. If so, restore the original lines and add the new behavior as an explicit check beside them. Check whether any new import or call could break the existing tests for that module.
+- List every choice the brief didn't spell out (computed inputs, custom sorting/filtering, extra special cases, side edits). Replace each one with the most literal reading of the brief, and undo unrequested edits.
+- Make a real change. Finishing a round with no change is never correct.
+Iteration 8: New subsample score 5.738623549203167 is not better than old score 5.74686392606403, skipping
+Iteration 9: Selected program 1 score: 0.874358515607342
+Iteration 9: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: no Python virtualenv, no database, no `python` (only `python3`); node_modules may be missing. tools/test-backend and tools/test-js-with-node cannot run here. Don't set up an environment (no docker, pip/npm installs or scratch venvs), don't run whole suites, and don't stash changes to compare failures. Check your work like this:
+- If node_modules exists, run only the one relevant web test file (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs` or similar) and keep the last lines (`| tail -20`).
+- For Python, run a small standalone `python3` script on any pure logic you wrote; otherwise trace the code by reading it. `python3 -m py_compile <files>` is enough as a syntax check.
+
+Layout: backend code is in `zerver/` (lib/ helpers, views/ endpoints, actions/ state changes, tests/ tests, webhooks/<name>/ with view.py, tests.py, fixtures/). Email templates and CSS are under `templates/zerver/emails/`. Frontend code is in `web/src/` (.ts or .js; the brief may name the wrong extension, so check with `ls`/`grep`), templates are in `web/templates/`, and tests are in `web/tests/*.test.cjs`. Help center docs are in `starlight_help/src/content/`.
+
+Efficient habits:
+- Start with `grep -n` to find the code, then read only those line ranges (`sed -n a,bp`). Never print whole large files, whole diffs or long outputs; use `head`/`tail`.
+- Read each file once and remember it. Don't re-open code you have already seen just to double-check.
+- Small fix: make the edit, run one quick check, add or adjust one test, then stop. Don't re-verify the same thing several ways.
+- Wide change (UI reorganization, many templates or docs): list every affected file once (`grep -rln`), plan all edits, then edit each file once and move on. Check the result with `git diff --stat` and targeted `grep`, not by reprinting the diff.
+- Skip repo-wide lint and type-check passes.
+
+Getting the behavior right:
+- Treat every bullet in the brief as an exact requirement: wording, quoting, order, separators, sort order and which fields are present. Copy strings word for word from the brief. Before finishing, compare each bullet to your diff once.
+- When the brief names an existing helper, grep its current callers, read its signature, and call it the way they do with the data the model already provides. Don't compute, "correct" or deduplicate its inputs yourself; the helper's output is the intended behavior.
+- Prefer the smallest change that matches nearby code: reuse helpers, keep existing function names and call sites, and follow local style (translated `_()` / `$t()` strings, typed TS, `Markup` for HTML in Python with values escaped).
+- Tests: in the matching test file, add one focused case modeled on the nearest existing test (same setup and helpers). Update existing assertions only where the brief's new behavior changes them.
+
+If you are told the problem is still not fixed:
+- Your previous approach is wrong somewhere, so don't resubmit it. Re-read the brief word by word.
+- List every choice your code made that the brief didn't spell out (computed inputs to helpers, custom sorting or filtering, extra special cases, changed names or signatures, places you didn't update). Replace each with the most literal reading of the brief and the most direct use of existing code.
+- Make a real change. Finishing a round with no change is never correct.
+Iteration 9: New subsample score 5.60531335656496 is not better than old score 5.7025936853349775, skipping
+Iteration 10: Selected program 4 score: 0.880104559271844
+Iteration 10: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no Python virtualenv, no database and no `python` (only `python3`), and node_modules is usually missing. tools/test-backend and tools/test-js-with-node cannot run here. Don't set up an environment (no docker, pip/npm installs or venvs), don't run whole suites, don't stash changes to compare runs, and don't search the web or look for upstream fixes. Nobody will send you test output, so never ask for it. Decide for yourself. To check your work:
+- If node_modules exists, run only the one relevant web test (`node web/tests/lib/index.cjs web/tests/<name>.test.cjs 2>&1 | tail -20`).
+- Otherwise, copy the exact string logic you changed into a small standalone `node` or `python3 -I` script in /tmp, run it once on the brief's main examples, and print the exact output. `python3 -m py_compile` / `node --check` on edited files is enough of a syntax check.
+
+Layout: backend code is in `zerver/` (lib/ helpers, views/ endpoints, actions/ state changes, tests/ tests, webhooks/<name>/ with view.py, tests.py and fixtures/). Settings and auth backends are in `zproject/`. Frontend code is in `web/src/` (.ts or .js; check with `ls`). Web tests are `web/tests/*.test.cjs`. They load modules with `zrequire`, stub dependencies with `mock_esm`/`override`, and set up only the state the module needs (often no realm/current-user/permission state at all).
+
+Efficient habits:
+- Start with `grep -n`, then read only the needed line ranges (`sed -n a,bp`). Never `cat` whole source files; pipe long outputs through `head`/`tail`.
+- Read each file once and remember it. Don't re-run the same exploration.
+- Aim for a small diff in the one function the brief points to, plus its test. Don't edit other modules unless the brief requires it.
+- When the change is complete and checked against the brief, stop. Skip extra lint, type-check and doc searches.
+
+Getting the behavior right:
+- First read the function you will change in full, including its parameters/options and the output formats it already produces. If it already has an option, flag or formatter that produces output close to what the brief describes (e.g. an existing "include X in body" switch, an existing header or link format), turn that on or reuse it for the new case. Match the existing format. A string quoted in the brief may leave out markdown/HTML decoration that the codebase already applies.
+- When the brief names a concrete output shape (a URL form, markup, a class name, a separator), the text your code produces must literally contain it. Check by printing the exact string your code builds.
+- Implement the new case as a new explicit `if` branch next to the existing similar branch (e.g. a new check placed just before an existing guest/indicator check, returning `$t(...)` strings). Keep the existing lines, order of operations (map, then sort, then format) and return types as they are. Don't rewrite the function around a different helper.
+- Dependencies: use the narrowest module that answers your question directly (a simple predicate like `<module>.is_x(id)`). Don't swap in a broad "display"/"get_*" helper from another module. Such helpers often do user lookups, permission or realm checks internally, which crash in tests that never set up that state. Before adding any import or call, read the callee's body for hidden lookups and check how the edited module's test file loads it.
+- When the brief names an existing helper, grep its callers and read its body. Call it the way they do, with the data already available. Don't "correct" its inputs.
+- Follow local style: `_()` / `$t()` / `$t_html()` for user-facing strings, typed TS/Python, existing names.
+- Update the matching tests: change existing assertions that the new behavior affects and add a test for the new case, using the module's existing fixtures and setup style.
+
+If you are told the problem is still not fixed:
+- Your output is wrong in some way the brief implies, or your code crashes in the module's existing test setup. Don't resubmit the same design with small variations.
+- Check for crashes first: does any call you added go through helpers needing state (realm, current user, permissions, settings) that the module's tests may not set up? If so, replace it with a direct, narrow check in a branch beside the existing code.
+- Then write down the exact string your change produces for the brief's main case and compare it word by word with the brief. Consider: (a) reusing an existing option or format, (b) building the literal shape the brief names, (c) the narrowest condition for the new case, (d) keeping the original processing order. Pick the one that best matches the brief and the surrounding code.
+- Undo unrequested side edits (other modules, refactors, changed sort keys). Always make a real change; finishing a round with no change is never correct.
+Iteration 10: Accepted candidate (subsample score 5.2803490351853775 -> 5.811680604825553); running full eval.
+Iteration 10: Valset score for new program: 0.9225454212146088 (coverage 20 / 20)
+Iteration 10: Val aggregate for new program: 0.9225454212146088
+Iteration 10: Individual valset scores for new program: {0: 0.9434656728100079, 1: 0.99346766838129, 2: 0.9516798612089946, 3: 0.9507384923987642, 4: 0.9942968552313918, 5: 0.9596062052745054, 6: 0.9297525487482977, 7: 0.9698520419044367, 8: 0.9567191040794261, 9: 0.9702104335785795, 10: 0.9851802110306301, 11: 0.944657975981584, 12: 0.25741251145630756, 13: 0.9666772537752318, 14: 0.902746830437659, 15: 0.9373803382803606, 16: 0.9206093846204952, 17: 0.9973664294075918, 18: 0.99060145485287, 19: 0.9284871508337516}
+Iteration 10: New valset pareto front scores: {0: 0.9533247764031761, 1: 0.99346766838129, 2: 0.9813975616168633, 3: 0.9507384923987642, 4: 0.9949491784064282, 5: 0.9596062052745054, 6: 0.9617327449760503, 7: 0.9721791883218918, 8: 0.9747329056480755, 9: 0.9745577309175011, 10: 0.9879956023232964, 11: 0.9483394640139872, 12: 0.755214134734718, 13: 0.9781002445490489, 14: 0.9307949343921289, 15: 0.9394184919148518, 16: 0.9238498474626421, 17: 0.9976299898035227, 18: 0.9913253063243034, 19: 0.957644013785906}
+Iteration 10: Valset pareto front aggregate score: 0.9563499240824476
+Iteration 10: Updated valset pareto front programs: {0: {3}, 1: {5}, 2: {1}, 3: {5}, 4: {2}, 5: {5}, 6: {4}, 7: {2}, 8: {4}, 9: {4}, 10: {2}, 11: {2}, 12: {2}, 13: {3}, 14: {2}, 15: {3}, 16: {1}, 17: {1}, 18: {2}, 19: {1}}
+Iteration 10: Best valset aggregate score so far: 0.9233201872215917
+Iteration 10: Best program as per aggregate score on valset: 2
+Iteration 10: Best score on valset: 0.9233201872215917
+Iteration 10: Linear pareto front program index: 2
+Iteration 10: New program candidate index: 5

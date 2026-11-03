@@ -180,6 +180,16 @@
         "cache_write": 0.125
       },
       "note": "added 2026-10-26 (GEPA) from platform.claude.com/docs/en/about-claude/pricing; prompts <=100K tokens tier. Prompts >100K: 0.50/2.50, cache read 0.05, 5m write 0.625 (not modelled here)."
+    },
+    "claude-sonnet-5-5": {
+      "home": "anthropic/claude-sonnet-5-5",
+      "cost": {
+        "input": 2.0,
+        "output": 10.0,
+        "cache_read": 0.2,
+        "cache_write": 2.5
+      },
+      "note": "added 2026-10-29 (GEPA retry) from the Anthropic model docs: $2/$10 per MTok, cache read $0.20; 5m cache write = 1.25x input. No long-context tier."
     }
   }
 }

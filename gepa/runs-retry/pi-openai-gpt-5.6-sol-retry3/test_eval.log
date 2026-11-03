@@ -1,0 +1,50 @@
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] 0/30 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] launching 19 cell(s) fanout=6 (busy elsewhere: 11)
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] launching 19 cell(s) fanout=6 (busy elsewhere: 11)
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] driver gepa-gepa-retry-test-pi-openai-gpt-5.6-sol-re-a25a28 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] done in 20.8 min: resolved 27/30
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] driver gepa-gepa-retry-test-pi-openai-gpt-5.6-sol-re-4e55b1 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] done in 21.4 min: resolved 26/30
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] driver gepa-gepa-retry-test-pi-openai-gpt-5.6-sol-re-fcffdc rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] done in 25.1 min: resolved 24/30
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] driver gepa-gepa-retry-test-pi-openai-gpt-5.6-sol-re-b2ac9d rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] driver gepa-gepa-retry-test-pi-openai-gpt-5.6-sol-re-250019 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] done in 36.2 min: resolved 30/30
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] driver gepa-gepa-retry-test-pi-openai-gpt-5.6-sol-re-a29e40 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] done in 38.2 min: resolved 29/30
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] driver gepa-gepa-retry-test-pi-openai-gpt-5.6-sol-re-002bbf rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] done in 38.8 min: resolved 29/30
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] done in 38.8 min: resolved 29/30
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/eval_test_retry.py", line 130, in <module>
+    main()
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/eval_test_retry.py", line 71, in main
+    res = {j: f.result() for j, f in futs.items()}
+              ^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/rollout_runner.py", line 601, in run_rollouts
+    agent_id, agents_file, row = ensure_candidate_agent(base_agent_id, append_prompt, sample)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/rollout_runner.py", line 136, in ensure_candidate_agent
+    tmp.replace(path)
+  File "/usr/lib/python3.12/pathlib.py", line 1378, in replace
+    os.replace(self, target)
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/data/robert-scripts/pure-swebench/gepa/store/agents/pi-openai-gpt-5.6-sol-retry3--seed-s2.tmp3874259' -> '/mnt/data/robert-scripts/pure-swebench/gepa/store/agents/pi-openai-gpt-5.6-sol-retry3--seed-s2.jsonl'

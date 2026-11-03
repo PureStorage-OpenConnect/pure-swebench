@@ -1,0 +1,270 @@
+[rollout pi-vllm-gpt-oss-120b--seed-s2] 20/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed-s3] 20/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed-s2] done in 0.1 min: resolved 11/20
+[rollout pi-vllm-gpt-oss-120b--seed] done in 0.1 min: resolved 9/20
+[rollout pi-vllm-gpt-oss-120b--seed-s3] done in 0.1 min: resolved 10/20
+[rollout pi-vllm-gpt-oss-120b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--seed-s2] done in 0.1 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--seed-s3] done in 0.1 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-a3600d rc=0
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] done in 30.4 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-6b3fb9 rc=0
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] done in 36.4 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-0453cd rc=0
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] done in 39.2 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] 6/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] 6/20 cell(s) cached[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] 6/20 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-09d48a rc=0
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] done in 90.1 min: resolved 12/20
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-9b4b8c rc=0
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] done in 119.1 min: resolved 10/20
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-bb857e rc=0
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] done in 134.3 min: resolved 10/20
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] done in 0.3 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] done in 0.4 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] done in 0.4 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] 0/6 cell(s) cached[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] 0/6 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--g412d191e] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g412d191e] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-6b50e7 rc=0
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] done in 42.1 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g412d191e] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-b684e3 rc=0
+[rollout pi-vllm-gpt-oss-120b--g412d191e] done in 63.2 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-6226d4 rc=0
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] done in 124.1 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] 6/20 cell(s) cached[rollout pi-vllm-gpt-oss-120b--g412d191e] 6/20 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] 6/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g412d191e] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g412d191e] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-e57ae4 rc=0
+[rollout pi-vllm-gpt-oss-120b--g412d191e] done in 73.0 min: resolved 10/20
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-87a29b rc=0
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] done in 74.6 min: resolved 10/20
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-56c476 rc=0
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] done in 79.6 min: resolved 10/20
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] 6/6 cell(s) cached[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] 6/6 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] done in 0.1 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] done in 0.1 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] done in 0.1 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22-s3] 0/6 cell(s) cached[rollout pi-vllm-gpt-oss-120b--gfe04ad22-s2] 0/6 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-cfdab6 rc=0
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22-s3] done in 32.3 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-6e929e rc=0
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22-s2] done in 34.8 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-548850 rc=0
+[rollout pi-vllm-gpt-oss-120b--gfe04ad22] done in 36.0 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] 4/4 cell(s) cached[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] 4/4 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] 4/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] done in 0.2 min: resolved 3/4
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] done in 0.2 min: resolved 3/4
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] done in 0.2 min: resolved 3/4
+[rollout pi-vllm-gpt-oss-120b--ga9869999] 0/4 cell(s) cached[rollout pi-vllm-gpt-oss-120b--ga9869999-s3] 0/4 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--ga9869999-s2] 0/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--ga9869999-s3] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--ga9869999-s2] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--ga9869999] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--ga9869999-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-40ad15 rc=0
+[rollout pi-vllm-gpt-oss-120b--ga9869999-s3] done in 17.6 min: resolved 1/4
+[rollout pi-vllm-gpt-oss-120b--ga9869999-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-01f79f rc=0
+[rollout pi-vllm-gpt-oss-120b--ga9869999-s2] done in 18.1 min: resolved 3/4
+[rollout pi-vllm-gpt-oss-120b--ga9869999] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-a8f5a6 rc=0
+[rollout pi-vllm-gpt-oss-120b--ga9869999] done in 22.3 min: resolved 2/4
+[rollout pi-vllm-gpt-oss-120b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--seed-s2] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--seed-s3] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032] 0/6 cell(s) cached[rollout pi-vllm-gpt-oss-120b--gf5e3a032-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032-s3] 0/6 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-64fc71 rc=0
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032-s3] done in 44.9 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-1f0e28 rc=0
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032-s2] done in 48.8 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-6c2d0f rc=0
+[rollout pi-vllm-gpt-oss-120b--gf5e3a032] done in 84.4 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] 6/6 cell(s) cached[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] 6/6 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] done in 0.5 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] done in 0.5 min: resolved 5/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] done in 0.5 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-91fa9b rc=0
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2] done in 37.4 min: resolved 5/6
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-addf18 rc=0
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2-s3] done in 39.2 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-f05716 rc=0
+[rollout pi-vllm-gpt-oss-120b--g64a1bea2-s2] done in 41.7 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g412d191e] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] done in 0.0 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--g412d191e] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] done in 0.1 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] 0/6 cell(s) cached[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] 0/6 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-8d6620 rc=0
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] done in 28.5 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-1f177e rc=0
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] done in 33.6 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-be94af rc=0
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] done in 35.8 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] 6/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] 6/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] 6/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-19ddd8 rc=0
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] done in 79.0 min: resolved 10/20
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-bbcc1f rc=0
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] done in 81.8 min: resolved 12/20
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-f75e01 rc=0
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] done in 90.7 min: resolved 7/20
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] 4/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] 4/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g412d191e] 4/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s2] done in 0.0 min: resolved 1/4
+[rollout pi-vllm-gpt-oss-120b--g412d191e] done in 0.0 min: resolved 2/4
+[rollout pi-vllm-gpt-oss-120b--g412d191e-s3] done in 0.1 min: resolved 2/4
+[rollout pi-vllm-gpt-oss-120b--gb1730a23-s2] 0/4 cell(s) cached[rollout pi-vllm-gpt-oss-120b--gb1730a23] 0/4 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--gb1730a23-s3] 0/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--gb1730a23-s2] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gb1730a23-s3] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gb1730a23] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gb1730a23-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-e3e12d rc=0
+[rollout pi-vllm-gpt-oss-120b--gb1730a23-s2] done in 22.4 min: resolved 1/4
+[rollout pi-vllm-gpt-oss-120b--gb1730a23] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-d05139 rc=0
+[rollout pi-vllm-gpt-oss-120b--gb1730a23] done in 26.2 min: resolved 1/4
+[rollout pi-vllm-gpt-oss-120b--gb1730a23-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-3d438e rc=0
+[rollout pi-vllm-gpt-oss-120b--gb1730a23-s3] done in 44.2 min: resolved 3/4
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] done in 0.0 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] done in 0.0 min: resolved 1/6
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] done in 0.0 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--gd5c43346-s2] 0/6 cell(s) cached[rollout pi-vllm-gpt-oss-120b--gd5c43346] 0/6 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--gd5c43346-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--gd5c43346] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gd5c43346-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gd5c43346-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gd5c43346-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-b6989c rc=0
+[rollout pi-vllm-gpt-oss-120b--gd5c43346-s3] done in 38.0 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--gd5c43346] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-58fbb0 rc=0
+[rollout pi-vllm-gpt-oss-120b--gd5c43346] done in 45.1 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--gd5c43346-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-890175 rc=0
+[rollout pi-vllm-gpt-oss-120b--gd5c43346-s2] done in 48.9 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a] done in 0.2 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s2] done in 0.3 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g19a2ea7a-s3] done in 0.3 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g4527e751] 0/6 cell(s) cached[rollout pi-vllm-gpt-oss-120b--g4527e751-s3] 0/6 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g4527e751] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-dcd846 rc=0
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s3] done in 31.2 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-f0d3a1 rc=0
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s2] done in 33.0 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--g4527e751] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-ec81bc rc=0
+[rollout pi-vllm-gpt-oss-120b--g4527e751] done in 41.2 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s3] 6/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s2] 6/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g4527e751] 6/20 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s2] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g4527e751] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s3] launching 14 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-d25d6a rc=0
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s2] done in 87.4 min: resolved 8/20
+[rollout pi-vllm-gpt-oss-120b--g4527e751] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-0af2c8 rc=0
+[rollout pi-vllm-gpt-oss-120b--g4527e751] done in 94.2 min: resolved 10/20
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-9f451a rc=0
+[rollout pi-vllm-gpt-oss-120b--g4527e751-s3] done in 106.2 min: resolved 12/20
+[rollout pi-vllm-gpt-oss-120b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--seed-s3] done in 0.1 min: resolved 3/6
+[rollout pi-vllm-gpt-oss-120b--seed] done in 0.1 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--seed-s2] done in 0.1 min: resolved 4/6
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8-s3] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8-s2] 0/6 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8-s3] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8-s2] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8] launching 6 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-8a086b rc=0
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8-s3] done in 58.4 min: resolved 1/6
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-77ba08 rc=0
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8] done in 65.6 min: resolved 1/6
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-326791 rc=0
+[rollout pi-vllm-gpt-oss-120b--g3201d8b8-s2] done in 74.3 min: resolved 2/6
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] 4/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] 4/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] 4/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s2] done in 0.1 min: resolved 2/4
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2-s3] done in 0.1 min: resolved 3/4
+[rollout pi-vllm-gpt-oss-120b--g2dfd97d2] done in 0.1 min: resolved 3/4
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa-s3] 0/4 cell(s) cached[rollout pi-vllm-gpt-oss-120b--gc567a6aa-s2] 0/4 cell(s) cached
+
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa] 0/4 cell(s) cached
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa-s3] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa-s2] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa] launching 4 cell(s) fanout=1 (busy elsewhere: 0)
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-4ca741 rc=0
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa] done in 19.7 min: resolved 3/4
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa-s3] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-ba1233 rc=0
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa-s3] done in 20.8 min: resolved 3/4
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa-s2] driver gepa-gepa-cost-pi-vllm-gpt-oss-120b-108acf rc=0
+[rollout pi-vllm-gpt-oss-120b--gc567a6aa-s2] done in 23.3 min: resolved 2/4

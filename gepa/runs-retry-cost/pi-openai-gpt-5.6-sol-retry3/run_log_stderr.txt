@@ -1,0 +1,252 @@
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] 20/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] 20/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] 20/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] done in 0.1 min: resolved 19/20
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] done in 0.1 min: resolved 20/20
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] done in 0.1 min: resolved 20/20
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] done in 0.0 min: resolved 6/6[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] done in 0.0 min: resolved 6/6
+
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf-s2] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-fcc1fe rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf-s3] done in 7.6 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-093c05 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf] done in 10.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-10d6af rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g85ef55bf-s2] done in 10.5 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] done in 0.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] done in 0.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] done in 0.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-45f8a9 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] done in 7.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-3d18c4 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] done in 7.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-364606 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] done in 7.2 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] 6/20 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] 6/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-0185b7 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] done in 13.8 min: resolved 20/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-90b16b rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] done in 14.2 min: resolved 19/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-3fa1d4 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] done in 18.3 min: resolved 18/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] done in 0.0 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s3] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-4cbca9 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s2] done in 5.2 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-529bf4 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8] done in 5.3 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-8ca1ed rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s3] done in 5.9 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s2] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-1e9834 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8] done in 14.6 min: resolved 18/20
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-cffd8c rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s2] done in 15.4 min: resolved 19/20
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-ad56e4 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--gb272b4c8-s3] done in 15.6 min: resolved 18/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s3] done in 0.0 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05] done in 0.0 min: resolved 4/4[rollout pi-openai-gpt-5.6-sol-retry3--g4b0cbd05-s2] done in 0.0 min: resolved 4/4
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] 0/4 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] 0/4 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] 0/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-f3f170 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] done in 3.8 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-ab9cc8 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] done in 4.2 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-7a74c8 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] done in 5.2 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] 4/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] 4/20 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] 4/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-4d36da rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] done in 14.3 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-3a4899 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] done in 14.8 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-194ec0 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] done in 15.3 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] 6/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] 6/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] done in 0.0 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd-s3] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-965ce0 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd] done in 6.9 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-671d37 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd-s3] done in 7.5 min: resolved 4/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-a9c9f7 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g71bd49dd-s2] done in 8.8 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9] done in 0.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s3] done in 0.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g7b7d56c9-s2] done in 0.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-c49433 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] done in 4.8 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-91f84a rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] done in 6.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-223624 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] done in 6.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-bbe181 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] done in 11.7 min: resolved 18/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-3350b8 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] done in 11.8 min: resolved 18/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-3d0ab7 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] done in 13.4 min: resolved 18/20
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] 6/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] 6/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--seed] done in 0.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s3] done in 0.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--seed-s2] done in 0.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s3] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s2] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-81d428 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed] done in 5.7 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-b8863d rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s2] done in 5.8 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-6662dc rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s3] done in 7.1 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed] 6/20 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s2] 6/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s3] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-411379 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s3] done in 13.6 min: resolved 19/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-300226 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed-s2] done in 14.4 min: resolved 18/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-13b6c1 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--g48b43bed] done in 15.3 min: resolved 18/20
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] 4/4 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] 4/4 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] 4/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s3] done in 0.1 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459-s2] done in 0.1 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-sol-retry3--g2bb0a459] done in 0.1 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] 0/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] 0/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] 0/4 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-09b32f rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] done in 4.1 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-3cf7dd rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] done in 4.7 min: resolved 4/4
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-864b0d rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] done in 6.4 min: resolved 3/4
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] 4/20 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] 4/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] 4/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-a12425 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] done in 11.2 min: resolved 19/20
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-856026 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] done in 11.5 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-f198cb rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] done in 12.3 min: resolved 19/20
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] 6/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] 6/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] 6/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s3] done in 0.2 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7] done in 0.2 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--ge6c009d7-s2] done in 0.2 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033] 0/6 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s2] 0/6 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s3] 0/6 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-4535ed rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s3] done in 5.0 min: resolved 6/6
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-f024a7 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-7b94dd rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s2] done in 7.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033] done in 7.1 min: resolved 5/6
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s3] 6/20 cell(s) cached[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s2] 6/20 cell(s) cached
+
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033] 6/20 cell(s) cached
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-d30257 rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033] done in 11.2 min: resolved 17/20
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s2] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-eda44b rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s2] done in 12.1 min: resolved 18/20
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s3] driver gepa-gepa-retry-pi-openai-gpt-5.6-sol-retry3-de6ffb rc=0
+[rollout pi-openai-gpt-5.6-sol-retry3--ga0aee033-s3] done in 13.2 min: resolved 18/20

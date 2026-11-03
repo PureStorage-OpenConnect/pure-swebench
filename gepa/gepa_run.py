@@ -71,6 +71,10 @@ Rules:
 Provide the new instructions within ``` blocks."""
 
 
+class ReflectorAuthError(BaseException):
+    """The reflector's claude login is dead; not catchable as Exception."""
+
+
 def claude_reflection_lm(prompt) -> str:
     """Reflection LM: Claude Opus 5.5 via the headless claude CLI, no tools."""
     if not isinstance(prompt, str):
@@ -90,7 +94,13 @@ def claude_reflection_lm(prompt) -> str:
                     logging.info("reflection ok: cost=$%.3f", out.get("total_cost_usd") or 0)
                     return out["result"]
             except json.JSONDecodeError:
-                pass
+                out = {}
+            if "Failed to authenticate" in str(out.get("result")) + p.stderr:
+                # Dead login: every later reflection fails too and GEPA would spend the rest of
+                # the budget on iterations that propose nothing. Stop the run (BaseException
+                # passes GEPA's except Exception); re-login and restart.
+                logging.critical("reflection LM: claude login expired; stopping the run")
+                raise ReflectorAuthError(out.get("result"))
             logging.warning("reflection attempt %d failed: rc=%s %s", attempt, p.returncode,
                             (p.stderr or p.stdout)[-500:])
     raise RuntimeError("reflection LM failed 3 times")

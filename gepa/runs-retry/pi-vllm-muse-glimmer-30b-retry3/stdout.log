@@ -1,0 +1,94 @@
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] 0/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] 0/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] 0/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] launching 20 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] launching 20 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] launching 20 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-ddfcca rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-c2331e rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] done in 135.5 min: resolved 16/20
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] done in 163.7 min: resolved 17/20
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-1c211b rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] done in 194.3 min: resolved 13/20
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] done in 0.1 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] done in 0.1 min: resolved 6/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] done in 0.1 min: resolved 6/6
+2026-11-01 01:36:03,044 INFO reflection ok: cost=$0.514
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-529f53 rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] done in 41.4 min: resolved 6/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-1e85eb rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] done in 47.4 min: resolved 6/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-c2aa59 rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] done in 49.2 min: resolved 6/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-cd585e rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] done in 129.3 min: resolved 16/20
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-e43072 rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] done in 155.3 min: resolved 17/20
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-806323 rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] done in 197.5 min: resolved 15/20
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s3] done in 0.0 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f-s2] done in 0.0 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--g7c28332f] done in 0.0 min: resolved 4/6
+2026-11-01 04:43:31,416 INFO reflection ok: cost=$0.554
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf-s3] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-d365f9 rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf-s3] done in 99.5 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf-s2] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-c3342f rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf-s2] done in 153.2 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-018540 rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g8a787adf] done in 170.3 min: resolved 3/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] done in 0.6 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] done in 0.6 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] done in 0.6 min: resolved 3/6
+2026-11-01 07:35:12,668 INFO reflection ok: cost=$0.522
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9-s3] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-45628a rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9-s3] done in 70.6 min: resolved 3/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9-s2] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-387a9f rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9-s2] done in 74.2 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9] driver gepa-gepa-retry-pi-vllm-muse-glimmer-30b-retr-e487fd rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--g14a8e7f9] done in 85.6 min: resolved 3/6
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] done in 0.1 min: resolved 2/4
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed] done in 0.1 min: resolved 3/4
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] done in 0.1 min: resolved 2/4
+2026-11-01 09:01:28,646 INFO reflection ok: cost=$0.517
+[rollout pi-vllm-muse-glimmer-30b-retry3--ga5434fff-s3] 0/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--ga5434fff] 0/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--ga5434fff-s2] 0/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b-retry3--ga5434fff-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--ga5434fff] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b-retry3--ga5434fff-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)

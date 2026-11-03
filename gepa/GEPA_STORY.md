@@ -1,12 +1,12 @@
 # We Asked an AI to Rewrite Its Own Instructions. It Mostly Learned to Be Cheaper.
 
-*Draft, 2026-10-29. All runs are complete.*
+*Draft, 2026-10-30.*
 
-Every coding agent ships with a system prompt, and almost nobody tunes it for their own codebase. The model vendors tune the model. The harness authors tune the generic prompt. The part that knows about *your* repository (which test runner works, where the logic lives, what a good fix looks like here) is usually empty.
+Every coding agent ships with a system prompt, and almost nobody tunes it for their own codebase. The model vendors tune the model. The authors of the harness (the program that wraps the model, gives it a shell and file tools, and runs the loop) tune the generic prompt. The part that knows about *your* repository (which test runner works, where the logic lives, what a good fix looks like here) is usually empty.
 
-GEPA is a method for filling in that empty part automatically. We ran it on eight models against our Zulip coding benchmark to answer one question: does an automatically written, repository-specific prompt make a coding agent better? The short answer is that it did not make any model solve significantly more tasks, but it made several models much cheaper. When we told GEPA to care about cost, GPT-5.6 Luna got 42% cheaper per task with no loss in accuracy we could detect. GPT-5.6 Sol also got 42% cheaper and Haiku 5.5 got 70% cheaper, both with a small accuracy loss we could not rule out.
+GEPA is a method that fills in that empty part automatically. A stronger model reads the agent's work logs, rewrites the prompt to address the mistakes it sees, and keeps only the rewrites that score better on a set of practice tasks. We ran it on eight models against our Zulip coding benchmark to answer one question, whether an automatically written, repository-specific prompt makes a coding agent better. The short answer is that it did not make any model solve significantly more tasks, but it made several models much cheaper. When we told GEPA to care about cost, GPT-5.6 Luna got 42% cheaper per task with no loss in accuracy we could detect. GPT-5.6 Sol also got 42% cheaper and Haiku 5.5 got 70% cheaper, both with a small accuracy loss we could not rule out.
 
-The rest of this post explains what GEPA does, shows the actual prompts it wrote, and walks through why the cheaper prompts are cheaper.
+We then changed one thing about the benchmark. Instead of grading a single attempt, which is how SWE-bench-style benchmarks work, we let an agent whose fix failed try again, up to three times, after a one-line message saying the problem is not fixed yet. That message did more for accuracy than any prompt GEPA wrote. It raised the share of runs that solved their task by 9 to 12 points for Haiku 5.5 and Sonnet 5.5, at a price of about 1.4 rounds per solved task. GEPA, re-run in this setting, still did not raise accuracy significantly. It did keep Haiku's saving, at about a third of the baseline cost, and this time the cheaper prompt showed no accuracy loss. Running the same Haiku model on a different harness cost 1.8 times as much for about the same solve rate, so the harness is part of the bill as well.
 
 ## The onboarding note
 
@@ -14,34 +14,39 @@ Here's an analogy that we will carry through the rest of this post.
 
 When a new engineer joins a team, someone usually writes them an onboarding note. "There's no local database, so don't try to run the full test suite. Backend logic is in `zerver/lib/`. When you change a function, grep for its callers." A good onboarding note saves the new hire a week of stumbling. A bad one makes them do pointless busywork.
 
-The agent's appended system prompt is exactly that note. Our benchmark harness (pi) gives every model the same generic system prompt and lets us append extra text. The **baseline** in every experiment below appends nothing. The new hire gets no note at all.
+The agent's appended system prompt is exactly that note. Our default harness (pi) gives every model the same generic system prompt and lets us append extra text. The **baseline** in every experiment below appends nothing. The new hire gets no note at all.
 
-GEPA (from the paper *GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning*, arXiv 2507.19457) writes the note by watching the new hire work. The loop runs like this:
+GEPA (short for Genetic-Pareto, from the paper *GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning*, arXiv 2507.19457) writes the note by trial and error, and the onboarding analogy needs one more detail to explain how. The agent has no memory between runs. Every run is a new hire on their first day who knows only what the note tells them. That means GEPA can test a draft of the note the way a team would test it on a real new hire, by handing it to someone who has never seen the codebase and watching them work through starter tickets that the team has already closed.
 
-1. Run the agent with the current note on a small batch of tasks (6 tasks, 3 attempts each).
-2. Give a stronger model (the **reflector**, Claude Opus 5.5 in our runs) the full work logs: every command the agent ran, the patch it produced, which hidden tests failed and why. The reflector also sees the reference fix and the hidden test, which the agent never sees.
-3. The reflector rewrites the note to address what went wrong.
-4. If the new note scores better on that batch, it is scored on all 20 validation tasks and kept in a pool of candidate notes.
+The person reviewing that work is a second, stronger model that we call the **reflector** (Claude Opus 5.5 in our runs). Because the starter tickets are already closed, the reflector can compare the new hire's patch with the fix the team actually shipped. No model weights change at any point. GEPA only edits the text of the note, which is why we can read every draft it produces. One pass through the following loop is what the paper calls an iteration:
 
-GEPA keeps a pool rather than a single best note. A note that is the best on *any* individual task stays in the pool (the paper calls this Pareto selection), so a note that is great at frontend tasks is not thrown away just because another note is better on average. We gave each run a budget of 240 agent runs, which produced 5 to 8 candidate notes per model.
+1. Pick a draft of the note from the drafts kept so far. At the start, the only draft is the baseline, i.e. the empty note.
+2. Hand that draft to new hires and have them work 6 of the 20 validation tasks (the starter tickets), 3 times per task. Grade every run with the hidden tests.
+3. Give the reflector the full work logs of those runs: every command the agent ran, the patch it produced, and which hidden tests failed and why. The reflector also sees the reference fix and the hidden test, which the agent never sees.
+4. The reflector writes a revised draft that targets what went wrong. For example, if the new hires spent twelve turns trying to start a test suite that cannot run in the sandbox, the revised draft tells them not to.
+5. Hand the revised draft to fresh new hires on the same 6 tasks. If they do not score better than the new hires who had the parent draft, GEPA throws the revised draft away. If they do score better, GEPA scores the revised draft on all 20 validation tasks and keeps it.
+
+GEPA repeats the loop until its budget runs out. Our budget was 240 task evaluations per run (each evaluation is one task run 3 times, so about 720 agent runs), which left 5 to 8 kept drafts per model. The draft with the best average score on the 20 validation tasks is the one we then tested on new tasks.
+
+The two halves of the name describe the loop. "Genetic" refers to the parent-and-child structure, because every new draft is a revised copy of an older draft and only the revisions that beat their parent survive. "Pareto" refers to how GEPA picks the parent in step 1. It does not always revise the draft with the best average score. Any draft that is the best on at least one validation task can be picked, and drafts that are the best on more tasks are picked more often. That way, a draft that works well on frontend tasks still gets revised even if another draft is better on average, and the search does not spend its whole budget polishing a single draft.
 
 The important detail is what GEPA optimizes. We ran two setups. In the **accuracy focus** setup the score is accuracy (did the patch pass the hidden test, with partial credit for passing some of the tests). In the **cost focus** setup the score is accuracy minus a penalty for cost:
 
 score = accuracy − 0.1 × (cost of this run ÷ cost of the baseline on the same task)
 
-The penalty is capped, and its weight is small on purpose. Halving the cost of every task is worth 0.05, i.e. one twentieth of a solved task. Solving tasks stays the main objective, and cost breaks ties. We also told the reflector about the objective in plain words, and it sees the dollar cost of every run next to the baseline's cost. In onboarding-note terms, the manager writing the note now sees the new hire's expense report as well as their code reviews.
+The penalty is capped, and its weight is small on purpose. Halving the cost of every task is worth 0.05, i.e. one twentieth of a solved task. Solving tasks stays the main objective, and cost breaks ties. We also told the reflector about the objective in plain words, and it sees the dollar cost of every run next to the baseline's cost. In onboarding-note terms, the reviewer revising the note now sees each new hire's expense report as well as their patch.
 
 ## How we measured it
 
-GEPA only ever sees 20 *validation* tasks. To check that a note helps in general and not just on the tasks it was tuned on, we ran every final note on 30 *held-out* tasks that GEPA never saw, 3 times each (90 runs per note), alongside the baseline on the same tasks. All tasks are real Zulip bug fixes and features, and each is graded by hidden tests that must fail before the patch and pass after it. We picked hard tasks on purpose (earlier board runs solved 0 to 4 out of 5 models on each).
+In the first experiment each agent run gets one attempt at a task, and the patch is graded once. We call this the one-shot setting. GEPA only ever sees 20 *validation* tasks. To check that a note helps in general and not just on the tasks it was tuned on, we ran every final note on 30 *held-out* tasks that GEPA never saw, 3 times each (90 runs per note), alongside the baseline on the same tasks. All tasks are real Zulip bug fixes and features, and each is graded by hidden tests that must fail before the patch and pass after it. We picked hard tasks on purpose (in our earlier leaderboard runs, between 0 and 4 of 5 models solved each one).
 
-Two numbers matter in the tables below. The **resolve rate** is the fraction of runs whose patch passed the hidden tests. The **cost ratio** is how much a run costs with the new note divided by what it costs with the baseline, averaged over the 30 tasks (a geometric mean, so a ratio of 0.5 means "half the cost on a typical task"). The bracketed ranges are 95% confidence intervals from resampling tasks. The p-values come from a paired test that asks how often a difference this large would appear if the note did nothing.
+Two numbers matter in the one-shot tables below. The **resolve rate** is the fraction of runs whose patch passed the hidden tests. The **cost ratio** is how much a run costs with the new note divided by what it costs with the baseline, averaged over the 30 tasks (a geometric mean, so a ratio of 0.5 means "half the cost on a typical task"). The bracketed ranges are 95% confidence intervals from resampling tasks. The p-values come from a paired test that asks how often a difference this large would appear if the note did nothing.
 
 We also ran an earlier, simpler version of the accuracy focus setup on five of the models (the reflector did not see the reference fixes, and GEPA scored each task from a single run). It led to the same conclusions, so this post reports only the later version; both are in our results file.
 
 One more piece of context explains why we needed 3 samples per task. When we ran the *same* prompt twice, about 22% of per-task outcomes flipped. A difference of one or two solved tasks out of 30 is noise.
 
-## Finding one: no note made any model solve significantly more tasks
+## No note made any model solve significantly more tasks
 
 On the validation tasks, GEPA always found a better note. The validation score went up by 0.06 to 0.25 for every model. On the held-out tasks, those gains disappeared. No model's resolve rate changed by an amount we could distinguish from noise (every p-value is 0.26 or higher).
 
@@ -49,7 +54,7 @@ We think this is the familiar problem of picking a winner on a small test set. W
 
 We also had a hypothesis going in, that smaller models would gain more from a good note than frontier models. The data do not support it for accuracy. The three smallest models (Qwen3.6 27B, Muse Glimmer 30B and Gemma 4 31B) moved by +1.1, +3.4 and −3.4 points with their accuracy-focus notes, and none of these changes is significant.
 
-## Finding two: the notes made several models cheaper, and asking for it doubled the saving
+## The notes made several models cheaper, and asking for it doubled the saving
 
 Cost is a different story. Even when GEPA optimized only for accuracy, the accuracy-focus notes cut the held-out cost of Haiku 5.5 to 0.78x (p = 0.04), gpt-oss-120b to 0.80x (p = 0.04) and Qwen3.6 27B to 0.77x (p < 0.01). The cost-focus notes went much further. Luna dropped to 0.58x with every one of the 30 tasks cheaper but one, Sol dropped to 0.58x with all 30 tasks cheaper, and Haiku 5.5 dropped to 0.30x with all 30 tasks cheaper.
 
@@ -130,7 +135,7 @@ The cost-focus note dropped both while compressing 1,137 words to 420. The cost 
 
 We also want to flag a smaller issue with both setups. Because the reflector sees the reference fixes, some notes include rules that only make sense for one validation task, e.g. Luna's cost-focus note warns about Zulip's `$t` translation helper translating a string twice, and names `message_lists.current` as the way to read app state. These rules did no harm on the held-out tasks, but they are memorized answers rather than general advice, and they are part of why validation gains do not carry over.
 
-## Results for every model
+## One-shot results for every model
 
 Each table compares the baseline (no note) with the best note from each setup on the 30 held-out tasks. Each task ran 3 times (6 times for the Haiku 5.5 baseline and cost focus). Cost is dollars per agent run at list prices; for open-weight models it is a public hosting provider's per-token price, not our own GPU cost. Haiku 5.5 cost includes the long-prompt price tier.
 
@@ -162,9 +167,9 @@ The Sol runs hit our OpenAI project's spending limit on the evening of 2026-10-2
 | Accuracy focus | 0.733 | −0.056 [−0.133, +0.022] | $1.72 | 0.86 [0.79, 0.92] | 0.74 |
 | **Cost focus** | **0.744** | **−0.044 [−0.156, +0.067]** | **$1.14** | **0.58 [0.55, 0.62]** | **0.60** |
 
-Sol repeats the Luna pattern for cost. The accuracy-focus note saved 14%, and the cost-focus note saved 42% with every one of the 30 tasks cheaper. Cost per solved task went from $2.49 to $1.53. Sol is by far the most expensive model we tested at about $2 per run on the held-out tasks, so this is the largest saving in dollars of any model, about $0.82 per run.
+Sol repeats the Luna pattern for cost, with every one of the 30 tasks cheaper under the cost-focus note. Cost per solved task went from $2.49 to $1.53. Sol is by far the most expensive model we tested at about $2 per run on the held-out tasks, so this is the largest saving in dollars of any model, about $0.82 per run.
 
-The accuracy side looks more like Haiku 5.5 than Luna. Both notes solved slightly fewer tasks than the baseline (0.733 and 0.744 against 0.789). Neither drop is significant (p = 0.31 and 0.59), but both intervals reach below a 10-point loss, so we cannot claim either note is as accurate as the baseline. Sol's baseline is also the strongest of any model, at 79% on these hard tasks, which leaves the least room for a note to help.
+The accuracy side looks more like Haiku 5.5 than Luna. Both notes solved slightly fewer tasks than the baseline (0.733 and 0.744 against 0.789). Neither drop is significant (p = 0.31 and 0.59), but both intervals reach below a 10-point loss, so we cannot claim either note is as accurate as the baseline. Sol's baseline, at 79%, is also among the strongest of any model on these hard tasks, which leaves little room for a note to help.
 
 ### The other models (accuracy focus only)
 
@@ -180,12 +185,73 @@ Qwen3.6 is the clearest example of the winner's problem from earlier. Its valida
 
 Two patterns stand out. The accuracy-focus notes did not change cost for Haiku 4.5, Muse or Gemma, and Gemma's note made it take 27% *more* turns. For gpt-oss-120b, the accuracy-focus note cut tokens per run by 21% without changing the number of turns, i.e. the agent read less per step rather than taking fewer steps. Qwen's note did both, with fewer turns and fewer tokens per run.
 
+## Telling the new hire the fix did not work yet
+
+The one-shot setting grades a single attempt, and that is not how coding agents are used. A developer applies the agent's patch, sees that the bug is still there, and says so. The Haiku 5.5 failures above made us want to measure that second chance, because in every one of those failed runs the agent had already opened the file that held the constraint it missed.
+
+We can extend the onboarding-note analogy here. The new hire still gets the same note, or no note for the baseline. The difference is that after they hand in a fix, a colleague tries it and, if the bug is still there, comes back and says "not fixed yet." The colleague does not say which test failed or why. The new hire has to work that out.
+
+Concretely, each run now gets up to three rounds. After a failed round, the same conversation and the same working copy of the repository continue, and the agent receives one message: "I applied your change and checked it. The problem is not fixed yet ... correct it." It never sees test names or test output. The run stops at the first success, and a round in which the agent makes no new change after the feedback ends the run with the earlier verdict standing. Cost counts every round, and Haiku 5.5 cost again includes the 5x price tier for requests over 100K prompt tokens.
+
+We re-ran GEPA for this setting, with the reflector reading the full round history, in both the accuracy focus and the cost focus setups with the same definitions as before. The tasks are the same 20 validation and 30 held-out tasks, 3 runs per task. We ran Claude Haiku 5.5 and Claude Sonnet 5.5 on the pi harness, and Haiku 5.5 a second time on the Claude Code CLI harness so we could compare two harnesses on the same model.
+
+The tables below have new columns, and the two rounds columns need care. **pass@1** is the share of runs solved in the first round, the same quantity the one-shot tables call the resolve rate. **pass@2** and **pass@3** are the shares solved within two and within three rounds, counted on the same runs. **Mean rounds to solve** is the average number of rounds among the runs that did solve their task. **Rounds per solve** is every round used by every run, including the runs that never solved their task, divided by the number of solved runs, i.e. the price of a solve in rounds. A run that fails all three rounds would have needed more than three, so it is left out of the first average and contributes its three rounds to the second; it is never counted as a zero (the statistical term is right-censored). **$/run** is the mean cost of a run with all rounds included, and **$/solve** is the total cost of all runs divided by the number of solved runs.
+
+## The feedback rounds added 9 to 12 points, more than any note did
+
+Start with the baseline, i.e. no note. Sonnet 5.5 on pi solved 81.1% of runs in the first round and 93.3% within three. Haiku 5.5 on pi went from 80.0% to 88.9%. Haiku 5.5 on Claude Code went from 81.1% to 90.0%. That is a gain of 9 to 12 points from a message that says only that the fix did not work, and no note in the one-shot experiment moved any model's resolve rate by an amount we could distinguish from noise.
+
+The rounds columns say what the gain cost. Among the runs that solved their task, the average was 1.14 to 1.15 rounds, so most solves still happen in the first round. Counting the rounds spent on runs that never solved their task, the baseline paid 1.37 to 1.46 rounds per solve. In onboarding-note terms, for every ten fixes that eventually worked, the colleague had to come back with "not fixed yet" about four times.
+
+In rounds, the feedback is cheap. In dollars it is less cheap, because a run's cost now includes every round, and the later rounds are the expensive ones. The baseline's cost per run is higher than it was one-shot ($0.284 against $0.132 for Haiku 5.5 on pi). Part of that gap is the feedback: the 18 baseline runs out of 90 that failed the first round kept going and averaged $0.575 each, because every later round re-sends a longer conversation and, for Haiku 5.5, a longer conversation is more likely to cross the 100K-token line where the per-token price goes up 5x. Those 18 runs are 41% of the bill. The other part I can't explain yet: the 72 runs that were solved in round one, with no feedback at all, still averaged $0.211, well above the one-shot $0.132. The $/solve column is the number to watch when comparing notes within this setting.
+
+## Haiku 5.5 kept the saving and the cost-focus note stopped losing tasks
+
+| Note | pass@1 | pass@2 | pass@3 | Mean rounds to solve | Rounds per solve | $/run | $/solve |
+|---|---|---|---|---|---|---|---|
+| Baseline | 80.0% | 85.6% | 88.9% | 1.14 | 1.46 | $0.284 | $0.319 |
+| Accuracy focus (1,313 words) | 78.9% | 87.8% | 90.0% | 1.15 | 1.48 | $0.070 | $0.078 |
+| **Cost focus** (540 words) | **78.9%** | **87.8%** | **95.6%** | **1.26** | **1.40** | **$0.095** | **$0.099** |
+
+The cost result carried over from the one-shot experiment. Both notes cut Haiku's cost per run to about a third of the baseline, the accuracy-focus note to 0.30x (95% CI 0.23 to 0.40) and the cost-focus note to 0.33x (0.23 to 0.47). The medians moved the same way ($0.118 per run for the baseline against $0.034 and $0.038), so the whole distribution shifted rather than a few expensive runs disappearing. Unlike the one-shot runs, the cost objective bought no extra saving here. The 1,313-word accuracy-focus note was as cheap as the 540-word cost-focus note.
+
+The accuracy result changed. In the one-shot experiment the cost-focus note cost Haiku about 6 points of resolve rate, and we could not rule out a 15-point loss. With feedback rounds, the new cost-focus note's first-round rate is within a point of the baseline (78.9% against 80.0%), and its three-round rate is 6.7 points *higher* (95.6% against 88.9%, with 4 tasks up and 1 down). The gain is not significant (p = 0.25), so we do not claim the note helps. The point is that the one-shot loss did not reappear, and the whole difference between the baseline and the cost-focus note sits in rounds two and three. The agent with the shorter note still hands in a first fix that misses something about as often as the baseline does, and being told that the fix did not work is enough to make it go back and find what it missed. The accuracy-focus note did nothing for accuracy (p = 1.0 for both pass@1 and pass@3) after raising its validation score from 0.901 to 0.990, so the winner's problem from the one-shot experiment applies unchanged.
+
+One comparison is worth stating with care. On these 30 tasks, Haiku 5.5 with the cost-focus note (95.6% within three rounds at $0.095 per run) matched or beat the Sonnet 5.5 baseline (93.3% at $0.222 per run) at less than half the cost. That is one held-out set and one pair of models, and the accuracy gain behind it is not significant, so treat it as a lead to confirm rather than a result.
+
+## Sonnet 5.5 had almost nothing left to learn
+
+| Note | pass@1 | pass@2 | pass@3 | Mean rounds to solve | Rounds per solve | $/run | $/solve |
+|---|---|---|---|---|---|---|---|
+| Baseline | 81.1% | 91.1% | 93.3% | 1.15 | 1.37 | $0.222 | $0.237 |
+| Accuracy focus (761 words) | 77.8% | 86.7% | 93.3% | 1.24 | 1.45 | $0.253 | $0.271 |
+| Cost focus (410 words) | 78.9% | 86.7% | 91.1% | 1.18 | 1.48 | $0.199 | $0.218 |
+
+In onboarding-note terms, Sonnet 5.5 is the new hire who already knows the codebase. On the 20 validation tasks the baseline solved 95.2% of runs within three rounds, and GEPA's own score for it, which gives partial credit for passing some of the hidden tests, was 0.989 out of 1. The reflector had almost no failed runs to read, so it had almost nothing to write about.
+
+On the held-out tasks the accuracy-focus note solved exactly the same tasks as the baseline within three rounds (93.3%, identical on every task, p = 1.0) and 3.3 points fewer in the first round (p = 0.63), and it cost 20% *more* per run (1.20x, 95% CI 1.07 to 1.34). The cost-focus note saved 8% (0.92x, 0.86 to 0.98) and solved 2.2 points fewer within three rounds (p = 0.50). For a model at this ceiling, the feedback rounds were worth 12 points and the best note was worth an 8% discount.
+
+## The harness changed the bill, not the solve rate
+
+| Note | pass@1 | pass@2 | pass@3 | Mean rounds to solve | Rounds per solve | $/run | $/solve |
+|---|---|---|---|---|---|---|---|
+| Baseline | 81.1% | 87.8% | 90.0% | 1.12 | 1.42 | $0.499 | $0.554 |
+| Accuracy focus (619 words) | 83.3% | 91.1% | 93.3% | 1.13 | 1.35 | $0.330 | $0.353 |
+| Cost focus (686 words) | 81.1% | 87.8% | 93.3% | 1.19 | 1.40 | $0.258 | $0.276 |
+
+Running Haiku 5.5 on the Claude Code CLI harness instead of pi, on the same 30 tasks, gave about the same accuracy and a very different bill. Within three rounds the baseline solved 90.0% on Claude Code against 88.9% on pi, with about the same mean rounds to solve (1.12 against 1.14), and it cost $0.499 per run against $0.284, about 1.8 times as much. A smoke test points at context size. Claude Code carried the full conversation into every later round, and on one task a single request reached about 300K tokens by round three, three times the 100K line where Haiku's per-token price goes up 5x.
+
+GEPA found the same kind of saving on this harness as on pi, only smaller. The accuracy-focus note cut cost to 0.59x (95% CI 0.48 to 0.74) and the cost-focus note to 0.44x (0.35 to 0.54), and neither changed accuracy by an amount we could distinguish from noise (p between 0.25 and 1.0). The cost-focus note also came out longer than the accuracy-focus note here (686 words against 619), so the cost objective does not always produce the shorter note. Even with its cheapest note, Haiku 5.5 on Claude Code ($0.258 per run) cost nearly as much as the Haiku 5.5 baseline on pi ($0.284). If you pay per token, which harness you run is a cost decision on the same scale as which note you give it.
+
+
 ## What this means if you run coding agents
 
 GEPA is a practical way to write a repository-specific system prompt, and the prompts it writes are readable. You can open them, see exactly what changed, and delete a rule you disagree with. That alone makes it more useful than tuning methods that produce opaque weights.
 
-On our benchmark, the place GEPA paid off was cost, not accuracy, and it paid off most when we told it to care about cost. The cost-focus notes did not find a clever trick. They found the boring habits a good senior engineer would put in an onboarding note: don't fight the environment, read the function rather than the file, batch your searches, don't write scaffolding nobody will grade, and stop when you are done. Those habits cut Luna's cost by 42% with no detectable accuracy loss, Sol's by 42% and Haiku 5.5's by 70%.
+On our benchmark, the place GEPA paid off was cost, not accuracy, and it paid off most when we told it to care about cost. The cost-focus notes did not find a clever trick. They found the boring habits a good senior engineer would put in an onboarding note: don't fight the environment, read the function rather than the file, batch your searches, don't write scaffolding nobody will grade, and stop when you are done. Those habits cut Luna's cost by 42% with no detectable accuracy loss, Sol's by 42% and Haiku 5.5's by 70%, and Haiku's saving held when we added feedback rounds.
 
-The scope caution is the Haiku 5.5 result, and to a smaller degree Sol. A cost objective removes any advice whose value does not show up on the validation tasks, and with 20 validation tasks, protective advice like "update every caller" can look like dead weight. We would keep the cost weight small (we are considering 0.05 instead of 0.1), check the held-out accuracy with enough samples to bound the loss, and read the final note for missing safety rules before using it.
+The cheapest accuracy gain we found did not come from the note. A colleague telling the new hire "not fixed yet" raised the solve rate by 9 to 12 points at about 1.4 rounds per solve, more than any note did in either experiment, and in the retry setting it also removed the accuracy loss of Haiku's cost-focus note. If your agent can get even a weak signal that its fix failed (a failing test, a user who says the bug is still there), wire that signal in before you tune the prompt. The two combine. With feedback rounds and the cost-focus note, Haiku 5.5 solved 95.6% of these hard tasks at $0.099 per solve; with feedback rounds alone it solved 88.9% at $0.319 per solve. The accuracy difference is within noise; the cost difference is not.
 
-If you are paying per token for an agent that works in one codebase every day, the time to run this is before your next monthly bill, not after it. The Luna cost focus run (300 agent runs plus the reflector, about $30) pays for itself after roughly 1,000 tasks at $0.032 saved per task. For Sol, at $0.82 saved per task and roughly $400 for the run, the same arithmetic gives about 500 tasks.
+The scope caution is still the Haiku 5.5 one-shot result, and to a smaller degree Sol. A cost objective removes any advice whose value does not show up on the validation tasks, and with 20 validation tasks, protective advice like "update every caller" can look like dead weight. Feedback rounds made up for that kind of miss on our 30 tasks, but an agent that gets no feedback has nothing to make up for it. We would keep the cost weight small (we are considering 0.05 instead of 0.1), check the held-out accuracy with enough samples to bound the loss, and read the final note for missing safety rules before using it. And if your model already solves nearly everything in your repository, as Sonnet 5.5 did here, expect the note to buy a discount rather than accuracy.
+
+If you are paying per token for an agent that works in one codebase every day, the time to run this is before your next monthly bill, not after it. The Luna cost focus run (300 agent runs plus the reflector, about $30) pays for itself after roughly 1,000 tasks at $0.032 saved per task. For Sol, at $0.82 saved per task and roughly $400 for the run, the same arithmetic gives about 500 tasks. While you are at it, check what your harness charges for the model you already use. On our tasks the same Haiku 5.5 cost 1.8 times as much on Claude Code as on pi for about the same solve rate, a bigger difference than most of the notes made.

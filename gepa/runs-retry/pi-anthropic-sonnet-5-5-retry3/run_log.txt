@@ -1,0 +1,169 @@
+Iteration 0: Base program full valset score: 0.9888888888888889 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.9888888888888889
+Iteration 1: All subsample scores perfect for parent 0. Skipping.
+Iteration 1: Reflective mutation did not propose a new candidate
+Iteration 2: Selected program 0 score: 0.9888888888888889
+Iteration 2: All subsample scores perfect for parent 0. Skipping.
+Iteration 2: Reflective mutation did not propose a new candidate
+Iteration 3: Selected program 0 score: 0.9888888888888889
+Iteration 3: Proposed new text for append_system_prompt: ## Working on this Zulip checkout
+
+Environment facts (do not fight them):
+- There is no virtualenv, no node_modules, no database, and no `python` binary. Use `python3`. Do not try to run tools/test-backend, tools/test-js-with-node, tsc, eslint, mypy or Django management commands. They will fail, and debugging them wastes turns.
+- You can run small standalone checks. Use `python3 -c` / heredoc scripts with only the standard library (for example `re`), and `node -e` for plain JavaScript. Use them to check regexes, string slicing, index arithmetic, ordering logic and expected output strings. To do this, copy the relevant logic into the script; do not import Zulip modules.
+- Leave your changes uncommitted in the working tree. Never run `git commit`, `git stash`, `git reset` or `git checkout` on files you edited.
+- If an edit tool call fails, re-issue it with the full old/new text. If a scripted edit fails, use the edit tool instead. Always confirm the result with `git diff`.
+
+Repository layout and conventions:
+- Backend: `zerver/` (lib/ holds the logic, actions/ holds state-changing operations, views/ holds the API, tests/ uses ZulipTestCase, and there are JSON fixtures in `zerver/tests/fixtures/`). Templates and email CSS live in `templates/`. Frontend: `web/src/*.ts`, with node tests in `web/tests/*.test.cjs`, which use `mock_esm`/`zrequire`/`override`.
+- Many features exist twice: once in Python (`zerver/lib/...`) and once in TypeScript (`web/src/...`) under the same or a similar module name. When the brief describes a link, a markup format, a display string or a URL shape, grep both trees. The other side usually already produces exactly the format you need, so mirror it.
+- Reuse existing helpers the brief names, and follow the structure of nearby code. But check what a helper actually outputs before relying on it. Don't assume some later rendering step will turn its output into what the brief wants.
+
+How to approach a task:
+1. Read the brief closely and list every concrete requirement: exact output strings or HTML, argument order, sync vs async, which module should own the change, and edge cases (empty values, indentation or whitespace, trailing punctuation, escaping, null IDs). Example inputs/outputs in the brief are the specification. Your code must produce them character for character.
+2. Find the code path with grep, then read the full function and its callers and existing tests before editing.
+3. Make the minimal change at the layer the brief points to. Keep existing behavior for cases the brief doesn't mention.
+4. Ask what text, HTML or value is actually produced and stored. If the brief says a link should point to X, the produced content should literally contain a link to X. A different syntax that might later resolve to X is not enough.
+5. Check your logic with a standalone python3/node script on the brief's examples and on the existing cases you must not break. Work out off-by-one positions (caret or selection offsets, slice bounds) by hand.
+6. Update existing tests whose expectations your change intentionally changes, and add a focused test if it is easy. Keep the test files syntactically valid.
+7. Finish with a short summary of what you changed and why.
+
+If you are told the problem is still not fixed:
+- Your previous change is wrong or incomplete. Do not defend it, and do not finish again without changing files.
+- Re-read the brief from the top. For each sentence, check that your diff satisfies it literally. Pay special attention to exact output formats, which entity or ID is used, and whether the result is a link, markup or plain text.
+- Question your main assumption: maybe you picked the wrong helper or output format, the wrong layer, or missed the other implementation (Python vs TypeScript) or another caller of the code path. Look at how the frontend or backend counterpart renders the same thing.
+- Make a materially different change, not a cosmetic variant. Update the tests you changed earlier to match.
+Iteration 3: New subsample score 5.666666666666667 is not better than old score 5.777777777777778, skipping
+Iteration 4: Selected program 0 score: 0.9888888888888889
+Iteration 4: All subsample scores perfect for parent 0. Skipping.
+Iteration 4: Reflective mutation did not propose a new candidate
+Iteration 5: Selected program 0 score: 0.9888888888888889
+Iteration 5: Proposed new text for append_system_prompt: You are fixing a bug or implementing a feature in the Zulip repository (Django/Python backend in zerver/, zproject/, corporate/; TypeScript web frontend in web/src with node tests in web/tests/*.test.cjs; email templates and CSS in templates/; docs in docs/). Your final working-tree diff is the deliverable.
+
+## Environment facts (don't waste turns on these)
+- There is no virtualenv, no node_modules, no database and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node cannot run here. Do not try to install dependencies or start services.
+- You can still check things cheaply:
+  - `python3 -m py_compile <file>` for syntax.
+  - For pure logic (parsing, string formatting, small algorithms), copy the function into a standalone `python3` snippet with the Django/model imports stubbed out, and run it on realistic inputs.
+  - Read the existing tests for the code you touch, so you know what they assert and how fixtures are built.
+
+## How to work
+1. Read the brief completely. List every concrete requirement: exact output strings, HTML markup, log levels and exact log wording, setting keys, which function must call which helper, argument order, and when calls must happen (e.g. synchronously). Treat quoted strings and example outputs as exact specs, down to quoting style, spacing and punctuation.
+2. Find where the behavior is produced today, and change it at that place. Prefer the smallest change that fits the existing structure.
+3. Reuse what exists. Use existing helpers, constants (e.g. length limits in zerver/models/constants.py), option flags already supported by the function you're editing, and existing actions (zerver/actions/*) for state changes. Don't build a parallel mechanism.
+4. When the brief describes the result but not the exact format, don't invent a new syntax. Find how Zulip already shows the same concept elsewhere and copy it:
+   - Many features have both a Python and a TypeScript version (e.g. zerver/lib/X.py and web/src/X.ts). Check both.
+   - Check the URL helpers, Markdown/link helpers and email/notification code for the same concept.
+   The expected output is usually what the product already produces for that concept in that situation.
+5. Keep behavior the brief doesn't mention exactly as it is. This includes edge cases like empty or null values, other branches, other callers and non-matching inputs. Don't change function signatures in incompatible ways. Existing tests not related to the change must still pass, so don't edit existing fixtures or test data to make your code work. Add new fixtures or tests instead.
+6. Check your logic against the brief's example:
+   - If the brief gives an input→output example, recreate that input faithfully, including the extra or irrelevant fields real payloads contain, not only the fields you care about.
+   - Run your code on it with python3 where you can, and compare the output with the expected text character by character.
+   - Also think about tricky values: separators inside values, duplicate keys or labels, empty strings, unicode, values that need HTML escaping.
+7. Update the existing tests that assert the old behavior, and add a focused test in the matching test file (zerver/tests/test_*.py, zerver/webhooks/<name>/tests.py with fixtures/, web/tests/*.test.cjs). Follow the existing test style. Update docs when you add a user- or admin-facing setting or behavior.
+8. Follow conventions: sorted imports (imports inside functions where the file already does that to avoid cycles), type annotations, Markup/escaping rules in templates and emails, and translated user-facing strings via _() / $t.
+
+## If you are told the problem is not fixed yet
+That message means your change is wrong or incomplete. Assume your interpretation is the mistake, not the checker. Never finish a round without a new, real change, and don't repeat or reword the same approach. Instead:
+- Re-read the brief line by line and compare each requirement with your diff. Look especially for exact formats, every case the brief lists, and the precise conditions under which something must or must not happen.
+- Write down at least two other ways to read the brief, and pick the one that best matches how Zulip already does similar things (see step 4; check the frontend/backend counterpart and similar features).
+- Check whether you broke an existing behavior or edge case, or edited existing fixtures or tests that should have stayed unchanged.
+- Check whether your own test input was too easy compared with real inputs. Rebuild it to match the brief's description exactly and re-run your logic.
+- Then make the corrected change. Revert parts of your earlier change that no longer fit.
+
+## Finishing
+End with a short summary: what you changed, where, and what you checked and how. Say plainly which tests you could not run.
+Iteration 5: Accepted candidate (subsample score 5.777777777777778 -> 6.0); running full eval.
+Iteration 5: Found a better program on the valset with score 1.0.
+Iteration 5: Valset score for new program: 1.0 (coverage 20 / 20)
+Iteration 5: Val aggregate for new program: 1.0
+Iteration 5: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 1.0, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 1.0}
+Iteration 5: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 1.0, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 1.0}
+Iteration 5: Valset pareto front aggregate score: 1.0
+Iteration 5: Updated valset pareto front programs: {0: {0, 1}, 1: {0, 1}, 2: {0, 1}, 3: {0, 1}, 4: {0, 1}, 5: {0, 1}, 6: {0, 1}, 7: {0, 1}, 8: {0, 1}, 9: {0, 1}, 10: {0, 1}, 11: {0, 1}, 12: {1}, 13: {0, 1}, 14: {0, 1}, 15: {0, 1}, 16: {0, 1}, 17: {0, 1}, 18: {0, 1}, 19: {0, 1}}
+Iteration 5: Best valset aggregate score so far: 1.0
+Iteration 5: Best program as per aggregate score on valset: 1
+Iteration 5: Best score on valset: 1.0
+Iteration 5: Linear pareto front program index: 1
+Iteration 5: New program candidate index: 1
+Iteration 6: Selected program 1 score: 1.0
+Iteration 6: All subsample scores perfect for parent 1. Skipping.
+Iteration 6: Reflective mutation did not propose a new candidate
+Iteration 7: Selected program 1 score: 1.0
+Iteration 7: All subsample scores perfect for parent 1. Skipping.
+Iteration 7: Reflective mutation did not propose a new candidate
+Iteration 8: Selected program 1 score: 1.0
+Iteration 8: All subsample scores perfect for parent 1. Skipping.
+Iteration 8: Reflective mutation did not propose a new candidate
+Iteration 9: Selected program 1 score: 1.0
+Iteration 9: All subsample scores perfect for parent 1. Skipping.
+Iteration 9: Reflective mutation did not propose a new candidate
+Iteration 10: Selected program 1 score: 1.0
+Iteration 10: All subsample scores perfect for parent 1. Skipping.
+Iteration 10: Reflective mutation did not propose a new candidate
+Iteration 11: Selected program 1 score: 1.0
+Iteration 11: All subsample scores perfect for parent 1. Skipping.
+Iteration 11: Reflective mutation did not propose a new candidate
+Iteration 12: Selected program 1 score: 1.0
+Iteration 12: All subsample scores perfect for parent 1. Skipping.
+Iteration 12: Reflective mutation did not propose a new candidate
+Iteration 13: Selected program 1 score: 1.0
+Iteration 13: All subsample scores perfect for parent 1. Skipping.
+Iteration 13: Reflective mutation did not propose a new candidate
+Iteration 14: Selected program 1 score: 1.0
+Iteration 14: All subsample scores perfect for parent 1. Skipping.
+Iteration 14: Reflective mutation did not propose a new candidate
+Iteration 15: Selected program 1 score: 1.0
+Iteration 15: All subsample scores perfect for parent 1. Skipping.
+Iteration 15: Reflective mutation did not propose a new candidate
+Iteration 16: Selected program 1 score: 1.0
+Iteration 16: All subsample scores perfect for parent 1. Skipping.
+Iteration 16: Reflective mutation did not propose a new candidate
+Iteration 17: Selected program 1 score: 1.0
+Iteration 17: All subsample scores perfect for parent 1. Skipping.
+Iteration 17: Reflective mutation did not propose a new candidate
+Iteration 18: Selected program 1 score: 1.0
+Iteration 18: All subsample scores perfect for parent 1. Skipping.
+Iteration 18: Reflective mutation did not propose a new candidate
+Iteration 19: Selected program 1 score: 1.0
+Iteration 19: All subsample scores perfect for parent 1. Skipping.
+Iteration 19: Reflective mutation did not propose a new candidate
+Iteration 20: Selected program 1 score: 1.0
+Iteration 20: All subsample scores perfect for parent 1. Skipping.
+Iteration 20: Reflective mutation did not propose a new candidate
+Iteration 21: Selected program 1 score: 1.0
+Iteration 21: All subsample scores perfect for parent 1. Skipping.
+Iteration 21: Reflective mutation did not propose a new candidate
+Iteration 22: Selected program 1 score: 1.0
+Iteration 22: All subsample scores perfect for parent 1. Skipping.
+Iteration 22: Reflective mutation did not propose a new candidate
+Iteration 23: Selected program 1 score: 1.0
+Iteration 23: All subsample scores perfect for parent 1. Skipping.
+Iteration 23: Reflective mutation did not propose a new candidate
+Iteration 24: Selected program 1 score: 1.0
+Iteration 24: All subsample scores perfect for parent 1. Skipping.
+Iteration 24: Reflective mutation did not propose a new candidate
+Iteration 25: Selected program 1 score: 1.0
+Iteration 25: All subsample scores perfect for parent 1. Skipping.
+Iteration 25: Reflective mutation did not propose a new candidate
+Iteration 26: Selected program 1 score: 1.0
+Iteration 26: All subsample scores perfect for parent 1. Skipping.
+Iteration 26: Reflective mutation did not propose a new candidate
+Iteration 27: Selected program 1 score: 1.0
+Iteration 27: All subsample scores perfect for parent 1. Skipping.
+Iteration 27: Reflective mutation did not propose a new candidate
+Iteration 28: Selected program 1 score: 1.0
+Iteration 28: All subsample scores perfect for parent 1. Skipping.
+Iteration 28: Reflective mutation did not propose a new candidate
+Iteration 29: Selected program 1 score: 1.0
+Iteration 29: All subsample scores perfect for parent 1. Skipping.
+Iteration 29: Reflective mutation did not propose a new candidate
+Iteration 30: Selected program 1 score: 1.0
+Iteration 30: All subsample scores perfect for parent 1. Skipping.
+Iteration 30: Reflective mutation did not propose a new candidate
+Iteration 31: Selected program 1 score: 1.0
+Iteration 31: All subsample scores perfect for parent 1. Skipping.
+Iteration 31: Reflective mutation did not propose a new candidate
+Iteration 32: Selected program 1 score: 1.0
+Iteration 32: All subsample scores perfect for parent 1. Skipping.
+Iteration 32: Reflective mutation did not propose a new candidate

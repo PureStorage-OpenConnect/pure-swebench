@@ -386,7 +386,8 @@ def test_workflow_maps_provider_failure_to_provider_error_status():
     give-up; without the failure channel the same shape stays no_patch_generated."""
     import inspect
     from zbench import workflow
-    src = inspect.getsource(workflow.run_patch_task_attempt)
+    # the per-round logic lives in _one_round since the retry-with-feedback loop
+    src = inspect.getsource(workflow._one_round)
     assert 'failure.get("kind") == "provider_error"' in src
     assert 'status="provider_error" if provider_failed else "no_patch_generated"' in src
 

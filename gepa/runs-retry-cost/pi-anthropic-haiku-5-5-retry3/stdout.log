@@ -1,0 +1,607 @@
+[rollout pi-anthropic-haiku-5-5-retry3--seed] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--seed] done in 0.0 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s2] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s3] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 19/20
+2026-10-30 09:46:21,531 INFO seed cost per task: mean $0.167 over 20 tasks
+[rollout pi-anthropic-haiku-5-5-retry3--seed] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s3] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s2] 20/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--seed] done in 0.1 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s3] done in 0.1 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s2] done in 0.1 min: resolved 16/20
+[rollout pi-anthropic-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 5/6
+2026-10-30 09:46:57,071 INFO reflection ok: cost=$0.546
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-1afbc0 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] done in 8.6 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-9d90a6 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] done in 12.2 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-dd8101 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] done in 20.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-5c2013 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] done in 15.0 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-78e8a5 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] done in 15.3 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-fec9f1 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] done in 16.4 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] done in 0.0 min: resolved 6/6
+2026-10-30 10:23:44,555 INFO reflection ok: cost=$0.515
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-fa69f2 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd-s3] done in 11.1 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-91bd39 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd-s2] done in 14.9 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-ef05f4 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--ga0427bcd] done in 18.8 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] done in 0.0 min: resolved 5/6
+2026-10-30 10:43:04,951 INFO reflection ok: cost=$0.514
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-13a5a0 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] done in 5.6 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-7bf657 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] done in 6.4 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-f9df42 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] done in 6.6 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-2c90df rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] done in 18.7 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-a2711b rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] done in 19.7 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-8a4f18 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] done in 22.1 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] done in 0.0 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] done in 0.0 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] done in 0.0 min: resolved 4/4
+2026-10-30 11:12:11,489 INFO reflection ok: cost=$0.541
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-966bdd rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] done in 5.4 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-f8622f rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] done in 5.5 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-5bcb2b rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] done in 9.8 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-f38454 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] done in 21.7 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-c5e6f8 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] done in 24.8 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-2bf23f rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] done in 29.1 min: resolved 20/20
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] done in 0.0 min: resolved 5/6
+2026-10-30 11:51:36,242 INFO reflection ok: cost=$0.530
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-a6916c rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b-s3] done in 7.6 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-600d43 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b] done in 7.7 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-b0bad2 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g3012390b-s2] done in 8.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g4a2589e2-s3] done in 0.0 min: resolved 6/6
+2026-10-30 12:00:01,305 INFO reflection ok: cost=$0.552
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-0fe8e6 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef] done in 12.1 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-109545 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef-s2] done in 12.7 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-fa850a rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g5daa3fef-s3] done in 14.6 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s3] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g8334ab5c-s2] done in 0.0 min: resolved 6/6
+2026-10-30 12:15:08,107 INFO reflection ok: cost=$0.525
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-71e013 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] done in 8.4 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-3239a3 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] done in 9.7 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-7501e7 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] done in 13.2 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-231418 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] done in 18.3 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-a7c8c7 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] done in 18.8 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-3da2a1 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] done in 19.6 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] 4/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s3] done in 0.1 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5] done in 0.1 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5-retry3--g47dd4cc5-s2] done in 0.1 min: resolved 4/4
+2026-10-30 12:48:25,914 INFO reflection ok: cost=$0.541
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s3] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s2] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d] 0/4 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-a8a547 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d] done in 7.0 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-64a401 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s2] done in 7.5 min: resolved 4/4
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-68a850 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s3] done in 8.8 min: resolved 3/4
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s3] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s2] 4/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s3] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s2] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-369e72 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s3] done in 18.6 min: resolved 17/20
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-7ccdc5 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d-s2] done in 20.2 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-cff889 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--gcd07851d] done in 21.7 min: resolved 18/20
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] done in 0.1 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] done in 0.1 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] done in 0.1 min: resolved 6/6
+2026-10-30 13:19:27,892 INFO reflection ok: cost=$0.568
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-5823cf rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2] done in 6.2 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-e36652 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2-s3] done in 6.3 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-a23895 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g7e3d2bf2-s2] done in 7.9 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] 6/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce] done in 0.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s2] done in 0.2 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--ge35074ce-s3] done in 0.2 min: resolved 5/6
+2026-10-30 13:28:03,941 INFO reflection ok: cost=$0.556
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-269f62 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s3] done in 11.6 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-6c4542 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s2] done in 12.5 min: resolved 5/6
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-e2f7c8 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b] done in 14.9 min: resolved 6/6
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s3] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-141274 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s3] done in 9.5 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-bdca4e rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b] done in 11.2 min: resolved 19/20
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s2] driver gepa-gepa-retry-pi-anthropic-haiku-5-5-retry3-49c478 rc=0
+[rollout pi-anthropic-haiku-5-5-retry3--g32aff51b-s2] done in 30.5 min: resolved 18/20
+2026-10-30 14:13:30,883 INFO done: best idx 3 val 0.906
+Iteration 0: Base program full valset score: 0.8006944444444445 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.8006944444444445
+Iteration 1: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3`. tools/test-backend and tools/test-js-with-node cannot run here, and ruff, mypy, eslint and prettier are not installed. Don't spend turns trying to install or activate them. To check logic, copy the relevant function or algorithm into a small standalone python3 or node script with sample inputs and stubbed imports, then compare the output with the brief's examples exactly.
+
+Layout: backend is zerver/ (lib/ for helpers, actions/, views/, webhooks/<name>/ with view.py, tests.py and fixtures/; tests are in zerver/tests/). Web frontend is web/src/ (.ts or .js; a file the brief calls .ts may actually be .js, so check with `ls`), web/templates/*.hbs, and tests in web/tests/*.test.cjs. Maximum line length is 100. User-facing strings go through `_()` in Python and `$t`/`$t_html` in the frontend.
+
+Efficient workflow:
+1. Read the brief once and list every concrete requirement: exact output strings, ordering, edge cases, fallbacks.
+2. Find the code with `grep -n` and read only the relevant sections with `sed -n 'A,Bp'`. Don't cat whole large files or re-read files you've already seen. Keep command output short with head/tail.
+3. When you use an existing helper (URL builders, mention/link syntax, fetch/convert utilities), read its definition AND at least one existing caller (`grep -rn helper_name zerver web/src | head`). Build its arguments the same way those callers do. For example, if callers pass all conversation participants, pass all of them, not just one user.
+4. Make the minimal change that fits the surrounding style. Reuse and refactor existing code instead of duplicating it when the brief asks for that.
+5. Update the existing tests that assert the old behavior, and add a focused test for the new behavior, following the test file's conventions.
+6. Verify: compare each required string with the brief character by character (wording, punctuation, blank lines, sorting, separators), and run your standalone check. Then stop. Don't polish further once the requirements are met and checked.
+
+Don't commit, stash or reset. Leave your changes as uncommitted edits in the working tree.
+
+If you're told the problem is still not fixed: don't repeat or slightly vary the same change. Re-read the brief line by line and check each requirement against your diff (`git diff`). Look most closely at values you built yourself, such as arguments to existing helpers, IDs, ordering and exact text, and compare them with how the codebase builds the same values elsewhere. Fix what differs, re-verify, and finish.
+Iteration 1: Accepted candidate (subsample score 5.191666666666666 -> 5.690296847689103); running full eval.
+Iteration 1: Found a better program on the valset with score 0.8918228290886946.
+Iteration 1: Valset score for new program: 0.8918228290886946 (coverage 20 / 20)
+Iteration 1: Val aggregate for new program: 0.8918228290886946
+Iteration 1: Individual valset scores for new program: {0: 0.9448698933197125, 1: 0.6560966771945113, 2: 0.9629385448283372, 3: 0.9396241393269202, 4: 0.8138394746825334, 5: 0.9624407510479996, 6: 0.8868749767844035, 7: 0.9801668075887758, 8: 0.976500315839435, 9: 0.9550980338393682, 10: 0.9628263045905561, 11: 0.9536017265138959, 12: 0.30371808614139734, 13: 0.9120687441333954, 14: 0.9201411817482947, 15: 0.9323019824734962, 16: 0.9108894736903206, 17: 0.9930461743113286, 18: 0.9544323024262084, 19: 0.9149809912930031}
+Iteration 1: New valset pareto front scores: {0: 0.9448698933197125, 1: 0.6560966771945113, 2: 0.9629385448283372, 3: 0.9396241393269202, 4: 0.9, 5: 0.9624407510479996, 6: 0.9, 7: 0.9801668075887758, 8: 0.976500315839435, 9: 0.9550980338393682, 10: 0.9628263045905561, 11: 0.9536017265138959, 12: 0.4555555555555555, 13: 0.9120687441333954, 14: 0.9201411817482947, 15: 0.9323019824734962, 16: 0.9108894736903206, 17: 0.9930461743113286, 18: 0.9544323024262084, 19: 0.9149809912930031}
+Iteration 1: Valset pareto front aggregate score: 0.9043789799860557
+Iteration 1: Updated valset pareto front programs: {0: {1}, 1: {1}, 2: {1}, 3: {1}, 4: {0}, 5: {1}, 6: {0}, 7: {1}, 8: {1}, 9: {1}, 10: {1}, 11: {1}, 12: {0}, 13: {1}, 14: {1}, 15: {1}, 16: {1}, 17: {1}, 18: {1}, 19: {1}}
+Iteration 1: Best valset aggregate score so far: 0.8918228290886946
+Iteration 1: Best program as per aggregate score on valset: 1
+Iteration 1: Best score on valset: 0.8918228290886946
+Iteration 1: Linear pareto front program index: 1
+Iteration 1: New program candidate index: 1
+Iteration 2: Selected program 1 score: 0.8918228290886946
+Iteration 2: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3`. tools/test-backend and tools/test-js-with-node cannot run here, and ruff, mypy, eslint and prettier are not installed. Don't try to install or activate them. To check logic, copy the relevant function into a small standalone python3 or node script with stubbed imports and sample inputs, and compare the output with the brief's examples exactly.
+
+Layout: backend is zerver/ (lib/ helpers, actions/, views/, webhooks/<name>/ with view.py, tests.py, fixtures/; tests in zerver/tests/), settings in zproject/. Web frontend is web/src/ (.ts or .js; check with `ls`), web/templates/*.hbs, tests in web/tests/*.test.cjs. Help-center docs are in starlight_help/src/content/docs/ (shared snippets in ../include/). Max line length 100. User-facing strings go through `_()` in Python and `$t`/`$t_html` in the frontend.
+
+Workflow:
+1. Read the brief once and list every concrete requirement: exact strings, ordering, edge cases, fallbacks, and every name, signature, CSS selector, URL fragment or parameter in "Interface requirements". Use those identifiers exactly as written. Code elsewhere may look them up by that exact text.
+2. Find the code with `grep -n` and read only the relevant ranges with `sed -n 'A,Bp'`. Don't cat large files or re-read what you've already seen. Keep output short with head/tail.
+3. Before using an existing helper, read its definition and one caller (`grep -rn name zerver web/src | head`), and build its arguments the way callers do. If you replace explicit logic with a helper, check that it produces exactly the required output for EVERY case in the brief, including combinations (e.g. two conditions true at once). If any case differs, write the logic explicitly.
+4. Make the minimal change that fits the surrounding style. Put new behavior in the layer the brief names.
+5. Update the existing tests that assert old behavior, and add one focused test for the new behavior, following the file's conventions (mock_esm/zrequire/override in node tests; check_webhook and fixtures in webhook tests). Your test must cover each case the brief lists, not only the main path.
+6. For repetitive edits across many files (docs pages, renamed includes), make one scripted pass (python3 or sed) instead of one edit call per file. Then spot-check one file. Write docs in the style of an existing sibling page.
+7. Verify once: `git diff --stat`, then `git diff` of the source files. Compare each required string with the brief character by character, and run your standalone check. Then stop. Don't polish or re-review after the requirements are met.
+
+Keep reasoning brief and act. Don't commit, stash or reset. Leave your changes as uncommitted edits.
+
+If you're told the problem is still not fixed: don't repeat or slightly vary the same change. Go through the brief requirement by requirement against `git diff`. Look most closely at:
+- values you built yourself (helper arguments, IDs, ordering, exact text);
+- exact identifiers from the interface requirements;
+- helpers whose output you assumed rather than traced for every case.
+Fix what differs, re-verify, and finish.
+Iteration 2: New subsample score 5.452541714674249 is not better than old score 5.7538700031452965, skipping
+Iteration 3: Selected program 1 score: 0.8918228290886946
+Iteration 3: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3`. tools/test-backend, tools/test-js-with-node, ruff, mypy, eslint and prettier can't run here. Don't try to install or activate them. To check logic, copy the relevant function into a small standalone python3 or node script with stubbed imports and sample inputs, and compare its output with the brief's examples character by character.
+
+Layout: backend is zerver/ (lib/ helpers, actions/, views/, webhooks/<name>/; tests in zerver/tests/, markdown cases in zerver/tests/fixtures/). Frontend is web/src/ (.ts or .js, so check with `ls`), web/templates/*.hbs, tests in web/tests/*.test.cjs. Max line length is 100. User-facing strings use `_()` in Python and `$t`/`$t_html` in the frontend.
+
+Workflow:
+1. Read the brief once. List every concrete requirement: exact output strings, URL forms (for example `/with/` vs `/near/`, relative `#narrow/...` vs absolute `http://...`), ordering, edge cases and fallbacks. Words in the brief such as a URL segment, class name or quote style are exact requirements, not flavor text.
+2. Find the code with `grep -n` and read only the needed ranges with `sed -n 'A,Bp'`. Don't cat large files or re-read what you've already seen. Keep output short with head/tail.
+3. Before reusing a helper, read its definition and trace what it actually outputs (and, for markdown syntax, what that syntax renders to). If that output doesn't match the required form exactly, build the value at the call site instead. Copy how nearby code and existing tests build the same kind of value (URL builders and their flags, link/mention syntax, escaping, base URL or not).
+4. Make the minimal change at the place the brief points to. Don't change the output or semantics of shared helpers or renderers used elsewhere just to fit one caller, because that breaks their other users and tests. If a shared piece really must change, add something new (a parameter or constant) and leave the existing behavior alone.
+5. When you generalize a behavior (for example to handle indentation, a new input shape or a new item type), apply it to every branch that handles it: the main path, removal/cleanup paths, offsets and lengths, and fallbacks. Keep them consistent with each other.
+6. Update the existing tests that assert the old behavior, and add one focused test that follows the file's conventions.
+7. Verify by running your standalone check on the brief's examples and on each branch you touched, then compare the final strings with the brief character by character. Then stop. Don't polish further.
+
+Don't commit, stash or reset. Leave your changes as uncommitted edits.
+
+If you're told the problem is still not fixed:
+- Don't repeat, slightly vary or broaden the same change. Check what is currently in place with `git diff`. If that is empty, check `git log -p -1 | head -80`, because an earlier edit may already be committed.
+- Re-read the brief line by line. For each requirement, write down the exact final output your code produces now (actual string or URL, actual offsets, actual order) and compare it with the brief's wording.
+- Most often the wrong part is a value you built yourself: a helper that produces a slightly different form, an absolute vs relative URL, a missed branch, or an off-by-indentation offset. Compare it with how the codebase builds the same value elsewhere. Fix only that, revert anything unneeded (especially edits to shared code), re-verify and finish.
+Iteration 3: Accepted candidate (subsample score 4.824124309611586 -> 5.052490920122666); running full eval.
+Iteration 3: Valset score for new program: 0.869738142476374 (coverage 20 / 20)
+Iteration 3: Val aggregate for new program: 0.869738142476374
+Iteration 3: Individual valset scores for new program: {0: 0.938490839942781, 1: -0.012108681599238669, 2: 0.9629198162055117, 3: 0.920576237789892, 4: 0.7809281656816548, 5: 0.9523481529326785, 6: 0.9188394914484964, 7: 0.9809253700145074, 8: 0.9707373837161257, 9: 0.9609535926909556, 10: 0.9574024633905722, 11: 0.939859619646423, 12: 0.5214088464466243, 13: 0.9186411187562658, 14: 0.9188522572782024, 15: 0.9450869689289965, 16: 0.9154900639007679, 17: 0.9918818320523991, 18: 0.9443431706716364, 19: 0.9671861396322289}
+Iteration 3: New valset pareto front scores: {0: 0.9448698933197125, 1: 0.6560966771945113, 2: 0.9629385448283372, 3: 0.9396241393269202, 4: 0.9, 5: 0.9624407510479996, 6: 0.9188394914484964, 7: 0.9809253700145074, 8: 0.976500315839435, 9: 0.9609535926909556, 10: 0.9628263045905561, 11: 0.9536017265138959, 12: 0.5214088464466243, 13: 0.9186411187562658, 14: 0.9201411817482947, 15: 0.9450869689289965, 16: 0.9154900639007679, 17: 0.9930461743113286, 18: 0.9544323024262084, 19: 0.9671861396322289}
+Iteration 3: Valset pareto front aggregate score: 0.9127524801483021
+Iteration 3: Updated valset pareto front programs: {0: {1}, 1: {1}, 2: {1}, 3: {1}, 4: {0}, 5: {1}, 6: {2}, 7: {2}, 8: {1}, 9: {2}, 10: {1}, 11: {1}, 12: {2}, 13: {2}, 14: {1}, 15: {2}, 16: {2}, 17: {1}, 18: {1}, 19: {2}}
+Iteration 3: Best valset aggregate score so far: 0.8918228290886946
+Iteration 3: Best program as per aggregate score on valset: 1
+Iteration 3: Best score on valset: 0.8918228290886946
+Iteration 3: Linear pareto front program index: 1
+Iteration 3: New program candidate index: 2
+Iteration 4: Selected program 1 score: 0.8918228290886946
+Iteration 4: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3`. tools/test-backend and tools/test-js-with-node cannot run here, and ruff, mypy, eslint and prettier are not installed. Don't try to install or activate them. To check logic, copy the relevant function into a small standalone python3 or node script with stubbed imports and sample inputs, and compare the output with the brief's examples.
+
+Layout: backend is zerver/ (lib/ helpers, actions/, views/, webhooks/<name>/ with view.py, tests.py, fixtures/; tests in zerver/tests/). Frontend is web/src/ (.ts or .js; a file the brief calls .ts may be .js, so check with `ls`), web/templates/*.hbs, tests in web/tests/*.test.cjs. Max line length 100. User-facing strings go through `_()` in Python and `$t`/`$t_html` in the frontend.
+
+Workflow:
+1. Read the brief once and list every concrete requirement: output text, ordering, edge cases, fallbacks, and which strings are explicitly called "exact".
+2. Find the code with `grep -n` and read only the relevant ranges with `sed -n 'A,Bp'`. Don't cat large files or re-read what you've already seen. Keep output short with head/tail.
+3. Before writing new logic, look for an existing mechanism that already does what the brief describes or something close to it: a flag, an option, a kwarg, a helper or a formatting branch in the same function or module (e.g. an existing "include X in body" option, an existing prefix or header builder). If one exists, turn it on or reuse it from the right call site rather than adding a parallel code path. The existing mechanism's output format (bold markers, separators, blank lines) is the convention. A brief that describes output loosely ("a line of the form ...") usually means that existing format, not a new literal string. Only follow the brief's text exactly when it says the string is exact, or when nothing in the codebase already produces it.
+4. When you call an existing helper, read its definition and at least one existing caller (`grep -rn name zerver web/src | head`), and build its arguments the same way the callers do.
+5. Make the minimal change at the layer where the decision belongs (often the caller that knows the condition, not the shared formatter). Match the surrounding style.
+6. Update the existing tests that assert the old behavior, and add one focused test for the new behavior, following the test file's conventions.
+7. Verify: check each requirement against `git diff`, compare strings that are given as exact character by character, and run your standalone check. Then stop.
+
+Don't commit, stash or reset. Leave your changes as uncommitted edits.
+
+If you're told the problem is still not fixed: your approach is probably wrong, not just one detail. Don't re-submit the same design with small tweaks. Re-read the brief line by line, then question your own choices: Did you invent a new code path or format where an existing option or helper already exists (step 3)? Did you take the brief's wording too literally where the codebase has an established format, or too loosely where the brief said "exact"? Did you build helper arguments, IDs or ordering differently from existing callers? Did you put the change in the right function? Pick the most likely wrong assumption, change it, re-verify, and finish.
+Iteration 4: Accepted candidate (subsample score 5.023720632185569 -> 5.664815729633686); running full eval.
+Iteration 4: Found a better program on the valset with score 0.905664058077915.
+Iteration 4: Valset score for new program: 0.905664058077915 (coverage 20 / 20)
+Iteration 4: Val aggregate for new program: 0.905664058077915
+Iteration 4: Individual valset scores for new program: {0: 0.932093662866521, 1: 0.997301876952581, 2: 0.9557910803371065, 3: 0.9110773318687545, 4: 0.7, 5: 0.9507497487237132, 6: 0.9446663651268338, 7: 0.9712592982222888, 8: 0.954729867206259, 9: 0.9497743112806727, 10: 0.9402472760813269, 11: 0.9267780479197233, 12: 0.732579821242251, 13: 0.9089098563065142, 14: 0.9324716348240957, 15: 0.9246952004745095, 16: 0.8976623959092364, 17: 0.7799474347572599, 18: 0.9469459508525825, 19: 0.8556000006060689}
+Iteration 4: New valset pareto front scores: {0: 0.9448698933197125, 1: 0.997301876952581, 2: 0.9629385448283372, 3: 0.9396241393269202, 4: 0.9, 5: 0.9624407510479996, 6: 0.9446663651268338, 7: 0.9809253700145074, 8: 0.976500315839435, 9: 0.9609535926909556, 10: 0.9628263045905561, 11: 0.9536017265138959, 12: 0.732579821242251, 13: 0.9186411187562658, 14: 0.9324716348240957, 15: 0.9450869689289965, 16: 0.9154900639007679, 17: 0.9930461743113286, 18: 0.9544323024262084, 19: 0.9671861396322289}
+Iteration 4: Valset pareto front aggregate score: 0.9422791552136939
+Iteration 4: Updated valset pareto front programs: {0: {1}, 1: {3}, 2: {1}, 3: {1}, 4: {0}, 5: {1}, 6: {3}, 7: {2}, 8: {1}, 9: {2}, 10: {1}, 11: {1}, 12: {3}, 13: {2}, 14: {3}, 15: {2}, 16: {2}, 17: {1}, 18: {1}, 19: {2}}
+Iteration 4: Best valset aggregate score so far: 0.905664058077915
+Iteration 4: Best program as per aggregate score on valset: 3
+Iteration 4: Best score on valset: 0.905664058077915
+Iteration 4: Linear pareto front program index: 3
+Iteration 4: New program candidate index: 3
+Iteration 5: Selected program 3 score: 0.905664058077915
+Iteration 5: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3`. tools/test-backend and tools/test-js-with-node cannot run here, and ruff, mypy, eslint and prettier are not installed. Don't try to install or activate them. To check logic, copy the relevant function into a small standalone python3 or node script with stubbed imports and sample inputs, and compare the output with the brief's examples.
+
+Layout: backend is zerver/ (lib/ helpers, actions/, views/, webhooks/<name>/ with view.py, tests.py, fixtures/; tests in zerver/tests/). Frontend is web/src/ (.ts or .js; a file the brief calls .ts may be .js, so check with `ls`), web/templates/*.hbs, tests in web/tests/*.test.cjs. Max line length 100. User-facing strings go through `_()` in Python and `$t`/`$t_html` in the frontend. Links to in-app narrows inside message content are usually relative (`#narrow/...`, no realm host). Build URLs with the existing url_encoding helpers and the same arguments other content-generating callers use.
+
+Workflow:
+1. Read the brief once and list every concrete requirement: output text, ordering, edge cases, fallbacks, and which strings are explicitly called "exact".
+2. Find the code with `grep -n` and read only the relevant ranges with `sed -n 'A,Bp'`. Don't cat large files or re-read what you've already seen. Keep output short with head/tail.
+3. Before writing new logic, look for an existing mechanism that already does what the brief describes or something close to it: a flag, an option, a kwarg, a helper or a formatting branch in the same function or module (e.g. an existing "include X in body" option, an existing prefix or header builder). If one exists, turn it on or reuse it from the right call site rather than adding a parallel code path. The existing mechanism's output format (bold markers, separators, blank lines) is the convention. A brief that describes output loosely ("a line of the form ...") usually means that existing format, not a new literal string. Only follow the brief's text exactly when it says the string is exact, or when nothing in the codebase already produces it.
+4. When you call an existing helper, read its definition and at least one existing caller (`grep -rn name zerver web/src | head`), and build its arguments the same way the callers do.
+5. Make the minimal change at the layer where the decision belongs (often the caller that knows the condition, not the shared formatter). Match the surrounding style. If the bug is that a value gets resolved at the wrong time or from the wrong source (e.g. "uses the latest X instead of this X"), compute the concrete value where the brief says it should come from. Don't switch to another syntax that still gets resolved later.
+6. Update the existing tests that assert the old behavior, and add one focused test for the new behavior, following the test file's conventions.
+7. Verify: check each requirement against `git diff`, compare strings that are given as exact character by character, and run your standalone check. For generated URLs and markup, compare the exact form with existing callers and tests in the same file: relative or absolute, escaping, quoting, separators. Then stop.
+
+Don't commit, stash or reset. Leave your changes as uncommitted edits.
+
+If you're told the problem is still not fixed: your change is wrong somewhere, even if it looks right to you. Never finish such a round without changing code. Don't re-submit the same design with small tweaks. Re-read the brief line by line, then question your own choices: Did you invent a new code path or format where an existing option or helper already exists (step 3)? Did you take the brief's wording too literally where the codebase has an established format, or too loosely where the brief said "exact"? Did you build helper arguments, IDs, URLs (relative vs absolute) or ordering differently from existing callers? Did you use a syntax that defers the decision instead of computing the value directly (step 5)? Did you put the change in the right function? Pick the most likely wrong assumption, change it, re-verify, and finish.
+Iteration 5: New subsample score 5.460315067962069 is not better than old score 5.460473174392105, skipping
+Iteration 6: Selected program 1 score: 0.8918228290886946
+Iteration 6: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3`. tools/test-backend,
+tools/test-js-with-node, ruff, mypy, eslint and prettier cannot run here. Don't try to install
+or activate them.
+
+Layout: backend is zerver/ (lib/ helpers, actions/, views/, webhooks/<name>/ with view.py,
+tests.py, fixtures/; tests in zerver/tests/). Frontend is web/src/ (a file the brief calls .ts may
+be .js, so check with `ls`), web/templates/*.hbs, web/tests/*.test.cjs, shared code in
+web/shared/src/. Max line length is 100. When you wrap a long line, use prettier's style.
+
+Workflow:
+1. Read the brief once. List every concrete requirement: exact strings, ordering, edge cases,
+   required exported names or signatures, where a new function must be called from.
+2. Find the code with `grep -rn` and read only the relevant ranges with `sed -n 'A,Bp'`. Never
+   cat whole large files or re-read ranges you've already seen. Keep output short (head/tail).
+3. Before you edit, see how the surrounding code does the same thing: existing helpers, how
+   callers build their arguments, how neighboring strings are written (copy their style,
+   including whether they use `_()`/`$t` or plain text), and how exported functions are made
+   stub-able (`export let`). Reuse existing helpers, such as shared utility modules, instead of
+   writing new ones.
+4. Make the minimal change. Then look for sibling paths that use the same value: the other
+   if/else branch, the add and remove cases, the bullet and numbered cases, the positive and
+   negated cases, the other callers. If you change how a value is computed (an offset, an
+   indent, a prefix, a filter), update every place that depends on it, e.g. selection ranges
+   and lengths. Don't edit docs, help pages or unrelated files unless the brief asks.
+5. Update existing tests that assert the old behavior. Add one focused test per new behavior,
+   following the file's conventions.
+6. Verify with at most one small standalone node/python3 script: paste in the changed logic with
+   stubbed imports, run the brief's examples plus one example for each branch you touched,
+   and work out every expected value from the brief by hand. If a case fails, first check
+   whether your expected value is wrong. Then compare each required string with the brief
+   character by character, run `git diff --stat`, and stop.
+
+Don't commit, stash or reset. Leave your changes as uncommitted edits.
+
+If you're told the problem is still not fixed: don't repeat or tweak the same change. Run
+`git diff`, then go through the brief line by line and check each requirement against the diff.
+Most often the miss is one of these:
+- a sibling branch or case that was left unchanged
+- a value you built yourself (an offset, an argument, the ordering, the exact text)
+- capitalization or translation wrapping that differs from neighboring code
+- a required function or export that is missing, or not called from where the brief says
+Fix what differs, re-run your check, and finish.
+Iteration 6: New subsample score 5.469137299135714 is not better than old score 5.584789785149669, skipping
+Iteration 7: Selected program 2 score: 0.869738142476374
+Iteration 7: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3` (and node 20, which can't run .ts files). tools/test-backend, tools/test-js-with-node, ruff, mypy, eslint and prettier can't run here. Don't try to install or activate them.
+
+Layout: backend is zerver/ (lib/ helpers, actions/, views/, webhooks/<name>/ with view.py, tests.py, fixtures/; tests in zerver/tests/). Frontend is web/src/ (.ts or .js, so check with `ls`), web/templates/*.hbs, tests in web/tests/*.test.cjs (they use zrequire/mock_esm/override and translated strings appear as "translated: ..." / "translated HTML: ..."). Max line length is 100. User-facing strings use `_()` in Python and `$t`/`$t_html` in the frontend.
+
+Workflow:
+1. Read the brief once. List every concrete requirement: exact output strings, URL forms, ordering, edge cases, fallbacks, and the exact function/field/selector names it gives. Words in the brief such as a URL segment, class name, field name or quote style are exact requirements.
+2. Find the code with `grep -n` and read only the needed ranges with `sed -n 'A,Bp'`. Don't cat large files or re-read what you've already seen. Keep output short with head/tail. For changes spanning many files (UI reorganizations, docs), first grep once to list all places involved, then edit them in batches.
+3. Implement the logic the brief describes explicitly, at the place it points to, next to the code that handles the sibling cases (e.g. add a new branch beside the existing similar `if`). Don't replace existing code with a call to some other shared helper whose behavior you haven't fully traced; small differences (indicators, fallbacks, escaping) break things. Before reusing a helper, read its definition and confirm its output matches the required form exactly; otherwise build the value at the call site, copying how nearby code builds the same kind of value.
+4. Keep the change minimal. Don't edit files the brief doesn't require, and don't change the output or semantics of shared helpers used elsewhere. If a shared piece really must change, add something new (a parameter or constant) and leave existing behavior alone.
+5. When you generalize a behavior, apply it to every branch that handles it (main path, cleanup paths, offsets, fallbacks) consistently.
+6. Update existing tests that assert the old behavior, and add one focused test following the file's conventions. If the brief names a new fixture or function, create it with that exact name.
+7. Verify cheaply, then stop:
+   - Python: copy the touched functions (sed range) into /tmp/check.py, stub imports and type names (e.g. `WildValue = Any`, `check_string = lambda x: x`), feed the brief's example input, print the result.
+   - JS/TS: write /tmp/check.cjs (use .cjs; don't name variables `exports`/`module`), paste the function with type annotations removed, stub its imports as plain objects.
+   - If the check script fails twice for reasons unrelated to your logic, drop it and trace the code by hand against the brief instead.
+   Compare final strings with the brief character by character, review `git diff` once, then finish. Don't polish further.
+
+Don't commit, stash or reset. Leave your changes as uncommitted edits.
+
+If you're told the problem is still not fixed:
+- Don't repeat, slightly vary or broaden the same change. Check what's in place with `git diff` (if empty, `git log -p -1 | head -80`).
+- If you delegated to a shared helper or edited files beyond the target spot, revert that first and write the required branches explicitly at the target spot.
+- Re-read the brief line by line. For each requirement, write the exact output your code now produces (actual string, URL, field names, order) and compare it with the brief's wording, including names of new functions, fields, fixtures and selectors.
+- Fix only the mismatch, re-verify and finish.
+Iteration 7: Accepted candidate (subsample score 5.649781185206787 -> 5.745535293152621); running full eval.
+Iteration 7: Valset score for new program: 0.8718515116285838 (coverage 20 / 20)
+Iteration 7: Val aggregate for new program: 0.8718515116285838
+Iteration 7: Individual valset scores for new program: {0: 0.9544306013453727, 1: -0.009599454002115374, 2: 0.966724667859751, 3: 0.9400192180121185, 4: 0.8198460461424807, 5: 0.9877328847163948, 6: 0.958561336239964, 7: 0.7793941133683925, 8: 0.9802148872919817, 9: 0.9614294726087494, 10: 0.9615639831920364, 11: 0.9632035628586538, 12: 0.5213779919915531, 13: 0.931586171764668, 14: 0.9311258837250862, 15: 0.9406024749206975, 16: 0.9252970981319677, 17: 0.9945722896866164, 18: 0.9563568031278165, 19: 0.9725901995894887}
+Iteration 7: New valset pareto front scores: {0: 0.9544306013453727, 1: 0.997301876952581, 2: 0.966724667859751, 3: 0.9400192180121185, 4: 0.9, 5: 0.9877328847163948, 6: 0.958561336239964, 7: 0.9809253700145074, 8: 0.9802148872919817, 9: 0.9614294726087494, 10: 0.9628263045905561, 11: 0.9632035628586538, 12: 0.732579821242251, 13: 0.931586171764668, 14: 0.9324716348240957, 15: 0.9450869689289965, 16: 0.9252970981319677, 17: 0.9945722896866164, 18: 0.9563568031278165, 19: 0.9725901995894887}
+Iteration 7: Valset pareto front aggregate score: 0.9471955584893266
+Iteration 7: Updated valset pareto front programs: {0: {4}, 1: {3}, 2: {4}, 3: {4}, 4: {0}, 5: {4}, 6: {4}, 7: {2}, 8: {4}, 9: {4}, 10: {1}, 11: {4}, 12: {3}, 13: {4}, 14: {3}, 15: {2}, 16: {4}, 17: {4}, 18: {4}, 19: {4}}
+Iteration 7: Best valset aggregate score so far: 0.905664058077915
+Iteration 7: Best program as per aggregate score on valset: 3
+Iteration 7: Best score on valset: 0.905664058077915
+Iteration 7: Linear pareto front program index: 3
+Iteration 7: New program candidate index: 4
+Iteration 8: Selected program 3 score: 0.905664058077915
+Iteration 8: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3`. tools/test-backend, tools/test-js-with-node, ruff, mypy, eslint and prettier cannot run here; don't try to install or activate anything. To check logic, copy the relevant function into a small standalone python3 or node script with stubbed imports and sample inputs, and compare its output with the brief's examples.
+
+Layout: backend is zerver/ (lib/ helpers, actions/, views/, webhooks/<name>/; tests in zerver/tests/, markdown cases in zerver/tests/fixtures/markdown_test_cases.json). Frontend is web/src/ (.ts or .js; check with `ls`), web/templates/*.hbs, tests in web/tests/*.test.cjs. Help docs are in starlight_help/. Max line length 100. User-facing strings go through `_()` in Python and `$t`/`$t_html` in the frontend.
+
+Workflow:
+1. Read the brief once and list every concrete requirement: output text, ordering, edge cases, fallbacks, named helpers, and which strings are called "exact".
+2. Find the code with `grep -n` and read only the relevant ranges with `sed -n 'A,Bp'`. Don't cat large files or re-read what you've already seen. Keep output short with head/tail.
+3. Reuse before inventing. If a flag, option, helper or format branch already does what the brief describes or something close to it, use it. Its output format (bold markers, separators, blank lines) is the convention. Follow the brief's text literally when it says "exact" or when nothing in the codebase produces that text.
+4. When the brief names an existing helper, or you call one: read its definition and at least two existing callers (`grep -rn name zerver web/src | head`). Build its arguments exactly as those callers do, from the same simple data sources (e.g. the model's own fields or existing lookup functions). Don't import a new serializer or wrapper class just to build arguments; that changes which IDs, users or fields end up in the result. Then work out by hand what the helper returns for one concrete case (e.g. a 1:1 DM, a group DM, a channel message), and make sure that matches what the brief describes.
+5. Make the minimal change at the layer where the decision belongs. Match the surrounding style.
+6. Update the existing tests that assert the old behavior, and add one focused test for the new behavior, following the file's conventions.
+7. For mechanical edits across many files (docs, renames), list the files once with `grep -rl`, then edit them in a few batched commands rather than one file per turn.
+8. Verify once: check each requirement against `git diff`, compare exact strings character by character, run your standalone check. Then stop. Don't keep re-checking work that already passed.
+
+Don't commit, stash or reset. Leave your changes as uncommitted edits.
+
+If you're told the problem is still not fixed, you MUST change the code again; finishing without a new change is never correct. Your design has a wrong assumption. Re-read the brief line by line and check these, most likely first:
+- Helper arguments: did you build them the same way existing callers do, from the same data? Recompute its output for each case (1:1, group, channel) and compare with the brief.
+- Formatting: did you invent a new format where an existing one exists, or loosen a string the brief called exact?
+- Which IDs or users are included, and in what order (sorting, separators, "and").
+- Is the change in the right function or layer, and does it cover every case the brief lists?
+Pick the most likely culprit, change it, re-verify, and finish.
+Iteration 8: Accepted candidate (subsample score 5.247140650252017 -> 5.306165991318882); running full eval.
+Iteration 8: Valset score for new program: 0.8551181187348833 (coverage 20 / 20)
+Iteration 8: Val aggregate for new program: 0.8551181187348833
+Iteration 8: Individual valset scores for new program: {0: 0.9447439921351635, 1: 0.9909080934202079, 2: 0.9667609582676758, 3: 0.9244499783843207, 4: 0.7840272342464659, 5: 0.2928282114526893, 6: 0.9598060499958073, 7: 0.7716788567581249, 8: 0.9776687585676769, 9: 0.9604172846726182, 10: 0.9584140079856942, 11: 0.9598563877096936, 12: 0.2805729310644097, 13: 0.9243423786696746, 14: 0.9293581399163005, 15: 0.9338113139099455, 16: 0.9155220181544276, 17: 0.7771184987024882, 18: 0.9486763655704304, 19: 0.9014009151138522}
+Iteration 8: New valset pareto front scores: {0: 0.9544306013453727, 1: 0.997301876952581, 2: 0.9667609582676758, 3: 0.9400192180121185, 4: 0.9, 5: 0.9877328847163948, 6: 0.9598060499958073, 7: 0.9809253700145074, 8: 0.9802148872919817, 9: 0.9614294726087494, 10: 0.9628263045905561, 11: 0.9632035628586538, 12: 0.732579821242251, 13: 0.931586171764668, 14: 0.9324716348240957, 15: 0.9450869689289965, 16: 0.9252970981319677, 17: 0.9945722896866164, 18: 0.9563568031278165, 19: 0.9725901995894887}
+Iteration 8: Valset pareto front aggregate score: 0.947259608697515
+Iteration 8: Updated valset pareto front programs: {0: {4}, 1: {3}, 2: {5}, 3: {4}, 4: {0}, 5: {4}, 6: {5}, 7: {2}, 8: {4}, 9: {4}, 10: {1}, 11: {4}, 12: {3}, 13: {4}, 14: {3}, 15: {2}, 16: {4}, 17: {4}, 18: {4}, 19: {4}}
+Iteration 8: Best valset aggregate score so far: 0.905664058077915
+Iteration 8: Best program as per aggregate score on valset: 3
+Iteration 8: Best score on valset: 0.905664058077915
+Iteration 8: Linear pareto front program index: 3
+Iteration 8: New program candidate index: 5
+Iteration 9: Selected program 4 score: 0.8718515116285838
+Iteration 9: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3` (and node 20, which can't run .ts files). tools/test-backend, tools/test-js-with-node, ruff, mypy, eslint and prettier can't run here. Don't try to install or activate them.
+
+Layout: backend is zerver/ (lib/ helpers, actions/, views/, webhooks/<name>/ with view.py, tests.py, fixtures/; tests in zerver/tests/). Frontend is web/src/, web/templates/*.hbs, tests in web/tests/*.test.cjs (they use zrequire/mock_esm/override; translated strings appear as "translated: ..." / "translated HTML: ..."). A file named in the brief may have a different extension (.ts vs .js), so locate it first with `ls web/src/name.*` or `git ls-files | grep name`. Max line length is 100. User-facing strings use `_()` in Python and `$t`/`$t_html` in the frontend. HTML built in Python uses `Markup(...).format(...)`, which escapes plain-str arguments and keeps Markup arguments literal.
+
+Workflow:
+1. Read the brief once. List every concrete requirement: exact output strings, URL forms, ordering, edge cases, fallbacks, and the exact function/field/selector/class names it gives. Words in the brief such as a URL segment, class name, field name or quote style are exact requirements.
+2. Explore efficiently: put several independent lookups in one shell call (e.g. `grep -n ... ; sed -n 'A,Bp' file`). Read only the needed ranges, keep output short with head/tail, and don't re-read code you've already seen or just edited. For changes spanning many files (UI reorganizations, docs), grep once to list every place involved, then edit them in batches, file by file. Only touch docs or templates that literally reference what moved.
+3. Decide the design once, briefly, then write it. Implement the logic the brief describes at the place it points to, next to the code that handles the sibling cases (e.g. a new branch beside the existing similar `if`). Don't replace existing code with a call to a shared helper whose behavior you haven't traced; small differences (indicators, fallbacks, escaping) break things. Before reusing a helper, read its definition and confirm its output matches the required form exactly; otherwise build the value at the call site the way nearby code does.
+4. Keep the change minimal. Don't edit files the brief doesn't require, and don't change the output or semantics of shared helpers used elsewhere. If a shared piece must change, add something new (a parameter or constant) and leave existing behavior alone.
+5. When you generalize a behavior, apply it to every branch that handles it (main path, cleanup paths, offsets, fallbacks) consistently.
+6. Update existing tests that assert the old behavior, and add one focused test following the file's conventions. If the brief names a new fixture or function, create it with that exact name; otherwise keep new fixtures small, with only the fields the code reads.
+7. Verify cheaply, once, then stop:
+   - Python: copy the touched functions (sed range) into /tmp/check.py, stub imports and type names (e.g. `WildValue = Any`, `check_string = lambda x: x`), feed the brief's example input, print the result.
+   - JS/TS: write /tmp/check.cjs (use .cjs; don't name variables `exports`/`module`), paste the function with type annotations removed, stub its imports as plain objects.
+   - If the check script fails twice for reasons unrelated to your logic, drop it and trace the code by hand against the brief.
+   Compare final strings with the brief character by character, review `git diff --stat` and the diff once, then finish. Don't polish further.
+
+Don't commit, stash or reset. Leave your changes as uncommitted edits.
+
+If you're told the problem is still not fixed:
+- Don't repeat, slightly vary or broaden the same change. Check what's in place with `git diff` (if empty, `git log -p -1 | head -80`).
+- If you delegated to a shared helper or edited files beyond the target spot, revert that first and write the required branches explicitly at the target spot.
+- Re-read the brief line by line. For each requirement, write the exact output your code now produces (actual string, URL, field names, order) and compare it with the brief's wording, including names of new functions, fields, fixtures and selectors.
+- Fix only the mismatch, re-verify and finish.
+Iteration 9: New subsample score 5.654156319003918 is not better than old score 5.662000120953564, skipping
+Iteration 10: Selected program 4 score: 0.8718515116285838
+Iteration 10: Proposed new text for append_system_prompt: Working notes for this Zulip checkout
+
+Environment: no virtualenv, no node_modules, no database, only `python3` (and node 20, which can't run .ts files). tools/test-backend, tools/test-js-with-node, ruff, mypy, eslint and prettier can't run here. Don't try to install or activate them. HEAD may be a commit named "pre-agent"; that's normal. Just use `git diff` for your edits.
+
+Layout: backend is zerver/ (lib/ helpers, actions/, views/, webhooks/<name>/ with view.py, tests.py, fixtures/; tests in zerver/tests/; markdown fixtures in zerver/tests/fixtures/). Frontend is web/src/ (.ts or .js, so check with `ls`), web/templates/*.hbs, tests in web/tests/*.test.cjs (they use zrequire/mock_esm/override, and translated strings appear as "translated: ..." / "translated HTML: ..."). Max line length is 100. User-facing strings use `_()` in Python and `$t`/`$t_html` in the frontend.
+
+Workflow:
+1. Read the brief once. List every concrete requirement: output text, URL forms, ordering, edge cases, fallbacks, and any function/field/fixture/selector names it gives (use those names exactly).
+2. Find the code with `grep -n` and read only the needed ranges with `sed -n 'A,Bp'`. Don't cat large files or re-read what you've already seen. Keep output short with head/tail.
+3. Before writing new logic, check whether the code already has a mechanism that produces the described output: an option/flag/kwarg, a branch for a sibling case, or a formatting line for the same kind of label. If it does, enable or extend it at the point where the decision is made (usually the caller that sets the options), and don't add a near-duplicate path. The brief often renders output in plain text: "Subject: X" or "From: X" in a brief may correspond to an existing markdown form like "**Subject:** X". Match the existing form unless the brief explicitly says it must differ from it.
+4. Otherwise, implement the logic explicitly at the place the brief points to, next to the code for the sibling cases (add a new branch beside the similar `if`). Don't swap existing code for a shared helper whose output you haven't traced. Small differences (indicators, fallbacks, escaping) break things.
+5. Keep the change minimal. Don't edit unrelated files, and don't change the output of shared helpers used elsewhere. If a shared piece must change, add a parameter or constant and keep the old behavior as the default.
+6. When you generalize a behavior (e.g. handle an indent, a new type or a new prefix), apply it to every branch that handles it: the main path, removal/cleanup paths, offsets and fallbacks.
+7. Update existing tests that assert the old behavior, and add one focused test following the file's conventions.
+8. Verify cheaply, then stop:
+   - Python: copy the touched functions into /tmp/check.py, stub imports/types (`WildValue = Any`, etc.), run the brief's example, print the result.
+   - JS/TS: write /tmp/check.cjs (don't name variables `exports`/`module`), paste the function with type annotations removed, and stub its imports.
+   - If the script fails twice for reasons unrelated to your logic, drop it and trace by hand.
+   Review `git diff` once, then finish. Don't polish further.
+
+Don't commit, stash or reset. Leave your changes as uncommitted edits.
+
+If you're told the problem is still not fixed:
+- Your previous interpretation was probably wrong, not just slightly off. Don't repeat or tweak the same change.
+- Check `git diff`. If you added a new parallel code path or literal string, look for an existing option/flag/branch in the surrounding code (and in its callers) that already produces that kind of output, and use it instead. If you instead delegated to a shared helper or edited extra files, revert that and write the branches explicitly at the target spot.
+- Re-read the brief line by line and list alternative readings of each requirement (exact text vs. the codebase's existing formatting; where the condition is checked; which layer). Choose the one most consistent with how the codebase handles neighboring cases, apply it, re-verify and finish.
+Iteration 10: Accepted candidate (subsample score 4.680226311678188 -> 5.366550995113889); running full eval.
+Iteration 10: Valset score for new program: 0.9040877381636004 (coverage 20 / 20)
+Iteration 10: Val aggregate for new program: 0.9040877381636004
+Iteration 10: Individual valset scores for new program: {0: 0.9566530247991119, 1: 0.9980836508507953, 2: 0.9683753528340723, 3: 0.935663706793283, 4: 0.8511775217634374, 5: 0.6313641012912595, 6: 0.9520760028698543, 7: 0.9946006442340602, 8: 0.9854340416288374, 9: 0.9638466196331934, 10: 0.9736342321809978, 11: 0.9677203214065246, 12: 0.3039945080434738, 13: 0.9266513125406227, 14: 0.9197889854930508, 15: 0.9366450599463658, 16: 0.9192102142937578, 17: 0.9941243682310141, 18: 0.9534193246104775, 19: 0.9492917698278184}
+Iteration 10: New valset pareto front scores: {0: 0.9566530247991119, 1: 0.9980836508507953, 2: 0.9683753528340723, 3: 0.9400192180121185, 4: 0.9, 5: 0.9877328847163948, 6: 0.9598060499958073, 7: 0.9946006442340602, 8: 0.9854340416288374, 9: 0.9638466196331934, 10: 0.9736342321809978, 11: 0.9677203214065246, 12: 0.732579821242251, 13: 0.931586171764668, 14: 0.9324716348240957, 15: 0.9450869689289965, 16: 0.9252970981319677, 17: 0.9945722896866164, 18: 0.9563568031278165, 19: 0.9725901995894887}
+Iteration 10: Valset pareto front aggregate score: 0.9493223513793907
+Iteration 10: Updated valset pareto front programs: {0: {6}, 1: {6}, 2: {6}, 3: {4}, 4: {0}, 5: {4}, 6: {5}, 7: {6}, 8: {6}, 9: {6}, 10: {6}, 11: {6}, 12: {3}, 13: {4}, 14: {3}, 15: {2}, 16: {4}, 17: {4}, 18: {4}, 19: {4}}
+Iteration 10: Best valset aggregate score so far: 0.905664058077915
+Iteration 10: Best program as per aggregate score on valset: 3
+Iteration 10: Best score on valset: 0.905664058077915
+Iteration 10: Linear pareto front program index: 3
+Iteration 10: New program candidate index: 6

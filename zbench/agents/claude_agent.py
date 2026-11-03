@@ -49,8 +49,19 @@ def _build_claude_cmd() -> list:
                 cmd += ["--max-turns", str(_n)]
         except ValueError:
             pass
+    # Retry-with-feedback cells (ZBENCH_CLAUDE_SESSION_ID set by the workflow) keep ONE
+    # conversation across rounds: round 1 names the session, later rounds resume it. The
+    # session lives in the per-cell hermetic config dir, so nothing leaks between cells.
+    sid = os.environ.get("ZBENCH_CLAUDE_SESSION_ID")
     if is_hermetic():
-        cmd.extend(claude_hermetic_flags())
+        flags = claude_hermetic_flags()
+        if sid:
+            flags = [f for f in flags if f != "--no-session-persistence"]
+        cmd.extend(flags)
+    if sid:
+        cmd += (["--resume", sid] if os.environ.get("ZBENCH_FOLLOWUP") else ["--session-id", sid])
+    if os.environ.get("CLAUDE_APPEND_SYSTEM_PROMPT"):
+        cmd += ["--append-system-prompt", os.environ["CLAUDE_APPEND_SYSTEM_PROMPT"]]
     if os.environ.get("CLAUDE_MODEL_NAME"):
         cmd += ["--model", os.environ["CLAUDE_MODEL_NAME"]]
     if os.environ.get("CLAUDE_EFFORT"):
@@ -70,7 +81,8 @@ def _run_claude_streaming(cmd, cwd, timeout, stream_path) -> _Res:
     buf, err_buf = [], []
     proc = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             text=True, bufsize=1, errors="replace")
-    f = open(stream_path, "w", buffering=1, errors="replace")
+    # a feedback round appends to the same rawcli, so the file holds the whole conversation
+    f = open(stream_path, "a" if os.environ.get("ZBENCH_FOLLOWUP") else "w", buffering=1, errors="replace")
 
     def _pump_out():
         for line in proc.stdout:
@@ -196,7 +208,11 @@ def call_claude(problem: str, repo_root: Path, stream_path: str | None = None) -
                 LOGGER.info("Claude usage: %s", token_usage)
             return token_usage
 
-        patch_text, tu = capture_git_patch(repo_root, _run)
+        try:
+            patch_text, tu = capture_git_patch(repo_root, _run)
+        except Exception as e:      # keep the round's usage for a no-change retry round
+            e.usage = holder["usage"]
+            raise
         # capture_git_patch returns tu={} when it recovers a patch AFTER _run raised; fall
         # back to the usage parsed just before the error so tokens are never lost.
         return patch_text, (tu or holder["usage"])
@@ -252,7 +268,10 @@ def main():
                                    "retryable": pe.retryable})
     except Exception as e:
         LOGGER.exception("Error generating patch for %s: %s", instance_id, e)
-        emit_agent_output(instance_id, "claude", [])
+        # retry-with-feedback cells: a no-change round still spent tokens (see pi_agent)
+        retry_usage = (getattr(e, "usage", None) or {}) if int(os.environ.get("ZBENCH_MAX_ATTEMPTS") or 1) > 1 else {}
+        retry_usage.pop("_raw_cli_output", None)
+        emit_agent_output(instance_id, "claude", [], **retry_usage)
 
 
 if __name__ == "__main__":

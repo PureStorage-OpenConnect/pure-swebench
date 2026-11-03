@@ -50,14 +50,20 @@ def augment_problem_with_repo_context(problem_statement: str, repo_root: Path, r
 
 
 def invoke_agent(agent: dict, instance: dict, repo_root: Path, *,
-                 run_id: str | None = None, evaluation_id: str | None = None) -> dict | None:
+                 run_id: str | None = None, evaluation_id: str | None = None,
+                 followup: str | None = None, extra_env: dict | None = None) -> dict | None:
     """Spawn the adapter for `agent` on `instance` in `repo_root`; return its output map
-    {instance_id, agent_id, patches:[...], token_usage:{...}} or None on failure."""
+    {instance_id, agent_id, patches:[...], token_usage:{...}} or None on failure.
+    `followup`: a feedback message that CONTINUES the cell's existing agent conversation
+    (sent as the prompt instead of the task brief; the adapter resumes its session)."""
     md = instance.get("metadata") or {}
     languages = instance.get("languages") or md.get("languages") or ["py"]
-    repo_tree = get_repo_tree(repo_root)
-    augmented = augment_problem_with_repo_context(instance["problem_statement"], repo_root, repo_tree)
-    logger.info("Augmented problem (%d chars tree, %d total)", len(repo_tree), len(augmented))
+    if followup is None:
+        repo_tree = get_repo_tree(repo_root)
+        augmented = augment_problem_with_repo_context(instance["problem_statement"], repo_root, repo_tree)
+        logger.info("Augmented problem (%d chars tree, %d total)", len(repo_tree), len(augmented))
+    else:
+        augmented = followup
 
     agent_input = {
         "instance_id": instance["instance_id"],
@@ -69,6 +75,10 @@ def invoke_agent(agent: dict, instance: dict, repo_root: Path, *,
 
     env = os.environ.copy()
     env.update(agent.get("env") or {})
+    env.update(extra_env or {})
+    env.pop("ZBENCH_FOLLOWUP", None)
+    if followup is not None:
+        env["ZBENCH_FOLLOWUP"] = "1"
     # the adapter runs as `python3 -m zbench.agents.*`; guarantee the zbench package
     # root is importable in the child regardless of how run_cell itself was launched
     # (cwd-on-sys.path does NOT propagate via env to a subprocess).

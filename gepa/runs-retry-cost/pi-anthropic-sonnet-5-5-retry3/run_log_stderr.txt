@@ -1,0 +1,246 @@
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] 20/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] 20/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] 20/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] done in 0.0 min: resolved 20/20
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] done in 0.0 min: resolved 20/20
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] done in 0.0 min: resolved 19/20
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5-s2] 0/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5-s3] 0/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-ea2d2f rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5] done in 6.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-1bac61 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5-s2] done in 7.1 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-9a930b rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g9cfed3c5-s3] done in 7.5 min: resolved 5/6
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-130985 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] done in 3.9 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-193ee1 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] done in 3.9 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-8587ea rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] done in 4.1 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-e5fe67 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] done in 15.2 min: resolved 19/20
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-4c7836 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] done in 16.4 min: resolved 19/20
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-1cc1f0 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] done in 26.5 min: resolved 20/20
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] 6/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] 6/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s2] 0/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2] 0/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-207604 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-f2fa27 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2] done in 7.0 min: resolved 5/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s3] done in 7.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-e403e7 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s2] done in 9.4 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-3998ee rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s2] done in 5.9 min: resolved 20/20
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-968efe rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2-s3] done in 6.1 min: resolved 20/20
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-157e6f rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g14863ba2] done in 8.1 min: resolved 19/20
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] 4/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] 4/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] 4/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] done in 0.8 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] done in 0.8 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] done in 0.8 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] 0/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] 0/4 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] 0/4 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-4b61d6 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] done in 1.9 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-ad1f43 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] done in 2.4 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-53deea rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] done in 2.7 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] 4/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] 4/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] 4/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-3b8da3 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] done in 8.6 min: resolved 19/20
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-6cda4b rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] done in 9.8 min: resolved 19/20
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-0538cd rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] done in 10.4 min: resolved 18/20
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] 0/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] 0/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-dea94a rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] done in 11.4 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-1799f7 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] done in 12.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-25f13d rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] done in 12.3 min: resolved 5/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-267abe rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] done in 5.6 min: resolved 20/20
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-11491d rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] done in 5.9 min: resolved 20/20
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-225e10 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] done in 6.0 min: resolved 19/20
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] done in 0.1 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] done in 0.1 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] done in 0.1 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d-s3] 0/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d-s2] 0/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-b1b800 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d-s3] done in 3.4 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-1ceada rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d] done in 3.8 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-6f8f1f rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gd79ea58d-s2] done in 4.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] 6/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] 6/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] 6/6 cell(s) cached
+
+
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0] done in 0.1 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s3] done in 0.1 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gd2362fa0-s2] done in 0.1 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] 0/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] 0/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-2a49e2 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] done in 3.4 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-0407fb rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] done in 3.6 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-8120ac rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] done in 3.9 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] 6/20 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-9ab8e4 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] done in 15.0 min: resolved 19/20
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-1f945c rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] done in 16.3 min: resolved 20/20
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-afb1fb rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] done in 16.7 min: resolved 19/20
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] 4/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] 4/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] 4/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693] done in 0.0 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s2] done in 0.0 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--g2ccda693-s3] done in 0.0 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b] 0/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b-s3] 0/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b-s2] 0/4 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-293a3e rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b] done in 3.5 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-9d7fe5 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b-s2] done in 3.9 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-673e7b rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gf122f46b-s3] done in 4.7 min: resolved 4/4
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] 6/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] 6/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0] 0/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0-s3] 0/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0-s2] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-825938 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0-s2] done in 4.3 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-cdb533 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0-s3] done in 4.3 min: resolved 5/6
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-3d7d2a rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gc74c6bf0] done in 4.9 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] 6/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] 6/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] 6/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s2] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4-s3] done in 0.0 min: resolved 5/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g92521ad4] done in 0.0 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d-s3] 0/6 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d] 0/6 cell(s) cached[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d-s2] 0/6 cell(s) cached
+
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d-s3] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-fefb02 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d-s3] done in 3.8 min: resolved 6/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-80debd rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d] done in 5.1 min: resolved 5/6
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d-s2] driver gepa-gepa-retry-pi-anthropic-sonnet-5-5-retry-aec817 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--g2bb2165d-s2] done in 6.3 min: resolved 6/6

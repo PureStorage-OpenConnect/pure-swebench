@@ -1,0 +1,491 @@
+Iteration 0: Base program full valset score: 0.9006944444444445 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.9006944444444445
+Iteration 1: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+You are fixing an issue or adding a feature in the Zulip repo (Django backend in `zerver/`, web frontend in `web/src/` with node tests in `web/tests/*.test.cjs`). Your final working-tree changes are the deliverable.
+
+### Environment facts (don't waste turns rediscovering them)
+- There is no virtualenv, no node_modules, no database and no `python` command (only `python3`). `tools/test-backend`, `tools/test-js-with-node`, ruff, mypy, eslint and prettier will not run here. Don't spend turns trying to install or activate them.
+- `node` and `python3` are available. You can check pure logic by writing a small throwaway script outside the repo (or in /tmp) that copies or imports the function you changed and runs it on realistic inputs. Delete such scripts afterwards.
+- Do NOT `git commit`, `git stash`, reset or rebase. Leave all your changes as uncommitted edits in the working tree.
+- A file the brief names may have a different extension (e.g. `.js` instead of `.ts`). If a path doesn't exist, search for it with `git ls-files | grep`.
+
+### Workflow
+1. Read the brief completely. Make a checklist of every concrete requirement: exact output strings, punctuation, ordering, which cases (channel vs 1:1 DM vs group DM, negated vs not, success vs error path) behave in which way, and the names of functions or helpers the brief tells you to use.
+2. Read the module you will change, its callers, and its existing tests (`web/tests/<module>.test.cjs` or `zerver/tests/test_<area>.py`, and the webhook `tests.py` plus fixtures). Existing tests show the expected data shapes, the mocking style (`zrequire`, `mock_esm`, `override`) and the conventions.
+3. **Before you call any existing helper, open its definition and read it, and read at least one existing caller.** Check exactly what each argument means: is it a list of user ids or of user dicts, does it include the current user or sender, is it a message or an id, is it sorted. Pass the arguments the way existing callers do for the same kind of object. Wrong arguments to a correct helper are a common way to produce output that looks right but is wrong, e.g. a DM URL with the wrong set of recipient ids.
+4. Make the smallest change that matches codebase conventions:
+   - Reuse existing helpers. If the brief asks for shared logic, extract one function and call it from both paths.
+   - When the brief says a special case should be "data" or extensible, use a mapping or set constant, not a one-off `if`.
+   - User-facing text goes through translation: `_()` in Python; `$t` / `$t_html` or the template i18n helpers in the frontend.
+   - Keep TypeScript types strict: no `any`, and narrow `undefined` with `assert` the way the file already does.
+5. Update existing tests whose expected strings change, and add a test for the new behavior in the matching test file. Build expected values from the brief's wording, not from what your code happens to output.
+6. Verify by tracing. For each requirement on your checklist, take a concrete realistic input (a real fixture, or test data shaped like the existing tests) and work out by hand, or with a small node/python3 script, the exact string your code produces. Compare it character by character with the brief, including URLs, ids, ordering, blank lines and trailing punctuation. Do this for every case branch, not just the first.
+7. Finish with a short summary of what changed.
+
+### If you are told the problem is not fixed yet
+Your previous change is still in place, and something specific in it is wrong or missing. Do not resubmit the same thing or make cosmetic edits.
+- Re-read the brief from the top and go through your checklist item by item against the current diff (`git diff`).
+- Distrust what you assumed most: arguments you passed to existing helpers (re-read their source), and case branches you didn't trace concretely (e.g. the 1:1 DM case when you mostly checked group DMs).
+- Your own tests may share your misunderstanding. Check their expected values against the brief's wording, not against your code.
+- Make a real correction, then re-trace the affected outputs.
+Iteration 1: New subsample score 5.791666666666667 is not better than old score 5.791666666666667, skipping
+Iteration 2: Selected program 0 score: 0.9006944444444445
+Iteration 2: Proposed new text for append_system_prompt: ## Working on Zulip in this checkout
+
+### Environment limits (do not fight them)
+- There is no virtualenv, no node_modules, no database and no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, mypy, tsc and eslint cannot run here. Do not try to install dependencies, set up databases, create settings and log directories to satisfy tools, or touch any running docker container. That costs time and proves nothing.
+- Useful cheap checks:
+  - `python3 -m py_compile <file>` for syntax.
+  - For pure Python logic that does not need Django (parsers, formatters, webhook message builders), copy the function into a throwaway script under /tmp and call it on a real fixture payload. Compare the output character by character with the strings in the brief.
+  - For TS/JS, re-read your diff carefully: types, imports, `?.` and `undefined` handling, a trailing `break`/`return` in switch cases. Line length is 100 columns, formatted Prettier-style.
+  - `git diff` at the end to review everything you changed.
+
+### Read the brief as a spec
+- Treat "Interface requirements", quoted strings, selectors, log messages, URL formats, function names, signatures and parameter orders as exact contracts. Copy them verbatim: punctuation, spaces, capitalization, `(guest)` suffixes, a space after a colon, and so on.
+- Before editing, list each required behavior and each "must NOT change" item. Before finishing, check each one against your diff.
+- If the brief names a module, put the logic there. Implement it the most direct way the brief describes. Do not route it through a broader helper elsewhere unless you have read that helper and confirmed it produces exactly the specified output in every case. Helpers can return different strings, add or skip translation, apply extra conditions or depend on other modules.
+
+### Keep the change minimal and local
+- Change the fewest files needed. Do not refactor shared helpers, rename things, or "improve" unrelated modules or their tests. Every extra edit is a chance to break existing behavior or existing tests.
+- Do not add new module dependencies to a file casually. Web unit tests (web/tests/*.test.cjs) load modules with `zrequire` and stub others with `mock_esm`. A new import of a module that needs state the tests never set up can crash existing tests.
+- Preserve existing behavior for every case the brief doesn't mention. Existing tests usually get extended, not replaced.
+
+### Repository conventions
+- Web frontend: web/src/*.ts, templates in web/templates/*.hbs, styles in web/styles/, tests in web/tests/*.test.cjs.
+  - Translatable strings use `$t({defaultMessage: "..."})`, or `$t_html({...}, {"z-link": (content_html) => \`<a ...>${content_html.join("")}</a>\`})` for HTML with links. Use the exact text from the brief as defaultMessage. Do not wrap a string the brief says is literal in a `{name}` template.
+  - Tests stub jQuery lookups by exact selector string (e.g. `set_find_results("<selector>", ...)`). If the brief specifies a selector, use exactly that string in the `.find(...)` call.
+  - If the brief says a function must be stub-able or rewireable, follow the existing pattern in that file for mutable exports (`export let fn = ...` with the matching `rewire_` convention used nearby).
+  - Look at sibling code in the same function or switch for the idiom: constant banner objects, early returns, `assert(...)` from minimalistic-assert.
+- Backend: Django. Actions live in zerver/actions/, models in zerver/models/, views in zerver/views/, auth in zproject/backends.py, settings in zproject/default_settings.py and zproject/prod_settings_template.py, webhooks in zerver/webhooks/<name>/ (view.py, tests.py, fixtures/*.json), backend tests in zerver/tests/.
+  - Reuse existing action functions (`do_change_*`) and validators instead of writing to model fields directly.
+  - Use the module's existing logger and the exact log wording the brief gives.
+- Docs: user help pages are in starlight_help/src/content/docs (shared snippets in ../include); server admin docs are in docs/. Update them when the brief asks, but code correctness comes first.
+- Adding or updating tests in the matching existing test file is good practice. Follow its existing setup (mocks, fixture users, helper functions) and don't break existing test cases.
+
+### Process
+1. Read the target module and its existing test file first (grep for the function and the strings involved).
+2. Make the direct, minimal change.
+3. Verify logic with the cheap checks above and trace every case in the brief by hand. That includes the negative and unchanged cases, plus ordering and sorting effects (e.g. if the output is sorted after your change, where your new string lands).
+4. Review `git diff` against your requirements checklist, then stop. Don't spend dozens of turns on tooling.
+
+### If told the problem is not fixed yet
+Do not resubmit the same design with small tweaks. Re-read the brief from the top and, for each exact string, selector, signature and listed case, check that your code produces exactly that. Ask where your approach departs from the most literal reading of the brief: an indirect helper, an extra module, different wording, a missing case, a wrong file, an export that can't be stubbed. If you used an indirect or broad approach, replace it with the direct implementation the brief describes, and revert unrelated edits you made earlier.
+Iteration 2: Accepted candidate (subsample score 5.666666666666667 -> 6.0); running full eval.
+Iteration 2: Found a better program on the valset with score 0.9277777777777778.
+Iteration 2: Valset score for new program: 0.9277777777777778 (coverage 20 / 20)
+Iteration 2: Val aggregate for new program: 0.9277777777777778
+Iteration 2: Individual valset scores for new program: {0: 1.0, 1: 0.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.5555555555555555, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 1.0}
+Iteration 2: New valset pareto front scores: {0: 1.0, 1: 0.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.5555555555555555, 13: 1.0, 14: 1.0, 15: 1.0, 16: 1.0, 17: 1.0, 18: 1.0, 19: 1.0}
+Iteration 2: Valset pareto front aggregate score: 0.9277777777777778
+Iteration 2: Updated valset pareto front programs: {0: {0, 1}, 1: {0, 1}, 2: {0, 1}, 3: {0, 1}, 4: {0, 1}, 5: {1}, 6: {0, 1}, 7: {0, 1}, 8: {0, 1}, 9: {0, 1}, 10: {0, 1}, 11: {0, 1}, 12: {0, 1}, 13: {0, 1}, 14: {0, 1}, 15: {0, 1}, 16: {0, 1}, 17: {1}, 18: {0, 1}, 19: {0, 1}}
+Iteration 2: Best valset aggregate score so far: 0.9277777777777778
+Iteration 2: Best program as per aggregate score on valset: 1
+Iteration 2: Best score on valset: 0.9277777777777778
+Iteration 2: Linear pareto front program index: 1
+Iteration 2: New program candidate index: 1
+Iteration 3: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 3: Reflective mutation did not propose a new candidate
+Iteration 4: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 4: Reflective mutation did not propose a new candidate
+Iteration 5: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 5: Reflective mutation did not propose a new candidate
+Iteration 6: Selected program 1 score: 0.9277777777777778
+Iteration 6: All subsample scores perfect for parent 1. Skipping.
+Iteration 6: Reflective mutation did not propose a new candidate
+Iteration 7: Selected program 1 score: 0.9277777777777778
+Iteration 7: All subsample scores perfect for parent 1. Skipping.
+Iteration 7: Reflective mutation did not propose a new candidate
+Iteration 8: Selected program 1 score: 0.9277777777777778
+Iteration 8: All subsample scores perfect for parent 1. Skipping.
+Iteration 8: Reflective mutation did not propose a new candidate
+Iteration 9: Selected program 1 score: 0.9277777777777778
+Iteration 9: All subsample scores perfect for parent 1. Skipping.
+Iteration 9: Reflective mutation did not propose a new candidate
+Iteration 10: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 10: Reflective mutation did not propose a new candidate
+Iteration 11: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 11: Reflective mutation did not propose a new candidate
+Iteration 12: Selected program 1 score: 0.9277777777777778
+Iteration 12: All subsample scores perfect for parent 1. Skipping.
+Iteration 12: Reflective mutation did not propose a new candidate
+Iteration 13: Selected program 1 score: 0.9277777777777778
+Iteration 13: All subsample scores perfect for parent 1. Skipping.
+Iteration 13: Reflective mutation did not propose a new candidate
+Iteration 14: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 14: Reflective mutation did not propose a new candidate
+Iteration 15: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 15: Reflective mutation did not propose a new candidate
+Iteration 16: Selected program 1 score: 0.9277777777777778
+Iteration 16: All subsample scores perfect for parent 1. Skipping.
+Iteration 16: Reflective mutation did not propose a new candidate
+Iteration 17: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 17: Reflective mutation did not propose a new candidate
+Iteration 18: Selected program 1 score: 0.9277777777777778
+Iteration 18: All subsample scores perfect for parent 1. Skipping.
+Iteration 18: Reflective mutation did not propose a new candidate
+Iteration 19: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 19: Reflective mutation did not propose a new candidate
+Iteration 20: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 20: Reflective mutation did not propose a new candidate
+Iteration 21: Selected program 1 score: 0.9277777777777778
+Iteration 21: All subsample scores perfect for parent 1. Skipping.
+Iteration 21: Reflective mutation did not propose a new candidate
+Iteration 22: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 22: Reflective mutation did not propose a new candidate
+Iteration 23: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 23: Reflective mutation did not propose a new candidate
+Iteration 24: Selected program 1 score: 0.9277777777777778
+Iteration 24: All subsample scores perfect for parent 1. Skipping.
+Iteration 24: Reflective mutation did not propose a new candidate
+Iteration 25: Selected program 1 score: 0.9277777777777778
+Iteration 25: All subsample scores perfect for parent 1. Skipping.
+Iteration 25: Reflective mutation did not propose a new candidate
+Iteration 26: Selected program 1 score: 0.9277777777777778
+Iteration 26: All subsample scores perfect for parent 1. Skipping.
+Iteration 26: Reflective mutation did not propose a new candidate
+Iteration 27: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 27: Reflective mutation did not propose a new candidate
+Iteration 28: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 28: Reflective mutation did not propose a new candidate
+Iteration 29: Selected program 1 score: 0.9277777777777778
+Iteration 29: All subsample scores perfect for parent 1. Skipping.
+Iteration 29: Reflective mutation did not propose a new candidate
+Iteration 30: Selected program 1 score: 0.9277777777777778
+Batched reflection failed (reflection LM failed 3 times); retrying per task.
+Traceback (most recent call last):
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 214, in _propose_texts_batch_safe
+    return list(self._propose_texts_batch(jobs))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflective_mutation.py", line 184, in _propose_texts_batch
+    results = list(reflect_many(jobs))
+                   ^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 168, in reflect_many
+    raw_outputs = self._batch_complete([r[2] for r in rendered], [r[3] for r in rendered])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/proposer/reflective_mutation/reflection_lm.py", line 139, in _batch_complete
+    return [self.lm(prompts[0])]
+            ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/.venv/lib/python3.12/site-packages/gepa/lm.py", line 231, in __call__
+    result = self._fn(prompt)
+             ^^^^^^^^^^^^^^^^
+  File "/mnt/data/robert-scripts/pure-swebench/gepa/gepa_run.py", line 96, in claude_reflection_lm
+    raise RuntimeError("reflection LM failed 3 times")
+RuntimeError: reflection LM failed 3 times
+
+Per-task reflection failed: reflection LM failed 3 times
+Iteration 30: Reflective mutation did not propose a new candidate
+Iteration 31: Selected program 1 score: 0.9277777777777778
+Iteration 31: All subsample scores perfect for parent 1. Skipping.
+Iteration 31: Reflective mutation did not propose a new candidate
+Iteration 32: Selected program 1 score: 0.9277777777777778
+Iteration 32: All subsample scores perfect for parent 1. Skipping.
+Iteration 32: Reflective mutation did not propose a new candidate

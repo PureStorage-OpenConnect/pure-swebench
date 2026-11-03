@@ -1,0 +1,118 @@
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] 29/30 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 27/30 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77] 26/30 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] 26/30 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] 26/30 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 27/30 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77-s2] 29/30 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77-s3] 28/30 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 27/30 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] launching 1 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77-s2] launching 1 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77-s3] launching 2 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] launching 3 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--seed] launching 3 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] launching 3 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77-s2] driver gepa-gepa-retry-test-claude-cli-haiku-5-5-ret-6c614b rc=0
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77-s2] done in 2.2 min: resolved 29/30
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] driver gepa-gepa-retry-test-claude-cli-haiku-5-5-ret-92747f rc=0
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s3] done in 5.7 min: resolved 28/30
+[rollout claude-cli-haiku-5-5-retry3--seed] driver gepa-gepa-retry-test-claude-cli-haiku-5-5-ret-034e51 rc=0
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 8.9 min: resolved 28/30
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77] driver gepa-gepa-retry-test-claude-cli-haiku-5-5-ret-5b1304 rc=0
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77] done in 10.2 min: resolved 28/30
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77-s3] driver gepa-gepa-retry-test-claude-cli-haiku-5-5-ret-d5635a rc=0
+[rollout claude-cli-haiku-5-5-retry3--gf30b0c77-s3] done in 11.2 min: resolved 27/30
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] driver gepa-gepa-retry-test-claude-cli-haiku-5-5-ret-bea348 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e-s2] done in 11.8 min: resolved 28/30
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] driver gepa-gepa-retry-test-claude-cli-haiku-5-5-ret-30d244 rc=0
+[rollout claude-cli-haiku-5-5-retry3--g777ad85e] done in 11.9 min: resolved 28/30
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] driver gepa-gepa-retry-test-claude-cli-haiku-5-5-ret-71e268 rc=0
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 15.9 min: resolved 27/30
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] driver gepa-gepa-retry-test-claude-cli-haiku-5-5-ret-f2ef2e rc=0
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 16.7 min: resolved 26/30
+{
+ "seed": {
+  "n_runs": 90,
+  "resolve@1": 0.8111,
+  "resolve@3": 0.9,
+  "mean_rounds": 1.278,
+  "mean_cost_per_run": 0.499,
+  "prompt_words": 0
+ },
+ "accuracy": {
+  "n_runs": 90,
+  "resolve@1": 0.8333,
+  "resolve@3": 0.9333,
+  "mean_rounds": 1.256,
+  "mean_cost_per_run": 0.3298,
+  "prompt_words": 619
+ },
+ "cost": {
+  "n_runs": 90,
+  "resolve@1": 0.8111,
+  "resolve@3": 0.9333,
+  "mean_rounds": 1.311,
+  "mean_cost_per_run": 0.2579,
+  "prompt_words": 686
+ }
+}
+{
+ "seed: resolve@3 - resolve@1": {
+  "mean_diff": 0.0889,
+  "n_tasks": 30
+ },
+ "accuracy: resolve@3 - resolve@1": {
+  "mean_diff": 0.1,
+  "n_tasks": 30
+ },
+ "cost: resolve@3 - resolve@1": {
+  "mean_diff": 0.1222,
+  "n_tasks": 30
+ },
+ "accuracy - seed (resolve@3)": {
+  "mean_diff": 0.0333,
+  "n_tasks": 30,
+  "tasks_up": 3,
+  "tasks_down": 0,
+  "p_sign_flip": 0.2497
+ },
+ "accuracy - seed (resolve@1)": {
+  "mean_diff": 0.0222,
+  "n_tasks": 30,
+  "tasks_up": 3,
+  "tasks_down": 2,
+  "p_sign_flip": 0.7494
+ },
+ "accuracy / seed cost ratio": {
+  "geo_mean": 0.593,
+  "ci95": [
+   0.479,
+   0.738
+  ]
+ },
+ "cost - seed (resolve@3)": {
+  "mean_diff": 0.0333,
+  "n_tasks": 30,
+  "tasks_up": 3,
+  "tasks_down": 2,
+  "p_sign_flip": 0.5625
+ },
+ "cost - seed (resolve@1)": {
+  "mean_diff": -0.0,
+  "n_tasks": 30,
+  "tasks_up": 5,
+  "tasks_down": 4,
+  "p_sign_flip": 1.0
+ },
+ "cost / seed cost ratio": {
+  "geo_mean": 0.435,
+  "ci95": [
+   0.353,
+   0.538
+  ]
+ }
+}

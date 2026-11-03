@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEPA Candidate Tree</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; width: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; display: flex; flex-direction: column; }
+  #header { background: #fff; border-bottom: 1px solid #dee2e6; padding: 12px 20px; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  #header h1 { font-size: 18px; font-weight: 600; color: #212529; }
+  .legend { display: flex; gap: 14px; font-size: 13px; color: #495057; }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #adb5bd; }
+  #graph-container { flex: 1 1 auto; width: 100%; overflow: auto; padding: 20px; text-align: center; }
+  #graph-container svg { width: 100%; height: 100%; }
+  #tooltip {
+    display: none; position: fixed; background: #fff; border: 1px solid #dee2e6;
+    border-radius: 8px; padding: 14px 16px; max-width: 560px; max-height: 70vh; overflow-y: auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 1000; font-size: 13px; line-height: 1.5;
+  }
+  #tooltip .tt-header { font-weight: 700; font-size: 15px; margin-bottom: 6px; color: #212529; }
+  #tooltip .tt-meta { color: #6c757d; margin-bottom: 4px; }
+  #tooltip .tt-hint { color: #adb5bd; font-size: 11px; font-style: italic; margin-bottom: 10px; }
+  #tooltip .tt-comp-name { font-weight: 600; color: #495057; margin-top: 10px; border-bottom: 1px solid #e9ecef; padding-bottom: 2px; }
+  #tooltip .tt-comp-text {
+    white-space: pre-wrap; word-break: break-word; background: #f8f9fa;
+    border: 1px solid #e9ecef; border-radius: 4px; padding: 8px 10px; margin-top: 4px;
+    font-family: "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px;
+    max-height: 200px; overflow-y: auto;
+  }
+  .role-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+  .role-best { background: #00e5ff33; color: #006064; }
+  .role-pareto { background: #ff980033; color: #e65100; }
+  .role-seed { background: #e0e0e0; color: #424242; }
+</style>
+</head>
+<body>
+<div id="header">
+  <h1>GEPA Candidate Tree</h1>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:cyan"></div> Best</div>
+    <div class="legend-item"><div class="legend-dot" style="background:orange"></div> Pareto Front</div>
+    <div class="legend-item"><div class="legend-dot" style="background:lightgray"></div> Other</div>
+  </div>
+</div>
+<div id="graph-container"><p>Loading graph&hellip;</p></div>
+<div id="tooltip"></div>
+
+<script type="module">
+const NODES = [{"idx": 0, "score": 0.9889, "parents": "seed", "role": "Seed", "components": {"append_system_prompt": ""}},
+{"idx": 1, "score": 1.0, "parents": "0", "role": "Best", "components": {"append_system_prompt": "You are fixing a bug or implementing a feature in the Zulip repository (Django/Python backend in zerver/, zproject/, corporate/; TypeScript web frontend in web/src with node tests in web/tests/*.test.cjs; email templates and CSS in templates/; docs in docs/). Your final working-tree diff is the deliverable.\n\n## Environment facts (don't waste turns on these)\n- There is no virtualenv, no node_modules, no database and no `python` command (use `python3`). tools/test-backend and tools/test-js-with-node cannot run here. Do not try to install dependencies or start services.\n- You can still check things cheaply:\n  - `python3 -m py_compile <file>` for syntax.\n  - For pure logic (parsing, string formatting, small algorithms), copy the function into a standalone `python3` snippet with the Django/model imports stubbed out, and run it on realistic inputs.\n  - Read the existing tests for the code you touch, so you know what they assert and how fixtures are built.\n\n## How to work\n1. Read the brief completely. List every concrete requirement: exact output strings, HTML markup, log levels and exact log wording, setting keys, which function must call which helper, argument order, and when calls must happen (e.g. synchronously). Treat quoted strings and example outputs as exact specs, down to quoting style, spacing and punctuation.\n2. Find where the behavior is produced today, and change it at that place. Prefer the smallest change that fits the existing structure.\n3. Reuse what exists. Use existing helpers, constants (e.g. length limits in zerver/models/constants.py), option flags already supported by the function you're editing, and existing actions (zerver/actions/*) for state changes. Don't build a parallel mechanism.\n4. When the brief describes the result but not the exact format, don't invent a new syntax. Find how Zulip already shows the same concept elsewhere and copy it:\n   - Many features have both a Python and a TypeScript version (e.g. zerver/lib/X.py and web/src/X.ts). Check both.\n   - Check the URL helpers, Markdown/link helpers and email/notification code for the same concept.\n   The expected output is usually what the product already produces for that concept in that situation.\n5. Keep behavior the brief doesn't mention exactly as it is. This includes edge cases like empty or null values, other branches, other callers and non-matching inputs. Don't change function signatures in incompatible ways. Existing tests not related to the change must still pass, so don't edit existing fixtures or test data to make your code work. Add new fixtures or tests instead.\n6. Check your logic against the brief's example:\n   - If the brief gives an input\u2192output example, recreate that input faithfully, including the extra or irrelevant fields real payloads contain, not only the fields you care about.\n   - Run your code on it with python3 where you can, and compare the output with the expected text character by character.\n   - Also think about tricky values: separators inside values, duplicate keys or labels, empty strings, unicode, values that need HTML escaping.\n7. Update the existing tests that assert the old behavior, and add a focused test in the matching test file (zerver/tests/test_*.py, zerver/webhooks/<name>/tests.py with fixtures/, web/tests/*.test.cjs). Follow the existing test style. Update docs when you add a user- or admin-facing setting or behavior.\n8. Follow conventions: sorted imports (imports inside functions where the file already does that to avoid cycles), type annotations, Markup/escaping rules in templates and emails, and translated user-facing strings via _() / $t.\n\n## If you are told the problem is not fixed yet\nThat message means your change is wrong or incomplete. Assume your interpretation is the mistake, not the checker. Never finish a round without a new, real change, and don't repeat or reword the same approach. Instead:\n- Re-read the brief line by line and compare each requirement with your diff. Look especially for exact formats, every case the brief lists, and the precise conditions under which something must or must not happen.\n- Write down at least two other ways to read the brief, and pick the one that best matches how Zulip already does similar things (see step 4; check the frontend/backend counterpart and similar features).\n- Check whether you broke an existing behavior or edge case, or edited existing fixtures or tests that should have stayed unchanged.\n- Check whether your own test input was too easy compared with real inputs. Rebuild it to match the brief's description exactly and re-run your logic.\n- Then make the corrected change. Revert parts of your earlier change that no longer fit.\n\n## Finishing\nEnd with a short summary: what you changed, where, and what you checked and how. Say plainly which tests you could not run."}}];
+const DOT = `digraph G {
+    rankdir=TB;
+    node [style=filled, shape=circle, fontsize=14, width=0.6, height=0.6];
+    0 [label="0\\n(0.99)", fillcolor=lightgray, tooltip=" "];
+    1 [label="1\\n(1.00)", fillcolor=cyan, tooltip=" "];
+    0 -> 1;
+}`;
+
+const nodeMap = {};
+NODES.forEach(n => { nodeMap[n.idx] = n; });
+
+let pinnedIdx = null;   // non-null when tooltip is click-pinned (scrollable)
+let hoverIdx = null;    // non-null when hovering over a node
+
+function renderTooltip(idx) {
+  const n = nodeMap[idx];
+  if (!n) return "";
+  let roleBadge = "";
+  if (n.role === "Best") roleBadge = '<span class="role-badge role-best">BEST</span>';
+  else if (n.role === "Pareto Front") roleBadge = '<span class="role-badge role-pareto">PARETO</span>';
+  else if (n.role === "Seed") roleBadge = '<span class="role-badge role-seed">SEED</span>';
+
+  let comps = "";
+  for (const [name, text] of Object.entries(n.components)) {
+    const escaped = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    comps += '<div class="tt-comp-name">' + name + '</div><div class="tt-comp-text">' + escaped + '</div>';
+  }
+
+  return '<div class="tt-header">Candidate ' + n.idx + roleBadge + '</div>' +
+    '<div class="tt-meta">Score: <strong>' + n.score + '</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Parent(s): ' + n.parents +
+    '</div><div class="tt-hint">' + (pinnedIdx === idx ? 'Click node again to dismiss' : 'Click to pin &amp; scroll') + '</div>' +
+    comps;
+}
+
+function positionTooltip(x, y) {
+  const tt = document.getElementById("tooltip");
+  let tx = x + 16, ty = y + 16;
+  const r = tt.getBoundingClientRect();
+  if (tx + r.width > window.innerWidth - 8) tx = x - r.width - 16;
+  if (ty + r.height > window.innerHeight - 8) ty = y - r.height - 16;
+  if (tx < 8) tx = 8;
+  if (ty < 8) ty = 8;
+  tt.style.left = tx + "px";
+  tt.style.top = ty + "px";
+}
+
+function showTooltip(idx, x, y) {
+  const tt = document.getElementById("tooltip");
+  tt.innerHTML = renderTooltip(idx);
+  tt.style.display = "block";
+  positionTooltip(x, y);
+}
+
+function hideTooltip() {
+  pinnedIdx = null;
+  hoverIdx = null;
+  document.getElementById("tooltip").style.display = "none";
+}
+
+// Click outside tooltip and outside nodes dismisses pinned tooltip
+document.addEventListener("mousedown", function(e) {
+  const tt = document.getElementById("tooltip");
+  if (pinnedIdx !== null && tt.style.display === "block"
+      && !tt.contains(e.target) && !e.target.closest(".node")) {
+    hideTooltip();
+  }
+});
+
+async function render() {
+  const { instance } = await import("https://cdn.jsdelivr.net/npm/@viz-js/viz@3.11.0/lib/viz-standalone.mjs");
+  const viz = await instance();
+  const svg = viz.renderSVGElement(DOT);
+  const container = document.getElementById("graph-container");
+  container.innerHTML = "";
+  container.appendChild(svg);
+
+  // Attach hover listeners and strip native <title> tooltips to avoid double tooltips
+  svg.querySelectorAll(".node").forEach(node => {
+    const title = node.querySelector("title");
+    if (!title) return;
+    const idx = parseInt(title.textContent, 10);
+    if (isNaN(idx)) return;
+    title.remove();  // remove native SVG tooltip
+    node.style.cursor = "pointer";
+    // Hover: show tooltip following the mouse (non-interactive)
+    node.addEventListener("mouseenter", e => {
+      if (pinnedIdx !== null) return;  // don't override a pinned tooltip
+      hoverIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+    node.addEventListener("mousemove", e => {
+      if (pinnedIdx !== null || hoverIdx !== idx) return;
+      positionTooltip(e.clientX, e.clientY);
+    });
+    node.addEventListener("mouseleave", () => {
+      if (pinnedIdx !== null) return;
+      hoverIdx = null;
+      document.getElementById("tooltip").style.display = "none";
+    });
+    // Click: pin the tooltip so user can scroll it
+    node.addEventListener("click", e => {
+      e.stopPropagation();
+      if (pinnedIdx === idx) { hideTooltip(); return; }
+      pinnedIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+  });
+  // Also strip <title> from edges and the graph itself
+  svg.querySelectorAll(".edge title").forEach(t => t.remove());
+  const graphTitle = svg.querySelector(":scope > title");
+  if (graphTitle) graphTitle.remove();
+}
+
+render().catch(err => {
+  document.getElementById("graph-container").innerHTML =
+    "<p style='color:red'>Failed to render graph: " + err.message + "</p>" +
+    "<pre>" + DOT.replace(/</g,"&lt;") + "</pre>";
+});
+</script>
+</body>
+</html>

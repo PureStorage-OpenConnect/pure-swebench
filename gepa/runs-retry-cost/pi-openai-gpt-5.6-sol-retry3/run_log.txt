@@ -1,0 +1,286 @@
+Iteration 0: Base program full valset score: 0.8833333333333334 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.8833333333333334
+Iteration 1: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/, web frontend in web/src with node tests in web/tests/*.test.cjs, Handlebars templates in web/templates).
+
+Environment: no virtualenv, no node_modules, no database, only `python3`. The test runners, tsc, eslint and mypy cannot run here, so don't look for them or try to install them. Don't run broad `find` over / or /mnt, don't create node_modules, and don't delete anything outside the files you are changing. To check your work: re-read your diff carefully, and where the logic is self-contained, check it with a small standalone `python3 -c`/`node -e` snippet that copies the function. Also run `git diff --check`.
+
+Efficient workflow:
+1. Read the brief and list every concrete requirement: exact output strings, punctuation, ordering, sorting key, spacing/blank lines, which cases (e.g. 1:1 vs group vs channel; negated vs plain) and which existing behaviors must stay unchanged.
+2. Locate code with `rg -n` (paths in the brief can be slightly wrong, e.g. .ts vs .js; trust rg). Read only the relevant ranges (`sed -n 'A,Bp'` or a read with offset/limit). Don't read whole large files, and don't re-read sections you have already seen.
+3. Find the existing tests for the module (`rg -ln <module> web/tests zerver/tests`) and read just the relevant test cases. They show the calling conventions and test mocking style (zrequire/mock_esm/override, WebhookTestCase fixtures).
+4. Make the minimal change in the layer the brief names. Reuse existing helpers instead of re-implementing them. Follow local conventions: `$t`/`_()` for user-facing strings, `assert(x !== undefined)` after store lookups, data tables/maps rather than one-off conditionals when the brief asks for extensibility.
+5. Update existing tests that assert the old behavior/strings, and add a focused test for the new behavior. When adding a webhook fixture, use the payload given in the brief.
+6. Before finishing, compare your output against the brief character by character: every literal string, sort order (sort by exactly what the brief says, e.g. by the rendered mention string vs. by a name field), separators like ", and ", newlines between blocks, and the ordering of list items. Then stop. Don't keep polishing once the change is complete and checked.
+
+If you are told the problem is not fixed yet: don't just tweak the same idea. Re-read the brief from the top and check each requirement against your diff one by one, especially exact strings, ordering/sorting, edge cases and every code path (each message type, each branch). Check that you didn't break existing behavior that other tests rely on, and that new functions are exported with the exact name and signature the brief describes. Fix every mismatch you find, not just the first.
+Iteration 1: New subsample score 5.160347237499617 is not better than old score 5.4, skipping
+Iteration 2: Selected program 0 score: 0.8833333333333334
+Iteration 2: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web client in web/src with node tests in web/tests/*.test.cjs, help docs in starlight_help/ and docs/):
+
+Implementing the change
+- Treat the brief's "Interface requirements" literally: exact names, signatures, strings, selectors, log wording and module placement. Where the brief names existing state or methods to use (e.g. "the current X", "pre-existing method Y"), use exactly those, via the module-level state the codebase already uses. Don't add new parameters or refactor call sites to pass things around. Callers and tests use the existing signatures.
+- Make the most direct change at the place the brief describes. Don't invent extra behaviour or invariants the brief doesn't ask for (e.g. preserving an old ordering, special-casing, renaming ids/classes, broader refactors). If existing logic runs on the value you change (sorting, formatting, filtering), let it keep running on the new value unless the brief says otherwise.
+- Follow nearby conventions: user-facing strings go through $t / $t_html (web) or gettext (backend); backend logging uses the module's existing logger; reuse existing helpers rather than writing parallel ones.
+- If you change a selector, class, signature or behaviour that existing tests stub or assert on, update those tests to match. Adding a focused test in the existing file's style is good but optional.
+
+Checking your work in this environment
+- The checkout has no virtualenv, node_modules or database, and only `python3`. tools/test-backend and tools/test-js-with-node cannot run. Don't try to build an environment (no installing packages, symlinking venvs or searching other directories for one). Verify by careful reading: trace each requirement in the brief through your diff, check imports, types and every call site (`rg` for the names you touched), and run `python3 -m py_compile` on edited Python files if useful.
+- Before finishing, reread the brief's requirement list once and confirm each item is handled. Then stop.
+
+Working efficiently
+- Locate code with `rg -n` and read only the relevant ranges (`sed -n 'A,Bp'` or the read tool with offset/limit), not whole large files. Keep command output short (`| head`, `-l`, `-c`). Don't re-read files you have already seen unless they changed.
+- Plan the edit once you have found the relevant code; avoid long exploratory detours.
+
+If told the problem is not fixed yet
+- Don't just tweak the same approach. Reread the brief and list every design decision in your diff that the brief didn't explicitly require (extra ordering rules, new parameters, changed signatures, renamed elements, extra conditions). Replace each one with the simplest literal reading of the brief and the existing code's conventions.
+- Check for missed requirements (other entry points, URL/hash validation, docs, existing tests needing updates) and for behaviour you may have broken.
+Iteration 2: Accepted candidate (subsample score 5.066666666666666 -> 5.650869042967644); running full eval.
+Iteration 2: Valset score for new program: 0.8802239548397355 (coverage 20 / 20)
+Iteration 2: Val aggregate for new program: 0.8802239548397355
+Iteration 2: Individual valset scores for new program: {0: 0.9567315625866449, 1: 0.9678744816126756, 2: 0.9439765419883123, 3: 0.9688011226564736, 4: 0.18048918077839882, 5: 0.9352503149975441, 6: 0.9056915585169364, 7: 0.9282983640483808, 8: 0.8924180519559128, 9: 0.9593032032122695, 10: 0.9168717746175314, 11: 0.9152394960646637, 12: 0.8990406807725906, 13: 0.9203998543624365, 14: 0.8902564723897834, 15: 0.9679299950684254, 16: 0.9302385852465065, 17: 0.6839586786420542, 18: 0.9411568066297249, 19: 0.9005523706474424}
+Iteration 2: New valset pareto front scores: {0: 0.9567315625866449, 1: 0.9678744816126756, 2: 0.9439765419883123, 3: 0.9688011226564736, 4: 0.9, 5: 0.9352503149975441, 6: 0.9056915585169364, 7: 0.9282983640483808, 8: 0.9, 9: 0.9593032032122695, 10: 0.9168717746175314, 11: 0.9152394960646637, 12: 0.9, 13: 0.9203998543624365, 14: 0.9, 15: 0.9679299950684254, 16: 0.9302385852465065, 17: 0.9, 18: 0.9411568066297249, 19: 0.9005523706474424}
+Iteration 2: Valset pareto front aggregate score: 0.9279158016127983
+Iteration 2: Updated valset pareto front programs: {0: {1}, 1: {1}, 2: {1}, 3: {1}, 4: {0}, 5: {1}, 6: {1}, 7: {1}, 8: {0}, 9: {1}, 10: {1}, 11: {1}, 12: {0}, 13: {1}, 14: {0}, 15: {1}, 16: {1}, 17: {0}, 18: {1}, 19: {1}}
+Iteration 2: Best valset aggregate score so far: 0.8833333333333334
+Iteration 2: Best program as per aggregate score on valset: 0
+Iteration 2: Best score on valset: 0.8833333333333334
+Iteration 2: Linear pareto front program index: 0
+Iteration 2: New program candidate index: 1
+Iteration 3: Selected program 1 score: 0.8802239548397355
+Iteration 3: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web client in web/src with node tests in web/tests/*.test.cjs, help docs in starlight_help/ and docs/).
+
+Implementing the change
+- Treat the brief's requirements, examples and "Interface requirements" as the spec: exact names, signatures, strings, selectors, output formats and module placement. Where the brief names existing state, helpers or methods to use, use exactly those. Keep existing signatures; don't add parameters or refactor call sites.
+- If the brief says the output should contain or resolve to something specific (a URL form, an id, a class, a wording), make sure the string your code generates literally contains it. Build it with the codebase's existing helpers (URL/link builders, display-name helpers, escaping utilities) rather than hand-rolled formatting.
+- Make the most direct change where the brief points. Don't invent extra behaviour, special cases or broader refactors. Existing logic that runs on the value you change (sorting, formatting, filtering) keeps running on the new value.
+- When you widen the inputs a function handles (new prefix or indentation, new URL shape, new user type, empty value), go through EVERY branch of that function that the new input can now reach, including "empty"/removal/early-return/fallback paths and not just the one the brief demonstrates. Each branch must handle the new input consistently: lengths, offsets, slices and selection ranges must account for the extra characters, and the same normalized value must be used everywhere.
+- Follow nearby conventions. User-facing strings go through $t / $t_html (web) or gettext (backend). Use the module's existing logger and reuse existing helpers. Use Markup/escaping the way the surrounding code does.
+- If you change behaviour that existing tests assert on, update those tests to match. Adding one focused test in the file's existing style is good. Update existing fixture/expected strings that your change alters.
+
+Checking your work
+- The checkout has no virtualenv, node_modules or database, and only `python3`. tools/test-backend and tools/test-js-with-node cannot run, so don't try to build an environment. For pure string, regex or offset logic you may copy it into a tiny standalone `python3 -c` (or `node -e`, if node exists) snippet and run it on the brief's examples.
+- Otherwise trace by hand: for each example in the brief, and for one input per branch you touched, write down the concrete input, the cursor position or offsets, and the exact output your code produces. Compare it character by character with the expected result.
+- `rg` for every name you touched to check imports, types and call sites. Run `python3 -m py_compile` on edited Python files. Then reread the requirement list once, confirm each item, and stop.
+
+Working efficiently
+- Locate code with `rg -n` and read only the relevant ranges (`sed -n 'A,Bp'` or read with offset/limit). Keep command output short (`| head`, `-l`). Don't re-read unchanged files.
+- Aim to plan the edit within a few searches, make it in one pass, verify, and finish. Avoid long exploratory detours and repeated diff dumps.
+
+If told the problem is not fixed yet
+- Don't re-explore the repo or slightly vary the same edit. First, list every branch and code path of the function(s) you changed and check each against the new input, especially sibling paths (removal/empty/fallback) that still use old assumptions such as fixed lengths or untrimmed values.
+- Then compare the brief's exact wording and examples with your actual output strings. Then list any design choices the brief didn't require and replace them with the simplest literal reading that follows existing conventions. Check for missed entry points, docs, and existing tests or fixtures that need updating.
+Iteration 3: Accepted candidate (subsample score 4.77580805233877 -> 5.581161127467002); running full eval.
+Iteration 3: Valset score for new program: 0.8692948319203516 (coverage 20 / 20)
+Iteration 3: Val aggregate for new program: 0.8692948319203516
+Iteration 3: Individual valset scores for new program: {0: 0.9506826887718219, 1: 0.9597000045190512, 2: 0.941292690131564, 3: 0.9718952692650997, 4: 0.9411270283487376, 5: 0.22197580832420627, 6: 0.915849662201379, 7: 0.9266327479796332, 8: 0.9032644402991235, 9: 0.9608884561583593, 10: 0.8974339055431023, 11: 0.9225020306895795, 12: 0.9328464558595045, 13: 0.9272020072255986, 14: 0.37439839184182666, 15: 0.9599720368000673, 16: 0.9281015039581902, 17: 0.8730495882244185, 18: 0.9563595646767401, 19: 0.9207223575890304}
+Iteration 3: New valset pareto front scores: {0: 0.9567315625866449, 1: 0.9678744816126756, 2: 0.9439765419883123, 3: 0.9718952692650997, 4: 0.9411270283487376, 5: 0.9352503149975441, 6: 0.915849662201379, 7: 0.9282983640483808, 8: 0.9032644402991235, 9: 0.9608884561583593, 10: 0.9168717746175314, 11: 0.9225020306895795, 12: 0.9328464558595045, 13: 0.9272020072255986, 14: 0.9, 15: 0.9679299950684254, 16: 0.9302385852465065, 17: 0.9, 18: 0.9563595646767401, 19: 0.9207223575890304}
+Iteration 3: Valset pareto front aggregate score: 0.9349914446239588
+Iteration 3: Updated valset pareto front programs: {0: {1}, 1: {1}, 2: {1}, 3: {2}, 4: {2}, 5: {1}, 6: {2}, 7: {1}, 8: {2}, 9: {2}, 10: {1}, 11: {2}, 12: {2}, 13: {2}, 14: {0}, 15: {1}, 16: {1}, 17: {0}, 18: {2}, 19: {2}}
+Iteration 3: Best valset aggregate score so far: 0.8833333333333334
+Iteration 3: Best program as per aggregate score on valset: 0
+Iteration 3: Best score on valset: 0.8833333333333334
+Iteration 3: Linear pareto front program index: 0
+Iteration 3: New program candidate index: 2
+Iteration 4: Selected program 1 score: 0.8802239548397355
+Iteration 4: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web client in web/src with node tests in web/tests/*.test.cjs, help docs in starlight_help/ and docs/):
+
+Implementing the change
+- Treat the brief's interface requirements literally: exact names, signatures, field names, strings, selectors, log/error wording, CSS classes and module placement. Where the brief names existing helpers or state to use, use exactly those, and reach them the way the codebase already does (module-level state, existing imports). Don't add parameters or refactor call sites unless the brief requires a new signature. If it does, update every caller (`rg` the name).
+- Make the most direct change at the place the brief describes. Don't invent behaviour, ordering rules or special cases the brief doesn't ask for. If existing logic runs on the value you change (sorting, formatting, escaping, filtering), let it keep running on the new value.
+- Prefer reusing existing machinery over post-processing its output. For example, to rank or treat a subset differently, split the input into groups and run each group through the existing pipeline or bucketing. Remove any old logic that your change makes redundant.
+- Follow nearby conventions. User-facing strings go through $t / $t_html (web) or gettext (backend). Backend logging uses the module's existing logger. HTML built in Python uses Markup/escape as the surrounding code does. Reuse existing helpers and constants instead of writing parallel ones.
+- Tests: if you change something existing tests stub or assert on, update those tests. Don't write new tests unless the brief asks for them.
+
+Checking your work in this environment
+- There is no virtualenv, node_modules or database, and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to build an environment or search for one. Verify by reading: trace each requirement through your diff, and check imports, types and every call site of names you touched (`rg -n`). Run `python3 -m py_compile` on edited Python files.
+- Review your diff once with `git diff`, reread the brief's requirement list, confirm each item is handled, then stop. Don't re-verify a diff you already checked, and don't dig through git history.
+
+Working efficiently
+- Find code with `rg -n` (use `-l` or `| head` to keep output short), then read only the relevant range: `sed -n 'A,Bp'`, or the read tool with offset and a limit of about 80 lines. Don't read whole large files or files you have already seen unless they changed.
+- Batch independent searches into one command. Plan the edit as soon as you have found the relevant code, and make it in as few edits as possible.
+
+If told the problem is not fixed yet
+- Don't just tweak the same approach. Reread the brief and list every choice in your diff that the brief didn't explicitly require (extra conditions, ordering rules, new parameters, renamed elements, different names or messages than quoted). Replace each one with the simplest literal reading of the brief and the existing code's conventions.
+- Check for missed requirements: other entry points or callers, exact quoted strings and names, the plain and HTML variants of the same output, docs, existing tests that need updates. Also check for behaviour you may have broken.
+Iteration 4: Accepted candidate (subsample score 5.5992053091526435 -> 5.736239443588283); running full eval.
+Iteration 4: Valset score for new program: 0.8417697137701857 (coverage 20 / 20)
+Iteration 4: Val aggregate for new program: 0.8417697137701857
+Iteration 4: Individual valset scores for new program: {0: 0.9770536576621554, 1: 0.9775035370266728, 2: 0.9675468757423585, 3: 0.9821311332500753, 4: -0.1462782142244393, 5: 0.9658728355677227, 6: 0.9347102593271888, 7: 0.9454771910799268, 8: 0.9223505896077169, 9: 0.965572987775083, 10: 0.951588885488587, 11: 0.9340046064589933, 12: 0.9341401360381194, 13: 0.940400842125091, 14: 0.4101628888985121, 15: 0.9720169313569365, 16: 0.978080095677038, 17: 0.3039538727015008, 18: 0.9760391411801488, 19: 0.9430660226643282}
+Iteration 4: New valset pareto front scores: {0: 0.9770536576621554, 1: 0.9775035370266728, 2: 0.9675468757423585, 3: 0.9821311332500753, 4: 0.9411270283487376, 5: 0.9658728355677227, 6: 0.9347102593271888, 7: 0.9454771910799268, 8: 0.9223505896077169, 9: 0.965572987775083, 10: 0.951588885488587, 11: 0.9340046064589933, 12: 0.9341401360381194, 13: 0.940400842125091, 14: 0.9, 15: 0.9720169313569365, 16: 0.978080095677038, 17: 0.9, 18: 0.9760391411801488, 19: 0.9430660226643282}
+Iteration 4: Valset pareto front aggregate score: 0.9504341378188441
+Iteration 4: Updated valset pareto front programs: {0: {3}, 1: {3}, 2: {3}, 3: {3}, 4: {2}, 5: {3}, 6: {3}, 7: {3}, 8: {3}, 9: {3}, 10: {3}, 11: {3}, 12: {3}, 13: {3}, 14: {0}, 15: {3}, 16: {3}, 17: {0}, 18: {3}, 19: {3}}
+Iteration 4: Best valset aggregate score so far: 0.8833333333333334
+Iteration 4: Best program as per aggregate score on valset: 0
+Iteration 4: Best score on valset: 0.8833333333333334
+Iteration 4: Linear pareto front program index: 0
+Iteration 4: New program candidate index: 3
+Iteration 5: Selected program 3 score: 0.8417697137701857
+Iteration 5: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web client in web/src with node tests in web/tests/*.test.cjs, webhooks in zerver/webhooks/<name>/ with fixtures/, help docs in starlight_help/ and docs/):
+
+Implementing the change
+- Treat the brief's interface requirements literally: exact names, signatures, field names, strings, URL forms, selectors, log/error wording, CSS classes and module placement. Where the brief names existing helpers or state to use, use exactly those, and reach them the way the codebase already does (module-level state, existing imports). Don't add parameters or refactor call sites unless the brief requires a new signature. If it does, update every caller (`rg` the name).
+- Make the most direct change at the place the brief describes. Don't invent behaviour, ordering rules or special cases the brief doesn't ask for. If existing logic runs on the value you change (sorting, formatting, escaping, filtering), let it keep running on the new value.
+- Extend, don't rewrite. Keep existing helpers and output formats and add the smallest new piece (for example one new parsing function) next to them. Reusing an existing helper is good only if its output is what the brief asks for. Before choosing a helper, work out the exact string or markup it will produce and compare it with the brief (for example a `/with/` link vs a `/near/` link, or plain vs HTML).
+- Follow nearby conventions. User-facing strings go through $t / $t_html (web) or gettext (backend). Backend logging uses the module's existing logger. HTML built in Python uses Markup/escape as the surrounding code does. Reuse existing helpers and constants instead of writing parallel ones.
+- Existing behaviour must not change unless the brief says so. Never edit the expected output of existing tests or fixtures just to match your new output. If your change alters them, your change is wrong. Only update tests that stub or call something whose interface you were required to change. Don't write new tests unless the brief asks for them.
+- Prefer graceful fallbacks over new error paths. Don't add code that raises or rejects input the old code accepted.
+
+Checking your work in this environment
+- There is no virtualenv, node_modules or database, and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to build an environment or search for one.
+- Verify by reading: trace each requirement through your diff, and check imports, types and every call site of names you touched (`rg -n`). Run `python3 -m py_compile` on edited Python files.
+- If the change involves non-trivial pure logic (parsing, string building, matching, formatting), and especially if the brief gives a concrete input and expected output, actually run it. Copy the function(s) into a scratch script under /tmp (no Django imports) and run it with `python3` on the brief's example and on the existing fixtures. Check that the output matches exactly, character for character. Fix the logic until it does, and leave nothing behind in the repo.
+- Review your diff once with `git diff`, reread the brief's requirement list, confirm each item is handled, then stop. Don't re-verify a diff you already checked, and don't dig through git history.
+
+Working efficiently
+- Find code with `rg -n` (use `-l` or `| head` to keep output short), then read only the relevant range: `sed -n 'A,Bp'`, or the read tool with offset and a limit of about 80 lines. Don't read whole large files or files you have already seen unless they changed.
+- Batch independent searches into one command. Plan the edit as soon as you have found the relevant code, and make it in as few edits as possible.
+
+If told the problem is not fixed yet
+- Don't just tweak the same approach. First, if the brief has an example input/output, run your logic on it as described above. A crash or mismatch there is the bug.
+- Reread the brief and list every choice in your diff that the brief didn't explicitly require (extra conditions, ordering rules, new parameters, new error paths, renamed elements, different names, messages or link forms than quoted). Replace each one with the simplest literal reading of the brief and the existing code's conventions.
+- Check for missed requirements: other entry points or callers, exact quoted strings and names, the plain and HTML variants of the same output, docs, existing tests that need updates. Also check for behaviour you may have broken: if you changed any existing test expectation, revert that and fix the code instead.
+Iteration 5: New subsample score 5.012216414013654 is not better than old score 5.202143792709889, skipping
+Iteration 6: Selected program 3 score: 0.8417697137701857
+Iteration 6: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web client in web/src with node tests in web/tests/*.test.cjs, help docs in starlight_help/ and docs/):
+
+Implementing the change
+- Treat the brief's interface requirements literally: exact names, signatures, field names, strings, selectors, log/error wording, CSS classes and module placement. Where the brief names existing helpers or state, use exactly those, reached the way the codebase already does. Don't add parameters or refactor call sites unless the brief requires a new signature; if it does, update every caller (`rg` the name).
+- Make the most direct change at the place the brief describes. Don't invent behaviour or special cases the brief doesn't ask for. If existing logic runs on the value you change (sorting, formatting, escaping, filtering), let it keep running on the new value.
+- Prefer reusing existing machinery over post-processing its output (e.g. split the input into groups and run each group through the existing pipeline). Remove old logic your change makes redundant.
+- Extending existing behaviour to a new case (e.g. "make X also work for indented/nested/negated/other-layout input", "same as the existing behaviour for Y"): the new case must behave like the old one in EVERY path of the function, not just the main one. Before editing, list each branch of the function, including the exit, removal, undo and early-return branches, and decide what the new case needs in each. Look hard at hard-coded lengths, offsets, slice indices and cursor/selection arithmetic. They usually assume the old case and must account for the new part (e.g. the prefix length).
+- Follow nearby conventions. User-facing strings go through $t / $t_html (web) or gettext (backend). Backend logging uses the module's existing logger. HTML built in Python uses Markup/escape as the surrounding code does. Reuse existing helpers and constants instead of writing parallel ones.
+- Tests: if you change something existing tests stub or assert on, update those tests. Don't write new tests unless the brief asks for them.
+
+Checking your work in this environment
+- There is no virtualenv, node_modules or database, and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to build an environment or search for one. Run `python3 -m py_compile` on edited Python files.
+- Verify by tracing by hand: for each branch you identified, pick a concrete input (e.g. a string plus a cursor position) and compute the exact output, positions and lengths your code produces. Check that they match what the old case produces, shifted for the new case. Check imports, types and every call site of names you touched (`rg -n`).
+- Review your diff once with `git diff`, reread the brief's requirement list, confirm each item is handled, then stop. Don't re-verify a diff you already checked, and don't dig through git history.
+
+Working efficiently
+- Find code with `rg -n` (use `-l` or `| head` to keep output short), then read only the relevant range: `sed -n 'A,Bp'`, or the read tool with offset and a limit of about 80 lines. Don't reread files you've already seen unless they changed.
+- Batch independent searches into one command. Once you've found the relevant function, plan the edit and make it in as few edits as possible. Don't explore unrelated modules (event plumbing, markdown rendering, hotkey dispatch) unless the brief points there.
+
+If told the problem is not fixed yet
+- The gap is most likely inside the function you already edited. Reopen it first and go branch by branch, especially branches you left unchanged and any hard-coded numbers. Ask what each one does with the new case, and trace concrete values. Do this before looking at other files.
+- Then list every choice in your diff that the brief didn't require (extra conditions, ordering rules, new parameters, renamed elements, different names or messages than quoted). Replace each with the simplest literal reading of the brief and the existing conventions.
+- Check for missed requirements: other entry points or callers, exact quoted strings and names, plain and HTML variants of the same output, docs, existing tests that need updates, and behaviour you may have broken.
+Iteration 6: Accepted candidate (subsample score 4.617708387969837 -> 5.680210579620786); running full eval.
+Iteration 6: Found a better program on the valset with score 0.8882723734515416.
+Iteration 6: Valset score for new program: 0.8882723734515416 (coverage 20 / 20)
+Iteration 6: Val aggregate for new program: 0.8882723734515416
+Iteration 6: Individual valset scores for new program: {0: 0.9718116549632312, 1: 0.97392038126888, 2: 0.9662101656892496, 3: 0.9800682614553979, 4: 0.9251617660275002, 5: 0.9518077045501001, 6: 0.8601530541174285, 7: 0.9442076511467647, 8: 0.9350153523614573, 9: 0.9671702610136629, 10: 0.9496645762075939, 11: 0.9319937538789488, 12: 0.8992184740701941, 13: 0.9365267451095699, 14: 0.42298551791556754, 15: 0.9764241099104898, 16: 0.974972495571039, 17: 0.29412138865192555, 18: 0.96886267342126, 19: 0.9351514817005719}
+Iteration 6: New valset pareto front scores: {0: 0.9770536576621554, 1: 0.9775035370266728, 2: 0.9675468757423585, 3: 0.9821311332500753, 4: 0.9411270283487376, 5: 0.9658728355677227, 6: 0.9347102593271888, 7: 0.9454771910799268, 8: 0.9350153523614573, 9: 0.9671702610136629, 10: 0.951588885488587, 11: 0.9340046064589933, 12: 0.9341401360381194, 13: 0.940400842125091, 14: 0.9, 15: 0.9764241099104898, 16: 0.978080095677038, 17: 0.9, 18: 0.9760391411801488, 19: 0.9430660226643282}
+Iteration 6: Valset pareto front aggregate score: 0.9513675985461377
+Iteration 6: Updated valset pareto front programs: {0: {3}, 1: {3}, 2: {3}, 3: {3}, 4: {2}, 5: {3}, 6: {3}, 7: {3}, 8: {4}, 9: {4}, 10: {3}, 11: {3}, 12: {3}, 13: {3}, 14: {0}, 15: {4}, 16: {3}, 17: {0}, 18: {3}, 19: {3}}
+Iteration 6: Best valset aggregate score so far: 0.8882723734515416
+Iteration 6: Best program as per aggregate score on valset: 4
+Iteration 6: Best score on valset: 0.8882723734515416
+Iteration 6: Linear pareto front program index: 4
+Iteration 6: New program candidate index: 4
+Iteration 7: Selected program 0 score: 0.8833333333333334
+Iteration 7: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/, web client in web/src with node tests in web/tests/*.test.cjs, help docs in starlight_help/).
+
+Environment: there is no virtualenv, node_modules, database or `python` here, so the test runners, tsc and eslint cannot run. Don't search the filesystem, other checkouts or /tmp for toolchains, and don't symlink venvs. It wastes time and usually times out. Check your work by careful reading instead: re-read your diff, trace the code paths by hand, and use `python3 -c` or `node -e` only for small self-contained snippets.
+
+Efficient habits:
+- Find code with `rg -n`, then read only the relevant ranges (`sed -n 'A,Bp'`, or read with offset/limit). Don't read large files whole, and don't re-read what you've already seen.
+- Keep command output short (`| head`, `-l`, `--stat`).
+- Once the change is complete and you've reviewed the diff, stop. Don't keep polishing or exploring.
+
+How to implement:
+1. Do exactly what the brief asks, at the place it names, in the simplest way that fits the existing code. Substitute the new value where the old one is produced and leave the surrounding logic (sorting, formatting, ordering, fallbacks) as it was. Don't invent extra requirements or "improvements" the brief doesn't state, such as preserving an order, adding timeouts, forcing refetches or adding new options. Each of these changes behavior someone else relies on.
+2. Keep existing function signatures and call patterns. If the brief refers to existing state ("the current list", "the existing API", a helper in some module), use it the way the codebase already does (for example, module-level state like `module.current`, or an existing helper), instead of threading new parameters through callers. Reuse the existing helpers that the brief names.
+3. Follow the brief's names, argument order, return shapes and exact strings literally. User-facing web strings go through `$t`/`$t_html`, and backend strings through the usual translation helpers.
+4. Web tests import modules with `zrequire` and replace dependencies with `mock_esm`/`override`. Code that calls other modules through `import * as mod` and `mod.fn()` stays mockable. Existing tests and fixtures must keep passing, so check how they call the code you change (`rg` in web/tests or zerver/tests). When you add a feature, it's good to add or update a focused test in the matching test file, following its existing patterns.
+5. Before finishing, walk through each example and requirement in the brief against your code and check that each gives exactly the stated output, including combined cases (several items, mixed flags, the default path left unchanged).
+
+If you're told the problem is not fixed yet: don't re-submit small variations. Re-read the brief line by line, then list every place where your change does something the brief didn't ask for (extra logic, changed ordering, new parameters, changed signatures, a different data source). Remove those first and go back to the most direct reading of the brief. Then re-check each stated example and edge case.
+Iteration 7: Accepted candidate (subsample score 5.066666666666666 -> 5.6521031727872995); running full eval.
+Iteration 7: Valset score for new program: 0.8618065250916477 (coverage 20 / 20)
+Iteration 7: Val aggregate for new program: 0.8618065250916477
+Iteration 7: Individual valset scores for new program: {0: 0.9393318361647466, 1: 0.9666673734926357, 2: 0.9320806969924196, 3: 0.9706160965893909, 4: 0.5142339612173924, 5: 0.9385546214385447, 6: 0.912749286095698, 7: 0.9303956570485471, 8: 0.8729434713945337, 9: 0.9610000491993367, 10: 0.9265823101185717, 11: 0.9274613634587914, 12: 0.888225530455661, 13: 0.9278887319826636, 14: 0.559093977530257, 15: 0.5860918108985733, 16: 0.9427498143960946, 17: 0.6939324378822722, 18: 0.940458156086561, 19: 0.9050733193902634}
+Iteration 7: New valset pareto front scores: {0: 0.9770536576621554, 1: 0.9775035370266728, 2: 0.9675468757423585, 3: 0.9821311332500753, 4: 0.9411270283487376, 5: 0.9658728355677227, 6: 0.9347102593271888, 7: 0.9454771910799268, 8: 0.9350153523614573, 9: 0.9671702610136629, 10: 0.951588885488587, 11: 0.9340046064589933, 12: 0.9341401360381194, 13: 0.940400842125091, 14: 0.9, 15: 0.9764241099104898, 16: 0.978080095677038, 17: 0.9, 18: 0.9760391411801488, 19: 0.9430660226643282}
+Iteration 7: Valset pareto front aggregate score: 0.9513675985461377
+Iteration 7: Updated valset pareto front programs: {0: {3}, 1: {3}, 2: {3}, 3: {3}, 4: {2}, 5: {3}, 6: {3}, 7: {3}, 8: {4}, 9: {4}, 10: {3}, 11: {3}, 12: {3}, 13: {3}, 14: {0}, 15: {4}, 16: {3}, 17: {0}, 18: {3}, 19: {3}}
+Iteration 7: Best valset aggregate score so far: 0.8882723734515416
+Iteration 7: Best program as per aggregate score on valset: 4
+Iteration 7: Best score on valset: 0.8882723734515416
+Iteration 7: Linear pareto front program index: 4
+Iteration 7: New program candidate index: 5
+Iteration 8: Selected program 4 score: 0.8882723734515416
+Iteration 8: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web client in web/src with node tests in web/tests/*.test.cjs, help docs in starlight_help/ and docs/):
+
+Implementing the change
+- Treat the brief's interface requirements literally: exact names, signatures, field names, strings, selectors, log/error wording, CSS classes and module placement. Where the brief names existing helpers or state, use exactly those, reached the way the codebase already does. Don't add parameters or refactor call sites unless the brief requires a new signature; if it does, update every caller (`rg` the name).
+- Calling an existing helper (especially one the brief names): first read its signature and body, then `rg -n` one or two existing callers and pass the same kind of values they pass, built the same way (e.g. the object's own fields, or the value an existing getter returns, used as is). Don't "complete" or "fix" its inputs yourself (adding the sender or current user to a recipient list, merging, deduplicating, re-sorting, reformatting) unless the brief says to. The helper's own output is the intended result.
+- Make the most direct change at the place the brief describes. Don't invent behaviour or special cases the brief doesn't ask for. If existing logic runs on the value you change (sorting, formatting, escaping, filtering), let it keep running on the new value.
+- Prefer reusing existing machinery over post-processing its output. Remove old logic your change makes redundant.
+- Extending existing behaviour to a new case (indented/nested/negated/other layout, "same as the existing behaviour for Y"): the new case must behave like the old one in EVERY branch of the function, including exit, removal, undo and early-return branches. Look hard at hard-coded lengths, offsets, slice indices and cursor arithmetic. They usually assume the old case.
+- Follow nearby conventions. User-facing strings go through $t / $t_html (web) or gettext `_()` (backend). Backend logging uses the module's existing logger. HTML built in Python uses Markup/escape like the surrounding code. Reuse existing helpers and constants instead of writing parallel ones.
+- Tests: if you change something existing tests stub or assert on, update those tests to the new expected output. Don't write new tests unless the brief asks for them.
+
+Checking your work in this environment
+- There is no virtualenv, node_modules or database, and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to build an environment or search for one. Run `python3 -m py_compile` on edited Python files.
+- Verify by tracing by hand: for each branch, pick a concrete input and write out the exact output string, positions or lengths your code produces. For any helper you call, trace its body with the arguments you actually pass and write down what it returns (e.g. the exact URL or ids). Check imports, types and every call site of names you touched.
+- Review your diff once with `git diff`, reread the brief's requirement list, confirm each item is handled, then stop. Don't re-verify a diff you already checked, and don't dig through git history.
+
+Working efficiently
+- Find code with `rg -n` (use `-l` or `| head` to keep output short), then read only the relevant range: `sed -n 'A,Bp'`, or the read tool with offset and a limit of about 80 lines. Don't reread files you've already seen unless they changed.
+- Batch independent searches into one command. Plan the edit, then make it in as few edits as possible. Don't explore unrelated modules unless the brief points there.
+
+If told the problem is not fixed yet
+- Don't just recheck the parts you already verified. Assume one of your own choices is wrong. List every value your diff computes or passes that the brief didn't spell out word for word: arguments you built for helpers, extra conditions, ordering rules, new parameters, renamed elements, different wording. Replace each with the simplest literal reading of the brief plus the way existing callers or code do it. Start with helper arguments: compare them with existing call sites and drop anything you added.
+- Then reopen the function you edited and go branch by branch, especially unchanged branches and hard-coded numbers, tracing concrete values.
+- Finally check for missed requirements: other entry points or callers, exact quoted strings and names, plain and HTML variants of the same output, docs, existing tests that need updates, and behaviour you may have broken.
+Iteration 8: Accepted candidate (subsample score 4.453153012459177 -> 5.340325037708262); running full eval.
+Iteration 8: Found a better program on the valset with score 0.9005636831956434.
+Iteration 8: Valset score for new program: 0.9005636831956434 (coverage 20 / 20)
+Iteration 8: Val aggregate for new program: 0.9005636831956434
+Iteration 8: Individual valset scores for new program: {0: 0.9767681848603922, 1: 0.9743265744548459, 2: 0.9662051563833017, 3: 0.9827347032370181, 4: 0.9734165953736783, 5: 0.9631270332468594, 6: 0.5632835148081938, 7: 0.9414963913149612, 8: 0.9299438180607602, 9: 0.9648093357977728, 10: 0.9559056994580732, 11: 0.9486742379570157, 12: 0.9291386154375478, 13: 0.9446308495505393, 14: 0.40633966651955467, 15: 0.9690281030848412, 16: 0.9739183681239305, 17: 0.7354299451722732, 18: 0.9716803064748181, 19: 0.9404165645964894}
+Iteration 8: New valset pareto front scores: {0: 0.9770536576621554, 1: 0.9775035370266728, 2: 0.9675468757423585, 3: 0.9827347032370181, 4: 0.9734165953736783, 5: 0.9658728355677227, 6: 0.9347102593271888, 7: 0.9454771910799268, 8: 0.9350153523614573, 9: 0.9671702610136629, 10: 0.9559056994580732, 11: 0.9486742379570157, 12: 0.9341401360381194, 13: 0.9446308495505393, 14: 0.9, 15: 0.9764241099104898, 16: 0.978080095677038, 17: 0.9, 18: 0.9760391411801488, 19: 0.9430660226643282}
+Iteration 8: Valset pareto front aggregate score: 0.9541730780413797
+Iteration 8: Updated valset pareto front programs: {0: {3}, 1: {3}, 2: {3}, 3: {6}, 4: {6}, 5: {3}, 6: {3}, 7: {3}, 8: {4}, 9: {4}, 10: {6}, 11: {6}, 12: {3}, 13: {6}, 14: {0}, 15: {4}, 16: {3}, 17: {0}, 18: {3}, 19: {3}}
+Iteration 8: Best valset aggregate score so far: 0.9005636831956434
+Iteration 8: Best program as per aggregate score on valset: 6
+Iteration 8: Best score on valset: 0.9005636831956434
+Iteration 8: Linear pareto front program index: 6
+Iteration 8: New program candidate index: 6
+Iteration 9: Selected program 6 score: 0.9005636831956434
+Iteration 9: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web client in web/src with node tests in web/tests/*.test.cjs, help docs in starlight_help/ and docs/):
+
+Implementing the change
+- Treat the brief's interface requirements literally: exact names, signatures, field names, strings, selectors, log/error wording, CSS classes and module placement. Where the brief names existing helpers or state, use exactly those, reached the way the codebase already does. Don't add parameters or refactor call sites unless the brief requires a new signature; if it does, update every caller (`rg` the name).
+- Calling an existing helper: first read its signature and body, then `rg -n` one or two existing callers and pass the same kind of values they pass. Don't "complete" or "fix" its inputs yourself (adding users, merging, deduplicating, re-sorting, reformatting) unless the brief says to.
+- Make the most direct change at the place the brief describes. Don't invent behaviour or special cases the brief doesn't ask for. If existing logic runs on the value you change (sorting, formatting, escaping, filtering), let it keep running on the new value. Remove old logic your change makes redundant.
+- Extending existing behaviour to a new case: the new case must behave like the old one in EVERY branch, including exit, removal, undo and early-return branches. Check hard-coded lengths, offsets and slice indices.
+- Parsing or matching logic (splitting strings, locating values, mapping keys): prefer the simplest sequential approach, e.g. walk the input left to right and find each known value in order from the current position. Avoid backtracking or search over candidates. Never make a path that used to succeed now raise or return an error: when unsure, fall back gracefully to the old behaviour.
+- Follow nearby conventions: $t / $t_html (web) or gettext `_()` (backend) for user-facing strings, the module's existing logger, Markup/escape for HTML built in Python, existing helpers and constants instead of parallel ones.
+- Existing tests describe behaviour that must keep working. Never change an existing test's expected output to match your code unless the brief explicitly changes that behaviour. If your change would alter it, your code is wrong. Only update tests whose stubs or selectors you deliberately renamed. Don't write new tests unless asked.
+
+Checking your work in this environment
+- There is no virtualenv, node_modules or database, and only `python3`, so tools/test-backend and tools/test-js-with-node cannot run. Don't try to build an environment. Run `python3 -m py_compile` on edited Python files.
+- When the brief gives a concrete example (input payload, string, expected output), and your logic is pure (no Django or DB needed), actually run it: copy the relevant functions into a scratch script in /tmp, feed it the brief's example exactly, and compare the output with the expected text character by character, including blank lines and punctuation. Also run the inputs from existing test fixtures through the same script to confirm their outputs didn't change. Run it as `python3 -I /tmp/x.py`. For pure JS logic, use `node` the same way if it exists.
+- Otherwise, trace by hand: for each branch, pick a concrete input and write out the exact output your code produces, including what any helper you call returns with your actual arguments. Check imports, types and every call site of names you touched.
+- Review your diff once with `git diff`, reread the brief's requirement list, confirm each item is handled, then stop. Don't dig through git history.
+
+Working efficiently
+- Find code with `rg -n` (use `-l` or `| head`), then read only the relevant range (`sed -n 'A,Bp'` or the read tool with offset and a limit of about 80 lines). Don't reread files you've already seen unless they changed.
+- Batch independent searches into one command. Plan the edit, then make it in as few edits as possible. Don't explore unrelated modules.
+
+If told the problem is not fixed yet
+- Assume your own design is wrong, not just a detail. If the brief has an example, run it through your code with a scratch script now (see above) and fix it until the output matches exactly. If your logic is complex (search, backtracking, many special cases), replace it with the simplest direct approach instead of patching it.
+- List every value your diff computes or passes that the brief didn't spell out word for word: helper arguments, extra conditions, ordering, new parameters, renamed elements, wording. Replace each with the simplest literal reading of the brief plus how existing callers do it.
+- Check that you didn't break existing behaviour: revert any edits to existing tests' expected outputs and make the code satisfy them again.
+- Finally check for missed requirements: other entry points or callers, exact quoted strings, plain and HTML variants of the same output, docs.
+Iteration 9: Accepted candidate (subsample score 5.22201161348625 -> 5.345784276125101); running full eval.
+Iteration 9: Valset score for new program: 0.8570065929878032 (coverage 20 / 20)
+Iteration 9: Val aggregate for new program: 0.8570065929878032
+Iteration 9: Individual valset scores for new program: {0: 0.9727734922420588, 1: 0.9763383865596462, 2: 0.9522379203427398, 3: 0.9815796026736052, 4: 0.21560408017650312, 5: 0.9481403704310102, 6: 0.9269873238455645, 7: 0.9364738448643476, 8: 0.9244501763595644, 9: 0.9550678391763137, 10: 0.9574186884657984, 11: 0.9353750086608358, 12: 0.6285202473814573, 13: 0.9195253398449098, 14: 0.5834513223647375, 15: 0.9595983212892197, 16: 0.9753049962425974, 17: 0.5065849008051708, 18: 0.9593541167699614, 19: 0.9253458812600229}
+Iteration 9: New valset pareto front scores: {0: 0.9770536576621554, 1: 0.9775035370266728, 2: 0.9675468757423585, 3: 0.9827347032370181, 4: 0.9734165953736783, 5: 0.9658728355677227, 6: 0.9347102593271888, 7: 0.9454771910799268, 8: 0.9350153523614573, 9: 0.9671702610136629, 10: 0.9574186884657984, 11: 0.9486742379570157, 12: 0.9341401360381194, 13: 0.9446308495505393, 14: 0.9, 15: 0.9764241099104898, 16: 0.978080095677038, 17: 0.9, 18: 0.9760391411801488, 19: 0.9430660226643282}
+Iteration 9: Valset pareto front aggregate score: 0.9542487274917659
+Iteration 9: Updated valset pareto front programs: {0: {3}, 1: {3}, 2: {3}, 3: {6}, 4: {6}, 5: {3}, 6: {3}, 7: {3}, 8: {4}, 9: {4}, 10: {7}, 11: {6}, 12: {3}, 13: {6}, 14: {0}, 15: {4}, 16: {3}, 17: {0}, 18: {3}, 19: {3}}
+Iteration 9: Best valset aggregate score so far: 0.9005636831956434
+Iteration 9: Best program as per aggregate score on valset: 6
+Iteration 9: Best score on valset: 0.9005636831956434
+Iteration 9: Linear pareto front program index: 6
+Iteration 9: New program candidate index: 7

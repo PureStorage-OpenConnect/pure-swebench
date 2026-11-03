@@ -28,6 +28,7 @@ import re
 import sqlite3
 import subprocess
 import sys
+import threading
 import time
 import uuid
 from pathlib import Path
@@ -46,7 +47,11 @@ OPENAI_KEY_FILE = Path(os.environ.get(
 
 BASE_AGENTS = ("pi-vllm-qwen3.6-27b", "pi-vllm-gemma-4-31b", "pi-vllm-muse-glimmer-30b",
                "pi-anthropic-haiku-4-5", "pi-openai-gpt-5.6-luna", "pi-anthropic-haiku-5-5",
-               "pi-vllm-gpt-oss-120b", "pi-openai-gpt-5.6-sol")
+               "pi-vllm-gpt-oss-120b", "pi-openai-gpt-5.6-sol",
+               # retry-with-feedback rows (ZBENCH_MAX_ATTEMPTS=3; gepa_run_retry.py)
+               "pi-anthropic-haiku-5-5-retry3", "pi-anthropic-sonnet-5-5-retry3",
+               "claude-cli-haiku-5-5-retry3", "pi-vllm-muse-glimmer-30b-retry3",
+               "pi-openai-gpt-5.6-sol-retry3")
 
 
 # --------------------------------------------------------------------------- environment
@@ -120,11 +125,16 @@ def ensure_candidate_agent(base_agent_id: str, append_prompt: str, sample: int =
     row = json.loads(json.dumps(base))            # deep copy: env copied exactly
     row["agent_id"] = aid
     row.setdefault("env", {})
-    row["env"].pop("PI_APPEND_SYSTEM_PROMPT", None)
+    # pi takes the appended text as PI_APPEND_SYSTEM_PROMPT, the claude CLI adapter as
+    # CLAUDE_APPEND_SYSTEM_PROMPT (both become --append-system-prompt)
+    var = "CLAUDE_APPEND_SYSTEM_PROMPT" if "claude_agent" in (row.get("command") or "") else "PI_APPEND_SYSTEM_PROMPT"
+    row["env"].pop(var, None)
     if p:
-        row["env"]["PI_APPEND_SYSTEM_PROMPT"] = p
+        row["env"][var] = p
     path = AGENTS_DIR / f"{aid}.jsonl"
-    tmp = path.with_suffix(f".tmp{os.getpid()}")
+    # pid + thread id: eval_test_retry runs arms in threads, and two arms with the same prompt
+    # (e.g. accuracy best = seed) write the same agent file at the same time
+    tmp = path.with_suffix(f".tmp{os.getpid()}-{threading.get_ident()}")
     tmp.write_text(json.dumps(row) + "\n")
     tmp.replace(path)
     (PROMPTS_DIR / f"{aid}.txt").write_text(p + "\n")
@@ -291,7 +301,8 @@ def _parse_session(path: Path) -> list[dict]:
     """-> steps: {think, say, calls:[{name,args,result,err}], stop, error}"""
     steps, by_id = [], {}
     if not path.is_file():
-        return steps
+        rawcli = path.with_name("rawcli.txt")       # claude CLI cells: stream-json transcript
+        return _parse_claude_stream(rawcli) if rawcli.is_file() else steps
     first_user_seen = False
     for line in path.read_text(errors="replace").splitlines():
         try:
@@ -328,6 +339,68 @@ def _parse_session(path: Path) -> list[dict]:
             if call is not None:
                 call["result"] = "".join(b.get("text", "") for b in m.get("content", []) if isinstance(b, dict))
                 call["err"] = bool(m.get("isError"))
+    return steps
+
+
+# claude CLI tool names -> the pi names _fmt_call knows (args mapped where they differ)
+_CLAUDE_TOOLS = {"Bash": "bash", "Read": "read", "Write": "write", "Edit": "edit"}
+
+
+def _claude_call(name: str, args: dict) -> dict:
+    n = _CLAUDE_TOOLS.get(name, name)
+    a = dict(args or {})
+    if n == "read":
+        a = {"path": a.get("file_path", ""), **{k: a[k] for k in ("offset", "limit") if k in a}}
+    elif n == "write":
+        a = {"path": a.get("file_path", ""), "content": a.get("content", "")}
+    elif n == "edit":
+        a = {"path": a.get("file_path", ""), "edits": [{"oldText": a.get("old_string", ""),
+                                                         "newText": a.get("new_string", "")}]}
+    return {"name": n, "args": a, "result": None, "err": False}
+
+
+def _parse_claude_stream(path: Path) -> list[dict]:
+    """claude --output-format stream-json (rawcli.txt) -> the same steps as _parse_session.
+    A retry cell appends one stream per round; each later round starts with the feedback
+    message, shown as a harness message (like pi's later user turns)."""
+    steps, by_id, n_init = [], {}, 0
+    for line in path.read_text(errors="replace").splitlines():
+        try:
+            d = json.loads(line)
+        except Exception:
+            continue
+        t = d.get("type")
+        if t == "system" and d.get("subtype") == "init":
+            n_init += 1
+            if n_init > 1:
+                steps.append({"think": "", "say": "[user/harness message] feedback round " + str(n_init)
+                              + ": the change did not fix the problem", "calls": []})
+        elif t == "assistant":
+            m = d.get("message") or {}
+            st = {"think": "", "say": "", "calls": [], "stop": m.get("stop_reason"), "error": None}
+            for b in m.get("content") or []:
+                if not isinstance(b, dict):
+                    continue
+                if b.get("type") == "thinking" and b.get("thinking"):
+                    st["think"] += b["thinking"] + " "
+                elif b.get("type") == "text" and b.get("text"):
+                    st["say"] += b["text"] + " "
+                elif b.get("type") == "tool_use":
+                    call = _claude_call(b.get("name"), b.get("input") or {})
+                    st["calls"].append(call)
+                    by_id[b.get("id")] = call
+            steps.append(st)
+        elif t == "user":
+            for b in (d.get("message") or {}).get("content") or []:
+                if isinstance(b, dict) and b.get("type") == "tool_result":
+                    call = by_id.get(b.get("tool_use_id"))
+                    if call is not None:
+                        c = b.get("content")
+                        call["result"] = c if isinstance(c, str) else "".join(
+                            x.get("text", "") for x in (c or []) if isinstance(x, dict))
+                        call["err"] = bool(b.get("is_error"))
+        elif t == "result" and d.get("is_error") and steps:
+            steps[-1]["error"] = str(d.get("result") or d.get("subtype"))[:300]
     return steps
 
 
@@ -461,6 +534,13 @@ def build_trace(row: dict, instance: dict, max_chars: int = 12000) -> str:
             f"{(row.get('total_duration_ms') or 0)/60000:.1f} min ===")
     brief_txt = _clip(brief, 2400, tail=True)
     grading = _grading_section(row, blob, instance, 2300)
+    if blob and (blob / "attempts.json").is_file():     # retry-with-feedback cell: per-round verdicts
+        try:
+            rounds = json.loads((blob / "attempts.json").read_text())["rounds"]
+            grading = ("Rounds: " + "; ".join(f"round {x['round']}: {'RESOLVED' if x.get('resolved') else x.get('status')}"
+                                              for x in rounds) + "\n" + grading)
+        except Exception:
+            pass
     sess = (blob / "session.jsonl") if blob else Path("/nonexistent")
     overhead = len(head) + len(brief_txt) + len(patch_txt) + len(grading) + 200
     tr_budget = max(2500, max_chars - overhead)

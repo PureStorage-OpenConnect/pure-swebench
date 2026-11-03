@@ -1,0 +1,250 @@
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 20/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 20/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 20/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 17/20
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 18/20
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 19/20
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] 0/6 cell(s) cached[rollout claude-cli-haiku-5-5-retry3--ge664992d-s2] 0/6 cell(s) cached
+
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s3] 0/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-9fb9db rc=0
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s3] done in 14.3 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-1b4c85 rc=0
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s2] done in 14.4 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-5ceee0 rc=0
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] done in 16.3 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s2] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s3] 6/20 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-abf18f rc=0
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] launching 1 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s2] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-8ab2ce rc=0
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s2] done in 19.1 min: resolved 14/20
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s3] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-63d6e8 rc=0
+[rollout claude-cli-haiku-5-5-retry3--ge664992d-s3] done in 19.2 min: resolved 17/20
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-47e6ce rc=0
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] launching 1 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] driver gepa-gepa-retry-claude-cli-haiku-5-5-retry3-b713ea rc=0
+[rollout claude-cli-haiku-5-5-retry3--ge664992d] done in 20.8 min: resolved 14/20
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.2 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.2 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.2 min: resolved 4/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.1 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.1 min: resolved 4/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.1 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.1 min: resolved 4/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 4/4 cell(s) cached[rollout claude-cli-haiku-5-5-retry3--seed-s3] 4/4 cell(s) cached
+
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.1 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.1 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 2/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 2/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 4/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 3/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 3/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 4/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 4/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 5/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 6/6 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 6/6 cell(s) cached[rollout claude-cli-haiku-5-5-retry3--seed] 6/6 cell(s) cached
+
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 6/6
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] 4/4 cell(s) cached
+[rollout claude-cli-haiku-5-5-retry3--seed-s3] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed-s2] done in 0.0 min: resolved 4/4
+[rollout claude-cli-haiku-5-5-retry3--seed] done in 0.0 min: resolved 4/4

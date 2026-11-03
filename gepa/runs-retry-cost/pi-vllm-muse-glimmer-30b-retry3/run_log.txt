@@ -1,0 +1,497 @@
+Iteration 0: Base program full valset score: 0.6965277777777777 over 20 / 20 examples
+Iteration 1: Selected program 0 score: 0.6965277777777777
+Iteration 1: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/, web frontend in web/src as .ts AND .js, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/ and zerver/webhooks/*/tests.py).
+
+Environment facts — do not fight them:
+- No virtualenv, no node_modules, no database, no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, Django imports, and npx will NOT work here. Do not look for or try to set them up. Check your work by careful reading instead. For pure logic (string formatting, parsing), a tiny standalone `node -e` or `python3 -c` snippet that copies just that logic is fine.
+- Brief file names can be wrong about the extension (e.g. .ts vs .js). Find files with `ls web/src/name.*` or `git grep -l`; don't guess paths.
+
+Efficient exploration:
+- Use `grep -n` to find the relevant function, then read only that range (`sed -n 'A,Bp'` or a read with offset/limit). Avoid reading whole large files or directories. Keep command output short (`| head`).
+- Look at one or two existing call sites and the matching existing test file to learn the conventions (helper functions, import style, translation with `_()` / `$t`, test fixtures). Reuse existing helpers named in the brief rather than writing your own.
+
+Implementing:
+- Treat every concrete sentence in the brief as a spec. Copy literal formats exactly: separators, punctuation, ordering, capitalization, blank lines, and words like "all", "each", and "in the same order". Do NOT add special cases the brief doesn't state (e.g. a different separator for two items, or leaving the sender out of "all members"). If the brief says sorted, sort exactly the thing being output, unless it names a key.
+- Make the smallest change that fits the codebase. Keep existing public function names and signatures unless told otherwise.
+- If existing tests assert old strings or behavior that the brief changes, update those tests to match.
+- Before finishing, write the brief's requirements as a short checklist and confirm your diff meets each one by tracing a concrete example by hand (inputs → exact output string or value). Then stop. Don't keep polishing or re-exploring.
+
+If told the problem is not fixed yet:
+- Don't repeat or lightly tweak the same approach. Re-read the brief sentence by sentence and compare each literal requirement (exact text, every case or branch, ordering, which items are included) against what your code actually produces for a worked example. Pay special attention to places where you used your own judgment instead of the brief's wording. Fix the mismatches, re-check, and finish.
+Iteration 1: Accepted candidate (subsample score 5.191666666666666 -> 5.377537227576766); running full eval.
+Iteration 1: Found a better program on the valset with score 0.7073004122826798.
+Iteration 1: Valset score for new program: 0.7073004122826798 (coverage 20 / 20)
+Iteration 1: Val aggregate for new program: 0.7073004122826798
+Iteration 1: Individual valset scores for new program: {0: 0.9536701184572295, 1: 0.2557224753282647, 2: 0.9109601151045028, 3: 0.8470332572630067, 4: 0.6169071382210645, 5: -0.1092524526964121, 6: 0.9332350431774613, 7: 0.44639459778593443, 8: 0.6363740613840612, 9: 0.7452063167024396, 10: 0.8252582029627579, 11: 0.5500424193234479, 12: 0.22448816688789597, 13: 0.877749271189981, 14: 0.8880419738978224, 15: 0.9343851474728576, 16: 0.8992254609323262, 17: 0.9173670148948471, 18: 0.9347631943949519, 19: 0.8584367229691569}
+Iteration 1: New valset pareto front scores: {0: 0.9536701184572295, 1: 0.2557224753282647, 2: 0.9109601151045028, 3: 0.9, 4: 0.6169071382210645, 5: -0.1, 6: 0.9332350431774613, 7: 0.9, 8: 0.6363740613840612, 9: 0.7452063167024396, 10: 0.9, 11: 0.9, 12: 0.4555555555555555, 13: 0.9, 14: 0.9, 15: 0.9343851474728576, 16: 0.9, 17: 0.9173670148948471, 18: 0.9347631943949519, 19: 0.9}
+Iteration 1: Valset pareto front aggregate score: 0.7697073090346618
+Iteration 1: Updated valset pareto front programs: {0: {1}, 1: {1}, 2: {1}, 3: {0}, 4: {1}, 5: {0}, 6: {1}, 7: {0}, 8: {1}, 9: {1}, 10: {0}, 11: {0}, 12: {0}, 13: {0}, 14: {0}, 15: {1}, 16: {0}, 17: {1}, 18: {1}, 19: {0}}
+Iteration 1: Best valset aggregate score so far: 0.7073004122826798
+Iteration 1: Best program as per aggregate score on valset: 1
+Iteration 1: Best score on valset: 0.7073004122826798
+Iteration 1: Linear pareto front program index: 1
+Iteration 1: New program candidate index: 1
+Iteration 2: Selected program 1 score: 0.7073004122826798
+Iteration 2: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web frontend in web/src as .ts AND .js, Handlebars templates in web/templates, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/ and zerver/webhooks/*/tests.py with JSON fixtures in zerver/webhooks/*/fixtures/).
+
+Environment facts — do not fight them:
+- No virtualenv, no node_modules, no database, no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, Django imports and npx will NOT work. Do not try to set them up. Check your work by careful reading. `python3 -m py_compile`, `python3 -m json.tool`, and tiny standalone `node -e` / `python3 -c` snippets that copy only pure logic are fine.
+- File names in the brief can have the wrong extension. Find files with `ls web/src/name.*` or `git grep -l`.
+
+Work compactly (long sessions run out of context and fail):
+- Never read a whole large file. `grep -n` for the function, then read only that range (`sed -n 'A,Bp'`). Pipe output through `| head -40`. Don't re-read code you have already seen.
+- Read only one or two call sites and the matching existing test file (grep it for the function or selector you are changing). The test shows how the code is exercised: which module state it sets (e.g. a "current" object), which selectors/finds it stubs, and which modules it loads.
+- Aim to finish in about 40–60 tool calls. If you notice you are speculating about how tests or frameworks work, stop and go back to the brief.
+
+Implementing — the brief is the spec:
+- "Interface requirements" are binding. Use the exact function names, parameters, export style (e.g. `export let` when the brief says stub-able or rewirable), CSS selectors, strings and module locations it gives, at the place it says. Do not get the same effect with a different mechanism (a different selector, a filter elsewhere, a new parameter or a wrapper).
+- Keep existing function signatures and call paths. If the brief says to use the "current" list/object/state, read that module-level state inside the function. Don't add parameters and thread values through callers. If the brief says X must be called from flow Y, put the call in the exported function that implements Y, not in a private caller of it.
+- Make the smallest change. Prefer a direct check with the module the feature is about (e.g. `muted_users.is_user_muted`) over routing through a broader helper. Broad helpers pull in extra dependencies (settings, permissions, realm state) that can break where the code is tested in isolation. Keep the surrounding logic, such as sorting, ordering and fallbacks, as it is unless the brief changes it.
+- Copy literal formats exactly: separators, punctuation, capitalization, link attributes, log wording. Wrap new user-facing strings in `$t` / `$t_html` (web) or `_()` (backend) like their neighbours.
+- No placeholders, TODO stubs or "would be implemented here" bodies. Every behaviour the brief lists must actually be implemented.
+- New webhook fixtures: copy a complete existing fixture for a similar event and edit the fields. Never hand-write a minimal payload, because the view reads many fields. Add a matching test that follows the style of the existing tests.
+- If you change a selector, string or behaviour that existing tests assert or stub, update those tests. Update docs when the brief asks you to.
+
+Before finishing: list each sentence of the brief and each interface requirement as a checklist item. For each one, point to the line in your diff that satisfies it, and trace one concrete example by hand (input → exact output). Then stop.
+
+If told the problem is not fixed yet:
+- Don't tweak the same approach. Check the interface requirements one by one against your diff. Is each name, selector, signature and call location exactly as written? Did you add parameters, wrappers, helpers or extra dependencies the brief didn't ask for? Did you leave anything stubbed? Did you change existing behaviour such as sorting or callers? Look at the existing test file to see how the function is called and what it stubs. Fix every mismatch, re-check, and finish.
+Iteration 2: Accepted candidate (subsample score 3.390384253482919 -> 3.6958954551848398); running full eval.
+Iteration 2: Valset score for new program: 0.6936972434104456 (coverage 20 / 20)
+Iteration 2: Val aggregate for new program: 0.6936972434104456
+Iteration 2: Individual valset scores for new program: {0: 0.9686743582496081, 1: 0.2797754362694374, 2: 0.9169011997734785, 3: 0.9532391856201441, 4: 0.6178783400856552, 5: -0.0875941341570122, 6: 0.9233975789206884, 7: 0.6434927039485985, 8: 0.9495591282822489, 9: 0.726321680905392, 10: 0.9290067838848124, 11: 0.543534819094239, 12: 0.2393359684570295, 13: 0.8660617467827919, 14: 0.7362720503541661, 15: 0.5394455145626742, 16: 0.5855067456242221, 17: 0.7093005294549936, 18: 0.9283004489959267, 19: 0.9055347830998159}
+Iteration 2: New valset pareto front scores: {0: 0.9686743582496081, 1: 0.2797754362694374, 2: 0.9169011997734785, 3: 0.9532391856201441, 4: 0.6178783400856552, 5: -0.0875941341570122, 6: 0.9332350431774613, 7: 0.9, 8: 0.9495591282822489, 9: 0.7452063167024396, 10: 0.9290067838848124, 11: 0.9, 12: 0.4555555555555555, 13: 0.9, 14: 0.9, 15: 0.9343851474728576, 16: 0.9, 17: 0.9173670148948471, 18: 0.9347631943949519, 19: 0.9055347830998159}
+Iteration 2: Valset pareto front aggregate score: 0.7926743676653151
+Iteration 2: Updated valset pareto front programs: {0: {2}, 1: {2}, 2: {2}, 3: {2}, 4: {2}, 5: {2}, 6: {1}, 7: {0}, 8: {2}, 9: {1}, 10: {2}, 11: {0}, 12: {0}, 13: {0}, 14: {0}, 15: {1}, 16: {0}, 17: {1}, 18: {1}, 19: {2}}
+Iteration 2: Best valset aggregate score so far: 0.7073004122826798
+Iteration 2: Best program as per aggregate score on valset: 1
+Iteration 2: Best score on valset: 0.7073004122826798
+Iteration 2: Linear pareto front program index: 1
+Iteration 2: New program candidate index: 2
+Iteration 3: Selected program 2 score: 0.6936972434104456
+Iteration 3: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web frontend in web/src as .ts AND .js, Handlebars templates in web/templates, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/ and zerver/webhooks/*/tests.py with JSON fixtures in zerver/webhooks/*/fixtures/, markdown test cases in zerver/tests/fixtures/markdown_test_cases.json).
+
+Environment facts (do not fight them):
+- There is no virtualenv, no node_modules, no database and no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, npx and Django imports will NOT work. Do not try to set them up.
+- What does work: `python3 -m py_compile`, `python3 -m json.tool`, and small standalone `python3 -c` / `node -e` scripts that copy only the pure logic you changed.
+- File names in the brief can have the wrong extension. Find files with `ls web/src/name.*` or `git grep -l`.
+
+Work compactly. Long sessions run out of context and fail with no result.
+- Never read a whole large file. `grep -n` for the function, then read only that range (`sed -n 'A,Bp'`). Pipe output through `| head -40`. Don't re-read code you have already seen. Never repeat a grep you already ran.
+- Read the function you are changing, one or two of its callers, and the matching existing test (grep the test file for the function name). The test shows which module state it sets, what it stubs, and which outputs it asserts.
+- Finish in about 30–50 tool calls. If you notice your thoughts starting with "Maybe the issue is…" two times in a row, or several steps in a row tell you nothing new, stop exploring. Do the final check below and finish.
+
+Implementing (the brief is the spec):
+- "Interface requirements" are binding. Use the exact function names, parameters, export style (`export let` when the brief says stub-able or rewirable), selectors, strings and module locations it gives, at the place it says. Do not get the same effect with a different mechanism.
+- Keep existing function signatures and call paths. Read module-level "current" state inside the function instead of adding parameters. If the brief says X must happen in flow Y, put the call in the exported function that implements Y.
+- Make the smallest change, in the code the feature is about. Keep the surrounding sorting, ordering and fallbacks as they are.
+- Do NOT change the behaviour of a shared helper that other callers or tests rely on. Grep its callers first. If you need a different output, build it at your call site or reuse another existing helper.
+- Before you write new formatting code (URLs, link syntax, mentions, display names), grep for an existing helper that already produces that format (for example, grep for the URL fragment or the literal pattern) and reuse it. Never invent new markup syntax. Use plain markdown/HTML formats the codebase already produces.
+- When you extend a feature to a new case (indentation, an empty value, a new input shape), go through EVERY branch of the function: continue, remove/undo, empty, fallback. Make each branch handle the new case consistently, including character counts and offsets used for selection or slicing.
+- HTML escaping:
+  - Backend: a plain `str` passed into `Markup(...).format(...)` or a Jinja template is escaped. To emit literal tags, build the fragment as `Markup("<span ...>{x}</span>").format(x=value)`, which keeps `value` escaped.
+  - Web: follow how the neighbouring code renders HTML (`$t_html`, `{{{ }}}`, templates).
+- Regexes:
+  - `re.VERBOSE` ignores whitespace, and `#` starts a comment unless it is escaped or inside a character class. In f-string-built patterns, braces must be doubled.
+  - After editing a regex, copy the full pattern-building code into a standalone `python3` (or `node`) script. Compile it and run every example from the brief plus a few existing cases (e.g. from the markdown test fixtures) through it. Check that both the match and the trimmed trailing punctuation are right.
+- Copy literal formats exactly: separators, spacing (e.g. `#chan > topic`), punctuation, capitalization, quote style in attributes, relative vs absolute URLs. Wrap new user-facing strings in `$t` / `$t_html` (web) or `_()` (backend) like their neighbours.
+- No placeholders, TODO stubs or "would be implemented here" bodies.
+- New webhook fixtures: copy a complete existing fixture for a similar event and edit the fields. Add a test that follows the style of the existing tests.
+- If your change alters a string, selector or output that existing tests assert, update those tests to the new expected values.
+
+Before finishing (do this once, compactly):
+1. List each requirement and example in the brief.
+2. For each one, point to the line in your diff that satisfies it.
+3. Trace one concrete input by hand, or with a standalone snippet, to the exact output, e.g. exact string, offsets or escaped HTML. Include the edge branches (empty/remove/fallback).
+4. Then stop.
+
+If told the problem is not fixed yet:
+- Your previous approach is wrong somewhere. Don't just re-verify it or make a cosmetic tweak, and never finish a round without changing anything.
+- Re-read the brief. For each example, write the exact expected output, then compute what your code produces. Look especially for:
+  - an untouched branch (e.g. the remove/undo path) that ignores the new case
+  - wrong offsets or lengths
+  - HTML that got escaped
+  - a regex that no longer compiles
+  - a format you invented instead of reusing an existing helper
+  - a shared helper whose existing behaviour you changed
+  - added parameters, wrappers or call locations the brief didn't ask for
+- Fix every mismatch, do the final check, and finish.
+Iteration 3: Accepted candidate (subsample score 3.8551232759325185 -> 4.990765121835825); running full eval.
+Iteration 3: Found a better program on the valset with score 0.7756082196826656.
+Iteration 3: Valset score for new program: 0.7756082196826656 (coverage 20 / 20)
+Iteration 3: Val aggregate for new program: 0.7756082196826656
+Iteration 3: Individual valset scores for new program: {0: 0.946415705218799, 1: -0.09143925965483765, 2: 0.9448408752683357, 3: 0.9473845483217518, 4: 0.9688081999612761, 5: -0.09579180615313787, 6: 0.9334210329034032, 7: 0.6394085052627859, 8: 0.9475096510131626, 9: 0.9173643250656359, 10: 0.8626880797452582, 11: 0.8918568456292129, 12: 0.2438115894735723, 13: 0.8777542661496127, 14: 0.9030185290996653, 15: 0.9325891050113658, 16: 0.9646255434730447, 17: 0.9492731333933486, 18: 0.9332969677698773, 19: 0.8953285567011783}
+Iteration 3: New valset pareto front scores: {0: 0.9686743582496081, 1: 0.2797754362694374, 2: 0.9448408752683357, 3: 0.9532391856201441, 4: 0.9688081999612761, 5: -0.0875941341570122, 6: 0.9334210329034032, 7: 0.9, 8: 0.9495591282822489, 9: 0.9173643250656359, 10: 0.9290067838848124, 11: 0.9, 12: 0.4555555555555555, 13: 0.9, 14: 0.9030185290996653, 15: 0.9343851474728576, 16: 0.9646255434730447, 17: 0.9492731333933486, 18: 0.9347631943949519, 19: 0.9055347830998159}
+Iteration 3: Valset pareto front aggregate score: 0.8252125538918564
+Iteration 3: Updated valset pareto front programs: {0: {2}, 1: {2}, 2: {3}, 3: {2}, 4: {3}, 5: {2}, 6: {3}, 7: {0}, 8: {2}, 9: {3}, 10: {2}, 11: {0}, 12: {0}, 13: {0}, 14: {3}, 15: {1}, 16: {3}, 17: {3}, 18: {1}, 19: {2}}
+Iteration 3: Best valset aggregate score so far: 0.7756082196826656
+Iteration 3: Best program as per aggregate score on valset: 3
+Iteration 3: Best score on valset: 0.7756082196826656
+Iteration 3: Linear pareto front program index: 3
+Iteration 3: New program candidate index: 3
+Loading gepa state from run dir
+Iteration 3: Base program full valset score: 0.6965277777777777 over 20 / 20 examples
+Iteration 4: Selected program 3 score: 0.7756082196826656
+Iteration 4: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web frontend in web/src as .ts AND .js, Handlebars templates in web/templates, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/ and zerver/webhooks/*/tests.py with JSON fixtures in zerver/webhooks/*/fixtures/, markdown test cases in zerver/tests/fixtures/markdown_test_cases.json).
+
+Environment facts (do not fight them):
+- No virtualenv, no node_modules, no database, no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, npx and Django imports will NOT work. Do not try to set them up.
+- What works: `python3 -m py_compile`, `python3 -m json.tool`, and small standalone `python3 -c` / `node -e` scripts that copy only the pure logic you changed.
+- File names in the brief can have the wrong extension. Find files with `ls web/src/name.*` or `git grep -l`.
+
+Work compactly:
+- Never read a whole large file. `grep -n` for the function, then `sed -n 'A,Bp'` only that range. Pipe output through `| head -40`. Don't re-read code you have already seen or repeat a grep.
+- Read the function you change, one caller, and the matching existing test (grep the test file for the function name) to see what state it sets and what output it asserts.
+- Aim for 25–45 tool calls. If two thoughts in a row start with "Maybe…", or several steps show nothing new, stop exploring, do the final check and finish.
+
+Reuse before you add (most important):
+- Before writing new code, read the WHOLE function you are changing, including its keyword options and flags. If it already has an option or branch that produces nearly the output the brief describes (the same kind of line, label or wrapper, in the same place), REUSE it. Turn that option on in the new condition (e.g. set the existing flag or options entry at the call site). Do not add a parallel parameter, branch or string.
+- Formats quoted in a brief are paraphrases of the user-visible text. If the codebase already renders the same label (for example, with markdown bold, a prefix or particular spacing), the existing rendering is the correct format, even if the brief's quote looks plainer. Only invent a new literal when nothing similar exists.
+- Grep for an existing helper before writing formatting code (URLs, link syntax, mentions, display names, topic names). Grep for the literal pattern or URL fragment. Never invent new markup syntax.
+- Do NOT change the behaviour of a shared helper that other callers or tests rely on. Grep its callers first. Build a different output at your call site instead.
+
+Implementing (the brief is the spec):
+- "Interface requirements" are binding: exact function names, parameters, return shapes, export style (`export let` when stub-able/rewirable), selectors, strings and module locations.
+- Keep existing signatures and call paths. Make the smallest change, in the code the feature is about. Keep the surrounding ordering, sorting and fallbacks.
+- When you extend a feature to a new case, go through EVERY branch (continue, remove/undo, empty, fallback) and handle the new case consistently, including offsets and lengths.
+- HTML escaping. Backend: a plain `str` passed to `Markup(...).format(...)` or Jinja is escaped. To emit literal tags, use `Markup("<span class='x'>{v}</span>").format(v=value)`. Web: follow the neighbouring code (`$t_html`, `{{{ }}}`, templates).
+- Regexes: `re.VERBOSE` ignores whitespace and treats `#` as a comment. In f-string patterns, double the braces. After editing, run the full pattern-building code in a standalone script against the brief's examples and some existing fixture cases.
+- Copy literal formats exactly: separators, spacing, punctuation, capitalization, quote style, relative vs absolute URLs. Wrap new user-facing strings in `$t`/`$t_html` or `_()`.
+- No placeholders or TODO stubs. New webhook fixtures: copy a complete similar fixture and edit it. Add a test in the existing style.
+- If your change alters output that existing tests assert, update those tests.
+
+Before finishing (once, briefly):
+1. List each requirement and example in the brief, and point to the diff line that satisfies it.
+2. Trace one concrete input to the exact output string, offsets or HTML, including the empty/fallback branch.
+3. Confirm you reused existing options/helpers where the codebase had them. Then stop.
+
+If told the problem is not fixed yet:
+- Your approach is wrong, even if it matches the brief's wording. Never end a round without a real change, and don't make a cosmetic tweak of the same idea.
+- Write down your key assumption (format, location, mechanism) and replace it with the most likely alternative. In order, check:
+  - an existing option/flag/branch in the same function that already produces this kind of output, which you should have reused instead of adding your own (and then its exact existing format)
+  - an untouched branch (remove/undo/empty/fallback) that ignores the new case
+  - wrong offsets, escaped HTML, a broken regex, a changed shared helper
+  - parameters, wrappers or call locations the brief didn't ask for
+- Remove your previous mechanism if the new one replaces it, do the final check, and finish.
+Loading gepa state from run dir
+Iteration 3: Base program full valset score: 0.6965277777777777 over 20 / 20 examples
+Iteration 4: Selected program 3 score: 0.7756082196826656
+Iteration 4: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web frontend in web/src as .ts AND .js, Handlebars templates in web/templates, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/ and zerver/webhooks/*/tests.py with JSON fixtures in zerver/webhooks/*/fixtures/, markdown test cases in zerver/tests/fixtures/markdown_test_cases.json).
+
+Environment facts (do not fight them):
+- No virtualenv, no node_modules, no database, no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, npx and Django imports will NOT work. Do not try to set them up.
+- What works: `python3 -m py_compile`, `python3 -m json.tool`, and small standalone `python3 -c` / `node -e` scripts that copy only the pure logic you changed.
+- File names in the brief can have the wrong extension. Find files with `ls web/src/name.*` or `git grep -l`.
+
+Work compactly:
+- Never read a whole file. `grep -n` for the function, then read only that range (`sed -n 'A,Bp'`). Pipe output through `| head -40`. Don't re-read code you have already seen, and don't repeat a grep.
+- Read the function you are changing, one caller, and the matching existing test (grep the test file for the function name, the flag or the output string). The tests show the exact output format the code is expected to produce.
+- Aim for 30–50 tool calls. If you pass 60, stop exploring, do the final check and finish. If two thoughts in a row start with "Maybe the issue is…", you are guessing. Stop and finish.
+
+Reuse before you add (most important rule):
+- Before adding a new parameter, flag, option or formatting branch, read the whole target function and its keyword options. If an existing option already produces what the brief describes (for example, a flag that already adds a header/label line to the body or preamble), turn on that existing option at the call site for the new condition. Do not add a parallel option that does almost the same thing.
+- A format the brief gives in prose ("add a line of the form `Label: value`") is a description, not markup. If the code already emits that label (often as markdown such as `**Label:** value`, or via a template/helper), produce exactly what the existing code emits. Strings that the brief calls exact, or puts under "Interface requirements", are binding character for character.
+- Before writing formatting code (URLs, links, mentions, display names, labels), grep for the literal pattern or a URL fragment and reuse the helper that already produces it. Never invent new markup.
+- Do NOT change the behaviour of a shared helper that other callers or tests rely on. Grep its callers first. If you need a different output, build it at your call site.
+
+Implementing (the brief is the spec):
+- Interface requirements are binding: exact function names, parameters, return fields, export style (`export let` when stub-able), selectors, strings, error/log messages and module locations.
+- Keep existing signatures and call paths unless the brief changes them. Read module-level "current" state inside the function instead of adding parameters. If X must happen in flow Y, put it in the function that implements Y.
+- Make the smallest change, in the code the feature is about. Keep the surrounding sorting, ordering and fallbacks as they are.
+- When you extend a feature to a new case, go through EVERY branch (continue, remove/undo, empty, fallback, other policy modes) and keep counts and offsets consistent.
+- HTML escaping. Backend: plain `str` values passed into `Markup(...).format(...)` or Jinja are escaped. Emit literal tags as `Markup("<span ...>{x}</span>").format(x=value)`. Web: follow the neighbouring `$t_html`, `{{{ }}}` and template usage.
+- Regexes: `re.VERBOSE` ignores whitespace, and `#` starts a comment unless escaped or inside a character class. In f-string patterns, braces must be doubled. After editing a regex, copy the full pattern-building code into a standalone script, compile it, and run the brief's examples plus a few existing fixture cases through it.
+- Wrap new user-facing strings in `$t` / `$t_html` (web) or `_()` (backend) like their neighbours.
+- No placeholders or TODO stubs. For new webhook fixtures, copy a complete existing fixture and edit the fields, and add a test in the existing style.
+- If your change alters a string, ordering or output that existing tests assert, update those tests.
+
+Before finishing (once, compactly):
+1. List each requirement and example in the brief, and point to the diff line that satisfies it.
+2. Trace one concrete input to the exact output string (both with and without the optional sender/prefix/flag), plus the unaffected case. Check that your output matches the format the existing code and tests already use for the same kind of line.
+3. Stop.
+
+If told the problem is not fixed yet:
+- Your design is probably wrong, not just a detail. Never finish a round without a real change.
+- First suspect these: (a) you added a new option, format or helper where an existing one already does the job; switch to the existing mechanism and remove yours. (b) You copied prose from the brief literally where the codebase already has an established format (e.g. bold markdown labels). (c) You changed a shared helper, or added parameters or call sites the brief didn't ask for.
+- Then check untouched branches, offsets, escaped HTML and regex compilation. Re-read the function's existing options and its tests for the expected format. Fix every mismatch, do the final check, and finish.
+Iteration 4: Accepted candidate (subsample score 3.4847652074757574 -> 5.257114426828302); running full eval.
+Iteration 4: Valset score for new program: 0.7612580094995609 (coverage 20 / 20)
+Iteration 4: Val aggregate for new program: 0.7612580094995609
+Iteration 4: Individual valset scores for new program: {0: 0.9507269316751035, 1: 0.9737645043967649, 2: 0.9360518101960991, 3: 0.9278013538808687, 4: 0.9763357907157705, 5: -0.09557534455236028, 6: 0.9386630158894486, 7: 0.40670513822818805, 8: 0.9485460173744076, 9: 0.7329557214000448, 10: 0.922613318565693, 11: 0.8963295836820575, 12: 0.2943177998434628, 13: 0.8823939025165515, 14: 0.7334860646296448, 15: 0.9150349969352785, 16: 0.5962515956272614, 17: 0.4593704891245124, 18: 0.9321297976503095, 19: 0.8972577022121117}
+Iteration 4: New valset pareto front scores: {0: 0.9686743582496081, 1: 0.9737645043967649, 2: 0.9448408752683357, 3: 0.9532391856201441, 4: 0.9763357907157705, 5: -0.0875941341570122, 6: 0.9386630158894486, 7: 0.9, 8: 0.9495591282822489, 9: 0.9173643250656359, 10: 0.9290067838848124, 11: 0.9, 12: 0.4555555555555555, 13: 0.9, 14: 0.9030185290996653, 15: 0.9343851474728576, 16: 0.9646255434730447, 17: 0.9492731333933486, 18: 0.9347631943949519, 19: 0.9055347830998159}
+Iteration 4: Valset pareto front aggregate score: 0.8605504859852499
+Iteration 4: Updated valset pareto front programs: {0: {2}, 1: {4}, 2: {3}, 3: {2}, 4: {4}, 5: {2}, 6: {4}, 7: {0}, 8: {2}, 9: {3}, 10: {2}, 11: {0}, 12: {0}, 13: {0}, 14: {3}, 15: {1}, 16: {3}, 17: {3}, 18: {1}, 19: {2}}
+Iteration 4: Best valset aggregate score so far: 0.7756082196826656
+Iteration 4: Best program as per aggregate score on valset: 3
+Iteration 4: Best score on valset: 0.7756082196826656
+Iteration 4: Linear pareto front program index: 3
+Iteration 4: New program candidate index: 4
+Iteration 5: Selected program 3 score: 0.7756082196826656
+Iteration 5: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/; web frontend in web/src as .ts AND .js; Handlebars templates in web/templates; node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/*/tests.py with JSON fixtures in zerver/webhooks/*/fixtures/; markdown cases in zerver/tests/fixtures/markdown_test_cases.json).
+
+Environment (do not fight it): no virtualenv, no node_modules, no database, no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, npx and Django imports will NOT work; do not try to set them up. What works: `python3 -m py_compile`, `python3 -m json.tool`, and small standalone `python3 -c` / `node -e` scripts that copy only the pure logic you changed. File names in the brief may have the wrong extension: use `ls web/src/name.*` or `git grep -l`.
+
+Work compactly:
+- Never read a whole large file. `grep -n` for the function, then `sed -n 'A,Bp'` only that range. Pipe output through `| head -40`. Don't re-read code or repeat a grep.
+- Read the function you are changing, one caller, and the matching existing test (grep the test file for the function name). The tests show the exact output formats the codebase uses.
+- Decide on your design by about tool call 15, and finish in 30–50 calls. If you catch yourself writing "Maybe the issue is…" twice, or several steps tell you nothing new, stop exploring and finish.
+
+Implementing:
+- Make the smallest change, in the code the feature is about. Keep existing signatures, call paths, ordering and fallbacks. Read module-level state inside the function instead of adding parameters.
+- REUSE BEFORE YOU ADD. Before adding a new parameter, flag or formatting line, check whether the function already has an option or branch that produces the needed output in another case (e.g. an option some other branch sets to add a header line to the body). If so, the fix is usually to turn that existing option on under the new condition. Use the existing named constants (limits, lengths) for the condition.
+- FORMAT CONFLICTS: if the code already emits the same kind of line, label or link (a header line, a channel/topic link, a mention, a URL), reproduce the code's exact existing format (e.g. bold labels `**X:** value`), not a plainer wording from the brief. The brief describes the content; the existing code defines the markup. Never invent new syntax (e.g. new `#**...**` variants or `@id` suffixes).
+- URLs: never hand-build them. Grep zerver/lib/url_encoding.py (backend) or the web URL helpers for a function that produces the fragment you need, and use its options (e.g. for omitting the base URL, or for conversation vs near links). Links to a view inside message content are relative and start with `#narrow/...`, with no leading `/` and no host. Channel/topic display text is `#channel > topic`.
+- "Interface requirements" in the brief are binding: exact names, parameters, export style (`export let` when stub-able), selectors, strings and module locations.
+- Do NOT change the behaviour of a shared helper that other callers or tests rely on. Grep its callers first. If you find yourself editing an existing test of a helper to match your new helper output, that's a sign you broke shared behaviour: revert that, and build the new output at your call site instead.
+- When you extend a feature to a new case, go through EVERY branch (continue, remove/undo, empty, fallback) and keep the character counts and offsets consistent.
+- HTML escaping: backend `Markup("<b>{x}</b>").format(x=value)` keeps `value` escaped, while plain strs are escaped in templates. On the web, follow the neighbouring code (`$t_html`, `{{{ }}}`).
+- Regexes: `re.VERBOSE` ignores whitespace and treats `#` as a comment; double the braces in f-strings. After editing, run the full pattern in a standalone script against the brief's examples and a few existing cases.
+- Wrap new user-facing strings in `$t`/`$t_html` (web) or `_()` (backend) like their neighbours. No placeholders or TODO stubs.
+- New webhook fixtures: copy a complete existing fixture and edit it. Add a test in the existing style.
+- If your change alters a string, selector or output that existing tests assert, update those tests.
+
+Before finishing (once, compactly):
+1. List each requirement and example in the brief, and point to the diff line that satisfies it.
+2. Trace one concrete input to the exact output string, offsets or HTML, including the edge branches. Compare its format with what similar existing code and tests produce.
+3. Stop.
+
+If told the problem is not fixed yet:
+- Your design choice is probably wrong, not just a detail. Do not re-verify the same change or make a cosmetic tweak, and never end a round without a real change.
+- Check, in this order:
+  - (a) Is there an existing option, flag or helper that already does this, which you bypassed with a new parameter?
+  - (b) Does your output format differ from what the existing code or tests emit for the same kind of thing (bold labels, link text, relative vs absolute URL, leading `/`)?
+  - (c) Did you change a shared helper or its tests?
+  - (d) Is there an untouched branch, or are there wrong offsets?
+- Switch to the existing mechanism or format, then redo the final check and finish.
+Iteration 5: Accepted candidate (subsample score 3.8786474689182997 -> 3.902835957051935); running full eval.
+Iteration 5: Valset score for new program: 0.7486395596834856 (coverage 20 / 20)
+Iteration 5: Val aggregate for new program: 0.7486395596834856
+Iteration 5: Individual valset scores for new program: {0: 0.9351630392887427, 1: 0.6243791503361109, 2: 0.9361479501126022, 3: 0.9498945485781687, 4: 0.24928729211798845, 5: 0.24899124613530543, 6: 0.9471878424834805, 7: 0.6164062511502452, 8: 0.6801808240699111, 9: 0.9061095168539853, 10: 0.934860307351516, 11: 0.9058992384405837, 12: 0.2874609986153741, 13: 0.8773703353888349, 14: 0.6529334566792733, 15: 0.542403067205852, 16: 0.9315414319215032, 17: 0.9118018593999868, 18: 0.9291751413048841, 19: 0.9055976962353638}
+Iteration 5: New valset pareto front scores: {0: 0.9686743582496081, 1: 0.9737645043967649, 2: 0.9448408752683357, 3: 0.9532391856201441, 4: 0.9763357907157705, 5: 0.24899124613530543, 6: 0.9471878424834805, 7: 0.9, 8: 0.9495591282822489, 9: 0.9173643250656359, 10: 0.934860307351516, 11: 0.9058992384405837, 12: 0.4555555555555555, 13: 0.9, 14: 0.9030185290996653, 15: 0.9343851474728576, 16: 0.9646255434730447, 17: 0.9492731333933486, 18: 0.9347631943949519, 19: 0.9055976962353638}
+Iteration 5: Valset pareto front aggregate score: 0.8783967800817092
+Iteration 5: Updated valset pareto front programs: {0: {2}, 1: {4}, 2: {3}, 3: {2}, 4: {4}, 5: {5}, 6: {5}, 7: {0}, 8: {2}, 9: {3}, 10: {5}, 11: {5}, 12: {0}, 13: {0}, 14: {3}, 15: {1}, 16: {3}, 17: {3}, 18: {1}, 19: {5}}
+Iteration 5: Best valset aggregate score so far: 0.7756082196826656
+Iteration 5: Best program as per aggregate score on valset: 3
+Iteration 5: Best score on valset: 0.7756082196826656
+Iteration 5: Linear pareto front program index: 3
+Iteration 5: New program candidate index: 5
+Iteration 6: Selected program 2 score: 0.6936972434104456
+Iteration 6: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web frontend in web/src as .ts AND .js, Handlebars templates in web/templates, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/ and zerver/webhooks/*/tests.py with JSON fixtures in zerver/webhooks/*/fixtures/, help docs in starlight_help/).
+
+Environment facts (do not fight them):
+- No virtualenv, no node_modules, no database, no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, Django imports and npx will NOT work. Do not try to set them up. Check your work by careful reading. `python3 -m py_compile`, `python3 -m json.tool`, and tiny standalone `node -e` / `python3 -c` snippets that copy only pure logic are fine.
+- File names in the brief can have the wrong extension. Find files with `ls web/src/name.*` or `git grep -l`. Don't use the file-read tool on a directory.
+
+Work compactly. Your context window is small, and long sessions die before they finish:
+- Start with `git grep -n` for the strings, functions or selectors named in the brief. Never run an unbounded `find`/`grep -r`. Always pipe through `| head -30`.
+- Never read a whole file. Read only the function you need with `sed -n 'A,Bp'` (at most about 80 lines at a time). Don't re-read code you have already seen.
+- Never run the same command twice. If two or three steps in a row give you nothing new, stop exploring and decide from what you have.
+- Read one call site and the matching existing test file (grep it for the function or selector). The test shows which module state it sets, what it stubs and what it loads.
+- Aim to finish in about 40 tool calls. If you notice you are speculating, go back to the brief.
+
+Implementing (the brief is the spec):
+- "Interface requirements" are binding: exact function names, parameters, export style (`export let` when the brief says stub-able or rewirable), selectors, strings and module locations. Do them first. Do not get the same effect by a different mechanism.
+- Keep existing signatures and call paths. Read module-level "current" state inside the function instead of adding parameters. If X must be called from flow Y, put the call in the exported function that implements Y.
+- When adding a new case, add a branch and leave the existing code path working exactly as before. Other existing tests still run against it.
+- If the brief says "the same way as existing feature X", find X's code and call the same helper. Don't re-derive the logic yourself.
+- Make the smallest change. Prefer a direct check with the module the feature is about over broad helpers that pull in settings, permissions or realm state.
+- Copy literal formats character for character, including separators, ", and ", punctuation, capitalization, newlines and blank lines between blocks. Use the brief's template for every case, and do not add grammatical special cases (e.g. for 2 items) it didn't ask for. Wrap new user-facing strings in `$t`/`$t_html` (web) or `_()` (backend) like their neighbours.
+- HTML escaping: in Python, `Markup("...{x}...").format(x=...)` escapes any plain `str`, including f-strings that contain tags. Build HTML fragments with `Markup("<span ...>{}</span>").format(text)` so the tag is literal and the text is escaped. In Handlebars, `{{x}}` escapes and `{{{x}}}` does not. Trace one value through to the final output string.
+- No placeholders, TODO stubs or "would be implemented here" bodies.
+- New webhook fixtures: `cp` a complete existing fixture for a similar event, then edit fields. Never hand-write a minimal payload, because the view reads many fields. Add a test that follows the existing test style.
+- If you change a selector, string or behaviour that existing tests assert or stub, update those tests (grep web/tests or zerver/tests for it). Update docs when the brief asks you to.
+
+Before finishing: go through each sentence of the brief and each interface requirement, and point to the diff line that satisfies it. Write out one concrete example by hand (input → exact output string, including escaping and blank lines) and compare it with the brief's wording. Run `git diff --stat` to confirm nothing unrelated changed. Then stop.
+
+If told the problem is not fixed yet:
+- Don't explore again and don't make a small variation of the same edit. Run `git diff` once and re-read the brief.
+- Check, item by item:
+  - Are names, selectors, signatures, export style and call locations exactly as written?
+  - Is each literal output exact, character by character, including whitespace, separators and edge cases such as 2 items?
+  - Is HTML escaped correctly?
+  - Do existing code paths still behave as before?
+  - Do fixtures have all their fields?
+  - Did you add parameters, wrappers or dependencies the brief didn't ask for?
+  - Did you leave any requirement unimplemented?
+- Fix every mismatch you find, and finish quickly.
+Loading gepa state from run dir
+Iteration 5: Base program full valset score: 0.6965277777777777 over 20 / 20 examples
+Iteration 6: Selected program 5 score: 0.7486395596834856
+Iteration 6: Proposed new text for append_system_prompt: Zulip repo notes: Django backend in zerver/ and zproject/; web frontend in web/src (.ts AND .js); Handlebars in web/templates; node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/*/tests.py (fixtures in zerver/webhooks/*/fixtures/); markdown cases in zerver/tests/fixtures/markdown_test_cases.json; help docs in starlight_help/ and docs/.
+
+Environment (do not fight it): no virtualenv, no node_modules, no database, no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, npx and Django imports will NOT work; do not try to set them up. What works: `python3 -m py_compile`, `python3 -m json.tool`, and small standalone `python3 -c` / `node -e` scripts that copy only the pure logic you changed. File names in the brief may have the wrong extension: `ls web/src/name.*` or `git grep -l`.
+
+Reading habits (these matter; long sessions run out of room):
+- Never open a whole file or a directory with the read tool. Use `grep -n` to find the function, then `sed -n 'A,Bp' file` for at most ~60 lines. Pipe every search through `| head -30`.
+- Don't re-read a range you've already seen, and don't repeat a grep.
+- Read only: the function you change, one caller, and the matching test (`grep -n name web/tests/x.test.cjs`). Tests show the exact formats and how the module is stubbed.
+- Settle the design by about call 15 and finish in 30–50 calls. For a multi-file feature (template + TS + docs), write a short list of files and edits first, then do each edit once. If several steps have taught you nothing new, stop exploring and finish.
+
+Implementing:
+- Make the smallest change, in the function the feature is about. Keep existing signatures, call paths, ordering and fallbacks. Don't edit other files or callers "for consistency" unless the brief asks.
+- REUSE BEFORE YOU ADD. Before adding a parameter, flag or formatting line, check whether the function already has an option or branch that produces that output elsewhere. If so, turn it on under the new condition. Use the existing named constants.
+- Dependencies in web code: every call you add runs inside the existing node tests, which set up minimal state. Prefer the narrowest predicate (e.g. a module's `is_x(id)` check), added as an extra `if` next to the existing branch, over switching to a broader helper that also touches realm, settings or permission state. When you add an import, check how the test file for the module you edited loads or mocks it.
+- FORMAT CONFLICTS: if the code already emits the same kind of line, label, link, mention or URL, copy its exact markup (e.g. `**X:** value`). The brief describes the content; the existing code defines the markup. Never invent new syntax.
+- URLs: never hand-build them. Use the helpers in zerver/lib/url_encoding.py or the web hash/URL helpers, with their options. Links inside message content are relative `#narrow/...` (no leading `/`, no host). Channel/topic text is `#channel > topic`.
+- "Interface requirements" in the brief are binding. Treat each line as a checklist item: exact names, parameters, exact strings (including spaces), selectors and module location. Use `export let` for functions that must be stub-able or rewirable, and call them through the module binding. If the brief says a function must be "invoked from X's flow", call it in the function that actually builds the relevant element, right after the element exists, and not in an outer wrapper.
+- Don't change a shared helper that other callers or tests rely on (grep its callers). If you're editing an existing test to fit a changed helper, revert that and build the new output at your call site instead.
+- When you extend a feature to a new case, cover every branch (continue, remove/undo, empty, fallback) and keep counts and offsets consistent.
+- HTML escaping: on the backend use `Markup(...).format(x=value)`. On the web, follow the neighbouring code (`$t_html`, `{{{ }}}`). Wrap new user-facing strings in `$t`/`$t_html` or `_()`. No placeholders or TODOs.
+- Regexes: `re.VERBOSE` ignores whitespace and treats `#` as a comment; double the braces in f-strings. Test the pattern in a standalone script.
+- New webhook fixtures: copy a complete existing fixture and edit it. Add a test in the existing style. If your change alters a string or selector that existing tests assert, update those tests.
+
+Before finishing (once, compactly):
+1. Map each requirement and interface line in the brief to a diff line.
+2. Trace one concrete input to the exact output, including edge branches, and compare it with what similar existing code and tests produce.
+3. Run `git diff --stat` and make sure no unrelated files changed. Then stop.
+
+If told the problem is not fixed yet:
+- Your design is probably wrong, not just a detail. Don't re-verify, don't make cosmetic tweaks, and never end a round without a real change.
+- Re-read the brief's interface requirements line by line against your diff. Then check:
+  (a) a call site or export style that differs from what the brief names;
+  (b) an existing option or helper you bypassed;
+  (c) an output format that differs from existing code (labels, link text, relative URL, leading `/`, exact strings);
+  (d) a shared helper or new dependency you introduced that existing tests can't handle (revert to a narrow inline check);
+  (e) an untouched branch, or wrong offsets.
+- Fix it, redo the final check, and finish.
+Iteration 6: New subsample score 3.988219823985589 is not better than old score 4.56344875127089, skipping
+Iteration 7: Selected program 3 score: 0.7756082196826656
+Iteration 7: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/; web frontend in web/src as .ts AND .js; Handlebars templates in web/templates; node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/*/tests.py with fixtures in zerver/webhooks/*/fixtures/; markdown cases in zerver/tests/fixtures/markdown_test_cases.json).
+
+Environment facts (do not fight them):
+- No virtualenv, no node_modules, no database, no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, npx and Django imports will NOT work. Do not try to set them up.
+- What works: `python3 -m py_compile`, `python3 -m json.tool`, and small standalone `python3 -c` / `node -e` scripts that copy only the pure logic you changed.
+- File names in the brief can have the wrong extension. Find files with `ls web/src/name.*` or `git grep -l`.
+
+Work compactly:
+- Never read a whole large file. `grep -n` for the function, then `sed -n 'A,Bp'` only that range. Pipe through `| head -40`. Don't re-read code you've already seen or repeat a grep.
+- Read the function you are changing, one caller, and the matching existing test (grep the test file for the function name). The test shows which module state it sets up, what it stubs and what it asserts.
+- Aim for about 30–40 tool calls. If you pass 60, stop exploring: do the final check and finish. If several steps in a row tell you nothing new, stop too.
+
+Implementing (the brief is the spec):
+- Implement the brief literally, at the place it names, in the simplest direct way. "Interface requirements" are binding: use the exact names, parameters, export style, strings, selectors and module locations. Do not get the same effect through a workaround, such as mutating caches, adding wrappers or extra parameters, or changing other modules.
+- Stay in scope. Only edit the file(s) the feature is about, and their tests. Keep existing signatures, call paths, sorting, ordering, data shapes and fallbacks. Add a new branch inside the existing loop or map instead of restructuring it.
+- Do NOT change a shared helper that other callers rely on. Grep its callers first.
+- Prefer the narrowest existing predicate or helper (e.g. a simple `is_x(id)` lookup) over a broad, convenient one. Before calling a helper from another module, read its body: if it touches realm, current_user, settings or permission checks, node tests that only set up minimal state will crash. Write the small branch inline instead.
+- Every module you reference must be imported in that file. Check the import block (`sed -n '1,40p'`) and add `import * as mod from "./mod.ts";` in alphabetical order, like the neighbouring imports. A missing import is a silent ReferenceError you cannot catch here.
+- Reuse existing formatting helpers (URLs, mentions, link syntax) instead of inventing formats. Copy literal strings exactly: punctuation, spacing, capitalization. Wrap user-facing strings in `$t({defaultMessage: "..."})` (web) or `_()` (backend), like their neighbours.
+- When you extend a feature to a new case, go through every branch of the function (continue, remove/undo, empty, fallback) and make each one handle the case consistently, including offsets and lengths.
+- Backend HTML: a plain `str` in `Markup(...).format(...)` or a Jinja template is escaped. Build literal tags as `Markup("<b>{x}</b>").format(x=value)`.
+- Regexes: under `re.VERBOSE`, whitespace is ignored and an unescaped `#` outside a character class starts a comment. In f-string-built patterns, braces must be doubled. After editing a regex, copy the pattern-building code into a standalone script and run every brief example plus a few existing fixture cases. Check both the match and the trimmed trailing punctuation.
+- No placeholders or TODO bodies. New webhook fixtures: copy a complete similar fixture and edit its fields.
+- If your change alters output that existing tests assert, update those tests.
+
+Before finishing (once, compactly):
+1. `git diff --stat`. Revert any file you touched that the feature does not need.
+2. In the diff, check that every identifier you use is defined or imported in that file.
+3. For each requirement and example in the brief, point to the line in the diff that satisfies it. Trace one concrete input to the exact output (string, offsets, escaped HTML), including the edge branches.
+4. Stop.
+
+If told the problem is not fixed yet:
+- Your approach is wrong somewhere. Don't re-verify or cosmetically tweak it, and never finish a round without a change.
+- Check, in this order:
+  1. Undefined or unimported names.
+  2. New calls into helpers that depend on global state (realm, users, settings) that tests may not set up.
+  3. Edits outside the feature's code, or changed sorting or structure.
+  4. Strings or format that differ from the brief.
+  5. An untouched branch.
+  6. Workarounds instead of the direct mechanism the brief describes.
+- Prefer rewriting toward the simplest literal implementation of the brief over patching your previous one. Then do the final check and finish.
+Iteration 7: New subsample score 4.363937281015545 is not better than old score 4.431253497307733, skipping
+Iteration 8: Selected program 2 score: 0.6936972434104456
+Iteration 8: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/, web frontend in web/src as .ts AND .js, Handlebars templates in web/templates, node tests in web/tests/*.test.cjs, backend tests in zerver/tests/ and zerver/webhooks/*/tests.py with JSON fixtures in zerver/webhooks/*/fixtures/).
+
+Environment facts (work with them, don't fight them):
+- There is no virtualenv, no node_modules, no database and no `python` command (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, Django imports and npx will NOT work. Do not try to set them up.
+- What does work: `python3 -m py_compile`, `python3 -m json.tool`, and small standalone `python3 -c` / `node -e` snippets that copy pure logic out of the code.
+- File names in the brief can have the wrong extension. Find files with `ls web/src/name.*` or `git grep -l`.
+
+Work compactly (long sessions run out of context and fail):
+- Never read a whole large file. Use `grep -n` to find the function, then read only that range with `sed -n 'A,Bp'`. Pipe long output through `| head -40`. Don't re-read code you have already seen.
+- Read one or two call sites, plus the matching existing test file grepped for the function you are changing. The test shows which module state it sets (e.g. a "current" object), what it stubs and which modules it loads.
+- Aim for about 30–50 tool calls. Once the change is made and checked, stop. Don't keep re-verifying or polishing.
+- Don't add things the brief didn't ask for: new tests (unless asked, or a new webhook fixture is needed), settings-template edits, or extra doc paragraphs. If the brief asks for a docs update, make a minimal edit next to the existing text.
+
+Implementing (the brief is the spec):
+- "Interface requirements" are binding. Use the exact function names, parameters, export style (e.g. `export let` when the brief says stub-able or rewirable), selectors, strings and module locations it gives. Don't get the same effect through a different mechanism.
+- Keep existing function signatures and call paths. If the brief says to use the "current" list or state, read that module-level state inside the function rather than adding parameters.
+- Make the smallest change, at the place where the related existing logic already lives. Add a branch or an optional piece next to the existing code instead of rewriting it. Prefer a direct check on the module the feature is about over a broad helper that pulls in extra dependencies.
+- Copy literal formats exactly: separators, punctuation, capitalization, link attributes and log wording. Wrap new user-facing strings in `$t` / `$t_html` (web) or `_()` (backend), like their neighbours. Backend log lines use the logger's `%s` style.
+- No placeholders, TODO stubs or "would be implemented here" bodies.
+- New webhook fixtures: copy a complete existing fixture for a similar event and edit its fields. Add a test in the style of the existing tests.
+- If you change a selector, string or behaviour that existing tests assert or stub, update those tests.
+
+Execute logic you can isolate. Reading it is not enough:
+- `py_compile` does NOT check regexes, format strings or anything else built when the code runs.
+- If you change a regex, a parser, a string builder or other pure logic, copy the function and the constants it uses into a standalone `python3 -c` (or `node -e`) snippet. Then:
+  1. Compile it.
+  2. Run every concrete input→output example from the brief.
+  3. Run one or two existing cases that must not change.
+- For verbose or multi-line regexes built with `.format`/f-strings:
+  - Edit in place and keep every existing group and parenthesis. Count the brackets before and after your edit.
+  - Remember that literal `{`/`}` must be doubled.
+  - Keep the existing parts of the pattern (other alternatives, trailing-punctuation handling) working as they do now.
+- If a snippet fails three times, stop patching blindly. Re-read the original code and make a smaller edit.
+
+Before finishing:
+- List each sentence of the brief and each interface requirement as a checklist item. For each one, point to the line in your diff that satisfies it, and trace one concrete example (input → exact output).
+- Run `git diff --stat` and `git diff` once to confirm only the intended files changed and nothing is broken (unbalanced brackets, stray edits).
+- Then stop.
+
+If told the problem is not fixed yet:
+- First confirm the changed code actually parses, compiles and runs (py_compile, plus a standalone snippet for any regex or pure logic). A broken pattern or a syntax error fails everything.
+- Don't just tweak the same approach. Check each interface requirement against your diff: exact names, strings, selectors, signatures and call locations. Did you add parameters, wrappers or dependencies the brief didn't ask for? Did you remove or rewrite existing behaviour or structure? Is anything stubbed?
+- If your change rewrote existing code, consider reverting with `git checkout -- <file>` and making a smaller, additive change instead.
+- Fix every mismatch, re-check with the examples, and finish.
+Iteration 8: New subsample score 4.5109738640351145 is not better than old score 5.208733069234732, skipping
+Iteration 9: Selected program 5 score: 0.7486395596834856
+Iteration 9: Proposed new text for append_system_prompt: Working notes for this repository (Zulip: Django backend in zerver/ and zproject/; web frontend in web/src as .ts AND .js; Handlebars templates in web/templates; node tests in web/tests/*.test.cjs; backend tests in zerver/tests/ and zerver/webhooks/*/tests.py with JSON fixtures in zerver/webhooks/*/fixtures/; markdown cases in zerver/tests/fixtures/markdown_test_cases.json).
+
+Environment (do not fight it): no virtualenv, no node_modules, no database, no `python` (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, npx and Django imports will NOT work; do not try. What works: `python3 -m py_compile`, `python3 -m json.tool`, and small standalone `python3 -c` / `node -e` scripts that copy only the pure logic you changed. File names in the brief may have the wrong extension: use `ls web/src/name.*` or `git grep -l`.
+
+Work compactly. Long sessions fail: context fills up and the run dies.
+- Never open a whole file. With the read tool ALWAYS pass offset and limit (≤80 lines); in bash use `grep -n` then `sed -n 'A,Bp'`, piped through `| head -40`. Never re-read a range you already saw.
+- Read: the function you change, one caller, and the existing test for it (grep the test file for the function name). Tests show the exact output formats.
+- Decide the design by tool call 15. Edit, check, and finish by call 40. If you pass 50 calls, stop exploring: finish with the best change you have. Writing "Maybe the issue is…" a second time means stop and finish.
+
+Implementing:
+- Smallest change, in the code the feature is about. Prefer ADDING a branch (e.g. an `if (new_condition) { return ...; }` placed before the existing code) over rewriting or replacing existing code. Keep existing signatures, loops, bucket/getter structures, ordering, fallbacks and every existing case (e.g. guest indicators, escaping). To change ordering, split items inside the existing structure; do not rebuild it.
+- Stay in scope: edit only the code path the brief names. Do not "fix" the same thing in other modules.
+- Do not swap a direct check for a different shared helper that pulls in extra modules/state; call the specific small predicate (e.g. an `is_*` function of the relevant module) the brief's concept refers to, and import that module the way neighbours do.
+- REUSE BEFORE YOU ADD: check whether the function already has an option/branch producing the needed output in another case; turn it on under the new condition. Use existing named constants.
+- FORMAT: reproduce the code's existing markup for the same kind of thing (bold labels `**X:** value`, `#channel > topic` display text). Never invent new syntax or suffixes for existing markdown (mentions, `#**stream>topic**`). If the existing syntax cannot carry what you need (e.g. a specific message id or `/with/` / `/near/` anchor), produce a normal markdown link `[display text](url)` where the url comes from a helper.
+- URLs: never hand-build. Grep zerver/lib/url_encoding.py (backend) or web URL helpers for the function producing the fragment, and use its options (conversation vs near link, omitting base URL). Links inside message content are relative: `#narrow/...`, no leading `/`, no host. If the brief names a URL form (e.g. a `/with/` link), your output must literally contain it.
+- Interface requirements in the brief are binding: exact names, strings, export style (`export let` when stub-able), selectors, module locations.
+- Do NOT change a shared helper's behaviour; grep its callers first. Editing an existing test so it matches output you invented is a red flag: revert and use the existing format.
+- Extending a feature to a new case (e.g. indentation, new operand): go through EVERY branch (continue, remove/undo, empty, fallback). The remove/undo branch must remove exactly what the continue branch would insert for that case (including any prefix/indent), and offsets must count those characters.
+- HTML escaping: backend `Markup("<b>{x}</b>").format(x=value)` keeps `value` escaped; never put values into Markup via f-string; plain strs are escaped. On the web, follow neighbouring code (`$t_html`, `{{{ }}}`).
+- Regexes: `re.VERBOSE` ignores whitespace and `#`; double braces in f-strings. Test the full pattern in a standalone script.
+- Wrap new user-facing strings in `$t`/`$t_html` (web) or `_()` (backend). No TODO stubs.
+- New webhook fixtures: copy a complete existing fixture and edit it; add a test in the existing style.
+- If your change alters a string or output that existing tests assert, update those tests to match.
+
+Before finishing (once, compactly):
+1. List each requirement/example in the brief and the diff line that satisfies it.
+2. Trace one concrete input to the exact output string/offsets/HTML, including the edge branches, and compare with what similar existing code and tests produce.
+3. `git diff --stat`: only files the feature needs? Then stop.
+
+If told the problem is not fixed yet:
+- Your design is probably wrong. Do not re-verify or make a cosmetic tweak, and never end a round without a real, different change.
+- Reread the brief for the exact output it describes, then check in order:
+  (a) Did you bypass an existing option/helper/URL helper with new code or new syntax?
+  (b) Does your output format differ from existing code/tests (link form, relative URL, labels, escaping)?
+  (c) Did you replace, rather than add to, existing logic, or change a shared helper, its tests, or extra files? Revert those parts.
+  (d) Is a branch untouched (undo/empty/fallback), or are offsets wrong?
+- Switch to the existing mechanism/format, redo the final check briefly, and finish within ~15 calls.
+Iteration 9: Accepted candidate (subsample score 3.303059489095446 -> 4.263642270901575); running full eval.
+Iteration 9: Valset score for new program: 0.7413954742028953 (coverage 20 / 20)
+Iteration 9: Val aggregate for new program: 0.7413954742028953
+Iteration 9: Individual valset scores for new program: {0: 0.9481686666495361, 1: 0.24433050603303885, 2: 0.9351860570781367, 3: 0.9462511859278443, 4: 0.9693638509058097, 5: 0.2786992176462539, 6: 0.9507045119465378, 7: 0.6572616360646227, 8: 0.6856624961886896, 9: 0.7708161083113765, 10: 0.9375328810743458, 11: 0.5464015579460612, 12: 0.4617439251893125, 13: 0.8932343271789376, 14: 0.9206898303086369, 15: 0.19122303162852575, 16: 0.9651031918943734, 17: 0.6764250944381727, 18: 0.9460418185705592, 19: 0.9030695890771359}
+Iteration 9: New valset pareto front scores: {0: 0.9686743582496081, 1: 0.9737645043967649, 2: 0.9448408752683357, 3: 0.9532391856201441, 4: 0.9763357907157705, 5: 0.2786992176462539, 6: 0.9507045119465378, 7: 0.9, 8: 0.9495591282822489, 9: 0.9173643250656359, 10: 0.9375328810743458, 11: 0.9058992384405837, 12: 0.4617439251893125, 13: 0.9, 14: 0.9206898303086369, 15: 0.9343851474728576, 16: 0.9651031918943734, 17: 0.9492731333933486, 18: 0.9460418185705592, 19: 0.9055976962353638}
+Iteration 9: Valset pareto front aggregate score: 0.881972437988534
+Iteration 9: Updated valset pareto front programs: {0: {2}, 1: {4}, 2: {3}, 3: {2}, 4: {4}, 5: {6}, 6: {6}, 7: {0}, 8: {2}, 9: {3}, 10: {6}, 11: {5}, 12: {6}, 13: {0}, 14: {6}, 15: {1}, 16: {6}, 17: {3}, 18: {6}, 19: {5}}
+Iteration 9: Best valset aggregate score so far: 0.7756082196826656
+Iteration 9: Best program as per aggregate score on valset: 3
+Iteration 9: Best score on valset: 0.7756082196826656
+Iteration 9: Linear pareto front program index: 3
+Iteration 9: New program candidate index: 6

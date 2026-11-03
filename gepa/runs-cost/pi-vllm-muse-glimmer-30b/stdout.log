@@ -1,0 +1,392 @@
+[rollout pi-vllm-muse-glimmer-30b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 12/20
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] done in 0.0 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] done in 0.0 min: resolved 15/20
+2026-10-30 19:07:54,314 INFO seed cost per task: mean $0.179 over 20 tasks
+[rollout pi-vllm-muse-glimmer-30b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.1 min: resolved 12/20
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] done in 0.1 min: resolved 15/20
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] done in 0.1 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] done in 0.0 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] done in 0.0 min: resolved 6/6
+2026-10-30 19:08:29,315 INFO reflection ok: cost=$0.547
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-6950e8 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] done in 51.4 min: resolved 6/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-9c9b92 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] done in 56.0 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-8276cb rc=0
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] done in 57.2 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-697d94 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] done in 115.9 min: resolved 15/20
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-589744 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] done in 129.5 min: resolved 13/20
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-5c9b81 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] done in 130.3 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] done in 0.0 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] done in 0.0 min: resolved 5/6
+2026-10-30 22:16:35,264 INFO reflection ok: cost=$0.566
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f-s2] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f-s3] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-94a3d6 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f-s3] done in 51.8 min: resolved 3/6
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-14764d rc=0
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f] done in 68.9 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-dcc6a9 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g05bb3b5f-s2] done in 71.1 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] done in 0.0 min: resolved 3/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] done in 0.0 min: resolved 2/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] done in 0.0 min: resolved 5/6
+2026-10-30 23:28:21,883 INFO reflection ok: cost=$0.562
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-e6d460 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] done in 55.9 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-061f08 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] done in 56.1 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-2fbb71 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] done in 67.1 min: resolved 3/6
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-1ef113 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] done in 123.4 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-0dab87 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] done in 131.0 min: resolved 15/20
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-7d2cbc rc=0
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] done in 132.3 min: resolved 13/20
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] done in 0.0 min: resolved 3/4
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] done in 0.0 min: resolved 2/4
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] done in 0.0 min: resolved 3/4
+2026-10-31 02:48:18,549 INFO reflection ok: cost=$0.527
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] 0/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] 0/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] 0/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] launching 4 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] launching 4 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] launching 4 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-3a2126 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] done in 33.4 min: resolved 2/4
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-dc7680 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] done in 33.7 min: resolved 2/4
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-d2b0bd rc=0
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] done in 39.1 min: resolved 4/4
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] 4/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] 4/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] 4/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] launching 16 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] launching 16 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] launching 16 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-478ced rc=0
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] done in 149.9 min: resolved 11/20
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-66ffba rc=0
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] done in 152.4 min: resolved 11/20
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-ee9a94 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] done in 158.4 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] done in 0.1 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] done in 0.1 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] done in 0.1 min: resolved 3/6
+2026-10-31 06:06:27,260 INFO reflection ok: cost=$0.536
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s2] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s3] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-8ed8b3 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s2] done in 50.4 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-7f7bb3 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s3] done in 52.6 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-ae087c rc=0
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2] done in 58.6 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s2] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s3] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s2] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s3] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-793fd3 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s2] done in 124.8 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-2bf6b1 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2] done in 125.4 min: resolved 15/20
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-b13045 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gcafeaba2-s3] done in 135.0 min: resolved 15/20
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s3] done in 0.0 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df] done in 0.0 min: resolved 6/6
+[rollout pi-vllm-muse-glimmer-30b--g4aa486df-s2] done in 0.0 min: resolved 6/6
+2026-10-31 09:20:39,328 INFO reflection ok: cost=$0.537
+[rollout pi-vllm-muse-glimmer-30b--g13c98665-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g13c98665-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g13c98665] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g13c98665-s2] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g13c98665-s3] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g13c98665] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g13c98665] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-75e951 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g13c98665] done in 58.7 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g13c98665-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-4f74f1 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g13c98665-s3] done in 62.5 min: resolved 6/6
+[rollout pi-vllm-muse-glimmer-30b--g13c98665-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-ef17c4 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g13c98665-s2] done in 74.7 min: resolved 5/6
+[rollout pi-vllm-muse-glimmer-30b--seed] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.2 min: resolved 2/6
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] done in 0.2 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] done in 0.2 min: resolved 3/6
+2026-10-31 10:36:12,733 INFO reflection ok: cost=$0.522
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s2] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s3] launching 6 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-7eeebf rc=0
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9] done in 54.0 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-9bb6f3 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s3] done in 57.7 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-84b3f3 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s2] done in 60.7 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s2] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s3] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s3] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s2] launching 14 cell(s) fanout=2 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-c71803 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s2] done in 117.7 min: resolved 16/20
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-318ab3 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9] done in 121.8 min: resolved 13/20
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-f9d272 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g685e64f9-s3] done in 124.1 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148] done in 0.1 min: resolved 1/4
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s2] done in 0.1 min: resolved 1/4
+[rollout pi-vllm-muse-glimmer-30b--g33eb2148-s3] done in 0.1 min: resolved 3/4
+[rollout pi-vllm-muse-glimmer-30b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.0 min: resolved 12/20
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] done in 0.0 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] done in 0.0 min: resolved 15/20
+2026-10-31 13:41:28,009 INFO seed cost per task: mean $0.179 over 20 tasks
+[rollout pi-vllm-muse-glimmer-30b--seed] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] 20/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--seed] done in 0.1 min: resolved 12/20
+[rollout pi-vllm-muse-glimmer-30b--seed-s3] done in 0.1 min: resolved 15/20
+[rollout pi-vllm-muse-glimmer-30b--seed-s2] done in 0.1 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] 4/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] done in 0.0 min: resolved 1/4
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] done in 0.0 min: resolved 3/4
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] done in 0.0 min: resolved 3/4
+2026-10-31 13:42:21,388 INFO reflection ok: cost=$0.573
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s3] 0/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d] 0/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s2] 0/4 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s2] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s3] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d] launching 4 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-cefe6b rc=0
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s3] done in 22.4 min: resolved 2/4
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-5bd50e rc=0
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s2] done in 23.9 min: resolved 3/4
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-bdfee6 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d] done in 31.8 min: resolved 4/4
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d] 4/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s3] 4/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s2] 4/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s3] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s2] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d] launching 16 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-0dac50 rc=0
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s3] done in 67.1 min: resolved 12/20
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-dd514b rc=0
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d-s2] done in 69.1 min: resolved 13/20
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-8793ae rc=0
+[rollout pi-vllm-muse-glimmer-30b--g665a0c0d] done in 71.9 min: resolved 16/20
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] 6/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s3] done in 0.2 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e] done in 0.2 min: resolved 3/6
+[rollout pi-vllm-muse-glimmer-30b--g6c835f1e-s2] done in 0.2 min: resolved 3/6
+2026-10-31 15:26:52,480 INFO reflection ok: cost=$0.566
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s3] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s2] 0/6 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s3] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s2] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f] launching 6 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-866156 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s3] done in 20.4 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-65703e rc=0
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s2] done in 20.7 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-8db42c rc=0
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f] done in 23.2 min: resolved 4/6
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s3] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s2] 6/20 cell(s) cached
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s2] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s3] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f] launching 14 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-2626e2 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f] done in 64.6 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s3] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-5837f6 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s3] done in 70.7 min: resolved 14/20
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s2] driver gepa-gepa-cost-pi-vllm-muse-glimmer-30b-7ca647 rc=0
+[rollout pi-vllm-muse-glimmer-30b--gbf6ef52f-s2] done in 75.9 min: resolved 13/20
+2026-10-31 17:05:59,941 INFO done: best idx 4 val 0.689
+Loading gepa state from run dir
+Iteration 7: Base program full valset score: 0.63125 over 20 / 20 examples
+Iteration 8: Selected program 2 score: 0.6596237427854688
+Iteration 8: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no virtualenv, no node_modules, no database, and no `python` command (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, eslint, mypy and Django imports do not work here. Don't run them or install anything. Check your work in the ways described below.
+
+### Efficient workflow
+1. Find code with `git grep -n <pattern> -- '*.py'` or `git ls-files | grep <name>`. Put options before the pattern (`git grep -n -i foo`). A path in the brief may have the wrong extension (.ts vs .js), so search for it instead of assuming.
+2. Read only what you need: `grep -n` to locate the function, then `sed -n 'START,ENDp' file`. Don't read whole large files or re-read ranges you have already seen. Cap long output with `| head -50`.
+3. Read the existing tests for the code you change (web/tests/<module>.test.cjs, zerver/tests/test_<area>.py, fixtures, zerver/webhooks/<name>/tests.py). Their assertions show the exact output format the code is expected to produce.
+4. Make the change, do the self-review, and stop. Once the self-review passes, finish. Don't keep looking for more edge cases. If two attempts fail, pick a simpler, more local change.
+
+### Reuse before you add
+- Before writing new logic, check whether the function you are changing already has a flag, option, branch or helper that produces what the brief asks for, or something very close (for example, an option that already inserts a header line in the same place). If it does, turn on or extend that existing path. Don't build a parallel one next to it. Often the fix is just setting an existing option under a new condition.
+- Briefs often describe what the user sees after rendering. "Label: value" next to existing generated lines usually means the same markup those sibling lines use (for example a Markdown `**Label:** value` when the nearby lines look like `**From:** …`). Match the format of the existing sibling output and of the existing tests. Use a literal string verbatim only when the brief says it is exact (error and log messages, HTML markup, URL shapes).
+- Use constants and helpers that already exist (length limits, truncation and display-name helpers, mime helpers) instead of hard-coding values or reimplementing them.
+
+### Make changes additively and completely
+- To support a new case in a regex, parser or helper, add a new alternative or branch next to the existing one. Don't loosen a shared sub-pattern that other cases depend on.
+- When you generalize an assumption, update every value derived from it: hard-coded lengths and offsets, selection ranges, removal spans, and both the add and the undo branches.
+- Follow the order of steps the brief describes. Side effects the brief requires on a path (logging a warning, cleanup) must happen before any early `raise` or `return` on that path. Check each failure path on its own: does it log what the brief says, then raise what the brief says?
+
+### Final self-review (required)
+Run `git diff` and check every hunk:
+- **Imports/names:** every identifier you use is imported or defined. Remove imports you no longer use. In TS, `import type` gives no runtime access; to call `mod.fn()`, use `import * as mod from "./mod.ts";`.
+- **Python `_`:** `_` is gettext. Never use `_` as a throwaway variable (`for _ in`, `a, _ = ...`) in modules that call `_()`. Use `unused`.
+- **HTML in Python (markupsafe):** `Markup("…{x}…").format(x=s)` HTML-escapes any plain `str`, even one built with an f-string that contains tags. Build HTML fragments as `Markup("<span class='c'>{t}</span>").format(t=text)` and pass that Markup object in. Search your diff for `f"<` or `f'<` in Python. Each hit is a bug if it reaches Markup. If `python3 -c "import markupsafe"` works, run a 3-line check of the exact output.
+- **Logging:** use the codebase's lazy style, `logging.warning("… %s …", arg)`.
+- **Syntax:** `python3 -m py_compile <file>` for each edited Python file. `node --check` only works on plain .js.
+- **Exports and mocks:** functions that callers or tests need must be `export`ed. Call other modules through their namespace (`other_module.fn()`) so `mock_esm`/`override` still work.
+- **Brief compliance:** exact strings, spacing, punctuation, order, every example in the brief, and every failure case. Existing behavior the brief says to keep is unchanged.
+
+### Checking logic without the test runners
+For non-trivial logic, copy the changed function into a scratch file in /tmp (for TS, strip the types into a .mjs file) and run it with `node` or `python3 -I`. Keep the script short and write it once. Run the brief's examples AND the existing test or fixture cases through both the old and the new version. Existing cases must give the same output unless the brief says they should change. Include the arguments passed to side-effect calls, and include the error paths.
+
+### Conventions
+- User-facing strings are translated: `_()` in Python, `$t({defaultMessage: ...})` / `$t_html` in web TS, `{{t "..."}}` in .hbs.
+- If you change user-visible text or output formats, update the existing tests that assert the old text in the same patch.
+- Keep the diff focused on the task.
+Iteration 8: Accepted candidate (subsample score 2.7842046729462138 -> 3.9031272296407447); running full eval.
+Iteration 8: Valset score for new program: 0.6603102852060865 (coverage 20 / 20)
+Iteration 8: Val aggregate for new program: 0.6603102852060865
+Iteration 8: Individual valset scores for new program: {0: 0.942384043947812, 1: 0.2634063416338049, 2: 0.9243465689123062, 3: 0.5795190236267552, 4: 0.6035070730299847, 5: -0.0825978485859758, 6: 0.9047987001645964, 7: 0.5023025691887762, 8: 0.6792532282065206, 9: 0.5727106579453636, 10: 0.90844269356552, 11: 0.9165706494983079, 12: 0.24598058876871476, 13: 0.8987531189937539, 14: 0.8965773337740393, 15: 0.24882047789011796, 16: 0.8995550801791067, 17: 0.7116975793542258, 18: 0.9272416505837942, 19: 0.662936173444204}
+Iteration 8: New valset pareto front scores: {0: 0.952434608901929, 1: 0.6008295875502119, 2: 0.9375415380732566, 3: 0.9139539423355931, 4: 0.9507979842426617, 5: -0.0825978485859758, 6: 0.9232324408431994, 7: 0.9161402119912468, 8: 0.9328623313610303, 9: 0.9274240092343209, 10: 0.9155956473372979, 11: 0.9165706494983079, 12: 0.26826767289683773, 13: 0.918194324282206, 14: 0.8976813471211333, 15: 0.9, 16: 0.9270132215204545, 17: 0.9212002094769225, 18: 0.9357750058011535, 19: 0.9273668223411929}
+Iteration 8: Valset pareto front aggregate score: 0.825014185311149
+Iteration 8: Updated valset pareto front programs: {0: {5}, 1: {4}, 2: {2}, 3: {2}, 4: {3}, 5: {6}, 6: {3}, 7: {1}, 8: {2}, 9: {1}, 10: {5}, 11: {6}, 12: {5}, 13: {5}, 14: {4}, 15: {0}, 16: {5}, 17: {2}, 18: {1}, 19: {5}}
+Iteration 8: Best valset aggregate score so far: 0.6887360415935662
+Iteration 8: Best program as per aggregate score on valset: 4
+Iteration 8: Best score on valset: 0.6887360415935662
+Iteration 8: Linear pareto front program index: 4
+Iteration 8: New program candidate index: 6
+Iteration 9: Selected program 2 score: 0.6596237427854688
+Iteration 9: Proposed new text for append_system_prompt: ## Working in this Zulip checkout
+
+Environment: there is no virtualenv, no node_modules, no database, and no `python` command (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, eslint, mypy and Django imports will not work here. Don't try to run them or install anything. Check your work in the ways described below.
+
+### Efficient workflow
+1. Find code with `git grep -n <pattern> -- '*.py'` or `git ls-files | grep <name>`, using paths relative to the repo root. Don't use `find` on absolute paths. Put git grep options before the pattern (`git grep -n -i foo`). There is no `--type` option. A path in the brief may have the wrong extension (.ts vs .js), so search; don't assume.
+2. Read only what you need: `grep -n` to find the function, then `sed -n 'START,ENDp' file`. Don't read whole large files, don't re-read a range you have already seen, and cap long outputs with `| head -50`.
+3. Read the existing tests for the code you change (web/tests/<module>.test.cjs, zerver/tests/test_<area>.py, zerver/tests/fixtures/*.json, zerver/webhooks/<name>/tests.py). `git grep` them for the literal text the brief talks about. Existing assertions show the exact format the code produces (bold markers, link syntax, spacing). Match that format.
+4. Make the change, do the self-review, and stop. Don't explore tangents (other callers, other layers) that the brief doesn't ask for. If two attempts at a fix fail, step back and choose a simpler, more local change.
+
+### Reuse before adding
+- Before adding a new flag, parameter or code path, check whether the function already has an option or helper that produces what the brief describes, such as an existing keyword argument that inserts a header line or an existing URL builder. If one exists, set or call it (for example, turn the existing option on under the new condition). Don't add a parallel near-duplicate. Briefs often paraphrase output and leave out Markdown formatting. The codebase's existing format wins over a loose paraphrase.
+- Exact quoted error, warning or log messages in the brief must be copied character-for-character.
+- If the brief describes a URL (for example a narrow link containing `/with/<id>` or `/near/<id>`), put a real link with that URL in the generated content, such as `[label](#narrow/...)`, built with the existing URL-encoding helpers. Don't use a shorthand syntax (like `#**channel>topic**` mention syntax) that gets turned into a link only when rendered.
+
+### Make changes additively and completely
+- Change as little shared code as possible. To support a new case in a regex, parser, or helper, add a new alternative or branch next to the existing one. Don't loosen or tighten a shared sub-pattern that other cases depend on.
+- When you generalize logic (allowing a prefix, indentation, a new form), update every value derived from the old assumption: hard-coded lengths and offsets (`caret - 2`, `slice(0, 2)`), selection ranges, and removal or replacement spans. Update both the "add" branch and the "remove/undo" branch. An undo must remove the whole new prefix, including any indentation you now preserve.
+- Side effects such as logging and warnings: emit them where the condition is first detected, before any later check that might raise. For example, log "X is missing, falling back to Y" before attempting Y, so the log also appears when Y fails.
+
+### Final self-review (required before finishing)
+Run `git diff` and check every changed hunk:
+- **Imports / names:** every identifier you use is imported or defined in that file. In TS, `import {type X}` / `import type` gives no runtime access. To call `mod.fn()`, add `import * as mod from "./mod.ts";`.
+- **Python `_`:** `_` is gettext. Never use `_` as a throwaway variable (`for _ in`, `a, _ = ...`) in a module that calls `_()`. Use `unused` instead.
+- **Logging:** use `logging.warning("... %s ...", arg)` style, not f-strings.
+- **HTML in Python (markupsafe `Markup`):** `Markup("...{x}...").format(x=s)` HTML-escapes plain `str` arguments. To insert an HTML fragment, build it as a `Markup(...)` object and pass that in. Escape user text with `Markup.escape(text)`. Never put raw user text into `Markup(f"...")`.
+- **Syntax:** run `python3 -m py_compile <file>` on each edited Python file. `node --check` only works on plain .js, not .ts.
+- **Exports and mocks:** new functions that callers or tests need must be `export`ed. Web tests replace modules with `mock_esm`/`override(module, "fn", ...)`, so call other modules through their namespace (`other_module.fn()`). Don't copy their logic inline.
+- **Brief compliance:** exact messages, the order of output lines, and every example in the brief. Existing behavior the brief says to keep is unchanged.
+
+### Checking logic without the test runners
+For non-trivial logic, copy the changed function into one scratch file under /tmp (for TS, strip the types into a .mjs file) and run it with `node` or `python3 -I`. Keep the script short and write it once.
+- Simulate the whole function, including the arguments it passes to side-effect calls (selection ranges, inserted text, removed spans, log calls), not just the return value.
+- Run the brief's examples and the existing test or fixture cases through the old and the new version. Existing cases must give the same output unless the brief says otherwise.
+
+### Conventions
+- User-facing strings are translated: `_()` in Python, `$t({defaultMessage: ...})` / `$t_html` in web TS, `{{t "..."}}` in .hbs templates.
+- If you change user-visible text or output formats, update the existing tests that assert the old text in the same patch.
+- Keep the diff focused on the task.
+Iteration 9: Accepted candidate (subsample score 3.3640339409583495 -> 3.9138405958153926); running full eval.
+Iteration 9: Valset score for new program: 0.652741180155113 (coverage 20 / 20)
+Iteration 9: Val aggregate for new program: 0.652741180155113
+Iteration 9: Individual valset scores for new program: {0: 0.93131656158312, 1: -0.06387157708959544, 2: 0.94013906004384, 3: 0.5977368610796029, 4: 0.9553157730763424, 5: -0.0622379377436741, 6: 0.589226961352478, 7: 0.4998140447387143, 8: 0.9380819058231133, 9: 0.722447833471304, 10: 0.9140533125904365, 11: 0.9053226049899774, 12: 0.24976423622249044, 13: 0.9157098767090652, 14: 0.8534825887426615, 15: 0.2404367214931528, 16: 0.5698823714416242, 17: 0.5081296339878427, 18: 0.9256057253139698, 19: 0.9244670452757934}
+Iteration 9: New valset pareto front scores: {0: 0.952434608901929, 1: 0.6008295875502119, 2: 0.94013906004384, 3: 0.9139539423355931, 4: 0.9553157730763424, 5: -0.0622379377436741, 6: 0.9232324408431994, 7: 0.9161402119912468, 8: 0.9380819058231133, 9: 0.9274240092343209, 10: 0.9155956473372979, 11: 0.9165706494983079, 12: 0.26826767289683773, 13: 0.918194324282206, 14: 0.8976813471211333, 15: 0.9, 16: 0.9270132215204545, 17: 0.9212002094769225, 18: 0.9357750058011535, 19: 0.9273668223411929}
+Iteration 9: Valset pareto front aggregate score: 0.8266489251165815
+Iteration 9: Updated valset pareto front programs: {0: {5}, 1: {4}, 2: {7}, 3: {2}, 4: {7}, 5: {7}, 6: {3}, 7: {1}, 8: {7}, 9: {1}, 10: {5}, 11: {6}, 12: {5}, 13: {5}, 14: {4}, 15: {0}, 16: {5}, 17: {2}, 18: {1}, 19: {5}}
+Iteration 9: Best valset aggregate score so far: 0.6887360415935662
+Iteration 9: Best program as per aggregate score on valset: 4
+Iteration 9: Best score on valset: 0.6887360415935662
+Iteration 9: Linear pareto front program index: 4
+Iteration 9: New program candidate index: 7

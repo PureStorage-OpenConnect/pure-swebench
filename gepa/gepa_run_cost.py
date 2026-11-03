@@ -149,7 +149,9 @@ def main():
         valset=train,
         adapter=ZbenchPiAdapterCost(args.agent, f"gepa-cost-{args.agent}", args.samples, sc),
         reflection_lm=claude_reflection_lm,
-        reflection_prompt_template=COST_TEMPLATE,
+        # the long-context price tier is a Haiku 5.5 fact (the Luna/Sol runs still had this line)
+        reflection_prompt_template=(COST_TEMPLATE if "haiku-5-5" in args.agent else COST_TEMPLATE.replace(
+            " A call whose context is larger than 100K tokens costs 5x more per token.", "")),
         candidate_selection_strategy="pareto",
         reflection_minibatch_size=args.minibatch,
         max_metric_calls=args.budget,

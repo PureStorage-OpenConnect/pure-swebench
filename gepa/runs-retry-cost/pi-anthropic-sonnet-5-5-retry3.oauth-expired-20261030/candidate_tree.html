@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEPA Candidate Tree</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; width: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; display: flex; flex-direction: column; }
+  #header { background: #fff; border-bottom: 1px solid #dee2e6; padding: 12px 20px; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  #header h1 { font-size: 18px; font-weight: 600; color: #212529; }
+  .legend { display: flex; gap: 14px; font-size: 13px; color: #495057; }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #adb5bd; }
+  #graph-container { flex: 1 1 auto; width: 100%; overflow: auto; padding: 20px; text-align: center; }
+  #graph-container svg { width: 100%; height: 100%; }
+  #tooltip {
+    display: none; position: fixed; background: #fff; border: 1px solid #dee2e6;
+    border-radius: 8px; padding: 14px 16px; max-width: 560px; max-height: 70vh; overflow-y: auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 1000; font-size: 13px; line-height: 1.5;
+  }
+  #tooltip .tt-header { font-weight: 700; font-size: 15px; margin-bottom: 6px; color: #212529; }
+  #tooltip .tt-meta { color: #6c757d; margin-bottom: 4px; }
+  #tooltip .tt-hint { color: #adb5bd; font-size: 11px; font-style: italic; margin-bottom: 10px; }
+  #tooltip .tt-comp-name { font-weight: 600; color: #495057; margin-top: 10px; border-bottom: 1px solid #e9ecef; padding-bottom: 2px; }
+  #tooltip .tt-comp-text {
+    white-space: pre-wrap; word-break: break-word; background: #f8f9fa;
+    border: 1px solid #e9ecef; border-radius: 4px; padding: 8px 10px; margin-top: 4px;
+    font-family: "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px;
+    max-height: 200px; overflow-y: auto;
+  }
+  .role-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+  .role-best { background: #00e5ff33; color: #006064; }
+  .role-pareto { background: #ff980033; color: #e65100; }
+  .role-seed { background: #e0e0e0; color: #424242; }
+</style>
+</head>
+<body>
+<div id="header">
+  <h1>GEPA Candidate Tree</h1>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:cyan"></div> Best</div>
+    <div class="legend-item"><div class="legend-dot" style="background:orange"></div> Pareto Front</div>
+    <div class="legend-item"><div class="legend-dot" style="background:lightgray"></div> Other</div>
+  </div>
+</div>
+<div id="graph-container"><p>Loading graph&hellip;</p></div>
+<div id="tooltip"></div>
+
+<script type="module">
+const NODES = [{"idx": 0, "score": 0.8889, "parents": "seed", "role": "Pareto Front", "components": {"append_system_prompt": ""}},
+{"idx": 1, "score": 0.8574, "parents": "0", "role": "Pareto Front", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Python/Django backend in zerver/ and zproject/, TypeScript web client in web/src with Handlebars templates in web/templates, node tests in web/tests, help-center docs in starlight_help/, developer docs in docs/):\n\nEnvironment\n- There is no virtualenv, node_modules, database, or `python` binary (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, eslint and mypy cannot run here, so don't try them. To check your work, read the diff carefully and, for Python, run `python3 -m py_compile <file>`.\n\nHow to work efficiently\n- Start with one or two targeted searches (`rg -n`/`grep -n` with a few patterns at once), then read only the relevant line ranges (`sed -n 'A,Bp'`). Don't cat whole large files or print long outputs; pipe through `head`.\n- Don't re-read code you've already seen. Plan the full change once, then make the edits in as few steps as possible. When the same mechanical edit applies to many files (for example doc pages), do it with one scripted pass and then spot-check.\n- Focus on the source change. Don't spend turns writing new tests or fixtures unless the task explicitly asks for them. If you change a function's signature or a selector, update existing callers and any existing tests that call or stub it, so they stay consistent.\n- When the change is complete, review `git diff` once and stop.\n\nGetting it right\n- Treat the task's \"Interface requirements\" / exact strings / names as a contract: use the exact function names, parameter order, exported module properties, CSS selectors, log message wording, and user-facing text given. If it says a function must be stub-able/rewirable, export it the same way other stub-able functions in that module are exported.\n- Follow existing conventions instead of inventing new ones: copy the pattern of the nearest similar feature (e.g., how a sibling tab, setting, webhook event type, or banner is implemented). Use existing helpers (shared modules under web/shared/src, people/muted_users/stream_data style modules, zerver/lib and zerver/actions functions) instead of re-implementing logic.\n- Web UI strings go through $t / $t_html (with <z-link> style tags for links); backend strings through gettext/_(); keep strings exactly as specified.\n- Backend: put imports at module top like neighbouring code; prefer existing actions (do_change_* functions) for model changes so events/audit logs fire; log via the existing logger of that module/backend.\n- Preserve behavior the brief says must not change; handle the stated edge cases (missing data, None, unconfigured setting) explicitly.\n- If the brief asks for docs updates, make them, but keep them concise.\n\nIf you are told the problem is not fixed yet\n- Don't just tweak the same lines. Re-read the task statement line by line, list every required behavior and interface item, and check each against your current diff (names, signatures, exact strings, every call site, every code path that reaches the feature). Look for a second place the behavior is implemented or a caller you didn't update, then fix what is missing."}},
+{"idx": 2, "score": 0.9069, "parents": "1", "role": "Best", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Python/Django backend in zerver/ and zproject/; TypeScript web client in web/src, Handlebars templates in web/templates, node tests in web/tests; help-center docs in starlight_help/, developer docs in docs/).\n\nEnvironment\n- No virtualenv, node_modules, database or `python` binary (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, eslint and mypy cannot run here, so don't try them. For Python, `python3 -m py_compile <file>`. To check logic, trace concrete inputs by hand through the code you changed (or run a tiny standalone python3/node snippet of just that pure logic). Don't explore unrelated subsystems (markdown parser internals, vendored libraries) to \"validate\" a change.\n\nHow to work efficiently\n- Start with one or two targeted searches (`rg -n` with a few patterns at once), then read only the relevant line ranges (`sed -n 'A,Bp'`). Don't cat large files. Pipe long output through `head`.\n- Don't re-read code you've already seen. Plan the whole change once, then make the edits in as few steps as possible. Use one scripted pass for repetitive edits, then spot-check.\n- Keep the change minimal and local to the layer the brief names. Don't refactor neighbouring modules.\n- Focus on the source change. Don't write new tests unless asked. If you change a function's signature, output format or selector, update existing callers and existing tests that call, stub or assert on it. Editing a test so it expects your own output doesn't show the change is right.\n- When done, review `git diff` once and stop.\n\nGetting it right\n- Treat names, signatures, exact strings, selectors and log wording in the brief as a contract.\n- When the brief describes the resulting output (a link/URL shape, the text shown, which message or ID it points to), make your code produce that output explicitly. Don't emit a different intermediate syntax that you assume renders into it later. Before reusing a helper, check that its exact output matches what the brief describes.\n- Follow the nearest similar feature's pattern and reuse existing helpers (web/shared/src, *_data modules, zerver/lib, zerver/actions do_change_* functions so events/audit logs fire). In TS, call other modules through their namespace import (`module.fn(...)`) so tests can replace them. Make rewirable functions follow the module's existing `export let` style.\n- UI strings use $t / $t_html; backend strings use _(). Keep imports at module top like neighbouring code.\n- When you generalize a behavior (e.g., handle a prefix, indentation, new case or empty value), apply it in every branch of the affected function: the main path, the early-return/cleanup/\"remove\" paths, and any computed offsets, lengths or cursor positions. For each branch, compute the exact resulting values for one concrete example and confirm they're right.\n- Preserve behavior the brief says must not change, and handle stated edge cases (None, empty, unconfigured) explicitly.\n- If the brief asks for docs updates, keep them concise.\n\nIf you are told the problem is not fixed yet\n- You must change something. Ending a round with the same diff is never correct.\n- Assume your interpretation or design was wrong, not just a detail. Re-read the brief line by line. List each required behavior and output, and check each against your diff with a concrete worked example. Ask yourself: Did I miss a sibling branch or offset? Does my output literally match what the brief describes? Is there a second code path or caller?\n- If the logic looks right, switch to the next most plausible alternative (a different output form, a different layer, a helper the brief names) instead of investigating unrelated code."}},
+{"idx": 3, "score": 0.9031, "parents": "2", "role": "Pareto Front", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Python/Django backend in zerver/ and zproject/; TypeScript web client in web/src, Handlebars templates in web/templates, node tests in web/tests; help-center docs in starlight_help/, developer docs in docs/).\n\nEnvironment\n- No virtualenv, node_modules, database or `python` binary (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, eslint and mypy cannot run here; don't try. For Python run `python3 -m py_compile <file>`. To check logic, trace concrete inputs by hand through the code you changed (or run a tiny standalone python3/node snippet of just that pure logic). Don't explore unrelated subsystems to \"validate\" a change.\n\nWorking efficiently\n- Start with one or two targeted searches (`rg -n` with several patterns at once, piped through `head`), then read only the relevant line ranges (`sed -n 'A,Bp'`). Never cat large files; don't re-read code you've already seen.\n- Plan the whole change once, then edit in as few steps as possible. For edits, copy oldText exactly from output you just saw (or use a short python3 replace script); after any edit, `py_compile` again before moving on.\n- Keep the change minimal and local to the layer the brief names. Don't refactor neighbouring modules or write new tests unless asked. If you change a function's signature, output or selector, update its callers and the existing tests that call, stub or assert on it.\n- When done, review `git diff` once and stop.\n\nGetting it right\n- Treat names, signatures, exact strings (error/warning/log text, punctuation), class names and selectors in the brief as a contract; copy them verbatim.\n- First look for an existing mechanism that already does what's asked (an option/flag, helper in zerver/lib or web/shared/src, *_data module, zerver/actions do_change_* so events/audit logs fire). If the code already has an option that adds the described element, turn it on rather than hand-building a new format; keep that option's existing formatting.\n- When no such mechanism exists and the brief describes the resulting output (URL shape, displayed text, markup), produce exactly that output. Don't emit an intermediate syntax that you assume renders into it later. For HTML built in Python, use Markup/format so intended tags aren't escaped and user text still is.\n- Follow the nearest similar feature's pattern. In TS, call other modules through their namespace import (`module.fn(...)`) and keep the module's `export let` style for rewirable functions. UI strings use $t / $t_html; backend strings use _(). Keep imports at module top.\n- When you generalize a behavior (a new case, prefix, empty value, category of item), apply it in every branch/bucket of the affected function, including early-return and cleanup paths and computed offsets/lengths. For each branch, work through one concrete example and confirm the exact result.\n- Preserve behavior the brief says must not change; handle stated edge cases (None, empty, unconfigured) explicitly.\n- If asked for docs updates, keep them concise.\n\nIf you are told the problem is not fixed yet\n- You must change something; ending a round with the same diff is never correct.\n- Assume your interpretation or design was wrong, not just a detail. Re-read the brief line by line, list each required behavior/output, and check it against your diff with a concrete example. Did you miss a sibling branch, a second caller or code path? Does the output literally match the brief (or the existing format it reuses)?\n- If the logic looks right, switch to the next most plausible alternative (different output form, different layer, the helper the brief names) instead of investigating unrelated code."}},
+{"idx": 4, "score": 0.8807, "parents": "1", "role": "Pareto Front", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Python/Django backend in zerver/ and zproject/, TypeScript web client in web/src with Handlebars templates in web/templates, node tests in web/tests, help-center docs in starlight_help/, developer docs in docs/):\n\nEnvironment\n- There is no virtualenv, node_modules, database, or `python` binary (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, eslint and mypy cannot run here, so don't try them. For Python, run `python3 -m py_compile <file>`.\n- For pure logic (parsing, string formatting, URL building), copy the relevant function into a small standalone `python3 - <<'EOF'` script, stub out the Django-dependent bits, and feed it the brief's example input. The output must match the brief's example output character for character. Also run it on the inputs in the existing fixtures and tests, so you know old cases still produce the same output.\n\nHow to work efficiently\n- Start with one or two targeted searches (`rg -n` with a few patterns at once), then read only the relevant line ranges (`sed -n 'A,Bp'`). Don't cat whole large files; pipe long output through `head`.\n- Don't re-read code you've already seen. Plan the full change once, then make the edits in as few steps as possible. For the same mechanical edit across many files, use one scripted pass and then spot-check.\n- Focus on the source change. Don't write new tests or fixtures unless asked. If you change a function's signature or a selector, update its callers and any existing tests that call or stub it.\n- When the change is complete, review `git diff` once and stop.\n\nGetting it right\n- Treat the brief's \"Interface requirements\", exact strings and names as a contract: function names, parameter order, exported module properties, CSS selectors, log message wording, user-facing text.\n- Follow existing conventions: copy the pattern of the nearest similar feature, and use existing helpers and options (shared modules under web/shared/src, zerver/lib, zerver/actions do_change_* functions) instead of re-implementing logic. Before reusing a helper, check that its actual output is the result the brief describes. Don't pick a helper just because it accepts the argument you need.\n- When the brief describes what the user should end up seeing or clicking (a link, a header, a message body), work out the final concrete string your code produces for the brief's scenario and check it against that description. Placeholder syntax that is only resolved later (or resolved with different data) may not count as a fix.\n- Existing tests and fixtures encode behavior that must keep working. Don't edit fixtures, and don't change existing expected outputs to whatever your code now produces. Only update an expectation when the brief explicitly changes that exact output. If your change breaks an existing expected output, that is a bug in your change.\n- Web UI strings go through $t / $t_html; backend strings through gettext/_(). Backend imports go at module top like neighbouring code; log via the module's or backend's existing logger.\n- Handle the stated edge cases explicitly (missing data, None, unconfigured setting, empty string), and preserve behavior the brief says must not change.\n- For web changes, trace the brief's scenario through the existing node test's setup to check that your new code path is actually reached. Call cross-module functions the way the module already does, so they can be mocked or stubbed.\n- If the brief asks for docs updates, make them concise.\n\nIf you are told the problem is not fixed yet\n- Your previous approach is wrong or incomplete. Never end the round with the same diff.\n- Re-read the brief line by line and list every required behavior and interface item. For each one, write down the concrete output your current code produces for the brief's scenario.\n- Then question your interpretation. What other output format, layer or code path could the brief mean? Check for a second place the behavior is implemented, a caller you didn't update, an existing test or fixture you changed that should have stayed the same, and an example in the brief you haven't checked exactly. Implement the most plausible alternative."}},
+{"idx": 5, "score": 0.9049, "parents": "2", "role": "Pareto Front", "components": {"append_system_prompt": "Working notes for this Zulip checkout (Python/Django backend in zerver/ and zproject/; TypeScript/JS web client in web/src, shared helpers in web/shared/src, Handlebars templates in web/templates, node tests in web/tests/*.test.cjs; help docs in starlight_help/, dev docs in docs/).\n\nEnvironment\n- No virtualenv, node_modules, database or `python` binary (only `python3`). tools/test-backend, tools/test-js-with-node, tsc, eslint and mypy cannot run here, so don't try them. For Python, use `python3 -m py_compile <file>`. To check logic, trace one or two concrete inputs by hand through the code you changed, or run a tiny standalone python3/node snippet of just that pure logic.\n- A path in the brief may have the wrong extension (some modules are still .js and not .ts). If a path is missing, locate it with `rg --files web/src | rg <name>` instead of retrying.\n\nWorking efficiently\n- Find the entry point first: the code that actually handles the user action in the brief (key handler, event callback, view function, API endpoint). Grep for the exact function, string or event name, then read that function. Don't survey neighbouring modules that only look related.\n- Batch your reading. Put several `rg -n` patterns and `sed -n 'A,Bp'` ranges in one command, and pipe long output through `head`. Don't cat large files, and don't re-read code you've already seen.\n- Plan the whole change once, then make it in one or two edits (a python3 replace script works well). Keep your reasoning short for simple changes.\n- Keep the change minimal and in the layer where the behavior lives. If the fix can be made inside the calling code, don't widen a shared helper that other callers depend on. Don't refactor nearby code.\n- Don't write new tests unless asked. If you change a function's signature, output, wording or selector, update existing callers, and update existing tests that call, stub or assert on it.\n- When done, review `git diff` once, give a two-line summary, and stop.\n\nGetting it right\n- Treat names, signatures, exact strings, selectors, ordering and placement in the brief as a contract. If the brief describes an output (text, URL shape, list order, which item comes first), make your code produce exactly that output, and check that any helper you reuse really does.\n- Follow the nearest similar feature's pattern and reuse existing helpers (web/shared/src, *_data modules, zerver/lib, the zerver/actions do_change_* functions so events and audit logs fire). In TS, call other modules through their namespace import (`module.fn(...)`) so they can be stubbed. Where a function must be replaceable, use the module's `export let` style.\n- UI strings use $t / $t_html, and backend strings use _(). Put imports at the top of the module, like the neighbouring code.\n- Test fixtures often leave out optional fields (flags like is_bot, negated, etc.). Write checks so that a missing field behaves like the default (`x === true`, `?? \"\"`), not so that it crashes or flips the result.\n- When you generalize a behavior (a prefix, indentation, a new case, an empty value), apply it in every branch of the affected function: the main path, the early-return/cleanup/\"remove\" paths, and any computed offsets, lengths or cursor positions. For each branch, work out the exact resulting values for one concrete example.\n- Preserve the behavior the brief says must not change, and handle the stated edge cases (None, empty, unconfigured) explicitly.\n- If the brief asks for docs updates, keep them concise.\n\nIf you are told the problem is not fixed yet\n- You must change something. Ending a round with the same diff is never correct.\n- Re-read the brief line by line. List every required behavior and output, and check each one against your diff with a concrete worked example. Look for a missed sibling branch or offset, an output that doesn't literally match the brief, a second code path or caller, or a changed shared helper whose other callers you broke.\n- If your logic looks right, assume the design or layer is wrong. Switch to the next most plausible alternative (a different output form, the handler that actually runs, a helper the brief names) instead of exploring unrelated code."}}];
+const DOT = `digraph G {
+    rankdir=TB;
+    node [style=filled, shape=circle, fontsize=14, width=0.6, height=0.6];
+    0 [label="0\\n(0.89)", fillcolor=orange, tooltip=" "];
+    1 [label="1\\n(0.86)", fillcolor=orange, tooltip=" "];
+    2 [label="2\\n(0.91)", fillcolor=cyan, tooltip=" "];
+    3 [label="3\\n(0.90)", fillcolor=orange, tooltip=" "];
+    4 [label="4\\n(0.88)", fillcolor=orange, tooltip=" "];
+    5 [label="5\\n(0.90)", fillcolor=orange, tooltip=" "];
+    0 -> 1;
+    1 -> 2;
+    2 -> 3;
+    1 -> 4;
+    2 -> 5;
+}`;
+
+const nodeMap = {};
+NODES.forEach(n => { nodeMap[n.idx] = n; });
+
+let pinnedIdx = null;   // non-null when tooltip is click-pinned (scrollable)
+let hoverIdx = null;    // non-null when hovering over a node
+
+function renderTooltip(idx) {
+  const n = nodeMap[idx];
+  if (!n) return "";
+  let roleBadge = "";
+  if (n.role === "Best") roleBadge = '<span class="role-badge role-best">BEST</span>';
+  else if (n.role === "Pareto Front") roleBadge = '<span class="role-badge role-pareto">PARETO</span>';
+  else if (n.role === "Seed") roleBadge = '<span class="role-badge role-seed">SEED</span>';
+
+  let comps = "";
+  for (const [name, text] of Object.entries(n.components)) {
+    const escaped = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    comps += '<div class="tt-comp-name">' + name + '</div><div class="tt-comp-text">' + escaped + '</div>';
+  }
+
+  return '<div class="tt-header">Candidate ' + n.idx + roleBadge + '</div>' +
+    '<div class="tt-meta">Score: <strong>' + n.score + '</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Parent(s): ' + n.parents +
+    '</div><div class="tt-hint">' + (pinnedIdx === idx ? 'Click node again to dismiss' : 'Click to pin &amp; scroll') + '</div>' +
+    comps;
+}
+
+function positionTooltip(x, y) {
+  const tt = document.getElementById("tooltip");
+  let tx = x + 16, ty = y + 16;
+  const r = tt.getBoundingClientRect();
+  if (tx + r.width > window.innerWidth - 8) tx = x - r.width - 16;
+  if (ty + r.height > window.innerHeight - 8) ty = y - r.height - 16;
+  if (tx < 8) tx = 8;
+  if (ty < 8) ty = 8;
+  tt.style.left = tx + "px";
+  tt.style.top = ty + "px";
+}
+
+function showTooltip(idx, x, y) {
+  const tt = document.getElementById("tooltip");
+  tt.innerHTML = renderTooltip(idx);
+  tt.style.display = "block";
+  positionTooltip(x, y);
+}
+
+function hideTooltip() {
+  pinnedIdx = null;
+  hoverIdx = null;
+  document.getElementById("tooltip").style.display = "none";
+}
+
+// Click outside tooltip and outside nodes dismisses pinned tooltip
+document.addEventListener("mousedown", function(e) {
+  const tt = document.getElementById("tooltip");
+  if (pinnedIdx !== null && tt.style.display === "block"
+      && !tt.contains(e.target) && !e.target.closest(".node")) {
+    hideTooltip();
+  }
+});
+
+async function render() {
+  const { instance } = await import("https://cdn.jsdelivr.net/npm/@viz-js/viz@3.11.0/lib/viz-standalone.mjs");
+  const viz = await instance();
+  const svg = viz.renderSVGElement(DOT);
+  const container = document.getElementById("graph-container");
+  container.innerHTML = "";
+  container.appendChild(svg);
+
+  // Attach hover listeners and strip native <title> tooltips to avoid double tooltips
+  svg.querySelectorAll(".node").forEach(node => {
+    const title = node.querySelector("title");
+    if (!title) return;
+    const idx = parseInt(title.textContent, 10);
+    if (isNaN(idx)) return;
+    title.remove();  // remove native SVG tooltip
+    node.style.cursor = "pointer";
+    // Hover: show tooltip following the mouse (non-interactive)
+    node.addEventListener("mouseenter", e => {
+      if (pinnedIdx !== null) return;  // don't override a pinned tooltip
+      hoverIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+    node.addEventListener("mousemove", e => {
+      if (pinnedIdx !== null || hoverIdx !== idx) return;
+      positionTooltip(e.clientX, e.clientY);
+    });
+    node.addEventListener("mouseleave", () => {
+      if (pinnedIdx !== null) return;
+      hoverIdx = null;
+      document.getElementById("tooltip").style.display = "none";
+    });
+    // Click: pin the tooltip so user can scroll it
+    node.addEventListener("click", e => {
+      e.stopPropagation();
+      if (pinnedIdx === idx) { hideTooltip(); return; }
+      pinnedIdx = idx;
+      showTooltip(idx, e.clientX, e.clientY);
+    });
+  });
+  // Also strip <title> from edges and the graph itself
+  svg.querySelectorAll(".edge title").forEach(t => t.remove());
+  const graphTitle = svg.querySelector(":scope > title");
+  if (graphTitle) graphTitle.remove();
+}
+
+render().catch(err => {
+  document.getElementById("graph-container").innerHTML =
+    "<p style='color:red'>Failed to render graph: " + err.message + "</p>" +
+    "<pre>" + DOT.replace(/</g,"&lt;") + "</pre>";
+});
+</script>
+</body>
+</html>

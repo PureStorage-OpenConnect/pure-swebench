@@ -1,0 +1,22 @@
+{
+ "agent": "claude-cli-haiku-5-5-retry3",
+ "version": "retry-cost",
+ "samples": 3,
+ "minibatch": 6,
+ "cost_weight": 0.1,
+ "cost_cap": 3.0,
+ "candidates": [
+  ""
+ ],
+ "val_aggregate_scores": [
+  0.829861111111111
+ ],
+ "parents": [
+  [
+   null
+  ]
+ ],
+ "best_idx": 0,
+ "best_prompt": "",
+ "total_metric_calls": 242
+}

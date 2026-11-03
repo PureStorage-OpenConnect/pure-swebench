@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import contextlib
 import fcntl
+import json
 import logging
 import os
 import shutil
@@ -347,14 +348,66 @@ def _score(instance: dict, agent: dict, ctx: dict, *, passed: bool, status: str,
     return score
 
 
+# ---- retry with feedback (GEPA retry experiment) ---------------------------------
+# ZBENCH_MAX_ATTEMPTS (agent env, default 1 = the standard one-shot benchmark): after a
+# round that does not resolve the task, the SAME agent conversation continues in the SAME
+# worktree (its previous change still in place) with a short user message that says only
+# that the problem is not fixed yet. The hidden tests are never shown. The cell records ONE
+# attempt row (the final round); per-round results go to attempts.json in the evidence dir.
+_RETRY_STATUSES = {"tests_failed", "timeout", "no_patch_generated", "patch_apply_failed"}
+
+_FEEDBACK_NOT_FIXED = (
+    "I applied your change and checked it. The problem is not fixed yet: the behavior "
+    "described in the task still does not happen as expected. Your previous change is still "
+    "in the repository. Review the task and your change again, find what is still wrong or "
+    "missing, and correct it.")
+_FEEDBACK_NO_CHANGE = (
+    "You finished without changing any file in the repository, so the problem is still "
+    "present. Make the code change that fixes it.")
+
+
+def _max_attempts(agent: dict) -> int:
+    try:
+        return max(1, int((agent.get("env") or {}).get("ZBENCH_MAX_ATTEMPTS") or 1))
+    except ValueError:
+        return 1
+
+
+def _restore_agent_state(wt: Path, base_commit: str, patches: list[dict]) -> None:
+    """Put the worktree back to base + the agent's own cumulative change (drops the hidden
+    tests and the test-edit strip that verify applied), so the next round starts from
+    exactly what the agent left."""
+    subprocess.run(["git", "reset", "-q", "--hard", base_commit], cwd=str(wt), capture_output=True)
+    subprocess.run(["git", "clean", "-qfdx"], cwd=str(wt), capture_output=True)
+    for p in patches:
+        if (p.get("patch_text") or "").strip():
+            ok, _o, err = apply_patch(p["patch_text"], wt)
+            if not ok:
+                raise RuntimeError(f"restore of agent change failed: {err[:300]}")
+
+
+def _sum_usage(usages: list[dict], cumulative: bool) -> dict:
+    """pi sums its whole --session file, so its last report already covers every round;
+    other adapters report per invocation -> add them up."""
+    usages = [u for u in usages if u]
+    if not usages:
+        return {}
+    if cumulative:
+        return dict(usages[-1])
+    tot: dict = {}
+    for u in usages:
+        for k, v in u.items():
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                tot[k] = (tot.get(k) or 0) + v
+            elif k not in tot:
+                tot[k] = v
+    return tot
+
+
 def run_patch_task_attempt(agent: dict, instance: dict, ctx: dict, base_repo_dir) -> dict:
-    """Test-blind patch evaluation for one attempt. Returns the score map."""
-    md = instance.get("metadata") or {}
-    commands = md.get("commands", {})
-    build_cmds = commands.get("build", []) or []
-    test_cmds = commands.get("tests", []) or []
+    """Test-blind patch evaluation for one attempt (up to ZBENCH_MAX_ATTEMPTS feedback
+    rounds). Returns the score map."""
     base_commit = instance["commit"]
-    verify_timeout = int(md.get("verify_timeout_sec", 2400))
     sp = ctx.get("set_phase") or (lambda *_: None)   # advance the lease phase for observability
 
     if base_repo_dir is None:
@@ -374,128 +427,217 @@ def run_patch_task_attempt(agent: dict, instance: dict, ctx: dict, base_repo_dir
         logger.error("worktree setup failed: %s", exc)
         return _score(instance, agent, ctx, passed=False, status="worktree_error", error=str(exc))
 
+    max_attempts = _max_attempts(agent)
+    cumulative_usage = "pi_agent" in (agent.get("command") or "")
+    extra_env = {"ZBENCH_CLAUDE_SESSION_ID": str(uuid.uuid4())} if max_attempts > 1 else {}
+    patches: list[dict] = []          # the agent's cumulative change, one patch per round
+    usages: list[dict] = []
+    rounds: list[dict] = []
+    gen_total = verify_total = 0
     try:
-        gen_start = time.perf_counter()
-        sp("waiting-gen")
-        with _phase_slot(ctx.get("gen_pool")):          # GENERATION: provider slot only (not heavy)
-            sp("generating")
-            out = invoke_agent(agent, instance, wt, run_id=ctx.get("run_id"), evaluation_id=ctx.get("evaluation_id"))
-        generation_ms = int((time.perf_counter() - gen_start) * 1000)
-        _task = constants.task_of(instance["instance_id"])
-        patches = (out or {}).get("patches") or []
-        patch_chars = sum(len(p.get("patch_text") or p.get("patch") or "") for p in patches)
-        if out is None or not patches:
-            # An adapter may report WHY it produced nothing. A provider failure (endpoint
-            # threw 429/5xx/auth) is an infra artifact, not a capability miss, so it gets
-            # its own status; anything else stays the ordinary "the agent gave up".
-            failure = (out or {}).get("failure") or {}
-            provider_failed = failure.get("kind") == "provider_error"
-            _msg = failure.get("message") or "agent produced no patch"
-            store.record_event(ctx.get("run_id"), agent["agent_id"], _task, "patch_missing",
-                               message=("provider failure: " + _msg) if provider_failed
-                                       else "agent produced no patch",
-                               data={"patch_count": 0, "patch_chars": 0, **({"failure": failure} if failure else {})})
-            return _score(instance, agent, ctx, passed=False,
-                          status="provider_error" if provider_failed else "no_patch_generated",
-                          error=_msg, agent_output=out, generation_ms=generation_ms)
+        for k in range(1, max_attempts + 1):
+            followup = None
+            if k > 1:
+                followup = _FEEDBACK_NO_CHANGE if not patches else _FEEDBACK_NOT_FIXED
+                _restore_agent_state(wt, base_commit, patches)
+            r = _one_round(agent, instance, ctx, wt, patches, followup=followup, extra_env=extra_env)
+            usages.append(r["usage"])
+            gen_total += r["generation_ms"] or 0
+            verify_total += r["verify_ms"] or 0
+            prev_out = ((usages[-2] or {}).get("output_tokens") or 0) if cumulative_usage and k > 1 else 0
+            if k > 1 and not r["new_patch"] and ((r["usage"] or {}).get("output_tokens") or 0) <= prev_out:
+                # No model output at all in a follow-up round = dead auth or endpoint, not a
+                # model decision. Void the whole cell (infra) so it is re-run, instead of
+                # keeping the earlier verdict as if the agent had given up.
+                rounds.append({"round": k, "resolved": False, "usage": r["usage"], "status": "provider_error",
+                               "error": r["error"] or "no model output", "generation_ms": r["generation_ms"]})
+                last = dict(r, status="provider_error", passed=False, verify_ms=None, verify_log=None,
+                            error=f"no model output in round {k} (dead auth or endpoint): {r['error']}")
+                break
+            if k > 1 and ((r["status"] == "no_patch_generated" and patches and not r["new_patch"])
+                          or r["status"] == "provider_error"):
+                # No new change after the feedback (or the round ended in an endpoint error or
+                # the agent timeout): the previous round's verdict stands. Re-verifying the same
+                # patch adds nothing, and a late-round error must not void the earlier rounds.
+                rounds.append({"round": k, "resolved": False, "usage": r["usage"],
+                               "status": "no_new_change" if r["status"] == "no_patch_generated" else "provider_error",
+                               "error": r["error"], "generation_ms": r["generation_ms"]})
+                break
+            rounds.append({"round": k, "status": r["status"], "resolved": r["passed"],
+                           "error": r["error"], "usage": r["usage"],
+                           "generation_ms": r["generation_ms"], "verify_ms": r["verify_ms"],
+                           "patch_chars": len(r["new_patch"] or "")})
+            last = r
+            if r["passed"] or r["status"] not in _RETRY_STATUSES:
+                break
+        if max_attempts > 1 and os.environ.get("ZBENCH_CELL_DIR"):
+            (Path(os.environ["ZBENCH_CELL_DIR"]) / "attempts.json").write_text(
+                json.dumps({"max_attempts": max_attempts, "rounds": rounds}, indent=1, default=str))
+        out = dict(last["out"] or {}) if last["out"] is not None else None
+        if out is not None:
+            out["patches"] = patches
+            out["token_usage"] = _sum_usage(usages, cumulative_usage)
+        elif any(usages):
+            out = {"patches": patches, "token_usage": _sum_usage(usages, cumulative_usage)}
+        score = _score(instance, agent, ctx, passed=last["passed"], status=last["status"],
+                       error=last["error"], agent_output=out, generation_ms=gen_total,
+                       verify_ms=verify_total if last["verify_ms"] is not None else None,
+                       verify_log_text=last["verify_log"])
+        logger.info("zbench %s / %s -> %s%s%s", instance["instance_id"], agent["agent_id"],
+                    "RESOLVED" if last["passed"] else "unresolved",
+                    "" if last["passed"] else f" ({last['error']})",
+                    f" after {len(rounds)} round(s)" if max_attempts > 1 else "")
+        return score
+    finally:
+        _remove_worktree(base_repo_dir, wt)
 
-        store.record_event(ctx.get("run_id"), agent["agent_id"], _task, "patch_extracted",
-                           message=f"{len(patches)} patch(es), {patch_chars} chars",
-                           data={"patch_count": len(patches), "patch_chars": patch_chars})
+
+def _one_round(agent: dict, instance: dict, ctx: dict, wt: Path, patches: list[dict], *,
+               followup: str | None, extra_env: dict) -> dict:
+    """One agent run + verify. Appends the round's patch to `patches` (the cumulative change).
+    Records nothing; returns {status, passed, error, out, usage, new_patch, generation_ms,
+    verify_ms, verify_log}."""
+    md = instance.get("metadata") or {}
+    commands = md.get("commands", {})
+    build_cmds = commands.get("build", []) or []
+    test_cmds = commands.get("tests", []) or []
+    base_commit = instance["commit"]
+    verify_timeout = int(md.get("verify_timeout_sec", 2400))
+    sp = ctx.get("set_phase") or (lambda *_: None)
+    res = {"status": "internal_error", "passed": False, "error": None, "out": None, "usage": {},
+           "new_patch": None, "generation_ms": None, "verify_ms": None, "verify_log": None}
+
+    gen_start = time.perf_counter()
+    sp("waiting-gen")
+    with _phase_slot(ctx.get("gen_pool")):          # GENERATION: provider slot only (not heavy)
+        sp("generating")
+        out = invoke_agent(agent, instance, wt, run_id=ctx.get("run_id"), evaluation_id=ctx.get("evaluation_id"),
+                           followup=followup, extra_env=extra_env)
+    res["generation_ms"] = int((time.perf_counter() - gen_start) * 1000)
+    res["out"] = out
+    res["usage"] = (out or {}).get("token_usage") or {}
+    _task = constants.task_of(instance["instance_id"])
+    new = [p for p in ((out or {}).get("patches") or []) if (p.get("patch_text") or "").strip()]
+    res["new_patch"] = "\n".join(p["patch_text"] for p in new) or None
+    patches.extend(new)
+    patch_chars = sum(len(p.get("patch_text") or p.get("patch") or "") for p in patches)
+    if out is None or not patches:
+        # An adapter may report WHY it produced nothing. A provider failure (endpoint
+        # threw 429/5xx/auth) is an infra artifact, not a capability miss, so it gets
+        # its own status; anything else stays the ordinary "the agent gave up".
+        failure = (out or {}).get("failure") or {}
+        provider_failed = failure.get("kind") == "provider_error"
+        _msg = failure.get("message") or "agent produced no patch"
+        store.record_event(ctx.get("run_id"), agent["agent_id"], _task, "patch_missing",
+                           message=("provider failure: " + _msg) if provider_failed
+                                   else "agent produced no patch",
+                           data={"patch_count": 0, "patch_chars": 0, **({"failure": failure} if failure else {})})
+        res.update(status="provider_error" if provider_failed else "no_patch_generated", error=_msg)
+        return res
+    if not new and followup is not None:
+        failure = (out or {}).get("failure") or {}
+        if failure.get("kind") == "provider_error":
+            res.update(status="provider_error", error=failure.get("message") or "provider failure")
+        else:
+            res.update(status="no_patch_generated", error="no further change after feedback")
+        return res
+
+    store.record_event(ctx.get("run_id"), agent["agent_id"], _task, "patch_extracted",
+                       message=f"{len(patches)} patch(es), {patch_chars} chars",
+                       data={"patch_count": len(patches), "patch_chars": patch_chars})
+    if followup is None:     # round 1: the worktree is clean (capture resets it); later rounds are restored
         for p in patches:
             if not (p.get("patch_text") or "").strip():
                 continue
             ok, _o, err = apply_patch(p["patch_text"], wt)
             if not ok:
-                return _score(instance, agent, ctx, passed=False, status="patch_apply_failed",
-                              error=f"agent patch apply failed: {err[:300]}",
-                              agent_output=out, generation_ms=generation_ms)
+                res.update(status="patch_apply_failed", error=f"agent patch apply failed: {err[:300]}")
+                return res
+    else:                    # capture reset the worktree to the pre-round snapshot: re-apply this round
+        for p in new:
+            ok, _o, err = apply_patch(p["patch_text"], wt)
+            if not ok:
+                res.update(status="patch_apply_failed", error=f"agent patch apply failed: {err[:300]}")
+                return res
 
-        try:
-            gold_text = _resolve_gold_patch(md.get("gold_test_patch"), md)
-        except Exception as exc:
-            return _score(instance, agent, ctx, passed=False, status="internal_error",
-                          error=f"gold_test resolve: {exc}", agent_output=out, generation_ms=generation_ms)
-        strip_notes = _strip_agent_test_edits(wt, base_commit, gold_text)
-        ok, _o, err = apply_patch(gold_text, wt)
-        if not ok:
-            return _score(instance, agent, ctx, passed=False, status="internal_error",
-                          error=f"gold_test apply failed (agent may have touched tests): {err[:300]}",
-                          agent_output=out, generation_ms=generation_ms)
-        tampered = _runner_integrity_violations(wt, base_commit)
-        if tampered:
-            return _score(instance, agent, ctx, passed=False, status="internal_error",
-                          error=f"runner integrity violated after strip (never resolve): {tampered[:5]}",
-                          agent_output=out, generation_ms=generation_ms)
+    try:
+        gold_text = _resolve_gold_patch(md.get("gold_test_patch"), md)
+    except Exception as exc:
+        res.update(status="internal_error", error=f"gold_test resolve: {exc}")
+        return res
+    strip_notes = _strip_agent_test_edits(wt, base_commit, gold_text)
+    ok, _o, err = apply_patch(gold_text, wt)
+    if not ok:
+        res.update(status="internal_error", error=f"gold_test apply failed (agent may have touched tests): {err[:300]}")
+        return res
+    tampered = _runner_integrity_violations(wt, base_commit)
+    if tampered:
+        res.update(status="internal_error", error=f"runner integrity violated after strip (never resolve): {tampered[:5]}")
+        return res
 
-        # Record an observable phase marker: the containerized verify is minutes-long
-        # and SILENT (writes nothing to the agent session), so without this event a
-        # watcher can't tell 'verifying' from 'dead'. attempt_event = the timeline.
-        store.record_event(ctx.get("run_id"), agent["agent_id"], _task, "verify_started",
-                           message=f"verify: {len(build_cmds + test_cmds)} cmd(s) (may take minutes)",
-                           data={"commands": build_cmds + test_cmds})
-        logger.info("zbench verify phase: %d command(s) (may take several minutes; silent)",
-                    len(build_cmds + test_cmds))
-        # Verify commands reference the corpus scripts dir portably via $ZBENCH_SCRIPTS
-        # (never absolute authoring-machine paths -- the old corpus's landmine).
-        verify_env = {**os.environ,
-                      "ZBENCH_SCRIPTS": os.environ.get("ZBENCH_SCRIPTS")
-                      or str(Path(__file__).resolve().parents[1] / "zbench-tasks" / "scripts"),
-                      "ZBENCH_WORKTREE": str(wt)}
-        v_start = time.perf_counter()
-        vlog_parts, resolved, fail_output, timed_out = [], True, "", False
-        sp("waiting-verify")
-        with _phase_slot(ctx.get("build_pool")):        # VERIFY: local-CPU/container slot
-            sp("verifying")
-            for cmd in (build_cmds + test_cmds):
-                logger.info("zbench verify: %s", cmd)
-                try:
-                    r = subprocess.run(cmd, cwd=str(wt), shell=True, capture_output=True,
-                                       text=True, timeout=verify_timeout, env=verify_env)
-                except subprocess.TimeoutExpired:
-                    vlog_parts.append(f"$ {cmd}\n[TIMEOUT after {verify_timeout}s]")
-                    resolved, timed_out = False, True
-                    break
-                vlog_parts.append(f"$ {cmd}\n(rc={r.returncode})\n{r.stdout[-4000:]}\n{r.stderr[-2000:]}")
-                if r.returncode != 0:
-                    resolved = False
-                    fail_output = (r.stdout or "") + "\n" + (r.stderr or "")
-                    break
-        verify_ms = int((time.perf_counter() - v_start) * 1000)
-        header = []
-        if out.get("patches"):
-            header.append("AGENT PATCH:\n" + "\n".join(p.get("patch_text", "") for p in out["patches"]))
-        if strip_notes:
-            header.append("STRIPPED AGENT TEST EDITS:\n" + "\n".join(strip_notes))
-        full_verify_log = "\n\n".join(header + vlog_parts)
+    # Record an observable phase marker: the containerized verify is minutes-long
+    # and SILENT (writes nothing to the agent session), so without this event a
+    # watcher can't tell 'verifying' from 'dead'. attempt_event = the timeline.
+    store.record_event(ctx.get("run_id"), agent["agent_id"], _task, "verify_started",
+                       message=f"verify: {len(build_cmds + test_cmds)} cmd(s) (may take minutes)",
+                       data={"commands": build_cmds + test_cmds})
+    logger.info("zbench verify phase: %d command(s) (may take several minutes; silent)",
+                len(build_cmds + test_cmds))
+    # Verify commands reference the corpus scripts dir portably via $ZBENCH_SCRIPTS
+    # (never absolute authoring-machine paths -- the old corpus's landmine).
+    verify_env = {**os.environ,
+                  "ZBENCH_SCRIPTS": os.environ.get("ZBENCH_SCRIPTS")
+                  or str(Path(__file__).resolve().parents[1] / "zbench-tasks" / "scripts"),
+                  "ZBENCH_WORKTREE": str(wt)}
+    v_start = time.perf_counter()
+    vlog_parts, resolved, fail_output, timed_out = [], True, "", False
+    sp("waiting-verify")
+    with _phase_slot(ctx.get("build_pool")):        # VERIFY: local-CPU/container slot
+        sp("verifying")
+        for cmd in (build_cmds + test_cmds):
+            logger.info("zbench verify: %s", cmd)
+            try:
+                r = subprocess.run(cmd, cwd=str(wt), shell=True, capture_output=True,
+                                   text=True, timeout=verify_timeout, env=verify_env)
+            except subprocess.TimeoutExpired:
+                vlog_parts.append(f"$ {cmd}\n[TIMEOUT after {verify_timeout}s]")
+                resolved, timed_out = False, True
+                break
+            vlog_parts.append(f"$ {cmd}\n(rc={r.returncode})\n{r.stdout[-4000:]}\n{r.stderr[-2000:]}")
+            if r.returncode != 0:
+                resolved = False
+                fail_output = (r.stdout or "") + "\n" + (r.stderr or "")
+                break
+    res["verify_ms"] = int((time.perf_counter() - v_start) * 1000)
+    header = []
+    if patches:
+        header.append("AGENT PATCH:\n" + "\n".join(p.get("patch_text", "") for p in patches))
+    if strip_notes:
+        header.append("STRIPPED AGENT TEST EDITS:\n" + "\n".join(strip_notes))
+    full_verify_log = "\n\n".join(header + vlog_parts)
+    res["verify_log"] = full_verify_log
 
-        # Grade-time NOTRUN guard: a rc==0 verify that ran ZERO tests must never score as
-        # a pass (a target that silently collected nothing looks green by exit code alone).
-        # Mode-agnostic -- keys on the runner's own "ran 0 tests" output.
-        if resolved and _ran_zero_tests(full_verify_log):
-            resolved = False
-            status, error = "tests_failed", "[notrun] verify ran zero tests (target collected nothing)"
-        elif resolved:
-            status, error = "ok", None
-        elif timed_out:
-            status, error = "timeout", f"verify timed out after {verify_timeout}s"
+    # Grade-time NOTRUN guard: a rc==0 verify that ran ZERO tests must never score as
+    # a pass (a target that silently collected nothing looks green by exit code alone).
+    # Mode-agnostic -- keys on the runner's own "ran 0 tests" output.
+    if resolved and _ran_zero_tests(full_verify_log):
+        resolved = False
+        status, error = "tests_failed", "[notrun] verify ran zero tests (target collected nothing)"
+    elif resolved:
+        status, error = "ok", None
+    elif timed_out:
+        status, error = "timeout", f"verify timed out after {verify_timeout}s"
+    else:
+        # NOTE: the Go-era "unrelated failing package" promotion was deliberately
+        # retired with the whole-tree pb verifies: zbench commands target specific
+        # test classes/files, so every failure is related by construction and a
+        # non-zero exit is never promoted to a pass.
+        full_verify = "\n".join(vlog_parts)
+        if _looks_like_setup_infra(full_verify) or _looks_like_setup_infra(fail_output):
+            status, error = "repo_setup_failed", f"[infra:setup] {_first_line(fail_output or full_verify, _SETUP_INFRA_SIGS)}"
+        elif _looks_like_build_error(fail_output):
+            status, error = "tests_failed", f"[build_failed] {_first_line(fail_output, _BUILD_ERR_SIGS)}"
         else:
-            # NOTE: the Go-era "unrelated failing package" promotion was deliberately
-            # retired with the whole-tree pb verifies: zbench commands target specific
-            # test classes/files, so every failure is related by construction and a
-            # non-zero exit is never promoted to a pass.
-            full_verify = "\n".join(vlog_parts)
-            if _looks_like_setup_infra(full_verify) or _looks_like_setup_infra(fail_output):
-                status, error = "repo_setup_failed", f"[infra:setup] {_first_line(fail_output or full_verify, _SETUP_INFRA_SIGS)}"
-            elif _looks_like_build_error(fail_output):
-                status, error = "tests_failed", f"[build_failed] {_first_line(fail_output, _BUILD_ERR_SIGS)}"
-            else:
-                status, error = "tests_failed", "[tests_failed] FAIL_TO_PASS did not pass"
-        score = _score(instance, agent, ctx, passed=resolved, status=status, error=error,
-                       agent_output=out, generation_ms=generation_ms, verify_ms=verify_ms,
-                       verify_log_text=full_verify_log)
-        logger.info("zbench %s / %s -> %s%s", instance["instance_id"], agent["agent_id"],
-                    "RESOLVED" if resolved else "unresolved", "" if resolved else f" ({error})")
-        return score
-    finally:
-        _remove_worktree(base_repo_dir, wt)
+            status, error = "tests_failed", "[tests_failed] FAIL_TO_PASS did not pass"
+    res.update(status=status, passed=resolved, error=error)
+    return res

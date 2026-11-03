@@ -1,0 +1,3362 @@
+{
+ "agent": "pi-anthropic-sonnet-5-5-retry3",
+ "tasks": [
+  "ZT-0b2cb835f545",
+  "ZT-0d91dad76f73",
+  "ZT-0dfb70915262",
+  "ZT-1338aa97fd5d",
+  "ZT-14173b757f93",
+  "ZT-2320a8917e00",
+  "ZT-31a06f2ed0ce",
+  "ZT-356028729f40",
+  "ZT-35ed45ce4415",
+  "ZT-4d5abdae1c10",
+  "ZT-61500abec1a1",
+  "ZT-6789c9d64848",
+  "ZT-6833ad8a2128",
+  "ZT-8da9cbf764a3",
+  "ZT-8f1d64748aea",
+  "ZT-9083c059e8a8",
+  "ZT-a028a6b9fd88",
+  "ZT-a98135649fd7",
+  "ZT-afb960c04137",
+  "ZT-b4bb708c1453",
+  "ZT-b7ce31135d20",
+  "ZT-ba8822dc01f7",
+  "ZT-c44c153b9af8",
+  "ZT-c5b9285a89d9",
+  "ZT-c752820dc09f",
+  "ZT-c8983c0d3183",
+  "ZT-dde9ec247568",
+  "ZT-ee41f4afc996",
+  "ZT-f86654ba5fa4",
+  "ZT-facbdf08fc2f"
+ ],
+ "samples": 3,
+ "arms": {
+  "seed": {
+   "cells": {
+    "ZT-0b2cb835f545": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "6f6e424a-e6cd-5fa0-b55b-43f50588642d",
+      "cost": 0.18458090000000005,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3ff43eab-5220-5ca3-bf39-135bd6d778a1",
+      "cost": 0.2060285,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "4727b59d-613a-5bce-99e0-1b9c865d117c",
+      "cost": 0.14239720000000003,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-0d91dad76f73": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "ff24e879-8a14-549b-889c-2838e2293062",
+      "cost": 0.0914783,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9042c5f3-ba41-5eec-be30-99a026a7dfce",
+      "cost": 0.07889140000000001,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b0c14794-fc7c-54e7-b858-e840bf30e8bc",
+      "cost": 0.07787010000000001,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-0dfb70915262": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "78b23690-6072-59c6-b21f-231930748d72",
+      "cost": 0.23779350000000007,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "e83185a6-c851-5e48-a48d-a2143900a149",
+      "cost": 0.1962318,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "141cc397-8028-5f64-9f08-822824fa2981",
+      "cost": 0.20223270000000002,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-1338aa97fd5d": [
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "5c343f9d-bfc4-554c-a022-c2b5eb7df20a",
+      "cost": 0.3806775,
+      "turns": 18,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "5ead8649-d351-5d65-a947-2e91bb1b05b1",
+      "cost": 0.4389198,
+      "turns": 23,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "cc43e303-ac18-5019-a945-7b84d53c64ac",
+      "cost": 0.4689643,
+      "turns": 21,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     }
+    ],
+    "ZT-14173b757f93": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8a6b33f9-5bf0-56e2-bb7f-6134960d0207",
+      "cost": 0.1627172,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3e001d33-b264-5202-810a-b54fc14022e0",
+      "cost": 0.1591416,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "c0aeb5e7-365f-5301-9f85-f737fdb6f357",
+      "cost": 0.23300890000000002,
+      "turns": 16,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-2320a8917e00": [
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "02a78209-3939-5669-b342-52abd023f2a8",
+      "cost": 0.6948983000000001,
+      "turns": 48,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "7c8c9a50-6a7a-57a1-aaf7-1e62ebce4f9b",
+      "cost": 0.4656853000000001,
+      "turns": 36,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "5efaa81b-0dbc-5014-a706-61753e656b5f",
+      "cost": 0.8434689999999999,
+      "turns": 56,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "no_new_change"
+      ]
+     }
+    ],
+    "ZT-31a06f2ed0ce": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8e754c6e-f41e-576d-99d2-65ba8beff733",
+      "cost": 0.12794490000000003,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "65a773be-ba9f-5236-9d80-72f983d734cf",
+      "cost": 0.1284813,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d86b73e9-1e6e-54d7-9f53-0e6b76831f43",
+      "cost": 0.1133417,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-356028729f40": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "763c0bb5-3563-52a8-94df-acfa60d622f6",
+      "cost": 0.1189675,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "1b7ed600-14c4-5a5e-ae2a-e260c78dac93",
+      "cost": 0.12332760000000001,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "148d8d84-1803-51a6-ae75-9dcc9aa400b6",
+      "cost": 0.1293462,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-35ed45ce4415": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8e035bf0-19e9-5e58-a487-f7283652188b",
+      "cost": 0.09154770000000001,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b4fa52dc-eaa9-5cb8-9fd0-a31908665b66",
+      "cost": 0.12304520000000002,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f77ccbe8-bb15-5e74-865d-e7b840e9d0b9",
+      "cost": 0.24239270000000004,
+      "turns": 19,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-4d5abdae1c10": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "85f593a0-3ff2-5f4c-98bd-0a4ea8310dea",
+      "cost": 0.2229287,
+      "turns": 14,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "66a1bf93-3981-5b51-af35-8374d8174109",
+      "cost": 0.19316170000000002,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "6b275591-ccdc-5dd0-96d8-f19ab60e43ad",
+      "cost": 0.21918300000000002,
+      "turns": 14,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-61500abec1a1": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "02ca4041-22e6-557e-932d-d462d995e5dd",
+      "cost": 0.1987086,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f160547a-dffe-5fe5-8e38-ae3cda27c747",
+      "cost": 0.3329885,
+      "turns": 22,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "55d4e833-e9fd-5c78-ad45-dbc62b6cbe16",
+      "cost": 0.21516160000000004,
+      "turns": 10,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-6789c9d64848": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "844c1c8d-0121-536b-8dcf-4aa9ce28cb31",
+      "cost": 0.270847,
+      "turns": 19,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "4779b84c-13b9-5bdb-89ec-065cdc256e31",
+      "cost": 0.24373530000000004,
+      "turns": 17,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "6b464e20-c833-5d7a-819f-4e3151ed5a52",
+      "cost": 0.3279157999999999,
+      "turns": 22,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-6833ad8a2128": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "36667f3d-851a-5987-a7c3-7309bb2e77ac",
+      "cost": 0.6340692000000001,
+      "turns": 21,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d89d4d42-bb4c-5df5-b9da-404c4dce4d74",
+      "cost": 0.4051228,
+      "turns": 15,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f87e7504-e532-51e0-b37b-728e2521ecdb",
+      "cost": 0.37940290000000004,
+      "turns": 20,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-8da9cbf764a3": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f52aa98f-339a-5d85-ac8f-8bf7a63a2d1b",
+      "cost": 0.08985630000000001,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "ab1a83db-382a-53e8-94b3-ac29b55c163d",
+      "cost": 0.10222940000000003,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "94c46b4e-daa4-5eca-99a0-e26d29879cc3",
+      "cost": 0.08420240000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-8f1d64748aea": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "e0cbe4ca-8a5f-54e5-a96e-78f5b6d59fb8",
+      "cost": 0.08796590000000001,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "10b8efaa-1b4f-5f5f-8e66-4e331dd0deac",
+      "cost": 0.0876436,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "710c3142-b40e-5324-82b0-5f104b1cc887",
+      "cost": 0.08194610000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-9083c059e8a8": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "36a53e78-a808-55d1-b5e2-229cd9776eea",
+      "cost": 0.1246106,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "5c3bdadc-d437-5372-b4bd-215ecca3ac70",
+      "cost": 0.11767980000000003,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "68217cfe-8a72-55b0-8b5e-09aac0b3fa91",
+      "cost": 0.133531,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-a028a6b9fd88": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b9d53b84-871b-5655-9828-36a0ff6a1946",
+      "cost": 0.1575664,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "99874edc-7f59-5756-84d2-4ce9bb5a239c",
+      "cost": 0.1400073,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "93309289-76b5-5d05-a725-76375a937f09",
+      "cost": 0.15133010000000002,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-a98135649fd7": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "292b324b-bbcc-5c4e-8967-41fca7dd3d5c",
+      "cost": 0.2842908,
+      "turns": 18,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "a5c75e51-f961-55b6-85c6-4e56999dd682",
+      "cost": 0.2773244000000001,
+      "turns": 20,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "c3fbd62b-2257-5ec9-9fea-65aa7f591ef8",
+      "cost": 0.4532417,
+      "turns": 30,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-afb960c04137": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "6c99ff43-d0e8-58d3-bf54-55c7ec8d5718",
+      "cost": 0.2947740000000001,
+      "turns": 19,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "c50824af-b079-562a-8f4f-23abd91c17ae",
+      "cost": 0.19054620000000003,
+      "turns": 17,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "902e85bc-379e-5a77-8dbb-f78f1dd95ce3",
+      "cost": 0.2309039,
+      "turns": 19,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-b4bb708c1453": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "5f14d58a-8402-5f51-9150-4247eec29b93",
+      "cost": 0.2725518,
+      "turns": 13,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9ef69a48-8e7c-54a7-b02e-53de148c6687",
+      "cost": 0.3234024000000001,
+      "turns": 18,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9f1bb943-687a-56bc-bfd5-3214910fd1d2",
+      "cost": 0.29139620000000005,
+      "turns": 13,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-b7ce31135d20": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "71a12730-8ed9-55ae-8e17-c89a8633931f",
+      "cost": 0.27577100000000004,
+      "turns": 18,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "fe836625-bbf2-512b-9511-0c123256239b",
+      "cost": 0.3544689,
+      "turns": 22,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "08307beb-e1b9-51f1-b88b-d63c8bc66383",
+      "cost": 0.3319145000000001,
+      "turns": 23,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-ba8822dc01f7": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "484fed6e-e3c8-5fe6-8f98-870529e87ba6",
+      "cost": 0.13773259999999998,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "87362b74-578d-5ccf-8aac-146f6e92ebec",
+      "cost": 0.1326421,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "10ce135c-9b6e-5c66-8ce6-31bff97d486a",
+      "cost": 0.10057750000000001,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c44c153b9af8": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "a2bf5a55-2d55-5f4b-9edd-8f99c4a5eea2",
+      "cost": 0.10289580000000001,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d173d748-3655-548d-8938-c6fd5e7dab3c",
+      "cost": 0.09627180000000002,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "0cf009b1-6298-5271-b9ab-e384afd8f04b",
+      "cost": 0.08407490000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c5b9285a89d9": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "bc7d5a47-c194-5245-935b-a24373c58494",
+      "cost": 0.20013540000000002,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f7e4f05a-8c83-595e-9801-e8bf1028e00b",
+      "cost": 0.14135520000000001,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b9ae9a13-131c-5aae-a87f-c1458cb5e502",
+      "cost": 0.419223,
+      "turns": 25,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c752820dc09f": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "bffd7d6f-730b-5b61-805b-79581d3cdc34",
+      "cost": 0.2103141,
+      "turns": 14,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "e563cf2f-647c-56ee-8e56-4186428e7d6e",
+      "cost": 1.0427515000000003,
+      "turns": 46,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d14c1b0a-a527-5733-bde1-f3ce4a8ace7b",
+      "cost": 0.18805980000000003,
+      "turns": 14,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c8983c0d3183": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "77597e30-2751-5d64-9d04-58106438fd76",
+      "cost": 0.1230662,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2e91085d-2b00-52f2-9522-d3b2ea2b72aa",
+      "cost": 0.10459940000000001,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "95770397-a9c7-5455-9c05-23928b2805c5",
+      "cost": 0.07911,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-dde9ec247568": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "4d176333-e756-5d39-8876-54e89e515204",
+      "cost": 0.18361610000000003,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3f1025e2-df04-56ed-b55e-d8c2f701a35f",
+      "cost": 0.22161029999999998,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "cb729f87-ef86-5a8c-a06d-8599aee62150",
+      "cost": 0.2406761,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-ee41f4afc996": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f7ecd81d-4424-57d4-8db1-ca4cacd90c66",
+      "cost": 0.08111840000000001,
+      "turns": 5,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "174d4d23-3148-58c1-be13-e591fced988e",
+      "cost": 0.09788990000000002,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "e308fe1f-a878-53f7-baa3-5cae59b66c2b",
+      "cost": 0.0845998,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-f86654ba5fa4": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "26dd6b78-eb92-5c38-b169-f783a22c18e6",
+      "cost": 0.1264353,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "1e9b5188-0c5e-586d-b524-b63f8fe9cd84",
+      "cost": 0.2290541,
+      "turns": 16,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "c3c40fbe-4be3-51cd-a3ea-9b65dc99ebf5",
+      "cost": 0.10368870000000001,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-facbdf08fc2f": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8a959d95-0000-5f46-94cf-339be9932e53",
+      "cost": 0.1004857,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "6dd63396-cd90-5f1b-9a68-3ba3d4c970f9",
+      "cost": 0.09270930000000002,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "5fe27ed9-8c17-570d-a8f8-d2cc16068c1d",
+      "cost": 0.16731220000000002,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ]
+   },
+   "n_runs": 90,
+   "resolve@1": 0.8111,
+   "resolve@3": 0.9333,
+   "mean_rounds": 1.278,
+   "mean_cost_per_run": 0.2215,
+   "prompt_words": 0
+  },
+  "accuracy": {
+   "cells": {
+    "ZT-0b2cb835f545": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "e7814abe-2db3-5421-a746-67672313f40a",
+      "cost": 0.2555832,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "6fdb5558-1043-5c02-992b-cf9bfd5b6cef",
+      "cost": 0.2277591,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2f6908e5-d691-5905-a9ae-99a0ff361248",
+      "cost": 0.2181008,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-0d91dad76f73": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "27bcb16b-c4e8-5e4c-b949-18c40b15e5c0",
+      "cost": 0.130571,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f5e97bb9-fc12-5830-8960-3b38ac2b569b",
+      "cost": 0.1264787,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "121422af-1255-52aa-9dfd-f17918c159aa",
+      "cost": 0.1174367,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-0dfb70915262": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d7b2f950-9aea-5abd-a30b-8cced96fe16d",
+      "cost": 0.24403160000000002,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b6032a1f-e0b8-516c-a658-a89882a78855",
+      "cost": 0.2067615,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "ca410646-86ae-502c-9fb8-36406ff0e9fd",
+      "cost": 0.26948510000000003,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-1338aa97fd5d": [
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "c916fe17-cc4c-56ed-9ab9-560d0076f7ee",
+      "cost": 0.3820162,
+      "turns": 21,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "aa52279c-43a0-5b30-91b9-e3deb0a6eb73",
+      "cost": 0.45915510000000004,
+      "turns": 21,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "f44c954a-6103-5c32-9324-0588eff44104",
+      "cost": 0.3135817,
+      "turns": 19,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     }
+    ],
+    "ZT-14173b757f93": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "01d1d3ec-2c0f-596f-9b8d-da7d070452b7",
+      "cost": 0.16085080000000004,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "21c7bac2-9e6d-5264-b81d-58ccc94a0b9b",
+      "cost": 0.1910851,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "15d1cbbd-f526-5db0-8878-be7eb259ef89",
+      "cost": 0.1962349,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-2320a8917e00": [
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "9a9f7fcc-7c9a-51e2-be50-37ffb2e7449e",
+      "cost": 0.4783825000000001,
+      "turns": 33,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "faa1c763-34fc-58be-94c4-f447c74220bc",
+      "cost": 0.5026779000000001,
+      "turns": 38,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "607665a3-b1c0-5067-a484-e4f94dc36909",
+      "cost": 0.6098878,
+      "turns": 43,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     }
+    ],
+    "ZT-31a06f2ed0ce": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b1ce7b4a-3b60-5ae9-9d7d-bbb9a8c28f6d",
+      "cost": 0.19520920000000003,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "c34a954a-15cc-5f96-884a-4e8696f6caf4",
+      "cost": 0.159136,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3d82bd87-3ab4-55c3-892b-f0fe97ff7a8f",
+      "cost": 0.1293775,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-356028729f40": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "26cb2ea1-7953-5e53-b22c-430b6bad30b3",
+      "cost": 0.1446183,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "30cb8428-1512-55e5-ab61-ad94c9f56c3c",
+      "cost": 0.1461317,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "76fd640f-28e9-5ecc-9a07-1309a36acd04",
+      "cost": 0.10391110000000002,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-35ed45ce4415": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "4cec36a5-03bd-5905-ac31-41e9bb75847a",
+      "cost": 0.23412930000000004,
+      "turns": 17,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "feb701bd-5c36-5780-8b27-55b81adbbee4",
+      "cost": 0.22172870000000003,
+      "turns": 16,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "0466b636-6c3b-58b7-b7dd-dc85c1a19e06",
+      "cost": 0.23292690000000005,
+      "turns": 18,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-4d5abdae1c10": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "095ca60c-ca00-5ebb-b3d4-ddd9c6520158",
+      "cost": 0.26398710000000003,
+      "turns": 16,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "563d721a-d12e-5358-923f-dad9c9388e87",
+      "cost": 0.29625290000000004,
+      "turns": 16,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "46d97971-a402-5f3c-9c68-557de60ad9e8",
+      "cost": 0.21902720000000003,
+      "turns": 14,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-61500abec1a1": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "445b5a68-d6c6-58b9-99d4-4ded36f02cf7",
+      "cost": 0.11240630000000001,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8e338466-024f-5f4a-8d4c-6f551c12e984",
+      "cost": 0.0888262,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "e28b352f-e456-5a81-b411-e88f400d815b",
+      "cost": 0.1903691,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-6789c9d64848": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d622f483-115b-57d6-9bf8-ac46005e3dfa",
+      "cost": 0.20423580000000002,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "02fbc01e-a83a-5ea8-b910-0681028db977",
+      "cost": 0.2233849,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "37d9cc92-a38f-5a6f-856f-59ac1fe6a7c0",
+      "cost": 0.26825730000000003,
+      "turns": 17,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-6833ad8a2128": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "81835ec8-2660-59a4-aace-e3b24b1270f2",
+      "cost": 0.4267487000000001,
+      "turns": 16,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "de7e03a7-d331-565b-afa2-13fe58e5d88c",
+      "cost": 0.21856370000000003,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "23b6730d-892b-53bb-a20e-c150c30ebca3",
+      "cost": 0.40124460000000006,
+      "turns": 18,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-8da9cbf764a3": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9716baa7-5397-5243-9e5f-80e7a98794a2",
+      "cost": 0.1258064,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "de224b5c-c0af-5a58-9320-6d366e95eade",
+      "cost": 0.1513375,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "a9158e02-65d9-5278-b171-b7a74f3af0ad",
+      "cost": 0.12133790000000001,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-8f1d64748aea": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "24bb4c57-3a89-5a57-ba16-e20654bef58b",
+      "cost": 0.18836220000000004,
+      "turns": 15,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2a0ca468-4fc5-58d5-aa12-faf5ff505fe9",
+      "cost": 0.14179850000000002,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f10fe084-bddf-517d-aeff-5d98dba7ba4f",
+      "cost": 0.11839070000000003,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-9083c059e8a8": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "0bf31ca1-f146-5640-abd1-f1f9a5417bd1",
+      "cost": 0.11908030000000001,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "ff487770-b858-5ff6-8601-01f59ea6754b",
+      "cost": 0.10900540000000002,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3cfa6269-09a1-5ae2-8739-3acffe2c0c3e",
+      "cost": 0.10831440000000002,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-a028a6b9fd88": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "4759e29f-70d8-5d8e-8020-d266eba84ae5",
+      "cost": 0.21400810000000003,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8fc13d38-3963-5ceb-9e9d-19c456bc22ab",
+      "cost": 0.20007200000000003,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2944a307-3b70-57d4-b76e-3fc3e6998797",
+      "cost": 0.22159600000000002,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-a98135649fd7": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9201997f-c7b3-568d-b9de-820fe188d0e9",
+      "cost": 0.4283418,
+      "turns": 26,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b6114463-4ede-5411-9340-55b6804c3024",
+      "cost": 0.4089378000000001,
+      "turns": 26,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "12416d56-5716-532a-a0b4-ab052e67ad96",
+      "cost": 0.3498821000000001,
+      "turns": 22,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-afb960c04137": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8b1ed55a-559a-55bf-90fc-c4c3f635c701",
+      "cost": 0.1698053,
+      "turns": 13,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b1b591e2-46ba-5825-9778-d9767bd4bf47",
+      "cost": 0.6899882999999999,
+      "turns": 36,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3d269fb1-07de-5fbc-bd52-28b1e5ea068d",
+      "cost": 0.3887216000000001,
+      "turns": 26,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-b4bb708c1453": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d907a0b2-fa4c-5a58-a767-205bb9cac8c1",
+      "cost": 0.5910638000000001,
+      "turns": 32,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "84769a83-1c3d-558b-aaa0-ea85e8eff5f2",
+      "cost": 0.42826850000000005,
+      "turns": 17,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "fef8fb6f-3e1f-5595-b2d4-664afb92ee49",
+      "cost": 0.6898459999999998,
+      "turns": 29,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-b7ce31135d20": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "039d5341-90d2-5271-8f82-568517dd8292",
+      "cost": 0.46241899999999997,
+      "turns": 25,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "881c9b50-bf2c-5b6d-9201-9240b9c71f24",
+      "cost": 0.3326126000000001,
+      "turns": 19,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "392dd44f-7300-599b-ba8e-6f75ca995af4",
+      "cost": 0.41065700000000005,
+      "turns": 22,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-ba8822dc01f7": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "577f4f37-641d-5965-9dec-0c4c2136e941",
+      "cost": 0.18676780000000004,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "bef45495-ccb1-5f1e-beac-ef83f4eb8173",
+      "cost": 0.17365360000000005,
+      "turns": 14,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "bf2818d4-2e06-5214-b385-74d40ccdd8b4",
+      "cost": 0.21273260000000002,
+      "turns": 16,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c44c153b9af8": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b2f1443b-7c32-5cac-8834-ec600ce40c48",
+      "cost": 0.10215550000000001,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "43c94404-c810-5418-8d37-e707b3a707b4",
+      "cost": 0.10653570000000001,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "fcef7428-e4fa-55fe-a8e6-78edef8c98d7",
+      "cost": 0.10608600000000001,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c5b9285a89d9": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f4f952e7-7950-540a-8611-b12e9fd0e8be",
+      "cost": 0.25430020000000003,
+      "turns": 18,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "647aec13-a1a0-5bd2-a7ed-50a5134d4d53",
+      "cost": 0.30027590000000004,
+      "turns": 15,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "643282e6-50ae-5255-9f69-49149ef0cf87",
+      "cost": 0.23830130000000002,
+      "turns": 13,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c752820dc09f": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "73340164-6c53-5ce8-8405-58b5b75d68a5",
+      "cost": 0.3531637000000001,
+      "turns": 20,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "025ff407-2e16-5271-8938-49c06fbc5e15",
+      "cost": 0.6644151,
+      "turns": 39,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9b2d518d-ee2b-5b26-bbd5-78d31448fea0",
+      "cost": 0.3488323,
+      "turns": 24,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c8983c0d3183": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "af10b18f-bc7d-5b33-8c99-06718423c322",
+      "cost": 0.13355530000000002,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f46921d1-950f-51d7-98a7-2c0ee9cddf07",
+      "cost": 0.1370926,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "cb1a8234-fb32-5131-a3ab-719186c9eb46",
+      "cost": 0.132688,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-dde9ec247568": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9c7ba45e-a6b2-59cf-b416-6330905d9625",
+      "cost": 0.2269056,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "0795ace1-ea37-5356-a5fe-2d9aee48ae05",
+      "cost": 0.2534848,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f36688dd-6c7b-55d5-8768-7f8a335484bc",
+      "cost": 0.25842719999999997,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-ee41f4afc996": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "5c521ac2-3679-5dca-908d-40feabeac7d2",
+      "cost": 0.17107080000000002,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2650be90-87dc-5f83-9faf-50c15f05b443",
+      "cost": 0.2718416,
+      "turns": 20,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2d4518a8-c6ca-5378-9ab6-8ddb74e925ad",
+      "cost": 0.1566061,
+      "turns": 12,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-f86654ba5fa4": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "99a705fa-e06f-5f12-b1b2-8e2bbae82792",
+      "cost": 0.21575040000000004,
+      "turns": 14,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d7300150-4303-5632-8428-fd5fe6ef4662",
+      "cost": 0.26389090000000004,
+      "turns": 18,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "044fd1a2-64fb-5099-9b0f-e696a1a823ee",
+      "cost": 0.3298888000000001,
+      "turns": 22,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-facbdf08fc2f": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "277b8817-6cb0-5971-9407-0820bf4bc80d",
+      "cost": 0.1354654,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "e77c1b3f-dcfd-545a-8efe-9f742f5aaea3",
+      "cost": 0.1171548,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "4815f902-f28d-54eb-9ced-419ff02eff18",
+      "cost": 0.13696820000000004,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ]
+   },
+   "n_runs": 90,
+   "resolve@1": 0.7778,
+   "resolve@3": 0.9333,
+   "mean_rounds": 1.356,
+   "mean_cost_per_run": 0.2525,
+   "prompt_words": 761
+  },
+  "cost": {
+   "cells": {
+    "ZT-0b2cb835f545": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "7de67cea-e8a2-54f5-8a23-d331bae81a62",
+      "cost": 0.140096,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "883e65b4-0682-5f1e-991d-2aa03114793a",
+      "cost": 0.14714600000000003,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9e3d9f5e-4d12-5846-b767-d19de2233c1c",
+      "cost": 0.14932760000000003,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-0d91dad76f73": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b10fbd85-5815-53a2-94ad-4ccdc1cd8f38",
+      "cost": 0.07881890000000001,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f6cb958e-0c52-5cdb-bf49-c25bca7c7725",
+      "cost": 0.08483560000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "c554a982-a3ea-5ce3-8bdc-36006085ad5b",
+      "cost": 0.072591,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-0dfb70915262": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "919ff3bc-104e-5a1c-bb37-189edf919f9d",
+      "cost": 0.19676940000000004,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "035d3f58-ef11-56ff-bbf4-1d5399f0b624",
+      "cost": 0.22336760000000005,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "1f49fd7a-26be-5e1a-9a44-fdeb1ef164c5",
+      "cost": 0.17898189999999997,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-1338aa97fd5d": [
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "b593d983-1add-5f25-bb35-7753d6e1e7aa",
+      "cost": 0.3350534,
+      "turns": 20,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "ba342aae-0479-5d2a-a7ee-ceda2d35f94c",
+      "cost": 0.40452590000000005,
+      "turns": 21,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "d3ec7e08-557d-5274-90ca-b2c8c0491a98",
+      "cost": 0.40920580000000006,
+      "turns": 18,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     }
+    ],
+    "ZT-14173b757f93": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b4097452-e19a-5273-9276-05e98012e806",
+      "cost": 0.0909757,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d1a0a27d-ffe7-5e87-858d-5e7c95539133",
+      "cost": 0.1491941,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "bb0f6220-21b2-5789-b56c-165d2a13208b",
+      "cost": 0.1744561,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-2320a8917e00": [
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "99a0eaab-6407-59b1-8e22-f0e4f6ffa6b5",
+      "cost": 0.6812174000000003,
+      "turns": 48,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "fd808b05-da21-5115-a353-6a844fcaf3f6",
+      "cost": 0.3743412000000001,
+      "turns": 33,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "67f55f9a-f449-5b18-918b-8fb4e9f3342c",
+      "cost": 0.4603329,
+      "turns": 36,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     }
+    ],
+    "ZT-31a06f2ed0ce": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f991473e-6b19-5af3-9dd2-fddb88a8f85f",
+      "cost": 0.1581338,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "842cb5f8-b2c9-546a-aef5-7875d81dddff",
+      "cost": 0.1510128,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2da74944-f7db-5b36-81f1-46dc83b9b790",
+      "cost": 0.11646210000000001,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-356028729f40": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "1cdcfb96-0745-51fe-ab01-a525ba886e67",
+      "cost": 0.12438750000000001,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "20d78f69-8ca4-59f0-aa75-787257a77872",
+      "cost": 0.11905160000000001,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "a6283374-3921-5228-8028-92d9e19162b7",
+      "cost": 0.1202112,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-35ed45ce4415": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2a9ce95f-f339-5be8-be39-9845ec3498ac",
+      "cost": 0.14119280000000003,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "dc935fe5-ae30-5f98-9e2f-1f9274af9bde",
+      "cost": 0.1082738,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "5d516ac2-4ba7-54f2-b77f-f21e95c72fa7",
+      "cost": 0.14982250000000003,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-4d5abdae1c10": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "5bc143cb-0d9b-5bb5-9678-87922212f989",
+      "cost": 0.2137361,
+      "turns": 15,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "f657490a-9e21-507f-b799-3a9eb7b4f050",
+      "cost": 0.22673140000000003,
+      "turns": 14,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "a48863cd-e887-5b00-a1c3-babf2b6d9990",
+      "cost": 0.16952950000000003,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-61500abec1a1": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "781089f9-b0ad-595a-9a04-e878cffd87f9",
+      "cost": 0.24032550000000003,
+      "turns": 15,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b8c94deb-c711-5090-b263-988ea036b66b",
+      "cost": 0.22643160000000004,
+      "turns": 19,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "521056b8-d694-5b84-b16c-90e59e8d9590",
+      "cost": 0.08556300000000001,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-6789c9d64848": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "16c64345-ca82-5f92-9e45-cae3db9d201d",
+      "cost": 0.2497579,
+      "turns": 17,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "c8b06be0-21b2-5d65-8cd1-96a51a99d1e1",
+      "cost": 0.20574650000000003,
+      "turns": 15,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "71dde812-d9e4-56e0-84e4-5e1271eeaace",
+      "cost": 0.146199,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-6833ad8a2128": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "437f3e12-0612-5c03-8581-6c48363438ed",
+      "cost": 0.20889810000000003,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "fc177ca0-8189-5758-b4e7-08317d0a9c55",
+      "cost": 0.2318623,
+      "turns": 15,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "e310573c-e898-5098-8be4-308bc517c24b",
+      "cost": 0.5653,
+      "turns": 25,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-8da9cbf764a3": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "6179b0a8-94e0-54b9-81f0-1daeb0cdc92f",
+      "cost": 0.1203784,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "855f0570-9b0c-5cb0-a7e9-5fe0000536a1",
+      "cost": 0.11697240000000003,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "cca96f36-deca-5656-9767-969feaf53e35",
+      "cost": 0.09490950000000002,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-8f1d64748aea": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "ffa67335-c1d6-532b-9b5b-fe42c6d64438",
+      "cost": 0.08891470000000001,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "0897f258-2eb4-592d-a9c4-22e6a4b746da",
+      "cost": 0.0877532,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "a826caac-adc0-5327-96fc-1f18f0657b98",
+      "cost": 0.07689800000000002,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-9083c059e8a8": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "6bf946be-d41f-5f26-83cd-3ec7e0a5a25e",
+      "cost": 0.06906260000000002,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "321fe488-b1be-5730-9ab2-91caa866836c",
+      "cost": 0.10020910000000002,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2e0273dd-cc8e-572d-aa82-7d0730b3467d",
+      "cost": 0.12185200000000002,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-a028a6b9fd88": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8cb1245e-cbab-5884-a23a-e3672ee0f608",
+      "cost": 0.1224035,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "be0a91fe-7f29-594e-888a-72885d01a0e2",
+      "cost": 0.1261102,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "d50efe07-95c6-5dbe-8e7b-bd8d57a90ec5",
+      "cost": 0.1407139,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-a98135649fd7": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "27992e51-b090-546a-92ab-0a29ff03f185",
+      "cost": 0.2939431,
+      "turns": 21,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "07018714-9d47-5ac0-8d1f-971886c75801",
+      "cost": 0.29671729999999996,
+      "turns": 19,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "602286f4-ec61-50bb-a252-3932dee24f52",
+      "cost": 0.39871680000000004,
+      "turns": 27,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-afb960c04137": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9afa8bb1-e8fc-5006-b244-5e9e15fa92f9",
+      "cost": 0.20298199999999997,
+      "turns": 17,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "485431c5-a9d2-587d-b18e-79cf2d8b2f71",
+      "cost": 0.19636670000000003,
+      "turns": 16,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3b644662-728e-57d5-9fcd-4823e204b7e9",
+      "cost": 0.09536560000000001,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-b4bb708c1453": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3dbee397-29d9-5a3a-8571-202a543312a6",
+      "cost": 0.25271750000000004,
+      "turns": 10,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "5b9ce881-ffcf-597e-9343-7f0cde98f17c",
+      "cost": 0.43833369999999994,
+      "turns": 28,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "72bd98d1-82e1-53b5-aa19-b3155bd93353",
+      "cost": 0.21365970000000004,
+      "turns": 12,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-b7ce31135d20": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8b7dd994-b97b-5fe8-a270-aed3fdfba4dc",
+      "cost": 0.27525050000000006,
+      "turns": 21,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8801c583-7ed1-563c-8c58-2df0cc846b3b",
+      "cost": 0.24061489999999996,
+      "turns": 16,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "5851e79f-ae5b-5512-9f71-5e4aa69a867a",
+      "cost": 0.35709,
+      "turns": 25,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-ba8822dc01f7": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "75ff1de7-0a60-50c9-ab9d-29a65efaad1a",
+      "cost": 0.14698189999999997,
+      "turns": 13,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2ab7d06f-5d00-5180-b3f7-091f69a163aa",
+      "cost": 0.1289019,
+      "turns": 11,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "fbafd776-ece2-556b-828f-a2b9eb261c11",
+      "cost": 0.08150950000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c44c153b9af8": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2e16fb1e-fe0e-506d-aa83-99e14cd87a15",
+      "cost": 0.09850010000000002,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "ca40650c-915a-59b7-a6a6-8824be1c4f02",
+      "cost": 0.09616710000000002,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3ca29581-eec8-5757-8f01-1902bfd0ade0",
+      "cost": 0.10158890000000001,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c5b9285a89d9": [
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "c49bc30a-42ad-525e-8641-f7e9c5c58642",
+      "cost": 0.4328236000000001,
+      "turns": 25,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "3c1838fa-8aa4-53c9-9907-f32721a229d3",
+      "cost": 0.3542005,
+      "turns": 21,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "971d6539-795c-545f-aa5a-02b99cf72d7d",
+      "cost": 0.2084046,
+      "turns": 14,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-c752820dc09f": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8a8d5f63-666c-51dd-84ff-9daec6e61cf4",
+      "cost": 0.363358,
+      "turns": 22,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "49d94312-21c1-5a35-b4d4-f1ff45e55ad9",
+      "cost": 0.25974630000000004,
+      "turns": 15,
+      "rounds": [
+       "tests_failed",
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 0,
+      "status": "tests_failed",
+      "infra_failure": false,
+      "evaluation_id": "7abaaf4c-c2e3-5ae3-915d-a2db4a03b449",
+      "cost": 0.7153148,
+      "turns": 37,
+      "rounds": [
+       "tests_failed",
+       "tests_failed",
+       "tests_failed"
+      ]
+     }
+    ],
+    "ZT-c8983c0d3183": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b719a774-a8ca-54cc-9900-19163ed00e4b",
+      "cost": 0.10870200000000002,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b19ce39a-40a0-5f42-b690-d0f635ca2908",
+      "cost": 0.08269040000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "c1250acd-5a81-5aa9-8eec-bc702cd58316",
+      "cost": 0.0985714,
+      "turns": 8,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-dde9ec247568": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "89e44f37-a473-5523-947e-fa11c88c212b",
+      "cost": 0.2089596,
+      "turns": 10,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "4f433e20-3dd3-5710-a404-2254b2ed782f",
+      "cost": 0.1694073,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "b1f47aad-0fb9-5064-ac9a-c4bb5d3a16f2",
+      "cost": 0.1857941,
+      "turns": 9,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-ee41f4afc996": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "7c1a047d-1c83-5772-9f6f-483349a01f4e",
+      "cost": 0.08759990000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "6732b61c-8bf2-5fc9-8f27-356701979ab1",
+      "cost": 0.08528490000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "9f159a34-1f78-5657-849b-ee26989188d1",
+      "cost": 0.08802780000000002,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-f86654ba5fa4": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "ae83a090-abb3-5744-87ac-d1d8490bb84e",
+      "cost": 0.17834170000000005,
+      "turns": 15,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "8dff3028-7274-5c69-898b-c5536e493f0b",
+      "cost": 0.27291270000000006,
+      "turns": 21,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "bea58ba0-d312-53c0-a76c-68f970f7c128",
+      "cost": 0.2338156,
+      "turns": 18,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ],
+    "ZT-facbdf08fc2f": [
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "2a76d0dc-c6de-581d-bdba-74758256b554",
+      "cost": 0.08571160000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "60f028c5-a586-5633-9860-fb20e699bb55",
+      "cost": 0.11507440000000002,
+      "turns": 7,
+      "rounds": [
+       "RESOLVED"
+      ]
+     },
+     {
+      "resolved": 1,
+      "status": "ok",
+      "infra_failure": false,
+      "evaluation_id": "42f5ebad-84d0-5fc1-81c3-1afca3526a63",
+      "cost": 0.08614650000000001,
+      "turns": 6,
+      "rounds": [
+       "RESOLVED"
+      ]
+     }
+    ]
+   },
+   "n_runs": 90,
+   "resolve@1": 0.7889,
+   "resolve@3": 0.9111,
+   "mean_rounds": 1.344,
+   "mean_cost_per_run": 0.199,
+   "prompt_words": 410
+  }
+ },
+ "comparisons": {
+  "seed: resolve@3 - resolve@1": {
+   "mean_diff": 0.1222,
+   "n_tasks": 30
+  },
+  "accuracy: resolve@3 - resolve@1": {
+   "mean_diff": 0.1556,
+   "n_tasks": 30
+  },
+  "cost: resolve@3 - resolve@1": {
+   "mean_diff": 0.1222,
+   "n_tasks": 30
+  },
+  "accuracy - seed (resolve@3)": {
+   "mean_diff": 0.0,
+   "n_tasks": 30,
+   "tasks_up": 0,
+   "tasks_down": 0,
+   "p_sign_flip": 1.0
+  },
+  "accuracy - seed (resolve@1)": {
+   "mean_diff": -0.0333,
+   "n_tasks": 30,
+   "tasks_up": 2,
+   "tasks_down": 4,
+   "p_sign_flip": 0.6254
+  },
+  "accuracy / seed cost ratio": {
+   "geo_mean": 1.198,
+   "ci95": [
+    1.067,
+    1.336
+   ]
+  },
+  "cost - seed (resolve@3)": {
+   "mean_diff": -0.0222,
+   "n_tasks": 30,
+   "tasks_up": 0,
+   "tasks_down": 2,
+   "p_sign_flip": 0.5009
+  },
+  "cost - seed (resolve@1)": {
+   "mean_diff": -0.0222,
+   "n_tasks": 30,
+   "tasks_up": 2,
+   "tasks_down": 2,
+   "p_sign_flip": 0.7503
+  },
+  "cost / seed cost ratio": {
+   "geo_mean": 0.918,
+   "ci95": [
+    0.862,
+    0.98
+   ]
+  }
+ }
+}

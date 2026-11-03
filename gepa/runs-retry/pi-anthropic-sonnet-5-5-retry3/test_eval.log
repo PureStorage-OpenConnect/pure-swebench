@@ -1,0 +1,118 @@
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366-s2] 0/30 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366-s3] 0/30 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] 0/30 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] 0/30 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] 0/30 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366] 0/30 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] 0/30 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] 0/30 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] 0/30 cell(s) cached
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366] launching 30 cell(s) fanout=6 (busy elsewhere: 0)
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366] driver gepa-gepa-retry-test-pi-anthropic-sonnet-5-5--f79d21 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366] done in 35.5 min: resolved 28/30
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] driver gepa-gepa-retry-test-pi-anthropic-sonnet-5-5--866f87 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a] done in 39.6 min: resolved 27/30
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366-s2] driver gepa-gepa-retry-test-pi-anthropic-sonnet-5-5--72fcad rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366-s2] done in 41.1 min: resolved 28/30
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] driver gepa-gepa-retry-test-pi-anthropic-sonnet-5-5--55fa82 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s2] done in 42.0 min: resolved 28/30
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] driver gepa-gepa-retry-test-pi-anthropic-sonnet-5-5--0f9c08 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gb3b67e3a-s3] done in 42.4 min: resolved 27/30
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366-s3] driver gepa-gepa-retry-test-pi-anthropic-sonnet-5-5--272c17 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--gf35b8366-s3] done in 42.8 min: resolved 28/30
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] driver gepa-gepa-retry-test-pi-anthropic-sonnet-5-5--2aae05 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--seed] done in 43.0 min: resolved 28/30
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] driver gepa-gepa-retry-test-pi-anthropic-sonnet-5-5--fd0ef2 rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s2] done in 44.8 min: resolved 28/30
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] driver gepa-gepa-retry-test-pi-anthropic-sonnet-5-5--f9df5a rc=0
+[rollout pi-anthropic-sonnet-5-5-retry3--seed-s3] done in 56.9 min: resolved 28/30
+{
+ "seed": {
+  "n_runs": 90,
+  "resolve@1": 0.8111,
+  "resolve@3": 0.9333,
+  "mean_rounds": 1.278,
+  "mean_cost_per_run": 0.2215,
+  "prompt_words": 0
+ },
+ "accuracy": {
+  "n_runs": 90,
+  "resolve@1": 0.7778,
+  "resolve@3": 0.9333,
+  "mean_rounds": 1.356,
+  "mean_cost_per_run": 0.2525,
+  "prompt_words": 761
+ },
+ "cost": {
+  "n_runs": 90,
+  "resolve@1": 0.7889,
+  "resolve@3": 0.9111,
+  "mean_rounds": 1.344,
+  "mean_cost_per_run": 0.199,
+  "prompt_words": 410
+ }
+}
+{
+ "seed: resolve@3 - resolve@1": {
+  "mean_diff": 0.1222,
+  "n_tasks": 30
+ },
+ "accuracy: resolve@3 - resolve@1": {
+  "mean_diff": 0.1556,
+  "n_tasks": 30
+ },
+ "cost: resolve@3 - resolve@1": {
+  "mean_diff": 0.1222,
+  "n_tasks": 30
+ },
+ "accuracy - seed (resolve@3)": {
+  "mean_diff": 0.0,
+  "n_tasks": 30,
+  "tasks_up": 0,
+  "tasks_down": 0,
+  "p_sign_flip": 1.0
+ },
+ "accuracy - seed (resolve@1)": {
+  "mean_diff": -0.0333,
+  "n_tasks": 30,
+  "tasks_up": 2,
+  "tasks_down": 4,
+  "p_sign_flip": 0.6254
+ },
+ "accuracy / seed cost ratio": {
+  "geo_mean": 1.198,
+  "ci95": [
+   1.067,
+   1.336
+  ]
+ },
+ "cost - seed (resolve@3)": {
+  "mean_diff": -0.0222,
+  "n_tasks": 30,
+  "tasks_up": 0,
+  "tasks_down": 2,
+  "p_sign_flip": 0.5009
+ },
+ "cost - seed (resolve@1)": {
+  "mean_diff": -0.0222,
+  "n_tasks": 30,
+  "tasks_up": 2,
+  "tasks_down": 2,
+  "p_sign_flip": 0.7503
+ },
+ "cost / seed cost ratio": {
+  "geo_mean": 0.918,
+  "ci95": [
+   0.862,
+   0.98
+  ]
+ }
+}
