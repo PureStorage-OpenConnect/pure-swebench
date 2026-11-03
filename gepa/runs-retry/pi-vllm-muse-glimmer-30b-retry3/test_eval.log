@@ -18,3 +18,56 @@
 [rollout pi-vllm-muse-glimmer-30b-retry3--gaf7a2b5d] done in 238.5 min: resolved 21/30
 [rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] driver gepa-gepa-retry-test-pi-vllm-muse-glimmer-30b-a1512b rc=0
 [rollout pi-vllm-muse-glimmer-30b-retry3--seed-s2] done in 254.9 min: resolved 20/30
+[rollout pi-vllm-muse-glimmer-30b-retry3--gaf7a2b5d-s2] driver gepa-gepa-retry-test-pi-vllm-muse-glimmer-30b-e926a1 rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--gaf7a2b5d-s2] done in 281.3 min: resolved 20/30
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] driver gepa-gepa-retry-test-pi-vllm-muse-glimmer-30b-3db1d6 rc=0
+[rollout pi-vllm-muse-glimmer-30b-retry3--seed-s3] done in 317.8 min: resolved 15/30
+{
+ "seed": {
+  "n_runs": 90,
+  "resolve@1": 0.5111,
+  "resolve@3": 0.6111,
+  "mean_rounds": 1.878,
+  "mean_cost_per_run": 0.2638,
+  "prompt_words": 0
+ },
+ "cost": {
+  "n_runs": 90,
+  "resolve@1": 0.5778,
+  "resolve@3": 0.6667,
+  "mean_rounds": 1.756,
+  "mean_cost_per_run": 0.2324,
+  "prompt_words": 915
+ }
+}
+{
+ "seed: resolve@3 - resolve@1": {
+  "mean_diff": 0.1,
+  "n_tasks": 30
+ },
+ "cost: resolve@3 - resolve@1": {
+  "mean_diff": 0.0889,
+  "n_tasks": 30
+ },
+ "cost - seed (resolve@3)": {
+  "mean_diff": 0.0556,
+  "n_tasks": 30,
+  "tasks_up": 8,
+  "tasks_down": 5,
+  "p_sign_flip": 0.3666
+ },
+ "cost - seed (resolve@1)": {
+  "mean_diff": 0.0667,
+  "n_tasks": 30,
+  "tasks_up": 11,
+  "tasks_down": 5,
+  "p_sign_flip": 0.3518
+ },
+ "cost / seed cost ratio": {
+  "geo_mean": 0.865,
+  "ci95": [
+   0.777,
+   0.964
+  ]
+ }
+}
