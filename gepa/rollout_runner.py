@@ -51,6 +51,7 @@ BASE_AGENTS = ("pi-vllm-qwen3.6-27b", "pi-vllm-gemma-4-31b", "pi-vllm-muse-glimm
                # retry-with-feedback rows (ZBENCH_MAX_ATTEMPTS=3; gepa_run_retry.py)
                "pi-anthropic-haiku-5-5-retry3", "pi-anthropic-sonnet-5-5-retry3",
                "claude-cli-haiku-5-5-retry3", "pi-vllm-muse-glimmer-30b-retry3",
+               "pi-vllm-qwen3.6-27b-retry3",
                "pi-openai-gpt-5.6-sol-retry3")
 
 

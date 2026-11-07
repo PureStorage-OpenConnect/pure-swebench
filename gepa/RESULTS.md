@@ -1,6 +1,6 @@
 # GEPA proof of concept: results
 
-Status as of 2026-10-29 12:00 PDT. Owner: Robert. Branch `gepa` (uncommitted).
+Status as of 2026-10-29 12:00 PDT (retry section: 2026-11-07). Owner: Robert. Branch `gepa`.
 
 ## Setup
 
@@ -202,6 +202,42 @@ Sol v2 0.73-0.80 -> 0.86 (partly kept); Sol cost-aware 0.53-0.63 -> 0.58 (kept).
 Sol validation detail (cost / turns / wall-clock vs seed): v2 cand1-5 0.74-0.80 /
 0.61-0.65 / 0.51-0.60; cost-aware cand1-6 0.53-0.63 / 0.53-0.69 / 0.47-0.54.
 
+## Retry with feedback (pass@3)
+
+`gepa_run_retry.py` (`runs-retry/` accuracy, `runs-retry-cost/` cost-aware) and
+`eval_test_retry.py`. Agent rows `*-retry3` (`ZBENCH_MAX_ATTEMPTS=3`): after a failed round
+the same session gets "not fixed yet" (no test names or output); stop at the first success.
+Cost includes every round. Same 20 validation / 30 held-out tasks, 3 samples, budget 240.
+pass@k = solved within k rounds. Open-weight rows: cost-aware only.
+
+| Model (harness) | Arm | pass@1 | pass@3 | $/run | Cost ratio [95% CI] |
+|---|---|---|---|---|---|
+| Haiku 5.5 (pi) | seed | 0.800 | 0.889 | $0.284 | |
+| | accuracy | 0.789 | 0.900 | $0.070 | 0.30 [0.23, 0.40] |
+| | cost-aware | 0.789 | 0.956 (p=0.25) | $0.095 | 0.33 [0.23, 0.47] |
+| Sonnet 5.5 (pi) | seed | 0.811 | 0.933 | $0.222 | |
+| | accuracy | 0.778 | 0.933 | $0.253 | 1.20 [1.07, 1.34] |
+| | cost-aware | 0.789 | 0.911 | $0.199 | 0.92 [0.86, 0.98] |
+| Haiku 5.5 (Claude Code) | seed | 0.811 | 0.900 | $0.499 | |
+| | accuracy | 0.833 | 0.933 | $0.330 | 0.59 [0.48, 0.74] |
+| | cost-aware | 0.811 | 0.933 | $0.258 | 0.44 [0.35, 0.54] |
+| Muse Glimmer 30B | seed | 0.511 | 0.611 | $0.264 | |
+| | cost-aware | 0.578 (p=0.35) | 0.667 (p=0.37) | $0.232 | 0.87 [0.78, 0.96] |
+| Qwen3.6 27B | seed | 0.311 | 0.567 | $2.598 | |
+| | cost-aware | **0.444 (p=0.015)** | 0.667 (p=0.078) | $2.015 | 0.74 [0.58, 0.96] |
+
+- **Qwen3.6 27B** (held-out done 2026-11-07 16:06 UTC, 0 infra failures). Cost GEPA 260
+  calls, best idx 4 (validation 0.733 -> 0.790, 708 words). pass@1 +0.133 (13 tasks up /
+  3 down) is the only significant accuracy gain from a GEPA prompt in either experiment;
+  with this many comparisons, confirm on fresh tasks. pass@3 +0.100 (9 up / 3 down).
+  Rounds per solve 3.82 -> 2.95; $/solve $4.58 -> $3.02; median $/run $1.98 -> $1.23.
+  Served with vLLM 0.32 (one-shot runs: 0.27.1); seed pass@1 0.311 vs one-shot 0.478, so
+  compare within the retry runs only. vLLM did not report cached tokens, so $ charge all
+  prompt tokens uncached (upper bound; same for both arms). Servers: 6 replicas with PureKVA
+  (2 remote + up to 4 local, LB `lb_proxy.py`), 16-24 cells at the same time.
+- **GPT-5.6 Sol retry**: both GEPA runs done; held-out report (seed, cost) pending, run
+  from the cache on another machine.
+
 ## Why the Haiku 5.5 cost-aware prompt is cheaper
 
 - Requests per run: 42 (seed) -> 22.
@@ -234,6 +270,7 @@ Sol validation detail (cost / turns / wall-clock vs seed): v2 cand1-5 0.74-0.80 
   shown. A cost weight of 0.05 may keep more resolves.
 - Optional: cost-aware rerun with cost weight 0.05.
 - Cost-aware GEPA on other models (the largest $ saving would be Qwen at $1.03 per run).
+  Qwen done in the retry setting 2026-11-07 (0.74x, see Retry with feedback).
 - Qwen v2 GEPA + held-out: DONE 2026-10-29 05:03. gpt-oss-120b done 2026-10-28 02:20.
 - Sol runs: DONE 2026-10-29 11:50 after the OpenAI budget was raised (resumed 11:02;
   cost-aware GEPA finished at 242 calls, best unchanged). Spend-limit failures from

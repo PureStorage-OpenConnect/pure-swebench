@@ -1,0 +1,67 @@
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] 0/30 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] 0/30 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] 0/30 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] 30/30 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] 30/30 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] 30/30 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] launching 30 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] launching 30 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] launching 30 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] done in 0.6 min: resolved 17/30
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] done in 0.6 min: resolved 18/30
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] done in 0.6 min: resolved 16/30
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] driver gepa-gepa-retry-test-pi-vllm-qwen3.6-27b-retr-20eb40 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] done in 126.8 min: resolved 23/30
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] driver gepa-gepa-retry-test-pi-vllm-qwen3.6-27b-retr-1aaaee rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] done in 146.8 min: resolved 18/30
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] driver gepa-gepa-retry-test-pi-vllm-qwen3.6-27b-retr-7956a9 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] done in 174.5 min: resolved 19/30
+{
+ "seed": {
+  "n_runs": 90,
+  "resolve@1": 0.3111,
+  "resolve@3": 0.5667,
+  "mean_rounds": 2.167,
+  "mean_cost_per_run": 2.5976,
+  "prompt_words": 0
+ },
+ "cost": {
+  "n_runs": 90,
+  "resolve@1": 0.4444,
+  "resolve@3": 0.6667,
+  "mean_rounds": 1.967,
+  "mean_cost_per_run": 2.0154,
+  "prompt_words": 708
+ }
+}
+{
+ "seed: resolve@3 - resolve@1": {
+  "mean_diff": 0.2556,
+  "n_tasks": 30
+ },
+ "cost: resolve@3 - resolve@1": {
+  "mean_diff": 0.2222,
+  "n_tasks": 30
+ },
+ "cost - seed (resolve@3)": {
+  "mean_diff": 0.1,
+  "n_tasks": 30,
+  "tasks_up": 9,
+  "tasks_down": 3,
+  "p_sign_flip": 0.0781
+ },
+ "cost - seed (resolve@1)": {
+  "mean_diff": 0.1333,
+  "n_tasks": 30,
+  "tasks_up": 13,
+  "tasks_down": 3,
+  "p_sign_flip": 0.0154
+ },
+ "cost / seed cost ratio": {
+  "geo_mean": 0.742,
+  "ci95": [
+   0.58,
+   0.957
+  ]
+ }
+}

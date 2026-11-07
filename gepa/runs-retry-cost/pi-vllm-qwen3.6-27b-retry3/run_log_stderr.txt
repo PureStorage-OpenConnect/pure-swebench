@@ -1,0 +1,280 @@
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] 20/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] 20/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] 20/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] done in 0.2 min: resolved 16/20
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] done in 0.2 min: resolved 18/20
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] done in 0.2 min: resolved 15/20
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] done in 0.1 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] done in 0.1 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] done in 0.1 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324-s2] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324-s3] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-ceec82 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324-s3] done in 49.4 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-a2e4f9 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324-s2] done in 49.4 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-b8cf65 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gee01f324] done in 80.6 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] done in 0.0 min: resolved 3/6[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] done in 0.0 min: resolved 5/6
+
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] done in 0.0 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] 0/6 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] 0/6 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-2afbe3 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] done in 45.0 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-cccafb rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] done in 59.9 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-65c950 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] done in 118.0 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] 6/20 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] 6/20 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] launching 14 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] launching 14 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] launching 14 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-b62145 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] done in 78.1 min: resolved 18/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-c5d51a rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] done in 101.8 min: resolved 18/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-e2cf08 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] done in 114.2 min: resolved 15/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] done in 0.5 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] done in 0.5 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] done in 0.5 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c] 0/6 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c-s3] 0/6 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c-s3] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c-s2] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-93fccd rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c-s3] done in 47.8 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-aa7331 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c] done in 56.1 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-effd97 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gd653245c-s2] done in 69.3 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] 4/4 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] 4/4 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] 4/4 cell(s) cached
+
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] done in 0.6 min: resolved 4/4[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] done in 0.6 min: resolved 4/4
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] done in 0.6 min: resolved 3/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] 0/4 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] 0/4 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] 0/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] launching 4 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] launching 4 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] launching 4 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-730d3d rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] done in 25.1 min: resolved 4/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-b80fd8 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] done in 30.1 min: resolved 4/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-685853 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] done in 40.6 min: resolved 3/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] 4/20 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] 4/20 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] 4/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] launching 16 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] launching 16 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] launching 16 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-9c2d73 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] done in 146.9 min: resolved 16/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-e165ab rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] done in 171.5 min: resolved 17/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-463ded rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] done in 177.4 min: resolved 11/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] 6/6 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] 6/6 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] done in 0.8 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] done in 0.8 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] done in 0.8 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4-s3] 0/6 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4-s2] 0/6 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4-s3] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4-s2] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-381011 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4-s2] done in 51.7 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-77cb3e rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4-s3] done in 95.5 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-5adfaf rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g255329a4] done in 98.0 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] 6/6 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] 6/6 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] done in 0.4 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] done in 0.4 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] done in 0.4 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5] 0/6 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5-s2] 0/6 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5-s2] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5-s3] launching 6 cell(s) fanout=16 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-a00268 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5-s3] done in 42.7 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-7a1a20 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g203cbee5] done in 56.9 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] 20/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] 20/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] 20/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] done in 0.6 min: resolved 18/20
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] done in 0.6 min: resolved 16/20
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] done in 0.6 min: resolved 15/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] done in 0.2 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] done in 0.2 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] done in 0.2 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3] 0/6 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s2] 0/6 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s2] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s3] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-8a30c6 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s2] done in 18.9 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-85a258 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3] done in 39.1 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-2dc146 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s3] done in 52.2 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s3] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s2] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s2] launching 14 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s3] launching 14 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3] launching 14 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-e86c09 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s2] done in 70.7 min: resolved 18/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-047794 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3] done in 93.6 min: resolved 16/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-0bff77 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g702345a3-s3] done in 108.5 min: resolved 13/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s3] done in 0.2 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34-s2] done in 0.2 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g3069bc34] done in 0.2 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46] 0/6 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46-s2] 0/6 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46-s2] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46-s3] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-b4b3d3 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46-s2] done in 33.9 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-338d15 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46-s3] done in 42.8 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-d1eb63 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g2d5c7e46] done in 69.6 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] 4/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] 4/4 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] 4/4 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s3] done in 0.9 min: resolved 2/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e] done in 0.9 min: resolved 3/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g13d55e5e-s2] done in 0.9 min: resolved 4/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] 0/4 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] 0/4 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] 0/4 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] launching 4 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] launching 4 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] launching 4 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-d293a2 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] done in 12.0 min: resolved 4/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-d725b2 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] done in 16.2 min: resolved 4/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-258f35 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] done in 18.2 min: resolved 4/4
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] 4/20 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] 4/20 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] 4/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] launching 16 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] launching 16 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] launching 16 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-aab0c5 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d] done in 69.9 min: resolved 17/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-dc79c7 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s3] done in 74.0 min: resolved 17/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-cea581 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g3dd4502d-s2] done in 94.9 min: resolved 17/20
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] done in 0.5 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] done in 0.5 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] done in 0.5 min: resolved 4/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s3] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s2] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s3] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-fd3a72 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2] done in 24.5 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-ce87e6 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s3] done in 42.4 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-05d3c0 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s2] done in 61.7 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s3] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s2] 6/20 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2] 6/20 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s2] launching 14 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2] launching 14 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s3] launching 14 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-94b2da rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2] done in 58.7 min: resolved 18/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-875ca3 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s3] done in 76.7 min: resolved 13/20
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-fed1ce rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--g5a870ed2-s2] done in 181.3 min: resolved 15/20
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] 6/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--seed] done in 0.2 min: resolved 5/6
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s3] done in 0.2 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--seed-s2] done in 0.2 min: resolved 3/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s3] 0/6 cell(s) cached[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s2] 0/6 cell(s) cached
+
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742] 0/6 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s3] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s2] launching 6 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-933067 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742] done in 21.7 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-c756f7 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s3] done in 28.2 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-7d4166 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s2] done in 38.7 min: resolved 6/6
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s2] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s3] 6/20 cell(s) cached
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s2] launching 14 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742] launching 14 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s3] launching 14 cell(s) fanout=24 (busy elsewhere: 0)
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s3] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-712fd0 rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s3] done in 68.2 min: resolved 15/20
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-70048a rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742] done in 71.9 min: resolved 17/20
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s2] driver gepa-gepa-retry-pi-vllm-qwen3.6-27b-retry3-31a1bc rc=0
+[rollout pi-vllm-qwen3.6-27b-retry3--gad81e742-s2] done in 95.7 min: resolved 15/20
